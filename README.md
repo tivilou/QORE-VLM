@@ -1,6 +1,6 @@
 <div align="center">
-  <h1>QORE-VLM</h1>
-  <p><b>Q</b>uantum-<b>O</b>ptimized token <b>RE</b>duction for Vision-Language Models</p>
+  <h1>QORE</h1>
+  <p><b>Q</b>uantum-<b>O</b>ptimized Context <b>RE</b>duction for Large Language Models</p>
   <p><i>(read as "Q-core")</i></p>
 
   <a href="https://github.com/tivilou/QORE-VLM/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License: Apache 2.0"></a>
@@ -9,104 +9,155 @@
 
 ---
 
-QORE-VLM is a research project that brings **quantum optimization** to visual-token
-reduction in Vision-Language Models (VLMs). It builds on the dual-stage token
-reduction framework [DUET-VLM](https://github.com/AMD-AGI/DUET-VLM) and replaces the
-heuristic token-selection step with a principled combinatorial optimizer that can be
-solved on quantum (or quantum-inspired) hardware.
+QORE is a research project that brings **quantum optimization** to context management
+in Large Language Models. It provides a unified QUBO (Quadratic Unconstrained Binary
+Optimization) framework for deciding **what information an LLM should attend to** under
+a finite context/memory budget — and solves this selection problem with quantum and
+quantum-inspired optimizers.
+
+We demonstrate the framework on two complementary applications:
+
+- **KV-Cache Eviction** (fine-grained, dynamic): which token-level KV entries to
+  retain during autoregressive generation
+- **RAG Context Selection** (coarse-grained, static): which retrieved passages to
+  include in the prompt before generation
+
+Both are instances of the same mathematical problem — coupled subset selection under
+a cardinality budget — and share a single solver stack.
 
 ## Motivation
 
-Modern VLMs emit thousands of visual tokens per high-resolution image, and attention
-cost grows quadratically with sequence length. Dual-stage reduction frameworks such as
-DUET-VLM cut this cost by (1) merging redundant tokens inside the vision encoder and
-(2) pruning visual tokens layer-by-layer inside the language model. Both stages rely on
-**greedy, score-based heuristics** to decide which tokens to keep.
+LLMs operate under finite context budgets. Whether it's a KV cache hitting its
+physical memory limit during long-sequence generation, or a RAG pipeline that must
+choose which retrieved passages fit within the context window, the core question is
+the same:
 
-Token selection — choosing the subset of `K` visual tokens (out of `N`) that preserves
-the most task-relevant information under a budget — is fundamentally a **combinatorial
-optimization** problem. Greedy selection ignores interactions between tokens (redundancy,
-complementarity). QORE-VLM reformulates the keep/drop decision as a **QUBO** (Quadratic
-Unconstrained Binary Optimization) problem and solves it with quantum and quantum-inspired
-optimizers, aiming for selections that better trade off coverage against budget.
+> **From N candidates, select K to keep, maximizing information while minimizing
+> redundancy.**
 
-## Core Idea
+Current approaches in both settings rely on **greedy, score-based heuristics**:
+rank items by a scalar importance score, keep the top-K. This ignores **pairwise
+interactions** — two items can both score high individually yet be mutually redundant
+(e.g., two KV entries encoding the same fact, or two passages covering the same
+evidence). Greedy selection wastes budget on redundancy.
+
+QORE reformulates context selection as a **QUBO** and solves it with combinatorial
+optimizers that respect pairwise coupling — including quantum solvers that are
+theoretically suited to this problem structure.
+
+## Unified Formulation
+
+Define binary decision variables `x ∈ {0,1}^N`, where `xᵢ = 1` means item i is kept.
+
+**Objective (minimization):**
 
 ```
-                 ┌─────────────────────────────────────────────┐
-   image ─▶ ViT ─┤ Stage 1: V2V merge (encoder)                 │
-                 │   token importance + pairwise redundancy      │
-                 │            │                                  │
-                 │            ▼                                  │
-                 │   ┌───────────────────────┐                  │
-                 │   │  QUBO token selection  │ ◀── QORE module  │
-                 │   │  (QAOA / annealing /   │                  │
-                 │   │   VQE / simulated)     │                  │
-                 │   └───────────────────────┘                  │
-                 │            │                                  │
-   text ────────▶│ Stage 2: T2V prune (LLM, text-guided)        │
-                 └─────────────────────────────────────────────┘
-                              │
-                              ▼
-                       reduced token set ─▶ LLM decoder
+E(x) = - Σᵢ aᵢ xᵢ  +  Σᵢ<ⱼ bᵢⱼ xᵢ xⱼ  +  λ (Σᵢ xᵢ - K)²
+         ─────────      ──────────────────      ──────────────────
+          quality        redundancy penalty      budget constraint
 ```
 
-The keep/drop vector `x ∈ {0,1}^N` is chosen to minimize an energy
-`E(x) = -Σ aᵢ xᵢ + Σ bᵢⱼ xᵢ xⱼ + λ(Σ xᵢ - K)²`, where `aᵢ` is per-token salience
-(vision self-attention and text-to-vision relevance, reused from DUET's two stages),
-`bᵢⱼ` penalizes keeping mutually redundant tokens, and the last term enforces the
-budget `K`. This maps directly onto a QUBO / Ising model.
+| Symbol | Meaning | KV-Cache instance | RAG instance |
+|--------|---------|-------------------|--------------|
+| N | candidate pool size | KV entries in cache | retrieved passages |
+| K | budget | cache capacity | max passages in context |
+| aᵢ | individual quality | cumulative attention score | query-passage relevance |
+| bᵢⱼ | pairwise redundancy | key vector similarity | passage content overlap |
+| λ | constraint weight | tuned per model | tuned per retriever |
+
+The QUBO matrix Q is constructed as:
+```
+Qᵢᵢ = -aᵢ + λ(1 - 2K)
+Qᵢⱼ = bᵢⱼ + 2λ         (i ≠ j)
+```
+
+Minimizing `x^T Q x` over binary x gives the optimal subset.
+
+## Two Applications, One Framework
+
+### Application A: KV-Cache Eviction
+
+During long-sequence generation, the KV cache grows until it exceeds memory. QORE
+replaces greedy eviction (H2O, SnapKV, PyramidKV) with QUBO-optimal selection:
+
+- **Quality signal** `aᵢ`: cumulative attention received by each KV entry from
+  subsequent tokens (the "heavy hitter" score from H2O, or windowed attention from
+  SnapKV)
+- **Redundancy signal** `bᵢⱼ`: cosine similarity between key vectors of entries i
+  and j — high similarity means keeping both wastes budget
+- **Timing**: solve every T generation steps (amortized overhead)
+- **Scaling**: block decomposition by attention head or position window
+
+### Application B: RAG Context Selection
+
+After retrieval, a typical pipeline has 50–200 candidate passages but can only fit
+5–15 in context. QORE replaces greedy re-ranking and MMR with QUBO-optimal selection:
+
+- **Quality signal** `aᵢ`: retriever relevance score (embedding similarity to query)
+- **Redundancy signal** `bᵢⱼ`: passage-pair semantic similarity (embedding cosine)
+  or lexical overlap (n-gram Jaccard)
+- **Timing**: once before generation (offline)
+- **Scaling**: N is naturally small (50–200), no decomposition needed — direct solve
 
 ## Why Quantum
 
-- **Coupling-aware selection.** The `bᵢⱼ` redundancy terms make the objective
-  non-separable; greedy top-K ignores them. QUBO solvers optimize the full coupled
-  objective.
-- **Hardware path.** The same QUBO runs unchanged on a classical simulated-annealing
-  baseline, a quantum-inspired solver (e.g. digital annealer / tensor methods), and
-  gate-based QAOA / quantum annealing — so the method degrades gracefully and is
-  reproducible without quantum hardware.
-- **Small, well-scoped subproblems.** Selection happens per-image / per-layer over a
-  bounded candidate pool, keeping qubit counts in a near-term-feasible range.
+- **Coupling-aware optimization.** The `bᵢⱼ` terms make the objective non-separable.
+  Greedy top-K cannot handle quadratic coupling. QUBO solvers optimize the full
+  coupled objective.
+- **Natural problem structure.** Subset selection with pairwise penalties maps directly
+  onto Ising / QUBO — the native problem class for quantum annealers and QAOA.
+- **Graceful degradation.** The same QUBO runs on classical simulated annealing
+  (always available), quantum-inspired solvers, gate-based QAOA, or quantum annealing
+  hardware. No quantum hardware is required to reproduce results.
+- **Feasible scale.** KV-cache blocks have 24–64 variables per sub-QUBO; RAG selection
+  has 50–200 variables total. Both are within near-term quantum device capacity.
 
-## Planned Backends
+## Theoretical Grounding: DPP & GBS
+
+The selection problem has a deep connection to **Determinantal Point Processes (DPP)**:
+selecting a diverse, high-quality subset is exactly k-DPP MAP inference (NP-hard in
+general). This connects to **Gaussian Boson Sampling (GBS)**, which naturally samples
+subsets weighted by matrix permanents / hafnians — providing a principled quantum
+sampling approach complementary to QUBO optimization.
+
+See `docs/technical_roadmap.md` for the full theoretical treatment.
+
+## Solver Backends
 
 | Backend | Library | Role |
-|---|---|---|
+|---------|---------|------|
 | Simulated annealing | `dwave-neal` / `dimod` | Classical baseline, always available |
 | QAOA (gate model) | `qiskit` / `pennylane` | Variational quantum optimizer |
-| Quantum annealing | `dwave-system` | Hardware sampler (optional, needs access) |
-| Brute force | numpy | Exact reference for tiny `N` (sanity check) |
+| Quantum annealing | `dwave-system` | Hardware sampler (optional) |
+| Quantum kernel | `pennylane` | Richer `bᵢⱼ` via Hilbert-space overlap |
+| Brute force | `numpy` | Exact reference for small N |
+
+## Project Structure
+
+```
+QORE/
+├── qore/                    # core QUBO framework
+│   ├── qubo.py              # build Q matrix from quality + redundancy signals
+│   ├── solvers/             # SA / QAOA / brute-force / quantum annealing
+│   ├── kernels.py           # classical + quantum kernels for bᵢⱼ
+│   └── block_decompose.py   # spatial / head-wise block partitioning
+├── applications/
+│   ├── kv_cache/            # KV-cache eviction integration
+│   │   ├── eviction.py      # hook into HuggingFace KV cache
+│   │   └── baselines/       # H2O, SnapKV, PyramidKV reimplementations
+│   └── rag/                 # RAG context selection integration
+│       ├── selector.py      # post-retrieval QUBO selection
+│       └── baselines/       # MMR, DPP-greedy, top-K reranker
+├── experiments/             # configs, scripts, result logs
+├── reproduction/            # collaborator-submitted reproduction results
+├── docs/                    # technical roadmap, paper drafts
+└── scripts/                 # evaluation & benchmarking scripts
+```
 
 ## Status
 
-This repository is an early-stage research work-in-progress. The README captures the
-intended design; code is being ported and extended from DUET-VLM. Nothing here is a
-released artifact yet.
-
-Planned layout:
-
-```
-QORE-VLM/
-├── qore/                # quantum token-selection module (QUBO build + solvers)
-│   ├── qubo.py          # build E(x) from salience + redundancy
-│   ├── solvers/         # annealing / QAOA / brute-force backends
-│   └── integration.py   # hooks into DUET Stage 1 / Stage 2
-├── llava/ videollava/ qwen2_5_vl/   # VLM backbones (from DUET-VLM)
-├── visionzip/           # Stage 1 token merging (from DUET-VLM)
-├── scripts/             # training + evaluation
-└── experiments/         # configs and result logs for the paper
-```
-
-## Acknowledgement
-
-QORE-VLM builds directly on [DUET-VLM](https://github.com/AMD-AGI/DUET-VLM) and, through
-it, on [LLaVA](https://github.com/haotian-liu/LLaVA),
-[Video-LLaVA](https://github.com/PKU-YuanGroup/Video-LLaVA),
-[VisionZip](https://github.com/dvlab-research/VisionZip),
-[PyramidDrop](https://github.com/Cooperx521/PyramidDrop), and
-[Qwen2.5-VL](https://github.com/QwenLM/Qwen2.5-VL). The quantum-optimization layer is the
-new contribution of this project.
+This repository is an early-stage research work-in-progress. Code is under active
+development. Nothing here is a released artifact yet.
 
 ## License
 
