@@ -1,0 +1,153 @@
+"""QORE passage selector: unified interface for RAG context selection."""
+
+import numpy as np
+
+from qore import solve as qore_solve
+from qore.signals import normalize
+from .signals_rag import passage_relevance, passage_redundancy
+from .baselines import topk, mmr
+
+
+def select_passages(
+    query_embedding: np.ndarray,
+    passage_embeddings: np.ndarray,
+    K: int,
+    method: str = "qore",
+    relevance_scores: np.ndarray | None = None,
+    redundancy_method: str = "cosine",
+    lam: float = 2.0,
+    num_reads: int = 50,
+    lambda_mmr: float = 0.5,
+    seed: int | None = None,
+) -> np.ndarray:
+    """
+    Select K passages from N candidates for inclusion in the LLM context.
+
+    This is the main entry point for QORE-RAG. It supports three methods:
+    - "qore": QUBO-optimized selection (quality + diversity, globally optimal)
+    - "topk": Greedy top-K by relevance (baseline)
+    - "mmr": Maximal Marginal Relevance (greedy diversity-aware baseline)
+
+    Args:
+        query_embedding: (d,) query vector.
+        passage_embeddings: (N, d) candidate passage embeddings.
+        K: Number of passages to select (context budget).
+        method: Selection method. One of "qore", "topk", "mmr".
+        relevance_scores: Optional (N,) pre-computed relevance scores from the
+            retriever. If None, cosine(query, passage) is used.
+        redundancy_method: How to compute b_ij. "cosine" (default) or "rbf".
+        lam: QUBO penalty weight (only for method="qore").
+        num_reads: SA reads (only for method="qore").
+        lambda_mmr: MMR trade-off (only for method="mmr").
+        seed: Random seed for reproducibility (only for method="qore").
+
+    Returns:
+        indices: (K,) integer array of selected passage indices.
+    """
+    query_embedding = np.asarray(query_embedding, dtype=np.float64)
+    passage_embeddings = np.asarray(passage_embeddings, dtype=np.float64)
+    N = len(passage_embeddings)
+    K = min(K, N)
+
+    # Compute relevance (quality signal)
+    if relevance_scores is not None:
+        a = normalize(np.asarray(relevance_scores, dtype=np.float64))
+    else:
+        raw_rel = passage_relevance(query_embedding, passage_embeddings)
+        a = normalize(raw_rel)
+
+    if method == "topk":
+        return topk.select(a, K)
+
+    elif method == "mmr":
+        return mmr.select(
+            query_embedding,
+            passage_embeddings,
+            K,
+            lambda_mmr=lambda_mmr,
+            relevance_scores=a,
+        )
+
+    elif method == "qore":
+        # Two-stage approach:
+        # 1. Pre-filter to top-M candidates by quality (removes clearly irrelevant items)
+        # 2. Run QUBO on the filtered set (redundancy becomes the differentiator)
+        M = min(N, max(K * 3, 15))  # candidate pool: 3x budget or at least 15
+        prefilter_idx = np.argsort(a)[-M:]  # top-M by quality
+
+        a_filtered = a[prefilter_idx]
+        embeddings_filtered = passage_embeddings[prefilter_idx]
+
+        # Compute redundancy only within the candidate pool
+        b = passage_redundancy(embeddings_filtered, method=redundancy_method)
+
+        # Solve QUBO on filtered set
+        kwargs = {"num_reads": num_reads}
+        if seed is not None:
+            kwargs["seed"] = seed
+
+        x = qore_solve(a_filtered, b, K, lam=lam, method="anneal", **kwargs)
+
+        # Map back to original indices
+        selected_in_pool = np.where(x == 1)[0]
+        indices = prefilter_idx[selected_in_pool]
+
+        # Sort by relevance (highest first) for consistent presentation
+        indices = indices[np.argsort(a[indices])[::-1]]
+
+        return indices
+
+    else:
+        raise ValueError(
+            f"Unknown method '{method}'. Choose from: 'qore', 'topk', 'mmr'."
+        )
+
+
+def evaluate_selection(
+    selected_indices: np.ndarray,
+    gold_indices: np.ndarray | set,
+    passage_embeddings: np.ndarray,
+) -> dict:
+    """
+    Evaluate a passage selection against gold-standard passages.
+
+    Args:
+        selected_indices: (K,) indices of selected passages.
+        gold_indices: Indices of gold (relevant) passages.
+        passage_embeddings: (N, d) all passage embeddings.
+
+    Returns:
+        Dictionary with metrics:
+        - recall: fraction of gold passages in selection
+        - redundancy_ratio: average pairwise cosine similarity among selected
+        - diversity_score: 1 - redundancy_ratio
+    """
+    selected = set(int(i) for i in selected_indices)
+    gold = set(int(i) for i in gold_indices)
+
+    # Recall
+    hits = len(selected & gold)
+    recall = hits / len(gold) if len(gold) > 0 else 0.0
+
+    # Redundancy ratio: avg pairwise cosine sim among selected
+    sel_embeddings = passage_embeddings[list(selected_indices)]
+    norms = np.linalg.norm(sel_embeddings, axis=1, keepdims=True)
+    norms = np.maximum(norms, 1e-12)
+    normed = sel_embeddings / norms
+    sim = normed @ normed.T
+    np.fill_diagonal(sim, 0.0)
+
+    K = len(selected_indices)
+    if K > 1:
+        redundancy = sim.sum() / (K * (K - 1))
+    else:
+        redundancy = 0.0
+
+    return {
+        "recall": recall,
+        "gold_hits": hits,
+        "gold_total": len(gold),
+        "redundancy_ratio": float(redundancy),
+        "diversity_score": 1.0 - float(redundancy),
+        "K": K,
+    }

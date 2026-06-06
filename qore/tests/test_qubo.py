@@ -40,7 +40,7 @@ class TestBuildQuboMatrix:
         assert np.allclose(np.diag(Q), expected_diag)
 
     def test_offdiag_values(self):
-        """Q_ij (i<j) = b_ij + 2*lam."""
+        """Q_ij (i<j) = gamma * b_ij + 2*lam."""
         N = 4
         a = np.ones(N)
         b = np.array([
@@ -51,10 +51,11 @@ class TestBuildQuboMatrix:
         ])
         K = 2
         lam = 1.5
-        Q = build_qubo_matrix(a, b, K=K, lam=lam)
+        gamma = 1.0
+        Q = build_qubo_matrix(a, b, K=K, lam=lam, gamma=gamma)
         for i in range(N):
             for j in range(i + 1, N):
-                assert np.isclose(Q[i, j], b[i, j] + 2 * lam)
+                assert np.isclose(Q[i, j], gamma * b[i, j] + 2 * lam)
 
     def test_invalid_K(self):
         N = 5
@@ -109,13 +110,14 @@ class TestEnergyDecomposed:
         np.fill_diagonal(b, 0)
         K = 3
         lam = 2.0
+        gamma = 1.0  # explicit to match build_qubo_matrix
 
-        Q = build_qubo_matrix(a, b, K, lam)
+        Q = build_qubo_matrix(a, b, K, lam, gamma=gamma)
         x = np.zeros(N)
         x[[1, 3, 5]] = 1
 
         e_total = energy(x, Q)
-        decomp = energy_decomposed(x, a, b, K, lam)
+        decomp = energy_decomposed(x, a, b, K, lam, gamma=gamma)
 
         assert np.isclose(decomp["total"], e_total, atol=1e-8)
         assert np.isclose(

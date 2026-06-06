@@ -8,16 +8,17 @@ def build_qubo_matrix(
     b: np.ndarray,
     K: int,
     lam: float = 2.0,
+    gamma: float | None = None,
 ) -> np.ndarray:
     """
     Build a QUBO matrix Q such that argmin x^T Q x gives the optimal K-subset.
 
     The objective being encoded:
-        E(x) = -sum_i a_i x_i + sum_{i<j} b_ij x_i x_j + lam*(sum_i x_i - K)^2
+        E(x) = -sum_i a_i x_i + gamma * sum_{i<j} b_ij x_i x_j + lam*(sum_i x_i - K)^2
 
     Expanding the penalty term and combining:
         Q_ii = -a_i + lam*(1 - 2K)
-        Q_ij = b_ij + 2*lam        (for i < j)
+        Q_ij = gamma * b_ij + 2*lam        (for i < j)
 
     Args:
         a: (N,) quality scores. Higher means more important to keep.
@@ -28,6 +29,10 @@ def build_qubo_matrix(
             Should be large enough to enforce |S|=K but not so large
             that it drowns out the quality/redundancy signals.
             Rule of thumb: lam >= max(a) + max(b).
+        gamma: Weight for the redundancy term relative to quality.
+            If None, auto-tuned so that the expected quality contribution
+            and redundancy contribution are balanced for a typical K-selection.
+            Explicitly set to 1.0 to disable auto-tuning.
 
     Returns:
         Q: (N, N) upper-triangular QUBO matrix.
@@ -41,6 +46,25 @@ def build_qubo_matrix(
     if K < 1 or K >= N:
         raise ValueError(f"K must be in [1, N-1], got K={K}, N={N}")
 
+    # Auto-tune gamma if not provided
+    if gamma is None:
+        # Heuristic: balance quality and redundancy contributions
+        # for the items most likely to be selected (top-K by quality).
+        # Look at redundancy AMONG top-K candidates specifically,
+        # since those are the items competing for selection.
+        top_k_idx = np.argsort(a)[-K:]
+        quality_scale = a[top_k_idx].mean() if K > 0 else 1.0
+
+        b_topk = b[np.ix_(top_k_idx, top_k_idx)]
+        b_topk_vals = b_topk[np.triu_indices(K, k=1)]
+        if len(b_topk_vals) > 0 and b_topk_vals.mean() > 1e-6:
+            # Expected redundancy per selected item: avg_b * (K-1)/2
+            redundancy_scale = b_topk_vals.mean() * (K - 1) / 2
+            gamma = quality_scale / max(redundancy_scale, 1e-12)
+            gamma = np.clip(gamma, 0.01, 10.0)
+        else:
+            gamma = 1.0
+
     Q = np.zeros((N, N), dtype=np.float64)
 
     # Diagonal terms
@@ -48,7 +72,7 @@ def build_qubo_matrix(
 
     # Off-diagonal terms (upper triangle only)
     upper_mask = np.triu_indices(N, k=1)
-    Q[upper_mask] = b[upper_mask] + 2 * lam
+    Q[upper_mask] = gamma * b[upper_mask] + 2 * lam
 
     return Q
 
@@ -74,6 +98,7 @@ def energy_decomposed(
     b: np.ndarray,
     K: int,
     lam: float = 2.0,
+    gamma: float = 1.0,
 ) -> dict:
     """
     Compute the energy broken into its three components for analysis.
@@ -88,7 +113,7 @@ def energy_decomposed(
     b = np.asarray(b, dtype=np.float64)
 
     quality = -float(a @ x)
-    redundancy = float(0.5 * x @ b @ x)  # b is symmetric; sum_{i<j} = 0.5 * x^T b x
+    redundancy = gamma * float(0.5 * x @ b @ x)  # b is symmetric; sum_{i<j} = 0.5 * x^T b x
     penalty = lam * (float(x.sum()) - K) ** 2
     constant = -lam * K**2  # absorbed into Q diagonal but missing from x^T Q x
     total = quality + redundancy + penalty + constant

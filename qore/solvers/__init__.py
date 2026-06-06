@@ -11,6 +11,7 @@ def solve(
     b: np.ndarray,
     K: int,
     lam: float = 2.0,
+    gamma: float | None = None,
     method: str = "anneal",
     **kwargs,
 ) -> np.ndarray:
@@ -25,6 +26,8 @@ def solve(
         b: (N, N) redundancy matrix (symmetric, zero diagonal).
         K: Budget — number of items to select.
         lam: Penalty weight for the cardinality constraint.
+        gamma: Weight for redundancy relative to quality.
+            None = auto-tune (recommended). 1.0 = equal weight.
         method: Solver backend.
             - "anneal": Simulated annealing (default, recommended).
             - "brute": Exact enumeration (N ≤ 20 only).
@@ -44,7 +47,7 @@ def solve(
         # Greedy ignores redundancy — only uses quality scores
         return greedy.solve(a, K)
 
-    Q = build_qubo_matrix(a, b, K, lam=lam)
+    Q = build_qubo_matrix(a, b, K, lam=lam, gamma=gamma)
 
     if method == "brute":
         return brute.solve(Q, K)
