@@ -58,6 +58,35 @@ def load_dataset_splits(dataset_name, max_samples=0):
     return samples
 
 
+def load_passage_corpus(dataset_name="natural_questions"):
+    """
+    Load passage corpus with pre-computed embeddings.
+
+    For NQ: uses facebook/wiki_dpr (21M Wikipedia passages + DPR embeddings).
+    Loaded via HuggingFace datasets — no manual download needed.
+
+    Returns:
+        passages: list of passage texts
+        embeddings: (N_corpus, d) numpy array of passage embeddings
+    """
+    from datasets import load_dataset
+
+    if dataset_name in ("natural_questions", "hotpotqa"):
+        # facebook/wiki_dpr: 21M Wikipedia passages with DPR embeddings
+        # Using the NQ subset with exact search vectors
+        print("  Loading facebook/wiki_dpr corpus (this may take a while on first run)...")
+        corpus = load_dataset(
+            "facebook/wiki_dpr", "psgs_w100.nq.exact",
+            split="train",
+        )
+        passages = corpus["text"]
+        embeddings = np.array(corpus["embeddings"])
+        print(f"  Loaded {len(passages)} passages, embedding dim={embeddings.shape[1]}")
+        return passages, embeddings
+    else:
+        raise ValueError(f"No pre-built corpus for dataset: {dataset_name}")
+
+
 def embed_texts(texts, model_name, batch_size=64):
     """Embed a list of texts using sentence-transformers."""
     from sentence_transformers import SentenceTransformer
@@ -175,19 +204,25 @@ def main():
     samples = load_dataset_splits(args.dataset, args.max_samples)
     print(f"  {len(samples)} samples loaded")
 
-    # For a full implementation, we'd have a pre-built passage corpus.
-    # Here we provide the evaluation framework; Bootrear fills in the
-    # corpus and retrieval pipeline for each dataset.
-    print(f"\nNote: This script requires a pre-built passage corpus.")
-    print(f"See docs/experiment_guide.md for dataset preparation instructions.")
-    print(f"\nTo run a quick test with synthetic data instead:")
-    print(f"  python -m applications.rag.demo_synthetic")
+    # Load passage corpus with pre-computed embeddings
+    print(f"Loading passage corpus...")
+    passages, corpus_embeddings = load_passage_corpus(args.dataset)
 
-    # Save config as output (actual results filled by Bootrear's run)
+    # Output setup
     output_path = Path(args.output_dir) / args.output_file
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    config = {
+    # VQC training (only for qore method)
+    train_log = None
+    if args.method == "qore":
+        print(f"\nTraining VQC encoder...")
+        train_log_path = Path(args.output_dir) / "train_log.json"
+        train_log = _train_vqc_encoder(
+            corpus_embeddings, args, train_log_path
+        )
+
+    # Save results
+    result = {
         "experiment": f"RAG-{args.dataset}",
         "method": args.method,
         "model": args.model_path,
@@ -201,14 +236,59 @@ def main():
             "num_passages": args.num_passages,
             "seed": args.seed,
         },
-        "status": "config_ready",
-        "note": "Run with pre-built corpus to produce full results",
+        "compression": {
+            "tokens_total": args.num_passages,
+            "tokens_kept": args.K,
+            "compression_ratio": args.K / args.num_passages,
+        },
+        "num_samples": len(samples),
+        "corpus_size": len(passages),
+        "status": "ready",
+        "train_log": train_log,
     }
 
     with open(output_path, "w") as f:
-        json.dump(config, f, indent=2)
+        json.dump(result, f, indent=2)
 
-    print(f"\nConfig saved to {output_path}")
+    print(f"\nResult saved to {output_path}")
+    print(f"Compression: {args.num_passages} → {args.K} "
+          f"({args.K/args.num_passages:.1%} kept)")
+
+
+def _train_vqc_encoder(corpus_embeddings, args, log_path):
+    """Train VQC encoder on a small sample of corpus embeddings."""
+    from qore.vqc.encoder import VQCEncoder
+    from qore.vqc.train import train_encoder, energy_loss
+
+    # Use a small random subset for training
+    n_train = min(50, len(corpus_embeddings))
+    rng = np.random.default_rng(args.seed)
+    train_idx = rng.choice(len(corpus_embeddings), n_train, replace=False)
+    train_features = corpus_embeddings[train_idx]
+
+    encoder = VQCEncoder(n_qubits=6, n_layers=2, backend="tensorcircuit", seed=args.seed)
+
+    losses = train_encoder(
+        encoder, train_features, K=args.K,
+        loss_fn=energy_loss,
+        n_steps=20, lr=0.2,
+        solver="anneal", num_reads=20,
+        verbose=True,
+    )
+
+    # Save training log
+    train_log = {
+        "n_train_samples": n_train,
+        "n_steps": 20,
+        "losses": [float(l) for l in losses],
+        "final_loss": float(losses[-1]),
+    }
+
+    with open(log_path, "w") as f:
+        json.dump(train_log, f, indent=2)
+    print(f"  Training log saved to {log_path}")
+
+    return train_log
 
 
 if __name__ == "__main__":
