@@ -32,8 +32,12 @@ def solve(
             - "anneal": Simulated annealing (default, recommended).
             - "brute": Exact enumeration (N ≤ 20 only).
             - "greedy": Top-K by quality (baseline, ignores b).
+            - "qaoa_qk": QAOA via Qiskit.
+            - "qaoa_pl": QAOA via PennyLane.
+            - "qaoa_tc": QAOA via TensorCircuit.
         **kwargs: Additional arguments passed to the solver.
             - anneal: num_reads (int), seed (int|None)
+            - qaoa_*: p (int, circuit depth), maxiter (int), seed (int|None)
             - brute: (none)
             - greedy: (none)
 
@@ -53,7 +57,17 @@ def solve(
         return brute.solve(Q, K)
     elif method == "anneal":
         return anneal.solve(Q, K, **kwargs)
+    elif method == "qaoa_qk":
+        from . import qaoa_qiskit
+        return qaoa_qiskit.solve(Q, K, **kwargs)
+    elif method == "qaoa_pl":
+        from . import qaoa_pennylane
+        return qaoa_pennylane.solve(Q, K, **kwargs)
+    elif method == "qaoa_tc":
+        from . import qaoa_tensorcircuit
+        return qaoa_tensorcircuit.solve(Q, K, **kwargs)
     else:
         raise ValueError(
-            f"Unknown method '{method}'. Choose from: 'anneal', 'brute', 'greedy'."
+            f"Unknown method '{method}'. Choose from: "
+            f"'anneal', 'brute', 'greedy', 'qaoa_qk', 'qaoa_pl', 'qaoa_tc'."
         )
