@@ -43,7 +43,7 @@ def build_qubo_matrix(
 
     if b.shape != (N, N):
         raise ValueError(f"b must be (N, N)={(N, N)}, got {b.shape}")
-    if K < 1 or K >= N:
+    if K < 1 or K > N - 1:
         raise ValueError(f"K must be in [1, N-1], got K={K}, N={N}")
 
     # Auto-tune gamma if not provided

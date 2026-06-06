@@ -277,14 +277,7 @@ class VQCEncoder:
             state = np.array(sv.data)
             states.append(state)
 
-            # Z expectation
-            z_exps = []
-            for k in range(n_q):
-                z_exps.append(float(sv.expectation_value(
-                    Statevector.from_label('0' * k + '1' + '0' * (n_q - k - 1)).to_operator()
-                ).real))
-
-            # Actually compute <Z_k> properly
+            # Compute <Z_k> from state probabilities
             probs = np.abs(state) ** 2
             z_exps = []
             for k in range(n_q):
@@ -315,3 +308,27 @@ class VQCEncoder:
         if new_params.shape != expected_shape:
             raise ValueError(f"Expected params shape {expected_shape}, got {new_params.shape}")
         self.params = new_params.copy()
+
+    def save(self, path: str):
+        """Save encoder config and trained parameters to a .npz file."""
+        np.savez(
+            path,
+            params=self.params,
+            n_qubits=self.n_qubits,
+            n_layers=self.n_layers,
+            backend=self.backend,
+            observable=self.observable,
+        )
+
+    @classmethod
+    def load(cls, path: str) -> "VQCEncoder":
+        """Load a trained encoder from a .npz file."""
+        data = np.load(path, allow_pickle=True)
+        encoder = cls(
+            n_qubits=int(data["n_qubits"]),
+            n_layers=int(data["n_layers"]),
+            backend=str(data["backend"]),
+            observable=str(data["observable"]),
+        )
+        encoder.params = data["params"]
+        return encoder

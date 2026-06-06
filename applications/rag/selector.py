@@ -19,12 +19,15 @@ def select_passages(
     num_reads: int = 50,
     lambda_mmr: float = 0.5,
     seed: int | None = None,
+    vqc_encoder=None,
+    vqc_backend: str = "tensorcircuit",
 ) -> np.ndarray:
     """
     Select K passages from N candidates for inclusion in the LLM context.
 
-    This is the main entry point for QORE-RAG. It supports three methods:
-    - "qore": QUBO-optimized selection (quality + diversity, globally optimal)
+    This is the main entry point for QORE-RAG. It supports four methods:
+    - "qore": QUBO-optimized selection (classical signals, SA solver)
+    - "vqc": Quantum-native pipeline (VQC encoder for signals + QUBO solve)
     - "topk": Greedy top-K by relevance (baseline)
     - "mmr": Maximal Marginal Relevance (greedy diversity-aware baseline)
 
@@ -32,14 +35,17 @@ def select_passages(
         query_embedding: (d,) query vector.
         passage_embeddings: (N, d) candidate passage embeddings.
         K: Number of passages to select (context budget).
-        method: Selection method. One of "qore", "topk", "mmr".
+        method: Selection method. One of "qore", "vqc", "topk", "mmr".
         relevance_scores: Optional (N,) pre-computed relevance scores from the
             retriever. If None, cosine(query, passage) is used.
         redundancy_method: How to compute b_ij. "cosine" (default) or "rbf".
-        lam: QUBO penalty weight (only for method="qore").
-        num_reads: SA reads (only for method="qore").
+        lam: QUBO penalty weight (only for method="qore"/"vqc").
+        num_reads: SA reads (only for method="qore"/"vqc").
         lambda_mmr: MMR trade-off (only for method="mmr").
-        seed: Random seed for reproducibility (only for method="qore").
+        seed: Random seed for reproducibility.
+        vqc_encoder: Pre-trained VQCEncoder instance (only for method="vqc").
+            If None, a fresh (untrained) encoder is created.
+        vqc_backend: Quantum backend for VQC (only for method="vqc").
 
     Returns:
         indices: (K,) integer array of selected passage indices.
@@ -97,9 +103,23 @@ def select_passages(
 
         return indices
 
+    elif method == "vqc":
+        # Fully quantum pipeline: VQC encoder produces both signals
+        from qore.vqc.scorer import vqc_select_passages
+
+        indices = vqc_select_passages(
+            query_embedding=query_embedding,
+            passage_embeddings=passage_embeddings,
+            K=K,
+            backend=vqc_backend,
+            encoder=vqc_encoder,
+            seed=seed,
+        )
+        return indices
+
     else:
         raise ValueError(
-            f"Unknown method '{method}'. Choose from: 'qore', 'topk', 'mmr'."
+            f"Unknown method '{method}'. Choose from: 'qore', 'vqc', 'topk', 'mmr'."
         )
 
 

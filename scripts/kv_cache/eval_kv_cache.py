@@ -34,11 +34,13 @@ def parse_args():
     parser.add_argument("--output_dir", type=str, default="results/kv_cache/longbench")
     parser.add_argument("--output_file", type=str, default="results.json")
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--skip_generation", action="store_true",
+                        help="Skip actual generation (just verify cache mechanics)")
     return parser.parse_args()
 
 
-def create_cache(policy, args):
-    """Create a cache object based on the specified policy."""
+def create_cache(policy, args, num_layers):
+    """Create a fresh cache object for a single sample."""
     if policy == "full":
         return None  # No eviction — use default DynamicCache
 
@@ -52,6 +54,7 @@ def create_cache(policy, args):
         from applications.kv_cache.qore_cache import QORECache
         return QORECache(
             **common_kwargs,
+            num_layers=num_layers,
             num_reads=args.num_reads,
             seed=args.seed,
         )
@@ -72,7 +75,6 @@ def load_longbench(max_samples=0):
     """Load LongBench dataset."""
     from datasets import load_dataset
 
-    # LongBench has multiple subtasks; load a representative subset
     subtasks = [
         "narrativeqa", "qasper", "multifieldqa_en",
         "hotpotqa", "2wikimqa", "musique",
@@ -81,14 +83,17 @@ def load_longbench(max_samples=0):
     all_samples = []
     for task in subtasks:
         try:
-            ds = load_dataset("THUDM/LongBench", task, split="test")
+            ds = load_dataset("THUDM/LongBench", task, split="test",
+                              trust_remote_code=True)
             for item in ds:
+                answers = item["answers"]
+                if isinstance(answers, str):
+                    answers = json.loads(answers) if answers.startswith("[") else [answers]
                 all_samples.append({
                     "task": task,
                     "input": item["input"],
                     "context": item["context"],
-                    "answers": item["answers"] if isinstance(item["answers"], list)
-                               else [item["answers"]],
+                    "answers": answers,
                 })
         except Exception as e:
             print(f"  Warning: could not load {task}: {e}")
@@ -99,9 +104,48 @@ def load_longbench(max_samples=0):
     return all_samples
 
 
+def load_llm(model_path):
+    """Load LLM model and tokenizer."""
+    from transformers import AutoModelForCausalLM, AutoTokenizer
+
+    print(f"  Loading LLM: {model_path}")
+    tokenizer = AutoTokenizer.from_pretrained(model_path)
+    model = AutoModelForCausalLM.from_pretrained(
+        model_path, torch_dtype=torch.float16, device_map="auto"
+    )
+    model.eval()
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+    return model, tokenizer
+
+
+def get_model_num_layers(model):
+    """Get number of transformer layers from model config."""
+    config = model.config
+    if hasattr(config, "num_hidden_layers"):
+        return config.num_hidden_layers
+    elif hasattr(config, "n_layer"):
+        return config.n_layer
+    else:
+        return 32  # fallback
+
+
+def get_kv_bytes_per_token(model):
+    """Compute KV-cache memory per token from model config."""
+    config = model.config
+    num_layers = getattr(config, "num_hidden_layers", 32)
+    # Use num_key_value_heads for GQA models, fall back to num_attention_heads
+    num_kv_heads = getattr(config, "num_key_value_heads",
+                           getattr(config, "num_attention_heads", 32))
+    head_dim = getattr(config, "head_dim",
+                       getattr(config, "hidden_size", 4096) // getattr(config, "num_attention_heads", 32))
+    dtype_bytes = 2  # fp16
+    # 2 for K and V
+    return 2 * num_layers * num_kv_heads * head_dim * dtype_bytes
+
+
 def evaluate_sample(model, tokenizer, sample, cache, max_new_tokens=128):
     """Run generation on a single sample with the given cache policy."""
-    # Format prompt
     prompt = f"{sample['context']}\n\nQuestion: {sample['input']}\nAnswer:"
 
     inputs = tokenizer(
@@ -110,7 +154,6 @@ def evaluate_sample(model, tokenizer, sample, cache, max_new_tokens=128):
     inputs = {k: v.to(model.device) for k, v in inputs.items()}
     input_len = inputs["input_ids"].shape[1]
 
-    # Generate with custom cache
     gen_kwargs = {
         "max_new_tokens": max_new_tokens,
         "do_sample": False,
@@ -123,19 +166,26 @@ def evaluate_sample(model, tokenizer, sample, cache, max_new_tokens=128):
         outputs = model.generate(**inputs, **gen_kwargs)
     elapsed_ms = (time.perf_counter() - start_time) * 1000
 
-    # Decode
+    output_len = outputs.shape[1] - input_len
     answer = tokenizer.decode(outputs[0][input_len:], skip_special_tokens=True).strip()
+
+    # Get final cache size (if cache was used)
+    final_cache_len = None
+    if cache is not None and hasattr(cache, "get_seq_length"):
+        final_cache_len = cache.get_seq_length()
 
     return {
         "prediction": answer,
         "input_length": input_len,
-        "output_length": outputs.shape[1] - input_len,
+        "output_length": output_len,
         "time_ms": elapsed_ms,
+        "tokens_per_sec": output_len / (elapsed_ms / 1000) if elapsed_ms > 0 else 0,
+        "final_cache_len": final_cache_len,
     }
 
 
-def compute_longbench_metrics(predictions, references):
-    """Compute metrics for LongBench."""
+def compute_metrics(predictions, references):
+    """Compute F1 for LongBench."""
     from collections import Counter
     import re
     import string
@@ -169,41 +219,100 @@ def main():
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
 
-    print(f"Loading model: {args.model_path}")
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    output_path = output_dir / args.output_file
+
     print(f"Policy: {args.policy}, Capacity: {args.max_capacity}")
 
-    # Output setup
-    output_path = Path(args.output_dir) / args.output_file
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-
-    # Estimate compression metrics
-    # Typical context length for long-context benchmarks
-    estimated_seq_len = 4096  # will be updated with actual values during evaluation
-    if args.policy == "full":
-        effective_capacity = estimated_seq_len
+    # --- Load data ---
+    print(f"Loading dataset: {args.dataset}")
+    if args.dataset == "longbench":
+        samples = load_longbench(args.max_samples)
     else:
-        effective_capacity = args.max_capacity
+        # Placeholder for other datasets
+        samples = []
+        print(f"  Dataset {args.dataset} not yet implemented, using empty set")
 
-    compression_ratio = effective_capacity / estimated_seq_len
-    # KV-Cache memory: 2 (K+V) × num_layers × num_heads × head_dim × seq_len × dtype_size
-    # For LLaMA-3-8B: 2 × 32 layers × 8 heads × 128 dim × seq_len × 2 bytes (fp16)
-    bytes_per_token = 2 * 32 * 8 * 128 * 2  # ~131 KB per token
-    memory_full_MB = estimated_seq_len * bytes_per_token / (1024 * 1024)
-    memory_compressed_MB = effective_capacity * bytes_per_token / (1024 * 1024)
+    print(f"  {len(samples)} samples loaded")
+
+    if len(samples) == 0:
+        print("No samples to evaluate. Exiting.")
+        return
+
+    # --- Load model ---
+    model, tokenizer = None, None
+    num_layers = 32  # default
+    kv_bytes_per_token = 2 * 32 * 8 * 128 * 2  # default estimate
+
+    if not args.skip_generation:
+        model, tokenizer = load_llm(args.model_path)
+        num_layers = get_model_num_layers(model)
+        kv_bytes_per_token = get_kv_bytes_per_token(model)
+        print(f"  Model: {num_layers} layers, {kv_bytes_per_token} bytes/token in KV cache")
+
+    # --- Evaluation loop ---
+    print(f"\nRunning evaluation: policy={args.policy}, capacity={args.max_capacity}")
+    predictions = []
+    references = []
+    latencies = []
+    throughputs = []
+    input_lengths = []
+
+    for i, sample in enumerate(samples):
+        if (i + 1) % 20 == 0:
+            print(f"  [{i+1}/{len(samples)}]")
+
+        # Create a FRESH cache for each sample (avoid state leaking between samples)
+        cache = create_cache(args.policy, args, num_layers)
+
+        if model is not None:
+            result = evaluate_sample(model, tokenizer, sample, cache, args.max_new_tokens)
+            predictions.append(result["prediction"])
+            latencies.append(result["time_ms"])
+            throughputs.append(result["tokens_per_sec"])
+            input_lengths.append(result["input_length"])
+        else:
+            predictions.append("")
+            input_lengths.append(0)
+
+        references.append(sample["answers"])
+
+    # --- Compute metrics ---
+    metrics = {}
+    if not args.skip_generation:
+        metrics = compute_metrics(predictions, references)
+        metrics["avg_latency_ms"] = float(np.mean(latencies))
+        metrics["avg_throughput_tok_per_sec"] = float(np.mean(throughputs))
+        print(f"\n  Results: F1={metrics['f1']:.4f}, "
+              f"Latency={metrics['avg_latency_ms']:.0f}ms, "
+              f"Throughput={metrics['avg_throughput_tok_per_sec']:.1f} tok/s")
+
+    # --- Compression metrics ---
+    avg_input_len = float(np.mean(input_lengths)) if input_lengths and input_lengths[0] > 0 else 4096
+    effective_capacity = args.max_capacity if args.policy != "full" else avg_input_len
+    compression_ratio = effective_capacity / avg_input_len if avg_input_len > 0 else 1.0
+
+    memory_full_MB = avg_input_len * kv_bytes_per_token / (1024 * 1024)
+    memory_compressed_MB = effective_capacity * kv_bytes_per_token / (1024 * 1024)
     memory_saved_MB = memory_full_MB - memory_compressed_MB
 
-    # VQC training for QORE policy
-    train_log = None
-    if args.policy == "qore":
-        print(f"Training VQC encoder for KV-Cache scoring...")
-        train_log_path = Path(args.output_dir) / "train_log.json"
-        train_log = _train_vqc_encoder_kv(args, train_log_path)
-
+    # --- Save results ---
     result = {
         "experiment": f"KV-Cache-{args.dataset}",
         "policy": args.policy,
         "model": args.model_path,
         "dataset": args.dataset,
+        "num_samples": len(samples),
+        "metrics": metrics,
+        "compression": {
+            "avg_input_length": round(avg_input_len),
+            "tokens_kept": int(effective_capacity),
+            "compression_ratio": round(compression_ratio, 4),
+            "memory_full_MB": round(memory_full_MB, 1),
+            "memory_compressed_MB": round(memory_compressed_MB, 1),
+            "memory_saved_MB": round(memory_saved_MB, 1),
+        },
         "config": {
             "max_capacity": args.max_capacity,
             "trigger_every": args.trigger_every,
@@ -212,58 +321,14 @@ def main():
             "max_new_tokens": args.max_new_tokens,
             "seed": args.seed,
         },
-        "compression": {
-            "tokens_total": estimated_seq_len,
-            "tokens_kept": effective_capacity,
-            "compression_ratio": compression_ratio,
-            "memory_full_MB": round(memory_full_MB, 1),
-            "memory_compressed_MB": round(memory_compressed_MB, 1),
-            "memory_saved_MB": round(memory_saved_MB, 1),
-        },
-        "status": "ready",
-        "train_log": train_log,
     }
 
     with open(output_path, "w") as f:
         json.dump(result, f, indent=2)
 
-    print(f"\nResult saved to {output_path}")
-    print(f"Compression: {estimated_seq_len} → {effective_capacity} tokens "
+    print(f"\nResults saved to {output_path}")
+    print(f"Compression: {avg_input_len:.0f} → {effective_capacity} tokens "
           f"({compression_ratio:.1%} kept, saves ~{memory_saved_MB:.0f} MB)")
-
-
-def _train_vqc_encoder_kv(args, log_path):
-    """Train VQC encoder on synthetic KV-like features."""
-    from qore.vqc.encoder import VQCEncoder
-    from qore.vqc.train import train_encoder, energy_loss
-
-    # Generate synthetic key-like features for pre-training
-    rng = np.random.default_rng(args.seed)
-    train_features = rng.standard_normal((40, 64))  # simulate key vectors
-
-    encoder = VQCEncoder(n_qubits=6, n_layers=2, backend="tensorcircuit", seed=args.seed)
-
-    losses = train_encoder(
-        encoder, train_features, K=min(10, args.max_capacity // 4),
-        loss_fn=energy_loss,
-        n_steps=15, lr=0.2,
-        solver="anneal", num_reads=20,
-        verbose=True,
-    )
-
-    train_log = {
-        "n_train_samples": 40,
-        "n_steps": 15,
-        "losses": [float(l) for l in losses],
-        "final_loss": float(losses[-1]),
-    }
-
-    import json as json_mod
-    with open(log_path, "w") as f:
-        json_mod.dump(train_log, f, indent=2)
-    print(f"  Training log saved to {log_path}")
-
-    return train_log
 
 
 if __name__ == "__main__":

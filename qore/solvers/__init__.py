@@ -46,6 +46,11 @@ def solve(
     """
     a = np.asarray(a, dtype=np.float64)
     b = np.asarray(b, dtype=np.float64)
+    N = len(a)
+
+    # Edge case: if K >= N, select everything
+    if K >= N:
+        return np.ones(N, dtype=np.int32)
 
     if method == "greedy":
         # Greedy ignores redundancy — only uses quality scores
