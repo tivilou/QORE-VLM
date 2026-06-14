@@ -7,9 +7,14 @@
 ## 1. 环境配置
 
 ### 硬件要求
-- GPU: 1× A100 80GB 或同等级别（LLaMA-3-8B 推理需要 ~16GB 显存）
-- RAM: ≥ 32GB
-- 存储: ≥ 100GB（模型权重 + 数据集）
+
+主力实验用 LLaMA-3-8B（fp16 权重约 16GB），不同实验显存需求不同：
+
+- **RAG 实验**：24GB 显存够用（RTX 4090 / A5000 / A6000）。context 短，只放 K 个段落。
+- **KV-Cache 实验**：建议 40GB（A100 40GB / A6000）。LongBench 输入长（8K+ token），prefill 阶段 KV cache 峰值较高。注意 QORE 本身就是压 cache 的，跑起来之后峰值会降。
+- **70B 模型（可选）**：才需要 80GB。主力实验用不到。
+
+其他：RAM ≥ 32GB；存储 ≥ 100GB（模型权重 + 数据集，其中 `wiki_dpr` 语料约 35GB）。
 
 ### 软件安装
 
@@ -244,7 +249,7 @@ git push origin main
 ## 7. 常见问题
 
 **Q: CUDA OOM 怎么办？**
-A: 减小 batch_size 或用 `--load-in-4bit`。KV-Cache 实验本身就是测试长序列，可能需要 A100 80GB。
+A: 减小 batch_size 或用 `--load-in-4bit`。KV-Cache 实验测的是长序列，prefill 峰值显存高，建议 40GB 卡。如果只有 24GB，把 `MAX_SAMPLES` 调小、或限制输入长度也能跑。
 
 **Q: QAOA 太慢？**
 A: 正常。QAOA 实验只在 subset (MAX_SAMPLES=100) 上跑，用于 scaling 分析。主实验用 SA。
