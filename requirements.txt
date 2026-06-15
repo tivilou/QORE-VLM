@@ -1,0 +1,42 @@
+# QORE 依赖锁定文件
+# 这些版本经过测试，可保证 91 个测试全部通过。
+# 安装：pip install -r requirements.txt
+#
+# 重要：transformers 必须 < 4.54。从 4.54 起 DynamicCache 内部结构
+# 从 key_cache/value_cache (list) 重构为 layers (DynamicLayer)，会导致
+# KV-Cache 模块的 11 个测试失败（AttributeError: no attribute 'key_cache'）。
+
+# ---- 核心数值计算 ----
+# numpy 必须 < 2：tensorcircuit 0.12 依赖 numpy<2。
+# 不要装 pennylane>=0.43（它要求 numpy>=2，与 tensorcircuit 冲突）。
+numpy==1.26.4
+scipy>=1.10
+
+# ---- 深度学习 ----
+torch>=2.0,<2.6
+transformers>=4.40,<4.54
+datasets>=2.14,<3.0
+accelerate>=0.30
+
+# ---- QUBO 求解（核心，必装）----
+dwave-neal==0.6.0
+dimod>=0.12
+
+# ---- 量子后端（可选）----
+# tensorcircuit 是默认后端，跑实验只需要它。
+tensorcircuit==0.12.0
+# pennylane 和 qiskit 仅在显式指定对应 backend 时需要（主要用于 ablation）。
+# 如果要装 pennylane，必须用 numpy<2 兼容的版本：
+# pennylane==0.42.3
+# qiskit>=1.0,<2.0
+# qiskit-algorithms
+# qiskit-optimization
+
+# ---- RAG 实验（Phase 6）----
+# 检索用纯 numpy 点积实现，不强制依赖 faiss。
+# 若语料库很大想加速，可选装 faiss-cpu（不要装 faiss-gpu，CUDA 版本易冲突）：
+# faiss-cpu
+sentence-transformers>=2.2
+
+# ---- 测试 ----
+pytest>=7.0

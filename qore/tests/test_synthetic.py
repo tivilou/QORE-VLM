@@ -267,8 +267,11 @@ class TestTiming:
         elapsed_ms = (time.perf_counter() - start) * 1000
 
         assert x.sum() == K
-        # Reasonable threshold: scale with N (SA is ~O(N^2) per read)
-        threshold_ms = 5 * N  # 100ms for N=20, 500ms for N=100
+        # Generous threshold — this is a "not absurdly slow" sanity check, not a
+        # precise benchmark. Timing is sensitive to machine load (especially when
+        # the full suite runs in parallel), so we allow a wide margin to avoid
+        # flaky failures. SA is ~O(N^2) per read.
+        threshold_ms = 50 * N  # 1s for N=20, 5s for N=100
         print(f"\n  N={N}, K={K}, reads={num_reads}: {elapsed_ms:.1f}ms "
               f"(threshold: {threshold_ms}ms)")
         assert elapsed_ms < threshold_ms, (

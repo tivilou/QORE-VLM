@@ -23,26 +23,27 @@
 git clone https://github.com/tivilou/QORE-VLM.git
 cd QORE-VLM
 
-# 2. 创建环境
+# 2. 创建环境（推荐 Python 3.10）
 conda create -n qore python=3.10 -y
 conda activate qore
 
-# 3. 安装核心依赖
+# 3. 安装 PyTorch（按你的 CUDA 版本选）
 pip install torch --index-url https://download.pytorch.org/whl/cu121
-pip install transformers>=4.44 datasets accelerate
 
-# 4. 安装 QORE（含量子库）
-pip install dwave-neal dimod
-pip install pennylane tensorcircuit
-pip install qiskit qiskit-algorithms qiskit-optimization
+# 4. 安装锁定的依赖（版本已钉死，避免冲突）
+pip install -r requirements.txt
 
-# 5. 安装 RAG 相关
-pip install sentence-transformers faiss-gpu
-
-# 6. 验证安装
+# 5. 验证安装
 python -m pytest qore/tests/ applications/ -q
-# 应该看到 "78 passed"
+# 应该看到 "91 passed"
 ```
+
+**环境注意事项（重要）：**
+
+- `transformers` 必须 `< 4.54`：4.54 起 `DynamicCache` 重构，`key_cache` 属性被移除，会导致 11 个 KV-Cache 测试失败。requirements.txt 已锁定。
+- `numpy` 必须 `< 2`：tensorcircuit 需要 numpy<2，pennylane>=0.43 需要 numpy>=2，互斥。用 numpy 1.26.4，不装高版本 pennylane。
+- `faiss` 不需要：检索是纯 numpy 实现，无 faiss 依赖。
+- 量子后端默认用 tensorcircuit；pennylane/qiskit 仅 ablation 需要，requirements.txt 里已注释掉，需要时再手动装兼容版本。
 
 ### 模型下载
 
