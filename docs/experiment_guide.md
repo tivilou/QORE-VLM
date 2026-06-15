@@ -41,9 +41,9 @@ python -m pytest qore/tests/ applications/ -q
 **环境注意事项（重要）：**
 
 - `transformers` 必须 `< 4.54`：4.54 起 `DynamicCache` 重构，`key_cache` 属性被移除，会导致 11 个 KV-Cache 测试失败。requirements.txt 已锁定。
-- `numpy` 必须 `< 2`：tensorcircuit 需要 numpy<2，pennylane>=0.43 需要 numpy>=2，互斥。用 numpy 1.26.4，不装高版本 pennylane。
+- `numpy` 必须 `< 2`：tensorcircuit 需要 numpy<2，pennylane>=0.43 需要 numpy>=2，互斥。用 numpy 1.26.4 + pennylane 0.42.3。
 - `faiss` 不需要：检索是纯 numpy 实现，无 faiss 依赖。
-- 量子后端默认用 tensorcircuit；pennylane/qiskit 仅 ablation 需要，requirements.txt 里已注释掉，需要时再手动装兼容版本。
+- 量子后端 tensorcircuit/pennylane/qiskit 都要装（requirements.txt 已锁版本），它们用于跨框架一致性测试，缺了对应测试会被 skip。
 
 ### 模型下载
 

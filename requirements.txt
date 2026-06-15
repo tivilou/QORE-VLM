@@ -22,15 +22,16 @@ accelerate>=0.30
 dwave-neal==0.6.0
 dimod>=0.12
 
-# ---- 量子后端（可选）----
-# tensorcircuit 是默认后端，跑实验只需要它。
+# ---- 量子后端 ----
+# tensorcircuit 是默认后端。pennylane 和 qiskit 用于跨框架一致性测试和 ablation。
+# 三个都装才能跑齐 91 个测试（缺了对应测试会被 skip）。
 tensorcircuit==0.12.0
-# pennylane 和 qiskit 仅在显式指定对应 backend 时需要（主要用于 ablation）。
-# 如果要装 pennylane，必须用 numpy<2 兼容的版本：
-# pennylane==0.42.3
-# qiskit>=1.0,<2.0
-# qiskit-algorithms
-# qiskit-optimization
+# 关键：pennylane 必须用 0.42.x（兼容 numpy<2）。
+# 不要装 >=0.43，它要求 numpy>=2，与 tensorcircuit 冲突。
+pennylane==0.42.3
+qiskit>=1.0,<3.0
+qiskit-algorithms
+qiskit-optimization
 
 # ---- RAG 实验（Phase 6）----
 # 检索用纯 numpy 点积实现，不强制依赖 faiss。
