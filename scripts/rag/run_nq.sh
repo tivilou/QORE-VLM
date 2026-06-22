@@ -24,7 +24,7 @@ SOLVER=${SOLVER:-anneal}
 MAX_SAMPLES=${MAX_SAMPLES:-0}  # 0 = all
 OUTPUT_DIR=${OUTPUT_DIR:-"results/rag/nq"}
 DATASET=${DATASET:-"natural_questions"}
-EMBED_MODEL=${EMBED_MODEL:-"BAAI/bge-base-en-v1.5"}
+EMBED_MODEL=${EMBED_MODEL:-"facebook/dpr-question_encoder-single-nq-base"}
 
 mkdir -p "$OUTPUT_DIR"
 

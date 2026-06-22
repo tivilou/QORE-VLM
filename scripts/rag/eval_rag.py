@@ -92,19 +92,16 @@ def load_passage_corpus(dataset_name="natural_questions"):
 
 def embed_queries(questions, embed_model_name, batch_size=64):
     """
-    Embed queries using the DPR question encoder (matches corpus embeddings).
+    Embed queries using a DPR question encoder (matches the wiki_dpr corpus).
 
-    Uses the DPR question encoder to ensure query/passage embeddings are in the
-    same vector space.
+    The corpus (facebook/wiki_dpr) is embedded with DPR, so queries must use a
+    DPR question encoder to live in the same vector space. embed_model_name should
+    be a DPRQuestionEncoder checkpoint.
     """
     from transformers import DPRQuestionEncoder, DPRQuestionEncoderTokenizer
 
-    tokenizer = DPRQuestionEncoderTokenizer.from_pretrained(
-        "facebook/dpr-question_encoder-single-nq-base"
-    )
-    model = DPRQuestionEncoder.from_pretrained(
-        "facebook/dpr-question_encoder-single-nq-base"
-    )
+    tokenizer = DPRQuestionEncoderTokenizer.from_pretrained(embed_model_name)
+    model = DPRQuestionEncoder.from_pretrained(embed_model_name)
     model.eval()
 
     embeddings = []
