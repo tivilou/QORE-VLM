@@ -61,22 +61,14 @@ huggingface-cli download BAAI/bge-base-en-v1.5 --local-dir models/bge-base
 
 ### 数据集下载
 
-```bash
-# 放在 datasets/ 目录下（已被 .gitignore 排除）
-mkdir -p datasets
+不用手动下载,也没有单独的下载脚本。数据集都是跑实验时通过 HuggingFace `datasets` 自动拉取并缓存的:
 
-# Natural Questions (RAG)
-python scripts/rag/download_nq.py
+- RAG: `nq_open`、`hotpot_qa`,以及段落语料库 `facebook/wiki_dpr`(21M Wikipedia passages + DPR embedding,首次约 35GB,之后走缓存)
+- KV-Cache: `THUDM/LongBench`、`pg19`
 
-# HotpotQA (RAG)
-python scripts/rag/download_hotpotqa.py
+直接跑 `bash scripts/rag/run_nq.sh` 就行,缺的数据会自动下。第一次跑 RAG 因为要拉语料库会慢一些。
 
-# LongBench (KV-Cache)
-python scripts/kv_cache/download_longbench.py
-
-# RULER (KV-Cache)
-python scripts/kv_cache/download_ruler.py
-```
+RAG 检索用的 query encoder(`facebook/dpr-question_encoder-single-nq-base`)也是首次运行自动下载,不用提前准备。
 
 ---
 
