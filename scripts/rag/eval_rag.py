@@ -21,7 +21,9 @@ import torch
 def parse_args():
     parser = argparse.ArgumentParser(description="QORE-RAG Evaluation")
     parser.add_argument("--model_path", type=str, required=True)
-    parser.add_argument("--embed_model", type=str, default="BAAI/bge-base-en-v1.5")
+    parser.add_argument("--embed_model", type=str,
+                        default="facebook/dpr-question_encoder-single-nq-base",
+                        help="DPR question encoder (must match wiki_dpr corpus space)")
     parser.add_argument("--dataset", type=str, default="natural_questions",
                         choices=["natural_questions", "hotpotqa", "multihop_rag"])
     parser.add_argument("--method", type=str, default="qore",
@@ -37,6 +39,9 @@ def parse_args():
     parser.add_argument("--output_file", type=str, default="results.json")
     parser.add_argument("--num_passages", type=int, default=100,
                         help="Number of candidate passages to retrieve per query")
+    parser.add_argument("--corpus_size", type=int, default=0,
+                        help="Limit passage corpus size via streaming (0 = full ~80GB). "
+                             "Set e.g. 100000 to only download a subset for quick tests.")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--vqc_encoder_path", type=str, default=None,
                         help="Path to pre-trained VQC encoder (.npz). If None, trains a new one.")
@@ -63,12 +68,17 @@ def load_dataset_splits(dataset_name, max_samples=0):
     return samples
 
 
-def load_passage_corpus(dataset_name="natural_questions"):
+def load_passage_corpus(dataset_name="natural_questions", corpus_size=0):
     """
     Load passage corpus with pre-computed embeddings.
 
     Uses facebook/wiki_dpr (21M Wikipedia passages + DPR embeddings).
     Both queries and passages use DPR embeddings for consistency.
+
+    Args:
+        dataset_name: which QA dataset the corpus is for.
+        corpus_size: if > 0, only load this many passages via streaming
+            (avoids downloading the full ~80GB dataset). 0 = full corpus.
 
     Returns:
         passages: list of passage texts
@@ -76,18 +86,36 @@ def load_passage_corpus(dataset_name="natural_questions"):
     """
     from datasets import load_dataset
 
-    if dataset_name in ("natural_questions", "hotpotqa"):
-        print("  Loading facebook/wiki_dpr corpus (this may take a while on first run)...")
-        corpus = load_dataset(
-            "facebook/wiki_dpr", "psgs_w100.nq.exact",
-            split="train",
-        )
-        passages = corpus["text"]
-        embeddings = np.array(corpus["embeddings"])
-        print(f"  Loaded {len(passages)} passages, embedding dim={embeddings.shape[1]}")
-        return passages, embeddings
-    else:
+    if dataset_name not in ("natural_questions", "hotpotqa"):
         raise ValueError(f"No pre-built corpus for dataset: {dataset_name}")
+
+    if corpus_size and corpus_size > 0:
+        # Streaming mode: pull only `corpus_size` passages, no full download.
+        print(f"  Streaming facebook/wiki_dpr, taking first {corpus_size} passages...")
+        stream = load_dataset(
+            "facebook/wiki_dpr", "psgs_w100.nq.exact",
+            split="train", streaming=True, trust_remote_code=True,
+        )
+        passages, embeddings = [], []
+        for i, item in enumerate(stream):
+            if i >= corpus_size:
+                break
+            passages.append(item["text"])
+            embeddings.append(item["embeddings"])
+        embeddings = np.array(embeddings)
+        print(f"  Loaded {len(passages)} passages (streaming), dim={embeddings.shape[1]}")
+        return passages, embeddings
+
+    # Full corpus (~80GB download on first run)
+    print("  Loading full facebook/wiki_dpr corpus (~80GB, slow on first run)...")
+    corpus = load_dataset(
+        "facebook/wiki_dpr", "psgs_w100.nq.exact",
+        split="train", trust_remote_code=True,
+    )
+    passages = corpus["text"]
+    embeddings = np.array(corpus["embeddings"])
+    print(f"  Loaded {len(passages)} passages, embedding dim={embeddings.shape[1]}")
+    return passages, embeddings
 
 
 def embed_queries(questions, embed_model_name, batch_size=64):
@@ -264,7 +292,7 @@ def main():
     print(f"  {len(samples)} samples loaded")
 
     print(f"Loading passage corpus...")
-    passages, corpus_embeddings = load_passage_corpus(args.dataset)
+    passages, corpus_embeddings = load_passage_corpus(args.dataset, corpus_size=args.corpus_size)
 
     # --- Embed queries (using DPR question encoder to match corpus space) ---
     print(f"Embedding queries with DPR question encoder...")

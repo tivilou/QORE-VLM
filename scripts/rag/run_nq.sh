@@ -22,6 +22,7 @@ fi
 K=${K:-5}
 SOLVER=${SOLVER:-anneal}
 MAX_SAMPLES=${MAX_SAMPLES:-0}  # 0 = all
+CORPUS_SIZE=${CORPUS_SIZE:-0}  # 0 = full corpus (~80GB); set e.g. 100000 for a subset
 OUTPUT_DIR=${OUTPUT_DIR:-"results/rag/nq"}
 DATASET=${DATASET:-"natural_questions"}
 EMBED_MODEL=${EMBED_MODEL:-"facebook/dpr-question_encoder-single-nq-base"}
@@ -51,6 +52,7 @@ for METHOD in qore topk mmr; do
         --K "$K" \
         --solver "$SOLVER" \
         --max_samples "$MAX_SAMPLES" \
+        --corpus_size "$CORPUS_SIZE" \
         --output_dir "$OUTPUT_DIR" \
         --output_file "${METHOD}.json"
 done
