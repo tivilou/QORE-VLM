@@ -62,3 +62,6 @@ datasets/
 output/
 downloads/
 wandb_api
+
+# Smoke-test / eval output dirs
+/results/

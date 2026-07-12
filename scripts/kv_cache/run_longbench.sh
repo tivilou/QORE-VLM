@@ -36,8 +36,8 @@ echo "  Max samples:   $MAX_SAMPLES (0=all)"
 echo "  Output:        $OUTPUT_DIR"
 echo "=============================================="
 
-# Run all cache policies
-for POLICY in qore h2o window random full; do
+# Run all cache policies (real SOTA baselines: H2O, SnapKV, PyramidKV)
+for POLICY in qore h2o snapkv pyramidkv window random full; do
     echo ""
     echo ">>> Running policy: $POLICY"
     python -m scripts.kv_cache.eval_kv_cache \

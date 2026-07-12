@@ -32,3 +32,14 @@ def _check_transformers_compat():
 _check_transformers_compat()
 
 from .qore_cache import QORECache
+from .baselines.h2o_cache import H2OCache
+from .baselines.snapkv_cache import SnapKVCache
+from .baselines.pyramidkv_cache import PyramidKVCache
+from .baselines.window_cache import WindowCache
+from .baselines.random_cache import RandomCache
+from .attention_capture import AttentionCapture
+
+__all__ = [
+    "QORECache", "H2OCache", "SnapKVCache", "PyramidKVCache",
+    "WindowCache", "RandomCache", "AttentionCapture",
+]

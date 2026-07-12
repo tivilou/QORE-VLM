@@ -50,23 +50,37 @@ def solve(
 
     sampleset = sampler.sample(bqm, **kwargs)
 
+    # Read solutions from the record arrays directly. sampleset.record.sample is
+    # a (num_reads, num_vars) int array whose columns follow sampleset.variables
+    # (the QUBO indices, not necessarily 0..N-1 or in order). We reindex each
+    # row into a dense (N,) vector. Avoids the per-sample dict API, whose
+    # `.get()` shape varies across dimod versions (SamplesArray has no `.get`).
+    records = sampleset.record.sample  # (num_reads, num_vars)
+    energies = sampleset.record.energy  # (num_reads,)
+    variables = list(sampleset.variables)
+    col_of = {v: c for c, v in enumerate(variables)}
+
+    def to_dense(row):
+        x = np.zeros(N, dtype=np.int32)
+        for i in range(N):
+            c = col_of.get(i)
+            if c is not None:
+                x[i] = row[c]
+        return x
+
     # Find best feasible solution (|x| = K)
     best_energy = np.inf
     best_x = None
-
-    for sample, e in zip(sampleset.samples(), sampleset.record.energy):
-        x = np.array([sample.get(i, 0) for i in range(N)], dtype=np.int32)
-        count = x.sum()
-        if count == K and e < best_energy:
+    for row, e in zip(records, energies):
+        x = to_dense(row)
+        if x.sum() == K and e < best_energy:
             best_energy = e
             best_x = x
 
     # Fallback: if no exact-K solution found, take lowest energy and fix
     if best_x is None:
-        # Get the overall lowest-energy sample
-        best_idx = np.argmin(sampleset.record.energy)
-        sample = sampleset.samples()[best_idx]
-        x = np.array([sample.get(i, 0) for i in range(N)], dtype=np.int32)
+        best_idx = int(np.argmin(energies))
+        x = to_dense(records[best_idx])
         best_x = _fix_cardinality(x, Q, K)
 
     return best_x

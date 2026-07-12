@@ -98,9 +98,32 @@ def pairwise_key_similarity(
     keys_avg = keys_subset.mean(dim=0)  # [seq_len, head_dim]
 
     if method == "cosine":
-        # Normalize
-        norms = torch.norm(keys_avg, dim=-1, keepdim=True).clamp(min=1e-12)
-        normed = keys_avg / norms
+        # Mean-center before cosine to correct transformer KEY ANISOTROPY.
+        # Raw key vectors cluster in a narrow cone around a shared dominant
+        # direction, so raw cosine similarity is ~1 for EVERY pair (measured on
+        # Qwen2.5-7B: mean 0.85, std 0.04 — no discrimination). That saturated
+        # redundancy collapses the QUBO's auto-tuned gamma to its floor, which
+        # neutralizes the redundancy term entirely and degrades QORE to a plain
+        # per-block top-K on the (early-biased) attention signal — producing
+        # scattered, low-quality keep-sets and garbage generation on larger
+        # models. Subtracting the per-batch mean removes the common component
+        # and exposes the real pairwise structure (post-centering: mean ~0,
+        # std 0.15). This is the standard anisotropy correction and lives in
+        # signal construction, not the solver.
+        orig_norms = torch.norm(keys_avg, dim=-1, keepdim=True)
+        keys_centered = keys_avg - keys_avg.mean(dim=0, keepdim=True)
+        norms = torch.norm(keys_centered, dim=-1, keepdim=True)
+        # A vector whose centered norm is negligible relative to its ORIGINAL
+        # norm has no distinguishing structure — it was essentially just the
+        # common component. Zero it out so it contributes 0 similarity, rather
+        # than letting a tiny floating-point residual normalize into a unit
+        # vector (those residuals all point the same way and would spuriously
+        # read as cosine ~1). Comparing against the original norm (not the
+        # centered max) correctly catches the case where EVERY key is near-equal:
+        # fp32 centering then leaves ~1e-7 residuals that an absolute 1e-12 floor
+        # would miss.
+        valid = (norms >= 1e-4 * orig_norms.clamp(min=1e-12)).float()
+        normed = (keys_centered / norms.clamp(min=1e-12)) * valid
         sim = torch.mm(normed, normed.t())  # [seq_len, seq_len]
         sim.clamp_(min=0.0, max=1.0)
         sim.fill_diagonal_(0.0)

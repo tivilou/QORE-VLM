@@ -69,28 +69,45 @@ def decompose(
         else:
             raise ValueError(f"Unknown strategy: {strategy}")
 
-        # Clamp K_block to block size
-        K_block = min(K_block, len(indices) - 1)
+        # Clamp K_block to [1, block size]. A block MAY keep all its members
+        # (K_block == len(indices)) — that is "retain this whole block", handled
+        # by the caller without invoking the QUBO solver (which requires
+        # K <= N-1). Clamping to len(indices)-1 here was a bug: it capped the
+        # total reachable budget at N - num_blocks, so when the caller wanted to
+        # drop fewer than num_blocks items the allocation could never sum to K
+        # and eviction silently under-kept (e.g. N=509, K=508 -> only 481 kept).
+        K_block = min(K_block, len(indices))
         K_block = max(1, K_block)
 
         result.append((a_block, b_block, K_block, indices))
 
-    # Adjust total budget allocation to match K exactly
-    allocated = sum(r[2] for r in result)
-    diff = K - allocated
-    if diff != 0:
-        # Distribute remainder to largest blocks (or take from smallest)
-        sorted_idx = sorted(range(len(result)), key=lambda i: len(result[i][3]), reverse=True)
+    # Adjust total budget allocation to match K exactly. This MUST be multi-pass:
+    # a single sweep adds at most 1 per block, but the rounding gap can exceed the
+    # number of blocks with spare room (e.g. gap 18 spread over 7 blocks each with
+    # 1-4 free slots). A single pass would leave the budget short and eviction
+    # would under-keep. We repeat sweeps until the gap closes or no block can
+    # absorb more. Growth is allowed up to len(idx_b) (a full block, handled
+    # solver-free by the caller); shrink stays >= 1 so no block empties.
+    sorted_idx = sorted(range(len(result)), key=lambda i: len(result[i][3]), reverse=True)
+    diff = K - sum(r[2] for r in result)
+    while diff != 0:
+        progressed = False
         for i in sorted_idx:
             if diff == 0:
                 break
             a_b, b_b, k_b, idx_b = result[i]
-            if diff > 0 and k_b < len(idx_b) - 1:
+            if diff > 0 and k_b < len(idx_b):
                 result[i] = (a_b, b_b, k_b + 1, idx_b)
                 diff -= 1
+                progressed = True
             elif diff < 0 and k_b > 1:
                 result[i] = (a_b, b_b, k_b - 1, idx_b)
                 diff += 1
+                progressed = True
+        if not progressed:
+            # No block can absorb the remaining gap (K infeasible for this
+            # partition, e.g. K > N or K < num_blocks). Leave as-is.
+            break
 
     return result
 

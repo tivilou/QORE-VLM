@@ -16,9 +16,10 @@ from typing import Optional, Dict, Any, Tuple
 from qore import solve as qore_solve
 from qore.signals import cosine_redundancy, normalize
 from .signals_kv import key_norm_quality, pairwise_key_similarity
+from .attention_accumulator import AttentionAccumulatorMixin, assert_single_batch
 
 
-class QORECache(DynamicCache):
+class QORECache(AttentionAccumulatorMixin, DynamicCache):
     """
     KV cache with QUBO-optimized eviction policy.
 
@@ -40,7 +41,14 @@ class QORECache(DynamicCache):
         lam: float = 2.0,
         redundancy_method: str = "cosine",
         score_layer: int = 0,
+        quality: str = "attention",
         seed: Optional[int] = None,
+        qaoa_p: int = 2,
+        qaoa_maxiter: int = 50,
+        quantum_backend: str = "tensorcircuit",
+        quantum_n_qubits: int = 6,
+        quantum_n_layers: int = 2,
+        vqc_encoder=None,
     ):
         """
         Args:
@@ -50,11 +58,29 @@ class QORECache(DynamicCache):
                 (attention sinks — first tokens get disproportionate attention).
             num_layers: Total number of transformer layers. If None, auto-detected
                 after the second forward pass.
-            solver_method: QORE solver ("anneal" or "greedy" for fast baseline).
+            solver_method: QORE solver. "anneal" (default) or "greedy" for the
+                fast baselines; "qaoa_tc"/"qaoa_pl"/"qaoa_qk" for QAOA on each
+                sub-QUBO (ablation — small blocks only, slow).
             num_reads: SA reads per solve (more = better solution, slower).
             lam: QUBO penalty weight.
-            redundancy_method: "cosine" or "rbf" for key similarity.
+            redundancy_method: bᵢⱼ signal. "cosine"/"rbf" (classical key
+                similarity) or "quantum" (fidelity quantum kernel — ablation).
             score_layer: Which layer's keys to use for scoring (0 = first layer).
+            qaoa_p: QAOA circuit depth p (only for solver_method="qaoa_*").
+            qaoa_maxiter: QAOA classical optimizer iterations.
+            quantum_backend: "tensorcircuit"/"pennylane"/"qiskit" for quantum
+                kernel and VQC paths.
+            quantum_n_qubits / quantum_n_layers: quantum circuit size for the
+                quantum kernel and VQC encoder.
+            vqc_encoder: optional pre-built/trained VQCEncoder. When provided
+                (or quality="vqc"), the VQC produces BOTH aᵢ and bᵢⱼ from one
+                circuit (fully-quantum KV pipeline, ablation).
+            quality: Quality signal aᵢ source. "attention" (default) uses real
+                cumulative attention captured via forward hooks (H2O heavy-hitter,
+                matches the paper); requires AttentionCapture + eager attention.
+                "keynorm" uses the key-vector L2 norm as a fast proxy (no hooks).
+                If "attention" is set but no attention was captured, falls back
+                to key norm automatically.
             seed: Random seed for reproducibility.
         """
         super().__init__()
@@ -66,10 +92,17 @@ class QORECache(DynamicCache):
         self.lam = lam
         self.redundancy_method = redundancy_method
         self.score_layer = score_layer
+        self.quality = quality
         self.seed = seed
+        self.qaoa_p = qaoa_p
+        self.qaoa_maxiter = qaoa_maxiter
+        self.quantum_backend = quantum_backend
+        self.quantum_n_qubits = quantum_n_qubits
+        self.quantum_n_layers = quantum_n_layers
+        self.vqc_encoder = vqc_encoder
 
+        self._init_attention_state()
         self._tokens_since_eviction = 0
-        self._attention_accumulator = None  # cumulative attention scores
         self._eviction_count = 0
         self._num_layers = num_layers  # None = auto-detect
         self._last_layer_idx = -1  # track forward pass progress
@@ -106,15 +139,32 @@ class QORECache(DynamicCache):
                 self._num_layers = self._last_layer_idx + 1
         self._last_layer_idx = layer_idx
 
-        # Check eviction condition (only trigger on the last layer to ensure
-        # all layers have been updated before we evict)
+        # Check eviction condition. Constraints:
+        # - last layer only: all layers have appended this step before we evict
+        # - decode only (query length == 1): during PREFILL the attention for
+        #   this layer runs AFTER update() returns, over a full-length query;
+        #   truncating the KV here would make attn_weights (q=prompt_len) and
+        #   keys (kv=max_capacity) mismatch. Standard KV-eviction compresses
+        #   after prefill, on the first decode step. key_states.shape[-2] is the
+        #   number of new tokens: prompt_len during prefill, 1 during decode.
+        is_decode_step = key_states.shape[-2] == 1
         if (self._num_layers is not None and
                 layer_idx == self._num_layers - 1 and
+                is_decode_step and
                 self.get_seq_length() > self.max_capacity and
                 self._tokens_since_eviction >= self.trigger_every):
+            # The model built this step's causal mask from the pre-eviction
+            # length, and the layers before this one already attended over the
+            # full KV. Snapshot this layer's full tensors to return for its own
+            # attention (mask-consistent), then evict — the truncation takes
+            # effect on the NEXT forward, whose mask is rebuilt from the new
+            # (smaller) get_seq_length().
+            keys_ret = self.key_cache[layer_idx]
+            values_ret = self.value_cache[layer_idx]
             self._evict()
             self._tokens_since_eviction = 0
             self._eviction_count += 1
+            return keys_ret, values_ret
 
         return self.key_cache[layer_idx], self.value_cache[layer_idx]
 
@@ -138,38 +188,50 @@ class QORECache(DynamicCache):
         if n_keep >= n_candidates:
             return  # nothing to evict
 
+        # Degenerate budget: capacity <= sink tokens leaves no room for QUBO
+        # selection (K would be <= 0, which the solver rejects). Keep only the
+        # first max_capacity positions (sinks take priority) — matches how the
+        # H2O/Window baselines behave in this configuration. Guarding here
+        # avoids a ValueError from build_qubo_matrix (K must be in [1, N-1]).
+        if n_keep <= 0:
+            keep_tensor = torch.arange(
+                min(self.max_capacity, seq_len),
+                dtype=torch.long, device=self.key_cache[0].device,
+            )
+            for layer_idx in range(len(self.key_cache)):
+                self.key_cache[layer_idx] = self.key_cache[layer_idx][:, :, keep_tensor, :]
+                self.value_cache[layer_idx] = self.value_cache[layer_idx][:, :, keep_tensor, :]
+            self.prune_attention(keep_tensor)
+            return
+
         # Get key states from the scoring layer for signal construction
         # Shape: [batch, num_heads, seq_len, head_dim]
         score_layer = min(self.score_layer, len(self.key_cache) - 1)
         keys = self.key_cache[score_layer]
 
+        # Eviction uses batch-0 signals for all rows — valid only at batch 1.
+        assert_single_batch(self.key_cache, "QORECache")
+
         # Work with first batch element (batch_size=1 for generation)
         # Average across heads for a single importance vector
         keys_2d = keys[0, :, n_sink:, :]  # [num_heads, n_candidates, head_dim]
 
-        # Build quality signal: key norm as importance proxy
-        a = key_norm_quality(keys_2d)
+        # Build the QUBO signals aᵢ (quality) and bᵢⱼ (redundancy).
+        a_np, b_np = self._build_signals(keys_2d, n_sink, n_candidates)
 
-        # Build redundancy signal from a subset of heads (for speed)
-        b = pairwise_key_similarity(
-            keys_2d, method=self.redundancy_method, max_heads=4
-        )
-
-        # Solve QUBO
-        a_np = a.cpu().numpy().astype(np.float64)
-        b_np = b.cpu().numpy().astype(np.float64)
-        a_np = normalize(a_np)
-
-        # Use block decomposition for large candidate pools
-        if n_candidates > 64:
+        # Choose the direct-vs-block threshold by solver. QAOA simulates one
+        # qubit per candidate, so 2^n_candidates state — anything beyond ~16
+        # qubits is intractable. Force block decomposition (small blocks) for
+        # QAOA regardless of pool size; SA scales fine to the full 64.
+        direct_threshold = self._max_direct_candidates()
+        if n_candidates > direct_threshold:
             keep_indices = self._solve_with_blocks(a_np, b_np, n_keep)
         else:
             x = qore_solve(
                 a_np, b_np, n_keep,
                 lam=self.lam,
                 method=self.solver_method,
-                num_reads=self.num_reads,
-                seed=self.seed,
+                **self._solver_kwargs(),
             )
             keep_indices = np.where(x == 1)[0]
 
@@ -186,6 +248,28 @@ class QORECache(DynamicCache):
             self.key_cache[layer_idx] = self.key_cache[layer_idx][:, :, keep_tensor, :]
             self.value_cache[layer_idx] = self.value_cache[layer_idx][:, :, keep_tensor, :]
 
+        # Keep the attention accumulator aligned with the retained positions.
+        self.prune_attention(keep_tensor)
+
+    def _max_direct_candidates(self) -> int:
+        """Largest candidate pool solved directly (no block decomposition).
+
+        QAOA simulates 2^n amplitudes (one qubit per candidate), so it must run
+        on small blocks; SA handles the full pool. Return the per-solve size cap.
+        """
+        if self.solver_method.startswith("qaoa"):
+            return 14  # 2^14 statevector — the practical QAOA simulation ceiling
+        return 64
+
+    def _block_size(self) -> int:
+        """Target sub-problem size for block decomposition, solver-aware.
+
+        Must not exceed _max_direct_candidates(): for QAOA every candidate in a
+        block is a qubit, so an oversized block reintroduces the 2^N blow-up the
+        block decomposition exists to prevent.
+        """
+        return 12 if self.solver_method.startswith("qaoa") else 32
+
     def _solve_with_blocks(
         self, a: np.ndarray, b: np.ndarray, n_keep: int
     ) -> np.ndarray:
@@ -193,25 +277,123 @@ class QORECache(DynamicCache):
         from qore.block_decompose import decompose, recompose
 
         N = len(a)
-        num_blocks = max(2, N // 32)
+        # ceil division: guarantees the LARGEST block <= block_size. Using
+        # floor (N // block_size) undersizes num_blocks so np.array_split makes
+        # blocks of ceil(N/num_blocks) > block_size — which for QAOA silently
+        # exceeds the qubit ceiling (e.g. N=35, size=12 -> 2 blocks of 18).
+        block_size = self._block_size()
+        num_blocks = max(2, -(-N // block_size))  # ceil(N / block_size)
 
         blocks = decompose(a, b, n_keep, num_blocks=num_blocks)
 
         solutions = []
         indices_list = []
         for a_block, b_block, k_block, block_indices in blocks:
-            x_block = qore_solve(
-                a_block, b_block, k_block,
-                lam=self.lam,
-                method=self.solver_method,
-                num_reads=self.num_reads,
-                seed=self.seed,
-            )
+            block_n = len(block_indices)
+            if k_block >= block_n:
+                # Retain the whole block: the QUBO solver requires K <= N-1, so
+                # a full-keep block must bypass it (selecting all is trivial).
+                x_block = np.ones(block_n, dtype=np.int32)
+            else:
+                x_block = qore_solve(
+                    a_block, b_block, k_block,
+                    lam=self.lam,
+                    method=self.solver_method,
+                    **self._solver_kwargs(),
+                )
             solutions.append(x_block)
             indices_list.append(block_indices)
 
         x_global = recompose(solutions, indices_list, N)
         return np.where(x_global == 1)[0]
+
+    def _solver_kwargs(self) -> dict:
+        """Assemble solver-specific kwargs for qore_solve.
+
+        Anneal takes num_reads; QAOA variants take p/maxiter. Passing num_reads
+        to a QAOA solver (or p to anneal) would raise, so we route by method.
+        """
+        if self.solver_method.startswith("qaoa"):
+            kwargs = {"p": self.qaoa_p, "maxiter": self.qaoa_maxiter}
+        elif self.solver_method == "greedy":
+            kwargs = {}
+        else:  # anneal (default)
+            kwargs = {"num_reads": self.num_reads}
+        if self.seed is not None and self.solver_method != "greedy":
+            kwargs["seed"] = self.seed
+        return kwargs
+
+    def _build_signals(self, keys_2d, n_sink: int, n_candidates: int):
+        """
+        Build (a, b) QUBO signals over the candidate positions.
+
+        Three modes:
+        - quality="vqc": a VQCEncoder produces BOTH aᵢ and bᵢⱼ from one circuit
+          (fully-quantum KV pipeline). Key vectors (mean over heads) are the
+          encoder features.
+        - redundancy_method="quantum": aᵢ from attention/keynorm, bᵢⱼ from the
+          fidelity quantum kernel over key vectors.
+        - otherwise: aᵢ from attention/keynorm, bᵢⱼ from classical cosine/rbf.
+
+        Returns:
+            (a_np, b_np): normalized quality vector and redundancy matrix, both
+            numpy float64 with shape (n_candidates,) and (n_candidates, n_candidates).
+        """
+        if self.quality == "vqc":
+            return self._vqc_signals(keys_2d)
+
+        # Classical/attention quality signal aᵢ.
+        if self.quality == "attention" and self.has_attention():
+            attn = self.attention_scores()[n_sink:n_sink + n_candidates]
+            a = attn.to(keys_2d.device)
+            if a.shape[0] != n_candidates:
+                a = key_norm_quality(keys_2d)
+        else:
+            a = key_norm_quality(keys_2d)
+        a_np = normalize(a.cpu().numpy().astype(np.float64))
+
+        # Redundancy signal bᵢⱼ.
+        if self.redundancy_method == "quantum":
+            b_np = self._quantum_kernel_redundancy(keys_2d)
+        else:
+            b = pairwise_key_similarity(
+                keys_2d, method=self.redundancy_method, max_heads=4
+            )
+            b_np = b.cpu().numpy().astype(np.float64)
+        return a_np, b_np
+
+    def _key_features(self, keys_2d) -> np.ndarray:
+        """Mean-over-heads key vectors as (n_candidates, head_dim) features."""
+        return keys_2d.mean(dim=0).cpu().numpy().astype(np.float64)
+
+    def _quantum_kernel_redundancy(self, keys_2d) -> np.ndarray:
+        """bᵢⱼ = fidelity quantum kernel over key vectors (ablation)."""
+        from qore.kernels import quantum_kernel
+        features = self._key_features(keys_2d)
+        return quantum_kernel(
+            features,
+            backend=self.quantum_backend,
+            n_qubits=self.quantum_n_qubits,
+            n_layers=self.quantum_n_layers,
+        )
+
+    def _vqc_signals(self, keys_2d):
+        """VQC encoder produces both aᵢ and bᵢⱼ from one circuit (ablation)."""
+        from qore.vqc.encoder import VQCEncoder
+        if self.vqc_encoder is None:
+            self.vqc_encoder = VQCEncoder(
+                n_qubits=self.quantum_n_qubits,
+                n_layers=self.quantum_n_layers,
+                backend=self.quantum_backend,
+                seed=self.seed,
+            )
+        features = self._key_features(keys_2d)
+        signals = self.vqc_encoder.encode_and_measure(features)
+        a_np = normalize(np.asarray(signals["quality"], dtype=np.float64))
+        b_np = np.asarray(signals["redundancy"], dtype=np.float64)
+        np.fill_diagonal(b_np, 0.0)
+        np.clip(b_np, 0.0, 1.0, out=b_np)
+        return a_np, b_np
 
     @property
     def eviction_count(self) -> int:
