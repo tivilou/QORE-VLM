@@ -22,8 +22,9 @@ done
 
 echo ""
 echo "[4/4] Perplexity (PG-19)"
+# Ungated mirror (see run_longbench.sh); override MODEL_PATH for the official repo.
 python -m scripts.kv_cache.eval_kv_cache \
-    --model_path meta-llama/Meta-Llama-3-8B-Instruct \
+    --model_path "${MODEL_PATH:-NousResearch/Meta-Llama-3-8B-Instruct}" \
     --dataset pg19 \
     --policy qore \
     --output_dir results/kv_cache/perplexity \

@@ -3,10 +3,13 @@ KV-Cache eviction evaluation: compare cache policies on long-context benchmarks.
 
 Usage:
     python -m scripts.kv_cache.eval_kv_cache \
-        --model_path meta-llama/Meta-Llama-3-8B-Instruct \
+        --model_path NousResearch/Meta-Llama-3-8B-Instruct \
         --dataset longbench \
         --policy qore \
         --max_capacity 1024
+
+    # --model_path accepts any HF id; the default mirror above is ungated.
+    # With gated access you can use meta-llama/Meta-Llama-3-8B-Instruct.
 """
 
 import argparse
