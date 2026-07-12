@@ -386,6 +386,9 @@ def generate_with_eviction(model, input_ids, cache, max_new_tokens, eos_id):
 
     Returns the generated token ids (excluding the prompt).
     """
+    from applications.kv_cache.attention_capture import PerLayerPositionPatch
+    import contextlib
+
     device = input_ids.device
     generated = []
 
@@ -397,31 +400,31 @@ def generate_with_eviction(model, input_ids, cache, max_new_tokens, eos_id):
     next_tok = out.logits[:, -1, :].argmax(dim=-1)
     generated.append(next_tok.item())
 
-    for _ in range(max_new_tokens - 1):
-        if next_tok.item() == eos_id:
-            break
-        # Physical cache length AFTER any eviction that fired last step. The new
-        # token attends over [0, L) retained keys and itself sits at position L.
-        # This position-rebasing assumes ALL layers share one length. Policies
-        # with per-layer uneven lengths (PyramidKV) have no single position_ids
-        # valid for every layer in one forward — each layer sizes its RoPE table
-        # to its own kv length, so a shared position OOBs the shorter layers.
-        # Such methods require attention-level patching (as the official
-        # PyramidKV repo does) and aren't supported by this shared-position loop.
-        layer_lens = {kc.shape[2] for kc in cache.key_cache}
-        if len(layer_lens) > 1:
-            raise NotImplementedError(
-                "generate_with_eviction requires uniform per-layer cache lengths; "
-                f"got {sorted(layer_lens)}. Per-layer-uneven policies (PyramidKV) "
-                "need attention-level position patching for real generation."
-            )
-        L = cache.get_seq_length()
-        pos = torch.tensor([[L]], device=device)
-        cache_position = torch.tensor([L], device=device)
-        out = model(input_ids=next_tok.unsqueeze(0), past_key_values=cache,
-                    use_cache=True, position_ids=pos, cache_position=cache_position)
-        next_tok = out.logits[:, -1, :].argmax(dim=-1)
-        generated.append(next_tok.item())
+    # Per-layer-uneven caches (PyramidKV) evict each layer to its own budget, so
+    # a single shared query position can't be correct for every layer. Activate
+    # PerLayerPositionPatch, which re-bases each layer's RoPE query to that
+    # layer's own physical length via a forward pre-hook. For uniform caches the
+    # patch is unnecessary (all layers share one length) and we take the plain
+    # shared-position path. The shared position_ids/cache_position we still pass
+    # below drive the model-level causal mask (sized to the longest layer, which
+    # for the pyramid is layer 0 → cache.get_seq_length()); the patch overrides
+    # only the RoPE embeddings per layer.
+    uneven = getattr(cache, "per_layer_uneven", False)
+    patch_ctx = PerLayerPositionPatch(model, cache) if uneven else contextlib.nullcontext()
+
+    with patch_ctx:
+        for _ in range(max_new_tokens - 1):
+            if next_tok.item() == eos_id:
+                break
+            # Physical cache length AFTER any eviction that fired last step. The
+            # new token attends over [0, L) retained keys and sits at position L.
+            L = cache.get_seq_length()
+            pos = torch.tensor([[L]], device=device)
+            cache_position = torch.tensor([L], device=device)
+            out = model(input_ids=next_tok.unsqueeze(0), past_key_values=cache,
+                        use_cache=True, position_ids=pos, cache_position=cache_position)
+            next_tok = out.logits[:, -1, :].argmax(dim=-1)
+            generated.append(next_tok.item())
 
     return generated
 

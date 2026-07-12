@@ -81,6 +81,89 @@ def reduce_attention(attn_weights: torch.Tensor) -> torch.Tensor:
     return per_key.mean(dim=1)[0]
 
 
+class PerLayerPositionPatch:
+    """
+    Re-base each layer's RoPE query position to that layer's OWN physical KV
+    length during decode.
+
+    Background: transformers computes the rotary embedding (cos/sin) ONCE at the
+    model level from a single shared ``position_ids`` and hands the same tensor
+    to every decoder layer. The synchronized eviction caches (QORE/H2O/…) keep
+    all layers the same length, so one shared re-based position is correct for
+    all of them. PyramidKV deliberately gives each layer a DIFFERENT budget, so
+    after eviction layer *i* holds ``L_i`` keys and its new query must sit at
+    position ``L_i`` — but the shared position (driven by layer 0's length)
+    would rotate the query wrong for every layer whose length differs.
+
+    This context manager installs a forward PRE-hook on each attention module
+    that, on decode steps only (query length == 1), recomputes cos/sin for that
+    layer's own current physical length and injects it as ``position_embeddings``
+    (the attention forward prefers it over ``position_ids``). The causal mask is
+    already sliced per-layer inside attention (``mask[..., :kv_len]``), so it
+    needs no patching. For uniform caches every ``L_i`` equals the shared length,
+    so this is behaviourally a no-op — we therefore only activate it for caches
+    that declare ``per_layer_uneven = True``.
+
+    Compose it with AttentionCapture (both are pre-hooks touching disjoint
+    kwargs — ``output_attentions`` vs ``position_embeddings``).
+    """
+
+    def __init__(self, model, cache):
+        self.model = model
+        self.cache = cache
+        self._handles: List[torch.utils.hooks.RemovableHandle] = []
+        # Model-level rotary_emb exists on Llama-style layouts (transformers
+        # >= 4.43) and is used to recompute cos/sin for the position_embeddings
+        # path. Qwen2 (4.44) has no model-level rotary_emb — it computes RoPE
+        # inside each attention from position_ids — so we override position_ids
+        # instead and don't need this.
+        base = getattr(model, "model", model)
+        self.rotary_emb = getattr(base, "rotary_emb", None)
+
+    def __enter__(self):
+        modules = find_attention_modules(self.model)
+        for idx, module in enumerate(modules):
+            layer_idx = getattr(module, "layer_idx", idx)
+            self._handles.append(
+                module.register_forward_pre_hook(
+                    functools.partial(self._patch, layer_idx=layer_idx),
+                    with_kwargs=True,
+                )
+            )
+        return self
+
+    def __exit__(self, *exc):
+        for h in self._handles:
+            h.remove()
+        self._handles.clear()
+        return False
+
+    def _patch(self, module, args, kwargs, layer_idx: int):
+        hs = kwargs.get("hidden_states")
+        if hs is None and args:
+            hs = args[0]
+        if hs is None or hs.shape[1] != 1:
+            return None  # prefill or unknown shape — leave positions untouched
+        kc = self.cache.key_cache
+        if layer_idx >= len(kc) or kc[layer_idx] is None:
+            return None
+        # Pre-hook fires BEFORE this layer's cache.update(), so key_cache holds
+        # the retained keys [0, L_i); the new token sits at position L_i.
+        L_i = int(kc[layer_idx].shape[2])
+        pos = torch.tensor([[L_i]], device=hs.device)
+        # Override position_ids (Qwen2 computes RoPE internally from it) and, on
+        # layouts that thread precomputed position_embeddings to attention
+        # (Llama >= 4.43), recompute and override those too — the attention
+        # forward prefers position_embeddings over position_ids when present.
+        kwargs["position_ids"] = pos
+        cache_position = torch.tensor([L_i], device=hs.device)
+        if "cache_position" in kwargs:
+            kwargs["cache_position"] = cache_position
+        if kwargs.get("position_embeddings") is not None and self.rotary_emb is not None:
+            kwargs["position_embeddings"] = self.rotary_emb(hs, pos)
+        return args, kwargs
+
+
 class AttentionCapture:
     """
     Installs hooks that stream per-key attention scores into a cache object.

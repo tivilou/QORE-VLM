@@ -373,3 +373,41 @@ class TestRealForwardGeneration:
         ref = self._gen(model, DynamicCache(), capture=False, prompt=prompt)[0].tolist()
         out = self._gen(model, factory(), capture=False, prompt=prompt)[0].tolist()
         assert out == ref
+
+    def test_pyramidkv_generate_with_eviction_per_layer_positions(self):
+        # The path eval ACTUALLY uses: generate_with_eviction, which for
+        # per-layer-uneven caches (PyramidKV) activates PerLayerPositionPatch to
+        # re-base each layer's RoPE query to its own physical length. Plain HF
+        # generate can't drive physical eviction; this loop does. Assert it runs,
+        # keeps an uneven pyramid, and yields finite in-vocab tokens (position
+        # desync would produce OOB indices or NaN logits -> garbage/crash).
+        from applications.kv_cache.attention_capture import AttentionCapture
+        from scripts.kv_cache.eval_kv_cache import generate_with_eviction
+        model = _tiny_llama()
+        prompt = torch.randint(0, 256, (1, 100))
+        cache = PyramidKVCache(max_capacity=48, trigger_every=8,
+                               num_layers=4, num_sink_tokens=4, beta=0.5)
+        assert getattr(cache, "per_layer_uneven", False) is True
+        with torch.no_grad(), AttentionCapture(model, cache):
+            gen = generate_with_eviction(model, prompt, cache, max_new_tokens=30, eos_id=-1)
+        assert len(gen) == 30
+        assert all(isinstance(t, int) and 0 <= t < 256 for t in gen)
+        lens = [cache.key_cache[i].shape[2] for i in range(4)]
+        assert len(set(lens)) > 1 and lens[0] > lens[-1], f"expected pyramid, got {lens}"
+
+    def test_generate_with_eviction_uniform_cache_unpatched(self):
+        # Regression: uniform caches (per_layer_uneven falsey) must take the
+        # plain shared-position path — the patch refactor must not change their
+        # behaviour. QORE keeps all layers the same length, so no patch fires.
+        from applications.kv_cache.attention_capture import AttentionCapture
+        from scripts.kv_cache.eval_kv_cache import generate_with_eviction
+        model = _tiny_llama()
+        prompt = torch.randint(0, 256, (1, 100))
+        cache = QORECache(max_capacity=48, trigger_every=8, num_layers=4,
+                          num_sink_tokens=4, quality="keynorm")
+        assert getattr(cache, "per_layer_uneven", False) is False
+        with torch.no_grad(), AttentionCapture(model, cache):
+            gen = generate_with_eviction(model, prompt, cache, max_new_tokens=30, eos_id=-1)
+        assert len(gen) == 30
+        lens = [cache.key_cache[i].shape[2] for i in range(4)]
+        assert len(set(lens)) == 1, f"uniform cache must stay uniform, got {lens}"

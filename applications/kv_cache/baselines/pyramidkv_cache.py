@@ -44,6 +44,10 @@ class PyramidKVCache(DynamicCache):
                 at the last layer (mean = max_capacity). beta in (0, 1].
         """
         super().__init__()
+        # Layers evict to DIFFERENT budgets, so per-layer KV lengths diverge.
+        # The decode loop uses this flag to enable per-layer RoPE re-basing
+        # (PerLayerPositionPatch) instead of the shared-position path.
+        self.per_layer_uneven = True
         self.max_capacity = max_capacity
         self.trigger_every = trigger_every
         self.num_sink_tokens = num_sink_tokens
