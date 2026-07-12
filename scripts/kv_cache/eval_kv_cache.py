@@ -31,6 +31,9 @@ def parse_args():
     parser.add_argument("--num_reads", type=int, default=30)
     parser.add_argument("--max_samples", type=int, default=0)
     parser.add_argument("--max_new_tokens", type=int, default=128)
+    parser.add_argument("--max_input_length", type=int, default=7900,
+                        help="Max input tokens; longer prompts are middle-truncated "
+                             "(keeps context head + trailing question)")
     parser.add_argument("--output_dir", type=str, default="results/kv_cache/longbench")
     parser.add_argument("--output_file", type=str, default="results.json")
     parser.add_argument("--seed", type=int, default=42)
@@ -80,26 +83,49 @@ def load_longbench(max_samples=0):
         "hotpotqa", "2wikimqa", "musique",
     ]
 
-    all_samples = []
+    # Load each subtask separately so we can sample evenly across all of them.
+    per_task = {}
     for task in subtasks:
         try:
             ds = load_dataset("THUDM/LongBench", task, split="test",
                               trust_remote_code=True)
+            items = []
             for item in ds:
                 answers = item["answers"]
                 if isinstance(answers, str):
                     answers = json.loads(answers) if answers.startswith("[") else [answers]
-                all_samples.append({
+                items.append({
                     "task": task,
                     "input": item["input"],
                     "context": item["context"],
                     "answers": answers,
                 })
+            per_task[task] = items
         except Exception as e:
             print(f"  Warning: could not load {task}: {e}")
 
-    if max_samples > 0:
-        all_samples = all_samples[:max_samples]
+    if max_samples <= 0:
+        # Full run: use everything, grouped by task.
+        all_samples = [s for task in subtasks if task in per_task for s in per_task[task]]
+        return all_samples
+
+    # Stratified sampling: take an even share from each available subtask so the
+    # first N samples aren't all from one task (e.g. narrativeqa).
+    tasks_available = [t for t in subtasks if per_task.get(t)]
+    per_task_quota = max(1, max_samples // len(tasks_available))
+    all_samples = []
+    for task in tasks_available:
+        all_samples.extend(per_task[task][:per_task_quota])
+    # Top up to exactly max_samples if integer division left a shortfall.
+    if len(all_samples) < max_samples:
+        for task in tasks_available:
+            for s in per_task[task][per_task_quota:]:
+                all_samples.append(s)
+                if len(all_samples) >= max_samples:
+                    break
+            if len(all_samples) >= max_samples:
+                break
+    all_samples = all_samples[:max_samples]
 
     return all_samples
 
@@ -144,15 +170,56 @@ def get_kv_bytes_per_token(model):
     return 2 * num_layers * num_kv_heads * head_dim * dtype_bytes
 
 
-def evaluate_sample(model, tokenizer, sample, cache, max_new_tokens=128):
-    """Run generation on a single sample with the given cache policy."""
-    prompt = f"{sample['context']}\n\nQuestion: {sample['input']}\nAnswer:"
+def build_inputs(tokenizer, sample, max_length, device):
+    """
+    Build model inputs, keeping the question intact.
 
-    inputs = tokenizer(
-        prompt, return_tensors="pt", truncation=True, max_length=8192
+    The question sits at the END of the prompt. If the prompt exceeds max_length,
+    we truncate from the MIDDLE (keep the head and tail token blocks) — this is the
+    LongBench-official strategy and guarantees the trailing "Question: ..." survives,
+    unlike default right-truncation which silently drops it.
+
+    Uses the tokenizer's chat template for Instruct models.
+    """
+    context = sample["context"]
+    question = sample["input"]
+    user_msg = (
+        f"{context}\n\n"
+        f"Answer the question based on the passages above. "
+        f"Only give the answer, no explanation.\n"
+        f"Question: {question}\nAnswer:"
     )
-    inputs = {k: v.to(model.device) for k, v in inputs.items()}
+
+    use_chat = getattr(tokenizer, "chat_template", None) is not None
+    reserve = 64 if use_chat else 0  # headroom for chat-template special tokens
+    budget = max(1, max_length - reserve)
+
+    ids = tokenizer(user_msg, add_special_tokens=False)["input_ids"]
+    if len(ids) > budget:
+        half = budget // 2
+        ids = ids[:half] + ids[-(budget - half):]  # keep head + tail, drop middle
+        user_msg = tokenizer.decode(ids, skip_special_tokens=True)
+
+    if use_chat:
+        messages = [{"role": "user", "content": user_msg}]
+        prompt = tokenizer.apply_chat_template(
+            messages, tokenize=False, add_generation_prompt=True
+        )
+        inputs = tokenizer(prompt, return_tensors="pt", add_special_tokens=False)
+    else:
+        inputs = tokenizer(user_msg, return_tensors="pt")
+
+    return {k: v.to(device) for k, v in inputs.items()}
+
+
+def evaluate_sample(model, tokenizer, sample, cache, max_new_tokens=128, max_input_length=7900):
+    """Run generation on a single sample with the given cache policy."""
+    inputs = build_inputs(tokenizer, sample, max_input_length, model.device)
     input_len = inputs["input_ids"].shape[1]
+
+    # Track peak GPU memory for this sample
+    if torch.cuda.is_available():
+        torch.cuda.reset_peak_memory_stats(model.device)
 
     gen_kwargs = {
         "max_new_tokens": max_new_tokens,
@@ -166,13 +233,20 @@ def evaluate_sample(model, tokenizer, sample, cache, max_new_tokens=128):
         outputs = model.generate(**inputs, **gen_kwargs)
     elapsed_ms = (time.perf_counter() - start_time) * 1000
 
+    peak_mem_MB = None
+    if torch.cuda.is_available():
+        peak_mem_MB = torch.cuda.max_memory_allocated(model.device) / (1024 * 1024)
+
     output_len = outputs.shape[1] - input_len
     answer = tokenizer.decode(outputs[0][input_len:], skip_special_tokens=True).strip()
 
     # Get final cache size (if cache was used)
     final_cache_len = None
     if cache is not None and hasattr(cache, "get_seq_length"):
-        final_cache_len = cache.get_seq_length()
+        try:
+            final_cache_len = int(cache.get_seq_length())
+        except Exception:
+            final_cache_len = None
 
     return {
         "prediction": answer,
@@ -181,6 +255,7 @@ def evaluate_sample(model, tokenizer, sample, cache, max_new_tokens=128):
         "time_ms": elapsed_ms,
         "tokens_per_sec": output_len / (elapsed_ms / 1000) if elapsed_ms > 0 else 0,
         "final_cache_len": final_cache_len,
+        "peak_mem_MB": peak_mem_MB,
     }
 
 
@@ -258,6 +333,9 @@ def main():
     latencies = []
     throughputs = []
     input_lengths = []
+    final_cache_lens = []
+    peak_mems = []
+    per_sample = []  # full per-sample records for later inspection
 
     for i, sample in enumerate(samples):
         if (i + 1) % 20 == 0:
@@ -267,11 +345,25 @@ def main():
         cache = create_cache(args.policy, args, num_layers)
 
         if model is not None:
-            result = evaluate_sample(model, tokenizer, sample, cache, args.max_new_tokens)
+            result = evaluate_sample(model, tokenizer, sample, cache,
+                                     args.max_new_tokens, args.max_input_length)
             predictions.append(result["prediction"])
             latencies.append(result["time_ms"])
             throughputs.append(result["tokens_per_sec"])
             input_lengths.append(result["input_length"])
+            if result["final_cache_len"] is not None:
+                final_cache_lens.append(result["final_cache_len"])
+            if result["peak_mem_MB"] is not None:
+                peak_mems.append(result["peak_mem_MB"])
+            per_sample.append({
+                "task": sample.get("task"),
+                "question": sample["input"],
+                "prediction": result["prediction"],
+                "references": sample["answers"],
+                "input_length": result["input_length"],
+                "final_cache_len": result["final_cache_len"],
+                "peak_mem_MB": round(result["peak_mem_MB"], 1) if result["peak_mem_MB"] else None,
+            })
         else:
             predictions.append("")
             input_lengths.append(0)
@@ -288,7 +380,7 @@ def main():
               f"Latency={metrics['avg_latency_ms']:.0f}ms, "
               f"Throughput={metrics['avg_throughput_tok_per_sec']:.1f} tok/s")
 
-    # --- Compression metrics ---
+    # --- Compression metrics (theoretical, from capacity) ---
     avg_input_len = float(np.mean(input_lengths)) if input_lengths and input_lengths[0] > 0 else 4096
     effective_capacity = args.max_capacity if args.policy != "full" else avg_input_len
     compression_ratio = effective_capacity / avg_input_len if avg_input_len > 0 else 1.0
@@ -297,6 +389,19 @@ def main():
     memory_compressed_MB = effective_capacity * kv_bytes_per_token / (1024 * 1024)
     memory_saved_MB = memory_full_MB - memory_compressed_MB
 
+    # --- Measured stats (actual cache length + GPU peak memory) ---
+    measured = {
+        "avg_final_cache_len": round(float(np.mean(final_cache_lens)), 1) if final_cache_lens else None,
+        "avg_peak_mem_MB": round(float(np.mean(peak_mems)), 1) if peak_mems else None,
+        "max_peak_mem_MB": round(float(np.max(peak_mems)), 1) if peak_mems else None,
+    }
+
+    # --- Task distribution (sanity check for stratified sampling) ---
+    task_counts = {}
+    for s in samples:
+        t = s.get("task", "unknown")
+        task_counts[t] = task_counts.get(t, 0) + 1
+
     # --- Save results ---
     result = {
         "experiment": f"KV-Cache-{args.dataset}",
@@ -304,6 +409,7 @@ def main():
         "model": args.model_path,
         "dataset": args.dataset,
         "num_samples": len(samples),
+        "task_distribution": task_counts,
         "metrics": metrics,
         "compression": {
             "avg_input_length": round(avg_input_len),
@@ -313,12 +419,14 @@ def main():
             "memory_compressed_MB": round(memory_compressed_MB, 1),
             "memory_saved_MB": round(memory_saved_MB, 1),
         },
+        "measured": measured,
         "config": {
             "max_capacity": args.max_capacity,
             "trigger_every": args.trigger_every,
             "num_sink_tokens": args.num_sink_tokens,
             "num_reads": args.num_reads,
             "max_new_tokens": args.max_new_tokens,
+            "max_input_length": args.max_input_length,
             "seed": args.seed,
         },
     }
@@ -326,8 +434,19 @@ def main():
     with open(output_path, "w") as f:
         json.dump(result, f, indent=2)
 
+    # Write per-sample records (predictions, references, cache lengths) alongside.
+    if per_sample:
+        detail_path = output_path.with_suffix(".samples.json")
+        with open(detail_path, "w") as f:
+            json.dump(per_sample, f, indent=2, ensure_ascii=False)
+        print(f"  Per-sample details saved to {detail_path}")
+
     print(f"\nResults saved to {output_path}")
-    print(f"Compression: {avg_input_len:.0f} → {effective_capacity} tokens "
+    print(f"  Task distribution: {task_counts}")
+    if measured["avg_peak_mem_MB"]:
+        print(f"  Measured peak GPU mem: avg {measured['avg_peak_mem_MB']:.0f} MB, "
+              f"max {measured['max_peak_mem_MB']:.0f} MB")
+    print(f"Compression (theoretical): {avg_input_len:.0f} → {effective_capacity} tokens "
           f"({compression_ratio:.1%} kept, saves ~{memory_saved_MB:.0f} MB)")
 
 
