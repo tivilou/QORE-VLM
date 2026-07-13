@@ -354,8 +354,9 @@ def measure_cache(cache):
 
     Returns per-layer lengths (so we see PyramidKV's uneven layers and can
     confirm the synchronized caches are uniform), the resident cache-tensor
-    bytes (real memory the KV occupies now, post-eviction), and the layer-0
-    sequence length for backward compatibility.
+    bytes (real memory the KV occupies now, post-eviction), and the average
+    sequence length across all layers (for PyramidKV this is the true capacity;
+    for uniform caches it equals any single layer).
     """
     if cache is None or not hasattr(cache, "key_cache"):
         return {"final_cache_len": None, "layer_lengths": None, "cache_bytes": None}
@@ -365,8 +366,11 @@ def measure_cache(cache):
         for i in range(len(cache.key_cache)):
             cache_bytes += cache.key_cache[i].element_size() * cache.key_cache[i].nelement()
             cache_bytes += cache.value_cache[i].element_size() * cache.value_cache[i].nelement()
+        # Use mean across layers: for PyramidKV (uneven layers) this reflects true
+        # average capacity; for uniform caches (QORE/H2O/SnapKV) mean == layer[0].
+        avg_len = sum(layer_lengths) / len(layer_lengths) if layer_lengths else None
         return {
-            "final_cache_len": layer_lengths[0] if layer_lengths else None,
+            "final_cache_len": round(avg_len, 1) if avg_len is not None else None,
             "layer_lengths": layer_lengths,
             "cache_bytes": int(cache_bytes),
         }
