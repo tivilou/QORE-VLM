@@ -489,19 +489,20 @@ def evaluate_sample(model, tokenizer, sample, cache, max_new_tokens=128,
     start_time = time.perf_counter()
     with torch.no_grad():
         if cache is None:
-            # No eviction (full-cache baseline): plain HF generate is correct.
-            outputs = model.generate(
-                **inputs, max_new_tokens=max_new_tokens, do_sample=False,
-            )
-            gen_ids = outputs[0][input_len:].tolist()
-        elif capture_attention:
-            # Eviction + attention signal: custom decode loop (position re-basing
-            # for physical eviction) with attention hooks streaming into cache.
+            # Full-cache baseline: use a non-evicting DynamicCache and the same
+            # decode loop as compressed policies (for fair speed comparison). This
+            # replaced the old model.generate() path, which used a different backend
+            # (sdpa) and different generation code, making latency comparisons unfair.
+            from transformers import DynamicCache
+            cache = DynamicCache()
+
+        if capture_attention:
+            # Eviction + attention signal: custom decode loop with attention hooks.
             with AttentionCapture(model, cache):
                 gen_ids = generate_with_eviction(
                     model, inputs["input_ids"], cache, max_new_tokens, eos_id)
         else:
-            # Eviction without attention (window/random/snapkv-keynorm/qore-vqc).
+            # Eviction without attention (window/random/full/snapkv-keynorm/qore-vqc).
             gen_ids = generate_with_eviction(
                 model, inputs["input_ids"], cache, max_new_tokens, eos_id)
     elapsed_ms = (time.perf_counter() - start_time) * 1000
@@ -611,12 +612,16 @@ def main():
     num_layers = 32  # default
     kv_bytes_per_token = 2 * 32 * 8 * 128 * 2  # default estimate
 
-    # Attention-based policies need eager attention (only impl that exposes the
-    # weight matrices the hooks read). Non-attention policies use the faster
-    # default so their latency isn't penalized by eager. Record what we actually
-    # loaded so the results file is truthful.
+    # For fair speed/memory comparison, ALL policies use the same attention backend
+    # and the same decode loop. We force "eager" across the board because:
+    # - Attention-based eviction (QORE/H2O/SnapKV) physically requires eager to
+    #   capture attention weights (sdpa/flash do not expose them).
+    # - To keep speed comparison fair, non-attention policies (window/random/full)
+    #   also use eager so backend differences don't confound the cache-policy effect.
+    # The cost: full/window/random are penalized by eager's slower throughput vs sdpa,
+    # but everyone is on the same starting line and latency rankings stay meaningful.
+    attn_impl = "eager"
     capture = policy_needs_attention(args.policy, args.quality)
-    attn_impl = "eager" if capture else "sdpa"
 
     if not args.skip_generation:
         model, tokenizer = load_llm(args.model_path, attn_implementation=attn_impl)
