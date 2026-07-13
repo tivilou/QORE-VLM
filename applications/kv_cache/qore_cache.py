@@ -216,8 +216,25 @@ class QORECache(AttentionAccumulatorMixin, DynamicCache):
         # Average across heads for a single importance vector
         keys_2d = keys[0, :, n_sink:, :]  # [num_heads, n_candidates, head_dim]
 
-        # Build the QUBO signals aᵢ (quality) and bᵢⱼ (redundancy).
-        a_np, b_np = self._build_signals(keys_2d, n_sink, n_candidates)
+        # VQC ablation: one circuit yields BOTH aᵢ and bᵢⱼ, so it can't be split
+        # into the quality-then-per-block-redundancy path. It's a small-N ablation
+        # (fidelity over all candidates), so solve the whole pool directly.
+        if self.quality == "vqc":
+            a_np, b_np = self._vqc_signals(keys_2d)
+            x = qore_solve(a_np, b_np, n_keep, lam=self.lam,
+                           method=self.solver_method, **self._solver_kwargs())
+            keep_indices = np.where(x == 1)[0]
+            keep_positions = np.sort(np.concatenate([
+                np.arange(n_sink), keep_indices + n_sink]))
+            keep_tensor = torch.tensor(keep_positions, dtype=torch.long, device=keys.device)
+            for layer_idx in range(len(self.key_cache)):
+                self.key_cache[layer_idx] = self.key_cache[layer_idx][:, :, keep_tensor, :]
+                self.value_cache[layer_idx] = self.value_cache[layer_idx][:, :, keep_tensor, :]
+            self.prune_attention(keep_tensor)
+            return
+
+        # Quality signal aᵢ is O(N) and always built over all candidates.
+        a_np = self._build_quality(keys_2d, n_sink, n_candidates)
 
         # Choose the direct-vs-block threshold by solver. QAOA simulates one
         # qubit per candidate, so 2^n_candidates state — anything beyond ~16
@@ -225,8 +242,14 @@ class QORECache(AttentionAccumulatorMixin, DynamicCache):
         # QAOA regardless of pool size; SA scales fine to the full 64.
         direct_threshold = self._max_direct_candidates()
         if n_candidates > direct_threshold:
-            keep_indices = self._solve_with_blocks(a_np, b_np, n_keep)
+            # Large pool: decompose by quality, then compute redundancy ONLY
+            # within each block (O(sum block^2) << O(N^2)). Avoids ever
+            # materializing the global N×N similarity matrix — the dominant
+            # cost that made QORE ~7x slower than full at long context.
+            keep_indices = self._solve_with_blocks(a_np, keys_2d, n_keep)
         else:
+            # Small pool: one solve; redundancy over the whole (small) pool.
+            b_np = self._build_redundancy(keys_2d)
             x = qore_solve(
                 a_np, b_np, n_keep,
                 lam=self.lam,
@@ -271,9 +294,15 @@ class QORECache(AttentionAccumulatorMixin, DynamicCache):
         return 12 if self.solver_method.startswith("qaoa") else 32
 
     def _solve_with_blocks(
-        self, a: np.ndarray, b: np.ndarray, n_keep: int
+        self, a: np.ndarray, keys_2d, n_keep: int
     ) -> np.ndarray:
-        """Solve large problems via block decomposition."""
+        """Solve large problems via block decomposition.
+
+        Redundancy is built PER BLOCK from that block's own key vectors — the
+        global N×N similarity matrix is never materialized. Budget allocation in
+        decompose() is quality-only, so passing b=None is correct; each block's
+        b is computed lazily just before its solve.
+        """
         from qore.block_decompose import decompose, recompose
 
         N = len(a)
@@ -284,23 +313,29 @@ class QORECache(AttentionAccumulatorMixin, DynamicCache):
         block_size = self._block_size()
         num_blocks = max(2, -(-N // block_size))  # ceil(N / block_size)
 
-        blocks = decompose(a, b, n_keep, num_blocks=num_blocks)
+        # b=None: decompose partitions by quality only; we fill redundancy below.
+        blocks = decompose(a, None, n_keep, num_blocks=num_blocks)
 
         solutions = []
         indices_list = []
-        for a_block, b_block, k_block, block_indices in blocks:
+        for a_block, _b_unused, k_block, block_indices in blocks:
             block_n = len(block_indices)
             if k_block >= block_n:
                 # Retain the whole block: the QUBO solver requires K <= N-1, so
                 # a full-keep block must bypass it (selecting all is trivial).
-                x_block = np.ones(block_n, dtype=np.int32)
-            else:
-                x_block = qore_solve(
-                    a_block, b_block, k_block,
-                    lam=self.lam,
-                    method=self.solver_method,
-                    **self._solver_kwargs(),
-                )
+                solutions.append(np.ones(block_n, dtype=np.int32))
+                indices_list.append(block_indices)
+                continue
+            # Redundancy for THIS block only: slice its key vectors (contiguous
+            # candidate positions) and build the small block_n × block_n matrix.
+            block_keys = keys_2d[:, block_indices, :]  # [heads, block_n, dim]
+            b_block = self._build_redundancy(block_keys)
+            x_block = qore_solve(
+                a_block, b_block, k_block,
+                lam=self.lam,
+                method=self.solver_method,
+                **self._solver_kwargs(),
+            )
             solutions.append(x_block)
             indices_list.append(block_indices)
 
@@ -323,26 +358,12 @@ class QORECache(AttentionAccumulatorMixin, DynamicCache):
             kwargs["seed"] = self.seed
         return kwargs
 
-    def _build_signals(self, keys_2d, n_sink: int, n_candidates: int):
+    def _build_quality(self, keys_2d, n_sink: int, n_candidates: int) -> np.ndarray:
+        """Quality signal aᵢ over the candidate positions (O(N), no pairwise).
+
+        Real cumulative attention when available (H2O heavy-hitter, the paper's
+        signal); key-norm proxy as fallback / when quality="keynorm".
         """
-        Build (a, b) QUBO signals over the candidate positions.
-
-        Three modes:
-        - quality="vqc": a VQCEncoder produces BOTH aᵢ and bᵢⱼ from one circuit
-          (fully-quantum KV pipeline). Key vectors (mean over heads) are the
-          encoder features.
-        - redundancy_method="quantum": aᵢ from attention/keynorm, bᵢⱼ from the
-          fidelity quantum kernel over key vectors.
-        - otherwise: aᵢ from attention/keynorm, bᵢⱼ from classical cosine/rbf.
-
-        Returns:
-            (a_np, b_np): normalized quality vector and redundancy matrix, both
-            numpy float64 with shape (n_candidates,) and (n_candidates, n_candidates).
-        """
-        if self.quality == "vqc":
-            return self._vqc_signals(keys_2d)
-
-        # Classical/attention quality signal aᵢ.
         if self.quality == "attention" and self.has_attention():
             attn = self.attention_scores()[n_sink:n_sink + n_candidates]
             a = attn.to(keys_2d.device)
@@ -350,17 +371,20 @@ class QORECache(AttentionAccumulatorMixin, DynamicCache):
                 a = key_norm_quality(keys_2d)
         else:
             a = key_norm_quality(keys_2d)
-        a_np = normalize(a.cpu().numpy().astype(np.float64))
+        return normalize(a.cpu().numpy().astype(np.float64))
 
-        # Redundancy signal bᵢⱼ.
+    def _build_redundancy(self, keys_2d) -> np.ndarray:
+        """Redundancy matrix bᵢⱼ for the given key vectors.
+
+        Called per-block by _solve_with_blocks (so its cost is O(block^2), never
+        O(N^2)), or over the whole pool when N is small enough to solve directly.
+        """
         if self.redundancy_method == "quantum":
-            b_np = self._quantum_kernel_redundancy(keys_2d)
-        else:
-            b = pairwise_key_similarity(
-                keys_2d, method=self.redundancy_method, max_heads=4
-            )
-            b_np = b.cpu().numpy().astype(np.float64)
-        return a_np, b_np
+            return self._quantum_kernel_redundancy(keys_2d)
+        b = pairwise_key_similarity(
+            keys_2d, method=self.redundancy_method, max_heads=4
+        )
+        return b.cpu().numpy().astype(np.float64)
 
     def _key_features(self, keys_2d) -> np.ndarray:
         """Mean-over-heads key vectors as (n_candidates, head_dim) features."""

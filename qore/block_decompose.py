@@ -31,7 +31,12 @@ def decompose(
         indices is the array of original indices belonging to this block.
     """
     a = np.asarray(a, dtype=np.float64)
-    b = np.asarray(b, dtype=np.float64)
+    # b may be None: budget allocation below is purely quality-based, so the
+    # redundancy matrix is never needed to DECIDE the split. Passing b=None lets
+    # the caller compute each block's redundancy lazily from that block's own
+    # features, avoiding a global O(N^2) dense matrix (the dominant cost at long
+    # context). When b is provided we still slice per-block submatrices as before.
+    b = np.asarray(b, dtype=np.float64) if b is not None else None
     N = len(a)
 
     if partition is None:
@@ -50,7 +55,7 @@ def decompose(
         if len(indices) == 0:
             continue
         a_block = a[indices]
-        b_block = b[np.ix_(indices, indices)]
+        b_block = b[np.ix_(indices, indices)] if b is not None else None
         quality_sums.append(a_block.sum())
         blocks.append((a_block, b_block, indices))
 
