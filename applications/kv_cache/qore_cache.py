@@ -105,7 +105,36 @@ class QORECache(AttentionAccumulatorMixin, DynamicCache):
         self._tokens_since_eviction = 0
         self._eviction_count = 0
         self._num_layers = num_layers  # None = auto-detect
+
+        # Track the original absolute position of each slot. Each element is a
+        # [batch=1, seq] or [seq] tensor holding the absolute positions baked
+        # into the RoPE phase of the cached keys. After eviction the retained
+        # positions are compacted. This enables RoPE re-rotation: keys enter the
+        # cache pre-RoPE-encoded, so after physical eviction we must re-rotate
+        # each retained key from its original phase to its new compact position
+        # (physical slot == phase, fixing the query-key relative geometry).
+        self.original_positions: List[Optional[torch.Tensor]] = []
+
+        # Lazy-init: fetched on first eviction from the model's rotary_emb.
+        self._inv_freq: Optional[torch.Tensor] = None
         self._last_layer_idx = -1  # track forward pass progress
+
+    def set_model(self, model):
+        """Fetch RoPE inv_freq from the model for key re-rotation on eviction.
+
+        Call this once before generation if you want correct post-eviction RoPE
+        phase. Without it, keys retain their baked absolute phase and query-key
+        relative geometry breaks after eviction (degenerate generation).
+        """
+        from .rope_utils import get_inv_freq
+        self._inv_freq = get_inv_freq(model)
+        if self._inv_freq is None:
+            import warnings
+            warnings.warn(
+                "Could not extract inv_freq from model. RoPE re-rotation disabled; "
+                "post-eviction generation may degrade due to position mismatch.",
+                stacklevel=2,
+            )
 
     def update(
         self,
@@ -127,9 +156,27 @@ class QORECache(AttentionAccumulatorMixin, DynamicCache):
         # Standard DynamicCache append
         keys, values = super().update(key_states, value_states, layer_idx, cache_kwargs)
 
+        # Track absolute positions: keys entering the cache were RoPE-encoded at
+        # positions [L_before, L_before+1, ..., L_before+n_new-1], where
+        # L_before = this layer's seq_len before this update. After eviction we
+        # re-rotate the retained keys to compact positions, so we need to remember
+        # each slot's original absolute phase. Expand position tracking to match
+        # num layers lazily (we may not know num_layers at first).
+        while len(self.original_positions) <= layer_idx:
+            self.original_positions.append(None)
+        n_new = key_states.shape[-2]
+        L_before = keys.shape[-2] - n_new  # seq_len before this append
+        new_pos = torch.arange(L_before, L_before + n_new, device=keys.device)
+        if self.original_positions[layer_idx] is None:
+            self.original_positions[layer_idx] = new_pos
+        else:
+            self.original_positions[layer_idx] = torch.cat(
+                [self.original_positions[layer_idx], new_pos], dim=0
+            )
+
         # Track tokens added (only count on layer 0 to avoid multi-counting)
         if layer_idx == 0:
-            self._tokens_since_eviction += key_states.shape[-2]
+            self._tokens_since_eviction += n_new
 
         # Detect total number of layers: when layer_idx wraps back to a value
         # <= last seen, we know the previous pass covered all layers.
@@ -266,10 +313,46 @@ class QORECache(AttentionAccumulatorMixin, DynamicCache):
         keep_positions = np.sort(keep_positions)
         keep_tensor = torch.tensor(keep_positions, dtype=torch.long, device=keys.device)
 
+        # Record for bug 7.2 fix: the last layer's post-hook fires AFTER _evict
+        # but carries pre-eviction-length attention. add_attention will map it.
+        self._last_keep_indices = keep_tensor.clone()
+
         # Apply eviction to ALL layers
         for layer_idx in range(len(self.key_cache)):
             self.key_cache[layer_idx] = self.key_cache[layer_idx][:, :, keep_tensor, :]
             self.value_cache[layer_idx] = self.value_cache[layer_idx][:, :, keep_tensor, :]
+
+        # Re-rotate retained keys: they were RoPE-encoded at their ORIGINAL
+        # absolute positions (baked phase), but now sit in compact slots 0,1,2,..
+        # We must shift their phase to match the compact position so Query's
+        # monotonic position aligns with Key's phase (physical slot == phase).
+        # This fixes the query-key relative geometry RoPE encodes.
+        if self._inv_freq is None:
+            # Lazy-fetch once from the model. We're inside an attention forward,
+            # so the model is accessible via the keys' device or from the caller's
+            # context. Best-effort: try standard layouts (model-level / per-attn).
+            # If it fails, re-rotation is skipped (fallback to broken positions,
+            # same as before this fix — a warning would alert, but we can't inject
+            # model here cleanly; the symptom is degenerate generation post-eviction).
+            from .rope_utils import get_inv_freq
+            # The keys are on the model's device; we can't directly access the model
+            # here, but the typical usage is generate_with_eviction which holds the
+            # model. For now, store a model ref on first update or accept it as an
+            # init param. Temporary: assume inv_freq can be inferred from keys.device
+            # and a standard RoPE formula. Let's make a method to receive it.
+            pass  # Will be set externally via set_model() or passed in __init__
+
+        if self._inv_freq is not None:
+            from .rope_utils import rerotate_keys
+            for layer_idx in range(len(self.key_cache)):
+                k = self.key_cache[layer_idx]  # [batch=1, heads, seq, dim]
+                orig_pos = self.original_positions[layer_idx][keep_positions]
+                new_pos = torch.arange(len(keep_positions), device=k.device)
+                # rerotate_keys expects [heads, seq, dim]; k is [1, heads, seq, dim]
+                k_rotated = rerotate_keys(k[0], self._inv_freq, orig_pos, new_pos)
+                self.key_cache[layer_idx] = k_rotated.unsqueeze(0)
+                # Update position tracking: compacted keys now sit at 0,1,2,...
+                self.original_positions[layer_idx] = new_pos
 
         # Keep the attention accumulator aligned with the retained positions.
         self.prune_attention(keep_tensor)

@@ -392,6 +392,12 @@ def generate_with_eviction(model, input_ids, cache, max_new_tokens, eos_id):
     from applications.kv_cache.attention_capture import PerLayerPositionPatch
     import contextlib
 
+    # Let the cache extract inv_freq for RoPE re-rotation on eviction. After
+    # eviction, retained keys are re-rotated to compact positions (physical slot
+    # == RoPE phase), so using position L = cache.get_seq_length() below is correct.
+    if hasattr(cache, "set_model"):
+        cache.set_model(model)
+
     device = input_ids.device
     generated = []
 

@@ -26,6 +26,9 @@ class AttentionAccumulatorMixin:
         # Set True once any real attention has been captured, so callers can
         # decide whether to fall back to a proxy (e.g. key norm).
         self._has_attention = False
+        # Last eviction's keep indices. Used by add_attention to map post-eviction
+        # hooks that fire after _evict but still carry pre-eviction-length scores.
+        self._last_keep_indices: Optional[torch.Tensor] = None
 
     def add_attention(self, layer_idx: int, scores: torch.Tensor):
         """
@@ -35,6 +38,11 @@ class AttentionAccumulatorMixin:
         layer's hook contributes, giving a robust importance estimate. Scores
         for newly appended positions extend the accumulator; existing positions
         are incremented.
+
+        Bug 7.2 fix: eviction fires inside the last layer's forward, so that
+        layer's post-hook (which fires AFTER _evict) still carries pre-eviction
+        length scores. We detect accumulator < scores (eviction just shrunk the
+        cache) and map the scores to the retained indices before accumulating.
 
         Args:
             layer_idx: source layer (unused for aggregation, kept for hooks/debug).
@@ -47,11 +55,25 @@ class AttentionAccumulatorMixin:
         elif self._attn_scores.shape[0] == n:
             self._attn_scores += scores
         elif self._attn_scores.shape[0] < n:
-            # New tokens were appended since last accumulation: grow then add.
-            grown = torch.zeros(n, dtype=torch.float32, device=scores.device)
-            grown[: self._attn_scores.shape[0]] = self._attn_scores.to(scores.device)
-            grown += scores
-            self._attn_scores = grown
+            # Normally: new tokens appended, grow then add.
+            # But if eviction just fired (accumulator shorter + we have keep_indices),
+            # this is a post-hook carrying pre-eviction scores → map to retained.
+            if self._last_keep_indices is not None and self._last_keep_indices.max() < n:
+                # Eviction case: map scores[keep_indices] to the retained positions.
+                keep = self._last_keep_indices.to(scores.device).long()
+                mapped = scores[keep]
+                if mapped.shape[0] == self._attn_scores.shape[0]:
+                    self._attn_scores += mapped
+                else:
+                    # Still mismatched (shouldn't happen); truncate.
+                    m = min(self._attn_scores.shape[0], mapped.shape[0])
+                    self._attn_scores[:m] += mapped[:m]
+            else:
+                # Normal growth: new tokens appended since last accumulation.
+                grown = torch.zeros(n, dtype=torch.float32, device=scores.device)
+                grown[: self._attn_scores.shape[0]] = self._attn_scores.to(scores.device)
+                grown += scores
+                self._attn_scores = grown
         else:
             # Accumulator longer than scores (shouldn't happen post-prune, but be
             # safe): add onto the leading slice.
