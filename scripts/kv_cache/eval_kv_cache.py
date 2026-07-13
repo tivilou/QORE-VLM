@@ -107,12 +107,24 @@ def create_cache(policy, args, num_layers):
             seed=args.seed,
         )
     elif policy == "h2o":
+        # H2O-style: simplified implementation. Uses cumulative attention across all
+        # queries (not just recent window as in the original paper). Does not split
+        # budget into heavy-hitter vs recent token pools. Sufficient for comparison
+        # but not a line-by-line reproduction of the official H2O logic.
         from applications.kv_cache.baselines.h2o_cache import H2OCache
         return H2OCache(**common_kwargs, num_layers=num_layers)
     elif policy == "snapkv":
+        # SnapKV-style: simplified implementation. Hooks accumulate attention from
+        # all queries (approximates observation window). Does not implement the
+        # official per-window voting mechanism. Sufficient for comparison but not
+        # a line-by-line reproduction of the official SnapKV logic.
         from applications.kv_cache.baselines.snapkv_cache import SnapKVCache
         return SnapKVCache(**common_kwargs, num_layers=num_layers, window=args.window)
     elif policy == "pyramidkv":
+        # PyramidKV-style: simplified implementation. Uses linear layer-budget decay
+        # + cumulative attention. Not aligned item-by-item with the official paper.
+        # Sufficient for comparison but not a line-by-line reproduction of the
+        # official PyramidKV logic.
         from applications.kv_cache.baselines.pyramidkv_cache import PyramidKVCache
         return PyramidKVCache(**common_kwargs, num_layers=num_layers)
     elif policy == "window":
@@ -680,6 +692,9 @@ def main():
                 "prediction": result["prediction"],
                 "references": sample["answers"],
                 "input_length": result["input_length"],
+                "output_length": len(result["prediction"].split()),  # word count (approx tokens)
+                "time_ms": round(result["time_ms"], 1),
+                "tokens_per_sec": round(result["tokens_per_sec"], 2),
                 "final_cache_len": result["final_cache_len"],
                 "layer_lengths": result.get("layer_lengths"),
                 "cache_bytes": result.get("cache_bytes"),
@@ -734,9 +749,19 @@ def main():
         task_counts[t] = task_counts.get(t, 0) + 1
 
     # --- Save results ---
+    # Add implementation note for simplified baselines
+    policy_note = None
+    if args.policy == "h2o":
+        policy_note = "H2O-style: simplified implementation (cumulative attention across all queries, no heavy-hitter/recent split). Not line-by-line reproduction of original paper."
+    elif args.policy == "snapkv":
+        policy_note = "SnapKV-style: simplified implementation (hook-based attention accumulation, not per-window voting). Not line-by-line reproduction of original paper."
+    elif args.policy == "pyramidkv":
+        policy_note = "PyramidKV-style: simplified implementation (linear layer-budget decay + cumulative attention). Not line-by-line reproduction of original paper."
+
     result = {
         "experiment": f"KV-Cache-{args.dataset}",
         "policy": args.policy,
+        "policy_note": policy_note,
         "model": args.model_path,
         "dataset": args.dataset,
         "num_samples": len(samples),
