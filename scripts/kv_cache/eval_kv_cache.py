@@ -378,6 +378,11 @@ def generate_with_eviction(model, input_ids, cache, max_new_tokens, eos_id):
     """
     Greedy decode loop that supports physical KV eviction.
 
+    eos_id may be a single int or an iterable of ints (e.g. Llama-3 has two:
+    [128001, 128009]). We stop on ANY of them — matching HF generate, so the
+    custom loop and model.generate agree on stopping and latency comparisons
+    stay fair between compressed policies and the full baseline.
+
     HF's `model.generate` tracks a monotonic absolute position counter that
     assumes the cache only grows. When an eviction cache physically drops
     tokens, the KV length shrinks but the counter keeps climbing, so RoPE is
@@ -391,6 +396,14 @@ def generate_with_eviction(model, input_ids, cache, max_new_tokens, eos_id):
     """
     from applications.kv_cache.attention_capture import PerLayerPositionPatch
     import contextlib
+
+    # Normalize eos_id to a set of stop ids (support multi-EOS models like Llama-3).
+    if eos_id is None:
+        eos_ids = set()
+    elif isinstance(eos_id, (list, tuple, set)):
+        eos_ids = {int(e) for e in eos_id}
+    else:
+        eos_ids = {int(eos_id)}
 
     # Let the cache extract inv_freq for RoPE re-rotation on eviction. After
     # eviction, retained keys are re-rotated to compact positions (physical slot
@@ -423,7 +436,7 @@ def generate_with_eviction(model, input_ids, cache, max_new_tokens, eos_id):
 
     with patch_ctx:
         for _ in range(max_new_tokens - 1):
-            if next_tok.item() == eos_id:
+            if next_tok.item() in eos_ids:
                 break
             # Physical cache length AFTER any eviction that fired last step. The
             # new token attends over [0, L) retained keys and sits at position L.
@@ -438,6 +451,23 @@ def generate_with_eviction(model, input_ids, cache, max_new_tokens, eos_id):
     return generated
 
 
+def _collect_eos_ids(model, tokenizer):
+    """All stop-token ids the model would stop on, matching model.generate.
+
+    Llama-3 defines two EOS in its generation_config ([128001, 128009]); using
+    only tokenizer.eos_token_id would make the custom eviction loop over-generate
+    relative to the full baseline, biasing latency/throughput comparisons.
+    """
+    ids = set()
+    gc = getattr(model, "generation_config", None)
+    if gc is not None and getattr(gc, "eos_token_id", None) is not None:
+        e = gc.eos_token_id
+        ids.update(e if isinstance(e, (list, tuple)) else [e])
+    if tokenizer.eos_token_id is not None:
+        ids.add(tokenizer.eos_token_id)
+    return {int(x) for x in ids}
+
+
 def evaluate_sample(model, tokenizer, sample, cache, max_new_tokens=128,
                     max_input_length=7900, capture_attention=False):
     """Run generation on a single sample with the given cache policy."""
@@ -450,7 +480,11 @@ def evaluate_sample(model, tokenizer, sample, cache, max_new_tokens=128,
     if torch.cuda.is_available():
         torch.cuda.reset_peak_memory_stats(model.device)
 
-    eos_id = tokenizer.eos_token_id
+    # Collect the FULL set of stop tokens, matching what model.generate uses, so
+    # the custom eviction decode loop stops at the same places as the full
+    # baseline (Llama-3 has two EOS: 128001 <|end_of_text|> + 128009 <|eot_id|>).
+    # Priority: generation_config.eos_token_id, then tokenizer.eos_token_id.
+    eos_id = _collect_eos_ids(model, tokenizer)
 
     start_time = time.perf_counter()
     with torch.no_grad():

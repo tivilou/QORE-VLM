@@ -411,3 +411,24 @@ class TestRealForwardGeneration:
         assert len(gen) == 30
         lens = [cache.key_cache[i].shape[2] for i in range(4)]
         assert len(set(lens)) == 1, f"uniform cache must stay uniform, got {lens}"
+
+    def test_multi_eos_stops_on_any(self):
+        # generate_with_eviction must accept a set/list of EOS ids (Llama-3 has
+        # two) and stop on ANY of them, matching model.generate. Force the first
+        # generated token's id into the eos set and assert we stop immediately.
+        from applications.kv_cache.attention_capture import AttentionCapture
+        from scripts.kv_cache.eval_kv_cache import generate_with_eviction
+        model = _tiny_llama()
+        prompt = torch.randint(0, 256, (1, 20))
+        # Discover the first token this model would greedily emit.
+        cache0 = QORECache(max_capacity=10000, trigger_every=10000, num_layers=4,
+                           num_sink_tokens=4, quality="keynorm")
+        with torch.no_grad(), AttentionCapture(model, cache0):
+            first = generate_with_eviction(model, prompt, cache0, max_new_tokens=5, eos_id=-1)[0]
+        # Now treat that token as one of two EOS ids; generation must stop after it.
+        cache1 = QORECache(max_capacity=10000, trigger_every=10000, num_layers=4,
+                           num_sink_tokens=4, quality="keynorm")
+        with torch.no_grad(), AttentionCapture(model, cache1):
+            gen = generate_with_eviction(model, prompt, cache1, max_new_tokens=30,
+                                         eos_id=[999999, first])
+        assert gen == [first], f"expected stop after first EOS-matching token, got {gen[:5]}"
