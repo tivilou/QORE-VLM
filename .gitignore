@@ -65,3 +65,4 @@ wandb_api
 
 # Smoke-test / eval output dirs
 /results/
+/reference/
