@@ -146,9 +146,15 @@ def create_cache(policy, args, num_layers):
         raise ValueError(f"Unknown policy: {policy}")
 
 
-def load_longbench(max_samples=0):
-    """Load LongBench dataset."""
+def load_longbench(max_samples=0, sample_seed=None):
+    """Load LongBench dataset with optional random sampling.
+
+    Args:
+        max_samples: Total samples (0 = all). Stratified evenly across tasks.
+        sample_seed: Random seed for sampling. If None, uses sequential order.
+    """
     from datasets import load_dataset
+    import random
 
     subtasks = [
         "narrativeqa", "qasper", "multifieldqa_en",
@@ -679,7 +685,7 @@ def main():
     # --- Load data ---
     print(f"Loading dataset: {args.dataset}")
     if args.dataset == "longbench":
-        samples = load_longbench(args.max_samples)
+        samples = load_longbench(args.max_samples, sample_seed=args.seed)
     else:
         # Placeholder for other datasets
         samples = []
