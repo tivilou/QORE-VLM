@@ -5,15 +5,20 @@ installed via a forward-hook monkeypatch. See clusters.py and monkeypatch.py.
 """
 
 from .clusters import SnapKVCluster, H2OKVCluster, PyramidKVCluster
+from .qore_cluster import QOREKVCluster
 from .monkeypatch import PrefillCompressor
 
 
 def make_cluster_factory(method, max_capacity, window_size=32,
-                         kernel_size=5, pooling="avgpool", beta=20):
+                         kernel_size=5, pooling="avgpool", beta=20,
+                         redundancy_method="cosine", solver_method="anneal",
+                         num_reads=30, lam=2.0, block_size=32, seed=None):
     """Return a `make_cluster(layer_idx, num_layers)` builder for the given method.
 
-    method: "h2o" | "snapkv" | "pyramidkv" (official prefill-compression paradigm).
-    max_capacity: target retained prompt length (per layer for h2o/snapkv;
+    method: "h2o" | "snapkv" | "pyramidkv" | "qore" (official prefill-compression
+        paradigm). "qore" uses QUBO selection under the exact same protocol as
+        the baselines — the only variable is the selection algorithm.
+    max_capacity: target retained prompt length (per layer for h2o/snapkv/qore;
         the pyramid's centre for pyramidkv).
     """
     m = method.lower().removesuffix("_official")
@@ -32,10 +37,17 @@ def make_cluster_factory(method, max_capacity, window_size=32,
                                     max_capacity_prompt=max_capacity,
                                     kernel_size=kernel_size, pooling=pooling,
                                     beta=beta, layer_idx=layer_idx)
+        if m == "qore":
+            return QOREKVCluster(window_size=window_size,
+                                 max_capacity_prompt=max_capacity,
+                                 redundancy_method=redundancy_method,
+                                 solver_method=solver_method,
+                                 num_reads=num_reads, lam=lam,
+                                 block_size=block_size, seed=seed)
         raise ValueError(f"unknown official method: {method}")
 
     return factory
 
 
-__all__ = ["SnapKVCluster", "H2OKVCluster", "PyramidKVCluster",
+__all__ = ["SnapKVCluster", "H2OKVCluster", "PyramidKVCluster", "QOREKVCluster",
            "PrefillCompressor", "make_cluster_factory"]

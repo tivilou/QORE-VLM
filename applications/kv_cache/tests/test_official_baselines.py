@@ -73,7 +73,7 @@ def _tiny_llama(nkv=2):
 
 
 class TestPrefillCompressorEndToEnd:
-    @pytest.mark.parametrize("method", ["snapkv", "h2o", "pyramidkv"])
+    @pytest.mark.parametrize("method", ["snapkv", "h2o", "pyramidkv", "qore"])
     def test_parity_when_capacity_not_exceeded(self, method):
         # Huge capacity → compressor is inert → output must equal plain generate.
         from transformers import DynamicCache
@@ -82,18 +82,20 @@ class TestPrefillCompressorEndToEnd:
         with torch.no_grad():
             ref = model.generate(ids, max_new_tokens=15, do_sample=False,
                                   use_cache=True)[0][120:].tolist()
-        fac = make_cluster_factory(method, max_capacity=100000, window_size=16)
+        kw = dict(num_reads=12, seed=0) if method == "qore" else {}
+        fac = make_cluster_factory(method, max_capacity=100000, window_size=16, **kw)
         with torch.no_grad(), PrefillCompressor(model, fac):
             out = model.generate(ids, max_new_tokens=15, do_sample=False,
                                   past_key_values=DynamicCache(), use_cache=True)[0][120:].tolist()
         assert out == ref
 
-    @pytest.mark.parametrize("method", ["snapkv", "h2o", "pyramidkv"])
+    @pytest.mark.parametrize("method", ["snapkv", "h2o", "pyramidkv", "qore"])
     def test_compresses_prefill(self, method):
         from transformers import DynamicCache
         model = _tiny_llama()
         ids = torch.randint(0, 256, (1, 150))
-        fac = make_cluster_factory(method, max_capacity=64, window_size=16)
+        kw = dict(num_reads=12, seed=0) if method == "qore" else {}
+        fac = make_cluster_factory(method, max_capacity=64, window_size=16, **kw)
         cache = DynamicCache()
         with torch.no_grad(), PrefillCompressor(model, fac):
             model.generate(ids, max_new_tokens=15, do_sample=False,

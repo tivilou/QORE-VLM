@@ -29,6 +29,15 @@ def parse_args():
     parser.add_argument("--policy", type=str, default="qore",
                         choices=["qore", "h2o", "snapkv", "pyramidkv",
                                  "window", "random", "full"])
+    parser.add_argument("--paradigm", type=str, default="decode_evict",
+                        choices=["decode_evict", "prefill_compress"],
+                        help="Eviction paradigm. 'decode_evict' (default): our "
+                             "decode-time physical eviction + RoPE re-rotation. "
+                             "'prefill_compress': official paradigm — compress "
+                             "once at end of prefill via monkeypatch, standard "
+                             "generate. In prefill_compress, h2o/snapkv/pyramidkv "
+                             "are FAITHFUL official reproductions and qore uses "
+                             "QUBO selection under the identical protocol.")
     parser.add_argument("--quality", type=str, default="attention",
                         choices=["attention", "keynorm", "vqc"],
                         help="QORE quality signal: real cumulative attention "
@@ -549,6 +558,65 @@ def evaluate_sample(model, tokenizer, sample, cache, max_new_tokens=128,
     }
 
 
+def evaluate_sample_prefill(model, tokenizer, sample, args, max_new_tokens=128,
+                            max_input_length=7900):
+    """Official prefill-compression paradigm: compress once at prefill via
+    PrefillCompressor, then standard model.generate (no custom decode loop, no
+    RoPE re-rotation — retained keys keep their original phase).
+
+    Used when --paradigm prefill_compress. `full` policy skips compression.
+    """
+    from transformers import DynamicCache
+    from applications.kv_cache.official import PrefillCompressor, make_cluster_factory
+
+    inputs = build_inputs(tokenizer, sample, max_input_length, model.device)
+    input_len = inputs["input_ids"].shape[1]
+
+    if torch.cuda.is_available():
+        torch.cuda.reset_peak_memory_stats(model.device)
+
+    cache = DynamicCache()
+    gen_kwargs = dict(max_new_tokens=max_new_tokens, do_sample=False,
+                      past_key_values=cache, use_cache=True)
+
+    start_time = time.perf_counter()
+    with torch.no_grad():
+        if args.policy == "full":
+            outputs = model.generate(**inputs, **gen_kwargs)
+        else:
+            factory = make_cluster_factory(
+                args.policy, max_capacity=args.max_capacity,
+                window_size=args.window, redundancy_method=args.redundancy_method,
+                solver_method=args.solver_method, num_reads=args.num_reads,
+                seed=args.seed)
+            with PrefillCompressor(model, factory):
+                outputs = model.generate(**inputs, **gen_kwargs)
+    elapsed_ms = (time.perf_counter() - start_time) * 1000
+
+    peak_mem_MB = resident_mem_MB = None
+    if torch.cuda.is_available():
+        peak_mem_MB = torch.cuda.max_memory_allocated(model.device) / (1024 * 1024)
+        resident_mem_MB = torch.cuda.memory_allocated(model.device) / (1024 * 1024)
+
+    gen_ids = outputs[0][input_len:].tolist()
+    output_len = len(gen_ids)
+    answer = tokenizer.decode(gen_ids, skip_special_tokens=True).strip()
+    cache_stats = measure_cache(cache)
+
+    return {
+        "prediction": answer,
+        "input_length": input_len,
+        "output_length": output_len,
+        "time_ms": elapsed_ms,
+        "tokens_per_sec": output_len / (elapsed_ms / 1000) if elapsed_ms > 0 else 0,
+        "final_cache_len": cache_stats["final_cache_len"],
+        "layer_lengths": cache_stats["layer_lengths"],
+        "cache_bytes": cache_stats["cache_bytes"],
+        "peak_mem_MB": peak_mem_MB,
+        "resident_mem_MB": resident_mem_MB,
+    }
+
+
 def compute_metrics(predictions, references, tasks=None):
     """Compute F1 for LongBench (micro + official macro-by-task if tasks given)."""
     from collections import Counter
@@ -636,6 +704,9 @@ def main():
     #   also use eager so backend differences don't confound the cache-policy effect.
     # The cost: full/window/random are penalized by eager's slower throughput vs sdpa,
     # but everyone is on the same starting line and latency rankings stay meaningful.
+    # prefill_compress recomputes its own scoring matmul inside the cluster, so it
+    # does not need eager to read model attention weights — but we keep eager for
+    # both paradigms so latency/quality stay comparable across paradigms too.
     attn_impl = "eager"
     capture = policy_needs_attention(args.policy, args.quality)
 
@@ -667,13 +738,18 @@ def main():
         if (i + 1) % 20 == 0:
             print(f"  [{i+1}/{len(samples)}]")
 
-        # Create a FRESH cache for each sample (avoid state leaking between samples)
-        cache = create_cache(args.policy, args, num_layers)
-
         if model is not None:
-            result = evaluate_sample(model, tokenizer, sample, cache,
-                                     args.max_new_tokens, args.max_input_length,
-                                     capture_attention=capture)
+            if args.paradigm == "prefill_compress":
+                # Official paradigm: compress once at prefill, standard generate.
+                result = evaluate_sample_prefill(
+                    model, tokenizer, sample, args,
+                    args.max_new_tokens, args.max_input_length)
+            else:
+                # decode_evict (default): our decode-time eviction + RoPE re-rotation.
+                cache = create_cache(args.policy, args, num_layers)
+                result = evaluate_sample(model, tokenizer, sample, cache,
+                                         args.max_new_tokens, args.max_input_length,
+                                         capture_attention=capture)
             predictions.append(result["prediction"])
             latencies.append(result["time_ms"])
             throughputs.append(result["tokens_per_sec"])
@@ -787,6 +863,7 @@ def main():
             "redundancy_method": args.redundancy_method,
             "quantum_backend": args.quantum_backend,
             "attn_implementation": attn_impl,
+            "paradigm": args.paradigm,
             "max_new_tokens": args.max_new_tokens,
             "max_input_length": args.max_input_length,
             "seed": args.seed,
