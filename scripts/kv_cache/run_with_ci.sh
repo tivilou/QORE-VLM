@@ -20,7 +20,7 @@ for policy in $POLICIES; do
   echo ""
   echo ">>> Policy: $policy"
   for seed in $SEEDS; do
-    echo "  Running seed $seed..."
+    echo "  Running seed $seed (log: $OUTPUT_DIR/${policy}_seed${seed}.log)..."
     python scripts/kv_cache/eval_kv_cache.py \
       --model_path "$MODEL" \
       --policy "$policy" \
@@ -32,6 +32,7 @@ for policy in $POLICIES; do
       --output_dir "$OUTPUT_DIR" \
       --output_file "${policy}_seed${seed}.json" \
       > "$OUTPUT_DIR/${policy}_seed${seed}.log" 2>&1
+    echo "    Completed."
   done
 
   echo "  Aggregating with bootstrap CI..."

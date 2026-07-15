@@ -740,9 +740,26 @@ def main():
     if capture:
         print(f"  Attention capture: ON (policy={args.policy} needs cumulative attention)")
 
-    for i, sample in enumerate(samples):
-        if (i + 1) % 20 == 0:
-            print(f"  [{i+1}/{len(samples)}]")
+    # Progress display: use tqdm if available AND stdout is a terminal (not redirected)
+    import sys
+    try:
+        from tqdm import tqdm
+        use_tqdm = sys.stderr.isatty()  # tqdm writes to stderr; show bar only if terminal
+    except ImportError:
+        use_tqdm = False
+
+    if use_tqdm:
+        sample_iter = tqdm(enumerate(samples), total=len(samples),
+                          desc=f"Eval {args.policy}", unit="sample", file=sys.stderr)
+    else:
+        sample_iter = enumerate(samples)
+        if not sys.stderr.isatty():
+            print(f"  Progress will be logged every 5 samples (output is redirected)")
+
+    for i, sample in sample_iter:
+        # Fallback progress for non-tty (log files): print every 5 samples
+        if not use_tqdm and (i + 1) % 5 == 0:
+            print(f"  [{i+1}/{len(samples)}] samples completed", flush=True)
 
         if model is not None:
             if args.paradigm == "prefill_compress":
