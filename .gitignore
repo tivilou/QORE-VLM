@@ -66,3 +66,6 @@ wandb_api
 # Smoke-test / eval output dirs
 /results/
 /reference/
+
+# Project progress tracking (local only)
+.ai-progress/
