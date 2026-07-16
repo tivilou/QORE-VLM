@@ -99,6 +99,50 @@ After retrieval, a typical pipeline has 50–200 candidate passages but can only
 - **Timing**: once before generation (offline)
 - **Scaling**: N is naturally small (50–200), no decomposition needed — direct solve
 
+## Quick Start
+
+### KV Cache Eviction
+
+```bash
+# Default (best quality, ~6× latency vs H2O)
+python -m scripts.kv_cache.eval_kv_cache \
+  --model_path meta-llama/Meta-Llama-3-8B-Instruct \
+  --dataset longbench \
+  --policy qore \
+  --max_capacity 1024
+
+# Balanced mode (recommended for production, ~3-4× latency)
+python -m scripts.kv_cache.eval_kv_cache \
+  --model_path meta-llama/Meta-Llama-3-8B-Instruct \
+  --dataset longbench \
+  --policy qore \
+  --speed_mode balanced \
+  --max_capacity 1024
+```
+
+**Performance tuning**: See [KV Cache Performance Tuning Guide](docs/kv_cache_performance_tuning.md) for quality-speed tradeoff options.
+
+### RAG Context Selection
+
+```bash
+# Evaluate QORE on Natural Questions (200 samples)
+python -m scripts.rag.eval_rag \
+  --model_path meta-llama/Meta-Llama-3-8B-Instruct \
+  --dataset natural_questions \
+  --method qore \
+  --K 8 \
+  --num_reads 200 \
+  --max_samples 200
+
+# Compare with baselines (MMR, Top-K)
+python -m scripts.rag.eval_rag \
+  --method mmr \
+  --lambda_mmr 0.7 \
+  --K 8
+```
+
+**Usage guide**: See [RAG Evaluation Guide](docs/rag_evaluation_guide.md) for complete documentation.
+
 ## Why Quantum
 
 - **Coupling-aware optimization.** The `bᵢⱼ` terms make the objective non-separable.

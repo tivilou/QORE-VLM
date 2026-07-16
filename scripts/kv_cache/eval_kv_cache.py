@@ -62,7 +62,20 @@ def parse_args():
     parser.add_argument("--max_capacity", type=int, default=1024)
     parser.add_argument("--trigger_every", type=int, default=128)
     parser.add_argument("--num_sink_tokens", type=int, default=4)
-    parser.add_argument("--num_reads", type=int, default=30)
+
+    # Speed optimization parameters
+    parser.add_argument("--speed_mode", type=str, default=None,
+                        choices=["quality", "balanced", "fast"],
+                        help="Quality-speed tradeoff preset for QORE. "
+                             "quality=num_reads 100 (best F1, ~6× latency); "
+                             "balanced=num_reads 50 (~3-4× latency); "
+                             "fast=num_reads 30 (~2-3× latency). "
+                             "If set, overrides --num_reads. Default: None (use --num_reads).")
+    parser.add_argument("--num_reads", type=int, default=100,
+                        help="SA sampling reads for QORE. Higher=better quality but slower. "
+                             "Recommended: 100 (default, quality), 50 (balanced), 30 (fast). "
+                             "Ignored if --speed_mode is set.")
+
     parser.add_argument("--max_samples", type=int, default=0)
     parser.add_argument("--max_new_tokens", type=int, default=128)
     parser.add_argument("--max_input_length", type=int, default=7900,
@@ -73,7 +86,19 @@ def parse_args():
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--skip_generation", action="store_true",
                         help="Skip actual generation (just verify cache mechanics)")
-    return parser.parse_args()
+    args = parser.parse_args()
+
+    # Apply speed_mode preset if specified
+    if args.speed_mode is not None:
+        SPEED_MODE_CONFIG = {
+            "quality": 100,
+            "balanced": 50,
+            "fast": 30,
+        }
+        args.num_reads = SPEED_MODE_CONFIG[args.speed_mode]
+        print(f"Speed mode '{args.speed_mode}' selected: num_reads={args.num_reads}")
+
+    return args
 
 
 # Policies whose eviction uses real cumulative attention → need forward hooks
