@@ -118,7 +118,7 @@ def run_experiment(K: int = 8, seed: int = 42):
         "Top-K": {"method": "topk"},
         "MMR (λ=0.5)": {"method": "mmr", "lambda_mmr": 0.5},
         "MMR (λ=0.7)": {"method": "mmr", "lambda_mmr": 0.7},
-        "QORE-SA": {"method": "qore", "num_reads": 100, "seed": seed},
+        "QORE-SA": {"method": "qore", "num_reads": 200, "seed": seed},
     }
 
     results = {}
