@@ -1,0 +1,29 @@
+{
+  "experiment": "KV-Cache-longbench",
+  "model": "models/llama3-8b",
+  "dataset": "longbench",
+  "policies": [
+    "qore",
+    "h2o",
+    "snapkv",
+    "pyramidkv",
+    "window",
+    "random",
+    "full"
+  ],
+  "max_capacity": 1024,
+  "trigger_every": 128,
+  "num_sink_tokens": 4,
+  "num_reads": 30,
+  "quality": "attention",
+  "window": 32,
+  "solver_method": "anneal",
+  "redundancy_method": "cosine",
+  "quantum_backend": "tensorcircuit",
+  "attn_implementation": "eager",
+  "paradigm": "decode_evict",
+  "max_samples": 0,
+  "max_new_tokens": 128,
+  "max_input_length": 7900,
+  "seed": 42
+}
