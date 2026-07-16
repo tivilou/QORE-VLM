@@ -1,0 +1,42 @@
+{
+  "schema_version": 2,
+  "project": {
+    "name": "QORE-VLM",
+    "created_at": "2026-07-16T03:21:04Z"
+  },
+  "workstreams": [
+    {
+      "id": "kv-cache-eval",
+      "title": "KV Cache Evaluation & Optimization",
+      "status": "active",
+      "path": "workstreams/kv-cache-eval",
+      "tags": [
+        "kv-cache",
+        "evaluation"
+      ],
+      "scope": [
+        "applications/kv_cache/**",
+        "scripts/kv_cache/**"
+      ],
+      "aliases": [],
+      "related": [],
+      "created_at": "2026-07-16T03:21:26Z"
+    },
+    {
+      "id": "rag-selector",
+      "title": "RAG Passage Selection with QORE",
+      "status": "active",
+      "path": "workstreams/rag-selector",
+      "tags": [
+        "rag",
+        "selector"
+      ],
+      "scope": [
+        "applications/rag/**"
+      ],
+      "aliases": [],
+      "related": [],
+      "created_at": "2026-07-16T04:27:43Z"
+    }
+  ]
+}
