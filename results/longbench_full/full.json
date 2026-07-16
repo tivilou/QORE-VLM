@@ -1,0 +1,62 @@
+{
+  "experiment": "KV-Cache-longbench",
+  "policy": "full",
+  "policy_note": null,
+  "model": "models/llama3-8b",
+  "dataset": "longbench",
+  "num_samples": 1150,
+  "task_distribution": {
+    "narrativeqa": 200,
+    "qasper": 200,
+    "multifieldqa_en": 150,
+    "hotpotqa": 200,
+    "2wikimqa": 200,
+    "musique": 200
+  },
+  "metrics": {
+    "f1": 0.36709767386671954,
+    "f1_micro": 0.36353657424654046,
+    "f1_per_task": {
+      "narrativeqa": 0.21742271164969132,
+      "qasper": 0.4440129777690545,
+      "multifieldqa_en": 0.4490029651308372,
+      "hotpotqa": 0.48670551378446114,
+      "2wikimqa": 0.3763563074856178,
+      "musique": 0.22908556738065514
+    },
+    "f1_macro": 0.36709767386671954,
+    "avg_latency_ms": 2893.60858931296,
+    "avg_throughput_tok_per_sec": 4.11904603795383
+  },
+  "compression": {
+    "avg_input_length": 6698,
+    "tokens_kept": 6697,
+    "compression_ratio": 1.0,
+    "memory_full_MB": 837.2,
+    "memory_compressed_MB": 837.2,
+    "memory_saved_MB": 0.0
+  },
+  "measured": {
+    "avg_final_cache_len": 6706.7,
+    "avg_peak_mem_MB": 31219.4,
+    "max_peak_mem_MB": 35586.1,
+    "avg_resident_mem_MB": 16163.1,
+    "avg_cache_MB": 838.34
+  },
+  "config": {
+    "max_capacity": 1024,
+    "trigger_every": 128,
+    "num_sink_tokens": 4,
+    "num_reads": 30,
+    "quality": "attention",
+    "window": 32,
+    "solver_method": "anneal",
+    "redundancy_method": "cosine",
+    "quantum_backend": "tensorcircuit",
+    "attn_implementation": "eager",
+    "paradigm": "decode_evict",
+    "max_new_tokens": 128,
+    "max_input_length": 7900,
+    "seed": 42
+  }
+}

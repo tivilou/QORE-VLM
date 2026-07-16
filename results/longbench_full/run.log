@@ -1,0 +1,93 @@
+==============================================
+  QORE KV-Cache Experiment: LongBench
+==============================================
+  Model:         models/llama3-8b
+  Max capacity:  1024
+  Trigger every: 128
+  Max samples:   0 (0=all)
+  Max input len: 7900
+  Output:        results/kv_cache/longbench_full
+==============================================
+
+>>> Running policy: qore
+Policy: qore, Capacity: 1024
+Loading dataset: longbench
+  1150 samples loaded
+  Loading LLM: models/llama3-8b (attn=eager)
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.02it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.04it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.05it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.48it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.28it/s]
+  Model: 32 layers, 131072 bytes/token in KV cache
+
+Running evaluation: policy=qore, capacity=1024
+  Attention capture: ON (policy=qore needs cumulative attention)
+  [20/1150]
+  [40/1150]
+  [60/1150]
+  [80/1150]
+  [100/1150]
+  [120/1150]
+  [140/1150]
+  [160/1150]
+  [180/1150]
+  [200/1150]
+  [220/1150]
+  [240/1150]
+  [260/1150]
+  [280/1150]
+  [300/1150]
+  [320/1150]
+  [340/1150]
+  [360/1150]
+  [380/1150]
+  [400/1150]
+  [420/1150]
+  [440/1150]
+  [460/1150]
+  [480/1150]
+  [500/1150]
+  [520/1150]
+  [540/1150]
+  [560/1150]
+  [580/1150]
+  [600/1150]
+  [620/1150]
+  [640/1150]
+  [660/1150]
+  [680/1150]
+  [700/1150]
+  [720/1150]
+  [740/1150]
+  [760/1150]
+  [780/1150]
+  [800/1150]
+  [820/1150]
+  [840/1150]
+  [860/1150]
+  [880/1150]
+  [900/1150]
+  [920/1150]
+  [940/1150]
+  [960/1150]
+  [980/1150]
+  [1000/1150]
+  [1020/1150]
+  [1040/1150]
+  [1060/1150]
+  [1080/1150]
+  [1100/1150]
+  [1120/1150]
+  [1140/1150]
+
+  Results: F1=0.1949, Latency=18023ms, Throughput=0.6 tok/s
+  Per-sample details saved to results/kv_cache/longbench_full/qore.samples.json
+
+Results saved to results/kv_cache/longbench_full/qore.json
+  Task distribution: {'narrativeqa': 200, 'qasper': 200, 'multifieldqa_en': 150, 'hotpotqa': 200, '2wikimqa': 200, 'musique': 200}
+  Measured peak GPU mem: avg 31221 MB, max 35588 MB
+Compression (theoretical): 6698 → 1024 tokens (15.3% kept, saves ~709 MB)
+
+>>> Running policy: h2o
+Policy: h2o, Capacity: 1024
+Loading dataset: longbench
+  1150 samples loaded
+  Loading LLM: models/llama3-8b (attn=eager)
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:03,  1.06s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.06s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:03<00:01,  1.05s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.34it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.16it/s]

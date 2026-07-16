@@ -1,0 +1,62 @@
+{
+  "experiment": "KV-Cache-longbench",
+  "policy": "pyramidkv",
+  "policy_note": "PyramidKV-style: simplified implementation (linear layer-budget decay + cumulative attention). Not line-by-line reproduction of original paper.",
+  "model": "models/llama3-8b",
+  "dataset": "longbench",
+  "num_samples": 1150,
+  "task_distribution": {
+    "narrativeqa": 200,
+    "qasper": 200,
+    "multifieldqa_en": 150,
+    "hotpotqa": 200,
+    "2wikimqa": 200,
+    "musique": 200
+  },
+  "metrics": {
+    "f1": 0.1329321248706673,
+    "f1_micro": 0.13080344139569375,
+    "f1_per_task": {
+      "narrativeqa": 0.09256459954740148,
+      "qasper": 0.10860882627644042,
+      "multifieldqa_en": 0.1818918447950596,
+      "hotpotqa": 0.21774527464757415,
+      "2wikimqa": 0.12326068883693896,
+      "musique": 0.0735215151205893
+    },
+    "f1_macro": 0.1329321248706673,
+    "avg_latency_ms": 6366.015719126949,
+    "avg_throughput_tok_per_sec": 8.23934325327835
+  },
+  "compression": {
+    "avg_input_length": 6698,
+    "tokens_kept": 1024,
+    "compression_ratio": 0.1529,
+    "memory_full_MB": 837.2,
+    "memory_compressed_MB": 128.0,
+    "memory_saved_MB": 709.2
+  },
+  "measured": {
+    "avg_final_cache_len": 1088.5,
+    "avg_peak_mem_MB": 31220.2,
+    "max_peak_mem_MB": 35587.1,
+    "avg_resident_mem_MB": 15461.6,
+    "avg_cache_MB": 136.06
+  },
+  "config": {
+    "max_capacity": 1024,
+    "trigger_every": 128,
+    "num_sink_tokens": 4,
+    "num_reads": 30,
+    "quality": "attention",
+    "window": 32,
+    "solver_method": "anneal",
+    "redundancy_method": "cosine",
+    "quantum_backend": "tensorcircuit",
+    "attn_implementation": "eager",
+    "paradigm": "decode_evict",
+    "max_new_tokens": 128,
+    "max_input_length": 7900,
+    "seed": 42
+  }
+}

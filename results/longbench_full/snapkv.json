@@ -1,0 +1,62 @@
+{
+  "experiment": "KV-Cache-longbench",
+  "policy": "snapkv",
+  "policy_note": "SnapKV-style: simplified implementation (hook-based attention accumulation, not per-window voting). Not line-by-line reproduction of original paper.",
+  "model": "models/llama3-8b",
+  "dataset": "longbench",
+  "num_samples": 1150,
+  "task_distribution": {
+    "narrativeqa": 200,
+    "qasper": 200,
+    "multifieldqa_en": 150,
+    "hotpotqa": 200,
+    "2wikimqa": 200,
+    "musique": 200
+  },
+  "metrics": {
+    "f1": 0.1412474995154539,
+    "f1_micro": 0.13998415510560178,
+    "f1_per_task": {
+      "narrativeqa": 0.10880533937093947,
+      "qasper": 0.15222520056190686,
+      "multifieldqa_en": 0.17030442094205248,
+      "hotpotqa": 0.19622370651587878,
+      "2wikimqa": 0.16736106961227393,
+      "musique": 0.05256526008967189
+    },
+    "f1_macro": 0.1412474995154539,
+    "avg_latency_ms": 4712.5364649017465,
+    "avg_throughput_tok_per_sec": 6.827523522213015
+  },
+  "compression": {
+    "avg_input_length": 6698,
+    "tokens_kept": 1024,
+    "compression_ratio": 0.1529,
+    "memory_full_MB": 837.2,
+    "memory_compressed_MB": 128.0,
+    "memory_saved_MB": 709.2
+  },
+  "measured": {
+    "avg_final_cache_len": 1065.3,
+    "avg_peak_mem_MB": 31219.4,
+    "max_peak_mem_MB": 35586.2,
+    "avg_resident_mem_MB": 15457.9,
+    "avg_cache_MB": 133.16
+  },
+  "config": {
+    "max_capacity": 1024,
+    "trigger_every": 128,
+    "num_sink_tokens": 4,
+    "num_reads": 30,
+    "quality": "attention",
+    "window": 32,
+    "solver_method": "anneal",
+    "redundancy_method": "cosine",
+    "quantum_backend": "tensorcircuit",
+    "attn_implementation": "eager",
+    "paradigm": "decode_evict",
+    "max_new_tokens": 128,
+    "max_input_length": 7900,
+    "seed": 42
+  }
+}

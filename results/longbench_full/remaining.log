@@ -1,0 +1,489 @@
+========================================
+Running policy: h2o
+========================================
+Policy: h2o, Capacity: 1024
+Loading dataset: longbench
+  1150 samples loaded
+  Loading LLM: models/llama3-8b (attn=eager)
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:36<01:49, 36.59s/it]Loading checkpoint shards:  50%|█████     | 2/4 [01:13<01:13, 36.70s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [01:49<00:36, 36.45s/it]Loading checkpoint shards: 100%|██████████| 4/4 [01:58<00:00, 25.44s/it]Loading checkpoint shards: 100%|██████████| 4/4 [01:58<00:00, 29.52s/it]
+  Model: 32 layers, 131072 bytes/token in KV cache
+
+Running evaluation: policy=h2o, capacity=1024
+  Attention capture: ON (policy=h2o needs cumulative attention)
+  [20/1150]
+  [40/1150]
+  [60/1150]
+  [80/1150]
+  [100/1150]
+  [120/1150]
+  [140/1150]
+  [160/1150]
+  [180/1150]
+  [200/1150]
+  [220/1150]
+  [240/1150]
+  [260/1150]
+  [280/1150]
+  [300/1150]
+  [320/1150]
+  [340/1150]
+  [360/1150]
+  [380/1150]
+  [400/1150]
+  [420/1150]
+  [440/1150]
+  [460/1150]
+  [480/1150]
+  [500/1150]
+  [520/1150]
+  [540/1150]
+  [560/1150]
+  [580/1150]
+  [600/1150]
+  [620/1150]
+  [640/1150]
+  [660/1150]
+  [680/1150]
+  [700/1150]
+  [720/1150]
+  [740/1150]
+  [760/1150]
+  [780/1150]
+  [800/1150]
+  [820/1150]
+  [840/1150]
+  [860/1150]
+  [880/1150]
+  [900/1150]
+  [920/1150]
+  [940/1150]
+  [960/1150]
+  [980/1150]
+  [1000/1150]
+  [1020/1150]
+  [1040/1150]
+  [1060/1150]
+  [1080/1150]
+  [1100/1150]
+  [1120/1150]
+  [1140/1150]
+
+  Results: F1=0.1127, Latency=5400ms, Throughput=10.5 tok/s
+  Per-sample details saved to results/kv_cache/longbench_full/h2o.samples.json
+
+Results saved to results/kv_cache/longbench_full/h2o.json
+  Task distribution: {'narrativeqa': 200, 'qasper': 200, 'multifieldqa_en': 150, 'hotpotqa': 200, '2wikimqa': 200, 'musique': 200}
+  Measured peak GPU mem: avg 31219 MB, max 35586 MB
+Compression (theoretical): 6698 → 1024 tokens (15.3% kept, saves ~709 MB)
+========================================
+Running policy: snapkv
+========================================
+Policy: snapkv, Capacity: 1024
+Loading dataset: longbench
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+  1150 samples loaded
+  Loading LLM: models/llama3-8b (attn=eager)
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:03,  1.29s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.30s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:03<00:01,  1.29s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.08it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.06s/it]
+  Model: 32 layers, 131072 bytes/token in KV cache
+
+Running evaluation: policy=snapkv, capacity=1024
+  Attention capture: ON (policy=snapkv needs cumulative attention)
+  [20/1150]
+  [40/1150]
+  [60/1150]
+  [80/1150]
+  [100/1150]
+  [120/1150]
+  [140/1150]
+  [160/1150]
+  [180/1150]
+  [200/1150]
+  [220/1150]
+  [240/1150]
+  [260/1150]
+  [280/1150]
+  [300/1150]
+  [320/1150]
+  [340/1150]
+  [360/1150]
+  [380/1150]
+  [400/1150]
+  [420/1150]
+  [440/1150]
+  [460/1150]
+  [480/1150]
+  [500/1150]
+  [520/1150]
+  [540/1150]
+  [560/1150]
+  [580/1150]
+  [600/1150]
+  [620/1150]
+  [640/1150]
+  [660/1150]
+  [680/1150]
+  [700/1150]
+  [720/1150]
+  [740/1150]
+  [760/1150]
+  [780/1150]
+  [800/1150]
+  [820/1150]
+  [840/1150]
+  [860/1150]
+  [880/1150]
+  [900/1150]
+  [920/1150]
+  [940/1150]
+  [960/1150]
+  [980/1150]
+  [1000/1150]
+  [1020/1150]
+  [1040/1150]
+  [1060/1150]
+  [1080/1150]
+  [1100/1150]
+  [1120/1150]
+  [1140/1150]
+
+  Results: F1=0.1412, Latency=4713ms, Throughput=6.8 tok/s
+  Per-sample details saved to results/kv_cache/longbench_full/snapkv.samples.json
+
+Results saved to results/kv_cache/longbench_full/snapkv.json
+  Task distribution: {'narrativeqa': 200, 'qasper': 200, 'multifieldqa_en': 150, 'hotpotqa': 200, '2wikimqa': 200, 'musique': 200}
+  Measured peak GPU mem: avg 31219 MB, max 35586 MB
+Compression (theoretical): 6698 → 1024 tokens (15.3% kept, saves ~709 MB)
+========================================
+Running policy: pyramidkv
+========================================
+Policy: pyramidkv, Capacity: 1024
+Loading dataset: longbench
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+  1150 samples loaded
+  Loading LLM: models/llama3-8b (attn=eager)
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.05it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.05it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.05it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.46it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.28it/s]
+  Model: 32 layers, 131072 bytes/token in KV cache
+
+Running evaluation: policy=pyramidkv, capacity=1024
+  Attention capture: ON (policy=pyramidkv needs cumulative attention)
+  [20/1150]
+  [40/1150]
+  [60/1150]
+  [80/1150]
+  [100/1150]
+  [120/1150]
+  [140/1150]
+  [160/1150]
+  [180/1150]
+  [200/1150]
+  [220/1150]
+  [240/1150]
+  [260/1150]
+  [280/1150]
+  [300/1150]
+  [320/1150]
+  [340/1150]
+  [360/1150]
+  [380/1150]
+  [400/1150]
+  [420/1150]
+  [440/1150]
+  [460/1150]
+  [480/1150]
+  [500/1150]
+  [520/1150]
+  [540/1150]
+  [560/1150]
+  [580/1150]
+  [600/1150]
+  [620/1150]
+  [640/1150]
+  [660/1150]
+  [680/1150]
+  [700/1150]
+  [720/1150]
+  [740/1150]
+  [760/1150]
+  [780/1150]
+  [800/1150]
+  [820/1150]
+  [840/1150]
+  [860/1150]
+  [880/1150]
+  [900/1150]
+  [920/1150]
+  [940/1150]
+  [960/1150]
+  [980/1150]
+  [1000/1150]
+  [1020/1150]
+  [1040/1150]
+  [1060/1150]
+  [1080/1150]
+  [1100/1150]
+  [1120/1150]
+  [1140/1150]
+
+  Results: F1=0.1329, Latency=6366ms, Throughput=8.2 tok/s
+  Per-sample details saved to results/kv_cache/longbench_full/pyramidkv.samples.json
+
+Results saved to results/kv_cache/longbench_full/pyramidkv.json
+  Task distribution: {'narrativeqa': 200, 'qasper': 200, 'multifieldqa_en': 150, 'hotpotqa': 200, '2wikimqa': 200, 'musique': 200}
+  Measured peak GPU mem: avg 31220 MB, max 35587 MB
+Compression (theoretical): 6698 → 1024 tokens (15.3% kept, saves ~709 MB)
+========================================
+Running policy: window
+========================================
+Policy: window, Capacity: 1024
+Loading dataset: longbench
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+  1150 samples loaded
+  Loading LLM: models/llama3-8b (attn=eager)
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.18it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.18it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.19it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.65it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.44it/s]
+  Model: 32 layers, 131072 bytes/token in KV cache
+
+Running evaluation: policy=window, capacity=1024
+  [20/1150]
+  [40/1150]
+  [60/1150]
+  [80/1150]
+  [100/1150]
+  [120/1150]
+  [140/1150]
+  [160/1150]
+  [180/1150]
+  [200/1150]
+  [220/1150]
+  [240/1150]
+  [260/1150]
+  [280/1150]
+  [300/1150]
+  [320/1150]
+  [340/1150]
+  [360/1150]
+  [380/1150]
+  [400/1150]
+  [420/1150]
+  [440/1150]
+  [460/1150]
+  [480/1150]
+  [500/1150]
+  [520/1150]
+  [540/1150]
+  [560/1150]
+  [580/1150]
+  [600/1150]
+  [620/1150]
+  [640/1150]
+  [660/1150]
+  [680/1150]
+  [700/1150]
+  [720/1150]
+  [740/1150]
+  [760/1150]
+  [780/1150]
+  [800/1150]
+  [820/1150]
+  [840/1150]
+  [860/1150]
+  [880/1150]
+  [900/1150]
+  [920/1150]
+  [940/1150]
+  [960/1150]
+  [980/1150]
+  [1000/1150]
+  [1020/1150]
+  [1040/1150]
+  [1060/1150]
+  [1080/1150]
+  [1100/1150]
+  [1120/1150]
+  [1140/1150]
+
+  Results: F1=0.1480, Latency=3378ms, Throughput=7.0 tok/s
+  Per-sample details saved to results/kv_cache/longbench_full/window.samples.json
+
+Results saved to results/kv_cache/longbench_full/window.json
+  Task distribution: {'narrativeqa': 200, 'qasper': 200, 'multifieldqa_en': 150, 'hotpotqa': 200, '2wikimqa': 200, 'musique': 200}
+  Measured peak GPU mem: avg 31219 MB, max 35586 MB
+Compression (theoretical): 6698 → 1024 tokens (15.3% kept, saves ~709 MB)
+========================================
+Running policy: random
+========================================
+Policy: random, Capacity: 1024
+Loading dataset: longbench
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+  1150 samples loaded
+  Loading LLM: models/llama3-8b (attn=eager)
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.18it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.18it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.18it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.64it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.44it/s]
+  Model: 32 layers, 131072 bytes/token in KV cache
+
+Running evaluation: policy=random, capacity=1024
+  [20/1150]
+  [40/1150]
+  [60/1150]
+  [80/1150]
+  [100/1150]
+  [120/1150]
+  [140/1150]
+  [160/1150]
+  [180/1150]
+  [200/1150]
+  [220/1150]
+  [240/1150]
+  [260/1150]
+  [280/1150]
+  [300/1150]
+  [320/1150]
+  [340/1150]
+  [360/1150]
+  [380/1150]
+  [400/1150]
+  [420/1150]
+  [440/1150]
+  [460/1150]
+  [480/1150]
+  [500/1150]
+  [520/1150]
+  [540/1150]
+  [560/1150]
+  [580/1150]
+  [600/1150]
+  [620/1150]
+  [640/1150]
+  [660/1150]
+  [680/1150]
+  [700/1150]
+  [720/1150]
+  [740/1150]
+  [760/1150]
+  [780/1150]
+  [800/1150]
+  [820/1150]
+  [840/1150]
+  [860/1150]
+  [880/1150]
+  [900/1150]
+  [920/1150]
+  [940/1150]
+  [960/1150]
+  [980/1150]
+  [1000/1150]
+  [1020/1150]
+  [1040/1150]
+  [1060/1150]
+  [1080/1150]
+  [1100/1150]
+  [1120/1150]
+  [1140/1150]
+
+  Results: F1=0.1379, Latency=3694ms, Throughput=9.2 tok/s
+  Per-sample details saved to results/kv_cache/longbench_full/random.samples.json
+
+Results saved to results/kv_cache/longbench_full/random.json
+  Task distribution: {'narrativeqa': 200, 'qasper': 200, 'multifieldqa_en': 150, 'hotpotqa': 200, '2wikimqa': 200, 'musique': 200}
+  Measured peak GPU mem: avg 31219 MB, max 35586 MB
+Compression (theoretical): 6698 → 1024 tokens (15.3% kept, saves ~709 MB)
+========================================
+Running policy: full
+========================================
+Policy: full, Capacity: 1024
+Loading dataset: longbench
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+Using the latest cached version of the module from /root/.cache/huggingface/modules/datasets_modules/datasets/THUDM--LongBench/4a916a4bde5c3481ac49b84d5dde69a9d2eefcd67f884ef65b3d97ee7cc91f3e (last modified on Wed Jul 15 13:15:21 2026) since it couldn't be found locally at THUDM/LongBench, or remotely on the Hugging Face Hub.
+  1150 samples loaded
+  Loading LLM: models/llama3-8b (attn=eager)
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.19it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.17it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.18it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.63it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.43it/s]
+  Model: 32 layers, 131072 bytes/token in KV cache
+
+Running evaluation: policy=full, capacity=1024
+  [20/1150]
+  [40/1150]
+  [60/1150]
+  [80/1150]
+  [100/1150]
+  [120/1150]
+  [140/1150]
+  [160/1150]
+  [180/1150]
+  [200/1150]
+  [220/1150]
+  [240/1150]
+  [260/1150]
+  [280/1150]
+  [300/1150]
+  [320/1150]
+  [340/1150]
+  [360/1150]
+  [380/1150]
+  [400/1150]
+  [420/1150]
+  [440/1150]
+  [460/1150]
+  [480/1150]
+  [500/1150]
+  [520/1150]
+  [540/1150]
+  [560/1150]
+  [580/1150]
+  [600/1150]
+  [620/1150]
+  [640/1150]
+  [660/1150]
+  [680/1150]
+  [700/1150]
+  [720/1150]
+  [740/1150]
+  [760/1150]
+  [780/1150]
+  [800/1150]
+  [820/1150]
+  [840/1150]
+  [860/1150]
+  [880/1150]
+  [900/1150]
+  [920/1150]
+  [940/1150]
+  [960/1150]
+  [980/1150]
+  [1000/1150]
+  [1020/1150]
+  [1040/1150]
+  [1060/1150]
+  [1080/1150]
+  [1100/1150]
+  [1120/1150]
+  [1140/1150]
+
+  Results: F1=0.3671, Latency=2894ms, Throughput=4.1 tok/s
+  Per-sample details saved to results/kv_cache/longbench_full/full.samples.json
+
+Results saved to results/kv_cache/longbench_full/full.json
+  Task distribution: {'narrativeqa': 200, 'qasper': 200, 'multifieldqa_en': 150, 'hotpotqa': 200, '2wikimqa': 200, 'musique': 200}
+  Measured peak GPU mem: avg 31219 MB, max 35586 MB
+Compression (theoretical): 6698 → 6697.782608695652 tokens (100.0% kept, saves ~0 MB)
