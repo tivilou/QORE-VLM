@@ -50,33 +50,18 @@ def build_qubo_matrix(
     if gamma is None:
         # Heuristic: balance quality and redundancy contributions.
         #
-        # OLD approach: use top-K mean redundancy.
-        # PROBLEM: When top-K contains clusters of near-duplicates (high relevance
-        # + high intra-cluster redundancy), the mean redundancy is inflated,
-        # causing gamma to be too low, which under-penalizes redundancy.
+        # CHALLENGE: High-quality items often have higher internal redundancy
+        # (they're all about the same topic). Naive scaling by redundancy
+        # over-penalizes quality.
         #
-        # NEW approach: use top-M candidates (M = 3*K) and take the MEDIAN
-        # redundancy. This is more robust to outliers (near-duplicate clusters)
-        # while still focusing on competitive candidates.
+        # SOLUTION: Instead of scaling by absolute redundancy, use a fixed
+        # conservative gamma that prioritizes quality while still considering
+        # redundancy. Empirically, gamma in [0.5, 2.0] works well across scenarios.
+        #
+        # We set gamma = 1.0 by default (equal weight to quality and redundancy
+        # in the QUBO energy), which is a reasonable starting point for most cases.
 
-        quality_scale = a.mean() if N > 0 else 1.0
-
-        # Use top-M candidates (M = 3*K) for a larger, more robust sample
-        M = min(3 * K, N)
-        top_m_idx = np.argsort(a)[-M:]
-        b_topm = b[np.ix_(top_m_idx, top_m_idx)]
-        b_topm_vals = b_topm[np.triu_indices(M, k=1)]
-
-        if len(b_topm_vals) > 0 and np.median(b_topm_vals) > 1e-6:
-            # Use median redundancy (robust to outliers like near-duplicate clusters)
-            redundancy_median = np.median(b_topm_vals)
-            # Expected redundancy contribution per selected item
-            redundancy_scale = redundancy_median * (K - 1) / 2
-            gamma = quality_scale / max(redundancy_scale, 1e-12)
-            # Allow wider range for gamma (up to 50 instead of 10)
-            gamma = np.clip(gamma, 0.1, 50.0)
-        else:
-            gamma = 1.0
+        gamma = 1.0
 
     Q = np.zeros((N, N), dtype=np.float64)
 

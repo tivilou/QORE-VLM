@@ -154,22 +154,20 @@ def select_passages_for_method(method, query_emb, passage_embs, relevance_scores
     """Select K passages using the specified method."""
     from applications.rag.selector import select_passages
 
-    kwargs = {}
+    kwargs = {"relevance_scores": relevance_scores}
+
     if method == "qore":
-        kwargs = {"num_reads": args.num_reads, "seed": args.seed}
+        kwargs.update({"num_reads": args.num_reads, "seed": args.seed, "lam": args.lam})
     elif method == "mmr":
-        kwargs = {"lambda_mmr": args.lambda_mmr}
+        kwargs.update({"lambda_mmr": args.lambda_mmr})
     elif method == "vqc":
-        kwargs = {"vqc_encoder": vqc_encoder, "seed": args.seed}
+        kwargs.update({"vqc_encoder": vqc_encoder, "seed": args.seed, "lam": args.lam})
 
     indices = select_passages(
         query_embedding=query_emb,
         passage_embeddings=passage_embs,
         K=K,
         method=method,
-        relevance_scores=relevance_scores,
-        lam=args.lam,
-        num_reads=args.num_reads,
         **kwargs,
     )
     return indices
