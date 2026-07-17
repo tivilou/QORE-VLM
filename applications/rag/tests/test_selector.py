@@ -188,3 +188,38 @@ class TestEvaluateSelection:
         selected = np.array([0, 1, 2, 3, 4])
         metrics = evaluate_selection(selected, set(), passages)
         assert metrics["redundancy_ratio"] < 0.01
+
+
+class TestDirectSolve:
+    """QORE RAG pure-solve path (roadmap §4.3): small N solves full QUBO,
+    no prefilter; large N falls back to prefilter. Both return valid K-sets."""
+
+    def test_small_n_direct_solve_returns_K(self):
+        rng = np.random.default_rng(0)
+        q = rng.standard_normal(32)
+        emb = rng.standard_normal((20, 32))
+        idx = select_passages(q, emb, K=5, method="qore", seed=1,
+                              direct_solve_max_n=64)
+        assert len(idx) == 5
+        assert len(set(idx.tolist())) == 5  # no duplicates
+
+    def test_direct_solve_avoids_redundant_pair(self):
+        # Two near-duplicate high-relevance passages: pure QUBO should not spend
+        # two of its K slots on both when diverse alternatives exist.
+        rng = np.random.default_rng(3)
+        d = 32
+        q = rng.standard_normal(d)
+        emb = q + 0.05 * rng.standard_normal((12, d))  # all relevant
+        emb[1] = emb[0] + 1e-4 * rng.standard_normal(d)  # 0 and 1 near-identical
+        idx = set(select_passages(q, emb, K=4, method="qore", seed=2,
+                                  direct_solve_max_n=64).tolist())
+        assert not (0 in idx and 1 in idx), "QUBO kept both near-duplicates"
+
+    def test_large_n_prefilter_returns_K(self):
+        rng = np.random.default_rng(1)
+        q = rng.standard_normal(32)
+        emb = rng.standard_normal((200, 32))
+        idx = select_passages(q, emb, K=5, method="qore", seed=1,
+                              direct_solve_max_n=64)
+        assert len(idx) == 5
+        assert len(set(idx.tolist())) == 5

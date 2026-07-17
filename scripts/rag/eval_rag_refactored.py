@@ -1,0 +1,313 @@
+"""End-to-end RAG evaluation: retrieval → selection → generation → scoring.
+
+Unified evaluation script supporting three corpus modes (aligned, precomputed,
+faiss) and three selection methods (qore, mmr, topk). The refactored architecture
+decouples corpus management, retrieval, selection, generation, and evaluation so
+each can be swapped or tested independently.
+
+Usage:
+    # Aligned corpus mode (recommended default, gold-guaranteed)
+    python -m scripts.rag.eval_rag \\
+        --dataset nq_open \\
+        --corpus_mode aligned \\
+        --corpus_output_dir data/nq_corpus \\
+        --method qore \\
+        --model_path meta-llama/Meta-Llama-3-8B-Instruct \\
+        --max_samples 100
+
+    # Precomputed mode (use dataset's own candidates, e.g. HotpotQA distractor)
+    python -m scripts.rag.eval_rag \\
+        --dataset hotpotqa_distractor \\
+        --corpus_mode precomputed \\
+        --method qore \\
+        --skip_generation
+
+    # FAISS mode (full 21M corpus, requires FAISS + embeddings)
+    python -m scripts.rag.eval_rag \\
+        --dataset nq_open \\
+        --corpus_mode faiss \\
+        --faiss_embeddings_path data/wiki_dpr_embeddings.npy \\
+        --method qore
+
+See docs/rag_corpus_modes.md for mode details.
+"""
+
+import argparse
+import json
+import time
+from pathlib import Path
+
+import numpy as np
+
+from applications.rag.data import load_dataset_for_rag, make_corpus_manager
+from applications.rag.evaluation import Evaluator
+from applications.rag.generation import Generator
+from applications.rag.retrieval import make_encoder
+from applications.rag.selector import select_passages
+
+
+def parse_args():
+    p = argparse.ArgumentParser(description="RAG end-to-end evaluation")
+
+    # Dataset
+    p.add_argument("--dataset", default="nq_open",
+                   help="Dataset name: nq_open, hotpotqa_distractor, hotpotqa_fullwiki, jsonl")
+    p.add_argument("--split", default="validation", help="Dataset split")
+    p.add_argument("--max_samples", type=int, default=0, help="Limit samples (0=all)")
+    p.add_argument("--custom_path", help="Path for jsonl dataset")
+
+    # Corpus mode
+    p.add_argument("--corpus_mode", default="aligned",
+                   choices=["aligned", "precomputed", "faiss"],
+                   help="Corpus management mode")
+    p.add_argument("--corpus_output_dir", help="Cache dir for aligned corpus")
+    p.add_argument("--n_distractors", type=int, default=36000,
+                   help="Distractors for aligned mode")
+    p.add_argument("--faiss_embeddings_path", help="Embeddings .npy for faiss mode")
+    p.add_argument("--faiss_passages_path", help="Passages list for faiss mode")
+
+    # Retrieval
+    p.add_argument("--encoder_type", default="sentence",
+                   choices=["dpr", "sentence"],
+                   help="Encoder type")
+    p.add_argument("--top_k_retrieval", type=int, default=50,
+                   help="Retrieve top-K candidates per query")
+
+    # Selection
+    p.add_argument("--method", default="qore",
+                   choices=["qore", "mmr", "topk"],
+                   help="Selection method")
+    p.add_argument("--K", type=int, default=5, help="Select K passages")
+    p.add_argument("--num_reads", type=int, default=100,
+                   help="SA reads for QORE (ignored for mmr/topk)")
+    p.add_argument("--lam", type=float, default=2.0,
+                   help="QUBO penalty weight for QORE")
+    p.add_argument("--lambda_mmr", type=float, default=0.7,
+                   help="MMR lambda (1=relevance, 0=diversity)")
+
+    # Generation
+    p.add_argument("--model_path",
+                   default="meta-llama/Meta-Llama-3-8B-Instruct",
+                   help="HF model for answer generation")
+    p.add_argument("--skip_generation", action="store_true",
+                   help="Skip LLM generation (selection-only eval)")
+    p.add_argument("--max_new_tokens", type=int, default=128,
+                   help="Max tokens for answer generation")
+
+    # Output
+    p.add_argument("--output_dir", default="results/rag",
+                   help="Directory for results JSON")
+    p.add_argument("--output_file", help="Result filename (auto if not set)")
+    p.add_argument("--seed", type=int, default=42, help="Random seed")
+
+    return p.parse_args()
+
+
+def main():
+    args = parse_args()
+    np.random.seed(args.seed)
+
+    print("=" * 70)
+    print("RAG End-to-End Evaluation")
+    print("=" * 70)
+    print(f"Dataset: {args.dataset} ({args.split})")
+    print(f"Corpus mode: {args.corpus_mode}")
+    print(f"Selection: {args.method}, K={args.K}")
+    print(f"Seed: {args.seed}")
+    print()
+
+    # ──────────────────────────────────────────────────────────────────────
+    # 1. Load dataset
+    # ──────────────────────────────────────────────────────────────────────
+    print("Loading dataset...")
+    questions = load_dataset_for_rag(
+        args.dataset, args.split, args.max_samples, args.custom_path
+    )
+    print(f"  Loaded {len(questions)} questions")
+
+    # ──────────────────────────────────────────────────────────────────────
+    # 2. Build/load corpus
+    # ──────────────────────────────────────────────────────────────────────
+    print(f"Building corpus (mode={args.corpus_mode})...")
+    corpus_config = {
+        "output_dir": args.corpus_output_dir,
+        "n_distractors": args.n_distractors,
+        "seed": args.seed,
+    }
+    if args.corpus_mode == "faiss":
+        if not args.faiss_embeddings_path:
+            raise ValueError("faiss mode requires --faiss_embeddings_path")
+        import pickle
+        corpus_config["embeddings"] = np.load(args.faiss_embeddings_path)
+        with open(args.faiss_passages_path, "rb") as f:
+            corpus_config["passages"] = pickle.load(f)
+
+    # FAISS mode uses wiki_dpr's own DPR passage embeddings, so queries MUST be
+    # encoded with the DPR question encoder to share that vector space. A sentence
+    # encoder would put queries in a different space → retrieval returns garbage.
+    if args.corpus_mode == "faiss" and args.encoder_type != "dpr":
+        print(f"  [faiss] forcing --encoder_type dpr "
+              f"(was {args.encoder_type!r}; corpus is DPR space)")
+        args.encoder_type = "dpr"
+
+    # Encoder for aligned mode (needed to embed gold passages if missing)
+    encoder = make_encoder(args.encoder_type)
+    if args.corpus_mode == "aligned":
+        corpus_config["embedder"] = encoder.encode_passages
+
+    corpus_manager = make_corpus_manager(args.corpus_mode, corpus_config)
+    corpus = corpus_manager.build(questions)
+    print(f"  Corpus ready: {len(corpus)} passages")
+    if corpus.metadata:
+        for k, v in corpus.metadata.items():
+            print(f"    {k}: {v}")
+
+    # ──────────────────────────────────────────────────────────────────────
+    # 3. Load generator (if needed)
+    # ──────────────────────────────────────────────────────────────────────
+    generator = None
+    if not args.skip_generation:
+        print(f"Loading generator: {args.model_path}...")
+        generator = Generator(
+            args.model_path,
+            max_new_tokens=args.max_new_tokens,
+            use_chat_template=True,
+        )
+        print("  Generator ready")
+
+    # ──────────────────────────────────────────────────────────────────────
+    # 4. Evaluation loop
+    # ──────────────────────────────────────────────────────────────────────
+    print(f"\nEvaluating {len(questions)} questions...")
+    evaluator = Evaluator()
+
+    for i, q in enumerate(questions):
+        if (i + 1) % 10 == 0:
+            print(f"  Progress: {i+1}/{len(questions)}")
+
+        question = q["question"]
+        qid = q["id"]
+        gold_answers = q.get("answers", [])
+
+        # Encode query
+        query_emb = encoder.encode_queries([question])[0]
+
+        # Retrieve
+        if args.corpus_mode == "precomputed":
+            # Per-question candidates
+            candidates = q.get("candidates", [])
+            cand_texts = [c["text"] for c in candidates]
+            cand_embs = encoder.encode_passages(cand_texts)
+            retrieved_idx, _ = corpus_manager.retrieve(
+                query_emb, args.top_k_retrieval, candidate_embeddings=cand_embs
+            )
+            retrieved_embs = cand_embs[retrieved_idx]
+        else:
+            # Shared corpus
+            retrieved_idx, _ = corpus_manager.retrieve(query_emb, args.top_k_retrieval)
+            retrieved_embs = corpus.embeddings[retrieved_idx]
+
+        # Select
+        t0 = time.perf_counter()
+        selected_local = select_passages(
+            query_emb,
+            retrieved_embs,
+            K=args.K,
+            method=args.method,
+            num_reads=args.num_reads,
+            lam=args.lam,
+            lambda_mmr=args.lambda_mmr,
+            seed=args.seed,
+        )
+        selection_time_ms = (time.perf_counter() - t0) * 1000
+
+        selected_global = retrieved_idx[selected_local]
+        selected_embs = retrieved_embs[selected_local]
+
+        # Gold indices (mode-dependent)
+        if args.corpus_mode == "precomputed":
+            gold_local = set(q.get("gold_local_indices", []))
+            # Map to retrieved space
+            gold_in_retrieved = gold_local & set(range(len(retrieved_idx)))
+        elif args.corpus_mode == "faiss":
+            # No gold labels for open-domain NQ: use the DPR answer-recall
+            # convention — a retrieved passage is "gold" if it contains any
+            # gold answer string. Scored over the retrieved candidates only.
+            gold_in_retrieved = set()
+            norm_answers = [a.lower() for a in gold_answers if a]
+            for j, gidx in enumerate(retrieved_idx):
+                passage_text = corpus.passages[gidx].lower()
+                if any(ans in passage_text for ans in norm_answers):
+                    gold_in_retrieved.add(j)
+        else:
+            gold_global = corpus.gold_for(qid)
+            # Map global gold to retrieved local indices
+            gold_in_retrieved = set()
+            for j, idx in enumerate(retrieved_idx):
+                if idx in gold_global:
+                    gold_in_retrieved.add(j)
+
+        # Generate answer
+        prediction = None
+        generation_time_ms = 0.0
+        if generator:
+            if args.corpus_mode == "precomputed":
+                selected_texts = [candidates[j]["text"] for j in selected_global]
+            else:
+                selected_texts = [corpus.passages[j] for j in selected_global]
+            t0 = time.perf_counter()
+            prediction = generator.generate(question, selected_texts)
+            generation_time_ms = (time.perf_counter() - t0) * 1000
+
+        # Evaluate
+        evaluator.evaluate_sample(
+            question_id=qid,
+            selected_indices=set(selected_local),
+            selected_embeddings=selected_embs,
+            gold_indices=gold_in_retrieved,
+            prediction=prediction,
+            gold_answers=gold_answers,
+            selection_time_ms=selection_time_ms,
+            generation_time_ms=generation_time_ms,
+        )
+
+    # ──────────────────────────────────────────────────────────────────────
+    # 5. Aggregate and save results
+    # ──────────────────────────────────────────────────────────────────────
+    agg = evaluator.aggregate()
+    print("\n" + "=" * 70)
+    print("Results")
+    print("=" * 70)
+    print(f"Method: {args.method}")
+    print(f"Samples: {agg.get('n_samples', 0)}")
+    if "mean_recall" in agg:
+        print(f"Recall@{args.K}: {agg['mean_recall']:.4f} ± {agg.get('std_recall', 0):.4f}")
+    if "mean_redundancy" in agg:
+        print(f"Redundancy: {agg['mean_redundancy']:.4f} ± {agg.get('std_redundancy', 0):.4f}")
+    if "mean_em" in agg:
+        print(f"EM: {agg['mean_em']:.4f} ± {agg.get('std_em', 0):.4f}")
+    if "mean_f1" in agg:
+        print(f"F1: {agg['mean_f1']:.4f} ± {agg.get('std_f1', 0):.4f}")
+    print()
+
+    # Save
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    if not args.output_file:
+        args.output_file = f"{args.method}_K{args.K}_seed{args.seed}.json"
+    output_path = output_dir / args.output_file
+
+    result = {
+        "config": vars(args),
+        "corpus_metadata": corpus.metadata,
+        "metrics": agg,
+        "samples": evaluator.samples,
+    }
+    with open(output_path, "w") as f:
+        json.dump(result, f, indent=2)
+
+    print(f"Results saved to: {output_path}")
+
+
+if __name__ == "__main__":
+    main()

@@ -19,6 +19,7 @@ def select_passages(
     num_reads: int = 50,
     lambda_mmr: float = 0.5,
     seed: int | None = None,
+    direct_solve_max_n: int = 64,
     vqc_encoder=None,
     vqc_backend: str = "tensorcircuit",
 ) -> np.ndarray:
@@ -43,6 +44,9 @@ def select_passages(
         num_reads: SA reads (only for method="qore"/"vqc").
         lambda_mmr: MMR trade-off (only for method="mmr").
         seed: Random seed for reproducibility.
+        direct_solve_max_n: If N <= this, solve the full QUBO directly with no
+            top-M prefilter (roadmap §4.3 "pure" demonstration). Above it, fall
+            back to prefilter + QUBO for tractability. Applies to "qore"/"vqc".
         vqc_encoder: Pre-trained VQCEncoder instance (only for method="vqc").
             If None, a fresh (untrained) encoder is created.
         vqc_backend: Quantum backend for VQC (only for method="vqc").
@@ -75,33 +79,33 @@ def select_passages(
         )
 
     elif method == "qore":
-        # Two-stage approach:
-        # 1. Pre-filter to top-M candidates by quality (removes clearly irrelevant items)
-        # 2. Run QUBO on the filtered set (redundancy becomes the differentiator)
-        M = min(N, max(K * 3, 15))  # candidate pool: 3x budget or at least 15
-        prefilter_idx = np.argsort(a)[-M:]  # top-M by quality
-
-        a_filtered = a[prefilter_idx]
-        embeddings_filtered = passage_embeddings[prefilter_idx]
-
-        # Compute redundancy only within the candidate pool
-        b = passage_redundancy(embeddings_filtered, method=redundancy_method)
-
-        # Solve QUBO on filtered set
         kwargs = {"num_reads": num_reads}
         if seed is not None:
             kwargs["seed"] = seed
 
+        if N <= direct_solve_max_n:
+            # PURE path (roadmap §4.3): N is small enough to solve the full QUBO
+            # directly — no prefilter, no approximation. This is RAG's "clean"
+            # demonstration that global QUBO selection beats greedy top-K/MMR.
+            b = passage_redundancy(passage_embeddings, method=redundancy_method)
+            x = qore_solve(a, b, K, lam=lam, method="anneal", **kwargs)
+            indices = np.where(x == 1)[0]
+            return indices[np.argsort(a[indices])[::-1]]
+
+        # Large N: two-stage. Pre-filter to top-M by quality, then QUBO on the
+        # pool (redundancy is the differentiator within already-relevant items).
+        M = min(N, max(K * 3, 15))
+        prefilter_idx = np.argsort(a)[-M:]
+
+        a_filtered = a[prefilter_idx]
+        embeddings_filtered = passage_embeddings[prefilter_idx]
+        b = passage_redundancy(embeddings_filtered, method=redundancy_method)
+
         x = qore_solve(a_filtered, b, K, lam=lam, method="anneal", **kwargs)
 
-        # Map back to original indices
         selected_in_pool = np.where(x == 1)[0]
         indices = prefilter_idx[selected_in_pool]
-
-        # Sort by relevance (highest first) for consistent presentation
-        indices = indices[np.argsort(a[indices])[::-1]]
-
-        return indices
+        return indices[np.argsort(a[indices])[::-1]]
 
     elif method == "vqc":
         # Fully quantum pipeline: VQC encoder produces both signals
@@ -114,6 +118,7 @@ def select_passages(
             backend=vqc_backend,
             encoder=vqc_encoder,
             seed=seed,
+            direct_solve_max_n=direct_solve_max_n,
         )
         return indices
 
