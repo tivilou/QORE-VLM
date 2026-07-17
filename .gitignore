@@ -69,3 +69,9 @@ wandb_api
 
 # Project progress tracking (local only)
 .ai-progress/
+
+# Agent tooling (local only)
+.agents/
+.claude/
+/AGENTS.md
+/CLAUDE.md
