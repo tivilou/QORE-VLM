@@ -58,13 +58,25 @@ def parse_args():
 
     # Corpus mode
     p.add_argument("--corpus_mode", default="aligned",
-                   choices=["aligned", "precomputed", "faiss"],
+                   choices=["aligned", "precomputed", "faiss", "wiki_dpr"],
                    help="Corpus management mode")
     p.add_argument("--corpus_output_dir", help="Cache dir for aligned corpus")
     p.add_argument("--n_distractors", type=int, default=36000,
                    help="Distractors for aligned mode")
     p.add_argument("--faiss_embeddings_path", help="Embeddings .npy for faiss mode")
     p.add_argument("--faiss_passages_path", help="Passages list for faiss mode")
+    p.add_argument("--faiss_mmap", action="store_true",
+                   help="Load embeddings as memmap (np.load mmap_mode='r'). "
+                        "Halves peak RAM: Python holds no separate copy of the "
+                        "embedding array — only the FAISS index stays in RAM. "
+                        "Use for large corpora (e.g. full 21M wiki_dpr).")
+    # wiki_dpr compressed mode
+    p.add_argument("--wiki_dpr_config", default="psgs_w100.nq.compressed",
+                   help="facebook/wiki_dpr config for wiki_dpr corpus mode")
+    p.add_argument("--wiki_dpr_cache_dir", default=None,
+                   help="HuggingFace cache dir for wiki_dpr dataset")
+    p.add_argument("--wiki_dpr_nprobe", type=int, default=64,
+                   help="IVFPQ search breadth for wiki_dpr mode (higher=more accurate)")
 
     # Retrieval
     p.add_argument("--encoder_type", default="sentence",
@@ -138,15 +150,22 @@ def main():
         if not args.faiss_embeddings_path:
             raise ValueError("faiss mode requires --faiss_embeddings_path")
         import pickle
-        corpus_config["embeddings"] = np.load(args.faiss_embeddings_path)
+        mmap_mode = "r" if args.faiss_mmap else None
+        if args.faiss_mmap:
+            print("  [faiss] loading embeddings as memmap (peak RAM ~halved)")
+        corpus_config["embeddings"] = np.load(args.faiss_embeddings_path, mmap_mode=mmap_mode)
         with open(args.faiss_passages_path, "rb") as f:
             corpus_config["passages"] = pickle.load(f)
+    elif args.corpus_mode == "wiki_dpr":
+        corpus_config["wiki_dpr_config"] = args.wiki_dpr_config
+        corpus_config["cache_dir"] = args.wiki_dpr_cache_dir
+        corpus_config["nprobe"] = args.wiki_dpr_nprobe
 
-    # FAISS mode uses wiki_dpr's own DPR passage embeddings, so queries MUST be
-    # encoded with the DPR question encoder to share that vector space. A sentence
-    # encoder would put queries in a different space → retrieval returns garbage.
-    if args.corpus_mode == "faiss" and args.encoder_type != "dpr":
-        print(f"  [faiss] forcing --encoder_type dpr "
+    # FAISS / wiki_dpr modes use wiki_dpr's DPR passage embeddings, so queries
+    # MUST be encoded with the DPR question encoder to share that vector space.
+    # A sentence encoder would put queries in a different space → garbage retrieval.
+    if args.corpus_mode in ("faiss", "wiki_dpr") and args.encoder_type != "dpr":
+        print(f"  [{args.corpus_mode}] forcing --encoder_type dpr "
               f"(was {args.encoder_type!r}; corpus is DPR space)")
         args.encoder_type = "dpr"
 
@@ -202,10 +221,17 @@ def main():
                 query_emb, args.top_k_retrieval, candidate_embeddings=cand_embs
             )
             retrieved_embs = cand_embs[retrieved_idx]
+            retrieved_texts = None
+        elif args.corpus_mode == "wiki_dpr":
+            # wiki_dpr mode: retrieval returns embeddings and texts directly
+            retrieved_idx, retrieved_embs, retrieved_texts = corpus_manager.retrieve_with_embeddings(
+                query_emb, args.top_k_retrieval
+            )
         else:
-            # Shared corpus
+            # Shared corpus (aligned or faiss)
             retrieved_idx, _ = corpus_manager.retrieve(query_emb, args.top_k_retrieval)
             retrieved_embs = corpus.embeddings[retrieved_idx]
+            retrieved_texts = None
 
         # Select
         t0 = time.perf_counter()
@@ -229,16 +255,23 @@ def main():
             gold_local = set(q.get("gold_local_indices", []))
             # Map to retrieved space
             gold_in_retrieved = gold_local & set(range(len(retrieved_idx)))
-        elif args.corpus_mode == "faiss":
+        elif args.corpus_mode in ("faiss", "wiki_dpr"):
             # No gold labels for open-domain NQ: use the DPR answer-recall
             # convention — a retrieved passage is "gold" if it contains any
             # gold answer string. Scored over the retrieved candidates only.
             gold_in_retrieved = set()
             norm_answers = [a.lower() for a in gold_answers if a]
-            for j, gidx in enumerate(retrieved_idx):
-                passage_text = corpus.passages[gidx].lower()
-                if any(ans in passage_text for ans in norm_answers):
-                    gold_in_retrieved.add(j)
+            if args.corpus_mode == "wiki_dpr":
+                # Use retrieved_texts directly
+                for j, text in enumerate(retrieved_texts):
+                    if any(ans in text.lower() for ans in norm_answers):
+                        gold_in_retrieved.add(j)
+            else:
+                # faiss mode: access corpus.passages
+                for j, gidx in enumerate(retrieved_idx):
+                    passage_text = corpus.passages[gidx].lower()
+                    if any(ans in passage_text for ans in norm_answers):
+                        gold_in_retrieved.add(j)
         else:
             gold_global = corpus.gold_for(qid)
             # Map global gold to retrieved local indices
@@ -253,6 +286,8 @@ def main():
         if generator:
             if args.corpus_mode == "precomputed":
                 selected_texts = [candidates[j]["text"] for j in selected_global]
+            elif args.corpus_mode == "wiki_dpr":
+                selected_texts = [retrieved_texts[j] for j in selected_local]
             else:
                 selected_texts = [corpus.passages[j] for j in selected_global]
             t0 = time.perf_counter()

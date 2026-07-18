@@ -38,7 +38,13 @@ class FaissCorpusManager(CorpusManager):
                 "FAISS mode needs faiss-cpu or faiss-gpu: pip install faiss-cpu"
             ) from e
 
-        embeddings = np.asarray(self.config["embeddings"], dtype=np.float32)
+        raw = self.config["embeddings"]
+        # Preserve memmap: if already float32, asarray returns a view (no copy).
+        # Forcing dtype=float32 only copies when the source dtype differs.
+        if isinstance(raw, np.ndarray) and raw.dtype == np.float32:
+            embeddings = raw  # memmap or plain ndarray — no extra copy
+        else:
+            embeddings = np.asarray(raw, dtype=np.float32)
         passages = self.config["passages"]
         n, d = embeddings.shape
 

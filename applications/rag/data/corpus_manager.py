@@ -1,6 +1,6 @@
 """Unified corpus management for RAG evaluation.
 
-Three interchangeable corpus modes solve the same problem — "give each query a
+Four interchangeable corpus modes solve the same problem — "give each query a
 candidate passage pool that provably contains its gold evidence" — with
 different cost/fidelity tradeoffs:
 
@@ -12,8 +12,13 @@ different cost/fidelity tradeoffs:
   are meaningful without a full 21M-passage download.
 - faiss: index the full corpus and retrieve live. Most realistic; highest cost
   (disk + build time). Gold coverage is probabilistic (whatever retrieval finds).
+  Requires pre-built embeddings.npy (~65GB) and passages.pkl.
+- wiki_dpr: uses facebook/wiki_dpr's built-in compressed FAISS index. Like faiss
+  but without needing to download/store embeddings.npy. The HuggingFace datasets
+  library loads a prebuilt IVFPQ index (~few GB in RAM) and retrieves on-demand.
+  Recommended for full 21M NQ evaluation when disk/RAM is limited.
 
-All three expose the same interface (build / retrieve / gold mapping), so the
+All modes expose the same interface (build / retrieve / gold mapping), so the
 eval loop is corpus-mode agnostic. See docs/rag_corpus_modes.md.
 """
 
@@ -104,8 +109,8 @@ class CorpusManager(ABC):
 def make_corpus_manager(mode: str, config: Optional[dict] = None) -> CorpusManager:
     """Factory: resolve a mode string to a concrete CorpusManager.
 
-    Lazy imports keep optional heavy deps (faiss) out of the import path unless
-    that mode is actually requested.
+    Lazy imports keep optional heavy deps (faiss, datasets) out of the import
+    path unless that mode is actually requested.
     """
     mode = (mode or "aligned").lower()
     if mode == "aligned":
@@ -117,6 +122,9 @@ def make_corpus_manager(mode: str, config: Optional[dict] = None) -> CorpusManag
     if mode == "faiss":
         from .faiss_corpus import FaissCorpusManager
         return FaissCorpusManager(config)
+    if mode == "wiki_dpr":
+        from .wiki_dpr_corpus import WikiDPRCorpusManager
+        return WikiDPRCorpusManager(config)
     raise ValueError(
-        f"Unknown corpus mode '{mode}'. Choose 'aligned', 'precomputed', or 'faiss'."
+        f"Unknown corpus mode '{mode}'. Choose 'aligned', 'precomputed', 'faiss', or 'wiki_dpr'."
     )
