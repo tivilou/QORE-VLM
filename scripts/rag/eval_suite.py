@@ -39,9 +39,21 @@ def parse_args():
 
     # Corpus mode
     p.add_argument("--corpus_mode", default="aligned",
-                   choices=["aligned", "precomputed", "faiss"])
+                   choices=["aligned", "precomputed", "faiss", "wiki_dpr"])
     p.add_argument("--corpus_output_dir", help="Aligned corpus cache dir")
     p.add_argument("--n_distractors", type=int, default=36000)
+    # FAISS mode
+    p.add_argument("--faiss_embeddings_path", help="Embeddings .npy for faiss mode")
+    p.add_argument("--faiss_passages_path", help="Passages list for faiss mode")
+    p.add_argument("--faiss_mmap", action="store_true",
+                   help="Load embeddings as memmap for faiss mode")
+    # wiki_dpr mode
+    p.add_argument("--wiki_dpr_config", default="psgs_w100.nq.compressed",
+                   help="facebook/wiki_dpr config for wiki_dpr mode")
+    p.add_argument("--wiki_dpr_cache_dir", default=None,
+                   help="HuggingFace cache dir for wiki_dpr dataset")
+    p.add_argument("--wiki_dpr_nprobe", type=int, default=64,
+                   help="IVFPQ search breadth for wiki_dpr mode")
 
     # Selection
     p.add_argument("--methods", default="qore,mmr,topk",
@@ -99,6 +111,24 @@ def run_single(args, method: str, seed: int, output_dir: Path) -> dict:
         cmd += ["--skip_generation"]
     if args.custom_path:
         cmd += ["--custom_path", args.custom_path]
+
+    # FAISS mode parameters
+    if args.corpus_mode == "faiss":
+        if hasattr(args, 'faiss_embeddings_path') and args.faiss_embeddings_path:
+            cmd += ["--faiss_embeddings_path", args.faiss_embeddings_path]
+        if hasattr(args, 'faiss_passages_path') and args.faiss_passages_path:
+            cmd += ["--faiss_passages_path", args.faiss_passages_path]
+        if hasattr(args, 'faiss_mmap') and args.faiss_mmap:
+            cmd += ["--faiss_mmap"]
+
+    # wiki_dpr mode parameters
+    if args.corpus_mode == "wiki_dpr":
+        if hasattr(args, 'wiki_dpr_config') and args.wiki_dpr_config:
+            cmd += ["--wiki_dpr_config", args.wiki_dpr_config]
+        if hasattr(args, 'wiki_dpr_cache_dir') and args.wiki_dpr_cache_dir:
+            cmd += ["--wiki_dpr_cache_dir", args.wiki_dpr_cache_dir]
+        if hasattr(args, 'wiki_dpr_nprobe') and args.wiki_dpr_nprobe:
+            cmd += ["--wiki_dpr_nprobe", str(args.wiki_dpr_nprobe)]
 
     print(f"  → Running {method} seed {seed}...")
     try:
