@@ -1,5 +1,28 @@
 # RAG 全量评测实验指引
 
+## 更新（2026-07-19）
+
+**修复三个问题**（commit `2fc455f`）：
+
+1. **DPR 检索分数丢失** ✅ 已修复
+   - 之前：Top-K 用余弦相似度重新排序，不是真正的 DPR Top-K
+   - 现在：所有方法使用 DPR 原始 inner product scores
+   - 影响：基线定义正确，Top-K/MMR/QORE 的相关性信号与检索器一致
+
+2. **QORE 参数 `lam` 过高** ✅ 已修复
+   - 之前：`lam=2.0` 过度偏向多样性，导致 Recall@5 低（0.218 vs MMR 0.317）
+   - 现在：`lam=1.0` 平衡 relevance 和 diversity
+   - 预期：提高证据覆盖率，同时保持去冗余优势
+
+3. **生成答案过长** ✅ 已修复
+   - 之前：`max_new_tokens=128`，prompt 不够明确，导致 EM=0
+   - 现在：`max_new_tokens=32`，prompt 强调"1-5 词简短答案"
+   - 预期：EM 指标从 0 提升
+
+**参考**： 200 样本实验报告（`/home/Q-DUET-VLM/analysis.md`）指出的问题。
+
+---
+
 ## 概述
 
 RAG 模块代码已完成（模块化重构 + 内存优化），现在需要在大机器上执行全量 NQ 评测。
