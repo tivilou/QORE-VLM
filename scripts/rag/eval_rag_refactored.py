@@ -92,8 +92,8 @@ def parse_args():
     p.add_argument("--K", type=int, default=5, help="Select K passages")
     p.add_argument("--num_reads", type=int, default=100,
                    help="SA reads for QORE (ignored for mmr/topk)")
-    p.add_argument("--lam", type=float, default=2.0,
-                   help="QUBO penalty weight for QORE")
+    p.add_argument("--lam", type=float, default=1.0,
+                   help="QUBO penalty weight for QORE (lower=favor relevance, higher=favor diversity)")
     p.add_argument("--lambda_mmr", type=float, default=0.7,
                    help="MMR lambda (1=relevance, 0=diversity)")
 
@@ -217,19 +217,19 @@ def main():
             candidates = q.get("candidates", [])
             cand_texts = [c["text"] for c in candidates]
             cand_embs = encoder.encode_passages(cand_texts)
-            retrieved_idx, _ = corpus_manager.retrieve(
+            retrieved_idx, retrieval_scores = corpus_manager.retrieve(
                 query_emb, args.top_k_retrieval, candidate_embeddings=cand_embs
             )
             retrieved_embs = cand_embs[retrieved_idx]
             retrieved_texts = None
         elif args.corpus_mode == "wiki_dpr":
-            # wiki_dpr mode: retrieval returns embeddings and texts directly
-            retrieved_idx, retrieved_embs, retrieved_texts = corpus_manager.retrieve_with_embeddings(
+            # wiki_dpr mode: retrieval returns embeddings, texts, and scores
+            retrieved_idx, retrieved_embs, retrieved_texts, retrieval_scores = corpus_manager.retrieve_with_embeddings(
                 query_emb, args.top_k_retrieval
             )
         else:
             # Shared corpus (aligned or faiss)
-            retrieved_idx, _ = corpus_manager.retrieve(query_emb, args.top_k_retrieval)
+            retrieved_idx, retrieval_scores = corpus_manager.retrieve(query_emb, args.top_k_retrieval)
             retrieved_embs = corpus.embeddings[retrieved_idx]
             retrieved_texts = None
 
@@ -244,6 +244,7 @@ def main():
             lam=args.lam,
             lambda_mmr=args.lambda_mmr,
             seed=args.seed,
+            relevance_scores=retrieval_scores,  # Pass DPR scores to selector
         )
         selection_time_ms = (time.perf_counter() - t0) * 1000
 

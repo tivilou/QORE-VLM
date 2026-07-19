@@ -84,13 +84,14 @@ class WikiDPRCorpusManager(CorpusManager):
 
     def retrieve_with_embeddings(
         self, query_embedding: np.ndarray, top_k: int
-    ) -> tuple[np.ndarray, np.ndarray, list[str]]:
+    ) -> tuple[np.ndarray, np.ndarray, list[str], np.ndarray]:
         """Retrieve top-k passages with their embeddings and texts.
 
         Returns:
             indices: np.array of shape (top_k,) — row indices in the dataset
             embeddings: np.array of shape (top_k, d) — passage embeddings
             texts: list of top_k passage texts (with title prefix)
+            scores: np.array of shape (top_k,) — DPR retrieval scores (inner product)
         """
         q = np.asarray(query_embedding, dtype=np.float32).reshape(1, -1)
 
@@ -114,4 +115,7 @@ class WikiDPRCorpusManager(CorpusManager):
         # don't need them since we pass texts directly in the eval loop
         indices = np.arange(top_k, dtype=np.int32)
 
-        return indices, embeddings, texts
+        # Convert scores to numpy array (DPR uses inner product as similarity)
+        scores = np.array(scores, dtype=np.float32)
+
+        return indices, embeddings, texts, scores

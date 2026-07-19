@@ -24,7 +24,7 @@ class Generator:
         model_name_or_path: str,
         device: Optional[str] = None,
         torch_dtype=torch.float16,
-        max_new_tokens: int = 128,
+        max_new_tokens: int = 32,
         use_chat_template: bool = True,
     ):
         from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -71,12 +71,14 @@ class Generator:
                     "role": "system",
                     "content": (
                         "You are a helpful assistant that answers questions "
-                        "based on provided passages. Give concise, accurate answers."
+                        "based on provided passages. Answer with only the specific "
+                        "information requested - typically just a few words or a short phrase. "
+                        "Do not add explanations or extra context."
                     ),
                 },
                 {
                     "role": "user",
-                    "content": f"Context:\n{context}\n\nQuestion: {question}\n\nAnswer:",
+                    "content": f"Context:\n{context}\n\nQuestion: {question}\n\nProvide a concise answer (typically 1-5 words):",
                 },
             ]
             try:
@@ -89,8 +91,9 @@ class Generator:
 
         # Plain concatenation fallback
         return (
-            f"Answer the question based on the passages below.\n\n"
+            f"Answer the question based on the passages below. "
+            f"Provide only a short, direct answer without explanation.\n\n"
             f"Context:\n{context}\n\n"
             f"Question: {question}\n"
-            f"Answer:"
+            f"Short Answer:"
         )

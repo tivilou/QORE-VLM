@@ -60,7 +60,7 @@ def parse_args():
                    help="Comma-separated methods")
     p.add_argument("--K", type=int, default=5)
     p.add_argument("--num_reads", type=int, default=100)
-    p.add_argument("--lam", type=float, default=2.0)
+    p.add_argument("--lam", type=float, default=1.0)
     p.add_argument("--lambda_mmr", type=float, default=0.7)
 
     # Generation
