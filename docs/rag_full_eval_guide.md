@@ -14,13 +14,22 @@
 3. 上轮修复保持有效（commit `2fc455f`）：DPR 检索分数传递、简短答案 prompt
    （EM 已从 0 恢复到 ~25%）
 
+**评测改进**（commit `df972e7`），本轮自动生效：
+
+4. **Gold 判定改进**：从简单字符串包含改为 token 边界匹配，避免误命中（如 "2012" 
+   匹配 "20122"），Recall/Precision 数值更准确
+5. **评测标注改进**：输出新增 Recall@Retrieved（检索上界，如 Recall@50）和
+   retrieval failure 统计，分离检索失败和重排失败
+6. **可选优化**：新增 `--qore_prefilter_size` 参数（默认 max(K*3,15)），若 gamma=0.5
+   仍不达标可尝试 `--qore_prefilter_size 15` 进一步限制候选池（减少低相关段风险）
+
 **参考**：200 样本实验报告（`/home/Q-DUET-VLM/analysis(1).md`）的根因分析。
 
 ---
 
 ## 概述
 
-RAG 模块代码已完成（模块化重构 + 内存优化 + gamma 参数）。本轮分两步执行：
+RAG 模块代码已完成（模块化重构 + 内存优化 + gamma 参数 + 评测改进）。本轮分两步执行：
 先跑 200 题验证 gamma=0.5 的效果，达标后再跑全量 NQ 评测。
 
 **机器要求**：
