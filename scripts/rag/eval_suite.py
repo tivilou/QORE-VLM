@@ -64,6 +64,8 @@ def parse_args():
     p.add_argument("--gamma", type=float, default=None)
     p.add_argument("--qore_prefilter_size", type=int, default=None,
                    help="QORE relevance-first candidate pool size")
+    p.add_argument("--direct_solve_max_n", type=int, default=20,
+                   help="QORE: max N for direct QUBO solve without prefilter")
     p.add_argument("--lambda_mmr", type=float, default=0.7)
 
     # Generation
@@ -112,6 +114,8 @@ def run_single(args, method: str, seed: int, output_dir: Path) -> dict:
         cmd += ["--gamma", str(args.gamma)]
     if args.qore_prefilter_size is not None:
         cmd += ["--qore_prefilter_size", str(args.qore_prefilter_size)]
+    if args.direct_solve_max_n != 20:
+        cmd += ["--direct_solve_max_n", str(args.direct_solve_max_n)]
     if args.corpus_output_dir:
         cmd += ["--corpus_output_dir", args.corpus_output_dir]
     if args.skip_generation:

@@ -138,13 +138,15 @@ class Evaluator:
         gold_answers: Optional[list[str]] = None,
         selection_time_ms: float = 0.0,
         generation_time_ms: float = 0.0,
-        retrieved_indices: Optional[set] = None,
+        answer_hit_at_retrieved: Optional[bool] = None,
     ) -> dict:
         """Score one sample and append to history.
 
         Args:
-            retrieved_indices: If provided, computes recall@retrieved (e.g., Recall@50)
-                              to measure retrieval upper bound.
+            answer_hit_at_retrieved: Whether ANY of the retrieved candidates
+                contains a gold answer string. True = retrieval succeeded;
+                False = retrieval failure (gold not in Top-K candidates).
+                None = unknown / not applicable (e.g. aligned mode).
 
         Returns the per-sample metric dict for immediate inspection.
         """
@@ -156,12 +158,9 @@ class Evaluator:
             "diversity": diversity_ratio(selected_embeddings),
             "selection_time_ms": selection_time_ms,
             "generation_time_ms": generation_time_ms,
-            "has_gold": len(gold_indices) > 0 if gold_indices else False,
         }
-
-        # Recall@retrieved (e.g., Recall@50): upper bound from retrieval
-        if retrieved_indices is not None:
-            metrics["recall_at_retrieved"] = recall_at_k(retrieved_indices, gold_indices)
+        if answer_hit_at_retrieved is not None:
+            metrics["answer_hit_at_retrieved"] = answer_hit_at_retrieved
 
         if prediction is not None and gold_answers is not None:
             qa = evaluate_answer(prediction, gold_answers)
@@ -172,12 +171,11 @@ class Evaluator:
     def aggregate(self) -> dict:
         """Compute mean/std over all evaluated samples.
 
-        Returns metrics with distinctions:
-        - mean_recall: averaged over samples with gold (conditional)
-        - mean_recall_at_retrieved: upper bound from retrieval stage
-        - n_samples: total samples
-        - n_with_gold: samples where gold exists in candidates
-        - n_retrieval_failure: samples where gold not in retrieved set
+        Key distinctions in output:
+        - mean_recall: conditional on having gold in retrieved set (n_with_gold)
+        - n_with_gold: questions where answer was found in retrieved candidates
+        - n_retrieval_failure: questions where answer was NOT in retrieved candidates
+          (only counted when answer_hit_at_retrieved is explicitly recorded)
         """
         if not self.samples:
             return {}
@@ -185,7 +183,6 @@ class Evaluator:
         keys = [
             "recall", "precision", "redundancy", "diversity",
             "em", "f1", "selection_time_ms", "generation_time_ms",
-            "recall_at_retrieved",
         ]
         agg = {}
         for k in keys:
@@ -195,18 +192,14 @@ class Evaluator:
                 agg[f"std_{k}"] = float(np.std(vals))
 
         agg["n_samples"] = len(self.samples)
-        agg["n_with_gold"] = sum(
-            1 for s in self.samples if s.get("has_gold", False)
-        )
 
-        # Count retrieval failures (gold not in retrieved set)
-        retrieval_failures = sum(
-            1 for s in self.samples
-            if "recall_at_retrieved" in s and s["recall_at_retrieved"] == 0.0
-        )
-        agg["n_retrieval_failure"] = retrieval_failures
+        # n_with_gold: questions where Top-K retrieval found at least one answer
+        hit_recorded = [s for s in self.samples if "answer_hit_at_retrieved" in s]
+        if hit_recorded:
+            agg["n_with_gold"] = sum(1 for s in hit_recorded if s["answer_hit_at_retrieved"])
+            agg["n_retrieval_failure"] = sum(1 for s in hit_recorded if not s["answer_hit_at_retrieved"])
+        else:
+            # Fallback: count samples where recall is not None (has gold in aligned/precomputed mode)
+            agg["n_with_gold"] = sum(1 for s in self.samples if s.get("recall") is not None)
 
         return agg
-
-    def reset(self):
-        self.samples.clear()

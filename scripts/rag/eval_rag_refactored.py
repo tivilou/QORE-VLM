@@ -124,6 +124,10 @@ def parse_args():
     p.add_argument("--qore_prefilter_size", type=int, default=None,
                    help="QORE relevance-first candidate pool size for large N "
                         "(default: max(K*3, 15); try 15-20 to reduce low-relevance risk)")
+    p.add_argument("--direct_solve_max_n", type=int, default=20,
+                   help="QORE: if N <= this, solve QUBO directly without prefilter. "
+                        "Keep at 20 (below Top-K retrieval size) so prefilter always runs. "
+                        "Increase only for small-N demos.")
     p.add_argument("--lambda_mmr", type=float, default=0.7,
                    help="MMR lambda (1=relevance, 0=diversity)")
 
@@ -275,8 +279,9 @@ def main():
             gamma=args.gamma,
             lambda_mmr=args.lambda_mmr,
             seed=args.seed,
-            relevance_scores=retrieval_scores,  # Pass DPR scores to selector
+            relevance_scores=retrieval_scores,
             qore_prefilter_size=args.qore_prefilter_size,
+            direct_solve_max_n=args.direct_solve_max_n,
         )
         selection_time_ms = (time.perf_counter() - t0) * 1000
 
@@ -327,6 +332,14 @@ def main():
             generation_time_ms = (time.perf_counter() - t0) * 1000
 
         # Evaluate
+        # answer_hit_at_retrieved: for open-domain modes, whether ANY retrieved
+        # candidate contains a gold answer string — this is the retrieval upper bound.
+        # For aligned/precomputed, retrieval guarantees gold so we skip this.
+        if args.corpus_mode in ("faiss", "wiki_dpr"):
+            answer_hit = len(gold_in_retrieved) > 0
+        else:
+            answer_hit = None
+
         evaluator.evaluate_sample(
             question_id=qid,
             selected_indices=set(selected_local),
@@ -336,7 +349,7 @@ def main():
             gold_answers=gold_answers,
             selection_time_ms=selection_time_ms,
             generation_time_ms=generation_time_ms,
-            retrieved_indices=set(range(len(retrieved_idx))),  # Recall@50 upper bound
+            answer_hit_at_retrieved=answer_hit,
         )
 
     # ──────────────────────────────────────────────────────────────────────
@@ -348,13 +361,15 @@ def main():
     print("=" * 70)
     print(f"Method: {args.method}")
     print(f"Samples: {agg.get('n_samples', 0)}")
-    print(f"Samples with gold: {agg.get('n_with_gold', 0)}")
-    if agg.get('n_retrieval_failure', 0) > 0:
-        print(f"Retrieval failures: {agg['n_retrieval_failure']} (gold not in retrieved set)")
-    if "mean_recall_at_retrieved" in agg:
-        print(f"Recall@Retrieved: {agg['mean_recall_at_retrieved']:.4f} ± {agg.get('std_recall_at_retrieved', 0):.4f} (upper bound)")
+    if "n_with_gold" in agg:
+        n_total = agg.get('n_samples', 0)
+        n_with = agg.get('n_with_gold', 0)
+        n_fail = agg.get('n_retrieval_failure', 0)
+        print(f"Retrieval: {n_with}/{n_total} hit gold in Top-{args.top_k_retrieval}"
+              + (f" | {n_fail} retrieval failures" if n_fail > 0 else ""))
     if "mean_recall" in agg:
-        print(f"Recall@{args.K}: {agg['mean_recall']:.4f} ± {agg.get('std_recall', 0):.4f} (selection quality)")
+        print(f"Recall@{args.K}: {agg['mean_recall']:.4f} ± {agg.get('std_recall', 0):.4f}"
+              " (conditional on retrieval hit)")
     if "mean_redundancy" in agg:
         print(f"Redundancy: {agg['mean_redundancy']:.4f} ± {agg.get('std_redundancy', 0):.4f}")
     if "mean_em" in agg:

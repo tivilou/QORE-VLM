@@ -20,7 +20,7 @@ def select_passages(
     num_reads: int = 50,
     lambda_mmr: float = 0.5,
     seed: int | None = None,
-    direct_solve_max_n: int = 64,
+    direct_solve_max_n: int = 20,
     qore_prefilter_size: int | None = None,
     vqc_encoder=None,
     vqc_backend: str = "tensorcircuit",
@@ -49,8 +49,9 @@ def select_passages(
         lambda_mmr: MMR trade-off (only for method="mmr").
         seed: Random seed for reproducibility.
         direct_solve_max_n: If N <= this, solve the full QUBO directly with no
-            top-M prefilter (roadmap §4.3 "pure" demonstration). Above it, fall
-            back to prefilter + QUBO for tractability. Applies to "qore"/"vqc".
+            top-M prefilter. Default is 20, which ensures N=50 (typical RAG
+            Top-K retrieval) goes through the relevance-first prefilter path.
+            Increase only for small-N demos where global QUBO is intended.
         qore_prefilter_size: Relevance-first candidate pool size for large N
             (only for method="qore"/"vqc"). If None, defaults to max(K*3, 15).
             Smaller values (e.g., 15-20) reduce the risk of QORE selecting
