@@ -46,6 +46,29 @@ from applications.rag.retrieval import make_encoder
 from applications.rag.selector import select_passages
 
 
+def answer_has_match_in_text(answer: str, text: str) -> bool:
+    """Check if answer appears in text with token boundaries.
+
+    More strict than simple substring match to avoid false positives like
+    "2012" matching "2012-2013" when the gold answer is specifically "2012".
+
+    Uses word boundaries (\b in regex) or whitespace/punctuation delimiters.
+    """
+    import re
+    # Normalize
+    answer_norm = answer.lower().strip()
+    text_norm = text.lower()
+
+    # Simple substring check first (fast path)
+    if answer_norm not in text_norm:
+        return False
+
+    # Token boundary check: require word boundaries around the answer
+    # \b matches position between \w and \W (word/non-word boundary)
+    pattern = r'\b' + re.escape(answer_norm) + r'\b'
+    return re.search(pattern, text_norm) is not None
+
+
 def parse_args():
     p = argparse.ArgumentParser(description="RAG end-to-end evaluation")
 
@@ -98,6 +121,9 @@ def parse_args():
                    help="QUBO redundancy weight (None=auto-tune to 1.0; "
                         "lower=favor relevance, higher=favor diversity; "
                         "try 0.05-0.5 for better answer coverage)")
+    p.add_argument("--qore_prefilter_size", type=int, default=None,
+                   help="QORE relevance-first candidate pool size for large N "
+                        "(default: max(K*3, 15); try 15-20 to reduce low-relevance risk)")
     p.add_argument("--lambda_mmr", type=float, default=0.7,
                    help="MMR lambda (1=relevance, 0=diversity)")
 
@@ -250,6 +276,7 @@ def main():
             lambda_mmr=args.lambda_mmr,
             seed=args.seed,
             relevance_scores=retrieval_scores,  # Pass DPR scores to selector
+            qore_prefilter_size=args.qore_prefilter_size,
         )
         selection_time_ms = (time.perf_counter() - t0) * 1000
 
@@ -264,19 +291,18 @@ def main():
         elif args.corpus_mode in ("faiss", "wiki_dpr"):
             # No gold labels for open-domain NQ: use the DPR answer-recall
             # convention — a retrieved passage is "gold" if it contains any
-            # gold answer string. Scored over the retrieved candidates only.
+            # gold answer string with token boundaries (stricter than substring).
             gold_in_retrieved = set()
-            norm_answers = [a.lower() for a in gold_answers if a]
             if args.corpus_mode == "wiki_dpr":
                 # Use retrieved_texts directly
                 for j, text in enumerate(retrieved_texts):
-                    if any(ans in text.lower() for ans in norm_answers):
+                    if any(answer_has_match_in_text(ans, text) for ans in gold_answers if ans):
                         gold_in_retrieved.add(j)
             else:
                 # faiss mode: access corpus.passages
                 for j, gidx in enumerate(retrieved_idx):
-                    passage_text = corpus.passages[gidx].lower()
-                    if any(ans in passage_text for ans in norm_answers):
+                    passage_text = corpus.passages[gidx]
+                    if any(answer_has_match_in_text(ans, passage_text) for ans in gold_answers if ans):
                         gold_in_retrieved.add(j)
         else:
             gold_global = corpus.gold_for(qid)
@@ -310,6 +336,7 @@ def main():
             gold_answers=gold_answers,
             selection_time_ms=selection_time_ms,
             generation_time_ms=generation_time_ms,
+            retrieved_indices=set(range(len(retrieved_idx))),  # Recall@50 upper bound
         )
 
     # ──────────────────────────────────────────────────────────────────────
@@ -321,8 +348,13 @@ def main():
     print("=" * 70)
     print(f"Method: {args.method}")
     print(f"Samples: {agg.get('n_samples', 0)}")
+    print(f"Samples with gold: {agg.get('n_with_gold', 0)}")
+    if agg.get('n_retrieval_failure', 0) > 0:
+        print(f"Retrieval failures: {agg['n_retrieval_failure']} (gold not in retrieved set)")
+    if "mean_recall_at_retrieved" in agg:
+        print(f"Recall@Retrieved: {agg['mean_recall_at_retrieved']:.4f} ± {agg.get('std_recall_at_retrieved', 0):.4f} (upper bound)")
     if "mean_recall" in agg:
-        print(f"Recall@{args.K}: {agg['mean_recall']:.4f} ± {agg.get('std_recall', 0):.4f}")
+        print(f"Recall@{args.K}: {agg['mean_recall']:.4f} ± {agg.get('std_recall', 0):.4f} (selection quality)")
     if "mean_redundancy" in agg:
         print(f"Redundancy: {agg['mean_redundancy']:.4f} ± {agg.get('std_redundancy', 0):.4f}")
     if "mean_em" in agg:

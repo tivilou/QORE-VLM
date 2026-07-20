@@ -138,8 +138,13 @@ class Evaluator:
         gold_answers: Optional[list[str]] = None,
         selection_time_ms: float = 0.0,
         generation_time_ms: float = 0.0,
+        retrieved_indices: Optional[set] = None,
     ) -> dict:
         """Score one sample and append to history.
+
+        Args:
+            retrieved_indices: If provided, computes recall@retrieved (e.g., Recall@50)
+                              to measure retrieval upper bound.
 
         Returns the per-sample metric dict for immediate inspection.
         """
@@ -151,7 +156,13 @@ class Evaluator:
             "diversity": diversity_ratio(selected_embeddings),
             "selection_time_ms": selection_time_ms,
             "generation_time_ms": generation_time_ms,
+            "has_gold": len(gold_indices) > 0 if gold_indices else False,
         }
+
+        # Recall@retrieved (e.g., Recall@50): upper bound from retrieval
+        if retrieved_indices is not None:
+            metrics["recall_at_retrieved"] = recall_at_k(retrieved_indices, gold_indices)
+
         if prediction is not None and gold_answers is not None:
             qa = evaluate_answer(prediction, gold_answers)
             metrics.update(qa)
@@ -159,13 +170,22 @@ class Evaluator:
         return metrics
 
     def aggregate(self) -> dict:
-        """Compute mean/std over all evaluated samples."""
+        """Compute mean/std over all evaluated samples.
+
+        Returns metrics with distinctions:
+        - mean_recall: averaged over samples with gold (conditional)
+        - mean_recall_at_retrieved: upper bound from retrieval stage
+        - n_samples: total samples
+        - n_with_gold: samples where gold exists in candidates
+        - n_retrieval_failure: samples where gold not in retrieved set
+        """
         if not self.samples:
             return {}
 
         keys = [
             "recall", "precision", "redundancy", "diversity",
-            "em", "f1", "selection_time_ms", "generation_time_ms"
+            "em", "f1", "selection_time_ms", "generation_time_ms",
+            "recall_at_retrieved",
         ]
         agg = {}
         for k in keys:
@@ -173,10 +193,19 @@ class Evaluator:
             if vals:
                 agg[f"mean_{k}"] = float(np.mean(vals))
                 agg[f"std_{k}"] = float(np.std(vals))
+
         agg["n_samples"] = len(self.samples)
         agg["n_with_gold"] = sum(
-            1 for s in self.samples if s.get("recall") is not None
+            1 for s in self.samples if s.get("has_gold", False)
         )
+
+        # Count retrieval failures (gold not in retrieved set)
+        retrieval_failures = sum(
+            1 for s in self.samples
+            if "recall_at_retrieved" in s and s["recall_at_retrieved"] == 0.0
+        )
+        agg["n_retrieval_failure"] = retrieval_failures
+
         return agg
 
     def reset(self):

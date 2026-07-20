@@ -21,6 +21,7 @@ def select_passages(
     lambda_mmr: float = 0.5,
     seed: int | None = None,
     direct_solve_max_n: int = 64,
+    qore_prefilter_size: int | None = None,
     vqc_encoder=None,
     vqc_backend: str = "tensorcircuit",
 ) -> np.ndarray:
@@ -42,12 +43,21 @@ def select_passages(
             retriever. If None, cosine(query, passage) is used.
         redundancy_method: How to compute b_ij. "cosine" (default) or "rbf".
         lam: QUBO penalty weight (only for method="qore"/"vqc").
+        gamma: QUBO redundancy weight (only for method="qore"/"vqc"). If None,
+            auto-tunes to 1.0.
         num_reads: SA reads (only for method="qore"/"vqc").
         lambda_mmr: MMR trade-off (only for method="mmr").
         seed: Random seed for reproducibility.
         direct_solve_max_n: If N <= this, solve the full QUBO directly with no
             top-M prefilter (roadmap §4.3 "pure" demonstration). Above it, fall
             back to prefilter + QUBO for tractability. Applies to "qore"/"vqc".
+        qore_prefilter_size: Relevance-first candidate pool size for large N
+            (only for method="qore"/"vqc"). If None, defaults to max(K*3, 15).
+            Smaller values (e.g., 15-20) reduce the risk of QORE selecting
+            low-relevance passages. Larger values give more diversity headroom.
+        vqc_encoder: Pre-trained VQCEncoder instance (only for method="vqc").
+            If None, a fresh (untrained) encoder is created.
+        vqc_backend: Quantum backend for VQC (only for method="vqc").
         vqc_encoder: Pre-trained VQCEncoder instance (only for method="vqc").
             If None, a fresh (untrained) encoder is created.
         vqc_backend: Quantum backend for VQC (only for method="vqc").
@@ -95,7 +105,11 @@ def select_passages(
 
         # Large N: two-stage. Pre-filter to top-M by quality, then QUBO on the
         # pool (redundancy is the differentiator within already-relevant items).
-        M = min(N, max(K * 3, 15))
+        # Smaller M (e.g., 15-20) reduces risk of low-relevance selections.
+        if qore_prefilter_size is not None:
+            M = min(N, qore_prefilter_size)
+        else:
+            M = min(N, max(K * 3, 15))
         prefilter_idx = np.argsort(a)[-M:]
 
         a_filtered = a[prefilter_idx]
