@@ -60,7 +60,8 @@ def parse_args():
                    help="Comma-separated methods")
     p.add_argument("--K", type=int, default=5)
     p.add_argument("--num_reads", type=int, default=100)
-    p.add_argument("--lam", type=float, default=1.0)
+    p.add_argument("--lam", type=float, default=2.0)
+    p.add_argument("--gamma", type=float, default=None)
     p.add_argument("--lambda_mmr", type=float, default=0.7)
 
     # Generation
@@ -105,6 +106,8 @@ def run_single(args, method: str, seed: int, output_dir: Path) -> dict:
         "--output_dir", str(output_dir),
         "--output_file", output_file,
     ]
+    if args.gamma is not None:
+        cmd += ["--gamma", str(args.gamma)]
     if args.corpus_output_dir:
         cmd += ["--corpus_output_dir", args.corpus_output_dir]
     if args.skip_generation:

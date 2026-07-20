@@ -16,6 +16,7 @@ def select_passages(
     relevance_scores: np.ndarray | None = None,
     redundancy_method: str = "cosine",
     lam: float = 2.0,
+    gamma: float | None = None,
     num_reads: int = 50,
     lambda_mmr: float = 0.5,
     seed: int | None = None,
@@ -88,7 +89,7 @@ def select_passages(
             # directly — no prefilter, no approximation. This is RAG's "clean"
             # demonstration that global QUBO selection beats greedy top-K/MMR.
             b = passage_redundancy(passage_embeddings, method=redundancy_method)
-            x = qore_solve(a, b, K, lam=lam, method="anneal", **kwargs)
+            x = qore_solve(a, b, K, lam=lam, gamma=gamma, method="anneal", **kwargs)
             indices = np.where(x == 1)[0]
             return indices[np.argsort(a[indices])[::-1]]
 
@@ -101,7 +102,7 @@ def select_passages(
         embeddings_filtered = passage_embeddings[prefilter_idx]
         b = passage_redundancy(embeddings_filtered, method=redundancy_method)
 
-        x = qore_solve(a_filtered, b, K, lam=lam, method="anneal", **kwargs)
+        x = qore_solve(a_filtered, b, K, lam=lam, gamma=gamma, method="anneal", **kwargs)
 
         selected_in_pool = np.where(x == 1)[0]
         indices = prefilter_idx[selected_in_pool]

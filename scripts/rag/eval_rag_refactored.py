@@ -92,8 +92,12 @@ def parse_args():
     p.add_argument("--K", type=int, default=5, help="Select K passages")
     p.add_argument("--num_reads", type=int, default=100,
                    help="SA reads for QORE (ignored for mmr/topk)")
-    p.add_argument("--lam", type=float, default=1.0,
-                   help="QUBO penalty weight for QORE (lower=favor relevance, higher=favor diversity)")
+    p.add_argument("--lam", type=float, default=2.0,
+                   help="QUBO cardinality penalty weight (keep at ~2.0 for proper constraint enforcement)")
+    p.add_argument("--gamma", type=float, default=None,
+                   help="QUBO redundancy weight (None=auto-tune to 1.0; "
+                        "lower=favor relevance, higher=favor diversity; "
+                        "try 0.05-0.5 for better answer coverage)")
     p.add_argument("--lambda_mmr", type=float, default=0.7,
                    help="MMR lambda (1=relevance, 0=diversity)")
 
@@ -242,6 +246,7 @@ def main():
             method=args.method,
             num_reads=args.num_reads,
             lam=args.lam,
+            gamma=args.gamma,
             lambda_mmr=args.lambda_mmr,
             seed=args.seed,
             relevance_scores=retrieval_scores,  # Pass DPR scores to selector
