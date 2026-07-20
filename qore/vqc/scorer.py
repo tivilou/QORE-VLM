@@ -101,6 +101,7 @@ def vqc_select_passages(
     solver: str = "anneal",
     encoder: Optional[VQCEncoder] = None,
     seed: Optional[int] = None,
+    direct_solve_max_n: int = 64,
 ) -> np.ndarray:
     """
     Quantum-native RAG passage selection.
@@ -124,12 +125,10 @@ def vqc_select_passages(
     """
     N = len(passage_embeddings)
 
-    # Pre-filter to top-3K by classical relevance (keeps VQC problem size manageable)
-    from ..signals import normalize as norm_fn
     query_embedding = np.asarray(query_embedding, dtype=np.float64)
     passage_embeddings = np.asarray(passage_embeddings, dtype=np.float64)
 
-    # Classical relevance for pre-filtering
+    # Classical relevance (used for pre-filtering and/or presentation order)
     q_norm = np.linalg.norm(query_embedding)
     if q_norm > 1e-12:
         q = query_embedding / q_norm
@@ -140,21 +139,23 @@ def vqc_select_passages(
     p_normed = passage_embeddings / p_norms
     relevance = p_normed @ q
 
-    # Pre-filter
+    # Small N: solve directly without pre-filtering
+    if N <= direct_solve_max_n:
+        x = vqc_score(
+            features=passage_embeddings, K=K, n_qubits=n_qubits, n_layers=n_layers,
+            backend=backend, solver=solver, encoder=encoder, seed=seed,
+        )
+        indices = np.where(x == 1)[0]
+        return indices[np.argsort(relevance[indices])[::-1]]
+
+    # Large N: pre-filter to top-M by relevance to keep the VQC problem tractable.
     M = min(N, max(K * 3, 15))
     prefilter_idx = np.argsort(relevance)[-M:]
     filtered_embeddings = passage_embeddings[prefilter_idx]
 
-    # Quantum scoring on filtered set
     x = vqc_score(
-        features=filtered_embeddings,
-        K=K,
-        n_qubits=n_qubits,
-        n_layers=n_layers,
-        backend=backend,
-        solver=solver,
-        encoder=encoder,
-        seed=seed,
+        features=filtered_embeddings, K=K, n_qubits=n_qubits, n_layers=n_layers,
+        backend=backend, solver=solver, encoder=encoder, seed=seed,
     )
 
     # Map back to original indices
