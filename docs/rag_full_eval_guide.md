@@ -16,28 +16,34 @@
 
 **评测改进**（commit `df972e7`），本轮自动生效：
 
-4. **Gold 判定改进**：从简单字符串包含改为 token 边界匹配，避免误命中（如 "2012" 
+4. **Gold 判定改进**：从简单字符串包含改为 token 边界匹配，避免误命中（如 "2012"
    匹配 "20122"），Recall/Precision 数值更准确
-5. **评测标注改进**：输出新增 Recall@Retrieved（检索上界，如 Recall@50）和
-   retrieval failure 统计，分离检索失败和重排失败
-6. **可选优化**：新增 `--qore_prefilter_size` 参数（默认 max(K*3,15)），若 gamma=0.5
-   仍不达标可尝试 `--qore_prefilter_size 15` 进一步限制候选池（减少低相关段风险）
+5. **检索失败统计修复**（commit `6b99cec`，重要）：之前版本的
+   `recall_at_retrieved=1.0` 和 `n_retrieval_failure=0` **是错误指标**，已修复：
+   - 现在每题记录 `answer_hit_at_retrieved`（Top-50 中是否命中 gold）
+   - `n_with_gold`：检索命中的题数；`n_retrieval_failure`：Top-50 未含答案的题数
+6. **QORE prefilter 修复**（commit `6b99cec`）：`direct_solve_max_n` 从 64 降为 20，
+   N=50 现在正确走 relevance-first 预过滤，`--qore_prefilter_size` 参数生效
+7. **可选**：新增 `--qore_prefilter_size` 参数（默认 max(K*3,15)），若达标困难可
+   尝试 `--qore_prefilter_size 15` 进一步限制候选池
 
-**参考**：200 样本实验报告（`/home/Q-DUET-VLM/analysis(1).md`）的根因分析。
+**⚠️ 注意**：2026-07-20 的 400 题实验用的是 `gamma=None`（=1.0），**不是** gamma=0.5；
+那轮 QORE 结果（Recall 28.1%，F1 44.5%）是 gamma=1.0 的表现，不能作为 gamma=0.5 的参考。
+
+**参考**：200 样本（`/home/Q-DUET-VLM/analysis(1).md`）和 400 样本（`analysis(2).md`）实验报告。
 
 ---
 
 ## 概述
 
-RAG 模块代码已完成（模块化重构 + 内存优化 + gamma 参数 + 评测改进）。本轮分两步执行：
-先跑 200 题验证 gamma=0.5 的效果，达标后再跑全量 NQ 评测。
+RAG 模块代码已完成（模块化重构 + 内存优化 + gamma 参数 + 评测修复）。本轮分两步执行：
+先跑 400 题验证 gamma=0.5 的效果，达标后再跑全量 NQ 评测。
 
 **机器要求**：
 - RAM: 32GB+（推荐 64GB）
 - GPU: 24GB 显存（用于生成答案）
 - 磁盘: 100GB+ 可用空间（HuggingFace 缓存）
-- 网络: 能访问 HuggingFace（首次运行会下载 ~80GB wiki_dpr 数据集；上轮已运行过的
-  机器会直接命中缓存）
+- 网络: 能访问 HuggingFace（wiki_dpr 应已缓存，直接命中）
 
 ---
 
@@ -50,38 +56,47 @@ cd /path/to/QORE-VLM
 git pull origin main
 ```
 
-### 2. 第一步：200 题验证（gamma=0.5）
+### 2. 第一步：400 题验证（gamma=0.5）
+
+与上轮 400 题实验的唯一区别：加上 `--gamma 0.5`。
 
 ```bash
-# 在 QORE-VLM 根目录下运行
 python -m scripts.rag.eval_suite \
   --corpus_mode wiki_dpr \
   --dataset nq_open \
-  --max_samples 200 \
+  --max_samples 400 \
   --methods qore,mmr,topk \
   --seeds 42 \
   --K 5 \
   --lam 2.0 \
   --gamma 0.5 \
-  --output_dir results/rag/gamma05_validation
+  --output_dir results/rag/gamma05_400
 ```
 
 **注意**：
 - `--methods` 用**逗号分隔**（用空格会报 unrecognized arguments）
 - 本地已有模型的话加 `--model_path models/llama3-8b`（按实际路径）
-- 旧版文档中的 `--num_workers` 参数不存在，不要加
+- QORE 的 prefilter 现在默认生效（direct_solve_max_n=20），选择耗时应显著低于上轮 476 ms
 
-**通过标准**（对比上轮 gamma=1.0 的 200 题结果）：
-- [ ] QORE Recall@5 ≥ 30%（上轮 24.4%；MMR 34.9%）
-- [ ] QORE F1 ≥ 45%（上轮 40.9%；MMR 47.1%）
-- [ ] QORE 冗余度 < 0.80（保持明显低于 MMR 的 0.832）
+**预期输出样例**：
+```
+Retrieval: 311/400 hit gold in Top-50 | 89 retrieval failures
+Recall@5:  0.XXXX (conditional on retrieval hit)
+Redundancy: 0.XXXX
+EM: 0.XXXX
+F1: 0.XXXX
+```
 
-三项达标 → 执行第二步全量评测；任何一项不达标 → 按交付方式推送 JSON 后停止，
-等分析后再定。
+**通过标准**（对比上轮 gamma=1.0 的 400 题）：
+- [ ] QORE Recall@5 ≥ 34%（上轮 28.1%；基线 Top-K 38.3%）
+- [ ] QORE F1 ≥ 46%（上轮 44.5%；基线 MMR 47.0%）
+- [ ] QORE 冗余度 < 0.80（上轮 0.766，基线 MMR 0.835）
+
+三项达标 → 执行第二步全量评测；不达标 → 按交付方式推送 JSON 等分析。
 
 ### 3. 第二步：全量评测
 
-**建议在 tmux 中运行**（避免 SSH 断开中断）：
+**建议在 tmux 中运行**：
 ```bash
 tmux new -s rag_eval
 ```
@@ -99,39 +114,36 @@ python -m scripts.rag.eval_suite \
   --output_dir results/rag/full_eval_21M
 ```
 
-- `--max_samples 0`：使用全部样本（NQ validation 约 3600 题）
-- Ctrl+B, D 分离 tmux；`tmux attach -t rag_eval` 重新连接查看进度
+Ctrl+B, D 分离 tmux；`tmux attach -t rag_eval` 重新连接查看进度。
 
 ### 4. 检查输出
 
-每步运行结束后，输出目录下应该有：
 ```
 qore_K5_seed42.json
 mmr_K5_seed42.json
 topk_K5_seed42.json
-summary.json          # 自动生成的汇总结果
+summary.json
 ```
 
 **检查点**：
 - [ ] 3 个 JSON 文件都生成了
+- [ ] `n_with_gold` 和 `n_retrieval_failure` 有合理数值（非 0/1.0）
 - [ ] QORE 的 Redundancy 明显低于 MMR/Top-K
-- 注：单 seed 下 summary.json 不含 t-test（跨 seed 显著性检验需要多 seed）
+- 注：单 seed 下 summary.json 不含 t-test
 
 ---
 
 ## 交付方式
 
-**将结果提交到 GitHub**（`results/` 在 .gitignore 中，需要加 `-f`）：
-
 ```bash
-git add -f results/rag/gamma05_validation/*.json
-git commit -m "实验结果:RAG 200题验证(gamma=0.5)"
+git add -f results/rag/gamma05_400/*.json
+git commit -m "实验结果:RAG 400题验证(gamma=0.5)"
 git push origin main
 ```
 
-全量评测完成后同样操作（目录换成 `results/rag/full_eval_21M`）。
+全量评测同样操作（目录换成 `results/rag/full_eval_21M`）。
 
-**关键指标**（在 summary.json 中）：
+**关键指标**：
 1. **Recall@5**：QORE vs MMR vs Top-K（越高越好）
 2. **Redundancy**：QORE 应该最低
 3. **EM / F1**：最终答案质量
