@@ -131,6 +131,13 @@ def parse_args():
     p.add_argument("--lambda_mmr", type=float, default=0.7,
                    help="MMR lambda (1=relevance, 0=diversity)")
 
+    # Answer scoring (optimization)
+    p.add_argument("--use_answer_scorer", action="store_true",
+                   help="Use answer likelihood from DPR reader instead of DPR scores as quality signal")
+    p.add_argument("--answer_scorer_backend", default="dpr",
+                   choices=["dpr", "cross_encoder"],
+                   help="Answer scorer backend: 'dpr' (DPR reader) or 'cross_encoder' (MiniLM)")
+
     # Generation
     p.add_argument("--model_path",
                    default="meta-llama/Meta-Llama-3-8B-Instruct",
@@ -229,6 +236,16 @@ def main():
         print("  Generator ready")
 
     # ──────────────────────────────────────────────────────────────────────
+    # 3b. Load answer scorer (if requested)
+    # ──────────────────────────────────────────────────────────────────────
+    answer_scorer = None
+    if args.use_answer_scorer:
+        from applications.rag.answer_scorer import make_answer_scorer
+        print(f"Loading answer scorer: {args.answer_scorer_backend}...")
+        answer_scorer = make_answer_scorer(backend=args.answer_scorer_backend)
+        print("  Answer scorer ready")
+
+    # ──────────────────────────────────────────────────────────────────────
     # 4. Evaluation loop
     # ──────────────────────────────────────────────────────────────────────
     print(f"\nEvaluating {len(questions)} questions...")
@@ -255,7 +272,7 @@ def main():
                 query_emb, args.top_k_retrieval, candidate_embeddings=cand_embs
             )
             retrieved_embs = cand_embs[retrieved_idx]
-            retrieved_texts = None
+            retrieved_texts = cand_texts if args.use_answer_scorer else None
         elif args.corpus_mode == "wiki_dpr":
             # wiki_dpr mode: retrieval returns embeddings, texts, and scores
             retrieved_idx, retrieved_embs, retrieved_texts, retrieval_scores = corpus_manager.retrieve_with_embeddings(
@@ -265,7 +282,17 @@ def main():
             # Shared corpus (aligned or faiss)
             retrieved_idx, retrieval_scores = corpus_manager.retrieve(query_emb, args.top_k_retrieval)
             retrieved_embs = corpus.embeddings[retrieved_idx]
-            retrieved_texts = None
+            retrieved_texts = [corpus.passages[idx] for idx in retrieved_idx] if args.use_answer_scorer else None
+
+        # Answer scoring (optional): replace DPR scores with answer likelihood
+        if answer_scorer is not None:
+            if retrieved_texts is None:
+                # Need passage texts for answer scoring
+                if args.corpus_mode == "precomputed":
+                    retrieved_texts = [candidates[idx]["text"] for idx in retrieved_idx]
+                else:
+                    retrieved_texts = [corpus.passages[idx] for idx in retrieved_idx]
+            retrieval_scores = answer_scorer.score_passages(question, retrieved_texts)
 
         # Select
         t0 = time.perf_counter()
