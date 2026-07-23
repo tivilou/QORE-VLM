@@ -68,6 +68,13 @@ def parse_args():
                    help="QORE: max N for direct QUBO solve without prefilter")
     p.add_argument("--lambda_mmr", type=float, default=0.7)
 
+    # Answer scoring (optimization)
+    p.add_argument("--use_answer_scorer", action="store_true",
+                   help="Use answer likelihood from DPR reader instead of DPR scores")
+    p.add_argument("--answer_scorer_backend", default="dpr",
+                   choices=["dpr", "cross_encoder"],
+                   help="Answer scorer backend")
+
     # Generation
     p.add_argument("--model_path",
                    default="meta-llama/Meta-Llama-3-8B-Instruct")
@@ -116,6 +123,10 @@ def run_single(args, method: str, seed: int, output_dir: Path) -> dict:
         cmd += ["--qore_prefilter_size", str(args.qore_prefilter_size)]
     if args.direct_solve_max_n != 20:
         cmd += ["--direct_solve_max_n", str(args.direct_solve_max_n)]
+    if args.use_answer_scorer:
+        cmd += ["--use_answer_scorer"]
+        if args.answer_scorer_backend != "dpr":
+            cmd += ["--answer_scorer_backend", args.answer_scorer_backend]
     if args.corpus_output_dir:
         cmd += ["--corpus_output_dir", args.corpus_output_dir]
     if args.skip_generation:
