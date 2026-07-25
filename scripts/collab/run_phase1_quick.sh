@@ -10,7 +10,7 @@ echo ""
 # 切换到项目根目录
 cd "$(dirname "$0")/../.."
 
-python scripts/tuning/run_suite.py \
+python scripts/tuning/run_tuning_suite.py \
     --config scripts/tuning/config/quick_test.yaml
 
 echo ""

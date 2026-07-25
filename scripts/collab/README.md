@@ -39,12 +39,12 @@ cat scratch/research/P1_diagnosis/analysis/analysis.md
 
 ```bash
 # 只跑 50 题
-python scripts/tuning/run_suite.py \
+python scripts/tuning/run_tuning_suite.py \
     --config scripts/tuning/config/phase1_diagnosis.yaml \
     --override max_samples=50
 
 # 修改其他参数
-python scripts/tuning/run_suite.py \
+python scripts/tuning/run_tuning_suite.py \
     --config scripts/tuning/config/phase1_diagnosis.yaml \
     --override max_samples=100 seed=123
 ```
@@ -94,7 +94,7 @@ cat scratch/research/P1_diagnosis/experiments/gamma_0.5/status.json
 ### 问题 3: 想快速测试
 只跑 50 题（15-20分钟）：
 ```bash
-python scripts/tuning/run_suite.py \
+python scripts/tuning/run_tuning_suite.py \
     --config scripts/tuning/config/phase1_diagnosis.yaml \
     --override max_samples=50
 ```

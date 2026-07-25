@@ -25,15 +25,15 @@ bash scripts/collab/run_phase1_full.sh
 
 ```bash
 # Phase 1 诊断（完整版，200题）
-python scripts/tuning/run_suite.py \
+python scripts/tuning/run_tuning_suite.py \
     --config scripts/tuning/config/phase1_diagnosis.yaml
 
 # 快速测试（10题）
-python scripts/tuning/run_suite.py \
+python scripts/tuning/run_tuning_suite.py \
     --config scripts/tuning/config/quick_test.yaml
 
 # 自定义参数
-python scripts/tuning/run_suite.py \
+python scripts/tuning/run_tuning_suite.py \
     --config scripts/tuning/config/phase1_diagnosis.yaml \
     --override max_samples=50
 ```
