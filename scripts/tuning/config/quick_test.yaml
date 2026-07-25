@@ -1,0 +1,101 @@
+"""
+快速测试配置 - 验证框架是否正常工作
+
+只跑 10 题，3 个实验，预计 5 分钟完成
+"""
+
+name: "Quick Test (10 samples)"
+description: "快速测试框架功能，只跑 10 题"
+version: "1.0"
+
+output_dir: "scratch/research/quick_test"
+
+experiments:
+  - name: "gamma_0.0"
+    description: "纯质量"
+    command: "python -m scripts.rag.eval_rag_refactored"
+    args:
+      corpus_mode: "wiki_dpr"
+      dataset: "nq_open"
+      max_samples: 10
+      method: "qore"
+      K: 5
+      lam: 2.0
+      gamma: 0.0
+      direct_solve_max_n: 20
+      use_answer_scorer: true
+      seed: 42
+      skip_generation: true
+      output_dir: "{output_dir}/experiments/gamma_0.0"
+      output_file: "result.json"
+    expected_time_minutes: 2
+
+  - name: "gamma_0.5"
+    description: "平衡"
+    command: "python -m scripts.rag.eval_rag_refactored"
+    args:
+      corpus_mode: "wiki_dpr"
+      dataset: "nq_open"
+      max_samples: 10
+      method: "qore"
+      K: 5
+      lam: 2.0
+      gamma: 0.5
+      direct_solve_max_n: 20
+      use_answer_scorer: true
+      seed: 42
+      skip_generation: true
+      output_dir: "{output_dir}/experiments/gamma_0.5"
+      output_file: "result.json"
+    expected_time_minutes: 2
+
+  - name: "gamma_1.0"
+    description: "纯多样性"
+    command: "python -m scripts.rag.eval_rag_refactored"
+    args:
+      corpus_mode: "wiki_dpr"
+      dataset: "nq_open"
+      max_samples: 10
+      method: "qore"
+      K: 5
+      lam: 2.0
+      gamma: 1.0
+      direct_solve_max_n: 20
+      use_answer_scorer: true
+      seed: 42
+      skip_generation: true
+      output_dir: "{output_dir}/experiments/gamma_1.0"
+      output_file: "result.json"
+    expected_time_minutes: 2
+
+post_process:
+  analyze:
+    enabled: true
+    script: "scratch/research/scripts/analyze_gamma_diagnosis.py"
+    args:
+      results_dir: "{output_dir}/experiments"
+      output: "{output_dir}/analysis/analysis.md"
+
+  package:
+    enabled: true
+    output: "{output_dir}/package/quick_test_{timestamp}.zip"
+    include:
+      - "{output_dir}/experiments/*/result.json"
+      - "{output_dir}/analysis/*"
+      - "{output_dir}/run_summary.json"
+
+  visualize:
+    enabled: false
+
+execution:
+  parallel: 1
+  retry_on_failure: 1
+  timeout_minutes: 10
+
+  pre_checks:
+    - check_gpu: true
+    - check_disk_space_gb: 5
+    - check_python_packages: ["torch", "transformers"]
+
+notifications:
+  enabled: false

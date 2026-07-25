@@ -75,3 +75,19 @@ wandb_api
 .claude/
 /AGENTS.md
 /CLAUDE.md
+
+# === Scripts: 本地开发内容（不推送到 GitHub）===
+
+# 开发和测试脚本
+scripts/dev/
+scripts/legacy/
+
+# 测试文件模式
+scripts/**/test_*.py
+scripts/**/debug_*.py
+scripts/**/*_temp.py
+scripts/**/*_tmp.*
+
+# 临时运行脚本
+scripts/**/run_temp*.sh
+scripts/**/run_debug*.sh

@@ -1,0 +1,124 @@
+"""
+实验配置文件 - Phase 1 诊断
+
+γ 极端值测试：理解多样性的作用，指导后续模型设计
+"""
+
+name: "Phase 1: Diagnosis (Gamma Sweep)"
+description: "测试 γ 极端值，理解多样性对 Recall 和冗余度的影响"
+version: "1.0"
+
+# 输出目录
+output_dir: "scratch/research/P1_diagnosis"
+
+# 实验配置
+experiments:
+  # 实验 1: 纯质量（γ=0.0）
+  - name: "gamma_0.0"
+    description: "纯质量优先，不考虑多样性"
+    command: "python -m scripts.rag.eval_rag_refactored"
+    args:
+      corpus_mode: "wiki_dpr"
+      dataset: "nq_open"
+      max_samples: 200
+      method: "qore"
+      K: 5
+      lam: 2.0
+      gamma: 0.0
+      direct_solve_max_n: 20
+      use_answer_scorer: true
+      seed: 42
+      skip_generation: true
+      output_dir: "{output_dir}/experiments/gamma_0.0"
+      output_file: "result.json"
+    expected_time_minutes: 20
+
+  # 实验 2: 平衡（γ=0.5）
+  - name: "gamma_0.5"
+    description: "质量与多样性平衡（当前 QORE 配置）"
+    command: "python -m scripts.rag.eval_rag_refactored"
+    args:
+      corpus_mode: "wiki_dpr"
+      dataset: "nq_open"
+      max_samples: 200
+      method: "qore"
+      K: 5
+      lam: 2.0
+      gamma: 0.5
+      direct_solve_max_n: 20
+      use_answer_scorer: true
+      seed: 42
+      skip_generation: true
+      output_dir: "{output_dir}/experiments/gamma_0.5"
+      output_file: "result.json"
+    expected_time_minutes: 20
+
+  # 实验 3: 纯多样性（γ=1.0）
+  - name: "gamma_1.0"
+    description: "纯多样性优先，牺牲质量"
+    command: "python -m scripts.rag.eval_rag_refactored"
+    args:
+      corpus_mode: "wiki_dpr"
+      dataset: "nq_open"
+      max_samples: 200
+      method: "qore"
+      K: 5
+      lam: 2.0
+      gamma: 1.0
+      direct_solve_max_n: 20
+      use_answer_scorer: true
+      seed: 42
+      skip_generation: true
+      output_dir: "{output_dir}/experiments/gamma_1.0"
+      output_file: "result.json"
+    expected_time_minutes: 20
+
+# 后处理配置
+post_process:
+  # 分析结果
+  analyze:
+    enabled: true
+    script: "scratch/research/scripts/analyze_gamma_diagnosis.py"
+    args:
+      results_dir: "{output_dir}/experiments"
+      output: "{output_dir}/analysis/analysis.md"
+
+  # 打包结果
+  package:
+    enabled: true
+    output: "{output_dir}/package/P1_diagnosis_{timestamp}.zip"
+    include:
+      - "{output_dir}/experiments/*/result.json"
+      - "{output_dir}/analysis/*"
+      - "{output_dir}/run_summary.json"
+
+  # 可视化（可选）
+  visualize:
+    enabled: false
+    plots:
+      - type: "bar"
+        metrics: ["recall", "redundancy"]
+        output: "{output_dir}/analysis/plots/comparison.png"
+
+# 运行配置
+execution:
+  # 并行运行实验数（1=串行，3=全部并行）
+  parallel: 1
+
+  # 失败重试次数
+  retry_on_failure: 2
+
+  # 超时设置（分钟）
+  timeout_minutes: 30
+
+  # 环境检查
+  pre_checks:
+    - check_gpu: true
+    - check_disk_space_gb: 10
+    - check_python_packages: ["torch", "transformers"]
+
+# 通知配置（可选）
+notifications:
+  enabled: false
+  email: null
+  slack_webhook: null
