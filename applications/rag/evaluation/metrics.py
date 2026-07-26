@@ -139,6 +139,7 @@ class Evaluator:
         selection_time_ms: float = 0.0,
         generation_time_ms: float = 0.0,
         answer_hit_at_retrieved: Optional[bool] = None,
+        dump: Optional[dict] = None,
     ) -> dict:
         """Score one sample and append to history.
 
@@ -147,6 +148,13 @@ class Evaluator:
                 contains a gold answer string. True = retrieval succeeded;
                 False = retrieval failure (gold not in Top-K candidates).
                 None = unknown / not applicable (e.g. aligned mode).
+            dump: Extra per-sample context merged verbatim into the sample —
+                typically "question", "gold_answers", "selected_passages" and
+                "prediction". None (the default) keeps the sample at scalar
+                metrics only; passing it inflates the result JSON a lot, so
+                callers gate it behind a flag (eval_rag_refactored
+                --dump_passages). Keys here never affect scoring: EM/F1 are
+                computed from the `prediction`/`gold_answers` args above.
 
         Returns the per-sample metric dict for immediate inspection.
         """
@@ -165,6 +173,15 @@ class Evaluator:
         if prediction is not None and gold_answers is not None:
             qa = evaluate_answer(prediction, gold_answers)
             metrics.update(qa)
+
+        if dump:
+            # Merged last but must not shadow a computed metric.
+            clashes = set(dump) & set(metrics)
+            if clashes:
+                raise ValueError(
+                    f"dump keys collide with computed metrics: {sorted(clashes)}"
+                )
+            metrics.update(dump)
         self.samples.append(metrics)
         return metrics
 

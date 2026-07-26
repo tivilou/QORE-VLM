@@ -3,9 +3,65 @@
 import numpy as np
 
 from qore import solve as qore_solve
+from qore.qubo import build_qubo_matrix, energy, energy_decomposed
 from qore.signals import normalize
 from .signals_rag import passage_relevance, passage_redundancy
 from .baselines import topk, mmr
+
+
+def _record_qubo_diagnostics(diagnostics, a, b, x, K, lam, gamma, prefiltered,
+                             n_candidates, pool_ranks):
+    """Record the QUBO the solver actually saw.
+
+    Exists because the energy cannot be reconstructed downstream from a result
+    JSON: `a` is min-max normalized over ALL N candidates (only K are dumped),
+    `b` is embedding cosine (not text overlap), and for large N the QUBO is
+    solved on a prefiltered pool of M < N. A diagnosis that recomputes the
+    objective from the dumped K passages measures a different function — with
+    answer-scorer scores the quality term came out ~42x off.
+    """
+    gamma_eff = 1.0 if gamma is None else float(gamma)
+
+    # build_qubo_matrix requires 1 <= K <= N-1. qore.solve short-circuits
+    # K >= N (selects everything) before building Q, so this path can legally
+    # be reached with K == N — recording diagnostics must not crash there.
+    if not (1 <= K <= len(a) - 1):
+        diagnostics.update({
+            "skipped": f"K={K} out of range for pool of {len(a)}; "
+                       "QUBO was not built (degenerate selection)",
+            "K": int(K),
+            "pool_size": int(len(a)),
+            "n_candidates": int(n_candidates),
+            "prefiltered": bool(prefiltered),
+        })
+        return
+
+    Q = build_qubo_matrix(a, b, K, lam=lam, gamma=gamma_eff)
+    terms = energy_decomposed(x, a, b, K, lam=lam, gamma=gamma_eff)
+    diagnostics.update({
+        "energy": float(energy(x, Q)),
+        "terms": {k: float(v) for k, v in terms.items()},
+        "gamma_effective": gamma_eff,
+        "lam": float(lam),
+        "K": int(K),
+        "n_candidates": int(n_candidates),
+        "prefiltered": bool(prefiltered),
+        "pool_size": int(len(a)),
+        "quality_min": float(a.min()),
+        "quality_max": float(a.max()),
+        "redundancy_mean": float(b[np.triu_indices(len(b), k=1)].mean()) if len(b) > 1 else 0.0,
+        # The pool's actual a and b, so downstream can enumerate subsets against
+        # the SAME objective the solver used. Without these, any reconstruction
+        # needs a stand-in for b; a score-proximity stand-in was measured to
+        # agree with true cosine on only 0.5% of subsets.
+        "a": [float(v) for v in a],
+        "b": [[float(v) for v in row] for row in b],
+        "x": [int(v) for v in np.asarray(x).reshape(-1)],
+        # Original candidate index for each pool position. Required to map
+        # is_gold (recorded per retrieved_rank) onto a/b, whose indices are
+        # pool-local after prefiltering.
+        "pool_ranks": [int(v) for v in pool_ranks],
+    })
 
 
 def select_passages(
@@ -24,6 +80,7 @@ def select_passages(
     qore_prefilter_size: int | None = None,
     vqc_encoder=None,
     vqc_backend: str = "tensorcircuit",
+    diagnostics: dict | None = None,
 ) -> np.ndarray:
     """
     Select K passages from N candidates for inclusion in the LLM context.
@@ -63,6 +120,19 @@ def select_passages(
             If None, a fresh (untrained) encoder is created.
         vqc_backend: Quantum backend for VQC (only for method="vqc").
 
+        diagnostics: Optional dict, filled in-place with what the solver
+            actually optimized (method="qore" only): the normalized quality
+            vector, the cosine redundancy matrix, and the decomposed QUBO
+            energy of the returned solution.
+
+            This exists because the energy is NOT reconstructable downstream:
+            `a` is min-max normalized over all N candidates (so the selected
+            K alone don't determine it), `b` is embedding cosine (not text
+            overlap), and for N > direct_solve_max_n the QUBO is solved on a
+            top-M pool rather than all N. Recomputing from a result JSON gave
+            a quality term ~42x off when relevance_scores come from the answer
+            scorer. Pass a dict here to get the real numbers instead.
+
     Returns:
         indices: (K,) integer array of selected passage indices.
     """
@@ -101,6 +171,12 @@ def select_passages(
             # demonstration that global QUBO selection beats greedy top-K/MMR.
             b = passage_redundancy(passage_embeddings, method=redundancy_method)
             x = qore_solve(a, b, K, lam=lam, gamma=gamma, method="anneal", **kwargs)
+            if diagnostics is not None:
+                _record_qubo_diagnostics(
+                    diagnostics, a=a, b=b, x=x, K=K, lam=lam, gamma=gamma,
+                    n_candidates=N, prefiltered=False,
+                    pool_ranks=list(range(N)),   # 直接求解：池子就是全部候选
+                )
             indices = np.where(x == 1)[0]
             return indices[np.argsort(a[indices])[::-1]]
 
@@ -118,6 +194,15 @@ def select_passages(
         b = passage_redundancy(embeddings_filtered, method=redundancy_method)
 
         x = qore_solve(a_filtered, b, K, lam=lam, gamma=gamma, method="anneal", **kwargs)
+
+        if diagnostics is not None:
+            # Note: the QUBO was solved on the M-item pool, not all N candidates.
+            # Energy is only meaningful against a_filtered/b, so record those.
+            _record_qubo_diagnostics(
+                diagnostics, a=a_filtered, b=b, x=x, K=K, lam=lam, gamma=gamma,
+                n_candidates=N, prefiltered=True,
+                pool_ranks=prefilter_idx,
+            )
 
         selected_in_pool = np.where(x == 1)[0]
         indices = prefilter_idx[selected_in_pool]

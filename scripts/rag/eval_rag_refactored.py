@@ -152,6 +152,11 @@ def parse_args():
                    help="Directory for results JSON")
     p.add_argument("--output_file", help="Result filename (auto if not set)")
     p.add_argument("--seed", type=int, default=42, help="Random seed")
+    p.add_argument("--dump_passages", action="store_true",
+                   help="Record question text and selected passage text/scores "
+                        "per sample. Required by the Phase 1 diagnosis scripts "
+                        "(answer diversity / context dependency / QUBO objective / "
+                        "query type). Inflates result JSON by ~5KB per sample.")
 
     return p.parse_args()
 
@@ -294,7 +299,15 @@ def main():
                     retrieved_texts = [corpus.passages[idx] for idx in retrieved_idx]
             retrieval_scores = answer_scorer.score_passages(question, retrieved_texts)
 
-        # Select
+        # Select.
+        # qubo_diag captures what the solver ACTUALLY optimized (normalized
+        # quality vector, cosine redundancy matrix, decomposed energy). The
+        # QUBO diagnosis cannot reconstruct these from the dumped passages:
+        # `a` is min-max normalized over all N candidates while only K are
+        # dumped, and `b` needs embeddings that the JSON does not carry.
+        # A score-proximity stand-in for `b` was measured to pick the same
+        # subset as true cosine in only 0.5% of cases, so it is not usable.
+        qubo_diag = {} if (args.dump_passages and args.method == "qore") else None
         t0 = time.perf_counter()
         selected_local = select_passages(
             query_emb,
@@ -309,6 +322,7 @@ def main():
             relevance_scores=retrieval_scores,
             qore_prefilter_size=args.qore_prefilter_size,
             direct_solve_max_n=args.direct_solve_max_n,
+            diagnostics=qubo_diag,
         )
         selection_time_ms = (time.perf_counter() - t0) * 1000
 
@@ -344,16 +358,78 @@ def main():
                 if idx in gold_global:
                     gold_in_retrieved.add(j)
 
-        # Generate answer
-        prediction = None
-        generation_time_ms = 0.0
-        if generator:
+        # Resolve selected passage texts — needed by the generator and by
+        # --dump_passages (the diagnosis scripts read them from the JSON).
+        selected_texts = None
+        if generator or args.dump_passages:
             if args.corpus_mode == "precomputed":
                 selected_texts = [candidates[j]["text"] for j in selected_global]
             elif args.corpus_mode == "wiki_dpr":
                 selected_texts = [retrieved_texts[j] for j in selected_local]
             else:
                 selected_texts = [corpus.passages[j] for j in selected_global]
+
+        # Per-passage quality signal actually fed to the selector (DPR score, or
+        # answer-scorer logit when --use_answer_scorer). The QUBO diagnosis needs
+        # these to recompute the objective the solver saw.
+        selected_passages = None
+        if args.dump_passages:
+            scores = np.asarray(retrieval_scores).reshape(-1) if retrieval_scores is not None else None
+            selected_passages = [
+                {
+                    "text": selected_texts[rank],
+                    "score": float(scores[j]) if scores is not None else None,
+                    "is_gold": j in gold_in_retrieved,
+                    "retrieved_rank": int(j),
+                    # Which gold answers this passage actually contains, using the
+                    # same matcher that decided is_gold. Answer-diversity diagnosis
+                    # reads this instead of re-implementing the match and drifting.
+                    "matched_answers": [
+                        ans for ans in gold_answers
+                        if ans and answer_has_match_in_text(ans, selected_texts[rank])
+                    ],
+                }
+                for rank, j in enumerate(selected_local)
+            ]
+
+        # Every retrieved candidate — rank, score, gold flag, whether selected.
+        # NO text, so this costs ~1.5x JSON rather than ~5-10x.
+        #
+        # Needed because the selection-failure diagnosis has to tell two very
+        # different root causes apart for the questions where gold was available
+        # but nothing gold got selected:
+        #   (a) gold never entered the QUBO — prefilter dropped it by quality
+        #   (b) gold was in the pool and the solver preferred another subset
+        # (a) is fixed by tuning qore_prefilter_size; (b) needs the objective
+        # changed. Dumping only the selected K cannot distinguish them.
+        all_candidates = None
+        if args.dump_passages:
+            sel_set = set(int(j) for j in selected_local)
+            n_cand = len(retrieved_idx)
+            cand_scores = (
+                np.asarray(retrieval_scores).reshape(-1)
+                if retrieval_scores is not None else None
+            )
+            all_candidates = [
+                {
+                    "retrieved_rank": int(j),
+                    # Guarded: in precomputed mode retrieval_scores can cover all
+                    # candidates rather than just the retrieved ones.
+                    "score": (
+                        float(cand_scores[j])
+                        if cand_scores is not None and j < len(cand_scores)
+                        else None
+                    ),
+                    "is_gold": j in gold_in_retrieved,
+                    "selected": j in sel_set,
+                }
+                for j in range(n_cand)
+            ]
+
+        # Generate answer
+        prediction = None
+        generation_time_ms = 0.0
+        if generator:
             t0 = time.perf_counter()
             prediction = generator.generate(question, selected_texts)
             generation_time_ms = (time.perf_counter() - t0) * 1000
@@ -377,6 +453,18 @@ def main():
             selection_time_ms=selection_time_ms,
             generation_time_ms=generation_time_ms,
             answer_hit_at_retrieved=answer_hit,
+            dump=(
+                {
+                    "question": question,
+                    "gold_answers": list(gold_answers),
+                    "selected_passages": selected_passages,
+                    "all_candidates": all_candidates,
+                    "qubo": qubo_diag or None,
+                    "prediction": prediction,
+                }
+                if args.dump_passages
+                else None
+            ),
         )
 
     # ──────────────────────────────────────────────────────────────────────
