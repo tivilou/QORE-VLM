@@ -14,8 +14,8 @@
 cd /home/Q-DUET-VLM/QORE-VLM
 
 # 运行 Phase 1 诊断（γ sweep, 3 个实验）
-python scripts/experiments/run_tuning_suite.py \
-    --config scripts/experiments/config/phase1_diagnosis.yaml
+python scripts/tuning/run_tuning_suite.py \
+    --config scripts/tuning/config/phase1_diagnosis.yaml
 ```
 
 **预期耗时**: 1 小时  
@@ -56,7 +56,7 @@ python scripts/experiments/run_tuning_suite.py \
 
 ## 配置文件格式
 
-配置文件使用 YAML 格式，位于 `scripts/experiments/config/`
+配置文件使用 YAML 格式，位于 `scripts/tuning/config/`
 
 ### 基本结构
 
@@ -102,13 +102,13 @@ execution:
 
 ```bash
 # 快速测试：只跑 50 题
-python scripts/experiments/run_tuning_suite.py \
-    --config scripts/experiments/config/phase1_diagnosis.yaml \
+python scripts/tuning/run_tuning_suite.py \
+    --config scripts/tuning/config/phase1_diagnosis.yaml \
     --override max_samples=50
 
 # 多个覆盖
-python scripts/experiments/run_tuning_suite.py \
-    --config scripts/experiments/config/phase1_diagnosis.yaml \
+python scripts/tuning/run_tuning_suite.py \
+    --config scripts/tuning/config/phase1_diagnosis.yaml \
     --override max_samples=50 seed=123
 ```
 
@@ -125,15 +125,15 @@ execution:
 复制 `phase1_diagnosis.yaml` 并修改：
 
 ```bash
-cp scripts/experiments/config/phase1_diagnosis.yaml \
-   scripts/experiments/config/my_experiment.yaml
+cp scripts/tuning/config/phase1_diagnosis.yaml \
+   scripts/tuning/config/my_experiment.yaml
 
 # 编辑配置
-vim scripts/experiments/config/my_experiment.yaml
+vim scripts/tuning/config/my_experiment.yaml
 
 # 运行
-python scripts/experiments/run_tuning_suite.py \
-    --config scripts/experiments/config/my_experiment.yaml
+python scripts/tuning/run_tuning_suite.py \
+    --config scripts/tuning/config/my_experiment.yaml
 ```
 
 ---
@@ -177,7 +177,7 @@ cat scratch/research/P1_diagnosis/run_summary.json
 ### 2. 查看分析报告
 
 ```bash
-cat scratch/research/P1_diagnosis/analysis/analysis.md
+cat scratch/research/P1_diagnosis/analysis/gamma_sweep.md
 ```
 
 ### 3. 查看单个实验结果
@@ -252,7 +252,7 @@ cat scratch/research/P1_diagnosis/experiments/gamma_0.0/stderr.log
 ## 框架文件说明
 
 ```
-scripts/experiments/
+scripts/tuning/
 ├── run_tuning_suite.py          # 主控脚本 ⭐
 ├── config/                       # 配置文件
 │   └── phase1_diagnosis.yaml    # Phase 1 配置
@@ -271,7 +271,7 @@ scripts/experiments/
 
 1. 创建配置文件:
 ```bash
-vim scripts/experiments/config/new_experiment.yaml
+vim scripts/tuning/config/new_experiment.yaml
 ```
 
 2. 定义实验:
@@ -286,8 +286,8 @@ experiments:
 
 3. 运行:
 ```bash
-python scripts/experiments/run_tuning_suite.py \
-    --config scripts/experiments/config/new_experiment.yaml
+python scripts/tuning/run_tuning_suite.py \
+    --config scripts/tuning/config/new_experiment.yaml
 ```
 
 ---
@@ -296,7 +296,7 @@ python scripts/experiments/run_tuning_suite.py \
 
 1. 创建分析脚本:
 ```python
-# scripts/experiments/analysis/custom_analyzer.py
+# scripts/tuning/analysis/custom_analyzer.py
 import argparse
 import json
 
@@ -322,7 +322,7 @@ if __name__ == '__main__':
 post_process:
   analyze:
     enabled: true
-    script: "scripts/experiments/analysis/custom_analyzer.py"
+    script: "scripts/tuning/analysis/custom_analyzer.py"
     args:
       results_dir: "{output_dir}/experiments"
       output: "{output_dir}/analysis/custom.md"
@@ -411,11 +411,11 @@ execution:
 
 ```bash
 # 先跑 50 题
-python scripts/experiments/run_tuning_suite.py \
+python scripts/tuning/run_tuning_suite.py \
     --config config.yaml --override max_samples=50
 
 # 确认没问题后跑全量
-python scripts/experiments/run_tuning_suite.py \
+python scripts/tuning/run_tuning_suite.py \
     --config config.yaml
 ```
 

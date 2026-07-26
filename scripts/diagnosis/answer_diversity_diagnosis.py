@@ -11,12 +11,15 @@
 3. 具体案例分析
 """
 
-import json
 import argparse
+import sys
 import numpy as np
 from pathlib import Path
-from collections import Counter, defaultdict
+from collections import Counter
 from typing import List, Dict, Set, Tuple
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from diagnosis_io import DiagnosisInputError, load_samples, passage_texts
 
 
 def compute_text_similarity(passages: List[str]) -> float:
@@ -70,98 +73,65 @@ def compute_word_overlap(passages: List[str]) -> float:
     return np.mean(overlaps) if overlaps else 0.0
 
 
-def extract_answer_spans(passages: List[str], query: str, answer_spans: List[List[str]]) -> Set[str]:
+def compute_answer_stats(answers_per_passage: List[List[str]]) -> Dict:
+    """答案层面的冗余统计。
+
+    输入是每个已选段落命中的 gold answer 字符串列表（由 eval 的
+    `--dump_passages` 写出的 `matched_answers`，与评测的 gold 判定同源）。
+
+    ⚠️ NQ-open 的 gold_answers 是**同一个答案的别名集合**（"Obama" /
+    "Barack Obama"），不是多个不同答案。所以这里的"distinct"是别名级，
+    不代表语义上的多个答案。真正可解释的量是:
+
+    - answer_bearing_ratio: 含答案的段落占比 → 证据冗余程度
+    - duplicate_ratio: 超出第一个含答案段落之外的那些占比 → 被"重复证据"
+      占掉的槽位比例。这才是答案多样性约束想回收的东西。
     """
-    提取段落中的答案
+    n_passages = len(answers_per_passage)
+    if n_passages == 0:
+        return {}
 
-    这里使用预先提取的 answer_spans（如果有）
-    否则使用简单的 n-gram 匹配
-    """
-    if answer_spans:
-        # 使用预提取的答案
-        all_answers = set()
-        for spans in answer_spans:
-            all_answers.update([s.lower().strip() for s in spans])
-        return all_answers
+    bearing = [a for a in answers_per_passage if a]
+    n_bearing = len(bearing)
 
-    # Fallback: 简单的 n-gram 提取（不准确，仅作示例）
-    # 实际应该用 QA 模型或预先提取的答案
-    return set()
+    distinct = set()
+    for spans in bearing:
+        distinct.update(s.lower().strip() for s in spans if s)
 
-
-def compute_answer_diversity(answer_spans_list: List[List[str]]) -> Tuple[float, float]:
-    """
-    计算答案多样性
-
-    Returns:
-        (unique_ratio, overlap_ratio)
-    """
-    if not answer_spans_list:
-        return 0.0, 1.0
-
-    # 收集所有答案（小写，去空格）
-    all_answers = []
-    for spans in answer_spans_list:
-        normalized = [s.lower().strip() for s in spans]
-        all_answers.extend(normalized)
-
-    if not all_answers:
-        return 0.0, 1.0
-
-    # 计算唯一答案比例
-    unique_answers = len(set(all_answers))
-    total_answers = len(all_answers)
-    unique_ratio = unique_answers / total_answers
-
-    # 计算答案重叠率
-    answer_counts = Counter(all_answers)
-    duplicates = sum(c - 1 for c in answer_counts.values() if c > 1)
-    overlap_ratio = duplicates / total_answers if total_answers > 0 else 0.0
-
-    return unique_ratio, overlap_ratio
-
-
-def analyze_single_query(query_result: Dict) -> Dict:
-    """分析单个查询的答案多样性"""
-    passages = query_result.get('selected_passages', [])
-
-    if not passages:
-        return None
-
-    # 提取文本
-    passage_texts = [p.get('text', '') for p in passages]
-
-    # 1. 计算文本多样性
-    text_similarity = compute_text_similarity(passage_texts)
-    text_diversity = 1 - text_similarity
-
-    # 2. 提取答案
-    answer_spans_list = []
-    for p in passages:
-        # 假设每个 passage 有 'answer_spans' 字段
-        # 如果没有，需要用 QA 模型提取
-        spans = p.get('answer_spans', [])
-        answer_spans_list.append(spans)
-
-    # 3. 计算答案多样性
-    answer_unique_ratio, answer_overlap_ratio = compute_answer_diversity(answer_spans_list)
+    # 第一个含答案段落是必要的，其余是重复证据
+    duplicates = max(0, n_bearing - 1)
 
     return {
-        'text_diversity': text_diversity,
-        'text_similarity': text_similarity,
-        'answer_unique_ratio': answer_unique_ratio,
-        'answer_overlap_ratio': answer_overlap_ratio,
-        'num_passages': len(passages)
+        'num_passages': n_passages,
+        'n_answer_bearing': n_bearing,
+        'answer_bearing_ratio': n_bearing / n_passages,
+        'n_distinct_answer_strings': len(distinct),
+        'duplicate_ratio': duplicates / n_passages,
     }
 
 
-def load_results(results_file: Path) -> List[Dict]:
-    """加载实验结果"""
-    with open(results_file, 'r') as f:
-        data = json.load(f)
+def analyze_single_query(sample: Dict) -> Dict:
+    """分析单个查询的文本多样性 vs 答案冗余"""
+    passages = sample.get('selected_passages') or []
+    if not passages:
+        return None
 
-    # 假设格式: {'results': [{query: ..., selected_passages: [...]}]}
-    return data.get('results', [])
+    text_similarity = compute_text_similarity(passage_texts(sample))
+    text_diversity = 1 - text_similarity
+
+    # eval 已经记录了每个段落命中哪些 gold answer，这里不再自己做匹配，
+    # 避免与评测的 gold 判定产生分歧。
+    answers_per_passage = [p.get('matched_answers') or [] for p in passages]
+    stats = compute_answer_stats(answers_per_passage)
+    if not stats:
+        return None
+
+    stats.update({
+        'text_diversity': text_diversity,
+        'text_similarity': text_similarity,
+        'f1': sample.get('f1'),
+    })
+    return stats
 
 
 def generate_report(stats: List[Dict], output_file: Path):
@@ -171,21 +141,23 @@ def generate_report(stats: List[Dict], output_file: Path):
 
     if not valid_stats:
         print("⚠️ 没有有效数据")
-        return
+        return False
 
     # 计算统计指标
     text_divs = [s['text_diversity'] for s in valid_stats]
-    answer_unique = [s['answer_unique_ratio'] for s in valid_stats]
-    answer_overlap = [s['answer_overlap_ratio'] for s in valid_stats]
+    bearing_ratios = [s['answer_bearing_ratio'] for s in valid_stats]
+    dup_ratios = [s['duplicate_ratio'] for s in valid_stats]
+    distinct_counts = [s['n_distinct_answer_strings'] for s in valid_stats]
 
     avg_text_div = np.mean(text_divs)
-    avg_answer_unique = np.mean(answer_unique)
-    avg_answer_overlap = np.mean(answer_overlap)
+    avg_bearing = np.mean(bearing_ratios)
+    avg_dup = np.mean(dup_ratios)
+    avg_distinct = np.mean(distinct_counts)
 
-    # 找出问题案例（文本多样但答案重复）
+    # 问题案例：文本上看起来很多样，但槽位被重复证据占掉
     problem_cases = []
     for i, s in enumerate(valid_stats):
-        if s['text_diversity'] > 0.6 and s['answer_unique_ratio'] < 0.5:
+        if s['text_diversity'] > 0.6 and s['duplicate_ratio'] >= 0.4:
             problem_cases.append((i, s))
 
     # 生成报告
@@ -194,70 +166,152 @@ def generate_report(stats: List[Dict], output_file: Path):
     report.append(f"**分析样本数**: {len(valid_stats)}\n")
     report.append("\n---\n")
 
+    report.append("\n## 读数须知\n")
+    report.append("\nNQ-open 的 `gold_answers` 是**同一答案的别名集合**，不是多个不同答案。")
+    report.append("所以「答案多样性」在本数据集上不可直接测量；本报告改测**证据冗余**：")
+    report.append("\n\n- `answer_bearing_ratio`: 含答案段落占比")
+    report.append("\n- `duplicate_ratio`: 除第一个含答案段落外的占比 = 被重复证据占掉的槽位")
+    report.append("\n\n答案多样性约束想回收的正是 `duplicate_ratio` 这部分槽位。\n")
+
     report.append("\n## 关键发现\n")
     report.append(f"\n### 整体统计\n")
     report.append(f"- **文本多样性**: {avg_text_div:.3f}")
-    report.append(f"\n- **答案唯一比例**: {avg_answer_unique:.3f}")
-    report.append(f"\n- **答案重叠率**: {avg_answer_overlap:.3f}\n")
+    report.append(f"\n- **含答案段落占比**: {avg_bearing:.3f}")
+    report.append(f"\n- **重复证据占比**: {avg_dup:.3f}")
+    report.append(f"\n- **平均别名命中数**: {avg_distinct:.2f}\n")
 
-    # 判断假设是否成立
-    report.append(f"\n### 假设验证\n")
-    report.append(f"\n**假设**: 文本多样但答案重复\n")
+    num_passages = [s['num_passages'] for s in valid_stats]
 
-    ratio = avg_answer_unique / avg_text_div if avg_text_div > 0 else 0
-    report.append(f"\n**答案多样性 / 文本多样性**: {ratio:.3f}\n")
+    # ── 先算完两条证据，再给唯一一次结论 ──────────────────────────────
+    # 证据 A（可回收空间有多大）: 重复证据占比
+    # 证据 B（回收了能否提升 F1）: 占比与 F1 的相关性 ← 更直接，冲突时以它为准
+    has_room = avg_text_div > 0.5 and avg_dup >= 0.3
+    some_room = avg_dup >= 0.15
 
-    if ratio < 0.7 and avg_answer_overlap > 0.3:
-        report.append(f"\n**结论**: ✅ **假设成立**\n")
-        report.append(f"\n答案唯一比例（{avg_answer_unique:.3f}）显著低于文本多样性（{avg_text_div:.3f}），")
-        report.append(f"且答案重叠率较高（{avg_answer_overlap:.3f}）。")
-        report.append(f"\n这表明当前方法虽然选出了文本不同的段落，但答案层面存在大量重复。\n")
-    elif ratio < 0.85:
-        report.append(f"\n**结论**: ⚠️ **假设部分成立**\n")
-        report.append(f"\n答案多样性（{avg_answer_unique:.3f}）略低于文本多样性（{avg_text_div:.3f}），")
-        report.append(f"有一定的改进空间。\n")
+    corr_note = ''
+    r = None
+    f1_pairs = [(s['duplicate_ratio'], s['f1']) for s in valid_stats
+                if s.get('f1') is not None]
+    if len(f1_pairs) >= 10:
+        xs = np.array([p[0] for p in f1_pairs])
+        ys = np.array([p[1] for p in f1_pairs])
+        if xs.std() > 1e-9 and ys.std() > 1e-9:
+            r = float(np.corrcoef(xs, ys)[0, 1])
+
+    if r is None:
+        # 没有 F1 就只能靠占比，此时结论必须标注为未经 F1 验证
+        hypothesis_holds = has_room or some_room
+    elif r < -0.1:
+        hypothesis_holds = True
+        corr_note = f"重复证据与 F1 负相关 (r={r:+.3f}) — 支持回收槽位"
+    elif r > 0.1:
+        hypothesis_holds = False
+        corr_note = f"重复证据与 F1 正相关 (r={r:+.3f}) — 与假设相反"
     else:
-        report.append(f"\n**结论**: ❌ **假设不成立**\n")
-        report.append(f"\n答案多样性与文本多样性接近，答案重复不是主要问题。\n")
+        hypothesis_holds = False
+        corr_note = f"重复证据与 F1 几乎无关 (r={r:+.3f})"
 
-    # 问题案例
+    report.append(f"\n### 证据 A：可回收空间\n")
+    report.append(f"\n**文本多样性 {avg_text_div:.3f}，重复证据占比 {avg_dup:.3f}**"
+                  f"（平均 {avg_dup * float(np.mean(num_passages)):.1f}/"
+                  f"{np.mean(num_passages):.0f} 个槽位）\n")
+    if has_room:
+        report.append(f"\n段落文本层面确实多样，且有 {avg_dup*100:.1f}% 的槽位被重复证据占用。\n")
+    elif some_room:
+        report.append(f"\n存在一定的证据冗余，但不算严重。\n")
+    else:
+        report.append(f"\n重复证据占比很低，可回收的槽位不多。\n")
+
+    report.append(f"\n### 证据 B：回收槽位能否提升 F1\n")
+    if len(f1_pairs) < len(valid_stats):
+        report.append(f"\n⚠️ 仅 {len(f1_pairs)}/{len(valid_stats)} 个样本有 F1"
+                      f"（评测加了 --skip_generation？）。\n")
+    if r is None:
+        report.append(f"\n**无法判断** —— 有 F1 的样本不足 10 条或方差过小。")
+        report.append(f"\n下面的结论只基于证据 A，**未经 F1 验证**，"
+                      f"不能作为实施答案多样性约束的依据。\n")
+    else:
+        report.append(f"\n**Pearson r(重复证据占比, F1) = {r:+.3f}**（n={len(f1_pairs)}）\n")
+        if r < -0.1:
+            report.append(f"\n负相关：槽位被重复证据占得越多，F1 越低。"
+                          f"**这是答案多样性约束最直接的支撑证据。**\n")
+        elif r > 0.1:
+            report.append(f"\n⚠️ 正相关：重复证据多的样本 F1 反而更高。"
+                          f"这与假设方向相反 —— 可能多份证据本身有助于生成。\n")
+        else:
+            report.append(f"\n几乎无关：回收槽位对 F1 的影响不可预期。\n")
+
+    # ── 唯一一次结论 ──────────────────────────────────────────────────
+    report.append(f"\n### 结论\n")
+    report.append(f"\n**假设**: 段落文本多样，但答案层面重复（槽位被重复证据占用）\n")
+    if hypothesis_holds and r is not None:
+        report.append(f"\n**✅ 假设成立** —— 有 {avg_dup*100:.1f}% 的槽位可回收，"
+                      f"且回收方向与 F1 一致 (r={r:+.3f})。\n")
+    elif hypothesis_holds:
+        report.append(f"\n**⚠️ 假设待验证** —— 有 {avg_dup*100:.1f}% 的槽位可回收，"
+                      f"但缺 F1 数据，无法确认回收能否提升质量。\n")
+    elif r is not None and (has_room or some_room):
+        report.append(f"\n**❌ 假设不成立** —— 占比 {avg_dup:.3f} 看似有可回收空间，"
+                      f"但它与 F1 的相关性只有 {r:+.3f}。"
+                      f"证据 B 比证据 A 更直接，以它为准。\n")
+    else:
+        report.append(f"\n**❌ 假设不成立** —— 重复证据占比 {avg_dup:.3f} 本身就很低。\n")
+
+    # 问题案例：文本上很分散，却把多个槽位花在重复证据上
     if problem_cases:
         report.append(f"\n### 典型问题案例\n")
-        report.append(f"\n发现 {len(problem_cases)} 个问题案例（文本多样 > 0.6 但答案唯一 < 0.5）：\n")
+        report.append(f"\n{len(problem_cases)} 个样本文本多样 >0.6 且重复证据占比 >0.4：\n")
 
         for idx, (case_id, case_stat) in enumerate(problem_cases[:5], 1):
-            report.append(f"\n**案例 {idx}**:")
+            report.append(f"\n**案例 {idx}** (#{case_id}):")
             report.append(f"\n- 文本多样性: {case_stat['text_diversity']:.3f}")
-            report.append(f"\n- 答案唯一比例: {case_stat['answer_unique_ratio']:.3f}")
-            report.append(f"\n- 答案重叠率: {case_stat['answer_overlap_ratio']:.3f}\n")
+            report.append(f"\n- 含答案段落: {case_stat['n_answer_bearing']}/{case_stat['num_passages']}")
+            report.append(f"\n- 重复证据占比: {case_stat['duplicate_ratio']:.3f}")
+            if case_stat.get('f1') is not None:
+                report.append(f"\n- F1: {case_stat['f1']:.3f}")
+            report.append("\n")
 
     # 分布分析
-    report.append(f"\n### 分布分析\n")
-    report.append(f"\n**文本多样性分布**:")
-    report.append(f"\n- 低 (<0.4): {sum(1 for d in text_divs if d < 0.4)} ({sum(1 for d in text_divs if d < 0.4)/len(text_divs)*100:.1f}%)")
-    report.append(f"\n- 中 (0.4-0.7): {sum(1 for d in text_divs if 0.4 <= d < 0.7)} ({sum(1 for d in text_divs if 0.4 <= d < 0.7)/len(text_divs)*100:.1f}%)")
-    report.append(f"\n- 高 (≥0.7): {sum(1 for d in text_divs if d >= 0.7)} ({sum(1 for d in text_divs if d >= 0.7)/len(text_divs)*100:.1f}%)\n")
+    def _dist(vals, name):
+        report.append(f"\n**{name}分布**:")
+        for label, lo, hi in [("低 (<0.4)", -1e9, 0.4),
+                              ("中 (0.4-0.7)", 0.4, 0.7),
+                              ("高 (≥0.7)", 0.7, 1e9)]:
+            n = sum(1 for d in vals if lo <= d < hi)
+            report.append(f"\n- {label}: {n} ({n/len(vals)*100:.1f}%)")
+        report.append("\n")
 
-    report.append(f"\n**答案唯一比例分布**:")
-    report.append(f"\n- 低 (<0.4): {sum(1 for d in answer_unique if d < 0.4)} ({sum(1 for d in answer_unique if d < 0.4)/len(answer_unique)*100:.1f}%)")
-    report.append(f"\n- 中 (0.4-0.7): {sum(1 for d in answer_unique if 0.4 <= d < 0.7)} ({sum(1 for d in answer_unique if 0.4 <= d < 0.7)/len(answer_unique)*100:.1f}%)")
-    report.append(f"\n- 高 (≥0.7): {sum(1 for d in answer_unique if d >= 0.7)} ({sum(1 for d in answer_unique if d >= 0.7)/len(answer_unique)*100:.1f}%)\n")
+    report.append(f"\n### 分布分析\n")
+    _dist(text_divs, "文本多样性")
+    _dist(dup_ratios, "重复证据占比")
 
     # 建议
     report.append(f"\n## 改进建议\n")
 
-    if ratio < 0.7:
+    if hypothesis_holds:
         report.append(f"\n基于诊断结果，建议：\n")
         report.append(f"\n1. ✅ **实施答案多样性约束**（高优先级）")
-        report.append(f"\n   - 在 QUBO 目标函数中添加答案层面的多样性项")
-        report.append(f"\n   - 预期提升：+1-2% F1\n")
-        report.append(f"\n2. ✅ **答案去重机制**")
-        report.append(f"\n   - 如果两个段落包含相同答案，惩罚其同时被选中\n")
+        report.append(f"\n   - 在 QUBO 目标中惩罚「同时选中多个含相同答案的段落」")
+        report.append(f"\n   - 可直接复用 answer scorer 的证据信号，无需新模型\n")
+        report.append(f"\n2. ⚠️ **先在 200 题上验证**")
+        report.append(f"\n   - 重复证据占比 {avg_dup:.3f} 说明平均有 "
+                      f"{avg_dup * float(np.mean(num_passages)):.1f} 个槽位可回收，")
+        report.append(f"\n     但回收的槽位是否真能提升 F1 需要实测\n")
+    elif r is not None and (has_room or some_room):
+        report.append(f"\n❌ **不建议现在实施答案多样性约束**。\n")
+        report.append(f"\n槽位确实有 {avg_dup*100:.1f}% 可回收，但回收方向与 F1 无关"
+                      f"（r={r:+.3f}）—— 换掉这些槽位大概率不会提升答案质量。\n")
+        report.append(f"\n若仍想推进，先查清为什么「选到证据」不等于「答得对」："
+                      f"瓶颈可能在生成阶段而非选择阶段。这与全量评测的观察一致"
+                      f"（Recall +13.4% 只换来 F1 +3.6%）。\n")
     else:
-        report.append(f"\n答案多样性问题不严重，可以考虑其他优化方向。\n")
+        report.append(f"\n重复证据占比 {avg_dup:.3f} 本身很低，可回收空间有限，"
+                      f"优先级应低于 Phase 2（两阶段 QUBO）。\n")
 
     report.append(f"\n---\n")
-    report.append(f"\n**生成时间**: 自动生成")
+    report.append("\n**注意**: NQ-open 的 gold_answers 是同一答案的别名集合，"
+                  "因此「distinct 答案数」是别名级而非语义级。"
+                  "结论应以「重复证据占比」为准。\n")
     report.append(f"\n**脚本**: `scripts/diagnosis/answer_diversity_diagnosis.py`\n")
 
     # 写入文件
@@ -269,15 +323,24 @@ def generate_report(stats: List[Dict], output_file: Path):
 
     # 打印摘要
     print(f"\n=== 摘要 ===")
+    print(f"样本数: {len(valid_stats)}")
     print(f"文本多样性: {avg_text_div:.3f}")
-    print(f"答案唯一比例: {avg_answer_unique:.3f}")
-    print(f"答案重叠率: {avg_answer_overlap:.3f}")
-    print(f"比例: {ratio:.3f}")
+    print(f"含答案段落占比: {avg_bearing:.3f}")
+    print(f"重复证据占比: {avg_dup:.3f}")
+    if corr_note:
+        print(corr_note)
 
-    if ratio < 0.7:
+    if hypothesis_holds and r is not None:
         print(f"\n✅ 假设成立：建议实施答案多样性约束")
+    elif hypothesis_holds:
+        print(f"\n⚠️ 假设待验证：有可回收槽位，但缺 F1 无法确认收益")
+        print(f"   去掉 --skip_generation 重跑才能定论")
+    elif r is not None and avg_dup >= 0.15:
+        print(f"\n❌ 假设不成立：占比 {avg_dup:.3f} 有空间，但与 F1 相关性仅 {r:+.3f}")
     else:
-        print(f"\n⚠️ 假设不成立或较弱")
+        print(f"\n❌ 假设不成立：重复证据占比 {avg_dup:.3f} 本身很低")
+
+    return True
 
 
 def main():
@@ -292,22 +355,22 @@ def main():
     print("=== 答案多样性诊断 ===")
     print(f"输入: {args.results}")
 
-    # 加载结果
-    results = load_results(args.results)
-    print(f"加载 {len(results)} 个查询结果")
+    # 缺字段就报错退出，不生成"假设不成立"的空报告
+    try:
+        samples = load_samples(args.results, require=('selected_passages',))
+    except DiagnosisInputError as e:
+        print(f"❌ {e}", file=sys.stderr)
+        return 1
+    print(f"加载 {len(samples)} 个样本")
 
-    # 分析每个查询
     stats = []
-    for i, query_result in enumerate(results):
+    for i, sample in enumerate(samples):
         if i % 100 == 0:
-            print(f"处理进度: {i}/{len(results)}")
+            print(f"处理进度: {i}/{len(samples)}")
+        stats.append(analyze_single_query(sample))
 
-        stat = analyze_single_query(query_result)
-        stats.append(stat)
-
-    # 生成报告
-    generate_report(stats, args.output)
+    return 0 if generate_report(stats, args.output) else 1
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())

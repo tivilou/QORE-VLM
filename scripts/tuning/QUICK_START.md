@@ -14,8 +14,8 @@
 ```bash
 cd /home/Q-DUET-VLM/QORE-VLM
 
-python scripts/experiments/run_tuning_suite.py \
-    --config scripts/experiments/config/quick_test.yaml
+python scripts/tuning/run_tuning_suite.py \
+    --config scripts/tuning/config/quick_test.yaml
 ```
 
 **预期输出**:
@@ -54,7 +54,7 @@ python scripts/experiments/run_tuning_suite.py \
 📊 分析结果...
   ✅ 摘要保存: scratch/research/quick_test/run_summary.json
   ✅ 报告生成: scratch/research/quick_test/analysis/quick_summary.md
-  ✅ 分析完成: scratch/research/quick_test/analysis/analysis.md
+  ✅ 分析完成: scratch/research/quick_test/analysis/gamma_sweep.md
 
 📦 打包结果...
   ✅ 打包完成: scratch/research/quick_test/package/quick_test_20260724_143052.zip (1.2 MB)
@@ -72,7 +72,7 @@ python scripts/experiments/run_tuning_suite.py \
   成功: 3
   失败: 0
 
-📊 分析报告: scratch/research/quick_test/analysis/analysis.md
+📊 分析报告: scratch/research/quick_test/analysis/gamma_sweep.md
 📦 打包文件: scratch/research/quick_test/package/quick_test_20260724_143052.zip
 ```
 
@@ -87,8 +87,8 @@ python scripts/experiments/run_tuning_suite.py \
 ```bash
 cd /home/Q-DUET-VLM/QORE-VLM
 
-python scripts/experiments/run_tuning_suite.py \
-    --config scripts/experiments/config/phase1_diagnosis.yaml
+python scripts/tuning/run_tuning_suite.py \
+    --config scripts/tuning/config/phase1_diagnosis.yaml
 ```
 
 **这个命令会自动**:
@@ -110,7 +110,7 @@ python scripts/experiments/run_tuning_suite.py \
 实验完成后，查看分析报告：
 
 ```bash
-cat scratch/research/P1_diagnosis/analysis/analysis.md
+cat scratch/research/P1_diagnosis/analysis/gamma_sweep.md
 ```
 
 **报告会告诉你**:
@@ -155,7 +155,7 @@ P1_diagnosis/
 ```
 
 **重点查看**:
-1. `analysis/analysis.md` - 分析报告
+1. `analysis/gamma_sweep.md` - 分析报告
 2. `run_summary.json` - 运行摘要
 3. `package/*.zip` - 打包文件（发给我）
 
@@ -213,8 +213,8 @@ python -m scripts.rag.eval_rag_refactored \
 
 ```bash
 # 只跑 50 题（快速验证）
-python scripts/experiments/run_tuning_suite.py \
-    --config scripts/experiments/config/phase1_diagnosis.yaml \
+python scripts/tuning/run_tuning_suite.py \
+    --config scripts/tuning/config/phase1_diagnosis.yaml \
     --override max_samples=50
 ```
 
@@ -284,7 +284,7 @@ python scripts/experiments/run_tuning_suite.py \
 
 运行完成后，发给我：
 
-1. **分析报告**: `scratch/research/P1_diagnosis/analysis/analysis.md`
+1. **分析报告**: `scratch/research/P1_diagnosis/analysis/gamma_sweep.md`
 2. **打包文件**: `scratch/research/P1_diagnosis/package/*.zip`
 3. **你的决策**: 根据报告，你认为下一步应该做什么？
 
@@ -292,8 +292,8 @@ python scripts/experiments/run_tuning_suite.py \
 
 ## 📚 更多信息
 
-- **详细文档**: `scripts/experiments/README.md`
-- **配置文件**: `scripts/experiments/config/phase1_diagnosis.yaml`
+- **详细文档**: `scripts/tuning/README.md`
+- **配置文件**: `scripts/tuning/config/phase1_diagnosis.yaml`
 - **框架设计**: 看代码注释
 
 ---

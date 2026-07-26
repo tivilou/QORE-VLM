@@ -21,15 +21,53 @@ bash scripts/collab/setup_env.sh
 bash scripts/collab/run_phase1_quick.sh
 ```
 
-**Step 3: 完整实验**（1-2小时）
+**Step 3: 完整实验**（1.5-2 小时，含 LLM 生成）
 ```bash
 bash scripts/collab/run_phase1_full.sh
 ```
 
-**Step 4: 查看结果**
+**Step 4: 跑 5 个诊断分析**（约 15 分钟，仅需 CPU）
 ```bash
-cat scratch/research/P1_diagnosis/analysis/analysis.md
+bash scripts/diagnosis/run_all_diagnosis.sh
 ```
+
+**Step 5: 查看结果**
+```bash
+ls scratch/research/P1_diagnosis/analysis/
+#   gamma_sweep.md         γ 对 Recall/冗余度的影响
+#   answer_diversity.md    重复证据占掉多少槽位
+#   query_type.md          不同查询类型的最优 γ
+#   context_dependency.md  段落间依赖是否被破坏
+#   qubo_objective.md      QUBO 目标与 F1 的一致性
+```
+
+### 两份配置的差异（Step 2 用哪份、Step 3 用哪份）
+
+| | quick_test.yaml | phase1_diagnosis.yaml |
+|---|---|---|
+| 用途 | Step 2 验流程跑通 | Step 3 拿真结论 |
+| 题数 | 10 | 200 |
+| LLM 生成 | ❌ 关（省时间） | ✅ 开（诊断需要 F1） |
+| 单配置耗时 | ~2 分钟 | ~30-35 分钟 |
+| 5 个诊断 | 3 和 5 会**报错**、2 给「待验证」 | 5 个都出结论 |
+
+**Step 2 跑完看到诊断 3、5 报错是正常的**——quick_test 不跑生成所以没有 F1，
+那两个诊断需要 F1 做对照。报错信息里会写明缺哪个字段。
+**不要因此以为脚本有 bug**，Step 3 用的配置开了生成，5 个都能跑。
+
+### 遇到问题时
+
+诊断脚本缺字段会直接报错并写明缺什么，例如：
+
+```
+❌ samples lack required field(s) ['selected_passages'].
+   'question'/'selected_passages' 需要评测时加 --dump_passages
+   'f1'/'em' 需要评测时不加 --skip_generation
+```
+
+**实验超时被杀**（单配置超过 75 分钟）时不要直接重跑——
+先看 `scratch/research/P1_diagnosis/experiments/<name>/stderr.log`。
+超时会触发 2 次重试，白跑三遍要 3.75 小时。
 
 ---
 
@@ -64,7 +102,11 @@ scratch/research/P1_diagnosis/
 │   ├── gamma_0.5/
 │   └── gamma_1.0/
 ├── analysis/                 # 分析报告
-│   └── analysis.md          ⭐ 重点查看
+│   ├── gamma_sweep.md        ⭐ 5 份诊断报告
+│   ├── answer_diversity.md
+│   ├── query_type.md
+│   ├── context_dependency.md
+│   └── qubo_objective.md
 ├── package/                  # 打包文件
 │   └── P1_diagnosis_*.zip
 └── run_summary.json         ⭐ 运行摘要
@@ -113,7 +155,7 @@ python scripts/tuning/run_tuning_suite.py \
 ## 完成后交付
 
 实验完成后，发给我：
-1. **分析报告**: `scratch/research/P1_diagnosis/analysis/analysis.md`
+1. **分析报告**: `scratch/research/P1_diagnosis/analysis/` 下全部 .md
 2. **打包文件**: `scratch/research/P1_diagnosis/package/*.zip`
 3. **你的决策**: 根据报告，你认为下一步应该做什么？
 

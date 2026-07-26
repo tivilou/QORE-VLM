@@ -1,402 +1,278 @@
 #!/usr/bin/env python3
+"""上下文完整性诊断 — 验证 idea 4 的前提。
+
+**假设**: 独立打分选段落会破坏段落间的依赖（共指、实体连贯），
+导致选出的段落各自相关、合起来信息不完整。
+
+**关键设计：必须有 gold 对照。**
+旧版只统计选中段落的共指问题数和实体连贯性，输出「实体连贯性 0.017」
+这类数字 —— 没有分母，无法判断这是高还是低。Wikipedia 段落里首字母大写
+的词遍地都是，绝对值本身没有意义。
+
+本版对每道题算两组同样的指标：
+    selected  = 模型选中的 K 条
+    gold      = 候选池里含答案的那些条
+然后看 selected 是否**系统性差于** gold。只有出现差距，才说明
+「独立选择破坏了依赖」；若两者相当，说明依赖损伤不是选择造成的。
+
+用法:
+    python scripts/diagnosis/context_dependency_diagnosis.py \
+        --results <dir>/gamma_0.5/result.json \
+        --output  <dir>/analysis/context_dependency.md
+
+数据要求: 评测时加 --dump_passages（需要 selected_passages 的文本）。
+
+⚠️ 已知偏差（写论文时必须声明）:
+gold 段落的文本只有在它**被选中**时才会出现在 dump 里。所以 gold 对照组
+偏向"选对了"的情形，会低估真实差距。要完全消除这个偏差，需要 dump 所有
+候选的文本（JSON 体积 ~5-10x）。当前实现是折中。
 """
-上下文依赖分析诊断脚本
 
-目的: 验证"独立选择破坏段落间依赖关系"的假设
-假设: 当前方法独立选择段落，没有考虑段落间的依赖（共指、实体连贯等），
-     导致选出的段落虽然各自相关，但组合起来信息不完整
+from __future__ import annotations
 
-输出:
-1. 共指链完整性分析
-2. 实体连贯性分析
-3. 跨段落引用统计
-"""
-
-import json
 import argparse
-import numpy as np
-from pathlib import Path
-from collections import Counter, defaultdict
-from typing import List, Dict, Set, Tuple
 import re
+import sys
+from pathlib import Path
+from typing import Dict, List, Set
+
+import numpy as np
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from diagnosis_io import DiagnosisInputError, load_samples
+
+PRONOUNS = ['he', 'she', 'it', 'they', 'him', 'her', 'them',
+            'his', 'hers', 'its', 'their']
+
+# 指示性引用词：出现这些说明段落依赖前文
+REFERENCE_PATTERNS = [
+    r'\bas mentioned\b', r'\bas stated\b', r'\bas described\b',
+    r'\bthe former\b', r'\bthe latter\b',
+    r'\bpreviously\b', r'\bearlier\b', r'\babove\b',
+]
 
 
-def extract_entities_simple(text: str) -> Set[str]:
+def extract_entities(text: str) -> Set[str]:
+    """粗略实体抽取：连续的首字母大写词。
+
+    不是 NER。句首单词会被误判，Wikipedia 里这类噪声很多 —— 这是为什么
+    本诊断只看 selected 与 gold 的**相对差距**，不看绝对值。
     """
-    简单的实体提取（基于大写词）
-
-    实际应该用 NER 模型（如 spaCy）
-    """
-    # 简单方法：提取首字母大写的连续词
-    words = text.split()
     entities = set()
-
-    current_entity = []
-    for word in words:
-        # 去除标点
-        clean_word = re.sub(r'[^\w\s]', '', word)
-        if clean_word and clean_word[0].isupper() and len(clean_word) > 1:
-            current_entity.append(clean_word)
+    current: List[str] = []
+    for word in text.split():
+        clean = re.sub(r'[^\w]', '', word)
+        if clean and clean[0].isupper() and len(clean) > 1:
+            current.append(clean)
         else:
-            if current_entity:
-                entities.add(' '.join(current_entity))
-                current_entity = []
-
-    if current_entity:
-        entities.add(' '.join(current_entity))
-
+            if current:
+                entities.add(' '.join(current))
+                current = []
+    if current:
+        entities.add(' '.join(current))
     return entities
 
 
-def extract_pronouns(text: str) -> List[str]:
-    """提取代词"""
-    pronouns = ['he', 'she', 'it', 'they', 'him', 'her', 'them', 'his', 'hers', 'its', 'their']
-    text_lower = text.lower()
-    found = []
+def dangling_pronoun_count(texts: List[str]) -> int:
+    """有代词但整组段落里找不到任何实体先行词的段落数。
 
-    for pronoun in pronouns:
-        if re.search(r'\b' + pronoun + r'\b', text_lower):
-            found.append(pronoun)
-
-    return found
-
-
-def check_coreference_simple(passages: List[str]) -> Dict:
+    这是"共指被切断"的代理信号：段落以 "He was born in..." 开头，
+    而 He 指的是谁在别的段落里。
     """
-    简单的共指检查
+    all_entities: Set[str] = set()
+    for t in texts:
+        all_entities |= extract_entities(t)
 
-    实际应该用共指消解模型（如 AllenNLP Coref）
-    """
-    # 检查是否有代词但缺少先行词
-    issues = []
-
-    for i, passage in enumerate(passages):
-        pronouns = extract_pronouns(passage)
-
-        if pronouns:
-            # 检查前面的段落是否有实体
-            if i == 0:
-                # 第一个段落有代词但没有先行词
-                entities = extract_entities_simple(passage)
-                if not entities:
-                    issues.append({
-                        'passage_idx': i,
-                        'issue': 'pronoun_without_antecedent',
-                        'pronouns': pronouns
-                    })
-            else:
-                # 检查前面的段落
-                prev_entities = set()
-                for j in range(i):
-                    prev_entities.update(extract_entities_simple(passages[j]))
-
-                if not prev_entities:
-                    issues.append({
-                        'passage_idx': i,
-                        'issue': 'pronoun_without_prior_entity',
-                        'pronouns': pronouns
-                    })
-
-    return {
-        'total_issues': len(issues),
-        'issues': issues
-    }
+    count = 0
+    for t in texts:
+        low = t.lower()
+        has_pronoun = any(re.search(r'\b' + p + r'\b', low) for p in PRONOUNS)
+        if has_pronoun and not extract_entities(t):
+            # 本段有代词却没有自己的实体 -> 依赖别处
+            count += 1
+    return count
 
 
-def compute_entity_coherence(passages: List[str]) -> Dict:
-    """
-    计算实体连贯性
-
-    检查段落间是否有共同实体（表示连贯）
-    """
-    if len(passages) < 2:
-        return {'coherence': 1.0, 'shared_entities': 0}
-
-    # 提取每个段落的实体
-    passage_entities = [extract_entities_simple(p) for p in passages]
-
-    # 计算段落间的实体重叠
-    overlaps = []
-    for i in range(len(passages)):
-        for j in range(i + 1, len(passages)):
-            shared = passage_entities[i] & passage_entities[j]
-            union = passage_entities[i] | passage_entities[j]
-
+def entity_coherence(texts: List[str]) -> float:
+    """段落两两之间实体集合的平均 Jaccard。高 = 讲同一批实体 = 连贯。"""
+    if len(texts) < 2:
+        return 0.0
+    ents = [extract_entities(t) for t in texts]
+    vals = []
+    for i in range(len(ents)):
+        for j in range(i + 1, len(ents)):
+            union = ents[i] | ents[j]
             if union:
-                overlap = len(shared) / len(union)
-                overlaps.append(overlap)
+                vals.append(len(ents[i] & ents[j]) / len(union))
+    return float(np.mean(vals)) if vals else 0.0
 
-    avg_overlap = np.mean(overlaps) if overlaps else 0
 
-    # 计算全局共享实体
-    all_entities = set()
-    for entities in passage_entities:
-        all_entities.update(entities)
+def cross_reference_count(texts: List[str]) -> int:
+    """含指示性引用词的段落数（依赖未包含的前文）。"""
+    n = 0
+    for t in texts:
+        low = t.lower()
+        if any(re.search(p, low) for p in REFERENCE_PATTERNS):
+            n += 1
+    return n
 
-    shared_count = 0
-    for entity in all_entities:
-        count = sum(1 for entities in passage_entities if entity in entities)
-        if count > 1:
-            shared_count += 1
 
+def group_metrics(texts: List[str]) -> Dict | None:
+    """一组段落的三项完整性指标。"""
+    if len(texts) < 2:
+        return None
     return {
-        'coherence': avg_overlap,
-        'shared_entities': shared_count,
-        'total_entities': len(all_entities)
+        'n': len(texts),
+        'dangling_pronouns': dangling_pronoun_count(texts),
+        'entity_coherence': entity_coherence(texts),
+        'cross_references': cross_reference_count(texts),
     }
 
 
-def check_cross_references(passages: List[str]) -> Dict:
-    """
-    检查跨段落引用
-
-    检查是否有指示性词语（"as mentioned", "above", "previously"等）
-    """
-    reference_patterns = [
-        r'\bas mentioned\b',
-        r'\bas stated\b',
-        r'\bas described\b',
-        r'\babove\b',
-        r'\bpreviously\b',
-        r'\bearlier\b',
-        r'\bthis\b',
-        r'\bthat\b',
-        r'\bthese\b',
-        r'\bthose\b'
-    ]
-
-    references = []
-
-    for i, passage in enumerate(passages):
-        passage_lower = passage.lower()
-        for pattern in reference_patterns:
-            if re.search(pattern, passage_lower):
-                references.append({
-                    'passage_idx': i,
-                    'pattern': pattern
-                })
-                break  # 只记录一次
-
-    return {
-        'total_references': len(references),
-        'references': references
-    }
-
-
-def analyze_single_query(query_result: Dict) -> Dict:
-    """分析单个查询的上下文依赖"""
-    passages = query_result.get('selected_passages', [])
-
-    if not passages or len(passages) < 2:
+def analyze_sample(sample: Dict) -> Dict | None:
+    """对一道题分别算 selected 组和 gold 组的指标。"""
+    passages = sample.get('selected_passages') or []
+    if len(passages) < 2:
         return None
 
-    # 提取文本
-    passage_texts = [p.get('text', '') for p in passages]
+    sel_texts = [p.get('text', '') for p in passages]
+    # gold 组：选中段落里 is_gold 为真的（见模块 docstring 的偏差说明）
+    gold_texts = [p.get('text', '') for p in passages if p.get('is_gold')]
 
-    # 1. 共指检查
-    coref_result = check_coreference_simple(passage_texts)
-
-    # 2. 实体连贯性
-    entity_result = compute_entity_coherence(passage_texts)
-
-    # 3. 跨段落引用
-    cross_ref_result = check_cross_references(passage_texts)
+    sel = group_metrics(sel_texts)
+    if sel is None:
+        return None
 
     return {
-        'num_passages': len(passages),
-        'coref_issues': coref_result['total_issues'],
-        'entity_coherence': entity_result['coherence'],
-        'shared_entities': entity_result['shared_entities'],
-        'total_entities': entity_result['total_entities'],
-        'cross_references': cross_ref_result['total_references']
+        'selected': sel,
+        'gold': group_metrics(gold_texts),   # 可能是 None（gold < 2 条）
+        'f1': sample.get('f1'),
+        'recall': sample.get('recall'),
     }
 
 
-def load_results(results_file: Path) -> List[Dict]:
-    """加载实验结果"""
-    with open(results_file, 'r') as f:
-        data = json.load(f)
+def generate_report(stats: List[Dict], output_path: Path) -> bool:
+    valid = [s for s in stats if s is not None]
+    if len(valid) < 10:
+        print(f"⚠️ 有效样本仅 {len(valid)} 条，不足以判断", file=sys.stderr)
+        return False
 
-    return data.get('results', [])
+    def col(group: str, key: str):
+        return [s[group][key] for s in valid
+                if s.get(group) is not None and s[group].get(key) is not None]
 
+    sel_dang = col('selected', 'dangling_pronouns')
+    sel_coh = col('selected', 'entity_coherence')
+    sel_xref = col('selected', 'cross_references')
 
-def generate_report(stats: List[Dict], output_file: Path):
-    """生成诊断报告"""
-    # 过滤有效数据
-    valid_stats = [s for s in stats if s is not None]
+    paired = [s for s in valid if s.get('gold') is not None]
+    n_paired = len(paired)
 
-    if not valid_stats:
-        print("⚠️ 没有有效数据")
-        return
+    out = []
+    out.append("# 上下文完整性诊断报告（idea 4）\n")
+    out.append(f"\n**样本数**: {len(valid)}")
+    out.append(f"\n**可做 gold 对照的样本**: {n_paired}\n")
+    out.append("\n---\n")
 
-    # 计算统计指标
-    coref_issues = [s['coref_issues'] for s in valid_stats]
-    entity_coherence = [s['entity_coherence'] for s in valid_stats]
-    shared_entities = [s['shared_entities'] for s in valid_stats]
-    cross_refs = [s['cross_references'] for s in valid_stats]
+    out.append("\n## selected 组的绝对值\n")
+    out.append(f"\n- 悬空代词段落数: {np.mean(sel_dang):.2f} / 题")
+    out.append(f"\n- 实体连贯性: {np.mean(sel_coh):.3f}")
+    out.append(f"\n- 跨段引用段落数: {np.mean(sel_xref):.2f} / 题\n")
+    out.append("\n⚠️ 这些**绝对值本身不能判断好坏** —— 实体抽取是粗启发式，"
+               "句首大写词会被误判。结论只看下面的 selected vs gold 差距。\n")
 
-    avg_coref_issues = np.mean(coref_issues)
-    avg_entity_coherence = np.mean(entity_coherence)
-    avg_shared_entities = np.mean(shared_entities)
-    avg_cross_refs = np.mean(cross_refs)
+    out.append("\n## selected vs gold 对照（核心）\n")
 
-    # 问题案例
-    problem_cases = []
-    for i, s in enumerate(valid_stats):
-        if s['coref_issues'] > 0 or s['entity_coherence'] < 0.2:
-            problem_cases.append((i, s))
-
-    # 生成报告
-    report = []
-    report.append("# 上下文依赖分析诊断报告\n")
-    report.append(f"**分析样本数**: {len(valid_stats)}\n")
-    report.append("\n---\n")
-
-    report.append("\n## 关键发现\n")
-    report.append(f"\n### 整体统计\n")
-    report.append(f"- **平均共指问题**: {avg_coref_issues:.2f} 个/查询")
-    report.append(f"\n- **平均实体连贯性**: {avg_entity_coherence:.3f}")
-    report.append(f"\n- **平均共享实体**: {avg_shared_entities:.2f} 个/查询")
-    report.append(f"\n- **平均跨段落引用**: {avg_cross_refs:.2f} 个/查询\n")
-
-    # 假设验证
-    report.append(f"\n### 假设验证\n")
-    report.append(f"\n**假设**: 独立选择破坏段落间的依赖关系\n")
-
-    # 判断标准
-    has_coref_issues = avg_coref_issues > 0.5
-    low_coherence = avg_entity_coherence < 0.3
-    few_shared = avg_shared_entities < 2
-
-    if has_coref_issues and low_coherence:
-        report.append(f"\n**结论**: ✅ **假设强烈成立**\n")
-        report.append(f"\n观察到明显的上下文依赖问题：")
-        report.append(f"\n- 共指问题频繁（平均 {avg_coref_issues:.2f} 个）")
-        report.append(f"\n- 实体连贯性低（{avg_entity_coherence:.3f}）")
-        report.append(f"\n- 共享实体少（{avg_shared_entities:.2f} 个）\n")
-        report.append(f"\n这表明独立选择确实破坏了段落间的依赖关系。\n")
-
-    elif has_coref_issues or low_coherence:
-        report.append(f"\n**结论**: ⚠️ **假设部分成立**\n")
-        report.append(f"\n存在一定的上下文依赖问题，但不是特别严重。\n")
-
-        if has_coref_issues:
-            report.append(f"- 有一些共指问题（{avg_coref_issues:.2f} 个）\n")
-        if low_coherence:
-            report.append(f"- 实体连贯性较低（{avg_entity_coherence:.3f}）\n")
-
+    if n_paired < 10:
+        out.append(f"\n❌ **无法判断** —— 只有 {n_paired} 题的选中段落里含 ≥2 条 gold。")
+        out.append("\n\n这本身是个信号：说明模型很少同时选中多条 gold。")
+        out.append("但它也让本诊断的对照组失效 —— 假设**未能验证**，")
+        out.append("不要据此判断 idea 4 的去留。\n")
+        verdict = 'inconclusive'
     else:
-        report.append(f"\n**结论**: ❌ **假设不成立**\n")
-        report.append(f"\n段落间的依赖关系保持较好，独立选择没有明显破坏上下文。\n")
+        ps_dang = [s['selected']['dangling_pronouns'] for s in paired]
+        pg_dang = [s['gold']['dangling_pronouns'] for s in paired]
+        ps_coh = [s['selected']['entity_coherence'] for s in paired]
+        pg_coh = [s['gold']['entity_coherence'] for s in paired]
 
-    # 详细分析
-    report.append(f"\n### 详细分析\n")
+        d_dang = np.mean(ps_dang) - np.mean(pg_dang)
+        d_coh = np.mean(ps_coh) - np.mean(pg_coh)
 
-    report.append(f"\n#### 共指问题分布\n")
-    no_issues = sum(1 for c in coref_issues if c == 0)
-    some_issues = sum(1 for c in coref_issues if 0 < c <= 2)
-    many_issues = sum(1 for c in coref_issues if c > 2)
+        out.append(f"\n| 指标 | selected | gold | 差距 |")
+        out.append(f"\n|---|---|---|---|")
+        out.append(f"\n| 悬空代词 / 题 | {np.mean(ps_dang):.2f} | "
+                   f"{np.mean(pg_dang):.2f} | {d_dang:+.2f} |")
+        out.append(f"\n| 实体连贯性 | {np.mean(ps_coh):.3f} | "
+                   f"{np.mean(pg_coh):.3f} | {d_coh:+.3f} |\n")
 
-    report.append(f"- 无问题: {no_issues} ({no_issues/len(coref_issues)*100:.1f}%)")
-    report.append(f"\n- 少量问题 (1-2): {some_issues} ({some_issues/len(coref_issues)*100:.1f}%)")
-    report.append(f"\n- 严重问题 (>2): {many_issues} ({many_issues/len(coref_issues)*100:.1f}%)\n")
+        # 配对检验：同一道题内比较，消除题目难度差异
+        try:
+            from scipy.stats import wilcoxon
+            if len(set(np.array(ps_coh) - np.array(pg_coh))) > 1:
+                _, p_coh = wilcoxon(ps_coh, pg_coh)
+                out.append(f"\n实体连贯性配对检验: p={p_coh:.4f}\n")
+            else:
+                p_coh = 1.0
+        except Exception:
+            p_coh = 1.0
 
-    report.append(f"\n#### 实体连贯性分布\n")
-    low_coh = sum(1 for c in entity_coherence if c < 0.2)
-    med_coh = sum(1 for c in entity_coherence if 0.2 <= c < 0.5)
-    high_coh = sum(1 for c in entity_coherence if c >= 0.5)
+        # 判据：selected 的连贯性显著低于 gold，且悬空代词更多
+        worse_coh = d_coh < -0.05 and p_coh < 0.05
+        worse_dang = d_dang > 0.3
 
-    report.append(f"- 低连贯 (<0.2): {low_coh} ({low_coh/len(entity_coherence)*100:.1f}%)")
-    report.append(f"\n- 中连贯 (0.2-0.5): {med_coh} ({med_coh/len(entity_coherence)*100:.1f}%)")
-    report.append(f"\n- 高连贯 (≥0.5): {high_coh} ({high_coh/len(entity_coherence)*100:.1f}%)\n")
+        if worse_coh and worse_dang:
+            verdict = 'holds'
+            out.append("\n### ✅ 假设成立\n")
+            out.append(f"\nselected 的实体连贯性比 gold 低 {abs(d_coh):.3f}"
+                       f"（p={p_coh:.4f}），且悬空代词多 {d_dang:.2f} 个/题。")
+            out.append("\n说明独立打分选出的段落，依赖完整性确实差于 gold 组合。\n")
+        elif worse_coh or worse_dang:
+            verdict = 'partial'
+            out.append("\n### ⚠️ 假设部分成立\n")
+            out.append("\n两项指标只有一项显示 selected 更差，证据不够强。\n")
+        else:
+            verdict = 'rejected'
+            out.append("\n### ❌ 假设不成立\n")
+            out.append("\nselected 的依赖完整性与 gold 相当，"
+                       "「独立选择破坏依赖」在 NQ 上没有得到支持。")
+            out.append("\nidea 4 的优先级应下调。\n")
 
-    # 问题案例
-    if problem_cases:
-        report.append(f"\n### 典型问题案例\n")
-        report.append(f"\n发现 {len(problem_cases)} 个问题案例：\n")
+    out.append("\n---\n")
+    out.append("\n## 方法学限制\n")
+    out.append("\n1. **gold 对照组有偏**：gold 段落的文本只在被选中时才进 dump，"
+               "所以对照组偏向「选对了」的情形，会**低估**真实差距。")
+    out.append("\n2. 实体抽取是首字母大写启发式，非 NER。仅用于相对比较。")
+    out.append("\n3. 悬空代词是共指断裂的代理信号，不等于真实共指错误。\n")
+    out.append("\n**脚本**: `scripts/diagnosis/context_dependency_diagnosis.py`\n")
 
-        for idx, (case_id, case_stat) in enumerate(problem_cases[:5], 1):
-            report.append(f"\n**案例 {idx}**:")
-            report.append(f"\n- 共指问题: {case_stat['coref_issues']}")
-            report.append(f"\n- 实体连贯性: {case_stat['entity_coherence']:.3f}")
-            report.append(f"\n- 共享实体: {case_stat['shared_entities']}/{case_stat['total_entities']}\n")
-
-    # 建议
-    report.append(f"\n## 改进建议\n")
-
-    if has_coref_issues or low_coherence:
-        report.append(f"\n基于诊断结果，建议：\n")
-        report.append(f"\n1. ✅ **实施上下文完整性建模**（中优先级）")
-        report.append(f"\n   - 在 QUBO 中添加段落间依赖项")
-        report.append(f"\n   - 考虑共指链和实体连贯性")
-        report.append(f"\n   - 预期提升: +1-2% F1\n")
-
-        report.append(f"\n2. ✅ **图结构建模**")
-        report.append(f"\n   - 将段落建模为图节点")
-        report.append(f"\n   - 边表示依赖关系（共指、实体共现）")
-        report.append(f"\n   - 选择时考虑子图连通性\n")
-
-        report.append(f"\n3. ⚠️ **后处理调整**（临时方案）")
-        report.append(f"\n   - 选择后检查共指完整性")
-        report.append(f"\n   - 必要时调整选择\n")
-    else:
-        report.append(f"\n上下文依赖问题不严重，可以优先考虑其他优化方向。\n")
-
-    report.append(f"\n---\n")
-    report.append(f"\n**注意**: 本分析使用简单的启发式方法。")
-    report.append(f"实际应该使用 NER 和共指消解模型以获得更准确的结果。\n")
-    report.append(f"\n**生成时间**: 自动生成")
-    report.append(f"\n**脚本**: `scripts/diagnosis/context_dependency_diagnosis.py`\n")
-
-    # 写入文件
-    output_file.parent.mkdir(parents=True, exist_ok=True)
-    with open(output_file, 'w') as f:
-        f.write(''.join(report))
-
-    print(f"✅ 报告生成: {output_file}")
-
-    # 打印摘要
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(''.join(out))
+    print(f"✅ 报告生成: {output_path}")
     print(f"\n=== 摘要 ===")
-    print(f"共指问题: {avg_coref_issues:.2f}")
-    print(f"实体连贯性: {avg_entity_coherence:.3f}")
-    print(f"共享实体: {avg_shared_entities:.2f}")
-
-    if has_coref_issues or low_coherence:
-        print(f"\n✅ 假设成立：建议实施上下文完整性建模")
-    else:
-        print(f"\n⚠️ 假设不成立或较弱")
+    print(f"样本 {len(valid)}，可对照 {n_paired}")
+    print(f"结论: {verdict}")
+    return True
 
 
-def main():
-    parser = argparse.ArgumentParser(description='上下文依赖分析诊断')
-    parser.add_argument('--results', type=Path, required=True,
-                       help='实验结果文件 (JSON)')
-    parser.add_argument('--output', type=Path, required=True,
-                       help='输出报告路径')
+def main() -> int:
+    ap = argparse.ArgumentParser(description='上下文完整性诊断 (idea 4)')
+    ap.add_argument('--results', type=Path, required=True)
+    ap.add_argument('--output', type=Path, required=True)
+    args = ap.parse_args()
 
-    args = parser.parse_args()
-
-    print("=== 上下文依赖分析诊断 ===")
+    print("=== 上下文完整性诊断 (idea 4) ===")
     print(f"输入: {args.results}")
 
-    # 加载结果
-    results = load_results(args.results)
-    print(f"加载 {len(results)} 个查询结果")
+    try:
+        samples = load_samples(args.results, require=('selected_passages',))
+    except DiagnosisInputError as e:
+        print(f"❌ {e}", file=sys.stderr)
+        return 1
 
-    # 分析每个查询
-    stats = []
-    for i, query_result in enumerate(results):
-        if i % 100 == 0:
-            print(f"处理进度: {i}/{len(results)}")
-
-        stat = analyze_single_query(query_result)
-        stats.append(stat)
-
-    # 生成报告
-    generate_report(stats, args.output)
-
-    return 0
+    print(f"加载 {len(samples)} 个样本")
+    stats = [analyze_sample(s) for s in samples]
+    return 0 if generate_report(stats, args.output) else 1
 
 
 if __name__ == '__main__':
-    exit(main())
+    sys.exit(main())

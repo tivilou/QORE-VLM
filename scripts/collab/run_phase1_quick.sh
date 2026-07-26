@@ -15,4 +15,6 @@ python scripts/tuning/run_tuning_suite.py \
 
 echo ""
 echo "✅ 完成！查看结果："
-echo "  cat scratch/research/quick_test/analysis/analysis.md"
+echo "  ls scratch/research/quick_test/analysis/"
+echo ""
+echo "⚠️ 10 题只能验证流程跑通，不足以支撑任何诊断结论"

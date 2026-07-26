@@ -5,19 +5,19 @@
 自动运行、监控、分析和打包实验结果
 
 使用方法:
-    python scripts/experiments/run_tuning_suite.py \\
-        --config config/phase1_diagnosis.yaml \\
+    python scripts/tuning/run_tuning_suite.py \\
+        --config scripts/tuning/config/phase1_diagnosis.yaml \\
         --parallel 1 \\
         --retry 2
 
 示例:
     # Phase 1 诊断
-    python scripts/experiments/run_tuning_suite.py \\
-        --config scripts/experiments/config/phase1_diagnosis.yaml
+    python scripts/tuning/run_tuning_suite.py \\
+        --config scripts/tuning/config/phase1_diagnosis.yaml
 
     # 快速测试（只跑 50 题）
-    python scripts/experiments/run_tuning_suite.py \\
-        --config scripts/experiments/config/phase1_diagnosis.yaml \\
+    python scripts/tuning/run_tuning_suite.py \\
+        --config scripts/tuning/config/phase1_diagnosis.yaml \\
         --override max_samples=50
 """
 
@@ -34,9 +34,9 @@ from typing import Dict, Any, List
 # 添加项目根目录到路径
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from scripts.experiments.utils.experiment_runner import ExperimentRunner
-from scripts.experiments.utils.result_analyzer import ResultAnalyzer
-from scripts.experiments.utils.packager import ResultPackager
+from scripts.tuning.utils.experiment_runner import ExperimentRunner
+from scripts.tuning.utils.result_analyzer import ResultAnalyzer
+from scripts.tuning.utils.packager import ResultPackager
 
 
 class TuningSuite:

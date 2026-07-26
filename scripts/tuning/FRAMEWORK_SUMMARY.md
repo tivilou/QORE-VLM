@@ -95,7 +95,7 @@
 ## 📁 文件结构
 
 ```
-scripts/experiments/
+scripts/tuning/
 ├── run_tuning_suite.py          # ⭐ 主控脚本（执行入口）
 ├── QUICK_START.md               # ⭐ 快速开始（给师弟）
 ├── README.md                    # 完整文档
@@ -147,16 +147,16 @@ scripts/experiments/
 
 ```bash
 # Phase 1 诊断（完整版，200 题）
-python scripts/experiments/run_tuning_suite.py \
-    --config scripts/experiments/config/phase1_diagnosis.yaml
+python scripts/tuning/run_tuning_suite.py \
+    --config scripts/tuning/config/phase1_diagnosis.yaml
 
 # 快速测试（10 题）
-python scripts/experiments/run_tuning_suite.py \
-    --config scripts/experiments/config/quick_test.yaml
+python scripts/tuning/run_tuning_suite.py \
+    --config scripts/tuning/config/quick_test.yaml
 
 # 覆盖参数（只跑 50 题）
-python scripts/experiments/run_tuning_suite.py \
-    --config scripts/experiments/config/phase1_diagnosis.yaml \
+python scripts/tuning/run_tuning_suite.py \
+    --config scripts/tuning/config/phase1_diagnosis.yaml \
     --override max_samples=50
 ```
 
@@ -192,8 +192,8 @@ scratch/research/P1_diagnosis/
 
 **输入**:
 ```bash
-python scripts/experiments/run_tuning_suite.py \
-    --config scripts/experiments/config/phase1_diagnosis.yaml
+python scripts/tuning/run_tuning_suite.py \
+    --config scripts/tuning/config/phase1_diagnosis.yaml
 ```
 
 **过程**:
@@ -276,15 +276,15 @@ experiments:
 
 ```bash
 # 1. 快速测试（5 分钟，验证框架）
-python scripts/experiments/run_tuning_suite.py \
-    --config scripts/experiments/config/quick_test.yaml
+python scripts/tuning/run_tuning_suite.py \
+    --config scripts/tuning/config/quick_test.yaml
 
 # 2. Phase 1 诊断（1-2 小时，正式实验）
-python scripts/experiments/run_tuning_suite.py \
-    --config scripts/experiments/config/phase1_diagnosis.yaml
+python scripts/tuning/run_tuning_suite.py \
+    --config scripts/tuning/config/phase1_diagnosis.yaml
 
 # 3. 查看结果
-cat scratch/research/P1_diagnosis/analysis/analysis.md
+cat scratch/research/P1_diagnosis/analysis/gamma_sweep.md
 ```
 
 ---

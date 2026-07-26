@@ -1,8 +1,16 @@
-"""
-快速测试配置 - 验证框架是否正常工作
-
-只跑 10 题，3 个实验，预计 5 分钟完成
-"""
+# 快速测试配置 - 验证框架是否正常工作
+#
+# 只跑 10 题，3 个实验，预计 5 分钟完成
+#
+# 用途仅限「跑通流程」：10 题不足以支撑任何诊断结论
+#（全量教训：40 题 F1=59.9%，全量 3610 题只有 47.0%）。
+#
+# ⚠️ 与 phase1_diagnosis.yaml 的关键差异：本配置**保留 skip_generation**（不跑生成），
+#    为的是 5 分钟内验完流程。代价是没有 F1，因此跑诊断时：
+#      诊断 3（查询类型）、诊断 5（QUBO 目标）会**报错**
+#      诊断 2（答案多样性）只能给「待验证」
+#    这是本配置的预期行为，**不是环境问题，不要照此判断诊断脚本有 bug**。
+#    要拿真结论用 phase1_diagnosis.yaml（200 题、开生成、5 个诊断都能出结论）。
 
 name: "Quick Test (10 samples)"
 description: "快速测试框架功能，只跑 10 题"
@@ -25,6 +33,9 @@ experiments:
       direct_solve_max_n: 20
       use_answer_scorer: true
       seed: 42
+      # 诊断脚本需要 question/selected_passages/matched_answers,
+      # 缺了会直接报错退出(不再静默产出空报告)
+      dump_passages: true
       skip_generation: true
       output_dir: "{output_dir}/experiments/gamma_0.0"
       output_file: "result.json"
@@ -44,6 +55,9 @@ experiments:
       direct_solve_max_n: 20
       use_answer_scorer: true
       seed: 42
+      # 诊断脚本需要 question/selected_passages/matched_answers,
+      # 缺了会直接报错退出(不再静默产出空报告)
+      dump_passages: true
       skip_generation: true
       output_dir: "{output_dir}/experiments/gamma_0.5"
       output_file: "result.json"
@@ -63,6 +77,9 @@ experiments:
       direct_solve_max_n: 20
       use_answer_scorer: true
       seed: 42
+      # 诊断脚本需要 question/selected_passages/matched_answers,
+      # 缺了会直接报错退出(不再静默产出空报告)
+      dump_passages: true
       skip_generation: true
       output_dir: "{output_dir}/experiments/gamma_1.0"
       output_file: "result.json"
@@ -71,10 +88,11 @@ experiments:
 post_process:
   analyze:
     enabled: true
-    script: "scratch/research/scripts/analyze_gamma_diagnosis.py"
+    # 指向仓库内脚本（scratch/ 被 gitignore，合作者拉不到）
+    script: "scripts/diagnosis/gamma_sweep_diagnosis.py"
     args:
       results_dir: "{output_dir}/experiments"
-      output: "{output_dir}/analysis/analysis.md"
+      output: "{output_dir}/analysis/gamma_sweep.md"
 
   package:
     enabled: true

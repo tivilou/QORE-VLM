@@ -1,127 +1,145 @@
 #!/bin/bash
-"""
-Phase 1 完整诊断脚本
+# Phase 1 诊断 —— 验证 4 个 idea 的前提假设
+#
+#   idea 1  两阶段 QUBO      gamma_sweep_diagnosis.py
+#   idea 4  上下文完整性      context_dependency_diagnosis.py
+#   idea 6  互补性矩阵        complementarity_diagnosis.py
+#   idea 7  Soft QUBO 端到端  qubo_objective_diagnosis.py
+#
+# 另外两个 idea 在 NQ 上原理上测不了，脚本保留但不在此运行：
+#   idea 2  答案多样性 —— NQ 的 gold_answers 是同一答案的别名集合
+#                        （"December 1972" / "14 December 1972 UTC"），
+#                        不是多个不同答案。需 AmbigQA / WebQSP。
+#   idea 3  Query-adaptive γ —— 实测 3610 题，分类器 simple 桶只有 2 题
+#                        (0.1%)，NQ 问句同质性太高。需 HotpotQA 混样。
+#
+# 前置：先跑完实验
+#   bash scripts/collab/run_phase1_full.sh
+#
+# 数据要求：评测必须带 --dump_passages（配置里已开）。
+#   缺字段时各脚本会明确报错并写明要加哪个参数，不会静默产出空报告。
 
-运行所有诊断分析，验证改进方案的假设
+set -uo pipefail
+cd "$(dirname "$0")/../.."
 
-诊断内容:
-1. γ sweep - 验证两阶段 QUBO 假设
-2. 答案多样性分析 - 验证答案多样性约束假设
-3. 查询类型分析 - 验证 Query-adaptive 假设
-4. 上下文依赖分析 - 验证上下文完整性建模假设
-5. QUBO 目标分析 - 验证 Soft QUBO 假设
-"""
-
-set -e
-
-echo "╔════════════════════════════════════════════════════════════════╗"
-echo "║             Phase 1 完整诊断 - 假设验证                        ║"
-echo "╚════════════════════════════════════════════════════════════════╝"
-echo ""
-
-# 配置
 RESULTS_DIR="scratch/research/P1_diagnosis/experiments"
 ANALYSIS_DIR="scratch/research/P1_diagnosis/analysis"
-GAMMA_0_5_RESULT="$RESULTS_DIR/gamma_0.5/result.json"
+MAIN_RESULT="$RESULTS_DIR/gamma_0.5/result.json"
 
-# 创建输出目录
 mkdir -p "$ANALYSIS_DIR"
 
-# ============================================================================
-# 1. γ Sweep (已由 tuning framework 运行)
-# ============================================================================
-echo "[1/5] ✅ γ Sweep"
-echo "      已由 run_tuning_suite.py 完成"
-echo "      结果: $RESULTS_DIR/gamma_*/"
+echo "╔════════════════════════════════════════════════════════════╗"
+echo "║        Phase 1 诊断 —— 4 个 idea 的前提验证                ║"
+echo "╚════════════════════════════════════════════════════════════╝"
+echo ""
+echo "实验结果: $RESULTS_DIR"
+echo "分析输出: $ANALYSIS_DIR"
 echo ""
 
-# ============================================================================
-# 2. 答案多样性分析
-# ============================================================================
-echo "[2/5] 📊 答案多样性分析"
-echo "      验证假设: 文本多样但答案重复"
+FAILED=()
+SKIPPED=()
+SATURATED=0
 
-if [ -f "$GAMMA_0_5_RESULT" ]; then
-    python scripts/diagnosis/answer_diversity_diagnosis.py \
-        --results "$GAMMA_0_5_RESULT" \
-        --output "$ANALYSIS_DIR/answer_diversity.md"
-
-    echo "      ✅ 完成"
-else
-    echo "      ⚠️  结果文件不存在: $GAMMA_0_5_RESULT"
-    echo "      请先运行 Phase 1 实验"
+# 目录存在但没有 result.json 也算缺输入 —— run_tuning_suite 一启动就会
+# 建 gamma_*/ 目录写日志，跑挂了目录也在。
+HAVE_SWEEP=0
+if [ -d "$RESULTS_DIR" ] && \
+   [ -n "$(find "$RESULTS_DIR" -mindepth 2 -name result.json -print -quit 2>/dev/null)" ]; then
+    HAVE_SWEEP=1
 fi
-echo ""
 
-# ============================================================================
-# 3. 查询类型分析
-# ============================================================================
-echo "[3/5] 🔍 查询类型分析"
-echo "      验证假设: 不同查询需要不同多样性策略"
-
-if [ -d "$RESULTS_DIR" ]; then
-    python scripts/diagnosis/query_type_diagnosis.py \
+# ── idea 1: γ sweep ──────────────────────────────────────────────────
+# 退出码 2 = γ 饱和（三个 γ 选出几乎同一批段落），不是失败，
+# 但意味着后面所有关于「多样性有无用」的读数都不可解读。
+echo "────────────────────────────────────────────────────────────"
+echo "[1/4] idea 1 两阶段 QUBO —— γ sweep"
+if [ "$HAVE_SWEEP" -eq 1 ]; then
+    python scripts/diagnosis/gamma_sweep_diagnosis.py \
         --results_dir "$RESULTS_DIR" \
-        --output "$ANALYSIS_DIR/query_type.md"
-
-    echo "      ✅ 完成"
+        --output "$ANALYSIS_DIR/gamma_sweep.md"
+    rc=$?
+    if [ $rc -eq 0 ]; then
+        echo "   ✅ 完成"
+    elif [ $rc -eq 2 ]; then
+        echo "   ⚠️  γ 未生效（饱和）—— 报告已生成但结论不可用"
+        SATURATED=1
+    else
+        echo "   ❌ 失败"
+        FAILED+=("[1/4] γ sweep")
+    fi
 else
-    echo "      ⚠️  结果目录不存在: $RESULTS_DIR"
+    echo "   ⏭️  跳过：$RESULTS_DIR 下没有 gamma_*/result.json"
+    SKIPPED+=("[1/4] γ sweep")
 fi
 echo ""
 
-# ============================================================================
-# 4. 上下文依赖分析
-# ============================================================================
-echo "[4/5] 🔗 上下文依赖分析"
-echo "      验证假设: 独立选择破坏段落间依赖"
+# ── 其余三个都读 gamma_0.5 的单份结果 ────────────────────────────────
+run_single() {
+    local label="$1" script="$2" outfile="$3"; shift 3
+    echo "────────────────────────────────────────────────────────────"
+    echo "$label"
+    if [ ! -f "$MAIN_RESULT" ]; then
+        echo "   ⏭️  跳过：$MAIN_RESULT 不存在"
+        SKIPPED+=("$label")
+        echo ""
+        return
+    fi
+    if python "$script" --results "$MAIN_RESULT" \
+            --output "$ANALYSIS_DIR/$outfile" "$@"; then
+        echo "   ✅ 完成"
+    else
+        echo "   ❌ 失败（见上方报错）"
+        FAILED+=("$label")
+    fi
+    echo ""
+}
 
-if [ -f "$GAMMA_0_5_RESULT" ]; then
-    python scripts/diagnosis/context_dependency_diagnosis.py \
-        --results "$GAMMA_0_5_RESULT" \
-        --output "$ANALYSIS_DIR/context_dependency.md"
+run_single "[2/4] idea 4 上下文完整性" \
+    scripts/diagnosis/context_dependency_diagnosis.py \
+    context_dependency.md
 
-    echo "      ✅ 完成"
-else
-    echo "      ⚠️  结果文件不存在: $GAMMA_0_5_RESULT"
+run_single "[3/4] idea 6 互补性矩阵" \
+    scripts/diagnosis/complementarity_diagnosis.py \
+    complementarity.md
+
+run_single "[4/4] idea 7 Soft QUBO 端到端" \
+    scripts/diagnosis/qubo_objective_diagnosis.py \
+    qubo_objective.md --gamma 0.5 --lam 2.0
+
+# ── 汇总 ─────────────────────────────────────────────────────────────
+echo "╔════════════════════════════════════════════════════════════╗"
+echo "║                      诊断汇总                              ║"
+echo "╚════════════════════════════════════════════════════════════╝"
+echo ""
+echo "📁 报告目录: $ANALYSIS_DIR/"
+ls -1 "$ANALYSIS_DIR" 2>/dev/null | sed 's/^/   /' || echo "   (空)"
+echo ""
+
+if [ ${#SKIPPED[@]} -gt 0 ]; then
+    echo "⏭️  跳过 ${#SKIPPED[@]} 个（缺输入）:"
+    printf '   %s\n' "${SKIPPED[@]}"
+    echo ""
 fi
-echo ""
 
-# ============================================================================
-# 5. QUBO 目标分析
-# ============================================================================
-echo "[5/5] 🎯 QUBO 目标分析"
-echo "      验证假设: QUBO 目标与 F1 不一致"
-
-if [ -f "$GAMMA_0_5_RESULT" ]; then
-    python scripts/diagnosis/qubo_objective_diagnosis.py \
-        --results "$GAMMA_0_5_RESULT" \
-        --output "$ANALYSIS_DIR/qubo_objective.md" \
-        --gamma 0.5 \
-        --lam 2.0
-
-    echo "      ✅ 完成"
-else
-    echo "      ⚠️  结果文件不存在: $GAMMA_0_5_RESULT"
+if [ ${#FAILED[@]} -gt 0 ]; then
+    echo "❌ 失败 ${#FAILED[@]} 个:"
+    printf '   %s\n' "${FAILED[@]}"
+    echo ""
+    echo "常见原因：评测未加 --dump_passages。报错信息里会写明缺哪个字段。"
+    exit 1
 fi
-echo ""
 
-# ============================================================================
-# 生成综合报告
-# ============================================================================
-echo "╔════════════════════════════════════════════════════════════════╗"
-echo "║                      诊断完成                                   ║"
-echo "╚════════════════════════════════════════════════════════════════╝"
+if [ ${#SKIPPED[@]} -gt 0 ]; then
+    echo "先跑 bash scripts/collab/run_phase1_full.sh 再回来。"
+    exit 1
+fi
+
+if [ "$SATURATED" -eq 1 ]; then
+    echo "⚠️  γ 饱和：idea 1 的结论不可用，需先重标定 QUBO 系数。"
+    echo "    其余三个诊断的结论不受影响。"
+    echo ""
+fi
+
+echo "✅ 4 个诊断全部完成"
 echo ""
-echo "📁 所有分析报告位于: $ANALYSIS_DIR/"
-echo ""
-echo "   1. answer_diversity.md    - 答案多样性分析"
-echo "   2. query_type.md          - 查询类型分析"
-echo "   3. context_dependency.md  - 上下文依赖分析"
-echo "   4. qubo_objective.md      - QUBO 目标分析"
-echo ""
-echo "下一步:"
-echo "  1. 查看各诊断报告"
-echo "  2. 根据假设验证结果决定 Phase 2-3 实施顺序"
-echo "  3. 见 improvement_roadmap.md"
-echo ""
+echo "下一步：逐份看报告，按假设强度决定先做哪个 idea。"

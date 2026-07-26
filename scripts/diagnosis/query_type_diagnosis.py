@@ -11,12 +11,15 @@
 3. Query-adaptive 策略的潜在收益
 """
 
-import json
 import argparse
+import sys
 import numpy as np
 from pathlib import Path
 from collections import defaultdict
-from typing import List, Dict, Tuple
+from typing import List, Dict, Optional, Tuple
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from diagnosis_io import DiagnosisInputError, load_samples
 
 
 def classify_query_simple(query: str) -> str:
@@ -52,68 +55,71 @@ def classify_query_simple(query: str) -> str:
 
 
 def load_results_all_gamma(results_dir: Path) -> Dict[float, List[Dict]]:
-    """加载所有 γ 配置的结果"""
+    """加载所有 γ 配置的结果。
+
+    目录布局由 scripts/tuning/config/phase1_diagnosis.yaml 决定：
+        <results_dir>/gamma_<value>/result.json
+    """
     gamma_results = {}
 
-    for gamma_file in results_dir.glob('gamma_*/result.json'):
+    for gamma_file in sorted(results_dir.glob('gamma_*/result.json')):
         gamma_str = gamma_file.parent.name.split('_')[1]
         gamma = float(gamma_str)
-
-        with open(gamma_file, 'r') as f:
-            data = json.load(f)
-
-        gamma_results[gamma] = data.get('results', [])
+        # 需要 question 做查询分类，需要 f1 做最优 γ 判定
+        gamma_results[gamma] = load_samples(gamma_file, require=('question', 'f1'))
 
     return gamma_results
 
 
 def compute_metrics(query_results: List[Dict]) -> Dict[str, float]:
-    """计算指标"""
+    """计算指标。
+
+    ⚠️ sample 是**平铺**的：recall/f1 等直接在顶层，没有嵌套的 'metrics' 子字典。
+    早前按 result['metrics']['f1'] 读会全取到 0，报告看着像"假设不成立"。
+    """
     if not query_results:
         return {}
 
-    recalls = []
-    precisions = []
-    f1s = []
-    redundancies = []
-
-    for result in query_results:
-        metrics = result.get('metrics', {})
-        if metrics:
-            recalls.append(metrics.get('recall', 0))
-            precisions.append(metrics.get('precision', 0))
-            f1s.append(metrics.get('f1', 0))
-            redundancies.append(metrics.get('redundancy', 0))
+    def mean_of(key: str) -> float:
+        vals = [r[key] for r in query_results
+                if r.get(key) is not None]
+        return float(np.mean(vals)) if vals else 0.0
 
     return {
-        'recall': np.mean(recalls) if recalls else 0,
-        'precision': np.mean(precisions) if precisions else 0,
-        'f1': np.mean(f1s) if f1s else 0,
-        'redundancy': np.mean(redundancies) if redundancies else 0,
+        'recall': mean_of('recall'),
+        'precision': mean_of('precision'),
+        'f1': mean_of('f1'),
+        'redundancy': mean_of('redundancy'),
         'count': len(query_results)
     }
 
 
 def analyze_by_query_type(gamma_results: Dict[float, List[Dict]]) -> Dict:
-    """按查询类型分析"""
-    # 分类查询
+    """按查询类型分析。
+
+    按 question_id 对齐各 γ 的样本，而不是按列表下标 —— 下标对齐只在所有
+    γ 跑了完全相同、且顺序一致的样本集时才成立，任何一次跳过/重跑都会
+    让不同查询被错配到一起。
+    """
     query_types = defaultdict(lambda: defaultdict(list))
 
-    # 假设所有 γ 的查询顺序一致
     base_gamma = min(gamma_results.keys())
-    base_results = gamma_results[base_gamma]
 
-    # 对每个查询分类
-    for idx, result in enumerate(base_results):
-        query = result.get('query', '')
-        qtype = classify_query_simple(query)
+    # question_id -> 该 γ 下的 sample
+    by_id = {
+        gamma: {s.get('question_id'): s for s in samples}
+        for gamma, samples in gamma_results.items()
+    }
 
-        # 收集所有 γ 下该查询的结果
-        for gamma, results in gamma_results.items():
-            if idx < len(results):
-                query_types[qtype][gamma].append(results[idx])
+    for sample in gamma_results[base_gamma]:
+        qid = sample.get('question_id')
+        qtype = classify_query_simple(sample.get('question') or '')
 
-    # 计算每种类型在每个 γ 下的指标
+        for gamma in gamma_results:
+            matched = by_id[gamma].get(qid)
+            if matched is not None:
+                query_types[qtype][gamma].append(matched)
+
     type_gamma_metrics = {}
     for qtype in query_types:
         type_gamma_metrics[qtype] = {}
@@ -124,10 +130,10 @@ def analyze_by_query_type(gamma_results: Dict[float, List[Dict]]) -> Dict:
     return type_gamma_metrics
 
 
-def find_best_gamma(type_metrics: Dict[float, Dict]) -> Tuple[float, str]:
-    """找到最优 γ"""
+def find_best_gamma(type_metrics: Dict[float, Dict]) -> Tuple[Optional[float], float]:
+    """找到 F1 最高的 γ 及其 F1。"""
     best_gamma = None
-    best_f1 = -1
+    best_f1 = -1.0
 
     for gamma, metrics in type_metrics.items():
         f1 = metrics.get('f1', 0)
@@ -135,7 +141,9 @@ def find_best_gamma(type_metrics: Dict[float, Dict]) -> Tuple[float, str]:
             best_f1 = f1
             best_gamma = gamma
 
-    return best_gamma, f1
+    # 曾经这里 return best_gamma, f1 —— f1 是循环残留量，
+    # 返回的是最后一个 γ 的 F1，不是最优的那个。
+    return best_gamma, best_f1
 
 
 def generate_report(type_gamma_metrics: Dict, output_file: Path):
@@ -181,7 +189,14 @@ def generate_report(type_gamma_metrics: Dict, output_file: Path):
 
         for gamma in sorted(type_gamma_metrics[qtype].keys()):
             metrics = type_gamma_metrics[qtype][gamma]
-            report.append(f"\n| {gamma:.1f} | {metrics['recall']:.3f} | {metrics['precision']:.3f} | {metrics['f1']:.3f} | {metrics['redundancy']:.3f} |")
+            if not metrics:
+                # 该 γ 下这一类没有样本（各 γ 跑的题集不完全一致时会出现）
+                report.append(f"\n| {gamma:.1f} | - | - | - | - |")
+                continue
+            report.append(
+                f"\n| {gamma:.1f} | {metrics['recall']:.3f} | {metrics['precision']:.3f}"
+                f" | {metrics['f1']:.3f} | {metrics['redundancy']:.3f} |"
+            )
 
         report.append("\n")
 
@@ -236,12 +251,13 @@ def generate_report(type_gamma_metrics: Dict, output_file: Path):
         # Adaptive: 使用最优 γ
         best_gamma = best_gammas.get(qtype)
         if best_gamma is not None:
-            adaptive_f1 = type_gamma_metrics[qtype][best_gamma]['f1']
-            adaptive_f1s.append(adaptive_f1)
+            adaptive_f1 = type_gamma_metrics[qtype][best_gamma].get('f1')
+            if adaptive_f1 is not None:
+                adaptive_f1s.append(adaptive_f1)
 
         # Uniform: 使用固定 γ=0.5
-        if 0.5 in type_gamma_metrics[qtype]:
-            uniform_f1 = type_gamma_metrics[qtype][0.5]['f1']
+        uniform_f1 = type_gamma_metrics[qtype].get(0.5, {}).get('f1')
+        if uniform_f1 is not None:
             uniform_f1s.append(uniform_f1)
 
     if adaptive_f1s and uniform_f1s:
@@ -311,16 +327,26 @@ def main():
     print(f"输入目录: {args.results_dir}")
 
     # 加载所有 γ 的结果
-    gamma_results = load_results_all_gamma(args.results_dir)
-    print(f"加载 {len(gamma_results)} 个 γ 配置")
+    try:
+        gamma_results = load_results_all_gamma(args.results_dir)
+    except DiagnosisInputError as e:
+        print(f"❌ {e}", file=sys.stderr)
+        return 1
+    print(f"加载 {len(gamma_results)} 个 γ 配置: {sorted(gamma_results)}")
 
     if not gamma_results:
-        print("❌ 未找到结果文件")
+        print(f"❌ 在 {args.results_dir} 下未找到 gamma_*/result.json",
+              file=sys.stderr)
         return 1
 
     # 按查询类型分析
     type_gamma_metrics = analyze_by_query_type(gamma_results)
-    print(f"分析 {len(type_gamma_metrics)} 种查询类型")
+    print(f"分析 {len(type_gamma_metrics)} 种查询类型: {sorted(type_gamma_metrics)}")
+
+    if not type_gamma_metrics:
+        print("❌ 没有可分析的查询类型（样本缺 question 字段？）",
+              file=sys.stderr)
+        return 1
 
     # 生成报告
     generate_report(type_gamma_metrics, args.output)
@@ -329,4 +355,4 @@ def main():
 
 
 if __name__ == '__main__':
-    exit(main())
+    sys.exit(main())
