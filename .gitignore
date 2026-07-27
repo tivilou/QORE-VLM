@@ -67,6 +67,15 @@ wandb_api
 /results/
 /reference/
 
+# === exchange/: 中间结果交换区（只收报告，不收大产物）===
+# git 删不掉历史：一轮 result.json 4.1MB、zip 2.4MB，跑十轮就是几十 MB
+# 永久留在每人的 clone 里，而真要读的只有 20KB 报告。
+# 真要提交某个大文件得 git add -f，请先在组里说一声。
+exchange/**/result.json
+exchange/**/*.zip
+exchange/**/*.samples.json
+exchange/**/experiments/
+
 # Project progress tracking (local only)
 .ai-progress/
 
