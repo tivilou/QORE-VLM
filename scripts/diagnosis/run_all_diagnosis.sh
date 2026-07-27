@@ -175,3 +175,6 @@ fi
 echo "✅ 4 个诊断全部完成"
 echo ""
 echo "下一步：逐份看报告，按假设强度决定先做哪个 idea。"
+echo ""
+echo "交结果（自动建趟次目录、拷文件、生成 README）："
+echo "  python scripts/collab/collect_p1_results.py"

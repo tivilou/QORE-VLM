@@ -104,27 +104,39 @@ bash scripts/diagnosis/run_all_diagnosis.sh
 
 ---
 
-## Step 6 打包交付
-
-Step 4 的 `post_process` 已经自动打好包了：
+## Step 6 交结果
 
 ```bash
-ls scratch/research/P1_diagnosis/package/
+python scripts/collab/collect_p1_results.py
 ```
 
-但那个包在 Step 5 之前生成，**不含四份诊断报告**。Step 5 跑完后补一个：
+它自动做这些：
+
+- 从 `status.json` 的 `start_time` 算出趟次时间戳（**不用你手记**）
+- 建 `exchange/p1_diagnosis/<时间戳>/`，拷进可提交的部分
+- README 里机械的部分全填好（指标表、耗时、真实命令、git HEAD、GPU）
+- 趟次表加一行
+- 原始 `result.json` 打包到 `~/P1_<时间戳>.zip`（这个单独发我）
+- `git add`，但**不自动 commit**
+
+然后把 README 里的 `<TODO>` 填完 —— 那几栏靠判断，自动生成不了，
+**尤其「结论可信度」是整份交付里最有用的一栏**。脚本会列出还剩哪几处。
+
+填完提交：
 
 ```bash
-cd scratch/research
-zip -r P1_diagnosis_$(date +%Y%m%d).zip \
-    P1_diagnosis/analysis \
-    P1_diagnosis/experiments/*/result.json \
-    P1_diagnosis/experiments/*/status.json \
-    P1_diagnosis/run_summary.json
-cd ../..
+git commit -m "exchange: P1 诊断 <时间戳>"
+git push
 ```
 
-把 zip 发我。`status.json` 一起带上，我这边能确认每个实验是真跑完的。
+**两种会直接拒绝收集的情况**（都是 2026-07-27 那趟踩过的）：
+
+- **带了 `--skip_generation` 或 `mean_f1` 缺失** —— idea 1 就是靠 F1 判的，缺了整趟白跑。
+  确实要收这种结果才加 `--allow-no-f1`。
+- **有实验 `status != success`** —— 跑挂的实验不该产出交付物。
+
+工作区不干净不会拒绝，但会**把改动列进 README**。请在「改动」栏说明原因 ——
+上一趟的两个问题（手改 yaml、旧版脚本）在四份报告里完全看不见。
 
 ---
 

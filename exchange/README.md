@@ -50,15 +50,27 @@ cp -r exchange/_TEMPLATE_EXPERIMENT exchange/kv_balanced_rerun
 
 **新趟次**（已有的实验又跑了一次）：
 
+有收集脚本的走脚本 —— 它会自己算时间戳、拷文件、填好 README 里机械的部分，
+并在缺 F1 / 实验未成功时**拒绝收集**：
+
 ```bash
-TS=$(date +%Y%m%dT%H%M%S)          # 跑实验前先记下开始时刻
-cp -r exchange/_TEMPLATE exchange/p1_diagnosis/$TS
-# 把 analysis/*.md 、status.json 、实际用的配置拷进去，填 README.md
-# 然后到 exchange/p1_diagnosis/README.md 的趟次表里加一行
-git add exchange/p1_diagnosis
-git commit -m "exchange: P1 诊断 $TS（开生成重跑）"
-git push
+python scripts/collab/collect_p1_results.py     # P1 诊断
+# 填完 README 里的 <TODO>，然后
+git commit -m "exchange: P1 诊断 <时间戳>" && git push
 ```
+
+没收集脚本的线（比如 KV）手建：
+
+```bash
+TS=$(date +%Y%m%dT%H%M%S)
+cp -r exchange/_TEMPLATE exchange/kv_balanced_rerun/$TS
+# 拷文件、填 README、到趟次表加一行
+```
+
+收集脚本做的事不是省打字，是**把来源核验从可选变成强制**。
+2026-07-27 那趟的两个问题 —— 手改 yaml 加了 `--skip_generation`、两个诊断脚本是旧版
+—— **在四份报告里完全看不见**，是事后翻 `status.json` 的 `command` 字段、
+比对报告标题才挖出来的。
 
 ## 命名与时区
 
@@ -66,6 +78,9 @@ git push
   （`p1_diagnosis`、`kv_balanced_rerun`。idea 编号会变 —— `6f03fdb` 已经把 idea 2/3
   从 driver 里摘掉过一次）
 - **趟次层**: `<YYYYMMDD>T<HHMMSS>`，**北京时间**，取**第一个实验的开始时刻**
+
+有收集脚本的话这个时间戳是**自动从 `status.json` 的 `start_time` 算的**，
+不用手记 —— 手记的话隔天才收集就错了。手建时：
 
 ```bash
 date +%Y%m%dT%H%M%S      # 不加 -u，我们用北京时间
