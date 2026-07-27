@@ -39,6 +39,23 @@ from scripts.tuning.utils.result_analyzer import ResultAnalyzer
 from scripts.tuning.utils.packager import ResultPackager
 
 
+def _fmt_metric(value: Any, spec: str = ".4f") -> str:
+    """格式化指标，缺失时显示 N/A。
+
+    跑 --skip_generation 时 result.json 的 metrics 里没有 mean_f1/mean_em，
+    experiment_runner._read_result 用 .get() 取值，于是 'f1' 这个键**存在但值是
+    None**。这时 m.get('f1', 0) 不会走默认值 0（键在），返回 None，
+    f"{None:.4f}" 直接 TypeError —— 实验本身已经成功了，却在打印摘要时炸掉。
+    result_analyzer.py 那边早就用 `or 0` 防过，这里补齐。
+    """
+    if value is None:
+        return "N/A"
+    try:
+        return format(value, spec)
+    except (TypeError, ValueError):
+        return str(value)
+
+
 class TuningSuite:
     """实验套件控制器"""
 
@@ -164,9 +181,9 @@ class TuningSuite:
                     print(f"  ✅ 成功 (耗时: {info['elapsed_seconds']:.0f}s)")
                     if 'metrics' in info:
                         m = info['metrics']
-                        print(f"     Recall: {m.get('recall', 0):.4f}, "
-                              f"F1: {m.get('f1', 0):.4f}, "
-                              f"冗余: {m.get('redundancy', 0):.4f}")
+                        print(f"     Recall: {_fmt_metric(m.get('recall'))}, "
+                              f"F1: {_fmt_metric(m.get('f1'))}, "
+                              f"冗余: {_fmt_metric(m.get('redundancy'))}")
                 else:
                     print(f"  ❌ 失败: {info.get('error', 'Unknown error')}")
 
