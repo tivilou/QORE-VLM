@@ -28,6 +28,38 @@ MAIN_RESULT="$RESULTS_DIR/gamma_0.5/result.json"
 
 mkdir -p "$ANALYSIS_DIR"
 
+# 实验是否真的跑成功了 —— 光看 result.json 在不在不够。
+# run_tuning_suite 超时会 kill 进程、失败返回非零，两种情况下评测都没重写
+# result.json。早期的 runner 不清旧产物，所以一份陈文件能让四个诊断照常出
+# 报告，数字看着还是对的 —— 那比读不到更危险。这里拿 status.json 卡住。
+check_status() {
+    local exp_dir="$1" status_file="$1/status.json"
+    [ -f "$status_file" ] || return 0   # 没有 status 就不下结论（可能是手跑的）
+    local st
+    st=$(python -c "import json,sys;print(json.load(open(sys.argv[1])).get('status',''))" \
+         "$status_file" 2>/dev/null) || return 0
+    if [ -n "$st" ] && [ "$st" != "success" ]; then
+        echo "   ⚠️  $(basename "$exp_dir") 的 status = $st"
+        return 1
+    fi
+    return 0
+}
+
+BAD_STATUS=0
+for d in "$RESULTS_DIR"/gamma_*; do
+    [ -d "$d" ] || continue
+    check_status "$d" || BAD_STATUS=1
+done
+if [ "$BAD_STATUS" -eq 1 ]; then
+    echo ""
+    echo "❌ 有实验没跑成功（超时/失败）。这些目录里的 result.json 可能是上一轮的陈数据，"
+    echo "   拿它跑诊断会得到看着合理但完全无效的结论。"
+    echo ""
+    echo "   先看: cat $RESULTS_DIR/gamma_0.5/stderr.log"
+    echo "   确认后重跑: bash scripts/collab/run_phase1_full.sh"
+    exit 1
+fi
+
 echo "╔════════════════════════════════════════════════════════════╗"
 echo "║        Phase 1 诊断 —— 4 个 idea 的前提验证                ║"
 echo "╚════════════════════════════════════════════════════════════╝"

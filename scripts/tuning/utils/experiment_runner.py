@@ -27,6 +27,10 @@ class ExperimentRunner:
         self.stdout_log = self.log_dir / "stdout.log"
         self.stderr_log = self.log_dir / "stderr.log"
         self.status_file = self.log_dir / "status.json"
+        # 产物路径按配置解析：诊断脚本和打包都按这个名字找文件。
+        self.result_file = self.log_dir / str(
+            experiment_config.get('args', {}).get('output_file') or "result.json"
+        )
 
     def build_command(self) -> str:
         """构建命令行"""
@@ -71,9 +75,24 @@ class ExperimentRunner:
 
         return False, info
 
+    def _clear_stale_result(self):
+        """跑之前删掉上一轮的产物。
+
+        必须删。超时会 kill 进程、失败会返回非零，两种情况下**评测都没重写
+        result.json**，旧文件原地留着。而下游只判断文件在不在:
+        run_all_diagnosis.sh 是 `[ -f "$MAIN_RESULT" ]`,
+        PHASE1_STEPS.md 的 Step 3 直接 json.load 那个路径。
+        结果是一次挂掉的实验能让四个诊断照常出报告，读的却是上一轮的数据 ——
+        比读不到更糟，因为数字看着是对的。
+        """
+        if self.result_file.exists():
+            print(f"  🧹 删除上一轮产物: {self.result_file}")
+            self.result_file.unlink()
+
     def _run_once(self, timeout_minutes: int) -> Tuple[bool, Dict[str, Any]]:
         """执行一次实验"""
         cmd = self.build_command()
+        self._clear_stale_result()
 
         # 记录状态
         status = {
@@ -159,7 +178,7 @@ class ExperimentRunner:
 
     def _read_result(self) -> Optional[Dict[str, Any]]:
         """读取实验结果"""
-        result_file = self.log_dir / "result.json"
+        result_file = self.result_file
         if not result_file.exists():
             return None
 
