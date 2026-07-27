@@ -6,11 +6,14 @@
 #（全量教训：40 题 F1=59.9%，全量 3610 题只有 47.0%）。
 #
 # ⚠️ 与 phase1_diagnosis.yaml 的关键差异：本配置**保留 skip_generation**（不跑生成），
-#    为的是 5 分钟内验完流程。代价是没有 F1，因此跑诊断时：
-#      诊断 3（查询类型）、诊断 5（QUBO 目标）会**报错**
-#      诊断 2（答案多样性）只能给「待验证」
-#    这是本配置的预期行为，**不是环境问题，不要照此判断诊断脚本有 bug**。
-#    要拿真结论用 phase1_diagnosis.yaml（200 题、开生成、5 个诊断都能出结论）。
+#    为的是 5 分钟内验完流程。代价是没有 F1。
+#
+#    本配置的 post_process 只跑 γ sweep 这一个分析（不是完整的四个诊断），
+#    而 γ sweep 容忍缺 F1：它会打印「⚠️ 无 F1 数据（--skip_generation），
+#    结论仅覆盖检索侧」然后正常退出 0。所以 Step 2 不会因为缺 F1 报错。
+#
+#    但 10 题 + 无 F1 的结果**不足以支撑任何诊断结论**。
+#    要拿真结论用 phase1_diagnosis.yaml（200 题、开生成、四个诊断都能出结论）。
 
 name: "Quick Test (10 samples)"
 description: "快速测试框架功能，只跑 10 题"
@@ -108,7 +111,11 @@ post_process:
 execution:
   parallel: 1
   retry_on_failure: 1
-  timeout_minutes: 10
+  # 30 分钟不是「跑 10 题要 30 分钟」—— 计算本身只要几分钟，
+  # 时间几乎全花在加载 wiki_dpr 索引和 DPR answer scorer 上。
+  # 旧值 10 分钟没给加载留余量：一旦某个实验超时，retry 会让它白跑两遍共 20 分钟，
+  # 然后 set -e 中止脚本，留下一份上一轮的陈 result.json —— Step 3 就会读到它。
+  timeout_minutes: 30
 
   pre_checks:
     - check_gpu: true
