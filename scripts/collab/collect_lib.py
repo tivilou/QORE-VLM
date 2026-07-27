@@ -18,12 +18,9 @@ packaging time.
 from __future__ import annotations
 
 import json
-import re
 import subprocess
 from datetime import datetime
 from pathlib import Path
-
-TODO_RE = re.compile(r"<TODO:[^>]*>")
 
 
 class CollectError(RuntimeError):
@@ -121,12 +118,12 @@ def prepare_round_dir(exchange_root: Path, experiment: str, ts: str,
     return dest
 
 
-def append_round_row(experiment_readme: Path, ts: str, who: str,
-                     status_label: str) -> bool:
+def append_round_row(experiment_readme: Path, ts: str, who: str) -> bool:
     """Add a row to the experiment-level round table.
 
-    Timestamp / who / status are mechanical. The conclusion column is left as a
-    TODO because it needs judgement.
+    Timestamp and who are mechanical, so they are filled. Conclusion and
+    verdict are left blank rather than templated — they are decided in
+    conversation after reading the reports, not by whoever ran the job.
     """
     if not experiment_readme.exists():
         return False
@@ -134,8 +131,7 @@ def append_round_row(experiment_readme: Path, ts: str, who: str,
     if f"[`{ts}`]" in text:
         return False
 
-    row = (f"| [`{ts}`]({ts}/) | {who} | "
-           f"<TODO: 一句话结论> | {status_label} |\n")
+    row = f"| [`{ts}`]({ts}/) | {who} | | |\n"
 
     lines = text.splitlines(keepends=True)
     out, inserted = [], False
@@ -157,26 +153,6 @@ def append_round_row(experiment_readme: Path, ts: str, who: str,
         return False
     experiment_readme.write_text("".join(out))
     return True
-
-
-# ── TODO 闸门 ─────────────────────────────────────────────────────────
-
-def find_todos(paths: list[Path]) -> list[tuple[Path, int, str]]:
-    """Locate <TODO: ...> markers so the caller can block on them.
-
-    The judgement sections — 想回答什么问题 / 结论可信度 / 遇到的问题 — cannot be
-    generated. They are also the ones that get skipped, because they take the
-    most thought, and 结论可信度 is the single most useful section in the
-    template. So they are emitted as markers and checked rather than trusted.
-    """
-    hits = []
-    for p in paths:
-        if not p.exists():
-            continue
-        for n, line in enumerate(p.read_text().splitlines(), 1):
-            if TODO_RE.search(line):
-                hits.append((p, n, line.strip()))
-    return hits
 
 
 # ── 杂项 ──────────────────────────────────────────────────────────────

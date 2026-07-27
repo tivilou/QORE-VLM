@@ -2,8 +2,12 @@
 """Collect a P1 diagnosis round into exchange/p1_diagnosis/<timestamp>/.
 
 Run after run_all_diagnosis.sh. Creates the round directory, copies the
-committable artifacts, fills in everything mechanical in the README, appends a
-row to the round table, and packages the raw result.json for direct transfer.
+committable artifacts, generates the README from what can be read off the
+artifacts, appends a round-table row, packages the raw result.json, and commits.
+
+Everything it writes is derived from the artifacts. It does not ask the runner
+to write up conclusions or caveats — those get settled in conversation after
+reading the reports, and a template that prompts for them just produces filler.
 
 Deliberately separate from run_all_diagnosis.sh rather than chained onto it.
 The diagnoses are pure-CPU and re-runnable, exit 2 on gamma saturation, and can
@@ -39,7 +43,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from collect_lib import (  # noqa: E402
-    CollectError, append_round_row, find_todos, fmt_duration, git_provenance,
+    CollectError, append_round_row, fmt_duration, git_provenance,
     gpu_info, load_json, prepare_round_dir, timestamp_from_start_time,
 )
 
@@ -170,9 +174,8 @@ def build_readme(per_gamma: list[dict], prov: dict, who: str, ts: str,
         dirty_detail = (
             f"\n\n  ⚠️ **工作区有未提交改动**，跑的代码与仓库 `{prov['head'].split()[0]}` 不一致：\n"
             f"{lines}\n\n"
-            "  这很重要 —— 2026-07-27 那趟就是手改了 yaml 加 `--skip_generation`、"
-            "外加两个诊断脚本是旧版，而四份报告里完全看不出来。\n"
-            "  **请在下面「改动」栏说明改了什么、为什么。**"
+            "  2026-07-27 那趟就是手改了 yaml 加 `--skip_generation`、"
+            "外加两个诊断脚本是旧版，而四份报告里完全看不出来 —— 所以这里自动记下来。"
         )
 
     warn_block = ""
@@ -182,25 +185,14 @@ def build_readme(per_gamma: list[dict], prov: dict, who: str, ts: str,
 
     raw = "大产物没提交（见 `exchange/README.md`）。\n\n"
     if zip_path:
+        size = zip_path.stat().st_size / 1048576
         raw += (f"- 文件: 3 × `result.json`（带 `--dump_passages`）\n"
-                f"- 已打包: `{zip_path}`\n"
-                f"- 是否已发出: <TODO: 是，微信 YYYY-MM-DD / 否>\n")
+                f"- 已打包: `{zip_path}` ({size:.1f} MB)，需要时单独发\n")
     else:
-        raw += "- <TODO: 哪些文件、多大、在哪、是否已发出>\n"
+        raw += "- 未打包（`--no-zip`）\n"
 
     return f"""# Phase 1 诊断（4 个 idea 前提验证）— {who}, {start} 北京时间
 {warn_block}
-## 这轮想回答什么问题
-
-<TODO: 写具体问题。例：四个 idea 的前提假设各自成不成立？这轮和上一趟差在哪？>
-
-**填清楚这栏，自己就能发现「我这轮答不了哪个问题」。**
-2026-07-27 那趟加了 `--skip_generation`，idea 1 的判据当场就缺了一半。
-
-## 一句话结论
-
-<TODO: 一句话>
-
 ## 跑了什么
 
 - **配置**: `phase1_diagnosis.yaml`，{cfg.get('max_samples')} 题 × {len(per_gamma)} 个 γ \
@@ -212,7 +204,6 @@ def build_readme(per_gamma: list[dict], prov: dict, who: str, ts: str,
 共 {fmt_duration(total)}
 - **检索**: {m0.get('n_samples')} 题中 {m0.get('n_with_gold')} 题命中 gold\
 （{m0.get('n_retrieval_failure')} 题检索阶段失败）
-- **改动**: <TODO: 手改过 yaml / 脚本吗？改了什么？没改写「无」>
 
 ## 结果
 
@@ -221,18 +212,6 @@ def build_readme(per_gamma: list[dict], prov: dict, who: str, ts: str,
 ## 诊断报告
 
 {reports or '(没有报告文件被收集到 —— run_all_diagnosis.sh 跑了吗？)'}
-
-## 结论可信度
-
-<TODO: 逐条写哪些能用、哪些不能。这栏比数字重要。>
-
-- ✅ <能用 + 为什么能用>
-- ⚠️ <有保留 + 什么条件下才成立>
-- ❌ <不能用 + 缺什么>
-
-## 遇到的问题
-
-<TODO: 报错、超时、产出看着不对的地方。没有就写「无」>
 
 ## 环境
 
@@ -316,33 +295,21 @@ def main() -> int:
 
     (dest / "README.md").write_text(
         build_readme(per_gamma, prov, who, ts, warnings, copied, zip_path))
-    print("✅ README.md 已填好机械部分")
+    print("✅ README.md 已生成")
 
-    if append_round_row(exchange_root / EXPERIMENT / "README.md", ts, who,
-                        "<TODO: ✅ 有效 / ⚠️ 部分作废 / ❌ 作废>"):
+    if append_round_row(exchange_root / EXPERIMENT / "README.md", ts, who):
         print("✅ 趟次表已加一行")
 
     rel = dest.relative_to(repo)
-    subprocess.run(["git", "add", str(rel),
-                    str((exchange_root / EXPERIMENT / "README.md").relative_to(repo))],
+    readme_rel = (exchange_root / EXPERIMENT / "README.md").relative_to(repo)
+    subprocess.run(["git", "add", str(rel), str(readme_rel)], cwd=repo)
+    subprocess.run(["git", "commit", "-q", "-m", f"exchange: P1 诊断 {ts}"],
                    cwd=repo)
+    print(f"✅ 已提交: exchange: P1 诊断 {ts}")
 
-    todos = find_todos([dest / "README.md",
-                        exchange_root / EXPERIMENT / "README.md"])
-    print()
-    if todos:
-        print(f"⚠️  还有 {len(todos)} 处 <TODO> 要你填：")
-        for p, n, line in todos:
-            print(f"   {p.relative_to(repo)}:{n}  {line[:72]}")
-        print()
-        print("这几栏没法自动生成 —— 特别是「结论可信度」，那是整份交付里最有用的一栏。")
-        print("填完再提交：")
-    else:
-        print("✅ 没有 TODO 残留，可以提交：")
-
-    print(f"\n  git commit -m \"exchange: P1 诊断 {ts}\"")
-    print("  git push\n")
-    print("（已 git add，没有自动 commit —— 带着 <TODO> 推上去比不推更糟）")
+    print("\n推上去：\n  git push\n")
+    if zip_path:
+        print(f"那份原始数据需要时单独发：{zip_path}")
     return 0
 
 

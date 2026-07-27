@@ -50,13 +50,12 @@ cp -r exchange/_TEMPLATE_EXPERIMENT exchange/kv_balanced_rerun
 
 **新趟次**（已有的实验又跑了一次）：
 
-有收集脚本的走脚本 —— 它会自己算时间戳、拷文件、填好 README 里机械的部分，
+有收集脚本的走脚本 —— 它会自己算时间戳、拷文件、从产物生成 README、提交，
 并在缺 F1 / 实验未成功时**拒绝收集**：
 
 ```bash
 python scripts/collab/collect_p1_results.py     # P1 诊断
-# 填完 README 里的 <TODO>，然后
-git commit -m "exchange: P1 诊断 <时间戳>" && git push
+git push
 ```
 
 没收集脚本的线（比如 KV）手建：
@@ -67,10 +66,13 @@ cp -r exchange/_TEMPLATE exchange/kv_balanced_rerun/$TS
 # 拷文件、填 README、到趟次表加一行
 ```
 
-收集脚本做的事不是省打字，是**把来源核验从可选变成强制**。
-2026-07-27 那趟的两个问题 —— 手改 yaml 加了 `--skip_generation`、两个诊断脚本是旧版
-—— **在四份报告里完全看不见**，是事后翻 `status.json` 的 `command` 字段、
-比对报告标题才挖出来的。
+README 里只写**从产物里读得出来的东西**，不让跑实验的人写结论和保留意见 ——
+那些看完报告聊一下就清楚了，模板退而求其次只会出填充文字。
+
+收集脚本真正的价值在门禁：2026-07-27 那趟的两个问题 —— 手改 yaml 加了
+`--skip_generation`、两个诊断脚本是旧版 —— **在四份报告里完全看不见**，
+是事后翻 `status.json` 的 `command` 字段、比对报告标题才挖出来的。
+现在缺 F1 直接拒绝收集，工作区不干净自动记进 README。
 
 ## 命名与时区
 

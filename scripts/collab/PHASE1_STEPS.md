@@ -108,34 +108,27 @@ bash scripts/diagnosis/run_all_diagnosis.sh
 
 ```bash
 python scripts/collab/collect_p1_results.py
-```
-
-它自动做这些：
-
-- 从 `status.json` 的 `start_time` 算出趟次时间戳（**不用你手记**）
-- 建 `exchange/p1_diagnosis/<时间戳>/`，拷进可提交的部分
-- README 里机械的部分全填好（指标表、耗时、真实命令、git HEAD、GPU）
-- 趟次表加一行
-- 原始 `result.json` 打包到 `~/P1_<时间戳>.zip`（这个单独发我）
-- `git add`，但**不自动 commit**
-
-然后把 README 里的 `<TODO>` 填完 —— 那几栏靠判断，自动生成不了，
-**尤其「结论可信度」是整份交付里最有用的一栏**。脚本会列出还剩哪几处。
-
-填完提交：
-
-```bash
-git commit -m "exchange: P1 诊断 <时间戳>"
 git push
 ```
+
+第一条命令自动做完这些：
+
+- 从 `status.json` 的 `start_time` 算出趟次时间戳（不用你手记）
+- 建 `exchange/p1_diagnosis/<时间戳>/`，拷进可提交的部分
+- 生成 README（指标表、耗时、检索命中数、真实命令、git HEAD、GPU）
+- 趟次表加一行
+- 原始 `result.json` 打包到 `~/P1_<时间戳>.zip`（需要时单独发）
+- `git add` + `git commit`
+
+完事。结论和疑问我看完报告直接问你，不用你写。
 
 **两种会直接拒绝收集的情况**（都是 2026-07-27 那趟踩过的）：
 
 - **带了 `--skip_generation` 或 `mean_f1` 缺失** —— idea 1 就是靠 F1 判的，缺了整趟白跑。
-  确实要收这种结果才加 `--allow-no-f1`。
+  确实要收这种结果才加 `--allow-no-f1`，但**先告诉我**。
 - **有实验 `status != success`** —— 跑挂的实验不该产出交付物。
 
-工作区不干净不会拒绝，但会**把改动列进 README**。请在「改动」栏说明原因 ——
+工作区不干净不会拒绝，但会把改动文件列进 README 的环境栏 ——
 上一趟的两个问题（手改 yaml、旧版脚本）在四份报告里完全看不见。
 
 ---
