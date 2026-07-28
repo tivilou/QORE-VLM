@@ -40,7 +40,7 @@ import sys
 import zipfile
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "lib"))
 
 from collect_lib import (  # noqa: E402
     CollectError, append_round_row, fmt_duration, git_provenance,

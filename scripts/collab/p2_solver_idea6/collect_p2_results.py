@@ -22,7 +22,7 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "lib"))
 
 from collect_lib import (
     CollectError, fmt_duration, git_provenance, gpu_info, load_json,

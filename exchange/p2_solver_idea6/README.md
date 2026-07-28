@@ -7,23 +7,10 @@
 
 ## 实验配置
 
-### Solver 修复验证
-
-```bash
-# 修复后的 baseline（delta=0.0，即无互补项）
-python -m scripts.rag.eval_rag_refactored \
-  --corpus_mode aligned \
-  --dataset nq_open \
-  --max_samples 200 \
-  --method qore \
-  --K 5 \
-  --gamma 0.5 \
-  --delta 0.0 \
-  --lam 2.0 \
-  --seed 42 \
-  --output_dir exchange/p2_solver_idea6/YYYYMMDDTHHMMSS \
-  --output_file result.json
-```
+### Baseline（solver fix only）
+- **gamma**: 0.5
+- **delta**: 0.0（无互补项）
+- **用途**: 验证 solver 修复效果
 
 ### Idea 6 调参网格
 
@@ -34,55 +21,41 @@ gamma × delta:
 
 共 9 组 + 1 组 baseline (delta=0.0) = 10 组配置
 
-```bash
-for gamma in 0.3 0.5 0.7; do
-  for delta in 0.1 0.3 0.5; do
-    python -m scripts.rag.eval_rag_refactored \
-      --corpus_mode aligned \
-      --dataset nq_open \
-      --max_samples 200 \
-      --method qore \
-      --K 5 \
-      --gamma $gamma \
-      --delta $delta \
-      --complementarity_method dpr \
-      --use_answer_scorer \
-      --lam 2.0 \
-      --seed 42 \
-      --output_dir exchange/p2_solver_idea6/YYYYMMDDTHHMMSS \
-      --output_file result.json
-  done
-done
-```
+### 共同配置
+- **数据集**: NQ-open aligned corpus
+- **样本数**: 200
+- **方法**: qore
+- **K**: 5
+- **λ**: 2.0
+- **种子**: 42
 
 ## 评测指标
 
 对比 baseline（MMR 冗余 0.796、F1 47.15%）：
 
-- **主目标**：冗余度显著 < 0.796
-- **约束**：F1 ≥ 47.15%、Recall@5 不低于 baseline
-- **次要**：Precision、EM
+- **主目标**: 冗余度显著 < 0.796
+- **约束**: F1 ≥ 47.15%、Recall@5 不低于 baseline
+- **次要**: Precision、EM
 
-## 提交要求
+## 提交结果格式
 
-每趟实验建一个 `YYYYMMDDTHHMMSS/` 目录（北京时间，取第一个实验的 start_time），包含：
+每趟实验建一个 `YYYYMMDDTHHMMSS/` 目录（北京时间），包含：
 
 ```
 YYYYMMDDTHHMMSS/
-├── README.md          # 用 scripts/collab/collect_p2_results.py 生成（需新建脚本）
-├── config/
-│   └── *.yaml         # 配置文件
-├── meta/
-│   └── git_state.txt  # git log -1, git diff, git status
-└── analysis/          # （可选）人工分析、可视化
+├── README.md                 # 自动生成（结果表格 + 最佳配置）
+├── meta/git_state.txt        # Git 状态
+├── gamma0.5_delta0.0/        # Baseline 配置目录
+├── gamma0.3_delta0.1/        # Idea 6 配置目录（9 组）
+├── ...
+└── results_<timestamp>.zip   # 所有 result.json 打包
 ```
 
 **不提交的大文件**（已在 .gitignore）：
-- result.json（4.1 MB/个）
-- *.zip
+- result.json（~4.1 MB/个）
 - *.samples.json
 
-## 外部依赖确认
+## 外部依赖
 
 - [ ] `eval_rag_refactored.py` 支持 `--delta` 和 `--complementarity_method` 参数
 - [ ] `--use_answer_scorer` 的 DPR 模型路径配置正确
@@ -90,12 +63,33 @@ YYYYMMDDTHHMMSS/
 
 ## 已知限制
 
-1. **DPR 成对打分成本**：N=12 时每题 66 次 scorer 前向，200 题共 13.2k 次，按 batch_size=16 约 825 次前向
-2. **Prefilter M>20 会 fallback anneal**：建议保持默认 M=15
+1. **DPR 成对打分成本**: N=12 时每题 66 次 scorer 前向，200 题共 13.2k 次，按 batch_size=16 约 825 次前向
+2. **Prefilter M>20 会 fallback anneal**: 建议保持默认 M=15
 3. **Complementarity 只在 qore 方法下工作**
+
+## 如何运行实验
+
+详见 `scripts/collab/p2_solver_idea6/README.md`（工作流程说明）。
+
+简要流程：
+```bash
+# 1. 进入脚本目录
+cd scripts/collab/p2_solver_idea6
+
+# 2. 运行实验
+bash run_p2_experiments.sh
+
+# 3. 汇总结果
+python collect_p2_results.py <timestamp>
+
+# 4. 提交
+git add ../../exchange/p2_solver_idea6/<timestamp>
+git commit && git push
+```
 
 ## 相关文档
 
-- 实现细节：`.ai-progress/workstreams/rag-selector/sessions/20260728T060000Z-solver-idea6.md`（gitignore，本地可见）
-- Idea 6 塌缩警告：`.ai-progress/.../refs/p2-plan-inputs-20260728.md` 第 3 节
-- Commit: `61cc37d` feat(rag): solver fix + idea 6 complementarity matrix
+- **工作流程**: `scripts/collab/p2_solver_idea6/README.md`（给执行者看）
+- **实现细节**: `.ai-progress/workstreams/rag-selector/sessions/20260728T060000Z-solver-idea6.md`（gitignore，本地可见）
+- **Idea 6 塌缩警告**: `.ai-progress/.../refs/p2-plan-inputs-20260728.md` 第 3 节
+- **Commit**: `61cc37d` feat(rag): solver fix + idea 6 complementarity matrix
