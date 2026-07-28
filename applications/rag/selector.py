@@ -73,6 +73,11 @@ def select_passages(
     redundancy_method: str = "cosine",
     lam: float = 2.0,
     gamma: float | None = None,
+    delta: float = 0.0,
+    complementarity_method: str | None = None,
+    answer_scorer=None,
+    passage_texts: list[str] | None = None,
+    question: str | None = None,
     num_reads: int = 50,
     lambda_mmr: float = 0.5,
     seed: int | None = None,
@@ -102,6 +107,14 @@ def select_passages(
         lam: QUBO penalty weight (only for method="qore"/"vqc").
         gamma: QUBO redundancy weight (only for method="qore"/"vqc"). If None,
             auto-tunes to 1.0.
+        delta: Complementarity weight (only for method="qore" with complementarity_method set).
+            Positive delta rewards selecting complementary passage pairs.
+        complementarity_method: How to compute complementarity c_ij (only for method="qore").
+            None (default): no complementarity term, w = gamma * b (standard QUBO).
+            "dpr": use DPR answer scorer pairwise signals (requires answer_scorer, passage_texts, question).
+        answer_scorer: Instance with score_passages(question, texts) method (required when complementarity_method="dpr").
+        passage_texts: List of N passage strings (required when complementarity_method="dpr").
+        question: Query string (required when complementarity_method="dpr").
         num_reads: SA reads (only for method="qore"/"vqc").
         lambda_mmr: MMR trade-off (only for method="mmr").
         seed: Random seed for reproducibility.
@@ -113,9 +126,6 @@ def select_passages(
             (only for method="qore"/"vqc"). If None, defaults to max(K*3, 15).
             Smaller values (e.g., 15-20) reduce the risk of QORE selecting
             low-relevance passages. Larger values give more diversity headroom.
-        vqc_encoder: Pre-trained VQCEncoder instance (only for method="vqc").
-            If None, a fresh (untrained) encoder is created.
-        vqc_backend: Quantum backend for VQC (only for method="vqc").
         vqc_encoder: Pre-trained VQCEncoder instance (only for method="vqc").
             If None, a fresh (untrained) encoder is created.
         vqc_backend: Quantum backend for VQC (only for method="vqc").
@@ -165,12 +175,37 @@ def select_passages(
         if seed is not None:
             kwargs["seed"] = seed
 
+        # Build pairwise interaction matrix w
+        # w = gamma * b (redundancy penalty) - delta * c (complementarity reward)
+        use_complementarity = complementarity_method is not None and delta != 0.0
+
         if N <= direct_solve_max_n:
             # PURE path (roadmap §4.3): N is small enough to solve the full QUBO
-            # directly — no prefilter, no approximation. This is RAG's "clean"
-            # demonstration that global QUBO selection beats greedy top-K/MMR.
+            # directly with brute-force enumeration — no prefilter, exact solution.
+            # This is RAG's "clean" demonstration that global QUBO selection beats
+            # greedy top-K/MMR.
             b = passage_redundancy(passage_embeddings, method=redundancy_method)
-            x = qore_solve(a, b, K, lam=lam, gamma=gamma, method="anneal", **kwargs)
+
+            if use_complementarity:
+                if complementarity_method == "dpr":
+                    if answer_scorer is None or passage_texts is None or question is None:
+                        raise ValueError("complementarity_method='dpr' requires answer_scorer, passage_texts, and question")
+                    from .signals_rag import passage_complementarity_dpr
+                    c = passage_complementarity_dpr(question, passage_texts, answer_scorer)
+                else:
+                    raise ValueError(f"Unknown complementarity_method: {complementarity_method}")
+
+                # w = gamma * b - delta * c
+                gamma_eff = 1.0 if gamma is None else gamma
+                w = gamma_eff * b - delta * c
+
+                from qore.qubo import build_qubo_matrix_from_w
+                from qore.solvers.brute import solve as brute_solve
+                Q = build_qubo_matrix_from_w(a, w, K, lam=lam)
+                x = brute_solve(Q, K)
+            else:
+                x = qore_solve(a, b, K, lam=lam, gamma=gamma, method="brute", **kwargs)
+
             if diagnostics is not None:
                 _record_qubo_diagnostics(
                     diagnostics, a=a, b=b, x=x, K=K, lam=lam, gamma=gamma,
@@ -193,7 +228,36 @@ def select_passages(
         embeddings_filtered = passage_embeddings[prefilter_idx]
         b = passage_redundancy(embeddings_filtered, method=redundancy_method)
 
-        x = qore_solve(a_filtered, b, K, lam=lam, gamma=gamma, method="anneal", **kwargs)
+        if use_complementarity:
+            if complementarity_method == "dpr":
+                if answer_scorer is None or passage_texts is None or question is None:
+                    raise ValueError("complementarity_method='dpr' requires answer_scorer, passage_texts, and question")
+                from .signals_rag import passage_complementarity_dpr
+                # Only compute complementarity for filtered passages
+                texts_filtered = [passage_texts[i] for i in prefilter_idx]
+                c = passage_complementarity_dpr(question, texts_filtered, answer_scorer)
+            else:
+                raise ValueError(f"Unknown complementarity_method: {complementarity_method}")
+
+            gamma_eff = 1.0 if gamma is None else gamma
+            w = gamma_eff * b - delta * c
+
+            from qore.qubo import build_qubo_matrix_from_w
+            Q = build_qubo_matrix_from_w(a_filtered, w, K, lam=lam)
+
+            # Guard: brute solver caps at N≤20; if M>20, fall back to anneal
+            M_actual = len(a_filtered)
+            if M_actual <= 20:
+                from qore.solvers.brute import solve as brute_solve
+                x = brute_solve(Q, K)
+            else:
+                from qore.solvers.anneal import solve as anneal_solve
+                x = anneal_solve(Q, K, **kwargs)
+        else:
+            # Guard: brute solver caps at N≤20; if M>20, fall back to anneal
+            M_actual = len(a_filtered)
+            solver_method = "brute" if M_actual <= 20 else "anneal"
+            x = qore_solve(a_filtered, b, K, lam=lam, gamma=gamma, method=solver_method, **kwargs)
 
         if diagnostics is not None:
             # Note: the QUBO was solved on the M-item pool, not all N candidates.

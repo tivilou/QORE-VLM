@@ -105,3 +105,47 @@ def retriever_scores_to_quality(
         a = alpha * a + (1 - alpha) * embed_rel
 
     return normalize(a)
+
+
+def passage_complementarity_dpr(
+    question: str,
+    passages: list[str],
+    answer_scorer,
+) -> np.ndarray:
+    """
+    Compute pairwise complementarity using DPR answer scorer.
+
+    Complementarity measures whether two passages together provide more
+    answer support than either alone. High complementarity means the pair
+    covers different aspects of the answer.
+
+    Args:
+        question: The query string.
+        passages: List of N passage texts.
+        answer_scorer: Instance with score_passages(question, texts) method.
+
+    Returns:
+        c: (N, N) symmetric complementarity matrix with zero diagonal.
+           c_ij = s(q, [p_i, p_j]) - max(s(q, p_i), s(q, p_j))
+           Positive c_ij means the pair is complementary (selecting both helps).
+           Negative c_ij means redundancy (one subsumes the other).
+    """
+    N = len(passages)
+    c = np.zeros((N, N), dtype=np.float64)
+
+    # Single-passage scores
+    single_scores = answer_scorer.score_passages(question, passages)
+
+    # Pairwise scores
+    for i in range(N):
+        for j in range(i + 1, N):
+            # Concatenate passages (order shouldn't matter much, but use consistent order)
+            pair_text = passages[i] + " " + passages[j]
+            pair_score = answer_scorer.score_passages(question, [pair_text])[0]
+
+            # Complementarity = joint score - max individual score
+            c_ij = pair_score - max(single_scores[i], single_scores[j])
+            c[i, j] = c_ij
+            c[j, i] = c_ij  # Symmetric
+
+    return c

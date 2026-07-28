@@ -75,6 +75,59 @@ def build_qubo_matrix(
     return Q
 
 
+def build_qubo_matrix_from_w(
+    a: np.ndarray,
+    w: np.ndarray,
+    K: int,
+    lam: float = 2.0,
+) -> np.ndarray:
+    """
+    Build a QUBO matrix Q with a custom pairwise interaction matrix w.
+
+    The objective being encoded:
+        E(x) = -sum_i a_i x_i + sum_{i<j} w_ij x_i x_j + lam*(sum_i x_i - K)^2
+
+    This generalizes build_qubo_matrix by allowing w_ij to be arbitrary
+    (not restricted to gamma * b_ij). Use this when:
+      - Learning pairwise terms from F1-labeled subsets
+      - Combining redundancy penalty with complementarity reward
+      - Using answer-scorer-based pairwise signals
+
+    Args:
+        a: (N,) quality scores. Higher means more important to keep.
+        w: (N, N) symmetric pairwise interaction matrix with zero diagonal.
+            Positive w_ij penalizes selecting both i and j (redundancy).
+            Negative w_ij rewards selecting both i and j (complementarity).
+        K: Budget — number of items to select.
+        lam: Penalty weight for the cardinality constraint.
+
+    Returns:
+        Q: (N, N) upper-triangular QUBO matrix.
+
+    Note:
+        When w = gamma * b, this is equivalent to build_qubo_matrix(a, b, K, lam, gamma).
+    """
+    a = np.asarray(a, dtype=np.float64)
+    w = np.asarray(w, dtype=np.float64)
+    N = len(a)
+
+    if w.shape != (N, N):
+        raise ValueError(f"w must be (N, N)={(N, N)}, got {w.shape}")
+    if K < 1 or K > N - 1:
+        raise ValueError(f"K must be in [1, N-1], got K={K}, N={N}")
+
+    Q = np.zeros((N, N), dtype=np.float64)
+
+    # Diagonal terms
+    Q[np.diag_indices(N)] = -a + lam * (1 - 2 * K)
+
+    # Off-diagonal terms (upper triangle only)
+    upper_mask = np.triu_indices(N, k=1)
+    Q[upper_mask] = w[upper_mask] + 2 * lam
+
+    return Q
+
+
 def energy(x: np.ndarray, Q: np.ndarray) -> float:
     """
     Compute the QUBO energy for a binary solution vector.
