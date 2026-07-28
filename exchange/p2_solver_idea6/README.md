@@ -71,18 +71,15 @@ YYYYMMDDTHHMMSS/
 
 详见 `scripts/collab/p2_solver_idea6/README.md`（工作流程说明）。
 
-简要流程：
+简要流程（3 步）：
 ```bash
 # 1. 进入脚本目录
 cd scripts/collab/p2_solver_idea6
 
-# 2. 运行实验
+# 2. 运行实验（自动汇总）
 bash run_p2_experiments.sh
 
-# 3. 汇总结果
-python collect_p2_results.py <timestamp>
-
-# 4. 提交
+# 3. 提交
 git add ../../exchange/p2_solver_idea6/<timestamp>
 git commit && git push
 ```

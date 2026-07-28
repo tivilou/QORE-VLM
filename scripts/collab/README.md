@@ -26,13 +26,10 @@ cd scripts/collab/p2_solver_idea6  # 例如 P2
 
 # 2. 阅读 README.md，了解实验配置和依赖
 
-# 3. 运行实验
+# 3. 运行实验（自动汇总）
 bash run_p2_experiments.sh
 
-# 4. 汇总结果（<timestamp> 由第3步输出）
-python collect_p2_results.py <timestamp>
-
-# 5. 提交到 GitHub
+# 4. 提交到 GitHub
 git add ../../exchange/p2_solver_idea6/<timestamp>
 git commit -m "experiment(p2): solver+idea6 results <timestamp>"
 git push

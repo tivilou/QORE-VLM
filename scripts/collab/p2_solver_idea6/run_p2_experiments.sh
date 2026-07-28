@@ -117,10 +117,29 @@ echo "✓ 所有实验完成！"
 echo "批次时间戳: $TIMESTAMP"
 echo "结果目录: $OUTPUT_BASE/$TIMESTAMP/"
 echo ""
-echo "下一步："
-echo "  1. 运行汇总脚本: python scripts/collab/collect_p2_results.py $TIMESTAMP"
-echo "  2. 检查生成的 README.md"
-echo "  3. git add exchange/p2_solver_idea6/$TIMESTAMP/"
-echo "  4. git commit -m 'experiment: p2 solver+idea6 results $TIMESTAMP'"
-echo "  5. git push"
+echo "正在汇总结果..."
 echo "=========================================="
+echo
+
+# 自动运行汇总脚本
+python "$SCRIPT_DIR/collect_p2_results.py" "$TIMESTAMP"
+
+if [ $? -eq 0 ]; then
+    echo
+    echo "=========================================="
+    echo "✓ 实验和汇总全部完成！"
+    echo ""
+    echo "下一步："
+    echo "  1. 查看结果: cat $OUTPUT_BASE/$TIMESTAMP/README.md"
+    echo "  2. git add exchange/p2_solver_idea6/$TIMESTAMP/"
+    echo "  3. git commit -m 'experiment(p2): solver+idea6 results $TIMESTAMP'"
+    echo "  4. git push"
+    echo "=========================================="
+else
+    echo
+    echo "=========================================="
+    echo "✗ 汇总失败，请检查错误信息"
+    echo "可手动重试: python scripts/collab/p2_solver_idea6/collect_p2_results.py $TIMESTAMP"
+    echo "=========================================="
+    exit 1
+fi

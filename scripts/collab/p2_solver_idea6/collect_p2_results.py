@@ -212,12 +212,26 @@ def package_results(round_dir: Path, timestamp: str):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("timestamp", help="实验批次时间戳 (YYYYMMDDTHHMMSS)")
+    parser.add_argument("timestamp", nargs="?", help="实验批次时间戳 (YYYYMMDDTHHMMSS)，省略则自动使用最新")
     parser.add_argument("--who", default="Q", help="提交者名字（默认: Q）")
     args = parser.parse_args()
 
     repo = Path(__file__).resolve().parent.parent.parent
     exchange_base = repo / "exchange" / EXPERIMENT
+
+    # 如果没有提供时间戳，自动找最新的
+    if args.timestamp is None:
+        rounds = sorted([
+            d.name for d in exchange_base.iterdir()
+            if d.is_dir() and d.name[0].isdigit() and len(d.name) == 15
+        ])
+        if not rounds:
+            print(f"ERROR: 在 {exchange_base} 下没有找到任何时间戳目录")
+            print(f"  先运行 run_p2_experiments.sh")
+            sys.exit(1)
+        args.timestamp = rounds[-1]
+        print(f">>> 自动选择最新批次: {args.timestamp}\n")
+
     round_dir = exchange_base / args.timestamp
 
     if not round_dir.exists():

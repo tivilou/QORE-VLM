@@ -6,35 +6,38 @@
 2. **调参 idea 6 互补性矩阵** — gamma × delta 网格搜索
 3. **优化目标** — 冗余度 < baseline 且 F1/Recall ≥ baseline（多目标）
 
-## 工作流程（4 步）
+## 工作流程（3 步）
 
 ### 1. 拉取最新代码
 ```bash
 git pull origin main
 ```
 
-### 2. 运行实验
+### 2. 运行实验（自动汇总）
 ```bash
 cd scripts/collab/p2_solver_idea6
 bash run_p2_experiments.sh
 ```
 - 自动跑 10 组配置（1 baseline + 9 idea6 grid）
 - 每组 ~200 样本，总耗时约数小时
-- **记下输出的时间戳**（如 `20260728T120000`）
+- **完成后自动汇总结果**，无需手动操作
 
-### 3. 汇总结果
+### 3. 提交到 GitHub
 ```bash
-python collect_p2_results.py <timestamp>
-```
-- 验证 10 个 result.json 完整性
-- 生成 README.md（结果表格 + 最佳配置）
-- 打包到 `../../exchange/p2_solver_idea6/<timestamp>/`
+# 查看生成的结果摘要
+cat ../../exchange/p2_solver_idea6/<timestamp>/README.md
 
-### 4. 提交到 GitHub
-```bash
+# 提交（<timestamp> 在上一步输出中显示）
 git add ../../exchange/p2_solver_idea6/<timestamp>/
 git commit -m "experiment(p2): solver+idea6 results <timestamp>"
 git push
+```
+
+**提示**: 如果需要单独重新汇总（如手动修改了某个结果），可运行：
+```bash
+python collect_p2_results.py  # 不传参数，自动使用最新批次
+# 或
+python collect_p2_results.py <timestamp>  # 指定批次
 ```
 
 ## 实验配置
