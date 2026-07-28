@@ -130,6 +130,14 @@ def parse_args():
                         "Increase only for small-N demos.")
     p.add_argument("--lambda_mmr", type=float, default=0.7,
                    help="MMR lambda (1=relevance, 0=diversity)")
+    p.add_argument("--delta", type=float, default=0.0,
+                   help="Complementarity weight (only for method=qore with complementarity_method set). "
+                        "Positive delta rewards selecting complementary passage pairs.")
+    p.add_argument("--complementarity_method", type=str, default=None,
+                   choices=["dpr", None],
+                   help="How to compute complementarity c_ij (only for method=qore). "
+                        "None (default): no complementarity term. "
+                        "'dpr': use DPR answer scorer pairwise signals (requires --use_answer_scorer).")
 
     # Answer scoring (optimization)
     p.add_argument("--use_answer_scorer", action="store_true",
@@ -299,6 +307,16 @@ def main():
                     retrieved_texts = [corpus.passages[idx] for idx in retrieved_idx]
             retrieval_scores = answer_scorer.score_passages(question, retrieved_texts)
 
+        # Ensure retrieved_texts is available if complementarity_method='dpr'
+        if args.complementarity_method == 'dpr' and retrieved_texts is None:
+            if args.corpus_mode == "precomputed":
+                retrieved_texts = [candidates[idx]["text"] for idx in retrieved_idx]
+            elif args.corpus_mode == "wiki_dpr":
+                # retrieved_texts already set above
+                pass
+            else:
+                retrieved_texts = [corpus.passages[idx] for idx in retrieved_idx]
+
         # Select.
         # qubo_diag captures what the solver ACTUALLY optimized (normalized
         # quality vector, cosine redundancy matrix, decomposed energy). The
@@ -317,6 +335,11 @@ def main():
             num_reads=args.num_reads,
             lam=args.lam,
             gamma=args.gamma,
+            delta=args.delta,
+            complementarity_method=args.complementarity_method,
+            answer_scorer=answer_scorer if args.complementarity_method == 'dpr' else None,
+            passage_texts=retrieved_texts if args.complementarity_method == 'dpr' else None,
+            question=question if args.complementarity_method == 'dpr' else None,
             lambda_mmr=args.lambda_mmr,
             seed=args.seed,
             relevance_scores=retrieval_scores,

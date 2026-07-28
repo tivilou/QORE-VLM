@@ -5,8 +5,11 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
 cd "$REPO_ROOT"
+
+# 设置 PYTHONPATH 使 Python 能找到 scripts 模块
+export PYTHONPATH="$REPO_ROOT:$PYTHONPATH"
 
 # 配置
 CORPUS_MODE="aligned"
