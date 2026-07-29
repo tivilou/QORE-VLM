@@ -265,7 +265,18 @@ def main():
 
     # Git 状态
     print("\n>>> 收集 Git 状态...")
-    git_state = git_provenance(repo)
+    git_info = git_provenance(repo)
+
+    # Format git state as string
+    git_state_lines = [f"HEAD: {git_info['head']}"]
+    if git_info['dirty']:
+        git_state_lines.append("\n⚠️  Working tree is dirty:")
+        for line in git_info['status_lines']:
+            git_state_lines.append(f"  {line}")
+    else:
+        git_state_lines.append("Working tree: clean")
+    git_state = "\n".join(git_state_lines)
+
     (round_dir / "meta").mkdir(parents=True, exist_ok=True)
     (round_dir / "meta" / "git_state.txt").write_text(git_state)
     print("✓ 写入 meta/git_state.txt")
