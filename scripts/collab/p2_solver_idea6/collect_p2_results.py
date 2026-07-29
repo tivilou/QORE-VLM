@@ -216,7 +216,12 @@ def main():
     parser.add_argument("--who", default="Q", help="提交者名字（默认: Q）")
     args = parser.parse_args()
 
-    repo = Path(__file__).resolve().parent.parent.parent
+    # Use git to find repo root (robust across different script locations)
+    repo = Path(subprocess.check_output(
+        ["git", "rev-parse", "--show-toplevel"],
+        cwd=Path(__file__).parent,
+        text=True
+    ).strip())
     exchange_base = repo / "exchange" / EXPERIMENT
 
     # 如果没有提供时间戳，自动找最新的
