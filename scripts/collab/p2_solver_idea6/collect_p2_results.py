@@ -266,7 +266,7 @@ def main():
     # Git 状态
     print("\n>>> 收集 Git 状态...")
     git_state = git_provenance(repo)
-    (round_dir / "meta").mkdir(exist_ok=True)
+    (round_dir / "meta").mkdir(parents=True, exist_ok=True)
     (round_dir / "meta" / "git_state.txt").write_text(git_state)
     print("✓ 写入 meta/git_state.txt")
 
