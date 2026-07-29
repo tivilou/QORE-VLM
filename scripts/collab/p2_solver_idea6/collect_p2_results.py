@@ -206,14 +206,14 @@ def generate_readme(
     return "\n".join(lines)
 
 
-def package_results(round_dir: Path, timestamp: str):
+def package_results(round_dir: Path, timestamp: str, repo: Path):
     """Package all result.json files into a zip."""
     zip_path = round_dir / f"results_{timestamp}.zip"
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
         for result_file in round_dir.rglob("result.json"):
             rel_path = result_file.relative_to(round_dir)
             zf.write(result_file, arcname=rel_path)
-    print(f"✓ 打包结果到 {zip_path.relative_to(Path.cwd())}")
+    print(f"✓ 打包结果到 {zip_path.relative_to(repo)}")
 
 
 def main():
@@ -289,7 +289,7 @@ def main():
 
     # 打包结果
     print("\n>>> 打包 result.json...")
-    package_results(round_dir, args.timestamp)
+    package_results(round_dir, args.timestamp, repo)
 
     # 完成
     print("\n" + "=" * 60)
