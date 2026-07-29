@@ -1,0 +1,9 @@
+HEAD: e5230c0 fix(collab): use repo root for relative path in package_results
+
+⚠️  Working tree is dirty:
+  M scripts/rag/eval_rag_refactored.py
+   M scripts/rag/eval_suite.py
+  ?? docs/rag_e2e_10_30_analysis.md
+  ?? docs/rag_e2e_200_result_analysis.md
+  ?? models/
+  ?? scripts/diagnosis/result_adapter.py
