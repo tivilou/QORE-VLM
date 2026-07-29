@@ -57,7 +57,8 @@ gamma × delta:
 ```
 
 ### 共同配置
-- **数据集**: NQ-open aligned corpus
+- **数据集**: NQ-open
+- **Corpus 模式**: wiki_dpr (全量 21M Wikipedia)
 - **样本数**: 200
 - **方法**: qore
 - **K**: 5
@@ -116,47 +117,37 @@ exchange/p2_solver_idea6/<timestamp>/
 
 ## 故障排查
 
-### 问题 1: "--delta 参数不存在"
-```
-ERROR: eval_rag_refactored.py 不支持 --delta 参数
-```
-**解决**: 需要给 `scripts/rag/eval_rag_refactored.py` 添加 argparse 支持：
-```python
-parser.add_argument("--delta", type=float, default=0.0)
-parser.add_argument("--complementarity_method", type=str, default=None)
-```
+### 常见问题
+详见 `SETUP.md` 的故障排除部分，或查看项目级文档：
+- `../../../docs/rag/troubleshooting.md` - 全面的故障排查指南
 
-### 问题 2: 某组实验失败
-查看具体配置的输出目录，检查是否 OOM/模型未加载。
-
-### 问题 3: collect 报 "缺少 result.json"
-对应实验未完成，重跑那组配置。
-
-### 问题 4: 只想测试一组配置
-手动运行单个实验：
+### 快速检查
 ```bash
-python -m scripts.rag.eval_rag_refactored \
-  --corpus_mode aligned \
-  --dataset nq_open \
-  --max_samples 10 \
-  --method qore \
-  --K 5 \
-  --gamma 0.5 \
-  --delta 0.3 \
-  --complementarity_method dpr \
-  --use_answer_scorer \
-  --lam 2.0 \
-  --seed 42 \
-  --output_dir /tmp/test_p2 \
-  --output_file result.json
+# 1. 验证参数支持
+python -m scripts.rag.eval_rag_refactored --help | grep -E "delta|complementarity"
+
+# 2. 测试单个配置（10题）
+# 编辑 run_p2_experiments.sh，临时设置 MAX_SAMPLES=10
+
+# 3. 查看 CHANGELOG
+cat CHANGELOG.md
 ```
 
 ## 相关文档
 
-- 实现细节: `.ai-progress/workstreams/rag-selector/sessions/20260728T060000Z-solver-idea6.md`（gitignore，本地可见）
-- Exchange 说明: `../../exchange/p2_solver_idea6/README.md`（实验需求说明）
-- Idea 6 塌缩警告: `.ai-progress/.../refs/p2-plan-inputs-20260728.md` 第 3 节
-- Commit: `61cc37d` feat(rag): solver fix + idea 6 complementarity matrix
+### 本目录文档
+- `SETUP.md` - 详细设置指南（环境、依赖、验证）
+- `CHANGELOG.md` - 脚本修改历史
+- `docs/P2_FIX_REPORT.md` - 参数修复技术报告
+- `docs/ALIGNED_FIX_SUMMARY.md` - Aligned 模式修复说明
+
+### 项目文档
+- `../../../docs/rag/corpus_modes.md` - Corpus 模式技术指南
+- `../../../docs/rag/troubleshooting.md` - 常见问题排查
+
+### 实验结果
+- `../../../exchange/p2_solver_idea6/` - 实验结果目录
+- `../../../exchange/p2_solver_idea6/README.md` - 实验需求和结果总览
 
 ---
 

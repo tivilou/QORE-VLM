@@ -1,4 +1,4 @@
-# Phase 2: Solver Fix + Idea 6 Complementarity Matrix
+# Phase 2: Solver Fix + Idea 6 - Experiment Results
 
 ## 实验目标
 
@@ -22,7 +22,8 @@ gamma × delta:
 共 9 组 + 1 组 baseline (delta=0.0) = 10 组配置
 
 ### 共同配置
-- **数据集**: NQ-open aligned corpus
+- **数据集**: NQ-open
+- **Corpus 模式**: wiki_dpr (全量 21M Wikipedia)
 - **样本数**: 200
 - **方法**: qore
 - **K**: 5
@@ -37,9 +38,65 @@ gamma × delta:
 - **约束**: F1 ≥ 47.15%、Recall@5 不低于 baseline
 - **次要**: Precision、EM
 
-## 提交结果格式
+---
 
-每趟实验建一个 `YYYYMMDDTHHMMSS/` 目录（北京时间），包含：
+## 实验结果
+
+结果按时间戳组织，每个目录包含一趟完整的 10 组实验：
+
+```
+exchange/p2_solver_idea6/
+├── README.md                    # 本文件：实验说明
+├── 20260728T212216/             # 第一趟实验
+│   ├── README.md                # 自动生成的结果汇总
+│   ├── meta/git_state.txt
+│   └── ...
+├── 20260728T212432/             # 第二趟实验
+│   └── ...
+└── [更多时间戳目录]/
+```
+
+每趟实验的详细结果见对应时间戳目录下的 `README.md`。
+
+---
+
+## 如何运行新实验
+
+详见 `scripts/collab/p2_solver_idea6/README.md` 和 `SETUP.md`。
+
+简要流程：
+```bash
+# 1. 拉取最新代码
+git pull origin main
+
+# 2. 运行实验
+cd scripts/collab/p2_solver_idea6
+bash run_p2_experiments.sh
+
+# 3. 提交结果
+git add ../../exchange/p2_solver_idea6/<timestamp>/
+git commit -m "experiment(p2): solver+idea6 results <timestamp>"
+git push
+```
+
+---
+
+## 相关文档
+
+### 实验脚本
+- `scripts/collab/p2_solver_idea6/README.md` - 脚本使用说明
+- `scripts/collab/p2_solver_idea6/SETUP.md` - 详细设置指南
+- `scripts/collab/p2_solver_idea6/CHANGELOG.md` - 脚本修改历史
+
+### 技术文档
+- `docs/rag/corpus_modes.md` - Corpus 模式技术指南
+- `docs/rag/troubleshooting.md` - 常见问题排查
+
+---
+
+## 提交格式说明
+
+每趟实验自动生成一个时间戳目录（北京时间），包含：
 
 ```
 YYYYMMDDTHHMMSS/
@@ -54,39 +111,3 @@ YYYYMMDDTHHMMSS/
 **不提交的大文件**（已在 .gitignore）：
 - result.json（~4.1 MB/个）
 - *.samples.json
-
-## 外部依赖
-
-- [ ] `eval_rag_refactored.py` 支持 `--delta` 和 `--complementarity_method` 参数
-- [ ] `--use_answer_scorer` 的 DPR 模型路径配置正确
-- [ ] 计算资源：200 题 × 10 配置，每题 DPR 前向 ~66 次（N=12）
-
-## 已知限制
-
-1. **DPR 成对打分成本**: N=12 时每题 66 次 scorer 前向，200 题共 13.2k 次，按 batch_size=16 约 825 次前向
-2. **Prefilter M>20 会 fallback anneal**: 建议保持默认 M=15
-3. **Complementarity 只在 qore 方法下工作**
-
-## 如何运行实验
-
-详见 `scripts/collab/p2_solver_idea6/README.md`（工作流程说明）。
-
-简要流程（3 步）：
-```bash
-# 1. 进入脚本目录
-cd scripts/collab/p2_solver_idea6
-
-# 2. 运行实验（自动汇总）
-bash run_p2_experiments.sh
-
-# 3. 提交
-git add ../../exchange/p2_solver_idea6/<timestamp>
-git commit && git push
-```
-
-## 相关文档
-
-- **工作流程**: `scripts/collab/p2_solver_idea6/README.md`（给执行者看）
-- **实现细节**: `.ai-progress/workstreams/rag-selector/sessions/20260728T060000Z-solver-idea6.md`（gitignore，本地可见）
-- **Idea 6 塌缩警告**: `.ai-progress/.../refs/p2-plan-inputs-20260728.md` 第 3 节
-- **Commit**: `61cc37d` feat(rag): solver fix + idea 6 complementarity matrix
