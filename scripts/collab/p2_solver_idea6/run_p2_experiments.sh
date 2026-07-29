@@ -12,7 +12,7 @@ cd "$REPO_ROOT"
 export PYTHONPATH="$REPO_ROOT:$PYTHONPATH"
 
 # 配置
-CORPUS_MODE="aligned"
+CORPUS_MODE="wiki_dpr"  # 使用 wiki_dpr 模式（已验证可用，更真实）
 DATASET="nq_open"
 MAX_SAMPLES=200
 METHOD="qore"
@@ -20,6 +20,8 @@ K=5
 LAM=2.0
 SEED=42
 OUTPUT_BASE="$REPO_ROOT/exchange/p2_solver_idea6"
+WIKI_DPR_CONFIG="psgs_w100.nq.compressed"
+WIKI_DPR_CACHE_DIR="/root/.cache/huggingface/datasets"
 
 # 时间戳（北京时间）
 TIMESTAMP=$(TZ='Asia/Shanghai' date +%Y%m%dT%H%M%S)
@@ -81,6 +83,12 @@ run_experiment() {
         --seed $SEED \
         --output_dir $output_dir \
         --output_file result.json"
+
+    # wiki_dpr 模式需要额外参数
+    if [ "$CORPUS_MODE" = "wiki_dpr" ]; then
+        cmd="$cmd --wiki_dpr_config $WIKI_DPR_CONFIG"
+        cmd="$cmd --wiki_dpr_cache_dir $WIKI_DPR_CACHE_DIR"
+    fi
 
     if [ "$use_complementarity" = "true" ]; then
         cmd="$cmd --complementarity_method dpr --use_answer_scorer"

@@ -146,16 +146,19 @@ class AlignedCorpusManager(CorpusManager):
 
         from datasets import load_dataset
 
-        cfg = self.config.get("wiki_dpr_config", "psgs_w100.nq.exact")
+        cfg = self.config.get("wiki_dpr_config", "psgs_w100.nq.compressed")  # Fixed: use compressed instead of exact
         seed = int(self.config.get("seed", 42))
         oversample = float(self.config.get("distractor_oversample", 3.0))
         window = int(n * oversample)
 
+        print(f"  Sampling {n} distractors from wiki_dpr (config={cfg}, window={window})...")
         stream = load_dataset(
             "facebook/wiki_dpr", cfg, split="train",
             streaming=True, trust_remote_code=True,
         )
         texts, embs = [], []
+        import time
+        last_report = time.time()
         for item in stream:
             if len(texts) >= window:
                 break
@@ -164,6 +167,11 @@ class AlignedCorpusManager(CorpusManager):
             texts.append(item["text"])
             embs.append(item["embeddings"])
 
+            # Progress reporting: every 1000 items or every 2 seconds
+            if len(texts) % 1000 == 0 or time.time() - last_report > 2.0:
+                print(f"    Progress: {len(texts)}/{window} distractors sampled...")
+                last_report = time.time()
+
         rng = np.random.default_rng(seed)
         if len(texts) > n:
             keep = rng.choice(len(texts), size=n, replace=False)
@@ -171,6 +179,7 @@ class AlignedCorpusManager(CorpusManager):
             texts = [texts[i] for i in keep]
             embs = [embs[i] for i in keep]
 
+        print(f"  ✓ Sampled {len(texts)} distractors")
         return texts, np.asarray(embs, dtype=np.float32)
 
     # ------------------------------------------------------------------ cache
