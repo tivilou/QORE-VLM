@@ -22,7 +22,13 @@ import zipfile
 from pathlib import Path
 from typing import Any
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "lib"))
+# Find repo root using git, then locate lib directory
+_repo_root = Path(subprocess.check_output(
+    ["git", "rev-parse", "--show-toplevel"],
+    cwd=Path(__file__).parent,
+    text=True
+).strip())
+sys.path.insert(0, str(_repo_root / "scripts" / "collab" / "lib"))
 
 from collect_lib import (
     CollectError, fmt_duration, git_provenance, gpu_info, load_json,
