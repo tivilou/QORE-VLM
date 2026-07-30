@@ -102,9 +102,15 @@ with open('$RESULT_JSON') as f:
 # 统计有 selected_passages 且有 gold 的样本
 valid = 0
 for item in data:
-    passages = item.get('selected_passages') or item.get('retrieved', [])
-    if len(passages) > 0:
-        has_gold = any(p.get('is_gold', False) for p in passages)
+    # Get passages field (handle both field names)
+    passages = None
+    if 'selected_passages' in item and isinstance(item['selected_passages'], list):
+        passages = item['selected_passages']
+    elif 'retrieved' in item and isinstance(item['retrieved'], list):
+        passages = item['retrieved']
+
+    if passages and len(passages) > 0:
+        has_gold = any(p.get('is_gold', False) for p in passages if isinstance(p, dict))
         if has_gold:
             valid += 1
 print(valid)
