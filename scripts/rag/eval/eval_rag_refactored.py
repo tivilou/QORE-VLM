@@ -404,6 +404,8 @@ def main():
                     "score": float(scores[j]) if scores is not None else None,
                     "is_gold": j in gold_in_retrieved,
                     "retrieved_rank": int(j),
+                    # Embedding for training (Idea 7 soft QUBO needs this)
+                    "embedding": selected_embs[rank].tolist() if selected_embs is not None else None,
                     # Which gold answers this passage actually contains, using the
                     # same matcher that decided is_gold. Answer-diversity diagnosis
                     # reads this instead of re-implementing the match and drifting.
