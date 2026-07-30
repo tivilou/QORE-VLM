@@ -57,15 +57,23 @@ def load_training_data(result_json_path: str, max_samples: int = 0) -> list[dict
     """Load training samples from result.json or synthetic data.
 
     Supports two formats:
-    1. result.json from eval_rag_refactored (has "retrieved" key)
-    2. Synthetic data (has "embeddings" and "gold_indices" directly)
+    1. result.json from eval_rag_refactored (dict with "samples" key)
+    2. Synthetic data (list with "embeddings" and "gold_indices" directly)
 
     Each sample needs:
     - embeddings: (N, d) numpy array
     - gold_indices: list of ints (which passages contain the answer)
     """
     with open(result_json_path) as f:
-        results = json.load(f)
+        data = json.load(f)
+
+    # Handle wrapped format (eval_rag_refactored output)
+    if isinstance(data, dict) and "samples" in data:
+        results = data["samples"]
+    elif isinstance(data, list):
+        results = data
+    else:
+        raise ValueError(f"Unexpected result.json format: {type(data)}")
 
     samples = []
     for i, item in enumerate(results):

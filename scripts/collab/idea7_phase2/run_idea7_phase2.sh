@@ -81,6 +81,7 @@ python -m scripts.rag.eval.eval_rag_refactored \
     --use_answer_scorer \
     --complementarity_method dpr \
     --skip_generation \
+    --dump_passages \
     --output_file "$RESULT_JSON" \
     --output_dir "$OUTPUT_DIR/data_prep" \
     2>&1 | tee "$OUTPUT_DIR/data_prep/eval.log"
@@ -99,9 +100,19 @@ VALID_SAMPLES=$(python -c "
 import json
 with open('$RESULT_JSON') as f:
     data = json.load(f)
+
+# Handle wrapped format (eval_rag_refactored output)
+if isinstance(data, dict) and 'samples' in data:
+    samples = data['samples']
+elif isinstance(data, list):
+    samples = data
+else:
+    print('0')
+    exit()
+
 # 统计有 selected_passages 且有 gold 的样本
 valid = 0
-for item in data:
+for item in samples:
     # Get passages field (handle both field names)
     passages = None
     if 'selected_passages' in item and isinstance(item['selected_passages'], list):
