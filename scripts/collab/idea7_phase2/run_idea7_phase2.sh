@@ -72,7 +72,7 @@ python -m scripts.rag.eval.eval_rag_refactored \
     --dataset nq_open \
     --split validation \
     --max_samples ${MAX_SAMPLES} \
-    --corpus_mode aligned \
+    --corpus_mode wiki_dpr \
     --corpus_output_dir data/nq_corpus \
     --method ${METHOD} \
     --K ${K} \
