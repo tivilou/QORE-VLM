@@ -1,0 +1,14 @@
+{
+  "result_json": "exchange/idea7_synthetic_data/synthetic_train.json",
+  "max_samples": 0,
+  "K": 5,
+  "model_type": "learnable",
+  "epochs": 50,
+  "lr": 0.05,
+  "temperature_init": 1.0,
+  "temperature_final": 0.3,
+  "temperature_anneal_epochs": 30,
+  "seed": 42,
+  "output_dir": "exchange/idea7_mvp",
+  "save_every": 10
+}

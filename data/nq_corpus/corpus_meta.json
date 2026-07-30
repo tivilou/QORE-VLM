@@ -1,0 +1,9 @@
+{
+  "mode": "aligned",
+  "n_gold": 0,
+  "n_distractors": 36000,
+  "n_total": 36000,
+  "n_questions": 10,
+  "n_questions_with_gold": 0,
+  "embed_dim": 768
+}

@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/usr/local/miniconda3/envs/py310/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/usr/local/miniconda3/envs/py310/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/Q-DUET-VLM/QORE-VLM/scripts/idea7/train_soft_qubo_simple.py", line 358, in <module>
+    main()
+  File "/home/Q-DUET-VLM/QORE-VLM/scripts/idea7/train_soft_qubo_simple.py", line 203, in main
+    train_data = load_training_data(args.result_json, args.max_samples)
+  File "/home/Q-DUET-VLM/QORE-VLM/scripts/idea7/train_soft_qubo_simple.py", line 64, in load_training_data
+    with open(result_json_path) as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'exchange/p2_idea7_diagnosis/20260730T111502/result.json'
+💾 Output directory: exchange/idea7_mvp
+📚 Loading training data from exchange/p2_idea7_diagnosis/20260730T111502/result.json

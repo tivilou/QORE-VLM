@@ -48,6 +48,10 @@ logs/
 *.pt
 *.pth
 *.bin
+
+# Large corpus files (aligned mode caches)
+data/*/corpus_embeddings.npy
+data/*/corpus_passages.pkl
 *.ckpt
 *.safetensors
 
