@@ -3,15 +3,30 @@
 
 set -e
 
+# 使用 git 找到仓库根目录并切换到根目录
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(git -C "$SCRIPT_DIR" rev-parse --show-toplevel)"
+cd "$REPO_ROOT"
+
+# 设置 PYTHONPATH 使 Python 能找到 scripts 模块
+export PYTHONPATH="$REPO_ROOT:$PYTHONPATH"
+
 # 实验配置
-TIMESTAMP=$(date +%Y%m%dT%H%M%S)
-OUTPUT_DIR="../../exchange/p2_idea7_diagnosis/${TIMESTAMP}"
+TIMESTAMP=$(TZ='Asia/Shanghai' date +%Y%m%dT%H%M%S)
+OUTPUT_DIR="$REPO_ROOT/exchange/p2_idea7_diagnosis/${TIMESTAMP}"
 GAMMA=0.5
 DELTA=0.1
 SAMPLES=200
 SEED=42
+LAM=2.0
+CORPUS_MODE="wiki_dpr"
+DATASET="nq_open"
+METHOD="qore"
+K=5
 
-echo "=== Idea 7 诊断实验 ==="
+echo "=========================================="
+echo "Idea 7 诊断实验: $TIMESTAMP"
+echo "=========================================="
 echo "配置: γ=${GAMMA}, δ=${DELTA} (Idea 6 推荐配置)"
 echo "样本数: ${SAMPLES}"
 echo "输出: ${OUTPUT_DIR}"
@@ -22,30 +37,47 @@ mkdir -p "${OUTPUT_DIR}"
 
 # 运行评估（带 dump_passages 以获取 QUBO 数据）
 echo "步骤 1/3: 运行 RAG 评估（含 QUBO 数据）..."
+echo ">>> 命令: python -m scripts.rag.eval_rag_refactored ..."
+echo ""
+
 python -m scripts.rag.eval_rag_refactored \
-    --dataset nq_open \
-    --corpus_mode wiki_dpr \
-    --method qore \
-    --selector_k 5 \
+    --corpus_mode ${CORPUS_MODE} \
+    --dataset ${DATASET} \
+    --max_samples ${SAMPLES} \
+    --method ${METHOD} \
+    --selector_k ${K} \
     --qore_prefilter_size 15 \
-    --qore_lambda 2.0 \
+    --qore_lambda ${LAM} \
     --qore_gamma ${GAMMA} \
     --delta ${DELTA} \
     --complementarity_method dpr \
     --use_answer_scorer \
-    --max_samples ${SAMPLES} \
     --seed ${SEED} \
     --dump_passages \
     --output "${OUTPUT_DIR}/result.json"
 
+if [ $? -ne 0 ]; then
+    echo "✗ 评估失败"
+    exit 1
+fi
+
+echo ""
+echo "✓ 评估完成"
 echo ""
 echo "步骤 2/3: 运行 QUBO 目标诊断..."
-python scripts/diagnosis/qubo_objective_diagnosis.py \
+python "$REPO_ROOT/scripts/diagnosis/qubo_objective_diagnosis.py" \
     --results "${OUTPUT_DIR}/result.json" \
     --output "${OUTPUT_DIR}/qubo_diagnosis.md" \
     --gamma ${GAMMA} \
-    --lam 2.0
+    --lam ${LAM}
 
+if [ $? -ne 0 ]; then
+    echo "✗ 诊断失败"
+    exit 1
+fi
+
+echo ""
+echo "✓ 诊断完成"
 echo ""
 echo "步骤 3/3: 生成对比报告..."
 cat > "${OUTPUT_DIR}/README.md" <<EOF
@@ -98,9 +130,20 @@ cat > "${OUTPUT_DIR}/README.md" <<EOF
 EOF
 
 echo ""
-echo "✅ Idea 7 诊断完成！"
-echo "结果: ${OUTPUT_DIR}"
+echo "=========================================="
+echo "✓ Idea 7 诊断完成！"
+echo "=========================================="
+echo ""
+echo "结果目录: ${OUTPUT_DIR}"
 echo ""
 echo "请查看:"
 echo "  - ${OUTPUT_DIR}/qubo_diagnosis.md (诊断报告)"
 echo "  - ${OUTPUT_DIR}/README.md (对比分析)"
+echo ""
+echo "下一步："
+echo "  1. 查看诊断报告: cat ${OUTPUT_DIR}/qubo_diagnosis.md"
+echo "  2. git add exchange/p2_idea7_diagnosis/${TIMESTAMP}/"
+echo "  3. git commit -m 'experiment(idea7): re-evaluation after idea6 implementation'"
+echo "  4. git push"
+echo "=========================================="
+
