@@ -45,16 +45,17 @@ python -m scripts.rag.eval_rag_refactored \
     --dataset ${DATASET} \
     --max_samples ${SAMPLES} \
     --method ${METHOD} \
-    --selector_k ${K} \
+    --K ${K} \
     --qore_prefilter_size 15 \
-    --qore_lambda ${LAM} \
-    --qore_gamma ${GAMMA} \
+    --lam ${LAM} \
+    --gamma ${GAMMA} \
     --delta ${DELTA} \
     --complementarity_method dpr \
     --use_answer_scorer \
     --seed ${SEED} \
     --dump_passages \
-    --output "${OUTPUT_DIR}/result.json"
+    --output_file result.json \
+    --output_dir "${OUTPUT_DIR}"
 
 if [ $? -ne 0 ]; then
     echo "✗ 评估失败"
