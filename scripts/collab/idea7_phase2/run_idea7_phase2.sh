@@ -99,11 +99,12 @@ VALID_SAMPLES=$(python -c "
 import json
 with open('$RESULT_JSON') as f:
     data = json.load(f)
-# 统计有 retrieved 且有 gold 的样本
+# 统计有 selected_passages 且有 gold 的样本
 valid = 0
 for item in data:
-    if 'retrieved' in item and len(item['retrieved']) > 0:
-        has_gold = any(p.get('is_gold', False) for p in item['retrieved'])
+    passages = item.get('selected_passages') or item.get('retrieved', [])
+    if len(passages) > 0:
+        has_gold = any(p.get('is_gold', False) for p in passages)
         if has_gold:
             valid += 1
 print(valid)

@@ -83,12 +83,19 @@ def load_training_data(result_json_path: str, max_samples: int = 0) -> list[dict
             continue
 
         # Format 2: result.json from eval_rag_refactored
-        if "retrieved" not in item or len(item["retrieved"]) == 0:
+        # Field name can be "retrieved" or "selected_passages"
+        passages_key = None
+        if "retrieved" in item and len(item["retrieved"]) > 0:
+            passages_key = "retrieved"
+        elif "selected_passages" in item and len(item["selected_passages"]) > 0:
+            passages_key = "selected_passages"
+
+        if passages_key is None:
             continue
 
         # Find gold indices
         gold_indices = []
-        for j, passage in enumerate(item["retrieved"]):
+        for j, passage in enumerate(item[passages_key]):
             if passage.get("is_gold", False):
                 gold_indices.append(j)
 
@@ -98,7 +105,7 @@ def load_training_data(result_json_path: str, max_samples: int = 0) -> list[dict
 
         # Get embeddings (if available)
         embeddings = []
-        for passage in item["retrieved"]:
+        for passage in item[passages_key]:
             if "embedding" in passage and passage["embedding"] is not None:
                 embeddings.append(passage["embedding"])
 
@@ -111,7 +118,7 @@ def load_training_data(result_json_path: str, max_samples: int = 0) -> list[dict
             "question": item.get("question", ""),
             "embeddings": np.array(embeddings, dtype=np.float32),
             "gold_indices": gold_indices,
-            "texts": [p["text"] for p in item["retrieved"]],
+            "texts": [p["text"] for p in item[passages_key]],
         })
 
     return samples
