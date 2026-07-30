@@ -122,7 +122,7 @@ cat exchange/idea7_phase2/<timestamp>/data_prep/eval.log
 解决方案：
 ```bash
 # 手动运行评估并观察错误
-python -m scripts.rag.eval_rag_refactored \
+python -m scripts.rag.eval.eval_rag_refactored \
     --max_samples 10 \
     --corpus_mode aligned \
     --skip_generation \
@@ -143,7 +143,7 @@ grep -i "nan\|inf\|error" exchange/idea7_phase2/<timestamp>/training.log
 解决方案：
 ```bash
 # 使用更保守的超参数重新训练
-python -m scripts.idea7.train_soft_qubo_simple \
+python -m scripts.rag.train.train_soft_qubo_simple \
     --result_json exchange/idea7_phase2/<timestamp>/data_prep/result.json \
     --epochs 100 \
     --lr 0.001 \

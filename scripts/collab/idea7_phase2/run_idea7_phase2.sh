@@ -68,7 +68,7 @@ echo "  这可能需要 10-20 分钟..."
 
 RESULT_JSON="$OUTPUT_DIR/data_prep/result.json"
 
-python -m scripts.rag.eval_rag_refactored \
+python -m scripts.rag.eval.eval_rag_refactored \
     --dataset nq_open \
     --split validation \
     --max_samples ${MAX_SAMPLES} \
@@ -131,7 +131,7 @@ echo ""
 
 TRAIN_OUTPUT_DIR="$OUTPUT_DIR/training"
 
-python -m scripts.idea7.train_soft_qubo_simple \
+python -m scripts.rag.train.train_soft_qubo_simple \
     --result_json "$RESULT_JSON" \
     --max_samples 0 \
     --K ${K} \

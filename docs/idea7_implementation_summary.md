@@ -242,12 +242,16 @@ else:
 
 ```
 ✅ qore/soft_qubo.py                            # 核心实现 (300 lines)
-✅ scripts/idea7/
-   ├── train_soft_qubo.py                       # 完整训练（待完善）
-   ├── train_soft_qubo_simple.py                # 简化训练（已验证）
-   ├── generate_synthetic_data.py               # 合成数据生成
-   ├── README.md                                # 技术文档
-   └── QUICKSTART.md                            # 快速指南
+✅ scripts/rag/
+   ├── train/
+   │   ├── train_soft_qubo.py                   # 完整训练（待完善）
+   │   ├── train_soft_qubo_simple.py            # 简化训练（已验证）
+   │   ├── README_soft_qubo.md                  # 技术文档
+   │   └── QUICKSTART_soft_qubo.md              # 快速指南
+   ├── utils/
+   │   └── generate_synthetic_data.py           # 合成数据生成
+   └── eval/
+       └── eval_rag_refactored.py               # RAG 评估
 ✅ scripts/collab/idea7_phase2/
    ├── run_idea7_phase2.sh                      # 一键实验脚本 (250 lines)
    ├── README.md                                # 使用指南

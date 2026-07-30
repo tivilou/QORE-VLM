@@ -65,7 +65,7 @@ Differentiable w.r.t. `p` → backprop to QUBO weights.
 ### Step 1: Quick Validation (10 samples, 5 min)
 
 ```bash
-python -m scripts.idea7.train_soft_qubo \
+python -m scripts.rag.train.train_soft_qubo \
     --max_samples 10 \
     --epochs 50 \
     --output_dir exchange/idea7_mvp
@@ -79,7 +79,7 @@ python -m scripts.idea7.train_soft_qubo \
 ### Step 2: Full Training (200 samples, 2 hours)
 
 ```bash
-python -m scripts.idea7.train_soft_qubo \
+python -m scripts.rag.train.train_soft_qubo \
     --max_samples 200 \
     --epochs 100 \
     --model_type learnable \
@@ -95,7 +95,7 @@ Compare trained model vs baseline on Phase 2 test set:
 
 ```bash
 # TODO: Create eval_with_soft_qubo.py
-python -m scripts.idea7.eval_with_soft_qubo \
+python -m scripts.rag.train.eval_with_soft_qubo \
     --checkpoint exchange/idea7_full/best_model.pt \
     --max_samples 200 \
     --output_file exchange/idea7_results.json
@@ -133,9 +133,9 @@ Idea 7 should **close the QUBO gap** measured in Phase 1/Phase 2:
 ## Implementation Status
 
 - [x] `qore/soft_qubo.py` - Differentiable QUBO (SoftQUBO, LearnableQUBO)
-- [x] `scripts/idea7/train_soft_qubo.py` - Training script
-- [ ] `scripts/idea7/eval_with_soft_qubo.py` - Evaluation script
-- [ ] `scripts/idea7/compare_baselines.py` - Compare vs Phase 2 baselines
+- [x] `scripts/rag/train/train_soft_qubo.py` - Training script
+- [ ] `scripts/rag/train/eval_with_soft_qubo.py` - Evaluation script
+- [ ] `scripts/rag/train/compare_baselines.py` - Compare vs Phase 2 baselines
 
 ## Timeline
 

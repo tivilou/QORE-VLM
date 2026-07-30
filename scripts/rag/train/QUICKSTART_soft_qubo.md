@@ -5,7 +5,7 @@
 ## 一行命令
 
 ```bash
-cd ~/QORE-VLM && python -m scripts.idea7.train_soft_qubo --max_samples 10 --epochs 50 --output_dir exchange/idea7_mvp
+cd ~/QORE-VLM && python -m scripts.rag.train.train_soft_qubo --max_samples 10 --epochs 50 --output_dir exchange/idea7_mvp
 ```
 
 ## 检查结果
@@ -51,7 +51,7 @@ grep "w_a\|w_b" exchange/idea7_mvp/history.json | tail -5
 如果 MVP 成功，运行完整训练：
 
 ```bash
-python -m scripts.idea7.train_soft_qubo \
+python -m scripts.rag.train.train_soft_qubo \
     --max_samples 200 \
     --epochs 100 \
     --model_type learnable \
