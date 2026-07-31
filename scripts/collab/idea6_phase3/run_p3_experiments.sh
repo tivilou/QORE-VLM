@@ -68,8 +68,7 @@ for seed in "${SEEDS[@]}"; do
                     --dataset nq_open \
                     --split validation \
                     --max_samples 0 \
-                    --corpus_mode aligned \
-                    --n_distractors 36000 \
+                    --corpus_mode wiki_dpr \
                     --method qore \
                     --K 5 \
                     --lam 2.0 \
@@ -85,8 +84,7 @@ for seed in "${SEEDS[@]}"; do
                     --dataset nq_open \
                     --split validation \
                     --max_samples 0 \
-                    --corpus_mode aligned \
-                    --n_distractors 36000 \
+                    --corpus_mode wiki_dpr \
                     --method qore \
                     --K 5 \
                     --lam 2.0 \
@@ -105,8 +103,7 @@ for seed in "${SEEDS[@]}"; do
                     --dataset nq_open \
                     --split validation \
                     --max_samples 0 \
-                    --corpus_mode aligned \
-                    --n_distractors 36000 \
+                    --corpus_mode wiki_dpr \
                     --method qore \
                     --K 5 \
                     --lam 2.0 \

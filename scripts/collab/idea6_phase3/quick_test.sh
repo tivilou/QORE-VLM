@@ -35,8 +35,7 @@ python -m scripts.rag.eval.eval_rag_refactored \
     --K 5 \
     --lam 2.0 \
     --gamma 0.5 \
-    --corpus_mode aligned \
-    --n_distractors 36000 \
+    --corpus_mode wiki_dpr \
     --skip_generation \
     --seed 42 \
     --output_dir "${OUTPUT_DIR}/baseline" \
@@ -57,8 +56,7 @@ python -m scripts.rag.eval.eval_rag_refactored \
     --gamma 0.5 \
     --delta 0.1 \
     --complementarity_method dpr \
-    --corpus_mode aligned \
-    --n_distractors 36000 \
+    --corpus_mode wiki_dpr \
     --skip_generation \
     --seed 42 \
     --output_dir "${OUTPUT_DIR}/idea6" \
