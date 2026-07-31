@@ -60,11 +60,70 @@ for seed in "${SEEDS[@]}"; do
         output_dir="${OUTPUT_BASE}/seed_${seed}/${config_name}"
         mkdir -p "${output_dir}"
 
-        python -m scripts.rag.eval.eval_rag_refactored \
-            --config "configs/experiments/${config_file}.yaml" \
-            --seed "${seed}" \
-            --output_dir "${output_dir}" \
-            2>&1 | tee "${output_dir}/log.txt"
+        # 根据配置名称设置参数
+        case "$config_name" in
+            "baseline")
+                # Baseline: gamma=0.5, delta=0.0 (no complementarity)
+                python -m scripts.rag.eval.eval_rag_refactored \
+                    --dataset nq_open \
+                    --split validation \
+                    --max_samples 0 \
+                    --corpus_mode aligned \
+                    --n_distractors 36000 \
+                    --method qore \
+                    --K 5 \
+                    --lam 2.0 \
+                    --gamma 0.5 \
+                    --skip_generation \
+                    --seed "${seed}" \
+                    --output_dir "${output_dir}" \
+                    2>&1 | tee "${output_dir}/log.txt"
+                ;;
+            "idea6_recommended")
+                # Idea 6 推荐: gamma=0.5, delta=0.1
+                python -m scripts.rag.eval.eval_rag_refactored \
+                    --dataset nq_open \
+                    --split validation \
+                    --max_samples 0 \
+                    --corpus_mode aligned \
+                    --n_distractors 36000 \
+                    --method qore \
+                    --K 5 \
+                    --lam 2.0 \
+                    --gamma 0.5 \
+                    --delta 0.1 \
+                    --complementarity_method dpr \
+                    --use_answer_scorer \
+                    --skip_generation \
+                    --seed "${seed}" \
+                    --output_dir "${output_dir}" \
+                    2>&1 | tee "${output_dir}/log.txt"
+                ;;
+            "idea6_best")
+                # Idea 6 最佳: gamma=0.3, delta=0.1
+                python -m scripts.rag.eval.eval_rag_refactored \
+                    --dataset nq_open \
+                    --split validation \
+                    --max_samples 0 \
+                    --corpus_mode aligned \
+                    --n_distractors 36000 \
+                    --method qore \
+                    --K 5 \
+                    --lam 2.0 \
+                    --gamma 0.3 \
+                    --delta 0.1 \
+                    --complementarity_method dpr \
+                    --use_answer_scorer \
+                    --skip_generation \
+                    --seed "${seed}" \
+                    --output_dir "${output_dir}" \
+                    2>&1 | tee "${output_dir}/log.txt"
+                ;;
+            *)
+                echo "  ✗ 未知配置: ${config_name}"
+                exit 1
+                ;;
+        esac
 
         echo "  ✓ 完成: ${config_name}"
         echo ""
