@@ -1,0 +1,28 @@
+# Baseline experiment configuration
+# Standard QUBO with redundancy penalty only
+
+experiment:
+  name: "baseline_gamma1.0"
+  description: "Baseline QORE with standard redundancy penalty"
+  dataset: "nq_open"
+  split: "validation"
+  max_samples: 200
+
+selection:
+  method: "qore"
+  K: 5
+  lam: 2.0
+
+  # Pluggable enhancers
+  enhancers:
+    - name: "baseline"
+      config:
+        gamma: 1.0
+
+retrieval:
+  corpus_mode: "aligned"
+  n_distractors: 36000
+
+generation:
+  skip: false
+  model_path: "/root/QORE-VLM/models/llama3-8b"

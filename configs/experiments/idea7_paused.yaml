@@ -1,0 +1,41 @@
+# Idea 7 configuration (PAUSED after Phase 2 failure)
+# Included for reference and potential future exploration
+
+experiment:
+  name: "idea7_differentiable_qubo"
+  description: "End-to-end differentiable QUBO with Gumbel-Softmax (PAUSED)"
+  dataset: "nq_open"
+  split: "validation"
+  max_samples: 200
+
+  # Phase 2 Results: Recall 0.3224 vs Baseline 0.4454 (-27.6%)
+  # Root cause: K=5/N=50 (10% selection) → sparse gradient signal
+  # Status: PAUSED, prioritize Idea 6 (+39.4%)
+
+selection:
+  method: "qore"
+  K: 5
+  lam: 2.0
+
+  # Pluggable enhancers
+  enhancers:
+    - name: "idea7"
+      config:
+        model_path: "exchange/idea7_phase2/20260731T120040/checkpoints/epoch_050.pt"
+        temperature: 0.5
+        use_straight_through: false
+        device: "cpu"
+        training: false  # Inference mode
+
+retrieval:
+  corpus_mode: "aligned"
+  n_distractors: 36000
+
+generation:
+  skip: false
+  model_path: "/root/QORE-VLM/models/llama3-8b"
+
+# Note: This config is for reference only.
+# Idea 7 Phase 2 failed and is currently PAUSED.
+# To re-enable, retrain model with different hyperparameters
+# (e.g., higher K, different temperature schedule).

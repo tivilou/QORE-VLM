@@ -1,0 +1,33 @@
+# Idea 6 grid search configuration
+# Test different gamma and delta combinations
+
+experiment:
+  name: "idea6_grid_search"
+  description: "Grid search over gamma and delta for Idea 6"
+  dataset: "nq_open"
+  split: "validation"
+  max_samples: 200
+
+selection:
+  method: "qore"
+  K: 5
+  lam: 2.0
+
+  # Grid search parameters
+  grid:
+    enhancer: "idea6"
+    params:
+      gamma: [0.0, 0.3, 0.5, 0.7, 1.0]
+      delta: [0.0, 0.05, 0.1, 0.15, 0.2]
+    method: "dpr"
+
+retrieval:
+  corpus_mode: "aligned"
+  n_distractors: 36000
+
+generation:
+  skip: true  # Skip generation for faster grid search
+
+answer_scorer:
+  enabled: true
+  model_path: "/root/QORE-VLM/models/dpr-reader"

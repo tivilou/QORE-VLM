@@ -1,0 +1,35 @@
+# Idea 6 Phase 2 experiment configuration
+# Complementarity matrix with gamma=0.5, delta=0.1
+
+experiment:
+  name: "idea6_gamma0.5_delta0.1"
+  description: "Idea 6 complementarity with optimal parameters from P2"
+  dataset: "nq_open"
+  split: "validation"
+  max_samples: 200
+
+selection:
+  method: "qore"
+  K: 5
+  lam: 2.0
+
+  # Pluggable enhancers
+  enhancers:
+    - name: "idea6"
+      config:
+        gamma: 0.5
+        delta: 0.1
+        method: "dpr"
+
+retrieval:
+  corpus_mode: "aligned"
+  n_distractors: 36000
+
+generation:
+  skip: false
+  model_path: "/root/QORE-VLM/models/llama3-8b"
+
+# Context requirements for Idea 6
+answer_scorer:
+  enabled: true
+  model_path: "/root/QORE-VLM/models/dpr-reader"

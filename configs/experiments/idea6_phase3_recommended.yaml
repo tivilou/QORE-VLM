@@ -1,0 +1,39 @@
+# Idea 6 Phase 3 - 全量验证实验配置
+# 验证 Idea 6 在完整 validation 集上的效果
+
+experiment:
+  name: "idea6_phase3_full"
+  description: "Idea 6 Phase 3 full validation set (3610 samples, 3 seeds)"
+  dataset: "nq_open"
+  split: "validation"
+  max_samples: 0  # 0 = all samples (3610)
+
+selection:
+  method: "qore"
+  K: 5
+  lam: 2.0
+
+  # Idea 6 推荐配置 (Phase 2 验证)
+  enhancers:
+    - name: "idea6"
+      config:
+        gamma: 0.5
+        delta: 0.1
+        method: "dpr"
+
+retrieval:
+  corpus_mode: "aligned"
+  n_distractors: 36000
+
+generation:
+  skip: true  # Skip generation for faster experiment
+
+# Context requirements for Idea 6
+answer_scorer:
+  enabled: true
+  model_path: "/root/QORE-VLM/models/dpr-reader"
+
+# Expected results (from Phase 2):
+# Baseline: Recall@5 = 0.3196, F1 = 0.4406
+# Idea 6:   Recall@5 = 0.4454, F1 = 0.5092
+# Target:   Recall@5 >= 0.43, F1 >= 0.50

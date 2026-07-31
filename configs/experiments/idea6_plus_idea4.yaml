@@ -1,0 +1,41 @@
+# Idea 6 + Idea 4 combination experiment
+# Testing composition of multiple ideas
+
+experiment:
+  name: "idea6_plus_idea4"
+  description: "Combine complementarity (Idea 6) with context integrity (Idea 4)"
+  dataset: "nq_open"
+  split: "validation"
+  max_samples: 200
+
+selection:
+  method: "qore"
+  K: 5
+  lam: 2.0
+
+  # Pluggable enhancers - applied in sequence
+  enhancers:
+    - name: "idea6"
+      config:
+        gamma: 0.5
+        delta: 0.1
+        method: "dpr"
+    - name: "idea4"
+      config:
+        alpha: 0.05
+
+retrieval:
+  corpus_mode: "aligned"
+  n_distractors: 36000
+
+generation:
+  skip: false
+  model_path: "/root/QORE-VLM/models/llama3-8b"
+
+# Context requirements
+answer_scorer:
+  enabled: true
+  model_path: "/root/QORE-VLM/models/dpr-reader"
+
+passages_meta:
+  enabled: true  # Required for Idea 4 context integrity

@@ -1,0 +1,39 @@
+# Idea 6 Phase 3 - 最佳配置
+# Phase 2 中 F1 和 Recall 都最高的配置
+
+experiment:
+  name: "idea6_phase3_best"
+  description: "Idea 6 Phase 3 with best config from Phase 2 (γ=0.3, δ=0.1)"
+  dataset: "nq_open"
+  split: "validation"
+  max_samples: 0  # 0 = all samples (3610)
+
+selection:
+  method: "qore"
+  K: 5
+  lam: 2.0
+
+  # Idea 6 最佳配置 (Phase 2 结果最好)
+  enhancers:
+    - name: "idea6"
+      config:
+        gamma: 0.3
+        delta: 0.1
+        method: "dpr"
+
+retrieval:
+  corpus_mode: "aligned"
+  n_distractors: 36000
+
+generation:
+  skip: true  # Skip generation for faster experiment
+
+# Context requirements for Idea 6
+answer_scorer:
+  enabled: true
+  model_path: "/root/QORE-VLM/models/dpr-reader"
+
+# Expected results (from Phase 2):
+# Baseline: Recall@5 = 0.3196, F1 = 0.4406
+# Idea 6:   Recall@5 = 0.4598, F1 = 0.5101
+# Target:   Recall@5 >= 0.45, F1 >= 0.50

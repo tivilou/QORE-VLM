@@ -1,19 +1,16 @@
-"""QORE passage selector: unified interface for RAG context selection.
-
-REFACTORED: Now supports pluggable enhancers for clean idea composition.
-"""
+"""QORE passage selector: unified interface for RAG context selection."""
 
 import numpy as np
 
 from qore import solve as qore_solve
-from qore.qubo import build_qubo_matrix, build_qubo_matrix_from_w, energy, energy_decomposed
+from qore.qubo import build_qubo_matrix, energy, energy_decomposed
 from qore.signals import normalize
 from .signals_rag import passage_relevance, passage_redundancy
 from .baselines import topk, mmr
 
 
 def _record_qubo_diagnostics(diagnostics, a, b, x, K, lam, gamma, prefiltered,
-                             n_candidates, pool_ranks, w=None):
+                             n_candidates, pool_ranks):
     """Record the QUBO the solver actually saw.
 
     Exists because the energy cannot be reconstructed downstream from a result
@@ -66,10 +63,6 @@ def _record_qubo_diagnostics(diagnostics, a, b, x, K, lam, gamma, prefiltered,
         "pool_ranks": [int(v) for v in pool_ranks],
     })
 
-    # Record actual w matrix if using enhancers
-    if w is not None:
-        diagnostics["w"] = [[float(v) for v in row] for row in w]
-
 
 def select_passages(
     query_embedding: np.ndarray,
@@ -79,18 +72,12 @@ def select_passages(
     relevance_scores: np.ndarray | None = None,
     redundancy_method: str = "cosine",
     lam: float = 2.0,
-    # Legacy parameters (for backward compatibility)
     gamma: float | None = None,
     delta: float = 0.0,
     complementarity_method: str | None = None,
-    # New pluggable enhancer parameters
-    enhancers: list[str] | None = None,
-    enhancer_configs: dict[str, dict] | None = None,
-    # Other parameters
     answer_scorer=None,
     passage_texts: list[str] | None = None,
     question: str | None = None,
-    passages_meta: list[dict] | None = None,
     num_reads: int = 50,
     lambda_mmr: float = 0.5,
     seed: int | None = None,
@@ -109,8 +96,6 @@ def select_passages(
     - "topk": Greedy top-K by relevance (baseline)
     - "mmr": Maximal Marginal Relevance (greedy diversity-aware baseline)
 
-    REFACTORED: Now supports pluggable enhancers for clean idea composition.
-
     Args:
         query_embedding: (d,) query vector.
         passage_embeddings: (N, d) candidate passage embeddings.
@@ -120,39 +105,43 @@ def select_passages(
             retriever. If None, cosine(query, passage) is used.
         redundancy_method: How to compute b_ij. "cosine" (default) or "rbf".
         lam: QUBO penalty weight (only for method="qore"/"vqc").
-
-        --- Legacy parameters (for backward compatibility) ---
-        gamma: QUBO redundancy weight. If None, auto-tunes to 1.0.
-            DEPRECATED: Use enhancers=["baseline"] with enhancer_configs={"baseline": {"gamma": x}}
-        delta: Complementarity weight.
-            DEPRECATED: Use enhancers=["idea6"] with enhancer_configs={"idea6": {"delta": x}}
-        complementarity_method: How to compute complementarity c_ij.
-            DEPRECATED: Use enhancers=["idea6"]
-
-        --- New pluggable enhancer parameters ---
-        enhancers: List of enhancer names to apply in sequence.
-            Examples:
-                None (default) - inferred from legacy parameters
-                ["baseline"] - standard QUBO with gamma * b
-                ["idea6"] - Idea 6 complementarity
-                ["baseline", "idea4"] - combine baseline + Idea 4
-        enhancer_configs: Config dict for each enhancer.
-            Example: {"baseline": {"gamma": 0.5}, "idea6": {"delta": 0.1}}
-
-        --- Other parameters ---
-        answer_scorer: Instance with score_passages(question, texts) method.
-        passage_texts: List of N passage strings.
-        question: Query string.
-        passages_meta: List of N passage metadata dicts (for idea4, etc.).
+        gamma: QUBO redundancy weight (only for method="qore"/"vqc"). If None,
+            auto-tunes to 1.0.
+        delta: Complementarity weight (only for method="qore" with complementarity_method set).
+            Positive delta rewards selecting complementary passage pairs.
+        complementarity_method: How to compute complementarity c_ij (only for method="qore").
+            None (default): no complementarity term, w = gamma * b (standard QUBO).
+            "dpr": use DPR answer scorer pairwise signals (requires answer_scorer, passage_texts, question).
+        answer_scorer: Instance with score_passages(question, texts) method (required when complementarity_method="dpr").
+        passage_texts: List of N passage strings (required when complementarity_method="dpr").
+        question: Query string (required when complementarity_method="dpr").
         num_reads: SA reads (only for method="qore"/"vqc").
         lambda_mmr: MMR trade-off (only for method="mmr").
         seed: Random seed for reproducibility.
         direct_solve_max_n: If N <= this, solve the full QUBO directly with no
-            top-M prefilter. Default is 20.
-        qore_prefilter_size: Relevance-first candidate pool size for large N.
+            top-M prefilter. Default is 20, which ensures N=50 (typical RAG
+            Top-K retrieval) goes through the relevance-first prefilter path.
+            Increase only for small-N demos where global QUBO is intended.
+        qore_prefilter_size: Relevance-first candidate pool size for large N
+            (only for method="qore"/"vqc"). If None, defaults to max(K*3, 15).
+            Smaller values (e.g., 15-20) reduce the risk of QORE selecting
+            low-relevance passages. Larger values give more diversity headroom.
         vqc_encoder: Pre-trained VQCEncoder instance (only for method="vqc").
+            If None, a fresh (untrained) encoder is created.
         vqc_backend: Quantum backend for VQC (only for method="vqc").
-        diagnostics: Optional dict, filled in-place with solver diagnostics.
+
+        diagnostics: Optional dict, filled in-place with what the solver
+            actually optimized (method="qore" only): the normalized quality
+            vector, the cosine redundancy matrix, and the decomposed QUBO
+            energy of the returned solution.
+
+            This exists because the energy is NOT reconstructable downstream:
+            `a` is min-max normalized over all N candidates (so the selected
+            K alone don't determine it), `b` is embedding cosine (not text
+            overlap), and for N > direct_solve_max_n the QUBO is solved on a
+            top-M pool rather than all N. Recomputing from a result JSON gave
+            a quality term ~42x off when relevance_scores come from the answer
+            scorer. Pass a dict here to get the real numbers instead.
 
     Returns:
         indices: (K,) integer array of selected passage indices.
@@ -186,50 +175,49 @@ def select_passages(
         if seed is not None:
             kwargs["seed"] = seed
 
-        # Infer enhancer configuration from legacy parameters if needed
-        if enhancers is None:
-            enhancers, enhancer_configs = _infer_enhancers_from_legacy(
-                gamma, delta, complementarity_method
-            )
-
-        # Build enhancer pipeline
-        from qore.enhancers import create_pipeline
+        # Build pairwise interaction matrix w
+        # w = gamma * b (redundancy penalty) - delta * c (complementarity reward)
+        use_complementarity = complementarity_method is not None and delta != 0.0
 
         if N <= direct_solve_max_n:
-            # PURE path: N is small enough to solve the full QUBO directly
+            # PURE path (roadmap §4.3): N is small enough to solve the full QUBO
+            # directly with brute-force enumeration — no prefilter, exact solution.
+            # This is RAG's "clean" demonstration that global QUBO selection beats
+            # greedy top-K/MMR.
             b = passage_redundancy(passage_embeddings, method=redundancy_method)
 
-            # Prepare context for enhancers
-            context = {
-                "embeddings": passage_embeddings,
-                "query_embedding": query_embedding,
-                "passages": passage_texts,
-                "question": question,
-                "answer_scorer": answer_scorer,
-                "passages_meta": passages_meta,
-            }
+            if use_complementarity:
+                if complementarity_method == "dpr":
+                    if answer_scorer is None or passage_texts is None or question is None:
+                        raise ValueError("complementarity_method='dpr' requires answer_scorer, passage_texts, and question")
+                    from .signals_rag import passage_complementarity_dpr
+                    c = passage_complementarity_dpr(question, passage_texts, answer_scorer)
+                else:
+                    raise ValueError(f"Unknown complementarity_method: {complementarity_method}")
 
-            # Apply enhancers to build w matrix
-            pipeline = create_pipeline(enhancers, enhancer_configs)
-            w = pipeline.enhance(a, b, context)
+                # w = gamma * b - delta * c
+                gamma_eff = 1.0 if gamma is None else gamma
+                w = gamma_eff * b - delta * c
 
-            # Build QUBO and solve
-            Q = build_qubo_matrix_from_w(a, w, K, lam=lam)
-            from qore.solvers.brute import solve as brute_solve
-            x = brute_solve(Q, K)
+                from qore.qubo import build_qubo_matrix_from_w
+                from qore.solvers.brute import solve as brute_solve
+                Q = build_qubo_matrix_from_w(a, w, K, lam=lam)
+                x = brute_solve(Q, K)
+            else:
+                x = qore_solve(a, b, K, lam=lam, gamma=gamma, method="brute", **kwargs)
 
             if diagnostics is not None:
-                diagnostics["enhancers"] = pipeline.describe()
                 _record_qubo_diagnostics(
                     diagnostics, a=a, b=b, x=x, K=K, lam=lam, gamma=gamma,
                     n_candidates=N, prefiltered=False,
-                    pool_ranks=list(range(N)),
-                    w=w,
+                    pool_ranks=list(range(N)),   # 直接求解：池子就是全部候选
                 )
             indices = np.where(x == 1)[0]
             return indices[np.argsort(a[indices])[::-1]]
 
-        # Large N: two-stage with prefilter
+        # Large N: two-stage. Pre-filter to top-M by quality, then QUBO on the
+        # pool (redundancy is the differentiator within already-relevant items).
+        # Smaller M (e.g., 15-20) reduces risk of low-relevance selections.
         if qore_prefilter_size is not None:
             M = min(N, qore_prefilter_size)
         else:
@@ -240,39 +228,44 @@ def select_passages(
         embeddings_filtered = passage_embeddings[prefilter_idx]
         b = passage_redundancy(embeddings_filtered, method=redundancy_method)
 
-        # Prepare filtered context for enhancers
-        context = {
-            "embeddings": embeddings_filtered,
-            "query_embedding": query_embedding,
-            "passages": [passage_texts[i] for i in prefilter_idx] if passage_texts else None,
-            "question": question,
-            "answer_scorer": answer_scorer,
-            "passages_meta": [passages_meta[i] for i in prefilter_idx] if passages_meta else None,
-        }
+        if use_complementarity:
+            if complementarity_method == "dpr":
+                if answer_scorer is None or passage_texts is None or question is None:
+                    raise ValueError("complementarity_method='dpr' requires answer_scorer, passage_texts, and question")
+                from .signals_rag import passage_complementarity_dpr
+                # Only compute complementarity for filtered passages
+                texts_filtered = [passage_texts[i] for i in prefilter_idx]
+                c = passage_complementarity_dpr(question, texts_filtered, answer_scorer)
+            else:
+                raise ValueError(f"Unknown complementarity_method: {complementarity_method}")
 
-        # Apply enhancers to build w matrix
-        pipeline = create_pipeline(enhancers, enhancer_configs)
-        w = pipeline.enhance(a_filtered, b, context)
+            gamma_eff = 1.0 if gamma is None else gamma
+            w = gamma_eff * b - delta * c
 
-        # Build QUBO and solve
-        Q = build_qubo_matrix_from_w(a_filtered, w, K, lam=lam)
+            from qore.qubo import build_qubo_matrix_from_w
+            Q = build_qubo_matrix_from_w(a_filtered, w, K, lam=lam)
 
-        # Guard: brute solver caps at N≤20; if M>20, fall back to anneal
-        M_actual = len(a_filtered)
-        if M_actual <= 20:
-            from qore.solvers.brute import solve as brute_solve
-            x = brute_solve(Q, K)
+            # Guard: brute solver caps at N≤20; if M>20, fall back to anneal
+            M_actual = len(a_filtered)
+            if M_actual <= 20:
+                from qore.solvers.brute import solve as brute_solve
+                x = brute_solve(Q, K)
+            else:
+                from qore.solvers.anneal import solve as anneal_solve
+                x = anneal_solve(Q, K, **kwargs)
         else:
-            from qore.solvers.anneal import solve as anneal_solve
-            x = anneal_solve(Q, K, **kwargs)
+            # Guard: brute solver caps at N≤20; if M>20, fall back to anneal
+            M_actual = len(a_filtered)
+            solver_method = "brute" if M_actual <= 20 else "anneal"
+            x = qore_solve(a_filtered, b, K, lam=lam, gamma=gamma, method=solver_method, **kwargs)
 
         if diagnostics is not None:
-            diagnostics["enhancers"] = pipeline.describe()
+            # Note: the QUBO was solved on the M-item pool, not all N candidates.
+            # Energy is only meaningful against a_filtered/b, so record those.
             _record_qubo_diagnostics(
                 diagnostics, a=a_filtered, b=b, x=x, K=K, lam=lam, gamma=gamma,
                 n_candidates=N, prefiltered=True,
                 pool_ranks=prefilter_idx,
-                w=w,
             )
 
         selected_in_pool = np.where(x == 1)[0]
@@ -298,46 +291,6 @@ def select_passages(
         raise ValueError(
             f"Unknown method '{method}'. Choose from: 'qore', 'vqc', 'topk', 'mmr'."
         )
-
-
-def _infer_enhancers_from_legacy(
-    gamma: float | None,
-    delta: float,
-    complementarity_method: str | None,
-) -> tuple[list[str], dict[str, dict]]:
-    """
-    Infer enhancer configuration from legacy parameters.
-
-    This provides backward compatibility for existing code using gamma/delta/complementarity_method.
-
-    Args:
-        gamma: Legacy gamma parameter.
-        delta: Legacy delta parameter.
-        complementarity_method: Legacy complementarity method.
-
-    Returns:
-        (enhancers, enhancer_configs) tuple.
-    """
-    # If complementarity is used, infer idea6
-    if complementarity_method is not None and delta != 0.0:
-        enhancers = ["idea6"]
-        enhancer_configs = {
-            "idea6": {
-                "gamma": gamma if gamma is not None else 1.0,
-                "delta": delta,
-                "method": complementarity_method,
-            }
-        }
-    else:
-        # Default to baseline
-        enhancers = ["baseline"]
-        enhancer_configs = {
-            "baseline": {
-                "gamma": gamma if gamma is not None else 1.0,
-            }
-        }
-
-    return enhancers, enhancer_configs
 
 
 def evaluate_selection(

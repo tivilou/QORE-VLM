@@ -1,0 +1,29 @@
+# Baseline for Phase 3 comparison
+
+experiment:
+  name: "baseline_phase3"
+  description: "Baseline (γ=0.5, δ=0.0) on full validation set"
+  dataset: "nq_open"
+  split: "validation"
+  max_samples: 0  # 0 = all samples (3610)
+
+selection:
+  method: "qore"
+  K: 5
+  lam: 2.0
+
+  # Baseline: standard QORE with no complementarity
+  enhancers:
+    - name: "baseline"
+      config:
+        gamma: 0.5
+
+retrieval:
+  corpus_mode: "aligned"
+  n_distractors: 36000
+
+generation:
+  skip: true  # Skip generation for faster experiment
+
+# Expected results (from Phase 2):
+# Recall@5 = 0.3196, F1 = 0.4406, EM = 0.2500
