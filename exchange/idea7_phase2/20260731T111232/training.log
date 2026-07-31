@@ -1,0 +1,112 @@
+💾 Output directory: /root/QORE-VLM/exchange/idea7_phase2/20260731T111232/training
+📚 Loading training data from /root/QORE-VLM/exchange/idea7_phase2/20260731T111232/data_prep/result.json
+   Loaded 141 valid samples
+   Train: 112, Val: 29
+🖥️  Device: cuda
+🧠 Model: LearnableQUBO
+
+🚀 Starting training for 100 epochs
+Epoch   1/100 | T=1.000 | Loss=-0.0537 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.498 | w_b=1.000
+Epoch   2/100 | T=0.988 | Loss=-0.0740 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.875 | w_b=1.000
+Epoch   3/100 | T=0.977 | Loss=-0.0701 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.258 | w_b=1.000
+Epoch   4/100 | T=0.965 | Loss=-0.0664 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.809 | w_b=1.000
+Epoch   5/100 | T=0.953 | Loss=-0.0588 | Recall=1.0000 | Val_Recall=1.0000 | w_a=3.459 | w_b=1.000
+Epoch   6/100 | T=0.942 | Loss=-0.0722 | Recall=1.0000 | Val_Recall=1.0000 | w_a=3.129 | w_b=1.000
+Epoch   7/100 | T=0.930 | Loss=-0.0665 | Recall=1.0000 | Val_Recall=1.0000 | w_a=3.059 | w_b=1.000
+Epoch   8/100 | T=0.918 | Loss=-0.0721 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.844 | w_b=1.000
+Epoch   9/100 | T=0.907 | Loss=-0.0765 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.876 | w_b=1.000
+Epoch  10/100 | T=0.895 | Loss=-0.0710 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.871 | w_b=1.000
+Epoch  11/100 | T=0.883 | Loss=-0.0553 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.944 | w_b=1.000
+Epoch  12/100 | T=0.872 | Loss=-0.0576 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.946 | w_b=1.000
+Epoch  13/100 | T=0.860 | Loss=-0.0775 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.716 | w_b=1.000
+Epoch  14/100 | T=0.848 | Loss=-0.0677 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.813 | w_b=1.000
+Epoch  15/100 | T=0.837 | Loss=-0.0496 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.901 | w_b=1.000
+Epoch  16/100 | T=0.825 | Loss=-0.0596 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.959 | w_b=1.000
+Epoch  17/100 | T=0.813 | Loss=-0.0631 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.896 | w_b=1.000
+Epoch  18/100 | T=0.802 | Loss=-0.0393 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.744 | w_b=1.000
+Epoch  19/100 | T=0.790 | Loss=-0.0694 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.340 | w_b=1.000
+Epoch  20/100 | T=0.778 | Loss=-0.0947 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.646 | w_b=1.000
+Epoch  21/100 | T=0.767 | Loss=-0.0570 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.475 | w_b=1.000
+Epoch  22/100 | T=0.755 | Loss=-0.0719 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.660 | w_b=1.000
+Epoch  23/100 | T=0.743 | Loss=-0.0565 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.614 | w_b=1.000
+Epoch  24/100 | T=0.732 | Loss=-0.0565 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.481 | w_b=1.000
+Epoch  25/100 | T=0.720 | Loss=-0.0778 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.498 | w_b=1.000
+Epoch  26/100 | T=0.708 | Loss=-0.0838 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.317 | w_b=1.000
+Epoch  27/100 | T=0.697 | Loss=-0.0331 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.704 | w_b=1.000
+Epoch  28/100 | T=0.685 | Loss=-0.0761 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.921 | w_b=1.000
+Epoch  29/100 | T=0.673 | Loss=-0.0584 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.766 | w_b=1.000
+Epoch  30/100 | T=0.662 | Loss=-0.0493 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.582 | w_b=1.000
+Epoch  31/100 | T=0.650 | Loss=-0.0514 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.445 | w_b=1.000
+Epoch  32/100 | T=0.638 | Loss=-0.0603 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.515 | w_b=1.000
+Epoch  33/100 | T=0.627 | Loss=-0.0567 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.706 | w_b=1.000
+Epoch  34/100 | T=0.615 | Loss=-0.0576 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.609 | w_b=1.000
+Epoch  35/100 | T=0.603 | Loss=-0.0455 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.765 | w_b=1.000
+Epoch  36/100 | T=0.592 | Loss=-0.0650 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.433 | w_b=1.000
+Epoch  37/100 | T=0.580 | Loss=-0.0727 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.319 | w_b=1.000
+Epoch  38/100 | T=0.568 | Loss=-0.0625 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.146 | w_b=1.000
+Epoch  39/100 | T=0.557 | Loss=-0.0444 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.458 | w_b=1.000
+Epoch  40/100 | T=0.545 | Loss=-0.0868 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.159 | w_b=1.000
+Epoch  41/100 | T=0.533 | Loss=-0.0559 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.209 | w_b=1.000
+Epoch  42/100 | T=0.522 | Loss=-0.0396 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.369 | w_b=1.000
+Epoch  43/100 | T=0.510 | Loss=-0.0441 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.445 | w_b=1.000
+Epoch  44/100 | T=0.498 | Loss=-0.0539 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.292 | w_b=1.000
+Epoch  45/100 | T=0.487 | Loss=-0.0525 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.016 | w_b=1.000
+Epoch  46/100 | T=0.475 | Loss=-0.0671 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.862 | w_b=1.000
+Epoch  47/100 | T=0.463 | Loss=-0.0728 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.715 | w_b=1.000
+Epoch  48/100 | T=0.452 | Loss=-0.0735 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.613 | w_b=1.000
+Epoch  49/100 | T=0.440 | Loss=-0.0182 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.483 | w_b=1.000
+Epoch  50/100 | T=0.428 | Loss=-0.0841 | Recall=1.0000 | Val_Recall=1.0000 | w_a=2.067 | w_b=1.000
+Epoch  51/100 | T=0.417 | Loss=-0.0477 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.917 | w_b=1.000
+Epoch  52/100 | T=0.405 | Loss=-0.0784 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.854 | w_b=1.000
+Epoch  53/100 | T=0.393 | Loss=-0.0664 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.838 | w_b=1.000
+Epoch  54/100 | T=0.382 | Loss=-0.0861 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.692 | w_b=1.000
+Epoch  55/100 | T=0.370 | Loss=-0.0587 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.789 | w_b=1.000
+Epoch  56/100 | T=0.358 | Loss=-0.0692 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.707 | w_b=1.000
+Epoch  57/100 | T=0.347 | Loss=-0.0868 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.735 | w_b=1.000
+Epoch  58/100 | T=0.335 | Loss=-0.0619 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.549 | w_b=1.000
+Epoch  59/100 | T=0.323 | Loss=-0.0591 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.503 | w_b=1.000
+Epoch  60/100 | T=0.312 | Loss=-0.0509 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.437 | w_b=1.000
+Epoch  61/100 | T=0.300 | Loss=-0.0876 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.432 | w_b=1.000
+Epoch  62/100 | T=0.300 | Loss=-0.0633 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.593 | w_b=1.000
+Epoch  63/100 | T=0.300 | Loss=-0.0549 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.611 | w_b=1.000
+Epoch  64/100 | T=0.300 | Loss=-0.0453 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.888 | w_b=1.000
+Epoch  65/100 | T=0.300 | Loss=-0.0502 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.964 | w_b=1.000
+Epoch  66/100 | T=0.300 | Loss=-0.0742 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.728 | w_b=1.000
+Epoch  67/100 | T=0.300 | Loss=-0.0805 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.580 | w_b=1.000
+Epoch  68/100 | T=0.300 | Loss=-0.0593 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.625 | w_b=1.000
+Epoch  69/100 | T=0.300 | Loss=-0.0850 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.414 | w_b=1.000
+Epoch  70/100 | T=0.300 | Loss=-0.0582 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.279 | w_b=1.000
+Epoch  71/100 | T=0.300 | Loss=-0.0427 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.430 | w_b=1.000
+Epoch  72/100 | T=0.300 | Loss=-0.0767 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.409 | w_b=1.000
+Epoch  73/100 | T=0.300 | Loss=-0.1057 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.241 | w_b=1.000
+Epoch  74/100 | T=0.300 | Loss=-0.0752 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.293 | w_b=1.000
+Epoch  75/100 | T=0.300 | Loss=-0.0738 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.341 | w_b=1.000
+Epoch  76/100 | T=0.300 | Loss=-0.0956 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.254 | w_b=1.000
+Epoch  77/100 | T=0.300 | Loss=-0.0506 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.364 | w_b=1.000
+Epoch  78/100 | T=0.300 | Loss=-0.0489 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.158 | w_b=1.000
+Epoch  79/100 | T=0.300 | Loss=-0.0593 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.459 | w_b=1.000
+Epoch  80/100 | T=0.300 | Loss=-0.0875 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.367 | w_b=1.000
+Epoch  81/100 | T=0.300 | Loss=-0.0973 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.476 | w_b=1.000
+Epoch  82/100 | T=0.300 | Loss=-0.0872 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.419 | w_b=1.000
+Epoch  83/100 | T=0.300 | Loss=-0.0634 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.270 | w_b=1.000
+Epoch  84/100 | T=0.300 | Loss=-0.0558 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.416 | w_b=1.000
+Epoch  85/100 | T=0.300 | Loss=-0.0336 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.507 | w_b=1.000
+Epoch  86/100 | T=0.300 | Loss=-0.0417 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.618 | w_b=1.000
+Epoch  87/100 | T=0.300 | Loss=-0.0458 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.801 | w_b=1.000
+Epoch  88/100 | T=0.300 | Loss=-0.0616 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.693 | w_b=1.000
+Epoch  89/100 | T=0.300 | Loss=-0.0785 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.537 | w_b=1.000
+Epoch  90/100 | T=0.300 | Loss=-0.0709 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.466 | w_b=1.000
+Epoch  91/100 | T=0.300 | Loss=-0.0587 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.457 | w_b=1.000
+Epoch  92/100 | T=0.300 | Loss=-0.0770 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.440 | w_b=1.000
+Epoch  93/100 | T=0.300 | Loss=-0.0799 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.390 | w_b=1.000
+Epoch  94/100 | T=0.300 | Loss=-0.0656 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.463 | w_b=1.000
+Epoch  95/100 | T=0.300 | Loss=-0.0665 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.445 | w_b=1.000
+Epoch  96/100 | T=0.300 | Loss=-0.0676 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.285 | w_b=1.000
+Epoch  97/100 | T=0.300 | Loss=-0.0513 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.398 | w_b=1.000
+Epoch  98/100 | T=0.300 | Loss=-0.0718 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.432 | w_b=1.000
+Epoch  99/100 | T=0.300 | Loss=-0.0722 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.462 | w_b=1.000
+Epoch 100/100 | T=0.300 | Loss=-0.0453 | Recall=1.0000 | Val_Recall=1.0000 | w_a=1.815 | w_b=1.000
+
+✅ Training complete!
+   Best validation Recall: 1.0000
+   Model saved to: /root/QORE-VLM/exchange/idea7_phase2/20260731T111232/training/best_model.pt
