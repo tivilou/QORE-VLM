@@ -2,7 +2,7 @@
 # Idea 6 Phase 3 - 全流程自动化脚本
 # 一键完成：实验运行 → 结果分析 → 结果打包
 
-set -e
+set -eo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
@@ -73,7 +73,7 @@ for seed in "${SEEDS[@]}"; do
     for config_entry in "${CONFIGS[@]}"; do
         IFS=':' read -r config_file config_name <<< "$config_entry"
 
-        ((CURRENT_RUN++))
+        CURRENT_RUN=$((CURRENT_RUN + 1))
         echo "[${CURRENT_RUN}/${TOTAL_RUNS}] 运行: ${config_name} (seed=${seed})"
 
         output_dir="${OUTPUT_BASE}/seed_${seed}/${config_name}"

@@ -3,7 +3,7 @@
 # 在完整 validation 集 (3610 samples) 上验证 Idea 6 效果
 # 使用 3 个随机种子确保结果稳定性
 
-set -e
+set -eo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
