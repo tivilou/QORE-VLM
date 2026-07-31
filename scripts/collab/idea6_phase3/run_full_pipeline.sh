@@ -30,7 +30,7 @@ echo "  - 输出: ${OUTPUT_BASE}"
 echo ""
 echo "预计总时间: 4.5-9 小时"
 echo ""
-read -p "按 Enter 开始，或 Ctrl+C 取消..."
+read -p "按 Enter 开始，或 Ctrl+C 取消..." || true
 
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
