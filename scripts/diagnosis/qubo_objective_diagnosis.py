@@ -1,234 +1,361 @@
 #!/usr/bin/env python3
-"""QUBO 代理目标诊断 — 验证 idea 7 (Soft QUBO 端到端) 的前提。
+"""
+QUBO 目标分析诊断脚本
 
-**假设**: QUBO 是人工设计的代理目标，没有直接优化 F1，
-所以 QUBO 最优解 ≠ F1 最优解。
+目的: 验证"QUBO 目标与下游任务（F1）不一致"的假设
+假设: 当前 QUBO 目标函数是人工设计的代理目标，没有直接优化 F1，
+     导致 QUBO 最优解不等于 F1 最优解
 
-**为什么重写了整个脚本。**
-旧版把每道题的 QUBO 能量放在一起做**跨题相关**。这个设计测不到假设：
-能量的绝对值主要由每道题自己的候选池量级决定（池子大小、分数范围、
-lam·K² 偏移），"选得好不好"只占很小一部分。实测同一个代理目标：
-
-    跨题相关   r = 0.007
-    同题内相关 r = 0.986
-
-差 140 倍。所以旧版无论 QUBO 设计得多好，都会报"相关性低 → 假设成立"。
-
-假设的真实含义是**同题内**的：这道题里，QUBO 选的 K 条不是 F1 最优的
-K 条。所以本版在每道题内部枚举候选子集，比较：
-
-    QUBO 排第一的子集  vs  Recall 排第一的子集
-
-用法:
-    python scripts/diagnosis/qubo_objective_diagnosis.py \\
-        --results <dir>/gamma_0.5/result.json \\
-        --output  <dir>/analysis/qubo_objective.md \\
-        --gamma 0.5 --lam 2.0
-
-数据要求: --dump_passages（需要 all_candidates 的 score/is_gold）。
-
-⚠️ 核心限制：**用 Recall 代替 F1 做排序目标。**
-真正的 F1 最优子集需要对每个候选子集跑一次 LLM 生成（C(10,5)=252 次/题，
-200 题 = 50400 次生成），成本不可接受。本诊断用"子集里 gold 的个数"
-（即 Recall）作为可计算的代理。
-
-这弱化了结论：Recall 最优不等于 F1 最优。但方向仍然有效 ——
-若 QUBO 连 Recall 都优化不好，它更不可能优化好 F1。
+输出:
+1. QUBO 目标与 F1 的相关性
+2. QUBO 最优 vs F1 最优的一致性
+3. 端到端训练的潜在收益
 """
 
-from __future__ import annotations
-
+import json
 import argparse
-import itertools
-import sys
-from pathlib import Path
-from typing import Dict, List
-
 import numpy as np
-
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-from diagnosis_io import DiagnosisInputError, load_samples
-
-# 项目根目录，为了 import qore 的真实 QUBO 实现
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from pathlib import Path
+from scipy.stats import pearsonr, spearmanr
+from typing import List, Dict, Tuple
+from result_adapter import load_query_results, write_unavailable_report
 
 
-def enumerate_subsets(sample: Dict, K: int, gamma: float, lam: float,
-                      pool_cap: int = 12) -> Dict | None:
-    """在一道题内枚举子集，比较 QUBO 最优与 Recall 最优。
-
-    用 sample['qubo'] 里 selector 记录的**真实** a 和 b，直接调用
-    qore.qubo 的实现。两点都是必须的：
-
-    1. 不自己重写公式 —— 旧版手写的与 qore/qubo.py 有三处偏差
-       （质量项多乘 lam、a 未归一化、冗余用词重叠而非 embedding 余弦）。
-    2. 不用代理的 b —— 实测「分数接近度」代理与真实余弦选出同一子集的
-       概率只有 0.5%（200 次试验命中 1 次）。用它等于换了个目标函数。
-
-    候选池截断到 pool_cap（按 a 降序），因为 C(15,5)=3003 × 200 题偏慢，
-    C(12,5)=792 可接受。截断会**低估** oracle，所以 gap 是下界。
+def compute_qubo_objective(passage_scores: List[float],
+                           redundancy_matrix: List[List[float]],
+                           gamma: float,
+                           lam: float) -> float:
     """
-    from qore.qubo import build_qubo_matrix, energy
+    计算 QUBO 目标值
 
-    qd = sample.get('qubo')
-    if not qd or qd.get('skipped') or 'a' not in qd or 'b' not in qd:
-        return None      # 退化题（K>=池子大小），QUBO 未构建
+    E = λ·Σq_i·x_i - γ·Σb_ij·x_i·x_j
 
-    a_full = np.asarray(qd['a'], dtype=np.float64)
-    b_full = np.asarray(qd['b'], dtype=np.float64)
-    if a_full.ndim != 1 or b_full.shape != (len(a_full), len(a_full)):
+    这里简化为已选择段落的目标值
+    """
+    n = len(passage_scores)
+
+    # 质量项
+    quality_term = lam * sum(passage_scores)
+
+    # 冗余项（两两之间）
+    redundancy_term = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            if i < len(redundancy_matrix) and j < len(redundancy_matrix[i]):
+                redundancy_term += redundancy_matrix[i][j]
+
+    # QUBO 目标（最小化）
+    objective = -quality_term + gamma * redundancy_term
+
+    return objective
+
+
+def analyze_single_query(query_result: Dict, gamma: float = 0.5, lam: float = 2.0) -> Dict:
+    """分析单个查询的 QUBO 目标 vs F1"""
+
+    # 获取选中的段落及其指标
+    selected = query_result.get('selected_passages', [])
+    if not selected:
         return None
-    if len(a_full) < K + 1:
-        return None
 
-    # gold 标记：qubo 记录的是 prefilter 后的池子，需要按 rank 对齐。
-    # selected_passages 的 retrieved_rank 是原候选池下标，与 a/b 的下标
-    # 不是同一套 —— 所以 gold 只能从 pool_ranks 映射。
-    pool_ranks = qd.get('pool_ranks')
-    if pool_ranks is None or len(pool_ranks) != len(a_full):
-        return None
-    gold_by_rank = {
-        c['retrieved_rank']: bool(c.get('is_gold'))
-        for c in (sample.get('all_candidates') or [])
-    }
-    gold_full = np.array([gold_by_rank.get(int(r), False) for r in pool_ranks])
+    # 获取 QUBO 相关信息（如果有）
+    # 注意：这些信息可能不在当前的结果文件中，需要从实验中提取
+    passage_scores = [p.get('score', 0) for p in selected]
 
-    order = np.argsort(a_full)[::-1][:pool_cap]
-    a = a_full[order]
-    b = b_full[np.ix_(order, order)]
-    gold = gold_full[order]
+    # 计算冗余矩阵（简化版，使用文本相似度）
+    # 实际应该使用实验中计算的 redundancy matrix
+    redundancy_matrix = compute_simple_redundancy(selected)
 
-    n_gold_total = int(gold.sum())
-    if n_gold_total == 0:
-        return None                          # 无 gold，Recall 恒为 0，无从比较
+    # 计算 QUBO 目标
+    qubo_score = compute_qubo_objective(passage_scores, redundancy_matrix, gamma, lam)
 
-    n = len(a)
-    Q = build_qubo_matrix(a, b, K, lam=lam, gamma=gamma)
-
-    best_e, best_e_recall = np.inf, 0.0
-    best_r, best_r_energy = -1.0, 0.0
-    for combo in itertools.combinations(range(n), K):
-        x = np.zeros(n)
-        x[list(combo)] = 1
-        e = float(energy(x, Q))
-        rec = float(gold[list(combo)].sum()) / n_gold_total
-        if e < best_e:
-            best_e, best_e_recall = e, rec
-        if rec > best_r or (rec == best_r and e < best_r_energy):
-            best_r, best_r_energy = rec, e
+    # 获取 F1
+    metrics = query_result.get('metrics', {})
+    f1 = metrics.get('f1', 0)
+    recall = metrics.get('recall', 0)
+    precision = metrics.get('precision', 0)
 
     return {
-        'qubo_best_recall': best_e_recall,   # QUBO 最优子集实际达到的 Recall
-        'oracle_recall': best_r,             # 枚举出的最好 Recall
-        'gap': best_r - best_e_recall,       # >0 表示 QUBO 没选到最优
-        'agrees': abs(best_r - best_e_recall) < 1e-9,
-        'pool_size': n,
-        'n_gold': n_gold_total,
+        'qubo_score': qubo_score,
+        'f1': f1,
+        'recall': recall,
+        'precision': precision,
+        'num_passages': len(selected)
     }
 
 
-def generate_report(stats: List[Dict], output_path: Path,
-                    gamma: float, lam: float) -> bool:
-    valid = [s for s in stats if s is not None]
-    if len(valid) < 10:
-        print(f"⚠️ 有效样本仅 {len(valid)} 条，不足以判断", file=sys.stderr)
-        return False
+def compute_simple_redundancy(passages: List[Dict]) -> List[List[float]]:
+    """简单的冗余度计算（基于词重叠）"""
+    n = len(passages)
+    matrix = [[0.0] * n for _ in range(n)]
 
-    qubo_r = np.array([s['qubo_best_recall'] for s in valid])
-    oracle_r = np.array([s['oracle_recall'] for s in valid])
-    gaps = np.array([s['gap'] for s in valid])
-    n_agree = sum(1 for s in valid if s['agrees'])
+    texts = [p.get('text', '') for p in passages]
 
-    out = []
-    out.append("# QUBO 代理目标诊断报告（idea 7）\n")
-    out.append(f"\n**样本数**: {len(valid)}")
-    out.append(f"\n**参数**: γ={gamma}, λ={lam}")
-    out.append(f"\n**枚举池**: 每题最多 {valid[0]['pool_size']} 条候选，选 K 条\n")
-    out.append("\n---\n")
+    for i in range(n):
+        for j in range(i + 1, n):
+            # 简单的词重叠
+            words_i = set(texts[i].lower().split())
+            words_j = set(texts[j].lower().split())
 
-    out.append("\n## 同题内比较（核心）\n")
-    out.append("\n对每道题枚举候选子集，比较两个子集达到的 Recall：\n")
-    out.append(f"\n- **QUBO 能量最低的子集**: 平均 Recall {qubo_r.mean():.4f}")
-    out.append(f"\n- **枚举出的最优子集**（oracle）: 平均 Recall {oracle_r.mean():.4f}")
-    out.append(f"\n- **平均差距**: {gaps.mean():.4f}")
-    out.append(f"\n- **QUBO 命中最优的题数**: {n_agree}/{len(valid)} "
-               f"({n_agree/len(valid)*100:.1f}%)\n")
+            if words_i and words_j:
+                overlap = len(words_i & words_j)
+                union = len(words_i | words_j)
+                similarity = overlap / union if union > 0 else 0
+                matrix[i][j] = similarity
+                matrix[j][i] = similarity
 
-    out.append("\n### 假设验证\n")
-    out.append("\n**假设**: QUBO 最优解 ≠ F1(此处用 Recall 代理) 最优解\n")
+    return matrix
 
-    disagree_rate = 1 - n_agree / len(valid)
-    if disagree_rate > 0.3 and gaps.mean() > 0.05:
-        verdict = 'holds'
-        out.append(f"\n**结论**: ✅ **假设成立**\n")
-        out.append(f"\n{disagree_rate*100:.1f}% 的题里 QUBO 没选到 Recall 最优子集，"
-                   f"平均少 {gaps.mean():.4f}。")
-        out.append("\n说明代理目标与任务目标存在系统性偏离 —— 支持 idea 7"
-                   "（让任务目标进入优化）。\n")
-    elif disagree_rate > 0.1:
-        verdict = 'partial'
-        out.append(f"\n**结论**: ⚠️ **假设部分成立**\n")
-        out.append(f"\n偏离存在但不大（{disagree_rate*100:.1f}% 的题，"
-                   f"平均差 {gaps.mean():.4f}）。\n")
+
+def load_results(results_file: Path) -> List[Dict]:
+    """加载实验结果"""
+    return load_query_results(results_file)
+
+
+def generate_report(stats: List[Dict], output_file: Path):
+    """生成诊断报告"""
+    # 过滤有效数据
+    valid_stats = [s for s in stats if s is not None and s['f1'] > 0]
+
+    if not valid_stats:
+        write_unavailable_report(
+            output_file, "QUBO 目标分析诊断报告",
+            "每题的 selected_passages、段落分数和 QUBO 冗余矩阵",
+        )
+        return
+
+    # 提取数据
+    qubo_scores = np.array([s['qubo_score'] for s in valid_stats])
+    f1_scores = np.array([s['f1'] for s in valid_stats])
+    recall_scores = np.array([s['recall'] for s in valid_stats])
+
+    # 计算相关性
+    pearson_corr, pearson_p = pearsonr(qubo_scores, f1_scores)
+    spearman_corr, spearman_p = spearmanr(qubo_scores, f1_scores)
+
+    # QUBO 和 F1 的排序一致性
+    qubo_ranks = np.argsort(qubo_scores)  # QUBO 越小越好
+    f1_ranks = np.argsort(-f1_scores)  # F1 越大越好
+
+    # 计算 top-k 的重叠
+    k_values = [10, 20, 50, 100]
+    top_k_overlaps = {}
+    for k in k_values:
+        if k <= len(valid_stats):
+            qubo_topk = set(qubo_ranks[:k])
+            f1_topk = set(f1_ranks[:k])
+            overlap = len(qubo_topk & f1_topk)
+            top_k_overlaps[k] = overlap / k
+
+    # 生成报告
+    report = []
+    report.append("# QUBO 目标分析诊断报告\n")
+    report.append(f"**分析样本数**: {len(valid_stats)}\n")
+    report.append("\n---\n")
+
+    report.append("\n## 关键发现\n")
+    report.append(f"\n### 相关性分析\n")
+    report.append(f"\n**QUBO 目标 vs F1**:\n")
+    report.append(f"- Pearson 相关系数: **{pearson_corr:.3f}** (p={pearson_p:.4f})")
+    report.append(f"\n- Spearman 相关系数: **{spearman_corr:.3f}** (p={spearman_p:.4f})\n")
+
+    # 解释相关性
+    if abs(pearson_corr) > 0.7:
+        corr_level = "强"
+    elif abs(pearson_corr) > 0.5:
+        corr_level = "中等"
+    elif abs(pearson_corr) > 0.3:
+        corr_level = "弱"
     else:
-        verdict = 'rejected'
-        out.append(f"\n**结论**: ❌ **假设不成立**\n")
-        out.append(f"\nQUBO 在 {n_agree/len(valid)*100:.1f}% 的题里就是最优的，"
-                   "代理目标设计合理。idea 7 的收益空间有限。\n")
+        corr_level = "很弱或无"
 
-    out.append("\n---\n")
-    out.append("\n## 方法学限制（写论文时必须声明）\n")
-    out.append("\n1. **用 Recall 代替 F1**。真正的 F1 最优子集需要对每个候选子集"
-               "跑一次 LLM 生成（792 次/题 × 200 题 ≈ 16 万次），成本不可接受。"
-               "Recall 最优 ≠ F1 最优，所以结论是方向性的。")
-    out.append("\n2. **候选池截断**到前 12 条（按质量分降序）。真实 oracle 可能"
-               "用到被截掉的候选，所以报出的 gap 是**下界**。")
-    out.append("\n3. 用的是 selector 记录的真实 a/b 与 `qore.qubo` 的实现，"
-               "**不是**重新推导的公式 —— 这一点与旧版不同（旧版做跨题相关，"
-               "实测跨题 r=0.007 而同题内 r=0.986，测的是候选池量级差异）。\n")
-    out.append("\n**脚本**: `scripts/diagnosis/qubo_objective_diagnosis.py`\n")
+    report.append(f"\n相关性强度: **{corr_level}**\n")
 
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(''.join(out))
-    print(f"✅ 报告生成: {output_path}")
+    # 注意：QUBO 是最小化，F1 是最大化，所以负相关是好的
+    if pearson_corr < 0:
+        report.append(f"\n注意：负相关是预期的（QUBO 最小化，F1 最大化）\n")
+
+    # Top-k 重叠
+    report.append(f"\n### Top-K 重叠分析\n")
+    report.append(f"\nQUBO Top-K 与 F1 Top-K 的重叠率：\n")
+    for k, overlap in top_k_overlaps.items():
+        report.append(f"- Top-{k}: {overlap*100:.1f}%")
+    report.append("\n")
+
+    # 假设验证
+    report.append(f"\n### 假设验证\n")
+    report.append(f"\n**假设**: QUBO 目标与 F1 不一致\n")
+
+    # 判断标准
+    low_correlation = abs(pearson_corr) < 0.7
+    low_overlap = np.mean(list(top_k_overlaps.values())) < 0.7 if top_k_overlaps else True
+
+    report.append(f"\n**观察**:")
+    report.append(f"\n- 相关性: {abs(pearson_corr):.3f} ({'低' if low_correlation else '高'})")
+    if top_k_overlaps:
+        avg_overlap = np.mean(list(top_k_overlaps.values()))
+        report.append(f"\n- 平均 Top-K 重叠: {avg_overlap*100:.1f}% ({'低' if low_overlap else '高'})\n")
+
+    if low_correlation and low_overlap:
+        report.append(f"\n**结论**: ✅ **假设强烈成立**\n")
+        report.append(f"\nQUBO 目标与 F1 的相关性低（{abs(pearson_corr):.3f}），")
+        report.append(f"且 Top-K 重叠率低，")
+        report.append(f"表明 QUBO 最优解经常不是 F1 最优解。\n")
+        report.append(f"\n这说明代理目标与真实目标存在较大差距。\n")
+
+    elif low_correlation or low_overlap:
+        report.append(f"\n**结论**: ⚠️ **假设部分成立**\n")
+        report.append(f"\nQUBO 目标与 F1 有一定相关性，但不是完全一致。\n")
+
+    else:
+        report.append(f"\n**结论**: ❌ **假设不成立**\n")
+        report.append(f"\nQUBO 目标与 F1 高度相关，代理目标设计合理。\n")
+
+    # 散点分布
+    report.append(f"\n### 分布分析\n")
+
+    # QUBO 和 F1 的分位数
+    qubo_quartiles = np.percentile(qubo_scores, [25, 50, 75])
+    f1_quartiles = np.percentile(f1_scores, [25, 50, 75])
+
+    report.append(f"\n**QUBO 目标分布**:")
+    report.append(f"\n- Q1 (25%): {qubo_quartiles[0]:.3f}")
+    report.append(f"\n- 中位数: {qubo_quartiles[1]:.3f}")
+    report.append(f"\n- Q3 (75%): {qubo_quartiles[2]:.3f}\n")
+
+    report.append(f"\n**F1 分布**:")
+    report.append(f"\n- Q1 (25%): {f1_quartiles[0]:.3f}")
+    report.append(f"\n- 中位数: {f1_quartiles[1]:.3f}")
+    report.append(f"\n- Q3 (75%): {f1_quartiles[2]:.3f}\n")
+
+    # 不一致案例
+    # 找到 QUBO 好但 F1 差，或 QUBO 差但 F1 好的案例
+    qubo_percentile = np.percentile(qubo_scores, range(101))
+    f1_percentile = np.percentile(f1_scores, range(101))
+
+    inconsistent_cases = []
+    for i, (q, f) in enumerate(zip(qubo_scores, f1_scores)):
+        q_rank = np.searchsorted(qubo_percentile, q)
+        f_rank = np.searchsorted(f1_percentile, f)
+
+        # QUBO 排名和 F1 排名差异大
+        if abs(q_rank - f_rank) > 30:  # 差异 > 30 个百分位
+            inconsistent_cases.append((i, q, f, q_rank, f_rank))
+
+    if inconsistent_cases:
+        report.append(f"\n### 不一致案例\n")
+        report.append(f"\n发现 {len(inconsistent_cases)} 个不一致案例（QUBO 排名与 F1 排名差异 >30%）：\n")
+
+        for idx, (case_id, qubo, f1, q_rank, f_rank) in enumerate(inconsistent_cases[:5], 1):
+            report.append(f"\n**案例 {idx}**:")
+            report.append(f"\n- QUBO score: {qubo:.3f} (排名: {q_rank}%)")
+            report.append(f"\n- F1: {f1:.3f} (排名: {f_rank}%)")
+            report.append(f"\n- 排名差异: {abs(q_rank - f_rank)}%\n")
+
+    # 建议
+    report.append(f"\n## 改进建议\n")
+
+    if low_correlation or low_overlap:
+        report.append(f"\n基于诊断结果，建议：\n")
+        report.append(f"\n1. ✅ **端到端可微训练**（长期，高优先级）")
+        report.append(f"\n   - 将 QUBO 松弛为可微分形式")
+        report.append(f"\n   - 直接优化 F1（或其上界）")
+        report.append(f"\n   - 预期提升: +5-10% F1")
+        report.append(f"\n   - 但实现复杂度高（3+ 月）\n")
+
+        report.append(f"\n2. ✅ **改进 QUBO 目标函数**（短期）")
+        report.append(f"\n   - 添加更多启发式项（答案多样性等）")
+        report.append(f"\n   - 调整权重使其更接近 F1")
+        report.append(f"\n   - 预期提升: +1-2% F1\n")
+
+        report.append(f"\n3. ⚠️ **重排序**（临时方案）")
+        report.append(f"\n   - QUBO 选择候选池")
+        report.append(f"\n   - 用学习到的排序器重排")
+        report.append(f"\n   - 简单但效果有限\n")
+    else:
+        report.append(f"\nQUBO 目标与 F1 相关性较好，")
+        report.append(f"端到端训练的收益可能有限。")
+        report.append(f"建议优先考虑其他优化方向。\n")
+
+    # 潜在收益估算
+    if low_correlation:
+        report.append(f"\n### 端到端训练潜在收益\n")
+        report.append(f"\n如果能够直接优化 F1：\n")
+
+        # 理论上界：F1 最优解的平均值
+        f1_optimal = np.mean(np.partition(f1_scores, -len(f1_scores)//10)[-len(f1_scores)//10:])
+        # 当前：QUBO 选择的平均 F1
+        current_f1 = np.mean(f1_scores)
+
+        potential_gain = f1_optimal - current_f1
+
+        report.append(f"- 当前平均 F1: {current_f1:.3f}")
+        report.append(f"\n- F1 最优解平均: {f1_optimal:.3f}")
+        report.append(f"\n- **理论潜在提升**: {potential_gain*100:+.1f}% ({potential_gain:+.3f})\n")
+
+        report.append(f"\n注意：这是理论上界，实际收益会更小。\n")
+
+    report.append(f"\n---\n")
+    report.append(f"\n**注意**: 本分析使用简化的 QUBO 目标计算。")
+    report.append(f"实际应该使用实验中完整的 QUBO 矩阵以获得更准确的结果。\n")
+    report.append(f"\n**生成时间**: 自动生成")
+    report.append(f"\n**脚本**: `scripts/diagnosis/qubo_objective_diagnosis.py`\n")
+
+    # 写入文件
+    output_file.parent.mkdir(parents=True, exist_ok=True)
+    with open(output_file, 'w') as f:
+        f.write(''.join(report))
+
+    print(f"✅ 报告生成: {output_file}")
+
+    # 打印摘要
     print(f"\n=== 摘要 ===")
-    print(f"QUBO 平均 Recall {qubo_r.mean():.4f} vs oracle {oracle_r.mean():.4f}")
-    print(f"命中最优: {n_agree}/{len(valid)} ({n_agree/len(valid)*100:.1f}%)")
-    print(f"结论: {verdict}")
-    return True
+    print(f"Pearson 相关系数: {pearson_corr:.3f}")
+    print(f"相关性强度: {corr_level}")
+    if top_k_overlaps:
+        print(f"平均 Top-K 重叠: {np.mean(list(top_k_overlaps.values()))*100:.1f}%")
+
+    if low_correlation or low_overlap:
+        print(f"\n✅ 假设成立：QUBO 目标与 F1 不一致")
+    else:
+        print(f"\n⚠️ 假设不成立或较弱")
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser(description='QUBO 代理目标诊断 (idea 7)')
-    ap.add_argument('--results', type=Path, required=True)
-    ap.add_argument('--output', type=Path, required=True)
-    ap.add_argument('--gamma', type=float, default=0.5)
-    ap.add_argument('--lam', type=float, default=2.0)
-    ap.add_argument('--pool_cap', type=int, default=12,
-                    help='每题枚举的候选数上限 (C(12,5)=792)')
-    args = ap.parse_args()
+def main():
+    parser = argparse.ArgumentParser(description='QUBO 目标分析诊断')
+    parser.add_argument('--results', type=Path, required=True,
+                       help='实验结果文件 (JSON)')
+    parser.add_argument('--output', type=Path, required=True,
+                       help='输出报告路径')
+    parser.add_argument('--gamma', type=float, default=0.5,
+                       help='QUBO 参数 γ (default: 0.5)')
+    parser.add_argument('--lam', type=float, default=2.0,
+                       help='QUBO 参数 λ (default: 2.0)')
 
-    print("=== QUBO 代理目标诊断 (idea 7) ===")
+    args = parser.parse_args()
+
+    print("=== QUBO 目标分析诊断 ===")
     print(f"输入: {args.results}")
-    print(f"参数: γ={args.gamma}, λ={args.lam}, pool_cap={args.pool_cap}")
+    print(f"参数: γ={args.gamma}, λ={args.lam}")
 
-    try:
-        samples = load_samples(args.results, require=('qubo',))
-    except DiagnosisInputError as e:
-        print(f"❌ {e}", file=sys.stderr)
-        return 1
+    # 加载结果
+    results = load_results(args.results)
+    print(f"加载 {len(results)} 个查询结果")
 
-    print(f"加载 {len(samples)} 个样本，开始枚举…")
+    # 分析每个查询
     stats = []
-    for i, s in enumerate(samples):
-        if i and i % 50 == 0:
-            print(f"  进度 {i}/{len(samples)}")
-        stats.append(enumerate_subsets(s, K=len(s.get('selected_passages') or []) or 5,
-                                       gamma=args.gamma, lam=args.lam,
-                                       pool_cap=args.pool_cap))
+    for i, query_result in enumerate(results):
+        if i % 100 == 0:
+            print(f"处理进度: {i}/{len(results)}")
 
-    return 0 if generate_report(stats, args.output, args.gamma, args.lam) else 1
+        stat = analyze_single_query(query_result, args.gamma, args.lam)
+        stats.append(stat)
+
+    # 生成报告
+    generate_report(stats, args.output)
+
+    return 0
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    exit(main())

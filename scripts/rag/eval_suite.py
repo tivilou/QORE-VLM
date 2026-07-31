@@ -77,7 +77,7 @@ def parse_args():
 
     # Generation
     p.add_argument("--model_path",
-                   default="meta-llama/Meta-Llama-3-8B-Instruct")
+                   default="/root/QORE-VLM/models/llama3-8b")
     p.add_argument("--skip_generation", action="store_true")
 
     # Batch control

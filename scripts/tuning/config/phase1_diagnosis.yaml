@@ -1,23 +1,5 @@
 # 实验配置文件 - Phase 1 诊断
-#
 # γ 极端值测试：理解多样性的作用，指导后续模型设计
-#
-# 注意：这里必须用 # 注释。之前开头是 Python 三引号 docstring，
-# yaml.safe_load 会直接 ParserError，run_tuning_suite 读配置就崩。
-#
-# ⚠️ 本配置**开启生成**（无 skip_generation），因为 5 个诊断里有 3 个依赖 F1：
-#      1. γ sweep        需要 F1 才能谈"多样性对下游 QA 的影响"
-#      2. 答案多样性      需要 F1 算"回收槽位能否提升质量"的相关性
-#      3. 查询类型        需要 F1 才能按类型选最优 γ
-#      4. 上下文依赖      不依赖 F1
-#      5. QUBO 目标       需要 F1 作为对照（这是该诊断的全部意义）
-#
-#    代价：加载 Llama-3-8B + 200 题 × 3 配置的生成时间（约 +10-15 分钟/配置）。
-#    若只想快速验证流程跑通，用 quick_test.yaml（10 题），别在这里加
-#    skip_generation —— 那会让 3 和 5 直接报错、2 只能给"待验证"。
-#
-#    dump_passages 同样是诊断的硬需求（question/selected_passages/matched_answers），
-#    两个 flag 缺任一个，run_all_diagnosis.sh 都会报错并指明缺什么。
 
 name: "Phase 1: Diagnosis (Gamma Sweep)"
 description: "测试 γ 极端值，理解多样性对 Recall 和冗余度的影响"
@@ -43,12 +25,10 @@ experiments:
       direct_solve_max_n: 20
       use_answer_scorer: true
       seed: 42
-      # 诊断脚本需要 question/selected_passages/matched_answers,
-      # 缺了会直接报错退出(不再静默产出空报告)
-      dump_passages: true
+      skip_generation: true
       output_dir: "{output_dir}/experiments/gamma_0.0"
       output_file: "result.json"
-    expected_time_minutes: 35
+    expected_time_minutes: 20
 
   # 实验 2: 平衡（γ=0.5）
   - name: "gamma_0.5"
@@ -65,12 +45,10 @@ experiments:
       direct_solve_max_n: 20
       use_answer_scorer: true
       seed: 42
-      # 诊断脚本需要 question/selected_passages/matched_answers,
-      # 缺了会直接报错退出(不再静默产出空报告)
-      dump_passages: true
+      skip_generation: true
       output_dir: "{output_dir}/experiments/gamma_0.5"
       output_file: "result.json"
-    expected_time_minutes: 35
+    expected_time_minutes: 20
 
   # 实验 3: 纯多样性（γ=1.0）
   - name: "gamma_1.0"
@@ -87,25 +65,20 @@ experiments:
       direct_solve_max_n: 20
       use_answer_scorer: true
       seed: 42
-      # 诊断脚本需要 question/selected_passages/matched_answers,
-      # 缺了会直接报错退出(不再静默产出空报告)
-      dump_passages: true
+      skip_generation: true
       output_dir: "{output_dir}/experiments/gamma_1.0"
       output_file: "result.json"
-    expected_time_minutes: 35
+    expected_time_minutes: 20
 
 # 后处理配置
 post_process:
   # 分析结果
   analyze:
     enabled: true
-    # 必须指向仓库内的脚本。之前指向 scratch/research/ 下的副本，
-    # 而 /scratch/ 被 .gitignore 排除，合作者 pull 后拿不到，
-    # post_process 只会打印「分析脚本不存在」，analysis.md 永远是空的。
-    script: "scripts/diagnosis/gamma_sweep_diagnosis.py"
+    script: "scratch/research/scripts/analyze_gamma_diagnosis.py"
     args:
       results_dir: "{output_dir}/experiments"
-      output: "{output_dir}/analysis/gamma_sweep.md"
+      output: "{output_dir}/analysis/analysis.md"
 
   # 打包结果
   package:
@@ -130,14 +103,10 @@ execution:
   parallel: 1
 
   # 失败重试次数
-  # ⚠️ 超时也算失败并触发重试。若因超时被杀会白跑 3 遍（75×3 ≈ 3.75h）。
-  #    真超时了先看 experiments/<name>/stderr.log，别直接重跑。
   retry_on_failure: 2
 
-  # 超时设置（分钟）—— 这是硬杀子进程的上限，不是提示
-  # 开生成后单配置约 30-35 分钟（加载 Llama-3-8B + 200 题生成），留余量到 75。
-  # 原值 30 是无生成时的设定，开生成后会中途被杀。
-  timeout_minutes: 75
+  # 超时设置（分钟）
+  timeout_minutes: 30
 
   # 环境检查
   pre_checks:

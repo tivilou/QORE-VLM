@@ -5,19 +5,19 @@
 自动运行、监控、分析和打包实验结果
 
 使用方法:
-    python scripts/tuning/run_tuning_suite.py \\
-        --config scripts/tuning/config/phase1_diagnosis.yaml \\
+    python scripts/experiments/run_tuning_suite.py \\
+        --config config/phase1_diagnosis.yaml \\
         --parallel 1 \\
         --retry 2
 
 示例:
     # Phase 1 诊断
-    python scripts/tuning/run_tuning_suite.py \\
-        --config scripts/tuning/config/phase1_diagnosis.yaml
+    python scripts/experiments/run_tuning_suite.py \\
+        --config scripts/experiments/config/phase1_diagnosis.yaml
 
     # 快速测试（只跑 50 题）
-    python scripts/tuning/run_tuning_suite.py \\
-        --config scripts/tuning/config/phase1_diagnosis.yaml \\
+    python scripts/experiments/run_tuning_suite.py \\
+        --config scripts/experiments/config/phase1_diagnosis.yaml \\
         --override max_samples=50
 """
 
@@ -34,6 +34,9 @@ from typing import Dict, Any, List
 # 添加项目根目录到路径
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
+# This suite lives under ``scripts.tuning``.  Keep the imports aligned with the
+# on-disk package so invoking it as ``python scripts/tuning/run_tuning_suite.py``
+# works from the repository root.
 from scripts.tuning.utils.experiment_runner import ExperimentRunner
 from scripts.tuning.utils.result_analyzer import ResultAnalyzer
 from scripts.tuning.utils.packager import ResultPackager
@@ -181,9 +184,19 @@ class TuningSuite:
                     print(f"  ✅ 成功 (耗时: {info['elapsed_seconds']:.0f}s)")
                     if 'metrics' in info:
                         m = info['metrics']
+<<<<<<< Updated upstream
                         print(f"     Recall: {_fmt_metric(m.get('recall'))}, "
                               f"F1: {_fmt_metric(m.get('f1'))}, "
                               f"冗余: {_fmt_metric(m.get('redundancy'))}")
+=======
+                        def format_metric(value: Any) -> str:
+                            """Format optional metrics returned by an evaluator."""
+                            return f"{value:.4f}" if isinstance(value, (int, float)) else "N/A"
+
+                        print(f"     Recall: {format_metric(m.get('recall'))}, "
+                              f"F1: {format_metric(m.get('f1'))}, "
+                              f"冗余: {format_metric(m.get('redundancy'))}")
+>>>>>>> Stashed changes
                 else:
                     print(f"  ❌ 失败: {info.get('error', 'Unknown error')}")
 

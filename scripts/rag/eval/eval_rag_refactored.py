@@ -12,7 +12,7 @@ Usage:
         --corpus_mode aligned \\
         --corpus_output_dir data/nq_corpus \\
         --method qore \\
-        --model_path meta-llama/Meta-Llama-3-8B-Instruct \\
+        --model_path /root/QORE-VLM/models/llama3-8b \\
         --max_samples 100
 
     # Precomputed mode (use dataset's own candidates, e.g. HotpotQA distractor)
@@ -148,7 +148,7 @@ def parse_args():
 
     # Generation
     p.add_argument("--model_path",
-                   default="meta-llama/Meta-Llama-3-8B-Instruct",
+                   default="/root/QORE-VLM/models/llama3-8b",
                    help="HF model for answer generation")
     p.add_argument("--skip_generation", action="store_true",
                    help="Skip LLM generation (selection-only eval)")
