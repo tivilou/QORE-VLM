@@ -10,7 +10,12 @@
 
 ### 脚本
 
-- **`run_p3_experiments.sh`** - 一键运行所有 Phase 3 实验
+- **`run_full_pipeline.sh`** ⭐ **推荐** - 一键全流程自动化
+  - 运行所有实验 + 分析结果 + 打包提交
+  - 完全自动化，无需人工干预
+  - 预计时间：4.5-9 小时
+
+- **`run_p3_experiments.sh`** - 仅运行实验（不分析和打包）
   - 3 个配置（baseline + 2 idea6 变体）
   - 3 个随机种子（42, 43, 44）
   - 总计 9 次运行
@@ -36,7 +41,22 @@
 
 ## 🚀 使用方法
 
-### 1. 运行完整实验（推荐）
+### 1. 一键全流程（⭐ 最推荐）
+
+```bash
+cd /home/Q-DUET-VLM/QORE-VLM
+
+# 使用 tmux 运行（推荐，防止断开）
+tmux new -s idea6_p3
+bash scripts/collab/idea6_phase3/run_full_pipeline.sh
+
+# 分离会话：Ctrl+B, 然后按 D
+# 重新连接：tmux attach -t idea6_p3
+```
+
+**优势**: 实验 → 分析 → 打包全自动，完成后直接可提交
+
+### 1b. 仅运行实验（手动分析）
 
 ```bash
 cd /home/Q-DUET-VLM/QORE-VLM
@@ -56,7 +76,7 @@ bash scripts/collab/idea6_phase3/run_p3_experiments.sh
 bash scripts/collab/idea6_phase3/quick_test.sh
 ```
 
-### 3. 分析结果
+### 3. 分析结果（如果手动运行）
 
 ```bash
 # 实验完成后分析结果
@@ -64,13 +84,17 @@ python scripts/collab/idea6_phase3/analyze_p3_results.py \
     exchange/p3_solver_idea6/YYYYMMDDTHHMMSS
 ```
 
-### 4. 打包结果
+**注**: `run_full_pipeline.sh` 会自动执行此步骤
+
+### 4. 打包结果（如果手动运行）
 
 ```bash
 # 打包用于 GitHub 提交
 python scripts/collab/idea6_phase3/package_p3_results.py \
     exchange/p3_solver_idea6/YYYYMMDDTHHMMSS
 ```
+
+**注**: `run_full_pipeline.sh` 会自动执行此步骤
 
 ---
 
