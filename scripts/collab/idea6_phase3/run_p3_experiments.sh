@@ -6,7 +6,7 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
 cd "$PROJECT_ROOT"
 
 TIMESTAMP=$(date +%Y%m%dT%H%M%S)
@@ -83,6 +83,6 @@ echo "结果保存在: ${OUTPUT_BASE}"
 echo ""
 echo "下一步："
 echo "1. 查看结果: ls -la ${OUTPUT_BASE}/seed_*/"
-echo "2. 分析结果: python scripts/collab/analyze_p3_results.py ${OUTPUT_BASE}"
-echo "3. 打包结果: python scripts/collab/package_p3_results.py ${OUTPUT_BASE}"
+echo "2. 分析结果: python scripts/collab/idea6_phase3/analyze_p3_results.py ${OUTPUT_BASE}"
+echo "3. 打包结果: python scripts/collab/idea6_phase3/package_p3_results.py ${OUTPUT_BASE}"
 echo ""
