@@ -101,6 +101,10 @@ def load_training_data(result_json_path: str, max_samples: int = 0) -> list[dict
         if passages_key is None:
             continue
 
+        # Get query embedding (required for training)
+        if "query_embedding" not in item or item["query_embedding"] is None:
+            continue  # Skip samples without query embedding
+
         # Find gold indices
         gold_indices = []
         for j, passage in enumerate(item[passages_key]):
@@ -124,6 +128,7 @@ def load_training_data(result_json_path: str, max_samples: int = 0) -> list[dict
 
         samples.append({
             "question": item.get("question", ""),
+            "query_embedding": np.array(item["query_embedding"], dtype=np.float32),
             "embeddings": np.array(embeddings, dtype=np.float32),
             "gold_indices": gold_indices,
             "texts": [p["text"] for p in item[passages_key]],
@@ -154,16 +159,9 @@ def train_epoch(
     for sample in train_data:
         passage_embs = torch.from_numpy(sample["embeddings"]).float().to(device)
         gold_indices = torch.tensor(sample["gold_indices"], dtype=torch.long, device=device)
+        query_emb = torch.from_numpy(sample["query_embedding"]).float().to(device)
 
         N = len(passage_embs)
-
-        # Compute quality: use first passage as "query" (rough approximation)
-        # In reality, should use actual query embedding
-        # For MVP: use mean of gold embeddings as "query"
-        if len(gold_indices) > 0:
-            query_emb = passage_embs[gold_indices].mean(dim=0)
-        else:
-            query_emb = passage_embs.mean(dim=0)
 
         # Quality: cosine similarity with query
         query_norm = query_emb / (torch.norm(query_emb) + 1e-12)
@@ -289,11 +287,7 @@ def main():
                 for sample in val_samples:
                     passage_embs = torch.from_numpy(sample["embeddings"]).float().to(device)
                     gold_indices = torch.tensor(sample["gold_indices"], dtype=torch.long, device=device)
-
-                    if len(gold_indices) > 0:
-                        query_emb = passage_embs[gold_indices].mean(dim=0)
-                    else:
-                        query_emb = passage_embs.mean(dim=0)
+                    query_emb = torch.from_numpy(sample["query_embedding"]).float().to(device)
 
                     query_norm = query_emb / (torch.norm(query_emb) + 1e-12)
                     passage_norms = passage_embs / (torch.norm(passage_embs, dim=1, keepdim=True) + 1e-12)

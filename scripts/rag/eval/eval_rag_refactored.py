@@ -482,6 +482,7 @@ def main():
                 {
                     "question": question,
                     "gold_answers": list(gold_answers),
+                    "query_embedding": query_emb.tolist() if query_emb is not None else None,
                     "selected_passages": selected_passages,
                     "all_candidates": all_candidates,
                     "qubo": qubo_diag or None,
