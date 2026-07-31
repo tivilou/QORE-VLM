@@ -91,9 +91,13 @@ def load_training_data(result_json_path: str, max_samples: int = 0) -> list[dict
             continue
 
         # Format 2: result.json from eval_rag_refactored
-        # Field name can be "retrieved" or "selected_passages"
+        # Priority: use "retrieved_passages" (all candidates) over "selected_passages" (QORE output)
+        # This is critical for Idea 7: we want to train on the full retrieval pool,
+        # not on QORE's already-optimized selection.
         passages_key = None
-        if "retrieved" in item and len(item["retrieved"]) > 0:
+        if "retrieved_passages" in item and item["retrieved_passages"] and len(item["retrieved_passages"]) > 0:
+            passages_key = "retrieved_passages"
+        elif "retrieved" in item and len(item["retrieved"]) > 0:
             passages_key = "retrieved"
         elif "selected_passages" in item and len(item["selected_passages"]) > 0:
             passages_key = "selected_passages"

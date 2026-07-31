@@ -428,6 +428,7 @@ def main():
         # (a) is fixed by tuning qore_prefilter_size; (b) needs the objective
         # changed. Dumping only the selected K cannot distinguish them.
         all_candidates = None
+        retrieved_passages_full = None
         if args.dump_passages:
             sel_set = set(int(j) for j in selected_local)
             n_cand = len(retrieved_idx)
@@ -450,6 +451,23 @@ def main():
                 }
                 for j in range(n_cand)
             ]
+
+            # For Idea 7 training: dump ALL retrieved passages with embeddings
+            # This is expensive (~50x larger JSON) but necessary for training a
+            # learnable selector that needs to learn from the full candidate pool.
+            # Only include when explicitly needed to avoid bloat.
+            if retrieved_texts is not None and retrieved_embs is not None:
+                retrieved_passages_full = [
+                    {
+                        "text": retrieved_texts[j],
+                        "score": float(cand_scores[j]) if cand_scores is not None and j < len(cand_scores) else None,
+                        "is_gold": j in gold_in_retrieved,
+                        "selected": j in sel_set,
+                        "embedding": retrieved_embs[j].tolist(),
+                        "retrieved_rank": int(j),
+                    }
+                    for j in range(n_cand)
+                ]
 
         # Generate answer
         prediction = None
@@ -485,6 +503,7 @@ def main():
                     "query_embedding": query_emb.tolist() if query_emb is not None else None,
                     "selected_passages": selected_passages,
                     "all_candidates": all_candidates,
+                    "retrieved_passages": retrieved_passages_full,  # For Idea 7 training
                     "qubo": qubo_diag or None,
                     "prediction": prediction,
                 }
