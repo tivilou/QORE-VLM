@@ -18,6 +18,14 @@ from pathlib import Path
 import shutil
 
 
+def find_result_file(config_dir: Path) -> Path | None:
+    for name in ("result.json", "qore_K5_seed*.json"):
+        matches = sorted(config_dir.glob(name))
+        if matches:
+            return matches[0]
+    return None
+
+
 def main():
     parser = argparse.ArgumentParser(description="Package Phase 3 results")
     parser.add_argument("result_dir", help="Path to Phase 3 result directory")
@@ -60,22 +68,23 @@ def main():
             f.write("|------|----------|----|----|------------|\n")
 
             for seed in seeds:
-                result_file = result_dir / f"seed_{seed}" / config / "result.json"
-                if result_file.exists():
+                result_file = find_result_file(result_dir / f"seed_{seed}" / config)
+                if result_file:
                     with open(result_file) as rf:
                         data = json.load(rf)
                         metrics = data.get("metrics", {})
-                        recall = metrics.get("recall_at_5", 0.0)
-                        f1 = metrics.get("f1", 0.0)
-                        em = metrics.get("exact_match", 0.0)
-                        red = metrics.get("redundancy", 0.0)
-                        f.write(f"| {seed} | {recall:.4f} | {f1:.4f} | {em:.4f} | {red:.4f} |\n")
+                        recall = metrics.get("recall_at_5", metrics.get("mean_recall"))
+                        f1 = metrics.get("f1")
+                        em = metrics.get("exact_match")
+                        red = metrics.get("redundancy", metrics.get("mean_redundancy"))
+                        fmt = lambda value: f"{value:.4f}" if value is not None else "N/A"
+                        f.write(f"| {seed} | {fmt(recall)} | {fmt(f1)} | {fmt(em)} | {fmt(red)} |\n")
 
             f.write("\n")
 
         f.write("---\n\n")
         f.write("## Files\n\n")
-        f.write("- `results.zip`: Compressed result.json files\n")
+        f.write("- `results.zip`: Compressed evaluator result JSON files\n")
         f.write("- `seed_XX/CONFIG/log.txt`: Execution logs (uncompressed)\n")
         f.write("- `git_*.txt`: Git status information\n")
         f.write("\n")
@@ -91,7 +100,9 @@ def main():
     print("Creating zip archive...")
     with zipfile.ZipFile(output_zip, "w", zipfile.ZIP_DEFLATED) as zf:
         # Add result.json files
-        for result_file in result_dir.rglob("result.json"):
+        for result_file in result_dir.rglob("*.json"):
+            if result_file.name in {"git_commit.txt", "git_status.txt"}:
+                continue
             arcname = result_file.relative_to(result_dir)
             zf.write(result_file, arcname)
             print(f"  + {arcname}")

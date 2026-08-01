@@ -1,0 +1,18 @@
+ M scripts/collab/idea6_phase3/run_full_pipeline.sh
+ M scripts/collab/idea6_phase3/run_p3_experiments.sh
+?? QORE-VLM_without_models.tar.gz
+?? docs/rag_e2e_10_30_analysis.md
+?? docs/rag_e2e_200_result_analysis.md
+?? exchange/idea7_phase2/20260730T135345/
+?? exchange/idea7_phase2/20260730T144430/
+?? exchange/idea7_phase2/20260730T151508/
+?? exchange/idea7_phase2/20260730T155515/
+?? exchange/idea7_phase2/20260730T173005/
+?? exchange/idea7_phase2/20260730T210806/
+?? exchange/idea7_phase2/20260731T102641/
+?? exchange/idea7_phase2/20260731T104003/
+?? exchange/idea7_phase2/20260731T105523/
+?? exchange/p2_idea7_diagnosis/20260730T110656/
+?? exchange/p3_solver_idea6/
+?? models/
+?? scripts/diagnosis/result_adapter.py

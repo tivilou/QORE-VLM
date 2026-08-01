@@ -10,18 +10,27 @@ from pathlib import Path
 import numpy as np
 
 
+def find_result_file(config_dir: Path) -> Path | None:
+    """Find the evaluator output, supporting legacy and current filenames."""
+    for name in ("result.json", "qore_K5_seed*.json"):
+        matches = sorted(config_dir.glob(name))
+        if matches:
+            return matches[0]
+    return None
+
+
 def load_result(result_path: Path) -> dict:
-    """Load result.json and extract key metrics."""
+    """Load an evaluator result and normalize metric names."""
     with open(result_path) as f:
         data = json.load(f)
 
     metrics = data.get("metrics", {})
     return {
-        "recall_at_5": metrics.get("recall_at_5", 0.0),
-        "f1": metrics.get("f1", 0.0),
-        "exact_match": metrics.get("exact_match", 0.0),
-        "redundancy": metrics.get("redundancy", 0.0),
-        "precision": metrics.get("precision", 0.0),
+        "recall_at_5": metrics.get("recall_at_5", metrics.get("mean_recall")),
+        "f1": metrics.get("f1"),
+        "exact_match": metrics.get("exact_match"),
+        "redundancy": metrics.get("redundancy", metrics.get("mean_redundancy")),
+        "precision": metrics.get("precision", metrics.get("mean_precision")),
     }
 
 
@@ -49,11 +58,12 @@ def main():
     for config in configs:
         results[config] = {}
         for seed in seeds:
-            result_path = result_dir / f"seed_{seed}" / config / "result.json"
-            if result_path.exists():
+            config_dir = result_dir / f"seed_{seed}" / config
+            result_path = find_result_file(config_dir)
+            if result_path:
                 results[config][seed] = load_result(result_path)
             else:
-                print(f"Warning: Missing {result_path}")
+                print(f"Warning: Missing result file in {config_dir}")
 
     # Print summary table
     print("Results Summary:")
@@ -65,8 +75,9 @@ def main():
         for seed in seeds:
             if seed in results[config]:
                 r = results[config][seed]
-                print(f"{config:<20} {seed:<6} {r['recall_at_5']:<10.4f} {r['f1']:<10.4f} "
-                      f"{r['exact_match']:<10.4f} {r['redundancy']:<12.4f}")
+                fmt = lambda value: f"{value:.4f}" if value is not None else "N/A"
+                print(f"{config:<20} {seed:<6} {fmt(r['recall_at_5']):<10} {fmt(r['f1']):<10} "
+                      f"{fmt(r['exact_match']):<10} {fmt(r['redundancy']):<12}")
 
     print()
     print("=" * 70)
@@ -84,17 +95,17 @@ def main():
             continue
 
         recall_vals = [results[config][s]["recall_at_5"] for s in results[config]]
-        f1_vals = [results[config][s]["f1"] for s in results[config]]
-        em_vals = [results[config][s]["exact_match"] for s in results[config]]
+        f1_vals = [results[config][s]["f1"] for s in results[config] if results[config][s]["f1"] is not None]
+        em_vals = [results[config][s]["exact_match"] for s in results[config] if results[config][s]["exact_match"] is not None]
         red_vals = [results[config][s]["redundancy"] for s in results[config]]
 
         avg_recall = np.mean(recall_vals)
-        avg_f1 = np.mean(f1_vals)
-        avg_em = np.mean(em_vals)
+        avg_f1 = np.mean(f1_vals) if f1_vals else None
+        avg_em = np.mean(em_vals) if em_vals else None
         avg_red = np.mean(red_vals)
 
         std_recall = np.std(recall_vals)
-        std_f1 = np.std(f1_vals)
+        std_f1 = np.std(f1_vals) if f1_vals else None
 
         if config == "baseline":
             baseline_avg = {
@@ -104,18 +115,15 @@ def main():
                 "redundancy": avg_red,
             }
             print(f"{config:<20} {avg_recall:.4f}±{std_recall:.4f}  "
-                  f"{avg_f1:.4f}±{std_f1:.4f}  "
-                  f"{avg_em:.4f}  {avg_red:.4f}")
+                  f"{avg_f1:.4f}±{std_f1:.4f}" if avg_f1 is not None else f"{config:<20} {avg_recall:.4f}±{std_recall:.4f}  F1=N/A", end="")
+            print(f"  {avg_em:.4f}  {avg_red:.4f}" if avg_em is not None else f"  EM=N/A  {avg_red:.4f}")
         else:
             delta_recall = (avg_recall - baseline_avg["recall"]) / baseline_avg["recall"] * 100
-            delta_f1 = (avg_f1 - baseline_avg["f1"]) / baseline_avg["f1"] * 100
-            delta_em = (avg_em - baseline_avg["em"]) / baseline_avg["em"] * 100 if baseline_avg["em"] > 0 else 0
             delta_red = (avg_red - baseline_avg["redundancy"]) / baseline_avg["redundancy"] * 100
-
+            f1_text = f"{avg_f1:.4f}" if avg_f1 is not None else "N/A"
+            em_text = f"{avg_em:.4f}" if avg_em is not None else "N/A"
             print(f"{config:<20} {avg_recall:.4f}±{std_recall:.4f} ({delta_recall:+.1f}%)  "
-                  f"{avg_f1:.4f}±{std_f1:.4f} ({delta_f1:+.1f}%)  "
-                  f"{avg_em:.4f} ({delta_em:+.1f}%)  "
-                  f"{avg_red:.4f} ({delta_red:+.1f}%)")
+                  f"{f1_text}  {em_text}  {avg_red:.4f} ({delta_red:+.1f}%)")
 
     print()
     print("=" * 70)
@@ -129,18 +137,14 @@ def main():
                 continue
 
             recall_vals = [results[config][s]["recall_at_5"] for s in results[config]]
-            f1_vals = [results[config][s]["f1"] for s in results[config]]
-
             avg_recall = np.mean(recall_vals)
-            avg_f1 = np.mean(f1_vals)
             std_recall = np.std(recall_vals)
 
             delta_recall_pct = (avg_recall - baseline_avg["recall"]) / baseline_avg["recall"] * 100
-            delta_f1_pct = (avg_f1 - baseline_avg["f1"]) / baseline_avg["f1"] * 100
 
             print(f"{config}:")
             print(f"  ✓ Recall@5 提升: {delta_recall_pct:.1f}% (target: ≥35%)")
-            print(f"  ✓ F1 提升: {delta_f1_pct:.1f}% (target: ≥10%)")
+            print("  - F1: 当前 evaluator 未输出该指标")
             print(f"  ✓ 结果稳定性: std={std_recall:.4f} (target: <0.02)")
             print()
 
