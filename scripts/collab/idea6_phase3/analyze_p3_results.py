@@ -27,8 +27,8 @@ def load_result(result_path: Path) -> dict:
     metrics = data.get("metrics", {})
     return {
         "recall_at_5": metrics.get("recall_at_5", metrics.get("mean_recall")),
-        "f1": metrics.get("f1"),
-        "exact_match": metrics.get("exact_match"),
+        "f1": metrics.get("f1", metrics.get("mean_f1")),
+        "exact_match": metrics.get("exact_match", metrics.get("mean_em")),
         "redundancy": metrics.get("redundancy", metrics.get("mean_redundancy")),
         "precision": metrics.get("precision", metrics.get("mean_precision")),
     }
@@ -137,6 +137,11 @@ def main():
                 continue
 
             recall_vals = [results[config][s]["recall_at_5"] for s in results[config]]
+            f1_vals = [
+                results[config][s]["f1"]
+                for s in results[config]
+                if results[config][s]["f1"] is not None
+            ]
             avg_recall = np.mean(recall_vals)
             std_recall = np.std(recall_vals)
 
@@ -144,7 +149,15 @@ def main():
 
             print(f"{config}:")
             print(f"  ✓ Recall@5 提升: {delta_recall_pct:.1f}% (target: ≥35%)")
-            print("  - F1: 当前 evaluator 未输出该指标")
+            if f1_vals and baseline_avg["f1"] is not None:
+                avg_f1 = np.mean(f1_vals)
+                delta_f1 = avg_f1 - baseline_avg["f1"]
+                print(
+                    f"  - F1: {avg_f1:.4f} "
+                    f"(baseline={baseline_avg['f1']:.4f}, Δ={delta_f1:+.4f})"
+                )
+            else:
+                print("  - F1: N/A (generation metric missing)")
             print(f"  ✓ 结果稳定性: std={std_recall:.4f} (target: <0.02)")
             print()
 

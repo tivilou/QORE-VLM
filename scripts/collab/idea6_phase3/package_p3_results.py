@@ -74,8 +74,8 @@ def main():
                         data = json.load(rf)
                         metrics = data.get("metrics", {})
                         recall = metrics.get("recall_at_5", metrics.get("mean_recall"))
-                        f1 = metrics.get("f1")
-                        em = metrics.get("exact_match")
+                        f1 = metrics.get("f1", metrics.get("mean_f1"))
+                        em = metrics.get("exact_match", metrics.get("mean_em"))
                         red = metrics.get("redundancy", metrics.get("mean_redundancy"))
                         fmt = lambda value: f"{value:.4f}" if value is not None else "N/A"
                         f.write(f"| {seed} | {fmt(recall)} | {fmt(f1)} | {fmt(em)} | {fmt(red)} |\n")
