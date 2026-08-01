@@ -22,11 +22,10 @@ selection:
         method: "dpr"
 
 retrieval:
-  corpus_mode: "aligned"
-  n_distractors: 36000
+  corpus_mode: "wiki_dpr"  # Fixed: aligned mode requires pre-built corpus
 
 generation:
-  skip: true  # Skip generation for faster experiment
+  skip: false  # Enable full evaluation (F1/EM)
 
 # Context requirements for Idea 6
 answer_scorer:
