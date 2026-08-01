@@ -1,0 +1,59 @@
+diff --cc scripts/tuning/config/quick_test.yaml
+index 2b7f09e,5719c63..0000000
+--- a/scripts/tuning/config/quick_test.yaml
++++ b/scripts/tuning/config/quick_test.yaml
+@@@ -1,21 -1,5 +1,24 @@@
+  # 快速测试配置 - 验证框架是否正常工作
+  # 只跑 10 题，3 个实验，预计 5 分钟完成
+ +<<<<<<< Updated upstream
+++<<<<<<< Updated upstream
+ +#
+ +# 用途仅限「跑通流程」：10 题不足以支撑任何诊断结论
+ +#（全量教训：40 题 F1=59.9%，全量 3610 题只有 47.0%）。
+ +#
+ +# ⚠️ 与 phase1_diagnosis.yaml 的关键差异：本配置**保留 skip_generation**（不跑生成），
+ +#    为的是 5 分钟内验完流程。代价是没有 F1。
+ +#
+ +#    本配置的 post_process 只跑 γ sweep 这一个分析（不是完整的四个诊断），
+ +#    而 γ sweep 容忍缺 F1：它会打印「⚠️ 无 F1 数据（--skip_generation），
+ +#    结论仅覆盖检索侧」然后正常退出 0。所以 Step 2 不会因为缺 F1 报错。
+ +#
+ +#    但 10 题 + 无 F1 的结果**不足以支撑任何诊断结论**。
+ +#    要拿真结论用 phase1_diagnosis.yaml（200 题、开生成、四个诊断都能出结论）。
+ +=======
+ +>>>>>>> Stashed changes
+++=======
+++>>>>>>> Stashed changes
+  
+  name: "Quick Test (10 samples)"
+  description: "快速测试框架功能，只跑 10 题"
+diff --cc scripts/tuning/run_tuning_suite.py
+index 39d7011,5cf162f..0000000
+--- a/scripts/tuning/run_tuning_suite.py
++++ b/scripts/tuning/run_tuning_suite.py
+@@@ -184,11 -167,6 +184,14 @@@ class TuningSuite
+                      print(f"  ✅ 成功 (耗时: {info['elapsed_seconds']:.0f}s)")
+                      if 'metrics' in info:
+                          m = info['metrics']
+++<<<<<<< Updated upstream
+ +<<<<<<< Updated upstream
+ +                        print(f"     Recall: {_fmt_metric(m.get('recall'))}, "
+ +                              f"F1: {_fmt_metric(m.get('f1'))}, "
+ +                              f"冗余: {_fmt_metric(m.get('redundancy'))}")
+ +=======
+++=======
+++>>>>>>> Stashed changes
+                          def format_metric(value: Any) -> str:
+                              """Format optional metrics returned by an evaluator."""
+                              return f"{value:.4f}" if isinstance(value, (int, float)) else "N/A"
+@@@ -196,7 -174,6 +199,10 @@@
+                          print(f"     Recall: {format_metric(m.get('recall'))}, "
+                                f"F1: {format_metric(m.get('f1'))}, "
+                                f"冗余: {format_metric(m.get('redundancy'))}")
+++<<<<<<< Updated upstream
+++>>>>>>> Stashed changes
+++=======
+ +>>>>>>> Stashed changes
+                  else:
+                      print(f"  ❌ 失败: {info.get('error', 'Unknown error')}")
+  
