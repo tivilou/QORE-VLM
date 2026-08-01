@@ -73,7 +73,6 @@ for seed in "${SEEDS[@]}"; do
                     --K 5 \
                     --lam 2.0 \
                     --gamma 0.5 \
-                    --skip_generation \
                     --seed "${seed}" \
                     --output_dir "${output_dir}" \
                     2>&1 | tee "${output_dir}/log.txt"
@@ -92,7 +91,6 @@ for seed in "${SEEDS[@]}"; do
                     --delta 0.1 \
                     --complementarity_method dpr \
                     --use_answer_scorer \
-                    --skip_generation \
                     --seed "${seed}" \
                     --output_dir "${output_dir}" \
                     2>&1 | tee "${output_dir}/log.txt"
@@ -111,7 +109,6 @@ for seed in "${SEEDS[@]}"; do
                     --delta 0.1 \
                     --complementarity_method dpr \
                     --use_answer_scorer \
-                    --skip_generation \
                     --seed "${seed}" \
                     --output_dir "${output_dir}" \
                     2>&1 | tee "${output_dir}/log.txt"

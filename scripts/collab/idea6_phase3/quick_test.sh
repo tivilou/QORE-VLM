@@ -36,7 +36,6 @@ python -m scripts.rag.eval.eval_rag_refactored \
     --lam 2.0 \
     --gamma 0.5 \
     --corpus_mode wiki_dpr \
-    --skip_generation \
     --seed 42 \
     --output_dir "${OUTPUT_DIR}/baseline" \
     2>&1 | tee "${OUTPUT_DIR}/baseline.log"
@@ -57,7 +56,6 @@ python -m scripts.rag.eval.eval_rag_refactored \
     --delta 0.1 \
     --complementarity_method dpr \
     --corpus_mode wiki_dpr \
-    --skip_generation \
     --seed 42 \
     --output_dir "${OUTPUT_DIR}/idea6" \
     2>&1 | tee "${OUTPUT_DIR}/idea6.log"
