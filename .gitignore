@@ -79,6 +79,7 @@ exchange/**/result.json
 exchange/**/*.zip
 exchange/**/*.samples.json
 exchange/**/experiments/
+exchange/idea6_attribution/**/log.txt
 
 # Project progress tracking (local only)
 .ai-progress/

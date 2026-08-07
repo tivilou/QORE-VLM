@@ -6,6 +6,7 @@
 
 - **[p1_diagnosis/](p1_diagnosis/)** — Phase 1 诊断（γ sweep、idea 6/7 验证）
 - **[p2_solver_idea6/](p2_solver_idea6/)** — Phase 2 solver 修复 + idea 6 互补性矩阵
+- **[idea6_phase3/](idea6_phase3/ATTRIBUTION_MATRIX.md)** — Phase 3 归因矩阵（Answer Scorer / Idea 6 / Top-K / MMR）
 
 ## 通用工具
 
