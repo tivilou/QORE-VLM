@@ -1,0 +1,1 @@
+python -m scripts.rag.eval.eval_rag_refactored --dataset nq_open --split validation --max_samples 0 --corpus_mode wiki_dpr --K 5 --lam 2.0 --seed 42 --output_file result.json --method qore --gamma 0.5 --output_dir exchange/idea6_attribution/20260808T153521/qore_dpr 

@@ -1,0 +1,424 @@
+Some weights of the model checkpoint at facebook/dpr-question_encoder-single-nq-base were not used when initializing DPRQuestionEncoder: ['question_encoder.bert_model.pooler.dense.bias', 'question_encoder.bert_model.pooler.dense.weight']
+- This IS expected if you are initializing DPRQuestionEncoder from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing DPRQuestionEncoder from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Some weights of the model checkpoint at facebook/dpr-ctx_encoder-single-nq-base were not used when initializing DPRContextEncoder: ['ctx_encoder.bert_model.pooler.dense.bias', 'ctx_encoder.bert_model.pooler.dense.weight']
+- This IS expected if you are initializing DPRContextEncoder from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing DPRContextEncoder from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+/root/miniconda3/lib/python3.10/site-packages/transformers/tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+The tokenizer class you load from this checkpoint is not the same type as the class this function is called from. It may result in unexpected tokenization. 
+The tokenizer class you load from this checkpoint is 'DPRQuestionEncoderTokenizer'. 
+The class this function is called from is 'DPRContextEncoderTokenizer'.
+======================================================================
+RAG End-to-End Evaluation
+======================================================================
+Dataset: nq_open (validation)
+Corpus mode: wiki_dpr
+Selection: mmr, K=5
+Seed: 42
+
+Loading dataset...
+  Loaded 3610 questions
+Building corpus (mode=wiki_dpr)...
+  [wiki_dpr] forcing --encoder_type dpr (was 'sentence'; corpus is DPR space)
+  Loading facebook/wiki_dpr [psgs_w100.nq.compressed]...
+  (This downloads the dataset + prebuilt FAISS index on first run)
+  Set FAISS nprobe=64
+  Corpus ready: 0 passages
+    mode: wiki_dpr
+    corpus_size: 21015300
+    wiki_config: psgs_w100.nq.compressed
+    nprobe: 64
+Loading generator: /root/QORE-VLM/models/llama3-8b...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:06<00:20,  6.85s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:12<00:12,  6.05s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:17<00:05,  5.48s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:18<00:00,  3.78s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:18<00:00,  4.58s/it]
+Some weights of the model checkpoint at facebook/dpr-reader-single-nq-base were not used when initializing DPRReader: ['span_predictor.encoder.bert_model.pooler.dense.bias', 'span_predictor.encoder.bert_model.pooler.dense.weight']
+- This IS expected if you are initializing DPRReader from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing DPRReader from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+The tokenizer class you load from this checkpoint is not the same type as the class this function is called from. It may result in unexpected tokenization. 
+The tokenizer class you load from this checkpoint is 'DPRQuestionEncoderTokenizer'. 
+The class this function is called from is 'DPRReaderTokenizer'.
+/root/miniconda3/lib/python3.10/site-packages/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.6` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/root/miniconda3/lib/python3.10/site-packages/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.9` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+Be aware, overflowing tokens are not returned for the setting you have chosen, i.e. sequence pairs with the 'longest_first' truncation strategy. So the returned list will always be empty even if some tokens have been removed.
+  Generator ready
+Loading answer scorer: dpr...
+  [AnswerScorer] Loading DPR reader: facebook/dpr-reader-single-nq-base on cuda
+  Answer scorer ready
+
+Evaluating 3610 questions...
+  Progress: 10/3610
+  Progress: 20/3610
+  Progress: 30/3610
+  Progress: 40/3610
+  Progress: 50/3610
+  Progress: 60/3610
+  Progress: 70/3610
+  Progress: 80/3610
+  Progress: 90/3610
+  Progress: 100/3610
+  Progress: 110/3610
+  Progress: 120/3610
+  Progress: 130/3610
+  Progress: 140/3610
+  Progress: 150/3610
+  Progress: 160/3610
+  Progress: 170/3610
+  Progress: 180/3610
+  Progress: 190/3610
+  Progress: 200/3610
+  Progress: 210/3610
+  Progress: 220/3610
+  Progress: 230/3610
+  Progress: 240/3610
+  Progress: 250/3610
+  Progress: 260/3610
+  Progress: 270/3610
+  Progress: 280/3610
+  Progress: 290/3610
+  Progress: 300/3610
+  Progress: 310/3610
+  Progress: 320/3610
+  Progress: 330/3610
+  Progress: 340/3610
+  Progress: 350/3610
+  Progress: 360/3610
+  Progress: 370/3610
+  Progress: 380/3610
+  Progress: 390/3610
+  Progress: 400/3610
+  Progress: 410/3610
+  Progress: 420/3610
+  Progress: 430/3610
+  Progress: 440/3610
+  Progress: 450/3610
+  Progress: 460/3610
+  Progress: 470/3610
+  Progress: 480/3610
+  Progress: 490/3610
+  Progress: 500/3610
+  Progress: 510/3610
+  Progress: 520/3610
+  Progress: 530/3610
+  Progress: 540/3610
+  Progress: 550/3610
+  Progress: 560/3610
+  Progress: 570/3610
+  Progress: 580/3610
+  Progress: 590/3610
+  Progress: 600/3610
+  Progress: 610/3610
+  Progress: 620/3610
+  Progress: 630/3610
+  Progress: 640/3610
+  Progress: 650/3610
+  Progress: 660/3610
+  Progress: 670/3610
+  Progress: 680/3610
+  Progress: 690/3610
+  Progress: 700/3610
+  Progress: 710/3610
+  Progress: 720/3610
+  Progress: 730/3610
+  Progress: 740/3610
+  Progress: 750/3610
+  Progress: 760/3610
+  Progress: 770/3610
+  Progress: 780/3610
+  Progress: 790/3610
+  Progress: 800/3610
+  Progress: 810/3610
+  Progress: 820/3610
+  Progress: 830/3610
+  Progress: 840/3610
+  Progress: 850/3610
+  Progress: 860/3610
+  Progress: 870/3610
+  Progress: 880/3610
+  Progress: 890/3610
+  Progress: 900/3610
+  Progress: 910/3610
+  Progress: 920/3610
+  Progress: 930/3610
+  Progress: 940/3610
+  Progress: 950/3610
+  Progress: 960/3610
+  Progress: 970/3610
+  Progress: 980/3610
+  Progress: 990/3610
+  Progress: 1000/3610
+  Progress: 1010/3610
+  Progress: 1020/3610
+  Progress: 1030/3610
+  Progress: 1040/3610
+  Progress: 1050/3610
+  Progress: 1060/3610
+  Progress: 1070/3610
+  Progress: 1080/3610
+  Progress: 1090/3610
+  Progress: 1100/3610
+  Progress: 1110/3610
+  Progress: 1120/3610
+  Progress: 1130/3610
+  Progress: 1140/3610
+  Progress: 1150/3610
+  Progress: 1160/3610
+  Progress: 1170/3610
+  Progress: 1180/3610
+  Progress: 1190/3610
+  Progress: 1200/3610
+  Progress: 1210/3610
+  Progress: 1220/3610
+  Progress: 1230/3610
+  Progress: 1240/3610
+  Progress: 1250/3610
+  Progress: 1260/3610
+  Progress: 1270/3610
+  Progress: 1280/3610
+  Progress: 1290/3610
+  Progress: 1300/3610
+  Progress: 1310/3610
+  Progress: 1320/3610
+  Progress: 1330/3610
+  Progress: 1340/3610
+  Progress: 1350/3610
+  Progress: 1360/3610
+  Progress: 1370/3610
+  Progress: 1380/3610
+  Progress: 1390/3610
+  Progress: 1400/3610
+  Progress: 1410/3610
+  Progress: 1420/3610
+  Progress: 1430/3610
+  Progress: 1440/3610
+  Progress: 1450/3610
+  Progress: 1460/3610
+  Progress: 1470/3610
+  Progress: 1480/3610
+  Progress: 1490/3610
+  Progress: 1500/3610
+  Progress: 1510/3610
+  Progress: 1520/3610
+  Progress: 1530/3610
+  Progress: 1540/3610
+  Progress: 1550/3610
+  Progress: 1560/3610
+  Progress: 1570/3610
+  Progress: 1580/3610
+  Progress: 1590/3610
+  Progress: 1600/3610
+  Progress: 1610/3610
+  Progress: 1620/3610
+  Progress: 1630/3610
+  Progress: 1640/3610
+  Progress: 1650/3610
+  Progress: 1660/3610
+  Progress: 1670/3610
+  Progress: 1680/3610
+  Progress: 1690/3610
+  Progress: 1700/3610
+  Progress: 1710/3610
+  Progress: 1720/3610
+  Progress: 1730/3610
+  Progress: 1740/3610
+  Progress: 1750/3610
+  Progress: 1760/3610
+  Progress: 1770/3610
+  Progress: 1780/3610
+  Progress: 1790/3610
+  Progress: 1800/3610
+  Progress: 1810/3610
+  Progress: 1820/3610
+  Progress: 1830/3610
+  Progress: 1840/3610
+  Progress: 1850/3610
+  Progress: 1860/3610
+  Progress: 1870/3610
+  Progress: 1880/3610
+  Progress: 1890/3610
+  Progress: 1900/3610
+  Progress: 1910/3610
+  Progress: 1920/3610
+  Progress: 1930/3610
+  Progress: 1940/3610
+  Progress: 1950/3610
+  Progress: 1960/3610
+  Progress: 1970/3610
+  Progress: 1980/3610
+  Progress: 1990/3610
+  Progress: 2000/3610
+  Progress: 2010/3610
+  Progress: 2020/3610
+  Progress: 2030/3610
+  Progress: 2040/3610
+  Progress: 2050/3610
+  Progress: 2060/3610
+  Progress: 2070/3610
+  Progress: 2080/3610
+  Progress: 2090/3610
+  Progress: 2100/3610
+  Progress: 2110/3610
+  Progress: 2120/3610
+  Progress: 2130/3610
+  Progress: 2140/3610
+  Progress: 2150/3610
+  Progress: 2160/3610
+  Progress: 2170/3610
+  Progress: 2180/3610
+  Progress: 2190/3610
+  Progress: 2200/3610
+  Progress: 2210/3610
+  Progress: 2220/3610
+  Progress: 2230/3610
+  Progress: 2240/3610
+  Progress: 2250/3610
+  Progress: 2260/3610
+  Progress: 2270/3610
+  Progress: 2280/3610
+  Progress: 2290/3610
+  Progress: 2300/3610
+  Progress: 2310/3610
+  Progress: 2320/3610
+  Progress: 2330/3610
+  Progress: 2340/3610
+  Progress: 2350/3610
+  Progress: 2360/3610
+  Progress: 2370/3610
+  Progress: 2380/3610
+  Progress: 2390/3610
+  Progress: 2400/3610
+  Progress: 2410/3610
+  Progress: 2420/3610
+  Progress: 2430/3610
+  Progress: 2440/3610
+  Progress: 2450/3610
+  Progress: 2460/3610
+  Progress: 2470/3610
+  Progress: 2480/3610
+  Progress: 2490/3610
+  Progress: 2500/3610
+  Progress: 2510/3610
+  Progress: 2520/3610
+  Progress: 2530/3610
+  Progress: 2540/3610
+  Progress: 2550/3610
+  Progress: 2560/3610
+  Progress: 2570/3610
+  Progress: 2580/3610
+  Progress: 2590/3610
+  Progress: 2600/3610
+  Progress: 2610/3610
+  Progress: 2620/3610
+  Progress: 2630/3610
+  Progress: 2640/3610
+  Progress: 2650/3610
+  Progress: 2660/3610
+  Progress: 2670/3610
+  Progress: 2680/3610
+  Progress: 2690/3610
+  Progress: 2700/3610
+  Progress: 2710/3610
+  Progress: 2720/3610
+  Progress: 2730/3610
+  Progress: 2740/3610
+  Progress: 2750/3610
+  Progress: 2760/3610
+  Progress: 2770/3610
+  Progress: 2780/3610
+  Progress: 2790/3610
+  Progress: 2800/3610
+  Progress: 2810/3610
+  Progress: 2820/3610
+  Progress: 2830/3610
+  Progress: 2840/3610
+  Progress: 2850/3610
+  Progress: 2860/3610
+  Progress: 2870/3610
+  Progress: 2880/3610
+  Progress: 2890/3610
+  Progress: 2900/3610
+  Progress: 2910/3610
+  Progress: 2920/3610
+  Progress: 2930/3610
+  Progress: 2940/3610
+  Progress: 2950/3610
+  Progress: 2960/3610
+  Progress: 2970/3610
+  Progress: 2980/3610
+  Progress: 2990/3610
+  Progress: 3000/3610
+  Progress: 3010/3610
+  Progress: 3020/3610
+  Progress: 3030/3610
+  Progress: 3040/3610
+  Progress: 3050/3610
+  Progress: 3060/3610
+  Progress: 3070/3610
+  Progress: 3080/3610
+  Progress: 3090/3610
+  Progress: 3100/3610
+  Progress: 3110/3610
+  Progress: 3120/3610
+  Progress: 3130/3610
+  Progress: 3140/3610
+  Progress: 3150/3610
+  Progress: 3160/3610
+  Progress: 3170/3610
+  Progress: 3180/3610
+  Progress: 3190/3610
+  Progress: 3200/3610
+  Progress: 3210/3610
+  Progress: 3220/3610
+  Progress: 3230/3610
+  Progress: 3240/3610
+  Progress: 3250/3610
+  Progress: 3260/3610
+  Progress: 3270/3610
+  Progress: 3280/3610
+  Progress: 3290/3610
+  Progress: 3300/3610
+  Progress: 3310/3610
+  Progress: 3320/3610
+  Progress: 3330/3610
+  Progress: 3340/3610
+  Progress: 3350/3610
+  Progress: 3360/3610
+  Progress: 3370/3610
+  Progress: 3380/3610
+  Progress: 3390/3610
+  Progress: 3400/3610
+  Progress: 3410/3610
+  Progress: 3420/3610
+  Progress: 3430/3610
+  Progress: 3440/3610
+  Progress: 3450/3610
+  Progress: 3460/3610
+  Progress: 3470/3610
+  Progress: 3480/3610
+  Progress: 3490/3610
+  Progress: 3500/3610
+  Progress: 3510/3610
+  Progress: 3520/3610
+  Progress: 3530/3610
+  Progress: 3540/3610
+  Progress: 3550/3610
+  Progress: 3560/3610
+  Progress: 3570/3610
+  Progress: 3580/3610
+  Progress: 3590/3610
+  Progress: 3600/3610
+  Progress: 3610/3610
+
+======================================================================
+Results
+======================================================================
+Method: mmr
+Samples: 3610
+Retrieval: 2887/3610 hit gold in Top-50 | 723 retrieval failures
+Recall@5: 0.4933 ± 0.3604 (conditional on retrieval hit)
+Redundancy: 0.7962 ± 0.0824
+EM: 0.2936 ± 0.4554
+F1: 0.4715 ± 0.4205
+
+Results saved to: exchange/idea6_attribution/20260808T153521/mmr_as/result.json

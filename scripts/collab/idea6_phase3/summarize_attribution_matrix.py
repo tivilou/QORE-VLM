@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import json
 import math
+from numbers import Real
 import random
 import sys
 from pathlib import Path
@@ -26,12 +27,22 @@ def fmt(value) -> str:
 
 def paired_delta(samples, left: str, right: str, key: str):
     common = sorted(set(samples[left]) & set(samples[right]))
-    diffs = [
-        samples[right][qid][key] - samples[left][qid][key]
-        for qid in common
-        if math.isfinite(samples[left][qid][key])
-        and math.isfinite(samples[right][qid][key])
-    ]
+    diffs = []
+    for qid in common:
+        left_value = samples[left][qid].get(key)
+        right_value = samples[right][qid].get(key)
+        # Some samples legitimately have no answer metric (None), e.g. when
+        # generation/evaluation produced no usable prediction.  Exclude those
+        # pairs from the paired analysis instead of passing None to isfinite.
+        if (
+            isinstance(left_value, Real)
+            and not isinstance(left_value, bool)
+            and isinstance(right_value, Real)
+            and not isinstance(right_value, bool)
+            and math.isfinite(left_value)
+            and math.isfinite(right_value)
+        ):
+            diffs.append(right_value - left_value)
     if not diffs:
         return None
     mean = sum(diffs) / len(diffs)
