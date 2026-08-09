@@ -21,6 +21,8 @@ import sys
 from pathlib import Path
 from typing import Any, Iterable
 
+from gate_manifest import ManifestError, configuration_map, load_manifest
+
 
 CONFIGS = ("qore_dpr", "qore_as_control", "qore_as_idea6", "topk_as", "mmr_as")
 PAIRED = (
@@ -266,6 +268,17 @@ def scalar_row(sample: dict[str, Any], config_name: str) -> dict[str, Any]:
     row["retrieval_hit"] = sample.get("answer_hit_at_retrieved")
     row["selected_ranks"] = fmt_list(selected_ranks(sample))
     row["gold_ranks"] = fmt_list(gold_ranks(sample))
+    trace = (sample.get("qubo") or {}).get("enhancer_trace")
+    if isinstance(trace, list):
+        compact_trace = []
+        for item in trace:
+            if isinstance(item, dict) and isinstance(item.get("name"), str) and finite(item.get("elapsed_ms")):
+                compact_trace.append(f"{item['name']}:{float(item['elapsed_ms']):.6f}")
+        row["plugin_timing_available"] = bool(compact_trace)
+        row["plugin_timing_ms"] = ";".join(compact_trace)
+    else:
+        row["plugin_timing_available"] = False
+        row["plugin_timing_ms"] = ""
     return row
 
 
@@ -283,9 +296,14 @@ def bootstrap_delta(diffs: list[float], reps: int, seed: int) -> tuple[float, fl
     return lo, hi
 
 
-def paired_effects(rows: dict[str, dict[str, dict[str, Any]]], reps: int, seed: int) -> list[dict[str, Any]]:
+def paired_effects(
+    rows: dict[str, dict[str, dict[str, Any]]],
+    pairs: list[tuple[str, str]],
+    reps: int,
+    seed: int,
+) -> list[dict[str, Any]]:
     output = []
-    for pair_index, (left, right) in enumerate(PAIRED):
+    for pair_index, (left, right) in enumerate(pairs):
         common = sorted(set(rows[left]) & set(rows[right]), key=str)
         for metric in ("recall", "f1", "em", "redundancy", "selection_time_ms"):
             diffs = []
@@ -324,9 +342,9 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         writer.writerows(rows)
 
 
-def aggregate_rows(rows: dict[str, dict[str, dict[str, Any]]]) -> list[dict[str, Any]]:
+def aggregate_rows(rows: dict[str, dict[str, dict[str, Any]]], config_names: list[str]) -> list[dict[str, Any]]:
     output = []
-    for config in CONFIGS:
+    for config in config_names:
         values = rows[config]
         item: dict[str, Any] = {"configuration": config, "samples": len(values)}
         hits = [v.get("retrieval_hit") for v in values.values() if isinstance(v.get("retrieval_hit"), bool)]
@@ -371,7 +389,7 @@ def make_readme(run_dir: Path, output_dir: Path, summary: dict[str, Any]) -> str
         "# Diagnostics Analysis",
         "",
         f"- Source run: `{run_dir.name}`",
-        f"- Configurations: {', '.join(CONFIGS)}",
+        f"- Configurations: {', '.join(summary['gate']['configurations'])}",
         f"- Samples per configuration: {summary['validation']['samples_per_config']}",
         f"- Bootstrap: {summary['options']['bootstrap_reps']} repetitions, seed {summary['options']['bootstrap_seed']}",
         "",
@@ -383,6 +401,7 @@ def make_readme(run_dir: Path, output_dir: Path, summary: dict[str, Any]) -> str
         "- `paired_effects.csv`: question-level paired deltas and deterministic bootstrap 95% intervals.",
         "- `per_question.csv`: scalar metrics, retrieval/gold flags, and selected ranks for every configuration.",
         "- `qubo_diagnostics.csv`: QUBO-derived quality, redundancy, interaction, residual-complementarity, objective, and optimality statistics.",
+        "- `plugin_timing.csv`: passage-free per-question enhancer timing when emitted by the selector.",
         "- `qubo_payload.jsonl.gz`: passage-free `a/b/w/x/pool_ranks` payload for exact offline re-scoring of the QUBO pool.",
         "- `summary.json`: machine-readable validation, provenance, aggregate, and paired results.",
         "",
@@ -404,15 +423,23 @@ def analyze(args: argparse.Namespace) -> dict[str, Any]:
         raise AnalysisError(f"Run directory does not exist: {run_dir}")
     output_dir = (args.output_dir or (run_dir / "analysis")).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
+    try:
+        manifest = load_manifest(args.gate_config.resolve() if args.gate_config else None)
+    except ManifestError as exc:
+        raise AnalysisError(str(exc)) from exc
+    config_specs = configuration_map(manifest)
+    config_names = [spec["name"] for spec in manifest["gate"]["configurations"]]
+    pairs = [tuple(pair) for pair in manifest["gate"]["paired_comparisons"]]
     configs: dict[str, dict[str, Any]] = {}
     rows: dict[str, dict[str, dict[str, Any]]] = {}
     qore_rows: list[dict[str, Any]] = []
+    plugin_timing_rows: list[dict[str, Any]] = []
     payloads: list[dict[str, Any]] = []
     source_info: list[dict[str, Any]] = []
     reference_config: dict[str, Any] | None = None
     reference_qids: list[Any] | None = None
 
-    for config_name in CONFIGS:
+    for config_name in config_names:
         path = run_dir / config_name / "result.json"
         if not path.exists():
             raise AnalysisError(f"Missing result file: {path}")
@@ -424,20 +451,38 @@ def analyze(args: argparse.Namespace) -> dict[str, Any]:
         if reference_config is None:
             reference_config = config
         else:
-            for key in SHARED_CONFIG_KEYS:
-                if config.get(key) != reference_config.get(key):
+            shared_keys = tuple(manifest["gate"]["shared_args"])
+            for key in shared_keys:
+                if key in config and key in reference_config and config.get(key) != reference_config.get(key):
                     raise AnalysisError(f"Config mismatch for {key}: {config_name}={config.get(key)!r}, reference={reference_config.get(key)!r}")
         samples = data.get("samples")
         if not isinstance(samples, list) or not samples:
             raise AnalysisError(f"{config_name}: samples is missing or empty")
         config_rows: dict[str, dict[str, Any]] = {}
-        config_qubo = config_name.startswith("qore_")
+        config_qubo = config_specs[config_name]["kind"] == "qore"
         for sample in samples:
             qid = sample.get("question_id")
             if qid in config_rows:
                 raise AnalysisError(f"{config_name}: duplicate question_id {qid!r}")
             compact = scalar_row(sample, config_name)
             config_rows[qid] = compact
+            trace = (sample.get("qubo") or {}).get("enhancer_trace")
+            if isinstance(trace, list):
+                for item in trace:
+                    if not isinstance(item, dict) or not isinstance(item.get("name"), str):
+                        raise AnalysisError(f"{config_name}/{qid}: malformed enhancer trace")
+                    if not finite(item.get("elapsed_ms")):
+                        raise AnalysisError(f"{config_name}/{qid}: enhancer elapsed_ms is not finite")
+                    plugin_timing_rows.append({
+                        "configuration": config_name,
+                        "question_id": qid,
+                        "plugin": item["name"],
+                        "mode": item.get("mode"),
+                        "elapsed_ms": float(item["elapsed_ms"]),
+                        "input_norm": item.get("input_norm"),
+                        "output_norm": item.get("output_norm"),
+                        "delta_norm": item.get("delta_norm"),
+                    })
             if config_qubo:
                 qrow, payload = qore_features(sample, config, args.max_enumerations)
                 qore_rows.append(qrow)
@@ -455,32 +500,49 @@ def analyze(args: argparse.Namespace) -> dict[str, Any]:
 
     assert reference_config is not None and reference_qids is not None
     for qid in reference_qids:
-        hits = [rows[name][qid].get("retrieval_hit") for name in CONFIGS]
+        hits = [rows[name][qid].get("retrieval_hit") for name in config_names]
         if not all(isinstance(v, bool) for v in hits):
             raise AnalysisError(f"retrieval hit is missing for question {qid!r}")
         if len(set(hits)) != 1:
             raise AnalysisError(f"retrieval hit mismatch for question {qid!r}")
-    if any(len(rows[name]) != len(reference_qids) for name in CONFIGS):
+    if any(len(rows[name]) != len(reference_qids) for name in config_names):
         raise AnalysisError("sample counts are not matched")
 
-    aggregates = aggregate_rows(rows)
+    aggregates = aggregate_rows(rows, config_names)
     validate_provided_aggregates(aggregates, configs)
-    paired = paired_effects(rows, args.bootstrap_reps, args.bootstrap_seed)
+    paired = paired_effects(rows, pairs, args.bootstrap_reps, args.bootstrap_seed)
+    plugin_summary: list[dict[str, Any]] = []
+    for key in sorted({(row["configuration"], row["plugin"]) for row in plugin_timing_rows}):
+        config_name, plugin = key
+        values = [row["elapsed_ms"] for row in plugin_timing_rows if (row["configuration"], row["plugin"]) == key]
+        plugin_summary.append({
+            "configuration": config_name,
+            "plugin": plugin,
+            "samples": len(values),
+            "mean_elapsed_ms": statistics.fmean(values),
+            "std_elapsed_ms": statistics.pstdev(values) if len(values) > 1 else 0.0,
+        })
     validation = {
         "samples_per_config": len(reference_qids),
         "question_ids_matched": True,
         "retrieval_hit_matched": True,
         "qore_diagnostics": len(qore_rows),
-        "expected_qore_diagnostics": len(reference_qids) * 3,
-        "qore_diagnostics_complete": len(qore_rows) == len(reference_qids) * 3,
+        "expected_qore_diagnostics": len(reference_qids) * sum(spec["kind"] == "qore" for spec in manifest["gate"]["configurations"]),
+        "qore_diagnostics_complete": len(qore_rows) == len(reference_qids) * sum(spec["kind"] == "qore" for spec in manifest["gate"]["configurations"]),
     }
     if not validation["qore_diagnostics_complete"]:
         raise AnalysisError("QORE diagnostics are not complete")
 
-    per_question = [rows[name][qid] for name in CONFIGS for qid in reference_qids]
+    per_question = [rows[name][qid] for name in config_names for qid in reference_qids]
     summary = {
-        "schema_version": 1,
+        "schema_version": 2,
         "run_id": run_dir.name,
+        "gate": {
+            "name": manifest["gate"]["name"],
+            "configurations": config_names,
+            "paired_comparisons": [list(pair) for pair in pairs],
+            "manifest": manifest.get("source"),
+        },
         "sources": source_info,
         "configs": configs,
         "validation": validation,
@@ -491,13 +553,28 @@ def analyze(args: argparse.Namespace) -> dict[str, Any]:
         },
         "aggregates": aggregates,
         "paired_effects": paired,
+        "plugin_timing": plugin_summary,
+        "cache_stats": manifest["cache_stats"],
+        "reproducibility": {},
         "privacy": {"passage_text": False, "question_text": False, "answers": False, "predictions": False, "embeddings": False},
     }
+    metadata_path = run_dir / "run_metadata.json"
+    if metadata_path.exists():
+        try:
+            metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            raise AnalysisError(f"invalid run metadata: {metadata_path}") from exc
+        summary["reproducibility"] = {
+            "git": metadata.get("git", {}),
+            "python": metadata.get("python", {}),
+            "gate_config": metadata.get("gate_config", {}),
+        }
 
     write_csv(output_dir / "aggregate.csv", aggregates)
     write_csv(output_dir / "paired_effects.csv", paired)
     write_csv(output_dir / "per_question.csv", per_question)
     write_csv(output_dir / "qubo_diagnostics.csv", qore_rows)
+    write_csv(output_dir / "plugin_timing.csv", plugin_timing_rows)
     (output_dir / "summary.json").write_text(json.dumps(summary, indent=2, allow_nan=False) + "\n", encoding="utf-8")
     payload_path = output_dir / "qubo_payload.jsonl.gz"
     with payload_path.open("wb") as raw_handle:
@@ -517,6 +594,7 @@ def analyze(args: argparse.Namespace) -> dict[str, Any]:
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("run_dir", type=Path, help="Five-configuration diagnostics run directory")
+    parser.add_argument("--gate-config", type=Path, help="YAML gate manifest; defaults to legacy five configurations")
     parser.add_argument("--output-dir", type=Path, help="Output directory; default RUN_DIR/analysis")
     parser.add_argument("--bootstrap-reps", type=int, default=5000)
     parser.add_argument("--bootstrap-seed", type=int, default=20260809)
