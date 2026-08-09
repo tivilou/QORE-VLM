@@ -109,11 +109,11 @@ Q = build_qubo_matrix_from_w(a, w, K, lam)
 - [ ] 继承 `QUBOEnhancer`
 - [ ] 实现 `__init__`, `enhance`, `name`, `description`
 - [ ] 用 `@register_enhancer("ideaX")` 装饰
-- [ ] 在 `qore/enhancers/__init__.py` 中导入
+- [ ] 确认模块可被自动发现（无需修改 `qore/enhancers/__init__.py`）
 
 ### □ 步骤 3：测试
 
-- [ ] 单元测试：在 `scripts/test_enhancers.py` 中添加测试
+- [ ] 单元测试：在 `qore/tests/test_enhancers.py` 中添加测试
 - [ ] 功能测试：创建小样本配置文件
 - [ ] 验证 w 矩阵的形状和对称性
 - [ ] 验证与其他增强器的组合
@@ -134,7 +134,7 @@ Q = build_qubo_matrix_from_w(a, w, K, lam)
 ### □ 步骤 6：清理
 
 - [ ] 如果失败，删除插件文件
-- [ ] 从 `__init__.py` 移除导入
+- [ ] 确认 `list_enhancers()` 不再发现该插件
 - [ ] 删除配置文件
 - [ ] 记录失败原因和教训
 

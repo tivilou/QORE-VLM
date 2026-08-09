@@ -187,11 +187,8 @@ class IdeaXEnhancer(QUBOEnhancer):
 
 ### 步骤 2：注册插件
 
-在 `qore/enhancers/__init__.py` 中添加：
-
-```python
-from . import ideaX_description
-```
+模块上的 `@register_enhancer("ideaX")` 会被自动发现。不要修改
+`qore/enhancers/__init__.py`；可用 `list_enhancers()` 验证注册结果。
 
 ### 步骤 3：测试
 
@@ -328,8 +325,7 @@ python -m scripts.rag.eval_rag --config configs/experiments/new_idea_test.yaml
 # 失败的话，删除插件文件
 rm qore/enhancers/ideaX_*.py
 
-# 从 __init__.py 移除 import
-# 完全不影响其他代码
+# 自动发现会停止注册已删除的模块，完全不影响其他代码
 ```
 
 ---
@@ -360,7 +356,7 @@ indices = select_passages(
 
 ```bash
 cd /home/Q-DUET-VLM/QORE-VLM
-PYTHONPATH=. python scripts/test_enhancers.py
+PYTHONPATH=. python -m pytest -q qore/tests/test_enhancers.py
 ```
 
 ---
@@ -379,7 +375,7 @@ PYTHONPATH=. python scripts/test_enhancers.py
 ```
 qore/
   enhancers/
-    __init__.py          # 导出和注册
+    __init__.py          # 公共 API 和自动发现入口
     base.py              # 基类定义
     registry.py          # 注册表
     pipeline.py          # 组合器
@@ -401,5 +397,5 @@ configs/
     [future configs...]
 
 scripts/
-  test_enhancers.py      # 插件系统测试
+  tests/test_enhancers.py # 插件系统测试
 ```

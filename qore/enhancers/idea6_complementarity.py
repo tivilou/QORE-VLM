@@ -85,5 +85,15 @@ class ComplementarityEnhancer(QUBOEnhancer):
     def name(self) -> str:
         return "idea6"
 
+    @property
+    def composition_mode(self) -> str:
+        return "replace"
+
+    @property
+    def required_context_keys(self) -> tuple[str, ...]:
+        if self.delta == 0.0:
+            return ()
+        return ("question", "passages", "answer_scorer")
+
     def description(self) -> str:
         return f"Idea 6 Complementarity (γ={self.gamma}, δ={self.delta})"

@@ -11,6 +11,7 @@
 # 不要装 pennylane>=0.43（它要求 numpy>=2，与 tensorcircuit 冲突）。
 numpy==1.26.4
 scipy>=1.10
+PyYAML>=6.0
 
 # ---- 深度学习 ----
 torch>=2.0,<2.6

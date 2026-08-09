@@ -1,0 +1,19 @@
+# Plugin Architecture v2 composition example.
+# Exactly one replace-mode root objective must come first. Any following
+# enhancers must use add mode so they preserve the existing objective.
+
+experiment:
+  name: "plugin_pipeline_v2_smoke"
+  description: "Baseline root objective with an additive context plugin"
+
+selection:
+  method: "qore"
+  K: 5
+  lam: 2.0
+  enhancers:
+    - name: "baseline"
+      config:
+        gamma: 1.0
+    - name: "idea4"
+      config:
+        alpha: 0.1

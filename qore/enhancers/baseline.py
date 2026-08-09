@@ -53,5 +53,9 @@ class BaselineEnhancer(QUBOEnhancer):
     def name(self) -> str:
         return "baseline"
 
+    @property
+    def composition_mode(self) -> str:
+        return "replace"
+
     def description(self) -> str:
         return f"Baseline (γ={self.gamma})"

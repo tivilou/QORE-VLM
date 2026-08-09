@@ -157,6 +157,14 @@ class DifferentiableQUBOEnhancer(QUBOEnhancer):
     def name(self) -> str:
         return "idea7"
 
+    @property
+    def composition_mode(self) -> str:
+        return "replace"
+
+    @property
+    def required_context_keys(self) -> tuple[str, ...]:
+        return ("embeddings",)
+
     def description(self) -> str:
         status = "training" if self.training else "inference"
         return f"Idea 7 Differentiable QUBO (τ={self.temperature}, {status}) ⏸️ PAUSED"

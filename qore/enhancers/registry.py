@@ -1,5 +1,7 @@
-"""Registry for QUBO enhancers: dynamic discovery and instantiation."""
+"""Registry for QUBO enhancers: discovery, validation, and instantiation."""
 
+import importlib
+import pkgutil
 from typing import Any
 
 from .base import QUBOEnhancer
@@ -7,6 +9,22 @@ from .pipeline import EnhancerPipeline
 
 # Global registry: name -> enhancer class
 _REGISTRY: dict[str, type[QUBOEnhancer]] = {}
+_DISCOVERED_PACKAGES: set[str] = set()
+
+
+def discover_enhancers(package_name: str = "qore.enhancers") -> None:
+    """Import plugin modules from a package without editing its ``__init__``."""
+    if package_name in _DISCOVERED_PACKAGES:
+        return
+
+    package = importlib.import_module(package_name)
+    skip = {"base", "config", "pipeline", "registry"}
+    for module in pkgutil.iter_modules(package.__path__, package.__name__ + "."):
+        leaf_name = module.name.rsplit(".", 1)[-1]
+        if leaf_name.startswith("_") or leaf_name in skip:
+            continue
+        importlib.import_module(module.name)
+    _DISCOVERED_PACKAGES.add(package_name)
 
 
 def register_enhancer(name: str):
@@ -46,6 +64,7 @@ def get_enhancer(name: str, config: dict[str, Any] | None = None) -> QUBOEnhance
     Raises:
         ValueError: If the enhancer name is not registered.
     """
+    discover_enhancers()
     if name not in _REGISTRY:
         raise ValueError(
             f"Unknown enhancer: '{name}'. "
@@ -61,12 +80,15 @@ def list_enhancers() -> list[str]:
     Returns:
         List of enhancer names that can be used with get_enhancer().
     """
-    return list(_REGISTRY.keys())
+    discover_enhancers()
+    return sorted(_REGISTRY.keys())
 
 
 def create_pipeline(
     enhancer_names: list[str],
     configs: dict[str, dict[str, Any]] | None = None,
+    *,
+    strict_composition: bool = False,
 ) -> EnhancerPipeline:
     """
     Create an enhancer pipeline from a list of names.
@@ -80,13 +102,14 @@ def create_pipeline(
 
     Example:
         pipeline = create_pipeline(
-            ["baseline", "idea6"],
-            configs={"baseline": {"gamma": 0.5}, "idea6": {"delta": 0.1}}
+            ["baseline", "idea4"],
+            configs={"baseline": {"gamma": 0.5}, "idea4": {"alpha": 0.1}}
         )
     """
     if not enhancer_names:
         raise ValueError("Pipeline requires at least one enhancer name")
 
+    discover_enhancers()
     configs = configs or {}
     enhancers = []
 
@@ -94,4 +117,7 @@ def create_pipeline(
         config = configs.get(name, {})
         enhancers.append(get_enhancer(name, config))
 
-    return EnhancerPipeline(enhancers)
+    return EnhancerPipeline(
+        enhancers,
+        strict_composition=strict_composition,
+    )

@@ -211,7 +211,11 @@ def select_passages(
 
             # Apply enhancers to build w matrix
             pipeline = create_pipeline(enhancers, enhancer_configs)
-            w = pipeline.enhance(a, b, context)
+            if diagnostics is None:
+                w = pipeline.enhance(a, b, context)
+                enhancer_trace = None
+            else:
+                w, enhancer_trace = pipeline.enhance_with_diagnostics(a, b, context)
 
             # Build QUBO and solve
             Q = build_qubo_matrix_from_w(a, w, K, lam=lam)
@@ -220,6 +224,7 @@ def select_passages(
 
             if diagnostics is not None:
                 diagnostics["enhancers"] = pipeline.describe()
+                diagnostics["enhancer_trace"] = enhancer_trace
                 _record_qubo_diagnostics(
                     diagnostics, a=a, b=b, x=x, K=K, lam=lam, gamma=gamma,
                     n_candidates=N, prefiltered=False,
@@ -252,7 +257,13 @@ def select_passages(
 
         # Apply enhancers to build w matrix
         pipeline = create_pipeline(enhancers, enhancer_configs)
-        w = pipeline.enhance(a_filtered, b, context)
+        if diagnostics is None:
+            w = pipeline.enhance(a_filtered, b, context)
+            enhancer_trace = None
+        else:
+            w, enhancer_trace = pipeline.enhance_with_diagnostics(
+                a_filtered, b, context
+            )
 
         # Build QUBO and solve
         Q = build_qubo_matrix_from_w(a_filtered, w, K, lam=lam)
@@ -268,6 +279,7 @@ def select_passages(
 
         if diagnostics is not None:
             diagnostics["enhancers"] = pipeline.describe()
+            diagnostics["enhancer_trace"] = enhancer_trace
             _record_qubo_diagnostics(
                 diagnostics, a=a_filtered, b=b, x=x, K=K, lam=lam, gamma=gamma,
                 n_candidates=N, prefiltered=True,

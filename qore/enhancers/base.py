@@ -87,6 +87,21 @@ class QUBOEnhancer(ABC):
         """
         return self.name
 
+    @property
+    def composition_mode(self) -> str:
+        """How this enhancer composes with the current interaction matrix.
+
+        ``"add"`` enhancers preserve the current objective and add a term.
+        ``"replace"`` enhancers define a complete root objective.  The default
+        remains additive so existing third-party enhancers keep working.
+        """
+        return "add"
+
+    @property
+    def required_context_keys(self) -> tuple[str, ...]:
+        """Context fields required before this enhancer can run."""
+        return ()
+
     def validate_context(self, context: dict[str, Any], required_keys: list[str]) -> None:
         """
         Helper to validate required context keys.
