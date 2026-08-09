@@ -12,7 +12,7 @@ export PYTHONPATH="$PROJECT_ROOT${PYTHONPATH:+:$PYTHONPATH}"
 MAX_SAMPLES=200
 SEED=42
 OUTPUT_ROOT="exchange/five_ideas/diagnostic_pilot"
-PYTHON_BIN="${PYTHON_BIN:-/usr/local/miniconda3/envs/py310/bin/python}"
+PYTHON_BIN="${PYTHON_BIN:-}"
 ALLOW_DIRTY=0
 SKIP_GENERATION=0
 
@@ -26,7 +26,7 @@ Options:
   --max-samples N      Override the sample count (default: 200).
   --seed N             Evaluation seed (default: 42).
   --output-root PATH   Result root (default: exchange/five_ideas/diagnostic_pilot).
-  --python-bin PATH    Python executable (default: py310 environment).
+  --python-bin PATH    Python executable (default: active python/python3).
   --skip-generation    Skip generator; useful for diagnostics-only smoke tests.
   --allow-dirty        Allow tracked worktree changes for a debug/smoke run.
   -h|--help            Show this help.
@@ -49,7 +49,11 @@ done
 
 [[ "$MAX_SAMPLES" =~ ^[0-9]+$ ]] || { echo "--max-samples must be a non-negative integer" >&2; exit 2; }
 [[ "$SEED" =~ ^[0-9]+$ ]] || { echo "--seed must be a non-negative integer" >&2; exit 2; }
+if [[ -z "$PYTHON_BIN" ]]; then
+    PYTHON_BIN="$(command -v python 2>/dev/null || command -v python3 2>/dev/null || true)"
+fi
 [[ -x "$PYTHON_BIN" ]] || { echo "Python executable not found or not executable: $PYTHON_BIN" >&2; exit 1; }
+echo "Using Python: $PYTHON_BIN ($("$PYTHON_BIN" --version 2>&1))"
 
 if (( ALLOW_DIRTY == 0 )); then
     if ! git diff --quiet || ! git diff --cached --quiet; then
