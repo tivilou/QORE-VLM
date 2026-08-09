@@ -108,4 +108,7 @@ run_config qore_as_idea6 --method qore --gamma 0.5 --delta 0.1 --complementarity
 run_config topk_as --method topk --use_answer_scorer
 run_config mmr_as --method mmr --lambda_mmr 0.7 --use_answer_scorer
 
+echo "==> compact diagnostics analysis"
+"$PYTHON_BIN" scripts/collab/five_ideas/analyze_diagnostics_pilot.py "$RUN_DIR"
+
 echo "Completed five-idea diagnostics pilot: $RUN_DIR"

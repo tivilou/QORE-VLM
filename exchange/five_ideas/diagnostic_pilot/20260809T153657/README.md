@@ -19,3 +19,16 @@ configuration's `log.txt`; exact invocations are in `command.txt`.
 The raw `result.json` files are intentionally excluded from Git because
 `--dump_passages` makes each file approximately 295-298 MB.
 
+## Compact follow-up analysis
+
+After pulling the analyzer commit, generate the passage-free analysis locally:
+
+```bash
+python scripts/collab/five_ideas/analyze_diagnostics_pilot.py \
+  exchange/five_ideas/diagnostic_pilot/20260809T153657
+```
+
+Then commit and push only
+`exchange/five_ideas/diagnostic_pilot/20260809T153657/analysis/`. The analyzer
+does not retain question text, gold answers, predictions, passage text, or
+embeddings.
