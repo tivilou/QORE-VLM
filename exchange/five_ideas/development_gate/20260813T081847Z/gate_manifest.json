@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "source": "/root/QORE-VLM/configs/experiments/five_idea_development_gate.yaml",
+  "gate": {
+    "name": "five_idea_development_gate",
+    "description": "Matched 200-question development gate for the frozen QORE-DPR, Answer Scorer, Idea 6 attribution control, Top-K, and MMR configurations.",
+    "shared_args": {
+      "dataset": "nq_open",
+      "split": "validation",
+      "max_samples": 200,
+      "corpus_mode": "wiki_dpr",
+      "K": 5,
+      "lam": 2.0,
+      "seed": 42,
+      "dump_passages": true
+    },
+    "configurations": [
+      {
+        "name": "qore_dpr",
+        "kind": "qore",
+        "args": {
+          "method": "qore",
+          "gamma": 0.5
+        },
+        "description": "QORE with DPR relevance and cosine redundancy."
+      },
+      {
+        "name": "qore_as_control",
+        "kind": "qore",
+        "args": {
+          "method": "qore",
+          "gamma": 0.5,
+          "delta": 0.0,
+          "use_answer_scorer": true
+        },
+        "description": "QORE with Answer Scorer relevance and no Idea 6 complementarity."
+      },
+      {
+        "name": "qore_as_idea6",
+        "kind": "qore",
+        "args": {
+          "method": "qore",
+          "gamma": 0.5,
+          "delta": 0.1,
+          "complementarity_method": "dpr",
+          "use_answer_scorer": true
+        },
+        "description": "Frozen Idea 6 attribution control."
+      },
+      {
+        "name": "topk_as",
+        "kind": "baseline",
+        "args": {
+          "method": "topk",
+          "use_answer_scorer": true
+        },
+        "description": "Top-K using Answer Scorer ranking."
+      },
+      {
+        "name": "mmr_as",
+        "kind": "baseline",
+        "args": {
+          "method": "mmr",
+          "lambda_mmr": 0.7,
+          "use_answer_scorer": true
+        },
+        "description": "MMR using Answer Scorer relevance."
+      }
+    ],
+    "paired_comparisons": [
+      [
+        "qore_dpr",
+        "qore_as_control"
+      ],
+      [
+        "qore_as_control",
+        "qore_as_idea6"
+      ],
+      [
+        "qore_as_idea6",
+        "topk_as"
+      ],
+      [
+        "qore_as_idea6",
+        "mmr_as"
+      ]
+    ]
+  },
+  "cache_stats": {
+    "available": false,
+    "hits": null,
+    "misses": null,
+    "reason": "Answer Scorer cache is not implemented in Phase 1"
+  }
+}
