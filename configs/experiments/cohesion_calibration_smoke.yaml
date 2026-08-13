@@ -1,0 +1,47 @@
+schema_version: 1
+
+gate:
+  name: cohesion_calibration_smoke
+  description: Synthetic contract smoke for the cohesion calibration ablations.
+  shared_args:
+    dataset: nq_open
+    split: validation
+    max_samples: 20
+    corpus_mode: aligned
+    K: 5
+    lam: 2.0
+    seed: 42
+    dump_passages: true
+    skip_generation: true
+    use_answer_scorer: false
+  configurations:
+    - name: qore_control
+      kind: qore
+      args:
+        method: qore
+        gamma: 0.5
+    - name: cohesion_fixed
+      kind: qore
+      args:
+        method: qore
+        enhancer_config: configs/experiments/cohesion_fixed.yaml
+    - name: cohesion_calibrated
+      kind: qore
+      args:
+        method: qore
+        enhancer_config: configs/experiments/cohesion_calibrated.yaml
+    - name: cohesion_disabled
+      kind: qore
+      args:
+        method: qore
+        enhancer_config: configs/experiments/cohesion_disabled.yaml
+  paired_comparisons:
+    - [qore_control, cohesion_fixed]
+    - [qore_control, cohesion_calibrated]
+    - [qore_control, cohesion_disabled]
+
+cache_stats:
+  available: false
+  hits: null
+  misses: null
+  reason: Answer Scorer disabled in smoke

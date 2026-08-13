@@ -130,7 +130,7 @@ class EnhancerPipeline:
             w = candidate
             if collect_diagnostics:
                 assert before is not None
-                trace.append({
+                entry = {
                     "name": enhancer.name,
                     "mode": enhancer.composition_mode,
                     "elapsed_ms": (perf_counter() - started) * 1000.0,
@@ -141,7 +141,11 @@ class EnhancerPipeline:
                         enhancer.composition_mode == "replace"
                         and np.any(before != 0.0)
                     ),
-                })
+                }
+                diagnostic_summary = getattr(enhancer, "diagnostic_summary", None)
+                if callable(diagnostic_summary):
+                    entry["plugin_diagnostics"] = diagnostic_summary()
+                trace.append(entry)
 
         return w, trace
 

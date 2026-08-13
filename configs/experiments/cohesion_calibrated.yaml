@@ -1,0 +1,11 @@
+selection:
+  method: qore
+  enhancers:
+    - name: baseline
+      config:
+        gamma: 0.5
+    - name: cohesion
+      config:
+        mode: calibrated
+        eta: 0.1
+        eps: 1.0e-6

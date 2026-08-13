@@ -207,6 +207,7 @@ def select_passages(
                 "question": question,
                 "answer_scorer": answer_scorer,
                 "passages_meta": passages_meta,
+                "selection_K": K,
             }
 
             # Apply enhancers to build w matrix
@@ -253,6 +254,7 @@ def select_passages(
             "question": question,
             "answer_scorer": answer_scorer,
             "passages_meta": [passages_meta[i] for i in prefilter_idx] if passages_meta else None,
+            "selection_K": K,
         }
 
         # Apply enhancers to build w matrix

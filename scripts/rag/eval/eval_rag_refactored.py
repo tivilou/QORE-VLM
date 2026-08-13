@@ -138,6 +138,8 @@ def parse_args():
                    help="How to compute complementarity c_ij (only for method=qore). "
                         "None (default): no complementarity term. "
                         "'dpr': use DPR answer scorer pairwise signals (requires --use_answer_scorer).")
+    p.add_argument("--enhancer_config", type=str, default=None,
+                   help="YAML plugin pipeline for QORE selection; overrides legacy gamma/delta wiring")
 
     # Answer scoring (optimization)
     p.add_argument("--use_answer_scorer", action="store_true",
@@ -172,6 +174,12 @@ def parse_args():
 def main():
     args = parse_args()
     np.random.seed(args.seed)
+
+    enhancer_names = None
+    enhancer_configs = None
+    if args.enhancer_config:
+        from qore.enhancers import load_enhancer_config
+        enhancer_names, enhancer_configs = load_enhancer_config(args.enhancer_config)
 
     print("=" * 70)
     print("RAG End-to-End Evaluation")
@@ -337,6 +345,8 @@ def main():
             gamma=args.gamma,
             delta=args.delta,
             complementarity_method=args.complementarity_method,
+            enhancers=enhancer_names,
+            enhancer_configs=enhancer_configs,
             answer_scorer=answer_scorer if args.complementarity_method == 'dpr' else None,
             passage_texts=retrieved_texts if args.complementarity_method == 'dpr' else None,
             question=question if args.complementarity_method == 'dpr' else None,

@@ -1,0 +1,54 @@
+schema_version: 1
+
+gate:
+  name: cohesion_calibration_gate
+  description: >-
+    Matched development gate for deterministic cohesion calibration. The
+    Answer Scorer control is compared with fixed, calibrated, and disabled
+    additive cohesion corrections under the same candidate pools.
+  shared_args:
+    dataset: nq_open
+    split: validation
+    max_samples: 200
+    corpus_mode: wiki_dpr
+    K: 5
+    lam: 2.0
+    seed: 42
+    dump_passages: true
+    use_answer_scorer: true
+  configurations:
+    - name: qore_as_control
+      kind: qore
+      description: Answer Scorer QORE control with the baseline root only.
+      args:
+        method: qore
+        gamma: 0.5
+        delta: 0.0
+    - name: cohesion_fixed
+      kind: qore
+      description: Baseline root plus fixed additive cohesion weight.
+      args:
+        method: qore
+        enhancer_config: configs/experiments/cohesion_fixed.yaml
+    - name: cohesion_calibrated
+      kind: qore
+      description: Baseline root plus query/pool-calibrated cohesion weight.
+      args:
+        method: qore
+        enhancer_config: configs/experiments/cohesion_calibrated.yaml
+    - name: cohesion_disabled
+      kind: qore
+      description: Explicit disabled cohesion ablation for pipeline equivalence.
+      args:
+        method: qore
+        enhancer_config: configs/experiments/cohesion_disabled.yaml
+  paired_comparisons:
+    - [qore_as_control, cohesion_fixed]
+    - [qore_as_control, cohesion_calibrated]
+    - [qore_as_control, cohesion_disabled]
+
+cache_stats:
+  available: false
+  hits: null
+  misses: null
+  reason: Answer Scorer cache is not implemented

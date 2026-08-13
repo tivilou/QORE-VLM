@@ -1,0 +1,9 @@
+selection:
+  method: qore
+  enhancers:
+    - name: baseline
+      config:
+        gamma: 0.5
+    - name: cohesion
+      config:
+        mode: disabled
