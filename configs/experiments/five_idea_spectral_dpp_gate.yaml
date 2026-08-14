@@ -1,0 +1,56 @@
+schema_version: 1
+
+gate:
+  name: five_idea_spectral_dpp_gate
+  description: >-
+    Matched collaborator-only Wiki-DPR gate comparing Answer-Scorer QORE
+    control with a query-conditioned Spectral/DPP terminal strategy.
+  shared_args:
+    dataset: nq_open
+    split: validation
+    max_samples: 200
+    corpus_mode: wiki_dpr
+    K: 5
+    lam: 2.0
+    seed: 42
+    dump_passages: true
+  configurations:
+    - name: qore_as_control
+      kind: qore
+      description: Answer Scorer QORE control without a new strategy.
+      args:
+        method: qore
+        gamma: 0.5
+        delta: 0.0
+        use_answer_scorer: true
+    - name: spectral_dpp_as
+      kind: baseline
+      description: Quality-weighted Spectral/DPP MAP; scale pre-screened by compact replay.
+      args:
+        method: spectral_dpp
+        dpp_quality_scale: 12.0
+        dpp_jitter: 1.0e-8
+        use_answer_scorer: true
+    - name: topk_as
+      kind: baseline
+      description: Top-K using Answer Scorer ranking.
+      args:
+        method: topk
+        use_answer_scorer: true
+    - name: mmr_as
+      kind: baseline
+      description: MMR using Answer Scorer relevance.
+      args:
+        method: mmr
+        lambda_mmr: 0.7
+        use_answer_scorer: true
+  paired_comparisons:
+    - [qore_as_control, spectral_dpp_as]
+    - [qore_as_control, topk_as]
+    - [qore_as_control, mmr_as]
+
+cache_stats:
+  available: false
+  hits: null
+  misses: null
+  reason: Answer Scorer cache is not implemented in Phase 1

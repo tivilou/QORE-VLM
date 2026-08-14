@@ -1,0 +1,12 @@
+{
+  "questions": 200,
+  "quality_scale": 16.0,
+  "jitter": 1e-08,
+  "mean_control_gold_hits": 1.76,
+  "mean_spectral_dpp_gold_hits": 1.85,
+  "mean_gold_hit_delta": 0.09,
+  "selection_changes": 200,
+  "mean_spectral_dpp_redundancy": 0.8027138777820919,
+  "source": "passage-free qore_as_control qubo_payload.jsonl.gz",
+  "interpretation": "PSD-repaired clipped-cosine diagnostic; not held-out generation or F1 evidence"
+}

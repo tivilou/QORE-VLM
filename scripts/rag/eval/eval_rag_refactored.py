@@ -110,7 +110,7 @@ def parse_args():
 
     # Selection
     p.add_argument("--method", default="qore",
-                   choices=["qore", "mmr", "topk", "submodular"],
+                   choices=["qore", "mmr", "topk", "submodular", "spectral_dpp"],
                    help="Selection method")
     p.add_argument("--K", type=int, default=5, help="Select K passages")
     p.add_argument("--num_reads", type=int, default=100,
@@ -134,6 +134,10 @@ def parse_args():
                    help="Submodular quality saturation (0=linear quality)")
     p.add_argument("--lambda_submodular", type=float, default=0.5,
                    help="Submodular pairwise redundancy penalty")
+    p.add_argument("--dpp_quality_scale", type=float, default=2.0,
+                   help="Spectral/DPP quality weight")
+    p.add_argument("--dpp_jitter", type=float, default=1e-8,
+                   help="Spectral/DPP positive numerical regularizer")
     p.add_argument("--delta", type=float, default=0.0,
                    help="Complementarity weight (only for method=qore with complementarity_method set). "
                         "Positive delta rewards selecting complementary passage pairs.")
@@ -364,6 +368,8 @@ def main():
             lambda_mmr=args.lambda_mmr,
             saturation_alpha=args.saturation_alpha,
             lambda_submodular=args.lambda_submodular,
+            dpp_quality_scale=args.dpp_quality_scale,
+            dpp_jitter=args.dpp_jitter,
             seed=args.seed,
             relevance_scores=retrieval_scores,
             qore_prefilter_size=args.qore_prefilter_size,

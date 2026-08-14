@@ -9,7 +9,7 @@ from qore import solve as qore_solve
 from qore.qubo import build_qubo_matrix, build_qubo_matrix_from_w, energy, energy_decomposed
 from qore.signals import normalize
 from .signals_rag import passage_relevance, passage_redundancy
-from .baselines import topk, mmr, submodular
+from .baselines import topk, mmr, submodular, spectral_dpp
 
 
 def _record_qubo_diagnostics(diagnostics, a, b, x, K, lam, gamma, prefiltered,
@@ -95,6 +95,8 @@ def select_passages(
     lambda_mmr: float = 0.5,
     saturation_alpha: float = 1.0,
     lambda_submodular: float = 0.5,
+    dpp_quality_scale: float = 2.0,
+    dpp_jitter: float = 1e-8,
     seed: int | None = None,
     direct_solve_max_n: int = 20,
     qore_prefilter_size: int | None = None,
@@ -111,6 +113,7 @@ def select_passages(
     - "topk": Greedy top-K by relevance (baseline)
     - "mmr": Maximal Marginal Relevance (greedy diversity-aware baseline)
     - "submodular": Saturating quality with pairwise redundancy penalty
+    - "spectral_dpp": Quality-weighted Spectral/DPP MAP strategy
 
     REFACTORED: Now supports pluggable enhancers for clean idea composition.
 
@@ -118,7 +121,7 @@ def select_passages(
         query_embedding: (d,) query vector.
         passage_embeddings: (N, d) candidate passage embeddings.
         K: Number of passages to select (context budget).
-        method: Selection method. One of "qore", "vqc", "topk", "mmr", "submodular".
+        method: Selection method. One of "qore", "vqc", "topk", "mmr", "submodular", "spectral_dpp".
         relevance_scores: Optional (N,) pre-computed relevance scores from the
             retriever. If None, cosine(query, passage) is used.
         redundancy_method: How to compute b_ij. "cosine" (default) or "rbf".
@@ -151,6 +154,8 @@ def select_passages(
         lambda_mmr: MMR trade-off (only for method="mmr").
         saturation_alpha: Concavity parameter for method="submodular".
         lambda_submodular: Pairwise redundancy penalty for method="submodular".
+        dpp_quality_scale: Quality weight in the Spectral/DPP L-ensemble.
+        dpp_jitter: Positive numerical regularizer for the DPP kernel.
         seed: Random seed for reproducibility.
         direct_solve_max_n: If N <= this, solve the full QUBO directly with no
             top-M prefilter. Default is 20.
@@ -194,6 +199,15 @@ def select_passages(
             K,
             saturation_alpha=saturation_alpha,
             lambda_redundancy=lambda_submodular,
+        )
+
+    elif method == "spectral_dpp":
+        return spectral_dpp.select(
+            a,
+            passage_embeddings,
+            K,
+            quality_scale=dpp_quality_scale,
+            jitter=dpp_jitter,
         )
 
     elif method == "qore":
@@ -325,7 +339,7 @@ def select_passages(
 
     else:
         raise ValueError(
-            f"Unknown method '{method}'. Choose from: 'qore', 'vqc', 'topk', 'mmr', 'submodular'."
+            f"Unknown method '{method}'. Choose from: 'qore', 'vqc', 'topk', 'mmr', 'submodular', 'spectral_dpp'."
         )
 
 

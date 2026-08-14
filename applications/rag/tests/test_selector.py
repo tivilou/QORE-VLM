@@ -5,7 +5,7 @@ import pytest
 
 from applications.rag.selector import select_passages, evaluate_selection
 from applications.rag.signals_rag import passage_relevance, passage_redundancy
-from applications.rag.baselines import topk, mmr, submodular
+from applications.rag.baselines import topk, mmr, submodular, spectral_dpp
 
 
 class TestSignals:
@@ -129,6 +129,31 @@ class TestSubmodular:
             submodular.select(np.array([0.2, 0.4]), np.array([[0.0, 0.1], [0.2, 0.0]]), 1)
 
 
+class TestSpectralDPP:
+    """Spectral/DPP strategy contracts."""
+
+    def test_selects_exactly_k_and_is_deterministic(self):
+        quality = np.array([0.9, 0.9, 0.4, 0.2])
+        embeddings = np.eye(4)
+        first = spectral_dpp.select(quality, embeddings, K=3, quality_scale=0.0)
+        second = spectral_dpp.select(quality, embeddings, K=3, quality_scale=0.0)
+        assert np.array_equal(first, second)
+        assert np.array_equal(first, np.array([0, 1, 2]))
+
+    def test_dpp_avoids_duplicate_embedding(self):
+        quality = np.array([1.0, 0.98, 0.7])
+        embeddings = np.array([[1.0, 0.0], [1.0, 0.0], [0.0, 1.0]])
+        selected = spectral_dpp.select(quality, embeddings, K=2, quality_scale=2.0)
+        assert set(selected) == {0, 2}
+
+    def test_repairs_indefinite_similarity_for_replay(self):
+        quality = np.array([0.7, 0.6, 0.5])
+        similarity = np.array([[1.0, 1.2, 0.0], [1.2, 1.0, 0.0], [0.0, 0.0, 1.0]])
+        selected = spectral_dpp.select_from_similarity(quality, similarity, K=2)
+        assert len(selected) == 2
+        assert len(set(selected.tolist())) == 2
+
+
 class TestQORESelector:
     """Test the unified QORE selector."""
 
@@ -178,7 +203,7 @@ class TestQORESelector:
 
     def test_all_methods_valid_indices(self, simple_scenario):
         N = len(simple_scenario["passages"])
-        for method in ["qore", "topk", "mmr", "submodular"]:
+        for method in ["qore", "topk", "mmr", "submodular", "spectral_dpp"]:
             kwargs = {"num_reads": 30, "seed": 42} if method == "qore" else {}
             indices = select_passages(
                 simple_scenario["query"],

@@ -69,6 +69,8 @@ def parse_args():
     p.add_argument("--lambda_mmr", type=float, default=0.7)
     p.add_argument("--saturation_alpha", type=float, default=1.0)
     p.add_argument("--lambda_submodular", type=float, default=0.5)
+    p.add_argument("--dpp_quality_scale", type=float, default=2.0)
+    p.add_argument("--dpp_jitter", type=float, default=1e-8)
 
     # Answer scoring (optimization)
     p.add_argument("--use_answer_scorer", action="store_true",
@@ -116,6 +118,8 @@ def run_single(args, method: str, seed: int, output_dir: Path) -> dict:
         "--lambda_mmr", str(args.lambda_mmr),
         "--saturation_alpha", str(args.saturation_alpha),
         "--lambda_submodular", str(args.lambda_submodular),
+        "--dpp_quality_scale", str(args.dpp_quality_scale),
+        "--dpp_jitter", str(args.dpp_jitter),
         "--model_path", args.model_path,
         "--seed", str(seed),
         "--output_dir", str(output_dir),
@@ -194,7 +198,7 @@ def aggregate_results(results_by_method: dict, output_dir: Path):
 
     # Significance tests (QORE vs others)
     if "qore" in summary["methods"]:
-        for other in ["mmr", "topk", "submodular"]:
+        for other in ["mmr", "topk", "submodular", "spectral_dpp"]:
             if other not in summary["methods"]:
                 continue
             for metric in summary["methods"]["qore"]:
@@ -216,7 +220,7 @@ def aggregate_results(results_by_method: dict, output_dir: Path):
     print("=" * 70)
     print(f"Method       Recall@K         Redundancy       EM               F1")
     print("-" * 70)
-    for method in ["qore", "mmr", "topk", "submodular"]:
+    for method in ["qore", "mmr", "topk", "submodular", "spectral_dpp"]:
         if method not in summary["methods"]:
             continue
         m = summary["methods"][method]
