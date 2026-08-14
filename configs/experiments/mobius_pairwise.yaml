@@ -1,0 +1,11 @@
+selection:
+  method: qore
+  enhancers:
+    - name: baseline
+      config:
+        gamma: 0.5
+    - name: mobius
+      config:
+        mode: pairwise
+        beta: 0.1
+        clip: 1.0

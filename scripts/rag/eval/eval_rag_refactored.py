@@ -181,6 +181,13 @@ def main():
         from qore.enhancers import load_enhancer_config
         enhancer_names, enhancer_configs = load_enhancer_config(args.enhancer_config)
 
+    # Answer-utility plugins consume the same scorer and passage context as the
+    # legacy DPR complementarity path.  Keep this evaluator plumbing generic:
+    # plugins are selected from YAML and do not need selector-specific branches.
+    needs_answer_context = bool(
+        args.use_answer_scorer or args.complementarity_method == "dpr"
+    )
+
     print("=" * 70)
     print("RAG End-to-End Evaluation")
     print("=" * 70)
@@ -315,8 +322,8 @@ def main():
                     retrieved_texts = [corpus.passages[idx] for idx in retrieved_idx]
             retrieval_scores = answer_scorer.score_passages(question, retrieved_texts)
 
-        # Ensure retrieved_texts is available if complementarity_method='dpr'
-        if args.complementarity_method == 'dpr' and retrieved_texts is None:
+        # Make scorer context available to legacy and plugin-based utilities.
+        if needs_answer_context and retrieved_texts is None:
             if args.corpus_mode == "precomputed":
                 retrieved_texts = [candidates[idx]["text"] for idx in retrieved_idx]
             elif args.corpus_mode == "wiki_dpr":
@@ -347,9 +354,9 @@ def main():
             complementarity_method=args.complementarity_method,
             enhancers=enhancer_names,
             enhancer_configs=enhancer_configs,
-            answer_scorer=answer_scorer if args.complementarity_method == 'dpr' else None,
-            passage_texts=retrieved_texts if args.complementarity_method == 'dpr' else None,
-            question=question if args.complementarity_method == 'dpr' else None,
+            answer_scorer=answer_scorer if needs_answer_context else None,
+            passage_texts=retrieved_texts if needs_answer_context else None,
+            question=question if needs_answer_context else None,
             lambda_mmr=args.lambda_mmr,
             seed=args.seed,
             relevance_scores=retrieval_scores,
