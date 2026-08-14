@@ -1,0 +1,16 @@
+left,right,metric,n,mean_delta,wins,losses,ties,bootstrap_ci95_low,bootstrap_ci95_high
+qore_as_control,cohesion_fixed,recall,156,-0.008012820512820512,0,2,154,-0.022435897435897436,0.0
+qore_as_control,cohesion_fixed,f1,200,-0.005833333333333333,0,2,198,-0.014999999999999998,0.0
+qore_as_control,cohesion_fixed,em,200,0.0,0,0,200,0.0,0.0
+qore_as_control,cohesion_fixed,redundancy,200,-0.0014770295612784973,0,9,191,-0.003118612908632044,-0.00039000863707091605
+qore_as_control,cohesion_fixed,selection_time_ms,200,0.024539315006677498,164,36,0,-0.16182598496015999,0.14834410000730713
+qore_as_control,cohesion_calibrated,recall,156,0.0,0,0,156,0.0,0.0
+qore_as_control,cohesion_calibrated,f1,200,0.0,0,0,200,0.0,0.0
+qore_as_control,cohesion_calibrated,em,200,0.0,0,0,200,0.0,0.0
+qore_as_control,cohesion_calibrated,redundancy,200,0.0,0,0,200,0.0,0.0
+qore_as_control,cohesion_calibrated,selection_time_ms,200,0.03869276500608976,164,36,0,-0.1496110850007426,0.1616293899962784
+qore_as_control,cohesion_disabled,recall,156,0.0,0,0,156,0.0,0.0
+qore_as_control,cohesion_disabled,f1,200,0.0,0,0,200,0.0,0.0
+qore_as_control,cohesion_disabled,em,200,0.0,0,0,200,0.0,0.0
+qore_as_control,cohesion_disabled,redundancy,200,0.0,0,0,200,0.0,0.0
+qore_as_control,cohesion_disabled,selection_time_ms,200,0.12057205499672818,179,21,0,-0.08036784000637454,0.2708531749760823

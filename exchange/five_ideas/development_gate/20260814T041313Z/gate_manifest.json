@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "source": "/root/QORE-VLM/configs/experiments/cohesion_calibration.yaml",
+  "gate": {
+    "name": "cohesion_calibration_gate",
+    "description": "Matched development gate for deterministic cohesion calibration. The Answer Scorer control is compared with fixed, calibrated, and disabled additive cohesion corrections under the same candidate pools.",
+    "shared_args": {
+      "dataset": "nq_open",
+      "split": "validation",
+      "max_samples": 200,
+      "corpus_mode": "wiki_dpr",
+      "K": 5,
+      "lam": 2.0,
+      "seed": 42,
+      "dump_passages": true,
+      "use_answer_scorer": true
+    },
+    "configurations": [
+      {
+        "name": "qore_as_control",
+        "kind": "qore",
+        "args": {
+          "method": "qore",
+          "gamma": 0.5,
+          "delta": 0.0
+        },
+        "description": "Answer Scorer QORE control with the baseline root only."
+      },
+      {
+        "name": "cohesion_fixed",
+        "kind": "qore",
+        "args": {
+          "method": "qore",
+          "enhancer_config": "configs/experiments/cohesion_fixed.yaml"
+        },
+        "description": "Baseline root plus fixed additive cohesion weight."
+      },
+      {
+        "name": "cohesion_calibrated",
+        "kind": "qore",
+        "args": {
+          "method": "qore",
+          "enhancer_config": "configs/experiments/cohesion_calibrated.yaml"
+        },
+        "description": "Baseline root plus query/pool-calibrated cohesion weight."
+      },
+      {
+        "name": "cohesion_disabled",
+        "kind": "qore",
+        "args": {
+          "method": "qore",
+          "enhancer_config": "configs/experiments/cohesion_disabled.yaml"
+        },
+        "description": "Explicit disabled cohesion ablation for pipeline equivalence."
+      }
+    ],
+    "paired_comparisons": [
+      [
+        "qore_as_control",
+        "cohesion_fixed"
+      ],
+      [
+        "qore_as_control",
+        "cohesion_calibrated"
+      ],
+      [
+        "qore_as_control",
+        "cohesion_disabled"
+      ]
+    ]
+  },
+  "cache_stats": {
+    "available": false,
+    "hits": null,
+    "misses": null,
+    "reason": "Answer Scorer cache is not implemented"
+  }
+}
