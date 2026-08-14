@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "source": "/root/QORE-VLM/configs/experiments/five_idea_submodular_gate.yaml",
+  "gate": {
+    "name": "five_idea_submodular_gate",
+    "description": "Matched collaborator-only Wiki-DPR gate comparing Answer-Scorer QORE control with the saturating Submodular terminal strategy and fixed baselines.",
+    "shared_args": {
+      "dataset": "nq_open",
+      "split": "validation",
+      "max_samples": 200,
+      "corpus_mode": "wiki_dpr",
+      "K": 5,
+      "lam": 2.0,
+      "seed": 42,
+      "dump_passages": true
+    },
+    "configurations": [
+      {
+        "name": "qore_as_control",
+        "kind": "qore",
+        "args": {
+          "method": "qore",
+          "gamma": 0.5,
+          "delta": 0.0,
+          "use_answer_scorer": true
+        },
+        "description": "Answer Scorer QORE control without a new strategy."
+      },
+      {
+        "name": "submodular_as",
+        "kind": "baseline",
+        "args": {
+          "method": "submodular",
+          "saturation_alpha": 1.0,
+          "lambda_submodular": 0.1,
+          "use_answer_scorer": true
+        },
+        "description": "Saturating Submodular strategy; lambda pre-screened by compact replay."
+      },
+      {
+        "name": "topk_as",
+        "kind": "baseline",
+        "args": {
+          "method": "topk",
+          "use_answer_scorer": true
+        },
+        "description": "Top-K using Answer Scorer ranking."
+      },
+      {
+        "name": "mmr_as",
+        "kind": "baseline",
+        "args": {
+          "method": "mmr",
+          "lambda_mmr": 0.7,
+          "use_answer_scorer": true
+        },
+        "description": "MMR using Answer Scorer relevance."
+      }
+    ],
+    "paired_comparisons": [
+      [
+        "qore_as_control",
+        "submodular_as"
+      ],
+      [
+        "qore_as_control",
+        "topk_as"
+      ],
+      [
+        "qore_as_control",
+        "mmr_as"
+      ]
+    ]
+  },
+  "cache_stats": {
+    "available": false,
+    "hits": null,
+    "misses": null,
+    "reason": "Answer Scorer cache is not implemented in Phase 1"
+  }
+}
