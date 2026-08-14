@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "source": "/root/QORE-VLM/configs/experiments/mobius_answer_utility_gate.yaml",
+  "gate": {
+    "name": "mobius_answer_utility_gate",
+    "description": "Matched development gate for the additive second-order answer-utility Mobius correction. It evaluates only the frozen Answer Scorer baseline, pairwise Mobius, and the explicit disabled-equivalence ablation.",
+    "shared_args": {
+      "dataset": "nq_open",
+      "split": "validation",
+      "max_samples": 200,
+      "corpus_mode": "wiki_dpr",
+      "K": 5,
+      "lam": 2.0,
+      "seed": 42,
+      "dump_passages": true,
+      "use_answer_scorer": true
+    },
+    "configurations": [
+      {
+        "name": "qore_as_control",
+        "kind": "qore",
+        "args": {
+          "method": "qore",
+          "gamma": 0.5,
+          "delta": 0.0
+        },
+        "description": "Frozen Answer Scorer QORE control with baseline root only."
+      },
+      {
+        "name": "mobius_pairwise",
+        "kind": "qore",
+        "args": {
+          "method": "qore",
+          "enhancer_config": "configs/experiments/mobius_pairwise.yaml"
+        },
+        "description": "Baseline root plus batched second-order answer-utility Mobius term."
+      },
+      {
+        "name": "mobius_disabled",
+        "kind": "qore",
+        "args": {
+          "method": "qore",
+          "enhancer_config": "configs/experiments/mobius_disabled.yaml"
+        },
+        "description": "Explicit disabled Mobius ablation; must exactly reproduce control selection."
+      }
+    ],
+    "paired_comparisons": [
+      [
+        "qore_as_control",
+        "mobius_pairwise"
+      ],
+      [
+        "qore_as_control",
+        "mobius_disabled"
+      ]
+    ]
+  },
+  "cache_stats": {
+    "available": false,
+    "hits": null,
+    "misses": null,
+    "reason": "Answer Scorer cache is not implemented; pair utilities are batched per question."
+  }
+}

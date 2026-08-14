@@ -1,0 +1,11 @@
+left,right,metric,n,mean_delta,wins,losses,ties,bootstrap_ci95_low,bootstrap_ci95_high
+qore_as_control,mobius_pairwise,recall,156,0.0001782227743766212,11,12,133,-0.01647764628533859,0.017274392274392272
+qore_as_control,mobius_pairwise,f1,200,0.007047619047619047,9,6,185,-0.004845238095238097,0.020892857142857144
+qore_as_control,mobius_pairwise,em,200,0.01,2,0,198,0.0,0.025
+qore_as_control,mobius_pairwise,redundancy,200,0.0004258418998043045,49,43,108,-0.0020433347249441563,0.0027039041908462637
+qore_as_control,mobius_pairwise,selection_time_ms,200,839.838072859999,200,0,0,835.287337349994,844.3443117549918
+qore_as_control,mobius_disabled,recall,156,0.0,0,0,156,0.0,0.0
+qore_as_control,mobius_disabled,f1,200,0.0,0,0,200,0.0,0.0
+qore_as_control,mobius_disabled,em,200,0.0,0,0,200,0.0,0.0
+qore_as_control,mobius_disabled,redundancy,200,0.0,0,0,200,0.0,0.0
+qore_as_control,mobius_disabled,selection_time_ms,200,0.10380465000025652,161,39,0,-0.06649690001069075,0.22434788999163402

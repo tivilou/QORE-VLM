@@ -1,0 +1,483 @@
+{
+  "schema_version": 2,
+  "run_id": "20260814T065620Z",
+  "gate": {
+    "name": "mobius_answer_utility_gate",
+    "configurations": [
+      "qore_as_control",
+      "mobius_pairwise",
+      "mobius_disabled"
+    ],
+    "paired_comparisons": [
+      [
+        "qore_as_control",
+        "mobius_pairwise"
+      ],
+      [
+        "qore_as_control",
+        "mobius_disabled"
+      ]
+    ],
+    "manifest": "/root/QORE-VLM/configs/experiments/mobius_answer_utility_gate.yaml"
+  },
+  "sources": [
+    {
+      "path": "qore_as_control/result.json",
+      "bytes": 298094193,
+      "sha256": "57468ec144306507e8e460a454b775cefee8c93bb3afcde0abccf7d215bce4d0"
+    },
+    {
+      "path": "mobius_pairwise/result.json",
+      "bytes": 298276670,
+      "sha256": "f9dc6c3f968aeb8f82c3e3452c0a7c01985c7ed5d3b0b80e1b342f7f53848b37"
+    },
+    {
+      "path": "mobius_disabled/result.json",
+      "bytes": 298202349,
+      "sha256": "b2dc78fcd28840bef58c7e766e4ee4187a4562529e6e9e6da92c9fc9ec8063f7"
+    }
+  ],
+  "configs": {
+    "qore_as_control": {
+      "config": {
+        "dataset": "nq_open",
+        "split": "validation",
+        "max_samples": 200,
+        "custom_path": null,
+        "corpus_mode": "wiki_dpr",
+        "corpus_output_dir": null,
+        "n_distractors": 36000,
+        "faiss_embeddings_path": null,
+        "faiss_passages_path": null,
+        "faiss_mmap": false,
+        "wiki_dpr_config": "psgs_w100.nq.compressed",
+        "wiki_dpr_cache_dir": null,
+        "wiki_dpr_nprobe": 64,
+        "encoder_type": "dpr",
+        "top_k_retrieval": 50,
+        "method": "qore",
+        "K": 5,
+        "num_reads": 100,
+        "lam": 2.0,
+        "gamma": 0.5,
+        "qore_prefilter_size": null,
+        "direct_solve_max_n": 20,
+        "lambda_mmr": 0.7,
+        "delta": 0.0,
+        "complementarity_method": null,
+        "enhancer_config": null,
+        "use_answer_scorer": true,
+        "answer_scorer_backend": "dpr",
+        "model_path": "/root/QORE-VLM/models/llama3-8b",
+        "skip_generation": false,
+        "max_new_tokens": 128,
+        "output_dir": "/root/QORE-VLM/exchange/five_ideas/development_gate/20260814T065620Z/qore_as_control",
+        "output_file": "result.json",
+        "seed": 42,
+        "dump_passages": true,
+        "name": "qore_as_control"
+      },
+      "provided_metrics": {
+        "mean_recall": 0.4343822346174457,
+        "std_recall": 0.317855523883797,
+        "mean_precision": 0.35200000000000004,
+        "std_precision": 0.3195246469366643,
+        "mean_redundancy": 0.7829672618555952,
+        "std_redundancy": 0.07528244187356357,
+        "mean_diversity": 0.21703273814440474,
+        "std_diversity": 0.07528244187356357,
+        "mean_em": 0.275,
+        "std_em": 0.44651427748729383,
+        "mean_f1": 0.4949920634920635,
+        "std_f1": 0.40495877868477237,
+        "mean_selection_time_ms": 11.493308460002822,
+        "std_selection_time_ms": 1.0596174581811872,
+        "mean_generation_time_ms": 239.0369420899998,
+        "std_generation_time_ms": 76.37348490014564,
+        "n_samples": 200,
+        "n_with_gold": 156,
+        "n_retrieval_failure": 44
+      },
+      "samples": 200
+    },
+    "mobius_pairwise": {
+      "config": {
+        "dataset": "nq_open",
+        "split": "validation",
+        "max_samples": 200,
+        "custom_path": null,
+        "corpus_mode": "wiki_dpr",
+        "corpus_output_dir": null,
+        "n_distractors": 36000,
+        "faiss_embeddings_path": null,
+        "faiss_passages_path": null,
+        "faiss_mmap": false,
+        "wiki_dpr_config": "psgs_w100.nq.compressed",
+        "wiki_dpr_cache_dir": null,
+        "wiki_dpr_nprobe": 64,
+        "encoder_type": "dpr",
+        "top_k_retrieval": 50,
+        "method": "qore",
+        "K": 5,
+        "num_reads": 100,
+        "lam": 2.0,
+        "gamma": null,
+        "qore_prefilter_size": null,
+        "direct_solve_max_n": 20,
+        "lambda_mmr": 0.7,
+        "delta": 0.0,
+        "complementarity_method": null,
+        "enhancer_config": "configs/experiments/mobius_pairwise.yaml",
+        "use_answer_scorer": true,
+        "answer_scorer_backend": "dpr",
+        "model_path": "/root/QORE-VLM/models/llama3-8b",
+        "skip_generation": false,
+        "max_new_tokens": 128,
+        "output_dir": "/root/QORE-VLM/exchange/five_ideas/development_gate/20260814T065620Z/mobius_pairwise",
+        "output_file": "result.json",
+        "seed": 42,
+        "dump_passages": true,
+        "name": "mobius_pairwise"
+      },
+      "provided_metrics": {
+        "mean_recall": 0.4345604573918222,
+        "std_recall": 0.3087709584847839,
+        "mean_precision": 0.3510000000000001,
+        "std_precision": 0.3140047770337261,
+        "mean_redundancy": 0.7833931037553995,
+        "std_redundancy": 0.07236263667654518,
+        "mean_diversity": 0.21660689624460047,
+        "std_diversity": 0.07236263667654518,
+        "mean_em": 0.285,
+        "std_em": 0.4514144437210666,
+        "mean_f1": 0.5020396825396826,
+        "std_f1": 0.40885528605577803,
+        "mean_selection_time_ms": 851.3313813200017,
+        "std_selection_time_ms": 32.426734357464426,
+        "mean_generation_time_ms": 243.80871621499864,
+        "std_generation_time_ms": 66.45929528420828,
+        "n_samples": 200,
+        "n_with_gold": 156,
+        "n_retrieval_failure": 44
+      },
+      "samples": 200
+    },
+    "mobius_disabled": {
+      "config": {
+        "dataset": "nq_open",
+        "split": "validation",
+        "max_samples": 200,
+        "custom_path": null,
+        "corpus_mode": "wiki_dpr",
+        "corpus_output_dir": null,
+        "n_distractors": 36000,
+        "faiss_embeddings_path": null,
+        "faiss_passages_path": null,
+        "faiss_mmap": false,
+        "wiki_dpr_config": "psgs_w100.nq.compressed",
+        "wiki_dpr_cache_dir": null,
+        "wiki_dpr_nprobe": 64,
+        "encoder_type": "dpr",
+        "top_k_retrieval": 50,
+        "method": "qore",
+        "K": 5,
+        "num_reads": 100,
+        "lam": 2.0,
+        "gamma": null,
+        "qore_prefilter_size": null,
+        "direct_solve_max_n": 20,
+        "lambda_mmr": 0.7,
+        "delta": 0.0,
+        "complementarity_method": null,
+        "enhancer_config": "configs/experiments/mobius_disabled.yaml",
+        "use_answer_scorer": true,
+        "answer_scorer_backend": "dpr",
+        "model_path": "/root/QORE-VLM/models/llama3-8b",
+        "skip_generation": false,
+        "max_new_tokens": 128,
+        "output_dir": "/root/QORE-VLM/exchange/five_ideas/development_gate/20260814T065620Z/mobius_disabled",
+        "output_file": "result.json",
+        "seed": 42,
+        "dump_passages": true,
+        "name": "mobius_disabled"
+      },
+      "provided_metrics": {
+        "mean_recall": 0.4343822346174457,
+        "std_recall": 0.317855523883797,
+        "mean_precision": 0.35200000000000004,
+        "std_precision": 0.3195246469366643,
+        "mean_redundancy": 0.7829672618555952,
+        "std_redundancy": 0.07528244187356357,
+        "mean_diversity": 0.21703273814440474,
+        "std_diversity": 0.07528244187356357,
+        "mean_em": 0.275,
+        "std_em": 0.44651427748729383,
+        "mean_f1": 0.4949920634920635,
+        "std_f1": 0.40495877868477237,
+        "mean_selection_time_ms": 11.597113110003079,
+        "std_selection_time_ms": 0.32227354866827573,
+        "mean_generation_time_ms": 240.54361217999772,
+        "std_generation_time_ms": 71.29882165205511,
+        "n_samples": 200,
+        "n_with_gold": 156,
+        "n_retrieval_failure": 44
+      },
+      "samples": 200
+    }
+  },
+  "validation": {
+    "samples_per_config": 200,
+    "question_ids_matched": true,
+    "retrieval_hit_matched": true,
+    "qore_diagnostics": 600,
+    "expected_qore_diagnostics": 600,
+    "qore_diagnostics_complete": true
+  },
+  "options": {
+    "bootstrap_reps": 5000,
+    "bootstrap_seed": 20260809,
+    "max_enumerations": 100000
+  },
+  "aggregates": [
+    {
+      "configuration": "qore_as_control",
+      "samples": 200,
+      "retrieval_hits": 156,
+      "mean_recall": 0.4343822346174457,
+      "std_recall": 0.317855523883797,
+      "mean_f1": 0.4949920634920635,
+      "std_f1": 0.40495877868477237,
+      "mean_em": 0.275,
+      "std_em": 0.4465142774872938,
+      "mean_redundancy": 0.7829672618555952,
+      "std_redundancy": 0.07528244187356357,
+      "mean_selection_time_ms": 11.493308460002822,
+      "std_selection_time_ms": 1.0596174581811872,
+      "mean_generation_time_ms": 239.0369420899998,
+      "std_generation_time_ms": 76.37348490014564
+    },
+    {
+      "configuration": "mobius_pairwise",
+      "samples": 200,
+      "retrieval_hits": 156,
+      "mean_recall": 0.4345604573918223,
+      "std_recall": 0.3087709584847839,
+      "mean_f1": 0.5020396825396826,
+      "std_f1": 0.40885528605577803,
+      "mean_em": 0.285,
+      "std_em": 0.4514144437210666,
+      "mean_redundancy": 0.7833931037553995,
+      "std_redundancy": 0.07236263667654518,
+      "mean_selection_time_ms": 851.3313813200017,
+      "std_selection_time_ms": 32.426734357464426,
+      "mean_generation_time_ms": 243.80871621499864,
+      "std_generation_time_ms": 66.45929528420828
+    },
+    {
+      "configuration": "mobius_disabled",
+      "samples": 200,
+      "retrieval_hits": 156,
+      "mean_recall": 0.4343822346174457,
+      "std_recall": 0.317855523883797,
+      "mean_f1": 0.4949920634920635,
+      "std_f1": 0.40495877868477237,
+      "mean_em": 0.275,
+      "std_em": 0.4465142774872938,
+      "mean_redundancy": 0.7829672618555952,
+      "std_redundancy": 0.07528244187356357,
+      "mean_selection_time_ms": 11.597113110003079,
+      "std_selection_time_ms": 0.32227354866827573,
+      "mean_generation_time_ms": 240.5436121799977,
+      "std_generation_time_ms": 71.29882165205511
+    }
+  ],
+  "paired_effects": [
+    {
+      "left": "qore_as_control",
+      "right": "mobius_pairwise",
+      "metric": "recall",
+      "n": 156,
+      "mean_delta": 0.0001782227743766212,
+      "wins": 11,
+      "losses": 12,
+      "ties": 133,
+      "bootstrap_ci95_low": -0.01647764628533859,
+      "bootstrap_ci95_high": 0.017274392274392272
+    },
+    {
+      "left": "qore_as_control",
+      "right": "mobius_pairwise",
+      "metric": "f1",
+      "n": 200,
+      "mean_delta": 0.007047619047619047,
+      "wins": 9,
+      "losses": 6,
+      "ties": 185,
+      "bootstrap_ci95_low": -0.004845238095238097,
+      "bootstrap_ci95_high": 0.020892857142857144
+    },
+    {
+      "left": "qore_as_control",
+      "right": "mobius_pairwise",
+      "metric": "em",
+      "n": 200,
+      "mean_delta": 0.01,
+      "wins": 2,
+      "losses": 0,
+      "ties": 198,
+      "bootstrap_ci95_low": 0.0,
+      "bootstrap_ci95_high": 0.025
+    },
+    {
+      "left": "qore_as_control",
+      "right": "mobius_pairwise",
+      "metric": "redundancy",
+      "n": 200,
+      "mean_delta": 0.0004258418998043045,
+      "wins": 49,
+      "losses": 43,
+      "ties": 108,
+      "bootstrap_ci95_low": -0.0020433347249441563,
+      "bootstrap_ci95_high": 0.0027039041908462637
+    },
+    {
+      "left": "qore_as_control",
+      "right": "mobius_pairwise",
+      "metric": "selection_time_ms",
+      "n": 200,
+      "mean_delta": 839.838072859999,
+      "wins": 200,
+      "losses": 0,
+      "ties": 0,
+      "bootstrap_ci95_low": 835.287337349994,
+      "bootstrap_ci95_high": 844.3443117549918
+    },
+    {
+      "left": "qore_as_control",
+      "right": "mobius_disabled",
+      "metric": "recall",
+      "n": 156,
+      "mean_delta": 0.0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 156,
+      "bootstrap_ci95_low": 0.0,
+      "bootstrap_ci95_high": 0.0
+    },
+    {
+      "left": "qore_as_control",
+      "right": "mobius_disabled",
+      "metric": "f1",
+      "n": 200,
+      "mean_delta": 0.0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 200,
+      "bootstrap_ci95_low": 0.0,
+      "bootstrap_ci95_high": 0.0
+    },
+    {
+      "left": "qore_as_control",
+      "right": "mobius_disabled",
+      "metric": "em",
+      "n": 200,
+      "mean_delta": 0.0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 200,
+      "bootstrap_ci95_low": 0.0,
+      "bootstrap_ci95_high": 0.0
+    },
+    {
+      "left": "qore_as_control",
+      "right": "mobius_disabled",
+      "metric": "redundancy",
+      "n": 200,
+      "mean_delta": 0.0,
+      "wins": 0,
+      "losses": 0,
+      "ties": 200,
+      "bootstrap_ci95_low": 0.0,
+      "bootstrap_ci95_high": 0.0
+    },
+    {
+      "left": "qore_as_control",
+      "right": "mobius_disabled",
+      "metric": "selection_time_ms",
+      "n": 200,
+      "mean_delta": 0.10380465000025652,
+      "wins": 161,
+      "losses": 39,
+      "ties": 0,
+      "bootstrap_ci95_low": -0.06649690001069075,
+      "bootstrap_ci95_high": 0.22434788999163402
+    }
+  ],
+  "plugin_timing": [
+    {
+      "configuration": "mobius_disabled",
+      "plugin": "baseline",
+      "samples": 200,
+      "mean_elapsed_ms": 0.1769506999960413,
+      "std_elapsed_ms": 0.021469735242895003
+    },
+    {
+      "configuration": "mobius_disabled",
+      "plugin": "mobius",
+      "samples": 200,
+      "mean_elapsed_ms": 0.09656314500944063,
+      "std_elapsed_ms": 0.008304932835242137
+    },
+    {
+      "configuration": "mobius_pairwise",
+      "plugin": "baseline",
+      "samples": 200,
+      "mean_elapsed_ms": 0.20783954500359414,
+      "std_elapsed_ms": 0.028553826496553088
+    },
+    {
+      "configuration": "mobius_pairwise",
+      "plugin": "mobius",
+      "samples": 200,
+      "mean_elapsed_ms": 839.6534814249958,
+      "std_elapsed_ms": 32.43051949321345
+    },
+    {
+      "configuration": "qore_as_control",
+      "plugin": "baseline",
+      "samples": 200,
+      "mean_elapsed_ms": 0.17018209999633882,
+      "std_elapsed_ms": 0.04380663577682963
+    }
+  ],
+  "cache_stats": {
+    "available": false,
+    "hits": null,
+    "misses": null,
+    "reason": "Answer Scorer cache is not implemented; pair utilities are batched per question."
+  },
+  "reproducibility": {
+    "git": {
+      "commit": "a7f559c70b3553d439d56890c0df2d496e4e0f63",
+      "status": "## five-ideas-development...origin/five-ideas-development"
+    },
+    "python": {
+      "executable": "/root/miniconda3/bin/python3.10",
+      "version": "3.10.20 (main, Mar 11 2026, 17:46:40) [GCC 14.3.0]"
+    },
+    "gate_config": {
+      "path": "/root/QORE-VLM/configs/experiments/mobius_answer_utility_gate.yaml",
+      "sha256": "9397fb5d41f2bbc9f8780558ffb6915f86ee5b0a496cc81dbb960fed3989beba"
+    }
+  },
+  "privacy": {
+    "passage_text": false,
+    "question_text": false,
+    "answers": false,
+    "predictions": false,
+    "embeddings": false
+  },
+  "artifacts": {
+    "qubo_payload_bytes": 2065816
+  }
+}
