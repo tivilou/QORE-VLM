@@ -1,7 +1,7 @@
 """End-to-end RAG evaluation: retrieval → selection → generation → scoring.
 
 Unified evaluation script supporting three corpus modes (aligned, precomputed,
-faiss) and three selection methods (qore, mmr, topk). The refactored architecture
+faiss) and four selection methods (qore, mmr, topk, submodular). The refactored architecture
 decouples corpus management, retrieval, selection, generation, and evaluation so
 each can be swapped or tested independently.
 
@@ -110,7 +110,7 @@ def parse_args():
 
     # Selection
     p.add_argument("--method", default="qore",
-                   choices=["qore", "mmr", "topk"],
+                   choices=["qore", "mmr", "topk", "submodular"],
                    help="Selection method")
     p.add_argument("--K", type=int, default=5, help="Select K passages")
     p.add_argument("--num_reads", type=int, default=100,
@@ -130,6 +130,10 @@ def parse_args():
                         "Increase only for small-N demos.")
     p.add_argument("--lambda_mmr", type=float, default=0.7,
                    help="MMR lambda (1=relevance, 0=diversity)")
+    p.add_argument("--saturation_alpha", type=float, default=1.0,
+                   help="Submodular quality saturation (0=linear quality)")
+    p.add_argument("--lambda_submodular", type=float, default=0.5,
+                   help="Submodular pairwise redundancy penalty")
     p.add_argument("--delta", type=float, default=0.0,
                    help="Complementarity weight (only for method=qore with complementarity_method set). "
                         "Positive delta rewards selecting complementary passage pairs.")
@@ -358,6 +362,8 @@ def main():
             passage_texts=retrieved_texts if needs_answer_context else None,
             question=question if needs_answer_context else None,
             lambda_mmr=args.lambda_mmr,
+            saturation_alpha=args.saturation_alpha,
+            lambda_submodular=args.lambda_submodular,
             seed=args.seed,
             relevance_scores=retrieval_scores,
             qore_prefilter_size=args.qore_prefilter_size,

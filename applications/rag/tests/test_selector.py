@@ -5,7 +5,7 @@ import pytest
 
 from applications.rag.selector import select_passages, evaluate_selection
 from applications.rag.signals_rag import passage_relevance, passage_redundancy
-from applications.rag.baselines import topk, mmr
+from applications.rag.baselines import topk, mmr, submodular
 
 
 class TestSignals:
@@ -95,6 +95,40 @@ class TestMMR:
         assert set(indices_mmr) == set(indices_topk)
 
 
+class TestSubmodular:
+    """Saturating submodular strategy contracts."""
+
+    def test_selects_exactly_k_and_is_deterministic(self):
+        quality = np.array([0.9, 0.9, 0.4, 0.2])
+        redundancy = np.zeros((4, 4))
+        first = submodular.select(quality, redundancy, K=3)
+        second = submodular.select(quality, redundancy, K=3)
+        assert np.array_equal(first, second)
+        assert np.array_equal(first, np.array([0, 1, 2]))
+
+    def test_zero_penalty_matches_topk(self):
+        quality = np.array([0.1, 0.8, 0.4, 0.7])
+        redundancy = np.ones((4, 4)) - np.eye(4)
+        selected = submodular.select(
+            quality, redundancy, K=2, saturation_alpha=0.0,
+            lambda_redundancy=0.0,
+        )
+        assert np.array_equal(selected, np.array([1, 3]))
+
+    def test_penalty_avoids_near_duplicate(self):
+        quality = np.array([1.0, 0.98, 0.7])
+        redundancy = np.array([[0.0, 1.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 0.0]])
+        selected = submodular.select(
+            quality, redundancy, K=2, saturation_alpha=1.0,
+            lambda_redundancy=0.5,
+        )
+        assert set(selected) == {0, 2}
+
+    def test_validates_matrix_contract(self):
+        with pytest.raises(ValueError, match="symmetric"):
+            submodular.select(np.array([0.2, 0.4]), np.array([[0.0, 0.1], [0.2, 0.0]]), 1)
+
+
 class TestQORESelector:
     """Test the unified QORE selector."""
 
@@ -144,7 +178,7 @@ class TestQORESelector:
 
     def test_all_methods_valid_indices(self, simple_scenario):
         N = len(simple_scenario["passages"])
-        for method in ["qore", "topk", "mmr"]:
+        for method in ["qore", "topk", "mmr", "submodular"]:
             kwargs = {"num_reads": 30, "seed": 42} if method == "qore" else {}
             indices = select_passages(
                 simple_scenario["query"],

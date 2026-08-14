@@ -1,0 +1,12 @@
+{
+  "questions": 200,
+  "saturation_alpha": 1.0,
+  "lambda_submodular": 0.3,
+  "mean_control_gold_hits": 1.76,
+  "mean_submodular_gold_hits": 1.75,
+  "mean_gold_hit_delta": -0.01,
+  "selection_changes": 200,
+  "mean_submodular_redundancy": 0.7864244025142193,
+  "source": "passage-free qore_as_control qubo_payload.jsonl.gz",
+  "interpretation": "selection diagnostic; not a held-out generation or F1 result"
+}

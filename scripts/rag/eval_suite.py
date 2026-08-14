@@ -8,7 +8,7 @@ Usage:
         --dataset nq_open \\
         --corpus_mode aligned \\
         --corpus_output_dir data/nq_corpus \\
-        --methods qore,mmr,topk \\
+        --methods qore,mmr,topk,submodular \\
         --seeds 42,123,456 \\
         --K 5 \\
         --max_samples 100
@@ -56,7 +56,7 @@ def parse_args():
                    help="IVFPQ search breadth for wiki_dpr mode")
 
     # Selection
-    p.add_argument("--methods", default="qore,mmr,topk",
+    p.add_argument("--methods", default="qore,mmr,topk,submodular",
                    help="Comma-separated methods")
     p.add_argument("--K", type=int, default=5)
     p.add_argument("--num_reads", type=int, default=100)
@@ -67,6 +67,8 @@ def parse_args():
     p.add_argument("--direct_solve_max_n", type=int, default=20,
                    help="QORE: max N for direct QUBO solve without prefilter")
     p.add_argument("--lambda_mmr", type=float, default=0.7)
+    p.add_argument("--saturation_alpha", type=float, default=1.0)
+    p.add_argument("--lambda_submodular", type=float, default=0.5)
 
     # Answer scoring (optimization)
     p.add_argument("--use_answer_scorer", action="store_true",
@@ -112,6 +114,8 @@ def run_single(args, method: str, seed: int, output_dir: Path) -> dict:
         "--num_reads", str(args.num_reads),
         "--lam", str(args.lam),
         "--lambda_mmr", str(args.lambda_mmr),
+        "--saturation_alpha", str(args.saturation_alpha),
+        "--lambda_submodular", str(args.lambda_submodular),
         "--model_path", args.model_path,
         "--seed", str(seed),
         "--output_dir", str(output_dir),
@@ -190,7 +194,7 @@ def aggregate_results(results_by_method: dict, output_dir: Path):
 
     # Significance tests (QORE vs others)
     if "qore" in summary["methods"]:
-        for other in ["mmr", "topk"]:
+        for other in ["mmr", "topk", "submodular"]:
             if other not in summary["methods"]:
                 continue
             for metric in summary["methods"]["qore"]:
@@ -212,7 +216,7 @@ def aggregate_results(results_by_method: dict, output_dir: Path):
     print("=" * 70)
     print(f"Method       Recall@K         Redundancy       EM               F1")
     print("-" * 70)
-    for method in ["qore", "mmr", "topk"]:
+    for method in ["qore", "mmr", "topk", "submodular"]:
         if method not in summary["methods"]:
             continue
         m = summary["methods"][method]

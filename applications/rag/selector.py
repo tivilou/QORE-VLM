@@ -9,7 +9,7 @@ from qore import solve as qore_solve
 from qore.qubo import build_qubo_matrix, build_qubo_matrix_from_w, energy, energy_decomposed
 from qore.signals import normalize
 from .signals_rag import passage_relevance, passage_redundancy
-from .baselines import topk, mmr
+from .baselines import topk, mmr, submodular
 
 
 def _record_qubo_diagnostics(diagnostics, a, b, x, K, lam, gamma, prefiltered,
@@ -93,6 +93,8 @@ def select_passages(
     passages_meta: list[dict] | None = None,
     num_reads: int = 50,
     lambda_mmr: float = 0.5,
+    saturation_alpha: float = 1.0,
+    lambda_submodular: float = 0.5,
     seed: int | None = None,
     direct_solve_max_n: int = 20,
     qore_prefilter_size: int | None = None,
@@ -108,6 +110,7 @@ def select_passages(
     - "vqc": Quantum-native pipeline (VQC encoder for signals + QUBO solve)
     - "topk": Greedy top-K by relevance (baseline)
     - "mmr": Maximal Marginal Relevance (greedy diversity-aware baseline)
+    - "submodular": Saturating quality with pairwise redundancy penalty
 
     REFACTORED: Now supports pluggable enhancers for clean idea composition.
 
@@ -115,7 +118,7 @@ def select_passages(
         query_embedding: (d,) query vector.
         passage_embeddings: (N, d) candidate passage embeddings.
         K: Number of passages to select (context budget).
-        method: Selection method. One of "qore", "vqc", "topk", "mmr".
+        method: Selection method. One of "qore", "vqc", "topk", "mmr", "submodular".
         relevance_scores: Optional (N,) pre-computed relevance scores from the
             retriever. If None, cosine(query, passage) is used.
         redundancy_method: How to compute b_ij. "cosine" (default) or "rbf".
@@ -146,6 +149,8 @@ def select_passages(
         passages_meta: List of N passage metadata dicts (for idea4, etc.).
         num_reads: SA reads (only for method="qore"/"vqc").
         lambda_mmr: MMR trade-off (only for method="mmr").
+        saturation_alpha: Concavity parameter for method="submodular".
+        lambda_submodular: Pairwise redundancy penalty for method="submodular".
         seed: Random seed for reproducibility.
         direct_solve_max_n: If N <= this, solve the full QUBO directly with no
             top-M prefilter. Default is 20.
@@ -179,6 +184,16 @@ def select_passages(
             K,
             lambda_mmr=lambda_mmr,
             relevance_scores=a,
+        )
+
+    elif method == "submodular":
+        b = passage_redundancy(passage_embeddings, method=redundancy_method)
+        return submodular.select(
+            a,
+            b,
+            K,
+            saturation_alpha=saturation_alpha,
+            lambda_redundancy=lambda_submodular,
         )
 
     elif method == "qore":
@@ -310,7 +325,7 @@ def select_passages(
 
     else:
         raise ValueError(
-            f"Unknown method '{method}'. Choose from: 'qore', 'vqc', 'topk', 'mmr'."
+            f"Unknown method '{method}'. Choose from: 'qore', 'vqc', 'topk', 'mmr', 'submodular'."
         )
 
 
