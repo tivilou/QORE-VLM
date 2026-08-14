@@ -118,7 +118,7 @@ def main() -> int:
             })
 
     with output.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+        writer = csv.DictWriter(handle, fieldnames=list(rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
@@ -148,7 +148,7 @@ def main() -> int:
         })
     summary_path = output.with_name(output.stem + "_aggregate.csv")
     with summary_path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(summary_rows[0]))
+        writer = csv.DictWriter(handle, fieldnames=list(summary_rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(summary_rows)
     print(f"wrote {output}")
