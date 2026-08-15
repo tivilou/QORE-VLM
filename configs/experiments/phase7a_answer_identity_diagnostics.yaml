@@ -1,0 +1,23 @@
+phase:
+  name: phase7a_answer_identity_diagnostics
+  schema_version: 1
+  dataset: nq_open
+  split: validation
+  max_samples: 50
+  seed: 42
+  corpus_mode: wiki_dpr
+  wiki_dpr_config: psgs_w100.nq.compressed
+  wiki_dpr_nprobe: 64
+  top_k_retrieval: 50
+  selection_K: 5
+  selection_method: qore
+  answer_scorer_backend: dpr
+  answer_top_m: 3
+  max_answer_tokens: 10
+  high_conflict_threshold: 0.25
+  generator:
+    enabled: true
+    model_path: /root/QORE-VLM/models/llama3-8b
+    max_new_tokens: 32
+  outputs:
+    root: exchange/five_ideas/phase7a_answer_identity_diagnostics

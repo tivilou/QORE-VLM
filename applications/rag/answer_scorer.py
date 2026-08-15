@@ -20,7 +20,7 @@ Usage:
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Any, Optional
 import numpy as np
 
 
@@ -88,6 +88,64 @@ class DPRAnswerScorer:
             all_scores.append(batch_scores)
 
         return np.concatenate(all_scores, axis=0)
+
+    def score_passages_with_hypotheses(
+        self,
+        question: str,
+        passages: list[str],
+        *,
+        top_m: int = 3,
+        max_answer_tokens: int = 10,
+    ) -> tuple[np.ndarray, list[list[dict[str, Any]]]]:
+        """Return baseline scores plus diagnostic-only top answer spans.
+
+        This method does not modify the selector. It exposes start/end logits
+        already produced by the DPR reader so Phase 7A can measure answer
+        agreement before implementing an answer-conditioned objective.
+        """
+        import torch
+
+        from applications.rag.answer_evidence import extract_top_answer_spans
+
+        if not passages:
+            return np.empty(0, dtype=np.float32), []
+
+        all_scores: list[np.ndarray] = []
+        all_hypotheses: list[list[dict[str, Any]]] = []
+        for start in range(0, len(passages), self.batch_size):
+            batch = passages[start:start + self.batch_size]
+            encoded = self.tokenizer(
+                questions=[question] * len(batch),
+                texts=batch,
+                return_tensors="pt",
+                padding=True,
+                truncation=True,
+                max_length=350,
+            )
+            encoded_cpu = {
+                key: value.detach().cpu()
+                for key, value in encoded.items()
+            }
+            encoded_device = {key: value.to(self.device) for key, value in encoded.items()}
+            with torch.no_grad():
+                outputs = self.reader(**encoded_device)
+                logits = outputs.relevance_logits.detach().cpu().float().numpy()
+                batch_scores = 1.0 / (1.0 + np.exp(-logits))
+            batch_hypotheses = extract_top_answer_spans(
+                encoded_cpu["input_ids"].numpy(),
+                outputs.start_logits.detach().cpu().float().numpy(),
+                outputs.end_logits.detach().cpu().float().numpy(),
+                self.tokenizer,
+                attention_mask=encoded_cpu.get("attention_mask").numpy()
+                if encoded_cpu.get("attention_mask") is not None
+                else None,
+                top_m=top_m,
+                max_answer_tokens=max_answer_tokens,
+            )
+            all_scores.append(batch_scores)
+            all_hypotheses.extend(batch_hypotheses)
+
+        return np.concatenate(all_scores, axis=0), all_hypotheses
 
 
 class CrossEncoderAnswerScorer:

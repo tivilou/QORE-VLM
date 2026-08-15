@@ -1,0 +1,112 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "Q-DUET-VLM Phase 7A answer-identity diagnostics",
+  "authorization": "approved",
+  "baseline": {
+    "entry_point": "applications.rag.answer_scorer.DPRAnswerScorer.score_passages",
+    "code_revision": "85f3a2f",
+    "equivalence_test": "Diagnostic-disabled DPR passage scoring remains byte-equivalent in shape and values."
+  },
+  "core_invariants": [
+    "Dataset loading, gold labels, metrics, retrieval, generation, and baseline selector remain outside the diagnostic adapter.",
+    "Diagnostic outputs are passage-free compact summaries and do not alter selection or evaluation decisions.",
+    "Answer hypothesis matrices are deterministic, finite, symmetric where declared, and have zero diagonal where declared."
+  ],
+  "interfaces": [
+    {
+      "id": "answer_evidence_diagnostic",
+      "type": "transformer",
+      "input_schema": "question: str; passages: list[str]; optional DPR start/end/relevance logits; top_m >= 1",
+      "output_schema": "per-passage hypotheses and compact agreement/conflict/duplication diagnostics",
+      "invariants": ["Input order is preserved", "No raw passage text is emitted", "Repeated inputs produce identical outputs"]
+    },
+    {
+      "id": "generator_sensitivity_diagnostic",
+      "type": "filter",
+      "input_schema": "question: str; selected context: list[str]; gold answer: str; distractor substitution policy",
+      "output_schema": "compact baseline-vs-substitution answer sensitivity summary",
+      "invariants": ["Gold labels are read-only", "Substitution is diagnostic-only", "No generator state is changed"]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "baseline_answer_scorer",
+      "version": "1.0.0",
+      "role": "baseline",
+      "interface": "answer_evidence_diagnostic",
+      "insertion_point": "applications.rag.answer_scorer.DPRAnswerScorer diagnostic adapter",
+      "hypothesis": "Existing passage-level answer likelihood is the unchanged baseline quality signal.",
+      "input_schema": "question and passages",
+      "output_schema": "passage-level scores in [0,1]",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "Existing DPR reader inference cost; no additional model.",
+      "failure_signatures": ["Score shape differs from passage count", "Diagnostic-disabled output changes"]
+    },
+    {
+      "id": "answer_identity_diagnostic",
+      "version": "0.1.0",
+      "role": "adapter",
+      "interface": "answer_evidence_diagnostic",
+      "insertion_point": "Diagnostic-only adapter over DPR reader start/end/relevance logits",
+      "hypothesis": "Independent passages supporting the same answer can be separated from duplicate support and answer conflict.",
+      "input_schema": "question, passages, DPR reader logits, top_m",
+      "output_schema": "normalized hypotheses, agreement matrix, conflict and duplication aggregates",
+      "requires": ["baseline_answer_scorer"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "Top-m span extraction from existing reader outputs; O(N*m^2) diagnostic arithmetic.",
+      "failure_signatures": ["All hypotheses empty", "Agreement is not symmetric", "Conflict is high on same-answer synthetic fixtures"]
+    },
+    {
+      "id": "generator_counterfactual_diagnostic",
+      "version": "0.1.0",
+      "role": "adapter",
+      "interface": "generator_sensitivity_diagnostic",
+      "insertion_point": "Collaborator-only diagnostic wrapper after selection and generation",
+      "hypothesis": "Replacing one supporting passage with a plausible answer-conflicting distractor exposes generator sensitivity relevant to future stopping decisions.",
+      "input_schema": "question, selected context, gold answer, generator callable",
+      "output_schema": "compact exact/F1 sensitivity delta and provenance",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "One additional bounded generation per selected context; collaborator-only.",
+      "failure_signatures": ["Substitution does not change any output on conflict fixtures", "Gold answer is mutated", "Raw context is written to Exchange"]
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": ["baseline_answer_scorer", "answer_identity_diagnostic", "generator_counterfactual_diagnostic"]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": ["baseline_answer_scorer", "answer_identity_diagnostic"],
+    "merge_rule": "Diagnostic adapter consumes baseline reader outputs and returns a separate immutable report; it does not modify QUBO weights.",
+    "interaction_ablations": ["baseline scorer only", "answer identity diagnostics enabled", "generator sensitivity diagnostic enabled independently"]
+  },
+  "validation": {
+    "baseline_equivalence": "Compare diagnostic-disabled score_passages against the current implementation on fixed synthetic logits and empty diagnostics.",
+    "tests": [
+      "baseline_equivalence",
+      "schema_and_invariants",
+      "plugin_isolation",
+      "deterministic_replay",
+      "dependency_conflict_validation",
+      "interaction_ablation",
+      "smoke_manifest"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/phase7a_answer_identity_diagnostics.yaml",
+    "dataset_identity": "wiki_dpr diagnostic pilot, collaborator-only, max_samples 50-100",
+    "environment": "record python version, package versions, device, model revision, and git revision",
+    "seeds": [42, 43, 44],
+    "output_manifest": "exchange/five_ideas/phase7a_answer_identity_diagnostics/manifest.json"
+  },
+  "limitations": [
+    "This phase diagnoses answer identity and generator sensitivity; it does not implement or validate the formal Answer-Conditioned QUBO enhancer.",
+    "A small pilot cannot establish novelty, generalization, or journal-level evidence.",
+    "Full Wiki-DPR, full-corpus, full-index, and multi-dataset runs remain collaborator-only."
+  ]
+}
