@@ -1,0 +1,1 @@
+/root/miniconda3/bin/python3 -m scripts.rag.eval.eval_rag_refactored --dataset nq_open --split validation --max_samples 200 --corpus_mode wiki_dpr --K 5 --lam 2.0 --seed 42 --dump_passages --method mmr --lambda_mmr 0.7 --use_answer_scorer --output_dir /root/QORE-VLM/exchange/five_ideas/spectral_dpp_gate/20260815T033011Z/mmr_as --output_file result.json

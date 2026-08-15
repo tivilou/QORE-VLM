@@ -1,0 +1,82 @@
+Some weights of the model checkpoint at facebook/dpr-question_encoder-single-nq-base were not used when initializing DPRQuestionEncoder: ['question_encoder.bert_model.pooler.dense.bias', 'question_encoder.bert_model.pooler.dense.weight']
+- This IS expected if you are initializing DPRQuestionEncoder from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing DPRQuestionEncoder from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+Some weights of the model checkpoint at facebook/dpr-ctx_encoder-single-nq-base were not used when initializing DPRContextEncoder: ['ctx_encoder.bert_model.pooler.dense.bias', 'ctx_encoder.bert_model.pooler.dense.weight']
+- This IS expected if you are initializing DPRContextEncoder from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing DPRContextEncoder from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+/root/miniconda3/lib/python3.10/site-packages/transformers/tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884
+  warnings.warn(
+The tokenizer class you load from this checkpoint is not the same type as the class this function is called from. It may result in unexpected tokenization. 
+The tokenizer class you load from this checkpoint is 'DPRQuestionEncoderTokenizer'. 
+The class this function is called from is 'DPRContextEncoderTokenizer'.
+======================================================================
+RAG End-to-End Evaluation
+======================================================================
+Dataset: nq_open (validation)
+Corpus mode: wiki_dpr
+Selection: spectral_dpp, K=5
+Seed: 42
+
+Loading dataset...
+  Loaded 200 questions
+Building corpus (mode=wiki_dpr)...
+  [wiki_dpr] forcing --encoder_type dpr (was 'sentence'; corpus is DPR space)
+  Loading facebook/wiki_dpr [psgs_w100.nq.compressed]...
+  (This downloads the dataset + prebuilt FAISS index on first run)
+  Set FAISS nprobe=64
+  Corpus ready: 0 passages
+    mode: wiki_dpr
+    corpus_size: 21015300
+    wiki_config: psgs_w100.nq.compressed
+    nprobe: 64
+Loading generator: /root/QORE-VLM/models/llama3-8b...
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:05,  1.89s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:03<00:03,  1.89s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:05<00:01,  1.88s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:06<00:00,  1.35s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:06<00:00,  1.54s/it]
+Some weights of the model checkpoint at facebook/dpr-reader-single-nq-base were not used when initializing DPRReader: ['span_predictor.encoder.bert_model.pooler.dense.bias', 'span_predictor.encoder.bert_model.pooler.dense.weight']
+- This IS expected if you are initializing DPRReader from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing DPRReader from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+The tokenizer class you load from this checkpoint is not the same type as the class this function is called from. It may result in unexpected tokenization. 
+The tokenizer class you load from this checkpoint is 'DPRQuestionEncoderTokenizer'. 
+The class this function is called from is 'DPRReaderTokenizer'.
+/root/miniconda3/lib/python3.10/site-packages/transformers/generation/configuration_utils.py:567: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.6` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/root/miniconda3/lib/python3.10/site-packages/transformers/generation/configuration_utils.py:572: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `0.9` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+  Generator ready
+Loading answer scorer: dpr...
+  [AnswerScorer] Loading DPR reader: facebook/dpr-reader-single-nq-base on cuda
+  Answer scorer ready
+
+Evaluating 200 questions...
+  Progress: 10/200
+  Progress: 20/200
+  Progress: 30/200
+  Progress: 40/200
+  Progress: 50/200
+  Progress: 60/200
+  Progress: 70/200
+  Progress: 80/200
+  Progress: 90/200
+  Progress: 100/200
+  Progress: 110/200
+  Progress: 120/200
+  Progress: 130/200
+  Progress: 140/200
+  Progress: 150/200
+  Progress: 160/200
+  Progress: 170/200
+  Progress: 180/200
+  Progress: 190/200
+  Progress: 200/200
+
+======================================================================
+Results
+======================================================================
+Method: spectral_dpp
+Samples: 200
+Retrieval: 156/200 hit gold in Top-50 | 44 retrieval failures
+Recall@5: 0.4465 ± 0.3117 (conditional on retrieval hit)
+Redundancy: 0.7922 ± 0.0775
+EM: 0.2750 ± 0.4465
+F1: 0.4831 ± 0.4108
+
+Results saved to: /root/QORE-VLM/exchange/five_ideas/spectral_dpp_gate/20260815T033011Z/spectral_dpp_as/result.json
