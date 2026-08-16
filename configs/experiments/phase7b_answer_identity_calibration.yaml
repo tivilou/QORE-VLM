@@ -1,0 +1,35 @@
+phase:
+  name: phase7b_answer_identity_calibration
+  schema_version: 1
+  dataset: nq_open
+  split: validation
+  sample_offset: 50
+  max_samples: 50
+  seeds: [42, 43, 44]
+  corpus_mode: wiki_dpr
+  wiki_dpr_config: psgs_w100.nq.compressed
+  wiki_dpr_nprobe: 64
+  top_k_retrieval: 50
+  K_values: [3, 5, 8]
+  selection_variants:
+    - name: qore_answer
+      method: qore
+      score_signal: answer
+    - name: topk_answer
+      method: topk
+      score_signal: answer
+    - name: qore_dpr
+      method: qore
+      score_signal: retrieval
+  answer_scorer_backend: dpr
+  answer_top_m: 3
+  max_answer_tokens: 10
+  high_conflict_threshold: 0.25
+  max_new_tokens: 32
+  generators:
+    - name: reference
+      model_path: /root/QORE-VLM/models/llama3-8b
+    - name: transfer
+      model_path: $PHASE7B_TRANSFER_MODEL
+  outputs:
+    root: exchange/five_ideas/phase7b_answer_identity_calibration

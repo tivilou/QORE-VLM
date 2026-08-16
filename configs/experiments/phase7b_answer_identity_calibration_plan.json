@@ -1,0 +1,113 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "Q-DUET-VLM Phase 7B answer-identity calibration",
+  "authorization": "approved",
+  "baseline": {
+    "entry_point": "applications.rag.selector.select_passages",
+    "code_revision": "7e1a2cc",
+    "equivalence_test": "The qore_answer K=5 seed=42 selection path uses the unchanged Answer-Scorer QORE control."
+  },
+  "core_invariants": [
+    "Data loading, gold answers, QA metrics, retrieval, and generator implementations remain outside diagnostic adapters.",
+    "The held-out question slice starts after the 50 Phase 7A questions and is identical across K, seed, selector, and generator conditions.",
+    "No answer-conditioned selector term is implemented until calibration evidence is reviewed.",
+    "Committed Exchange artifacts contain no raw questions, passages, gold answers, or predictions."
+  ],
+  "interfaces": [
+    {
+      "id": "answer_identity_calibration",
+      "type": "transformer",
+      "input_schema": "fixed retrieved candidates, answer hypotheses, selector variant, K, seed",
+      "output_schema": "compact agreement/conflict/corroboration/duplication features and selected ranks",
+      "invariants": ["same candidate pool across conditions", "selected_count equals K", "deterministic replay per seed"]
+    },
+    {
+      "id": "generator_transfer_probe",
+      "type": "combiner",
+      "input_schema": "question and selected passages held in memory plus two or more generator specifications",
+      "output_schema": "hashed prediction identity and unchanged EM/F1 definitions",
+      "invariants": ["no raw text output", "same selections across generators", "generator models loaded sequentially"]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "answer_scorer_qore_control",
+      "version": "1.0.0",
+      "role": "baseline",
+      "interface": "answer_identity_calibration",
+      "insertion_point": "selection quality score before unchanged QORE solver",
+      "hypothesis": "The established Answer-Scorer QORE control provides the fixed baseline for calibration.",
+      "input_schema": "query embedding, passage embeddings, answer scores, K, seed",
+      "output_schema": "selected passage ranks",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "Existing selector cost for three K values and three seeds.",
+      "failure_signatures": ["K=5 seed=42 path drifts from baseline", "selected_count differs from K"]
+    },
+    {
+      "id": "multi_k_seed_calibration",
+      "version": "0.1.0",
+      "role": "adapter",
+      "interface": "answer_identity_calibration",
+      "insertion_point": "read-only diagnostics after each baseline/control selection",
+      "hypothesis": "A useful answer-identity feature should associate with QA correctness consistently across K, seed, and selector controls.",
+      "input_schema": "fixed candidate matrices and selected ranks",
+      "output_schema": "compact feature-quality calibration rows",
+      "requires": ["answer_scorer_qore_control"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "50 held-out questions; K in {3,5,8}; seeds in {42,43,44}; no extra reader passes per condition.",
+      "failure_signatures": ["correlation changes sign across K", "feature is constant", "seed conditions use different candidates"]
+    },
+    {
+      "id": "generator_transfer_calibration",
+      "version": "0.1.0",
+      "role": "adapter",
+      "interface": "generator_transfer_probe",
+      "insertion_point": "read-only generation after fixed selections",
+      "hypothesis": "A selector-relevant answer-identity signal should retain direction across at least two generators.",
+      "input_schema": "fixed selections and two or more explicit generator paths",
+      "output_schema": "compact per-generator EM/F1 calibration rows",
+      "requires": ["multi_k_seed_calibration"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "Generators loaded sequentially; duplicate selected contexts reuse deterministic predictions.",
+      "failure_signatures": ["association reverses across generators", "only one generator completes", "raw prediction text is emitted"]
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": ["answer_scorer_qore_control", "multi_k_seed_calibration", "generator_transfer_calibration"]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": ["answer_scorer_qore_control", "multi_k_seed_calibration", "generator_transfer_calibration"],
+    "merge_rule": "Adapters observe fixed selections and append compact diagnostics; they never modify selector weights or evaluation metrics.",
+    "interaction_ablations": ["qore_answer versus topk_answer", "qore_answer versus qore_dpr", "K and seed stratification", "reference versus transfer generator"]
+  },
+  "validation": {
+    "baseline_equivalence": "Replay qore_answer at K=5 seed=42 on fixed synthetic fixtures and confirm unchanged selected ranks.",
+    "tests": [
+      "baseline_equivalence",
+      "schema_and_invariants",
+      "plugin_isolation",
+      "deterministic_replay",
+      "dependency_conflict_validation",
+      "interaction_ablation",
+      "smoke_manifest"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/phase7b_answer_identity_calibration.yaml",
+    "dataset_identity": "nq_open validation questions 50-99 with Wiki-DPR compressed retrieval",
+    "environment": "record Python, git revision, generator names/paths, dataset slice, K values, seeds, and selector variants",
+    "seeds": [42, 43, 44],
+    "output_manifest": "exchange/five_ideas/phase7b_answer_identity_calibration/<timestamp>/manifest.json"
+  },
+  "limitations": [
+    "Phase 7B calibrates diagnostics and does not establish a method improvement.",
+    "Fifty held-out questions are a gate, not final statistical evidence.",
+    "Full Wiki-DPR execution and generator transfer remain collaborator-only."
+  ]
+}
