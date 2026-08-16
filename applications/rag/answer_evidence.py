@@ -245,6 +245,75 @@ def answer_conflict_matrix(
     return conflict
 
 
+def decisive_conflict_matrix(
+    hypotheses: Sequence[Sequence[Mapping[str, Any]]],
+    agreement: np.ndarray,
+    *,
+    passage_confidence: Sequence[float] | None = None,
+    alias_groups: Iterable[Iterable[str]] | None = None,
+    confidence_threshold: float = 0.5,
+    margin_threshold: float = 0.2,
+) -> np.ndarray:
+    """Score only concentrated, high-confidence answer divergences.
+
+    The Phase 7B ``conflict`` feature treats any different top spans as a
+    potential contradiction.  This stricter diagnostic requires both passages
+    to have confidence and posterior margin above configurable thresholds.  It
+    remains a diagnostic feature: different answers are not assumed to be
+    logically contradictory without an entailment or exclusivity model.
+    """
+    size = len(hypotheses)
+    if agreement.shape != (size, size):
+        raise ValueError("agreement matrix shape does not match hypotheses")
+    if not 0.0 <= confidence_threshold < 1.0:
+        raise ValueError("confidence_threshold must be in [0, 1)")
+    if not 0.0 <= margin_threshold < 1.0:
+        raise ValueError("margin_threshold must be in [0, 1)")
+
+    aliases = build_alias_map(alias_groups)
+    confidence = np.ones(size, dtype=np.float64)
+    if passage_confidence is not None:
+        confidence = np.clip(np.asarray(passage_confidence, dtype=np.float64), 0.0, 1.0)
+        if confidence.shape != (size,):
+            raise ValueError("passage_confidence must match hypotheses")
+
+    top_answers: list[str] = []
+    concentration = np.zeros(size, dtype=np.float64)
+    for index, items in enumerate(hypotheses):
+        distribution = hypothesis_distribution(items, alias_map=aliases)
+        ranked = sorted(distribution.items(), key=lambda item: (-item[1], item[0]))
+        if not ranked:
+            top_answers.append("")
+            continue
+        top_answers.append(ranked[0][0])
+        second_probability = ranked[1][1] if len(ranked) > 1 else 0.0
+        concentration[index] = float(
+            np.clip(ranked[0][1] - second_probability, 0.0, 1.0)
+        )
+
+    def gate(value: float, threshold: float) -> float:
+        return float(np.clip((value - threshold) / (1.0 - threshold), 0.0, 1.0))
+
+    conflict = np.zeros((size, size), dtype=np.float64)
+    for left in range(size):
+        for right in range(left + 1, size):
+            if (
+                not top_answers[left]
+                or not top_answers[right]
+                or top_answers[left] == top_answers[right]
+            ):
+                continue
+            confidence_gate = gate(float(confidence[left]), confidence_threshold) * gate(
+                float(confidence[right]), confidence_threshold
+            )
+            margin_gate = gate(float(concentration[left]), margin_threshold) * gate(
+                float(concentration[right]), margin_threshold
+            )
+            value = confidence_gate * margin_gate * (1.0 - agreement[left, right])
+            conflict[left, right] = conflict[right, left] = float(np.clip(value, 0.0, 1.0))
+    return conflict
+
+
 def passage_duplication_matrix(passages: Sequence[str]) -> np.ndarray:
     """Compute deterministic token-Jaccard near-duplication scores."""
     token_sets = [set(normalize_answer_text(passage).split()) for passage in passages]
@@ -264,6 +333,8 @@ def build_answer_evidence_matrices(
     *,
     passage_confidence: Sequence[float] | None = None,
     alias_groups: Iterable[Iterable[str]] | None = None,
+    decisive_confidence_threshold: float = 0.5,
+    decisive_margin_threshold: float = 0.2,
 ) -> dict[str, np.ndarray]:
     """Build the Phase 7A agreement, conflict, duplicate, and support matrices."""
     if len(passages) != len(hypotheses):
@@ -274,12 +345,21 @@ def build_answer_evidence_matrices(
         agreement,
         passage_confidence=passage_confidence,
     )
+    decisive_conflict = decisive_conflict_matrix(
+        hypotheses,
+        agreement,
+        passage_confidence=passage_confidence,
+        alias_groups=alias_groups,
+        confidence_threshold=decisive_confidence_threshold,
+        margin_threshold=decisive_margin_threshold,
+    )
     duplication = passage_duplication_matrix(passages)
     corroboration = agreement * (1.0 - duplication)
     np.fill_diagonal(corroboration, 0.0)
     return {
         "agreement": agreement,
         "conflict": conflict,
+        "decisive_conflict": decisive_conflict,
         "duplication": duplication,
         "corroboration": corroboration,
     }
@@ -334,7 +414,10 @@ def summarize_answer_evidence(
         "selected_count": len(selected),
         "nonempty_hypothesis_count": sum(bool(items) for items in hypotheses),
     }
-    for name in ("agreement", "conflict", "duplication", "corroboration"):
+    matrix_names = ["agreement", "conflict", "duplication", "corroboration"]
+    if "decisive_conflict" in matrices:
+        matrix_names.insert(2, "decisive_conflict")
+    for name in matrix_names:
         matrix = np.asarray(matrices[name], dtype=np.float64)
         if matrix.shape != (size, size):
             raise ValueError(f"{name} matrix shape does not match hypotheses")

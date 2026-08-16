@@ -24,7 +24,7 @@ class LengthScorer:
 
 
 def test_builtin_plugins_are_discovered_automatically():
-    assert {"baseline", "idea4", "idea6", "idea7"} <= set(list_enhancers())
+    assert {"baseline", "idea4", "idea6", "idea7", "answer_corroboration"} <= set(list_enhancers())
 
 
 def test_baseline_preserves_original_objective():
@@ -82,6 +82,82 @@ def test_root_then_additive_plugin_composes_without_overwrite():
     np.testing.assert_allclose(w, np.array([[0.0, 0.1], [0.1, 0.0]]))
     assert [entry["mode"] for entry in trace] == ["replace", "add"]
     assert not any(entry["overwrote_nonzero_input"] for entry in trace)
+
+
+def test_answer_corroboration_adds_only_a_negative_pair_reward():
+    a = np.array([0.8, 0.3, 0.2])
+    b = np.array([
+        [0.0, 0.4, 0.2],
+        [0.4, 0.0, 0.1],
+        [0.2, 0.1, 0.0],
+    ])
+    feature = np.array([
+        [0.0, 1.0, 0.0],
+        [1.0, 0.0, 0.5],
+        [0.0, 0.5, 0.0],
+    ])
+    pipeline = create_pipeline(
+        ["baseline", "answer_corroboration"],
+        {
+            "baseline": {"gamma": 1.0},
+            "answer_corroboration": {
+                "mode": "agreement", "strength": 0.25,
+            },
+        },
+        strict_composition=True,
+    )
+    w = pipeline.enhance(
+        a, b, {"answer_evidence_matrices": {"agreement": feature}}
+    )
+    assert w[0, 1] < b[0, 1]
+    assert w[0, 2] == pytest.approx(b[0, 2])
+    np.testing.assert_allclose(w, w.T)
+    assert np.allclose(np.diag(w), 0.0)
+
+
+def test_answer_corroboration_discounted_duplicate_support_is_distinct():
+    b = np.ones((3, 3), dtype=float) - np.eye(3)
+    matrices = {
+        "corroboration": np.array([
+            [0.0, 0.0, 1.0],
+            [0.0, 0.0, 0.5],
+            [1.0, 0.5, 0.0],
+        ])
+    }
+    pipeline = create_pipeline(
+        ["baseline", "answer_corroboration"],
+        {
+            "baseline": {},
+            "answer_corroboration": {
+                "mode": "corroboration", "strength": 0.25,
+            },
+        },
+        strict_composition=True,
+    )
+    w = pipeline.enhance(np.ones(3), b, {"answer_evidence_matrices": matrices})
+    assert w[0, 1] == pytest.approx(b[0, 1])
+    assert w[0, 2] < w[1, 2] < b[1, 2]
+
+
+def test_answer_corroboration_requires_precomputed_evidence_when_enabled():
+    pipeline = create_pipeline(
+        ["baseline", "answer_corroboration"],
+        {"baseline": {}, "answer_corroboration": {"strength": 0.1}},
+        strict_composition=True,
+    )
+    with pytest.raises(ValueError, match="answer_evidence_matrices"):
+        pipeline.enhance(np.ones(2), np.zeros((2, 2)), {})
+
+
+def test_zero_strength_answer_corroboration_is_a_null_adapter():
+    b = np.array([[0.0, 0.4], [0.4, 0.0]])
+    pipeline = create_pipeline(
+        ["baseline", "answer_corroboration"],
+        {"baseline": {"gamma": 0.5}, "answer_corroboration": {"strength": 0.0}},
+        strict_composition=True,
+    )
+    w = pipeline.enhance(np.ones(2), b, {})
+    np.testing.assert_allclose(w, 0.5 * b)
 
 
 def test_strict_config_rejects_multiple_root_objectives():

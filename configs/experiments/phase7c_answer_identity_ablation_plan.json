@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "Q-DUET-VLM Phase 7C answer corroboration ablation",
+  "authorization": "approved",
+  "baseline": {
+    "entry_point": "applications.rag.selector.select_passages",
+    "code_revision": "56a4198",
+    "equivalence_test": "The baseline root with answer_corroboration strength=0 produces the unchanged baseline interaction matrix and K-set on synthetic fixtures."
+  },
+  "core_invariants": [
+    "Retrieval, data loading, gold answers, generation, QA metrics, and reporting rules remain outside the enhancer.",
+    "Answer evidence is computed once and passed as a read-only context object; the plugin cannot change reader outputs.",
+    "The decisive_conflict feature is diagnostic-only and is not included in the QUBO objective.",
+    "The collaborator output contains compact identifiers and metrics only, with no raw questions, passages, answers, or predictions."
+  ],
+  "interfaces": [
+    {
+      "id": "answer_identity_enhancer",
+      "type": "enhancer",
+      "input_schema": "baseline interaction matrix, normalized relevance, redundancy matrix, precomputed answer evidence matrices",
+      "output_schema": "symmetric zero-diagonal interaction matrix",
+      "invariants": ["same candidate pool as baseline", "finite values", "add-mode preserves prior terms"]
+    },
+    {
+      "id": "answer_identity_diagnostic",
+      "type": "transformer",
+      "input_schema": "reader answer hypotheses and passage confidence",
+      "output_schema": "agreement, legacy conflict, decisive conflict, duplication, corroboration matrices",
+      "invariants": ["symmetric zero diagonal", "values bounded in [0,1]", "no evaluation mutation"]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "baseline",
+      "version": "1.0.0",
+      "role": "baseline",
+      "interface": "answer_identity_enhancer",
+      "insertion_point": "QUBO interaction matrix root",
+      "hypothesis": "The established QORE redundancy objective remains the fixed control.",
+      "input_schema": "normalized relevance and redundancy matrix",
+      "output_schema": "baseline interaction matrix",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "Existing QORE matrix construction",
+      "failure_signatures": ["baseline K-set changes with enhancer strength zero", "non-finite matrix"]
+    },
+    {
+      "id": "answer_corroboration",
+      "version": "0.1.0",
+      "role": "idea",
+      "interface": "answer_identity_enhancer",
+      "insertion_point": "after baseline root and before QUBO solve",
+      "hypothesis": "Stable agreement/corroboration signals can reward jointly supported passages without penalizing useful answer diversity.",
+      "input_schema": "baseline interaction matrix and selected answer evidence matrix",
+      "output_schema": "baseline plus negative agreement/corroboration reward",
+      "requires": ["baseline"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "One matrix lookup and O(N^2) scaling per selection",
+      "failure_signatures": ["matrix shape mismatch", "non-symmetric output", "baseline equivalence fails at zero strength"]
+    },
+    {
+      "id": "decisive_conflict_diagnostic",
+      "version": "0.1.0",
+      "role": "adapter",
+      "interface": "answer_identity_diagnostic",
+      "insertion_point": "after reader hypotheses and before selection",
+      "hypothesis": "A stricter high-confidence/high-margin divergence feature is less confounded than the legacy conflict score.",
+      "input_schema": "answer hypotheses, agreement matrix, passage confidence",
+      "output_schema": "diagnostic decisive_conflict matrix",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "O(N^2) over cached hypotheses; no extra reader pass",
+      "failure_signatures": ["feature remains positive for low-margin pairs", "diagnostic enters QUBO objective", "raw answer text emitted"]
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": ["baseline", "answer_corroboration", "decisive_conflict_diagnostic"]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": ["baseline", "answer_corroboration"],
+    "merge_rule": "The baseline is the only replace root; answer_corroboration adds a normalized negative pair reward. decisive_conflict_diagnostic is parallel observation only.",
+    "interaction_ablations": ["baseline versus agreement-only", "baseline versus corroboration-only", "legacy conflict versus decisive conflict", "zero-strength null adapter"]
+  },
+  "validation": {
+    "baseline_equivalence": "Synthetic direct and prefiltered selector fixtures preserve baseline output when the new plugin has zero strength.",
+    "tests": [
+      "baseline_equivalence",
+      "schema_and_input_invariants",
+      "plugin_isolation",
+      "deterministic_replay",
+      "dependency_and_conflict_validation",
+      "interaction_ablation",
+      "smoke_manifest"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/phase7c_answer_identity_ablation.yaml",
+    "dataset_identity": "nq_open validation questions 100-149 with Wiki-DPR compressed retrieval",
+    "environment": "record Python executable/version, git revision, reference generator path, dataset slice, K=5, seed=42, and plugin tree",
+    "seeds": [42],
+    "output_manifest": "exchange/five_ideas/phase7c_answer_identity_ablation/<timestamp>/manifest.json"
+  },
+  "limitations": [
+    "This stage is a mechanism ablation and does not establish a paper-level method gain.",
+    "The decisive_conflict feature is not a logical contradiction detector and is diagnostic-only.",
+    "The first collaborator pilot uses one generator, one K, and 50 held-out questions; transfer confirmation remains a later gate.",
+    "Full Wiki-DPR execution remains collaborator-only."
+  ]
+}

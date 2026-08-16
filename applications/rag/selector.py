@@ -12,6 +12,24 @@ from .signals_rag import passage_relevance, passage_redundancy
 from .baselines import topk, mmr, submodular, spectral_dpp
 
 
+def _slice_answer_evidence(
+    matrices: dict[str, np.ndarray] | None,
+    indices: np.ndarray,
+) -> dict[str, np.ndarray] | None:
+    """Map full-candidate answer evidence onto a prefiltered QUBO pool."""
+    if matrices is None:
+        return None
+    sliced: dict[str, np.ndarray] = {}
+    for name, matrix in matrices.items():
+        array = np.asarray(matrix, dtype=np.float64)
+        if array.ndim != 2 or array.shape[0] != array.shape[1]:
+            raise ValueError(f"answer evidence '{name}' must be square")
+        if np.any(indices < 0) or np.any(indices >= array.shape[0]):
+            raise ValueError(f"answer evidence '{name}' does not cover candidate pool")
+        sliced[name] = array[np.ix_(indices, indices)]
+    return sliced
+
+
 def _record_qubo_diagnostics(diagnostics, a, b, x, K, lam, gamma, prefiltered,
                              n_candidates, pool_ranks, w=None):
     """Record the QUBO the solver actually saw.
@@ -89,6 +107,7 @@ def select_passages(
     # Other parameters
     answer_scorer=None,
     passage_texts: list[str] | None = None,
+    answer_evidence_matrices: dict[str, np.ndarray] | None = None,
     question: str | None = None,
     passages_meta: list[dict] | None = None,
     num_reads: int = 50,
@@ -148,6 +167,9 @@ def select_passages(
         --- Other parameters ---
         answer_scorer: Instance with score_passages(question, texts) method.
         passage_texts: List of N passage strings.
+        answer_evidence_matrices: Optional full-candidate matrices produced by
+            applications.rag.answer_evidence. Matrices are sliced alongside a
+            prefiltered QUBO pool and are never used by evaluation.
         question: Query string.
         passages_meta: List of N passage metadata dicts (for idea4, etc.).
         num_reads: SA reads (only for method="qore"/"vqc").
@@ -235,6 +257,7 @@ def select_passages(
                 "passages": passage_texts,
                 "question": question,
                 "answer_scorer": answer_scorer,
+                "answer_evidence_matrices": answer_evidence_matrices,
                 "passages_meta": passages_meta,
                 "selection_K": K,
             }
@@ -282,6 +305,9 @@ def select_passages(
             "passages": [passage_texts[i] for i in prefilter_idx] if passage_texts else None,
             "question": question,
             "answer_scorer": answer_scorer,
+            "answer_evidence_matrices": _slice_answer_evidence(
+                answer_evidence_matrices, prefilter_idx
+            ),
             "passages_meta": [passages_meta[i] for i in prefilter_idx] if passages_meta else None,
             "selection_K": K,
         }

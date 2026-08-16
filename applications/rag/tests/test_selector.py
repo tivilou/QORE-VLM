@@ -282,3 +282,30 @@ class TestDirectSolve:
                               direct_solve_max_n=64)
         assert len(idx) == 5
         assert len(set(idx.tolist())) == 5
+
+    def test_answer_evidence_is_sliced_with_large_pool_prefilter(self):
+        rng = np.random.default_rng(9)
+        query = rng.standard_normal(16)
+        embeddings = rng.standard_normal((25, 16))
+        feature = np.zeros((25, 25), dtype=float)
+        feature[0, 1] = feature[1, 0] = 1.0
+        selected = select_passages(
+            query,
+            embeddings,
+            K=5,
+            method="qore",
+            relevance_scores=rng.random(25),
+            enhancers=["baseline", "answer_corroboration"],
+            enhancer_configs={
+                "baseline": {"gamma": 1.0},
+                "answer_corroboration": {
+                    "mode": "agreement", "strength": 0.25,
+                },
+            },
+            answer_evidence_matrices={"agreement": feature},
+            qore_prefilter_size=10,
+            direct_solve_max_n=4,
+            seed=3,
+        )
+        assert len(selected) == 5
+        assert len(set(selected.tolist())) == 5

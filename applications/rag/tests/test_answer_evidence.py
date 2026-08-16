@@ -7,6 +7,7 @@ import numpy as np
 from applications.rag.answer_evidence import (
     answer_agreement_matrix,
     build_answer_evidence_matrices,
+    decisive_conflict_matrix,
     extract_top_answer_spans,
     normalize_answer_text,
     select_counterfactual_swap,
@@ -86,6 +87,34 @@ def test_aliases_produce_agreement_and_different_answers_conflict():
     )
     assert matrices["conflict"][0, 1] == 0.0
     assert matrices["conflict"][0, 2] > 0.0
+
+
+def test_decisive_conflict_requires_concentrated_high_confidence_answers():
+    hypotheses = [
+        [_hypothesis("Alpha", 0.9), _hypothesis("Beta", 0.1)],
+        [_hypothesis("Gamma", 0.9), _hypothesis("Delta", 0.1)],
+        [_hypothesis("Epsilon", 0.55), _hypothesis("Zeta", 0.45)],
+    ]
+    agreement = answer_agreement_matrix(hypotheses)
+    decisive = decisive_conflict_matrix(
+        hypotheses,
+        agreement,
+        passage_confidence=[0.9, 0.9, 0.9],
+        confidence_threshold=0.5,
+        margin_threshold=0.2,
+    )
+    assert decisive[0, 1] > 0.0
+    assert decisive[0, 2] == 0.0
+
+
+def test_build_matrices_exposes_decisive_conflict_without_changing_legacy_conflict():
+    hypotheses = [[_hypothesis("Alpha")], [_hypothesis("Beta")]]
+    matrices = build_answer_evidence_matrices(
+        ["alpha source", "beta source"], hypotheses, passage_confidence=[0.9, 0.9]
+    )
+    assert "decisive_conflict" in matrices
+    assert matrices["conflict"][0, 1] > 0.0
+    assert matrices["decisive_conflict"][0, 1] > 0.0
 
 
 def test_duplicate_support_is_discounted_and_matrices_obey_contract():
