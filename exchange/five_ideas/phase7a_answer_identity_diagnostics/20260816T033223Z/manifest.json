@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "phase": "phase7a_answer_identity_diagnostics",
+  "config": {
+    "path": "/root/QORE-VLM/configs/experiments/phase7a_answer_identity_diagnostics.yaml",
+    "sha256": "6c91bf14923513335080fa596d6cc5a6bb6b5ae09258ac5b54a40ed6a48d943e"
+  },
+  "dataset": {
+    "name": "nq_open",
+    "split": "validation",
+    "max_samples": 50,
+    "corpus_mode": "wiki_dpr",
+    "wiki_dpr_config": "psgs_w100.nq.compressed",
+    "nprobe": 64
+  },
+  "seed": 42,
+  "python": {
+    "executable": "/root/miniconda3/bin/python",
+    "version": "3.10.20 (main, Mar 11 2026, 17:46:40) [GCC 14.3.0]"
+  },
+  "git": {
+    "commit": "e1eeb190dfa1ae12623b05b1bd9d3daa5f3f4fca",
+    "status": "## five-ideas-development...origin/five-ideas-development"
+  },
+  "generation": {
+    "enabled": true,
+    "model_path": "/root/QORE-VLM/models/llama3-8b"
+  },
+  "diagnostic_only": true,
+  "timing_ms": {
+    "total": 315118.28138400003,
+    "mean_answer_scorer": 693.3832218400084,
+    "mean_selection": 11.205419519999396,
+    "mean_counterfactual_generation_pair": 474.4155069399904
+  },
+  "summary": {
+    "samples": 50,
+    "mean_selected_agreement": 0.2555375989025265,
+    "mean_selected_conflict": 0.2395859893175727,
+    "mean_selected_corroboration": 0.20703655431017087,
+    "counterfactual_available": 50,
+    "counterfactual_prediction_changed": 25,
+    "counterfactual_mean_f1_delta": 0.006857142857142855
+  }
+}
