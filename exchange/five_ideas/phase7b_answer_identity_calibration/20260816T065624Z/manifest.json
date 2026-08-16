@@ -1,0 +1,84 @@
+{
+  "config": {
+    "path": "/root/QORE-VLM/configs/experiments/phase7b_answer_identity_calibration.yaml",
+    "sha256": "32f5b23185127bd75569292b40990f62738d29c0aa23f983e8ac3c99b9adc565"
+  },
+  "dataset": {
+    "corpus_mode": "wiki_dpr",
+    "max_samples": 50,
+    "name": "nq_open",
+    "nprobe": 64,
+    "sample_offset": 50,
+    "split": "validation",
+    "wiki_dpr_config": "psgs_w100.nq.compressed"
+  },
+  "design": {
+    "K_values": [
+      3,
+      5,
+      8
+    ],
+    "generators": [
+      {
+        "model_path": "/root/QORE-VLM/models/llama3-8b",
+        "name": "reference"
+      },
+      {
+        "model_path": "/root/QORE-VLM/models/Qwen2.5-7B-Instruct",
+        "name": "transfer"
+      }
+    ],
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "selection_variants": [
+      {
+        "method": "qore",
+        "name": "qore_answer",
+        "score_signal": "answer"
+      },
+      {
+        "method": "topk",
+        "name": "topk_answer",
+        "score_signal": "answer"
+      },
+      {
+        "method": "qore",
+        "name": "qore_dpr",
+        "score_signal": "retrieval"
+      }
+    ]
+  },
+  "diagnostic_only": true,
+  "generator_status": {
+    "reference": {
+      "status": "completed",
+      "unique_generations": 616
+    },
+    "transfer": {
+      "status": "completed",
+      "unique_generations": 616
+    }
+  },
+  "git": {
+    "commit": "fa8e772ac7c4d637b085c2081f51ca188159c7fd",
+    "status": "## five-ideas-development...origin/five-ideas-development"
+  },
+  "phase": "phase7b_answer_identity_calibration",
+  "python": {
+    "executable": "/root/miniconda3/bin/python",
+    "version": "3.10.20 (main, Mar 11 2026, 17:46:40) [GCC 14.3.0]"
+  },
+  "schema_version": 1,
+  "status": "completed",
+  "summary": {
+    "questions": 50,
+    "rows": 2700,
+    "unique_generations": 1232
+  },
+  "timing_ms": {
+    "total": 620544.8457079999
+  }
+}
