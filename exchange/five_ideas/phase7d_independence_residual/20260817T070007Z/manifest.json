@@ -1,0 +1,111 @@
+{
+  "config": {
+    "path": "/root/QORE-VLM/configs/experiments/phase7d_independence_residual.yaml",
+    "sha256": "7c6655a9c536893ef3a9c2527971c77b7bf36c189b8daa596266a6a89a67eae3"
+  },
+  "dataset": {
+    "corpus_mode": "wiki_dpr",
+    "max_samples": 50,
+    "name": "nq_open",
+    "nprobe": 64,
+    "sample_offset": 150,
+    "split": "validation",
+    "wiki_dpr_config": "psgs_w100.nq.compressed"
+  },
+  "design": {
+    "K_values": [
+      5
+    ],
+    "diagnostic_outputs_used_for_selection": false,
+    "diagnostic_plugins": [
+      "answer_evidence_observer",
+      "independence_residual"
+    ],
+    "gold_labels_used_for_residual_fit": false,
+    "plugin_tree_hash": "0729573fe63744acb00cefb6bfc4aa9603ca7d50b228f51201bed7821843a2d4",
+    "residualization_variants": {
+      "all_nuisances": [
+        "answer_confidence_product",
+        "lexical_duplication",
+        "embedding_redundancy"
+      ],
+      "confidence_only": [
+        "answer_confidence_product"
+      ],
+      "embedding_only": [
+        "embedding_redundancy"
+      ],
+      "lexical_only": [
+        "lexical_duplication"
+      ]
+    },
+    "seeds": [
+      42
+    ],
+    "selection_variants": [
+      {
+        "enhancer_configs": {
+          "baseline": {
+            "gamma": 1.0
+          }
+        },
+        "enhancers": [
+          "baseline"
+        ],
+        "method": "qore",
+        "name": "qore_answer",
+        "score_signal": "answer"
+      },
+      {
+        "enhancer_configs": {},
+        "enhancers": [],
+        "method": "topk",
+        "name": "topk_answer",
+        "score_signal": "answer"
+      },
+      {
+        "enhancer_configs": {
+          "baseline": {
+            "gamma": 1.0
+          }
+        },
+        "enhancers": [
+          "baseline"
+        ],
+        "method": "qore",
+        "name": "qore_dpr",
+        "score_signal": "retrieval"
+      }
+    ]
+  },
+  "diagnostic_only": true,
+  "generator_status": {
+    "reference": {
+      "status": "completed",
+      "unique_generations": 144
+    }
+  },
+  "git": {
+    "commit": "4df677de4911c3c52a066434f21fa05c05b706f3",
+    "status": "## five-ideas-development...origin/five-ideas-development"
+  },
+  "phase": "phase7d_independence_residual",
+  "python": {
+    "executable": "/root/miniconda3/bin/python",
+    "version": "3.10.20 (main, Mar 11 2026, 17:46:40) [GCC 14.3.0]"
+  },
+  "schema_version": 1,
+  "selection_mutation": false,
+  "status": "completed",
+  "summary": {
+    "gate_decision": "stop_answer_identity_objective",
+    "gate_status": "fail",
+    "questions": 50,
+    "residual_fit_rows": 400,
+    "rows": 150,
+    "unique_generations": 144
+  },
+  "timing_ms": {
+    "total": 331114.69775899994
+  }
+}
