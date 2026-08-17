@@ -1,0 +1,120 @@
+{
+  "config": {
+    "path": "/root/QORE-VLM/configs/experiments/phase7c_answer_identity_ablation.yaml",
+    "sha256": "369d527a60549406ba80621cc284d5b1616bfe35566d0af41b972a02a1bab274"
+  },
+  "dataset": {
+    "corpus_mode": "wiki_dpr",
+    "max_samples": 50,
+    "name": "nq_open",
+    "nprobe": 64,
+    "sample_offset": 100,
+    "split": "validation",
+    "wiki_dpr_config": "psgs_w100.nq.compressed"
+  },
+  "design": {
+    "K_values": [
+      5
+    ],
+    "diagnostics": [
+      "legacy_conflict",
+      "decisive_conflict"
+    ],
+    "generators": [
+      {
+        "model_path": "/root/QORE-VLM/models/llama3-8b",
+        "name": "reference"
+      }
+    ],
+    "seeds": [
+      42
+    ],
+    "selection_variants": [
+      {
+        "enhancer_configs": {
+          "baseline": {
+            "gamma": 1.0
+          }
+        },
+        "enhancers": [
+          "baseline"
+        ],
+        "method": "qore",
+        "name": "qore_answer",
+        "score_signal": "answer"
+      },
+      {
+        "enhancer_configs": {},
+        "enhancers": [],
+        "method": "topk",
+        "name": "topk_answer",
+        "score_signal": "answer"
+      },
+      {
+        "enhancer_configs": {
+          "answer_corroboration": {
+            "mode": "agreement",
+            "normalization": "baseline_rms",
+            "strength": 0.25
+          },
+          "baseline": {
+            "gamma": 1.0
+          }
+        },
+        "enhancers": [
+          "baseline",
+          "answer_corroboration"
+        ],
+        "method": "qore",
+        "name": "qore_agreement",
+        "score_signal": "answer"
+      },
+      {
+        "enhancer_configs": {
+          "answer_corroboration": {
+            "mode": "corroboration",
+            "normalization": "baseline_rms",
+            "strength": 0.25
+          },
+          "baseline": {
+            "gamma": 1.0
+          }
+        },
+        "enhancers": [
+          "baseline",
+          "answer_corroboration"
+        ],
+        "method": "qore",
+        "name": "qore_corroboration",
+        "score_signal": "answer"
+      }
+    ]
+  },
+  "diagnostic_only": false,
+  "generator_status": {
+    "reference": {
+      "status": "completed",
+      "unique_generations": 154
+    }
+  },
+  "git": {
+    "commit": "de285db4b6eeb5add6a5715df54667da9e8922da",
+    "status": "## five-ideas-development...origin/five-ideas-development"
+  },
+  "mechanism_ablation": true,
+  "phase": "phase7c_answer_identity_ablation",
+  "python": {
+    "executable": "/root/miniconda3/bin/python",
+    "version": "3.10.20 (main, Mar 11 2026, 17:46:40) [GCC 14.3.0]"
+  },
+  "schema_version": 1,
+  "status": "completed",
+  "summary": {
+    "questions": 50,
+    "rows": 200,
+    "unique_generations": 154
+  },
+  "timing_ms": {
+    "total": 317929.665134
+  }
+}
