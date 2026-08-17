@@ -1,0 +1,71 @@
+phase:
+  name: phase7d_independence_residual
+  schema_version: 1
+  diagnostic_only: true
+  dataset: nq_open
+  split: validation
+  sample_offset: 150
+  max_samples: 50
+  seeds: [42]
+  corpus_mode: wiki_dpr
+  wiki_dpr_config: psgs_w100.nq.compressed
+  wiki_dpr_nprobe: 64
+  top_k_retrieval: 50
+  K_values: [5]
+  selection_variants:
+    - name: qore_answer
+      method: qore
+      score_signal: answer
+      enhancers: [baseline]
+      enhancer_configs:
+        baseline: {gamma: 1.0}
+    - name: topk_answer
+      method: topk
+      score_signal: answer
+      enhancers: []
+      enhancer_configs: {}
+    - name: qore_dpr
+      method: qore
+      score_signal: retrieval
+      enhancers: [baseline]
+      enhancer_configs:
+        baseline: {gamma: 1.0}
+  answer_scorer_backend: dpr
+  answer_top_m: 3
+  max_answer_tokens: 10
+  decisive_confidence_threshold: 0.5
+  decisive_margin_threshold: 0.2
+  diagnostic_plugins:
+    - answer_evidence_observer
+    - independence_residual
+  residualization:
+    ridge: 1.0e-6
+    variants:
+      - name: confidence_only
+        nuisances: [answer_confidence_product]
+      - name: lexical_only
+        nuisances: [lexical_duplication]
+      - name: embedding_only
+        nuisances: [embedding_redundancy]
+      - name: all_nuisances
+        nuisances:
+          - answer_confidence_product
+          - lexical_duplication
+          - embedding_redundancy
+  bootstrap:
+    samples: 2000
+    seed: 4207
+  gate:
+    residual_variant: all_nuisances
+    primary_selector: qore_answer
+    consistency_selectors: [topk_answer, qore_dpr]
+    minimum_residual_spearman_f1: 0.10
+    minimum_improvement_over_raw: 0.05
+    minimum_positive_selectors: 2
+    minimum_bootstrap_ci_low: -0.05
+  max_new_tokens: 32
+  generators:
+    - name: reference
+      model_path: /root/QORE-VLM/models/llama3-8b
+  outputs:
+    root: exchange/five_ideas/phase7d_independence_residual

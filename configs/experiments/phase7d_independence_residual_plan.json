@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "Q-DUET-VLM Phase 7D answer-evidence independence residual diagnostic",
+  "authorization": "approved",
+  "baseline": {
+    "entry_point": "applications.rag.selector.select_passages",
+    "code_revision": "c9ca258",
+    "equivalence_test": "The observer-only null adapter returns exact copies of agreement and corroboration matrices; fixed qore_answer, topk_answer, and qore_dpr controls receive no residual diagnostic output and therefore preserve their existing selector inputs."
+  },
+  "core_invariants": [
+    "Retrieval, data loading, gold answers, generation, QA metrics, selection, and reporting rules remain outside the diagnostic plugin boundary.",
+    "Residual coefficients are fit independently per question over candidate pairs using only answer confidence product, lexical duplication, and embedding redundancy; no gold labels or generated answers enter the fit.",
+    "Residual features are observation-only and are never passed to select_passages or a QUBO objective.",
+    "The collaborator output contains compact identifiers and numeric diagnostics only, with no raw questions, passages, answers, or predictions.",
+    "The full Wiki-DPR run remains collaborator-only."
+  ],
+  "interfaces": [
+    {
+      "id": "answer_evidence_observation",
+      "type": "transformer",
+      "input_schema": "agreement, corroboration, lexical duplication matrices; passage confidence vector; embedding redundancy matrix",
+      "output_schema": "validated raw target matrices and nuisance matrices",
+      "invariants": ["symmetric zero diagonal", "finite values", "bounded pair features", "no selector access"]
+    },
+    {
+      "id": "independence_residual_diagnostic",
+      "type": "transformer",
+      "input_schema": "validated raw target matrices and nuisance matrices",
+      "output_schema": "standardized residual agreement/corroboration matrices plus compact fit diagnostics",
+      "invariants": ["per-question unsupervised fit", "deterministic ridge solve", "no gold-label access", "observation-only output"]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "answer_evidence_observer",
+      "version": "1.0.0",
+      "role": "baseline",
+      "interface": "answer_evidence_observation",
+      "insertion_point": "after reader evidence and embedding construction, before fixed selection controls",
+      "hypothesis": "The raw answer-evidence features can be observed without changing the established selector behavior.",
+      "input_schema": "agreement, corroboration, duplication, confidence, and embedding redundancy",
+      "output_schema": "exact validated copies of raw target and nuisance matrices",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "O(N^2) validation and copy; no model pass",
+      "failure_signatures": ["raw matrices are mutated", "non-symmetric output", "diagnostic output reaches selector"]
+    },
+    {
+      "id": "independence_residual",
+      "version": "0.1.0",
+      "role": "idea",
+      "interface": "independence_residual_diagnostic",
+      "insertion_point": "after answer_evidence_observer and before compact association analysis",
+      "hypothesis": "Answer agreement or corroboration retains a useful F1 association after removing confidence, lexical duplication, and embedding redundancy explained variation.",
+      "input_schema": "raw target matrices and selected nuisance matrices",
+      "output_schema": "standardized per-question residual target matrices and ridge-fit diagnostics",
+      "requires": ["answer_evidence_observer"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "Four O(N^2) ridge fits per target and question; no additional reader pass",
+      "failure_signatures": ["residual association is near zero or reverses sign", "residual association does not exceed raw association", "positive result occurs for only one selector", "gold labels enter coefficient fitting", "residual output enters QUBO"]
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": ["answer_evidence_observer", "independence_residual"]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": ["answer_evidence_observer", "independence_residual"],
+    "merge_rule": "The observer is a null baseline transformer. independence_residual adds observation-only residual matrices; it cannot mutate the selector inputs.",
+    "interaction_ablations": ["observer-only null adapter", "confidence-only residual", "lexical-only residual", "embedding-only residual", "all-nuisances residual", "fixed qore_answer versus topk_answer versus qore_dpr association"]
+  },
+  "validation": {
+    "baseline_equivalence": "Observer-only fixtures return exact target matrices and the runner does not pass residual output to select_passages.",
+    "tests": [
+      "baseline_equivalence",
+      "schema_and_input_invariants",
+      "plugin_isolation",
+      "deterministic_replay",
+      "dependency_and_conflict_validation",
+      "interaction_ablation",
+      "smoke_manifest"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/phase7d_independence_residual.yaml",
+    "dataset_identity": "nq_open validation questions 150-199 with Wiki-DPR compressed retrieval",
+    "environment": "record Python executable/version, git revision, plugin tree hash, reference generator path, dataset slice, K=5, seed=42, and bootstrap seed",
+    "seeds": [42, 4207],
+    "output_manifest": "exchange/five_ideas/phase7d_independence_residual/<timestamp>/manifest.json"
+  },
+  "limitations": [
+    "This is a mechanism diagnostic, not a selector improvement or paper-level method claim.",
+    "Per-question linear residualization cannot prove causal independence and may miss nonlinear nuisance effects.",
+    "The pilot uses one generator, one K, and 50 held-out questions; a passing gate only authorizes a controlled follow-up.",
+    "Bootstrap intervals quantify association uncertainty but do not correct all exploratory multiplicity.",
+    "Full Wiki-DPR execution remains collaborator-only."
+  ]
+}
