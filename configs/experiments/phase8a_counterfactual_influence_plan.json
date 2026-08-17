@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "QORE-VLM Phase 8A doubly-robust counterfactual passage influence diagnostic",
+  "authorization": "plan_only",
+  "baseline": {
+    "entry_point": "applications.rag.selector.select_passages followed by applications.rag.generation.Generator.generate",
+    "code_revision": "156ad83",
+    "equivalence_test": "With only full_context_probe enabled, selected passage IDs, order, generated prompt, deterministic prediction hash, EM, and F1 must exactly match the existing qore_answer K=5 path on fixed fixtures and a smoke sample."
+  },
+  "core_invariants": [
+    "QORE plus Answer Scorer at K=5 remains the fixed selection baseline; Phase 8A does not modify select_passages or any QUBO coefficient.",
+    "Dataset loading, retrieval, gold answers, Generator prompt semantics, evaluate_answer, EM, and F1 remain outside the research plugin boundary.",
+    "Probe inclusion is assigned before generation from a stable question identifier and a frozen randomization seed; gold answers, predictions, and outcome metrics cannot enter assignment.",
+    "The balanced subset design uses eight mask-complement pairs over the five selected passages, giving treatment propensity 0.5 for every passage in the effect-fit probes.",
+    "Full-context and empty-context anchors are descriptive controls and are excluded from propensity-weighted effect fitting.",
+    "Question-grouped cross-fitting prevents any question from contributing to both nuisance-model fitting and held-out effect evaluation.",
+    "The one-click runner resolves the frozen reference generator from an explicit CLI override, the legacy project path, or the pinned local Hugging Face snapshot in that order; the resolved path, model ID, revision, and config hash are written to the manifest.",
+    "Only compact identifiers, masks, numeric covariates, prediction hashes, outcomes, timing, and fit diagnostics may be written to Exchange; raw questions, passages, answers, and predictions are forbidden.",
+    "Full Wiki-DPR and full-corpus execution remains collaborator-only."
+  ],
+  "interfaces": [
+    {
+      "id": "context_probe_transformer",
+      "type": "transformer",
+      "input_schema": "question stable ID; five selected passage ranks in baseline order; probe seed; numeric non-gold passage covariates",
+      "output_schema": "ordered ContextProbe records containing stable probe ID, five-bit inclusion mask, ordered selected ranks, anchor flag, and assignment propensity",
+      "invariants": [
+        "baseline full mask preserves exact selected order",
+        "every non-anchor mask has a unique complement",
+        "each passage is included in exactly eight of sixteen effect-fit probes",
+        "probe order randomization is deterministic and independent of gold outcomes"
+      ]
+    },
+    {
+      "id": "counterfactual_influence_combiner",
+      "type": "combiner",
+      "input_schema": "compact probe outcomes joined to frozen probe assignments and numeric covariates",
+      "output_schema": "per-question per-passage difference-in-means and cross-fitted AIPW influence estimates; bootstrap uncertainty; stability, nuisance, placebo, and gate summaries",
+      "invariants": [
+        "known propensity is 0.5 for effect-fit rows",
+        "anchors never enter the AIPW fit",
+        "folds are grouped by question",
+        "all reported estimates are deterministically reproducible from compact rows"
+      ]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "full_context_probe",
+      "version": "1.0.0",
+      "role": "baseline",
+      "interface": "context_probe_transformer",
+      "insertion_point": "after fixed qore_answer selection and before the unchanged Generator.generate call",
+      "hypothesis": "A null observation adapter can expose the full selected context without changing baseline selection or generation behavior.",
+      "input_schema": "five selected passage ranks in baseline order",
+      "output_schema": "one full-mask ContextProbe with unchanged passage order and anchor=true",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "One existing baseline generation per question; no additional model or selection call.",
+      "failure_signatures": [
+        "selected IDs or order differ from baseline",
+        "prompt or prediction hash differs from baseline",
+        "baseline EM/F1 differs from the existing path"
+      ]
+    },
+    {
+      "id": "balanced_subset_probe",
+      "version": "0.1.0",
+      "role": "idea",
+      "interface": "context_probe_transformer",
+      "insertion_point": "after full_context_probe and before unchanged generation; appends effect-fit and empty-anchor contexts without mutating the baseline probe",
+      "hypothesis": "Balanced randomized inclusion interventions expose stable passage-specific generator utility that static relevance, diversity, and answer-identity proxies miss.",
+      "input_schema": "full-mask ContextProbe; stable question ID; probe seed; five selected ranks; non-gold numeric passage covariates",
+      "output_schema": "the baseline full probe, sixteen unique effect-fit probes arranged as eight complement pairs, and one empty-context anchor",
+      "requires": ["full_context_probe"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "Seventeen additional deterministic generations per question; 850 additional generations for the 50-question pilot.",
+      "failure_signatures": [
+        "inclusion counts are not exactly balanced",
+        "duplicate or non-complement masks are emitted",
+        "gold or prediction data affects assignment",
+        "the full-context probe is mutated",
+        "probe generation exceeds the predeclared cap"
+      ]
+    },
+    {
+      "id": "doubly_robust_influence",
+      "version": "0.1.0",
+      "role": "idea",
+      "interface": "counterfactual_influence_combiner",
+      "insertion_point": "after the unchanged generator and evaluate_answer have produced compact probe outcomes",
+      "hypothesis": "A cross-fitted AIPW estimate of passage inclusion effect has reproducible conditional answer-utility signal after accounting for Answer Scorer, retrieval rank, context size, token count, and embedding redundancy.",
+      "input_schema": "effect-fit probe assignments with propensity 0.5; compact F1/EM outcomes; frozen non-gold covariates; question-grouped fold assignments",
+      "output_schema": "per-passage influence estimates and uncertainty plus split-half, nuisance-model, placebo, and pre-registered gate decisions",
+      "requires": ["balanced_subset_probe"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "Five-fold ridge nuisance fits, 5000 question-cluster bootstrap samples, and permutation placebos over at most 800 effect-fit rows; no model call.",
+      "failure_signatures": [
+        "AIPW and raw difference-in-means disagree materially",
+        "split-half influence stability is below the gate",
+        "effect signal vanishes after nuisance control",
+        "placebo assignments produce an equal or stronger signal",
+        "a question leaks across fit and evaluation folds",
+        "the estimator consumes raw text or gold-derived covariates"
+      ]
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": ["full_context_probe", "balanced_subset_probe", "doubly_robust_influence"]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": ["full_context_probe", "balanced_subset_probe", "doubly_robust_influence"],
+    "merge_rule": "full_context_probe creates the immutable baseline anchor; balanced_subset_probe appends uniquely keyed context probes; the existing generator and evaluator fill compact outcomes at the declared boundary; doubly_robust_influence joins only by stable probe ID and cannot feed results back to selection or generation.",
+    "interaction_ablations": [
+      "full_context_probe only for exact baseline equivalence",
+      "raw difference-in-means versus cross-fitted AIPW",
+      "AIPW without outcome-model covariates versus AIPW with frozen nuisances",
+      "first four versus last four complement-pair split-half stability",
+      "true assignment versus within-question complement-preserving placebo assignment",
+      "fixed baseline passage order anchor versus randomized-order effect probes"
+    ]
+  },
+  "validation": {
+    "baseline_equivalence": "The null full-context probe must be byte-equivalent at the prompt boundary and exactly equal at selected IDs, order, prediction hash, EM, and F1 on deterministic fixtures.",
+    "tests": [
+      "baseline_equivalence",
+      "schema_and_input_invariants",
+      "plugin_isolation",
+      "deterministic_replay",
+      "dependency_and_conflict_validation",
+      "interaction_ablation",
+      "balanced_assignment_property",
+      "question_grouped_cross_fit",
+      "gold_blind_assignment",
+      "placebo_collapse",
+      "compact_output_privacy",
+      "smoke_manifest"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/phase8a_counterfactual_influence.yaml",
+    "dataset_identity": "nq_open validation questions 200-249 with Wiki-DPR compressed retrieval, top 50 candidates, fixed qore_answer K=5 selection",
+    "environment": "record Python executable/version, git revision, config SHA-256, plugin tree hash, resolved reference generator path, model ID, pinned revision, model config hash, dataset slice, retrieval settings, selection seed, probe seed, fold hash, and bootstrap seed",
+    "seeds": [42, 8101, 8102, 8103],
+    "output_manifest": "exchange/five_ideas/phase8a_counterfactual_influence/<timestamp>/manifest.json"
+  },
+  "limitations": [
+    "This stage is a diagnostic plan, not an implemented selector and not evidence that counterfactual influence improves F1.",
+    "The AIPW treatment is passage inclusion under the frozen five-passage qore_answer context distribution; it does not identify effects for arbitrary retrieved candidates.",
+    "Randomized prompt order marginalizes position effects but increases variance; a positive result still needs an explicit order-sensitivity audit.",
+    "F1 and EM are discontinuous outcomes, so effect estimates may be sparse and noisy on 50 questions.",
+    "A passing Phase 8A gate authorizes only a separate distilled-surrogate plan; it does not authorize a production selector or paper claim.",
+    "Novelty remains provisional against RAG attribution, Shapley valuation, and data-importance literature.",
+    "Full Wiki-DPR execution remains collaborator-only."
+  ]
+}

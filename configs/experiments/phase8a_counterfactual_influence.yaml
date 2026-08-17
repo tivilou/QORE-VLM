@@ -1,0 +1,104 @@
+phase:
+  name: phase8a_counterfactual_influence
+  schema_version: 1
+  diagnostic_only: true
+  selection_mutation: false
+
+  dataset: nq_open
+  split: validation
+  sample_offset: 200
+  max_samples: 50
+  corpus_mode: wiki_dpr
+  wiki_dpr_config: psgs_w100.nq.compressed
+  wiki_dpr_nprobe: 64
+  top_k_retrieval: 50
+
+  selection:
+    name: qore_answer
+    method: qore
+    K: 5
+    seed: 42
+    score_signal: answer
+    enhancers: [baseline]
+    enhancer_configs:
+      baseline: {gamma: 1.0}
+
+  answer_scorer:
+    backend: dpr
+
+  diagnostic_plugins:
+    - full_context_probe
+    - balanced_subset_probe
+    - doubly_robust_influence
+
+  randomization:
+    seed: 8101
+    selected_passage_count: 5
+    complement_pairs: 8
+    effect_fit_probes: 16
+    include_full_anchor: true
+    include_empty_anchor: true
+    anchors_in_effect_fit: false
+    treatment_propensity: 0.5
+    randomize_included_order: true
+    max_generations_per_question: 18
+
+  estimator:
+    name: cross_fitted_aipw
+    outcome: f1
+    secondary_outcomes: [em]
+    grouped_by: question_id
+    folds: 5
+    fold_seed: 8102
+    nuisance_model: ridge
+    ridge: 1.0e-6
+    covariates:
+      - answer_score
+      - retrieval_rank
+      - original_selection_position
+      - passage_token_count
+      - other_context_size
+      - other_context_answer_score_sum
+      - other_context_token_count
+      - other_context_embedding_redundancy
+    bootstrap:
+      samples: 5000
+      seed: 8103
+      cluster: question_id
+    placebo:
+      mode: complement_preserving_within_question
+      repetitions: 200
+
+  gate:
+    primary_endpoint: split_half_spearman_influence
+    minimum_split_half_spearman: 0.20
+    minimum_split_half_ci95_low: 0.00
+    minimum_aipw_dim_spearman: 0.50
+    minimum_incremental_cross_fitted_r2: 0.05
+    minimum_questions_with_effect_range_0_10_fraction: 0.20
+    maximum_placebo_p_value: 0.05
+    maximum_generations_per_question: 18
+    pass_requires_all: true
+    pass_action: authorize_phase8b_surrogate_plan_only
+    fail_action: stop_counterfactual_influence_direction
+
+  max_new_tokens: 32
+  generators:
+    - name: reference
+      model_id: NousResearch/Meta-Llama-3-8B-Instruct
+      revision: 53346005fb0ef11d3b6a83b12c895cca40156b6c
+      model_path_candidates:
+        - /root/QORE-VLM/models/llama3-8b
+        - /root/.cache/huggingface/hub/models--NousResearch--Meta-Llama-3-8B-Instruct/snapshots/53346005fb0ef11d3b6a83b12c895cca40156b6c
+      resolver_order: [cli_override, existing_candidate]
+      record_resolved_identity: true
+
+  outputs:
+    root: exchange/five_ideas/phase8a_counterfactual_influence
+    compact_only: true
+    forbidden_fields:
+      - question
+      - passages
+      - gold_answers
+      - prediction
+      - raw_prompt
