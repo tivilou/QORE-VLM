@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "Q-DUET-VLM RAG Phase 9A context bottleneck diagnostic",
+  "authorization": "implemented",
+  "baseline": {
+    "entry_point": "scripts/rag/eval/eval_rag_refactored.py: selected_texts -> Generator.generate",
+    "code_revision": "five-ideas-development at phase9a implementation",
+    "equivalence_test": "full transform returns the original selected_texts byte-for-byte and leaves selector outputs unchanged"
+  },
+  "core_invariants": [
+    "Selected passage IDs and their order are unchanged.",
+    "The transformer runs only after select_passages and before Generator.generate.",
+    "No context diagnostic is passed back to retrieval, selection, or evaluation labels.",
+    "Gold answers, metric definitions, retrieval settings, and generator decoding remain fixed.",
+    "Exchange results contain scalar diagnostics only and never question, passage, prediction, or raw prompt text."
+  ],
+  "interfaces": [
+    {
+      "id": "context_transformer_v1",
+      "type": "transformer",
+      "input_schema": "ordered selected passage text sequence plus generator tokenizer and optional reader spans",
+      "output_schema": "ordered transformed passage text sequence plus scalar token/span diagnostics",
+      "invariants": [
+        "Output sequence length and order equal input sequence length.",
+        "full mode is baseline-equivalent.",
+        "Non-full modes respect a deterministic total token budget."
+      ]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "full_context_baseline",
+      "version": "1.0.0",
+      "role": "baseline",
+      "interface": "context_transformer_v1",
+      "insertion_point": "after_selection_before_generation",
+      "hypothesis": "The original complete selected context is the null transformation.",
+      "input_schema": "ordered selected passages",
+      "output_schema": "identical ordered selected passages",
+      "requires": [],
+      "conflicts": ["uniform_head_context", "reader_window_context"],
+      "deterministic": true,
+      "resource_estimate": "one tokenizer pass per selected passage; no additional model forward",
+      "failure_signatures": ["output text differs from input", "passage count/order changes"]
+    },
+    {
+      "id": "uniform_head_context",
+      "version": "1.0.0",
+      "role": "idea",
+      "interface": "context_transformer_v1",
+      "insertion_point": "after_selection_before_generation",
+      "hypothesis": "The generator may benefit from a fixed compact head allocation instead of receiving overlong selected passages.",
+      "input_schema": "ordered selected passages plus budget ratio in (0,1)",
+      "output_schema": "ordered head-window passages plus scalar token counts",
+      "requires": [],
+      "conflicts": ["reader_window_context"],
+      "deterministic": true,
+      "resource_estimate": "one tokenizer pass and deterministic slicing per selected passage",
+      "failure_signatures": ["budget violation", "F1 harm beyond preregistered tolerance", "unstable replay"]
+    },
+    {
+      "id": "reader_window_context",
+      "version": "1.0.0",
+      "role": "idea",
+      "interface": "context_transformer_v1",
+      "insertion_point": "after_selection_before_generation",
+      "hypothesis": "A compact window centered on the DPR Reader answer span preserves useful evidence better than an undirected head crop.",
+      "input_schema": "ordered selected passages plus aligned top reader hypotheses and budget ratio in (0,1)",
+      "output_schema": "ordered centered-window passages plus scalar span diagnostics",
+      "requires": [],
+      "conflicts": ["uniform_head_context"],
+      "deterministic": true,
+      "resource_estimate": "one DPR reader pass over retrieved passages plus one tokenizer pass per selected passage",
+      "failure_signatures": ["reader span non-retention above 5%", "high span fallback", "F1 harm beyond preregistered tolerance"]
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": ["full_context_baseline", "uniform_head_context", "reader_window_context"]
+  },
+  "composition": {
+    "mode": "single",
+    "order": ["full_context_baseline", "uniform_head_context", "reader_window_context"],
+    "merge_rule": "Exactly one context transformer is selected per configuration; no sequential stacking is allowed in Phase 9A.",
+    "interaction_ablations": [
+      "full vs uniform_head at budget ratios 0.50 and 0.75",
+      "full vs reader_window at budget ratios 0.50 and 0.75",
+      "reader_window vs uniform_head at each matched budget"
+    ]
+  },
+  "validation": {
+    "baseline_equivalence": "Synthetic fixture proves full mode preserves text exactly and selected passage identity/order is untouched.",
+    "tests": [
+      "baseline_equivalence",
+      "plugin_isolation",
+      "deterministic_replay",
+      "interaction_ablation",
+      "schema and argument validation rejects unknown transforms and invalid budgets",
+      "runner writes a compact manifest and paired summary without forbidden raw fields"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/phase9a_context_intervention.yaml",
+    "dataset_identity": "nq_open validation[200:250], Wiki-DPR psgs_w100.nq.compressed, top-50 retrieval, K=5",
+    "environment": "runner records executable/version, git commit, resolved model ID/revision, config.json SHA-256, and output paths",
+    "seeds": [42, 9201],
+    "output_manifest": "exchange/five_ideas/phase9a_context_intervention/<timestamp>/run_metadata.json"
+  },
+  "limitations": [
+    "This phase diagnoses context sensitivity and does not implement a selector or claim a paper contribution.",
+    "Reader span localization depends on tokenizer compatibility; fallback and clipping are explicitly measured.",
+    "The 50-question slice is a development gate and requires held-out or multi-seed confirmation before claims."
+  ]
+}

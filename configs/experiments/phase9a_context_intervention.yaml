@@ -1,0 +1,95 @@
+phase:
+  name: phase9a_context_intervention
+  schema_version: 1
+  diagnostic_only: true
+  selection_mutation: false
+
+  dataset: nq_open
+  split: validation
+  sample_offset: 200
+  max_samples: 50
+  corpus_mode: wiki_dpr
+  wiki_dpr_config: psgs_w100.nq.compressed
+  wiki_dpr_nprobe: 64
+  top_k_retrieval: 50
+
+  shared_args:
+    dataset: nq_open
+    split: validation
+    sample_offset: 200
+    max_samples: 50
+    corpus_mode: wiki_dpr
+    wiki_dpr_config: psgs_w100.nq.compressed
+    wiki_dpr_nprobe: 64
+    top_k_retrieval: 50
+    method: qore
+    K: 5
+    seed: 42
+    gamma: 1.0
+    use_answer_scorer: true
+    answer_scorer_backend: dpr
+    max_new_tokens: 32
+
+  configurations:
+    - name: qore_as_full
+      kind: baseline
+      args:
+        context_transform: full
+        context_budget_ratio: 1.0
+      description: Original selected passage payload, baseline equivalence.
+    - name: qore_as_uniform_head_050
+      kind: idea
+      args:
+        context_transform: uniform_head
+        context_budget_ratio: 0.50
+      description: Equal per-passage head windows at half the selected-context budget.
+    - name: qore_as_uniform_head_075
+      kind: idea
+      args:
+        context_transform: uniform_head
+        context_budget_ratio: 0.75
+      description: Equal per-passage head windows at three quarters of the selected-context budget.
+    - name: qore_as_reader_window_050
+      kind: idea
+      args:
+        context_transform: reader_window
+        context_budget_ratio: 0.50
+      description: Centered windows around DPR Reader top answer spans at half budget.
+    - name: qore_as_reader_window_075
+      kind: idea
+      args:
+        context_transform: reader_window
+        context_budget_ratio: 0.75
+      description: Centered windows around DPR Reader top answer spans at three quarters budget.
+
+  gate:
+    minimum_f1_delta: 0.01
+    maximum_f1_harm: 0.005
+    minimum_token_reduction: 0.25
+    minimum_generation_time_reduction: 0.15
+    maximum_reader_span_failure_fraction: 0.05
+    bootstrap_repetitions: 2000
+    bootstrap_seed: 9201
+    direction_requires_nonnegative_by_budget: true
+    pass_action: authorize_context_selector_followup_only
+    fail_action: stop_context_intervention_direction
+
+  max_new_tokens: 32
+  generator:
+    name: reference
+    model_id: NousResearch/Meta-Llama-3-8B-Instruct
+    revision: 53346005fb0ef11d3b6a83b12c895cca40156b6c
+    model_path_candidates:
+      - models/llama3-8b
+    resolver_order: [cli_override, project_candidate, hf_cache]
+    record_resolved_identity: true
+
+  outputs:
+    root: exchange/five_ideas/phase9a_context_intervention
+    compact_only: true
+    forbidden_fields:
+      - question
+      - passages
+      - gold_answers
+      - prediction
+      - raw_prompt

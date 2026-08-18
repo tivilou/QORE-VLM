@@ -40,6 +40,7 @@ from pathlib import Path
 import numpy as np
 
 from applications.rag.data import load_dataset_for_rag, make_corpus_manager
+from applications.rag.context_transform import CONTEXT_TRANSFORMS, transform_context
 from applications.rag.evaluation import Evaluator
 from applications.rag.generation import Generator
 from applications.rag.retrieval import make_encoder
@@ -77,6 +78,8 @@ def parse_args():
                    help="Dataset name: nq_open, hotpotqa_distractor, hotpotqa_fullwiki, jsonl")
     p.add_argument("--split", default="validation", help="Dataset split")
     p.add_argument("--max_samples", type=int, default=0, help="Limit samples (0=all)")
+    p.add_argument("--sample_offset", type=int, default=0,
+                   help="Start offset within the selected split (default: 0)")
     p.add_argument("--custom_path", help="Path for jsonl dataset")
 
     # Corpus mode
@@ -164,6 +167,10 @@ def parse_args():
                    help="Skip LLM generation (selection-only eval)")
     p.add_argument("--max_new_tokens", type=int, default=128,
                    help="Max tokens for answer generation")
+    p.add_argument("--context_transform", default=None, choices=CONTEXT_TRANSFORMS,
+                   help="Observation-only transform applied after selection and before generation")
+    p.add_argument("--context_budget_ratio", type=float, default=1.0,
+                   help="Fraction of selected-context tokens retained by a non-full transform")
 
     # Output
     p.add_argument("--output_dir", default="results/rag",
@@ -181,6 +188,17 @@ def parse_args():
 
 def main():
     args = parse_args()
+    if args.sample_offset < 0:
+        raise ValueError("--sample_offset must be non-negative")
+    if not 0.0 < args.context_budget_ratio <= 1.0:
+        raise ValueError("--context_budget_ratio must be in (0, 1]")
+    if args.context_transform == "reader_window":
+        if not args.use_answer_scorer:
+            raise ValueError("--context_transform reader_window requires --use_answer_scorer")
+        if args.answer_scorer_backend != "dpr":
+            raise ValueError("reader_window requires the DPR answer scorer")
+    if args.skip_generation and args.context_transform not in (None, "full"):
+        raise ValueError("context transforms require generation; remove --skip_generation")
     np.random.seed(args.seed)
 
     enhancer_names = None
@@ -199,9 +217,11 @@ def main():
     print("=" * 70)
     print("RAG End-to-End Evaluation")
     print("=" * 70)
-    print(f"Dataset: {args.dataset} ({args.split})")
+    print(f"Dataset: {args.dataset} ({args.split}[{args.sample_offset}:])")
     print(f"Corpus mode: {args.corpus_mode}")
     print(f"Selection: {args.method}, K={args.K}")
+    if args.context_transform is not None:
+        print(f"Context: {args.context_transform}, budget={args.context_budget_ratio:.2f}")
     print(f"Seed: {args.seed}")
     print()
 
@@ -209,9 +229,14 @@ def main():
     # 1. Load dataset
     # ──────────────────────────────────────────────────────────────────────
     print("Loading dataset...")
-    questions = load_dataset_for_rag(
-        args.dataset, args.split, args.max_samples, args.custom_path
-    )
+    load_limit = 0
+    if args.max_samples > 0:
+        load_limit = args.sample_offset + args.max_samples
+    questions = load_dataset_for_rag(args.dataset, args.split, load_limit, args.custom_path)
+    if args.sample_offset:
+        questions = questions[args.sample_offset:]
+    if args.max_samples > 0:
+        questions = questions[:args.max_samples]
     print(f"  Loaded {len(questions)} questions")
 
     # ──────────────────────────────────────────────────────────────────────
@@ -294,6 +319,7 @@ def main():
         question = q["question"]
         qid = q["id"]
         gold_answers = q.get("answers", [])
+        answer_hypotheses = None
 
         # Encode query
         query_emb = encoder.encode_queries([question])[0]
@@ -328,7 +354,12 @@ def main():
                     retrieved_texts = [candidates[idx]["text"] for idx in retrieved_idx]
                 else:
                     retrieved_texts = [corpus.passages[idx] for idx in retrieved_idx]
-            retrieval_scores = answer_scorer.score_passages(question, retrieved_texts)
+            if args.context_transform == "reader_window":
+                retrieval_scores, answer_hypotheses = answer_scorer.score_passages_with_hypotheses(
+                    question, retrieved_texts, top_m=1
+                )
+            else:
+                retrieval_scores = answer_scorer.score_passages(question, retrieved_texts)
 
         # Make scorer context available to legacy and plugin-based utilities.
         if needs_answer_context and retrieved_texts is None:
@@ -380,6 +411,9 @@ def main():
 
         selected_global = retrieved_idx[selected_local]
         selected_embs = retrieved_embs[selected_local]
+        selected_hypotheses = None
+        if answer_hypotheses is not None:
+            selected_hypotheses = [answer_hypotheses[int(index)] for index in selected_local]
 
         # Gold indices (mode-dependent)
         if args.corpus_mode == "precomputed":
@@ -420,6 +454,18 @@ def main():
                 selected_texts = [retrieved_texts[j] for j in selected_local]
             else:
                 selected_texts = [corpus.passages[j] for j in selected_global]
+
+        context_result = None
+        generation_texts = selected_texts
+        if generator and args.context_transform is not None:
+            context_result = transform_context(
+                selected_texts,
+                tokenizer=generator.tokenizer,
+                transform=args.context_transform,
+                budget_ratio=args.context_budget_ratio,
+                hypotheses=selected_hypotheses,
+            )
+            generation_texts = list(context_result.texts)
 
         # Per-passage quality signal actually fed to the selector (DPR score, or
         # answer-scorer logit when --use_answer_scorer). The QUBO diagnosis needs
@@ -503,7 +549,7 @@ def main():
         generation_time_ms = 0.0
         if generator:
             t0 = time.perf_counter()
-            prediction = generator.generate(question, selected_texts)
+            prediction = generator.generate(question, generation_texts)
             generation_time_ms = (time.perf_counter() - t0) * 1000
 
         # Evaluate
@@ -515,6 +561,24 @@ def main():
         else:
             answer_hit = None
 
+        compact_context = context_result.compact() if context_result is not None else None
+        dump_payload = (
+            {
+                "question": question,
+                "gold_answers": list(gold_answers),
+                "query_embedding": query_emb.tolist() if query_emb is not None else None,
+                "selected_passages": selected_passages,
+                "all_candidates": all_candidates,
+                "retrieved_passages": retrieved_passages_full,
+                "qubo": qubo_diag or None,
+                "prediction": prediction,
+            }
+            if args.dump_passages
+            else {}
+        )
+        if compact_context is not None:
+            dump_payload.update(compact_context)
+
         evaluator.evaluate_sample(
             question_id=qid,
             selected_indices=set(selected_local),
@@ -525,20 +589,7 @@ def main():
             selection_time_ms=selection_time_ms,
             generation_time_ms=generation_time_ms,
             answer_hit_at_retrieved=answer_hit,
-            dump=(
-                {
-                    "question": question,
-                    "gold_answers": list(gold_answers),
-                    "query_embedding": query_emb.tolist() if query_emb is not None else None,
-                    "selected_passages": selected_passages,
-                    "all_candidates": all_candidates,
-                    "retrieved_passages": retrieved_passages_full,  # For Idea 7 training
-                    "qubo": qubo_diag or None,
-                    "prediction": prediction,
-                }
-                if args.dump_passages
-                else None
-            ),
+            dump=dump_payload or None,
         )
 
     # ──────────────────────────────────────────────────────────────────────
