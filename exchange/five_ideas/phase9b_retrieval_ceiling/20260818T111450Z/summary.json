@@ -1,0 +1,45 @@
+{
+  "decision": {
+    "primary_bottleneck": "retrieval_ceiling",
+    "thresholds": {
+      "maximum_retrieval_failure_rate": 0.2,
+      "minimum_selection_failure_rate": 0.1,
+      "minimum_topk_recovery_delta": 0.1
+    }
+  },
+  "generation": {
+    "em_mean": 0.26,
+    "em_when_selected_hit": 0.35294117647058826,
+    "f1_mean": 0.4615238095238095,
+    "f1_when_selected_hit": 0.604201680672269,
+    "f1_when_selected_miss": 0.05000000000000001,
+    "generation_time_ms_mean": 280.38725118001366,
+    "n_when_selected_hit": 34,
+    "n_when_selected_miss": 4
+  },
+  "n_questions": 50,
+  "retrieval": {
+    "n_top50_answer_hits": 38,
+    "top50_answer_failure_rate": 0.24,
+    "top50_answer_hit_rate": 0.76
+  },
+  "schema_version": 1,
+  "selection": {
+    "eligible_questions_with_top50_hit": 38,
+    "qore_as_k5": {
+      "selected_hit_rate_conditional": 0.8947368421052632,
+      "selection_failure_rate_conditional": 0.10526315789473684,
+      "topk_recovery_delta": {
+        "bootstrap_repetitions": 2000,
+        "bootstrap_seed": 9301,
+        "ci95_high": 0.07894736842105263,
+        "ci95_low": 0.0,
+        "mean": 0.02631578947368421
+      }
+    },
+    "topk_as_k5": {
+      "selected_hit_rate_conditional": 0.9210526315789473,
+      "selection_failure_rate_conditional": 0.07894736842105265
+    }
+  }
+}
