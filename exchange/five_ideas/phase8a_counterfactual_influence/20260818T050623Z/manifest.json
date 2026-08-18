@@ -1,0 +1,96 @@
+{
+  "config": {
+    "path": "/root/QORE-VLM/configs/experiments/phase8a_counterfactual_influence.yaml",
+    "sha256": "99f7cc6c495b195772eaca65c911fdb8a731fb295569dfc21f5db05a154de8a0"
+  },
+  "dataset": {
+    "corpus_mode": "wiki_dpr",
+    "max_samples": 50,
+    "name": "nq_open",
+    "nprobe": 64,
+    "sample_offset": 200,
+    "slice_end_exclusive": 250,
+    "split": "validation",
+    "top_k_retrieval": 50,
+    "wiki_dpr_config": "psgs_w100.nq.compressed"
+  },
+  "design": {
+    "anchors_in_effect_fit": false,
+    "bootstrap_seed": 8103,
+    "complement_pairs": 8,
+    "covariate_conventions": {
+      "original_selection_position": "one_based_position_in_baseline_K5_order",
+      "passage_token_count": "whitespace_token_count",
+      "retrieval_rank": "one_based_rank_in_retrieved_top_k"
+    },
+    "diagnostic_outputs_used_for_selection": false,
+    "diagnostic_plugins": [
+      "full_context_probe",
+      "balanced_subset_probe",
+      "doubly_robust_influence"
+    ],
+    "effect_fit_probes": 16,
+    "fold_seed": 8102,
+    "generations_per_question": 18,
+    "gold_labels_used_for_assignment_or_covariates": false,
+    "plugin_tree_hash": "cf503e84315e5c544e0abaf335e4f75ada52ce9d77ccd6717620bbcf0f09c315",
+    "probe_seed": 8101,
+    "selected_passage_count": 5
+  },
+  "diagnostic_only": true,
+  "generator": {
+    "config_path": "/root/QORE-VLM/models/llama3-8b/config.json",
+    "config_sha256": "61f3de03a16ca8046b05dc777bce72717022bc8522152eee61a69072272ef54b",
+    "model_id": "NousResearch/Meta-Llama-3-8B-Instruct",
+    "model_path": "/root/QORE-VLM/models/llama3-8b",
+    "name": "reference",
+    "resolution": "resolved",
+    "revision": "53346005fb0ef11d3b6a83b12c895cca40156b6c",
+    "source": "existing_candidate"
+  },
+  "generator_status": {
+    "reference": {
+      "generations": 900,
+      "status": "completed"
+    }
+  },
+  "git": {
+    "commit": "adb2256407d4d7c828a74e615cd37196b781369b",
+    "status": "## five-ideas-development...origin/five-ideas-development"
+  },
+  "output_root": "/root/QORE-VLM/exchange/five_ideas/phase8a_counterfactual_influence",
+  "phase": "phase8a_counterfactual_influence",
+  "python": {
+    "executable": "/root/miniconda3/bin/python",
+    "version": "3.10.20 (main, Mar 11 2026, 17:46:40) [GCC 14.3.0]"
+  },
+  "schema_version": 1,
+  "selection": {
+    "K": 5,
+    "enhancer_configs": {
+      "baseline": {
+        "gamma": 1.0
+      }
+    },
+    "enhancers": [
+      "baseline"
+    ],
+    "method": "qore",
+    "name": "qore_answer",
+    "score_signal": "answer",
+    "seed": 42
+  },
+  "selection_mutation": false,
+  "status": "completed",
+  "summary": {
+    "effect_rows": 4000,
+    "gate_decision": "stop_counterfactual_influence_direction",
+    "gate_status": "fail",
+    "generations": 900,
+    "probe_rows": 900,
+    "questions": 50
+  },
+  "timing_ms": {
+    "total": 474513.75696699996
+  }
+}

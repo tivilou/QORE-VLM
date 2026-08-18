@@ -1,0 +1,4796 @@
+{
+  "diagnostic_only": true,
+  "primary": {
+    "cross_fit": {
+      "fold_assignments": {
+        "1894c109f0d8561333b23d92": 1,
+        "19c3dbda47fba82f8ec18d24": 3,
+        "1cb6c5434e162164e98f176f": 4,
+        "24b7ca352b3fb59b85df6313": 2,
+        "277a2b0a578f0dc59897aaaf": 2,
+        "2dfeb1daf5ca09b9a45a01f8": 0,
+        "38a846a8c6d64c96ca3ad3dc": 3,
+        "3d93c79dbe68c7b52129e6e9": 0,
+        "45f82fef133d5e881df613f0": 2,
+        "47105d5adc5b194033be06a4": 2,
+        "5485c4bdaa8483c175ff31ec": 0,
+        "5934858becd972e0875997d0": 3,
+        "5d0c509d60c88bd8dc7fe27c": 0,
+        "5df2eb944eca6f7403300dee": 1,
+        "5ff57566004f07ab6f170b2e": 2,
+        "63081b7c5a3c68d1d4097195": 2,
+        "6bce924646c336f6df65f6fc": 0,
+        "74e10f01529136f1ecfdf30e": 1,
+        "764e96e8cb6adc8a6221691f": 0,
+        "7bbe290b60ebc4902dd95952": 2,
+        "7c9be6a555ae2bb3155681a0": 3,
+        "821a450092a3fd1f33be6a57": 0,
+        "82f8840baad6348d5099a254": 3,
+        "899e9848a258bf432261ad2c": 4,
+        "95d6ce9a2909b25ae42f10c3": 2,
+        "a4ae4016a93f5eeb886eb3f5": 0,
+        "a5437f6847bbbafbfc680e36": 3,
+        "a783c67c62a3ae3d58e4c5d1": 3,
+        "abd291c33be09eb6c533c3a1": 2,
+        "af7d8bdf9746c508a1313497": 4,
+        "b07fdd95ec1ec92dde21d0ce": 4,
+        "b17e411bd93a0d2901b0aa5d": 4,
+        "b9fde8a4f5080f1c361e4913": 4,
+        "c7498fbb16a9375a72cccf01": 1,
+        "c9eb35caec15d59394e42e40": 4,
+        "cc9a99b02fdf5f0d0213de1e": 2,
+        "ccc911bdcac88febac59fb72": 4,
+        "cd17e7586c6889fbbf1bad9f": 2,
+        "cf477311726fdd855fad93f0": 1,
+        "d29267b671305cccc406f879": 4,
+        "e1b6a3ea0d301fc90db79873": 1,
+        "e1ff0a065574916147828e37": 3,
+        "e9260c8e511da41c616e0b42": 3,
+        "e9a12f8788057733d4e9ca4e": 4,
+        "ea2f15b995e50d8424fa4d6d": 1,
+        "f225f9af24953f3711bcfb17": 4,
+        "f2391f41500425c8f2eda12b": 2,
+        "f40f6d7dfcdfb075d84b3202": 2,
+        "f80dfd4e0da3d96a8aa9085b": 3,
+        "f9948f6b62bdcb1e6461d541": 2
+      },
+      "folds": 5,
+      "question_grouped": true
+    },
+    "diagnostic_only": true,
+    "effect_count": 250,
+    "effects": [
+      {
+        "aipw_influence": -0.04658559186742178,
+        "dim_influence": -0.0630952380952381,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5398809523809525,
+        "passage_index": 0,
+        "question_id": "1894c109f0d8561333b23d92"
+      },
+      {
+        "aipw_influence": -0.07023809523809525,
+        "dim_influence": -0.07023809523809521,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5398809523809525,
+        "passage_index": 1,
+        "question_id": "1894c109f0d8561333b23d92"
+      },
+      {
+        "aipw_influence": 0.37059204411887287,
+        "dim_influence": 0.2964285714285715,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5398809523809525,
+        "passage_index": 2,
+        "question_id": "1894c109f0d8561333b23d92"
+      },
+      {
+        "aipw_influence": -0.4797777665399404,
+        "dim_influence": -0.4964285714285715,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5398809523809525,
+        "passage_index": 3,
+        "question_id": "1894c109f0d8561333b23d92"
+      },
+      {
+        "aipw_influence": 0.053436105702951486,
+        "dim_influence": 0.036904761904761996,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5398809523809525,
+        "passage_index": 4,
+        "question_id": "1894c109f0d8561333b23d92"
+      },
+      {
+        "aipw_influence": -0.2861238102915895,
+        "dim_influence": -0.30000000000000004,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.525,
+        "passage_index": 0,
+        "question_id": "19c3dbda47fba82f8ec18d24"
+      },
+      {
+        "aipw_influence": -0.28081655980596454,
+        "dim_influence": -0.30000000000000004,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.525,
+        "passage_index": 1,
+        "question_id": "19c3dbda47fba82f8ec18d24"
+      },
+      {
+        "aipw_influence": 0.07738414992870316,
+        "dim_influence": 0.050000000000000044,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.525,
+        "passage_index": 2,
+        "question_id": "19c3dbda47fba82f8ec18d24"
+      },
+      {
+        "aipw_influence": 0.9710529016988808,
+        "dim_influence": 0.95,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.525,
+        "passage_index": 3,
+        "question_id": "19c3dbda47fba82f8ec18d24"
+      },
+      {
+        "aipw_influence": -0.28136602619413487,
+        "dim_influence": -0.30000000000000004,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.525,
+        "passage_index": 4,
+        "question_id": "19c3dbda47fba82f8ec18d24"
+      },
+      {
+        "aipw_influence": 0.04498529658212597,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 0,
+        "question_id": "1cb6c5434e162164e98f176f"
+      },
+      {
+        "aipw_influence": 0.00221879303150882,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 1,
+        "question_id": "1cb6c5434e162164e98f176f"
+      },
+      {
+        "aipw_influence": 0.012543195287829892,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 2,
+        "question_id": "1cb6c5434e162164e98f176f"
+      },
+      {
+        "aipw_influence": 0.07752282854098505,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 3,
+        "question_id": "1cb6c5434e162164e98f176f"
+      },
+      {
+        "aipw_influence": -0.01685979547168552,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 4,
+        "question_id": "1cb6c5434e162164e98f176f"
+      },
+      {
+        "aipw_influence": -0.011948207769575017,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 0,
+        "question_id": "24b7ca352b3fb59b85df6313"
+      },
+      {
+        "aipw_influence": -0.012306155048543675,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 1,
+        "question_id": "24b7ca352b3fb59b85df6313"
+      },
+      {
+        "aipw_influence": -0.011910216561773192,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 2,
+        "question_id": "24b7ca352b3fb59b85df6313"
+      },
+      {
+        "aipw_influence": 0.02847021606710519,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 3,
+        "question_id": "24b7ca352b3fb59b85df6313"
+      },
+      {
+        "aipw_influence": 0.03770531509246949,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 4,
+        "question_id": "24b7ca352b3fb59b85df6313"
+      },
+      {
+        "aipw_influence": -0.0237126578029195,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 0,
+        "question_id": "277a2b0a578f0dc59897aaaf"
+      },
+      {
+        "aipw_influence": -0.01261823454439067,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 1,
+        "question_id": "277a2b0a578f0dc59897aaaf"
+      },
+      {
+        "aipw_influence": 0.02163115211816906,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 2,
+        "question_id": "277a2b0a578f0dc59897aaaf"
+      },
+      {
+        "aipw_influence": 0.013039325368767882,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 3,
+        "question_id": "277a2b0a578f0dc59897aaaf"
+      },
+      {
+        "aipw_influence": 0.033899000947958675,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 4,
+        "question_id": "277a2b0a578f0dc59897aaaf"
+      },
+      {
+        "aipw_influence": -0.5069691524674446,
+        "dim_influence": -0.5069444444444445,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.4756944444444445,
+        "passage_index": 0,
+        "question_id": "2dfeb1daf5ca09b9a45a01f8"
+      },
+      {
+        "aipw_influence": -0.15813192580090732,
+        "dim_influence": -0.1597222222222222,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.4756944444444445,
+        "passage_index": 1,
+        "question_id": "2dfeb1daf5ca09b9a45a01f8"
+      },
+      {
+        "aipw_influence": 0.3826535817837587,
+        "dim_influence": 0.38194444444444453,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.4756944444444445,
+        "passage_index": 2,
+        "question_id": "2dfeb1daf5ca09b9a45a01f8"
+      },
+      {
+        "aipw_influence": 0.18131291921629988,
+        "dim_influence": 0.15972222222222227,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.4756944444444445,
+        "passage_index": 3,
+        "question_id": "2dfeb1daf5ca09b9a45a01f8"
+      },
+      {
+        "aipw_influence": 0.3019109347801622,
+        "dim_influence": 0.2847222222222222,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.4756944444444445,
+        "passage_index": 4,
+        "question_id": "2dfeb1daf5ca09b9a45a01f8"
+      },
+      {
+        "aipw_influence": 0.22797241504519283,
+        "dim_influence": 0.17857142857142855,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5148809523809523,
+        "passage_index": 0,
+        "question_id": "38a846a8c6d64c96ca3ad3dc"
+      },
+      {
+        "aipw_influence": -0.1422218345172202,
+        "dim_influence": -0.09523809523809529,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5148809523809523,
+        "passage_index": 1,
+        "question_id": "38a846a8c6d64c96ca3ad3dc"
+      },
+      {
+        "aipw_influence": -0.10397480511751701,
+        "dim_influence": -0.08333333333333337,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5148809523809523,
+        "passage_index": 2,
+        "question_id": "38a846a8c6d64c96ca3ad3dc"
+      },
+      {
+        "aipw_influence": 0.252388139175561,
+        "dim_influence": 0.25,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5148809523809523,
+        "passage_index": 3,
+        "question_id": "38a846a8c6d64c96ca3ad3dc"
+      },
+      {
+        "aipw_influence": -0.1556716065882705,
+        "dim_influence": -0.16666666666666663,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5148809523809523,
+        "passage_index": 4,
+        "question_id": "38a846a8c6d64c96ca3ad3dc"
+      },
+      {
+        "aipw_influence": -0.1303132367863698,
+        "dim_influence": -0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0625,
+        "passage_index": 0,
+        "question_id": "3d93c79dbe68c7b52129e6e9"
+      },
+      {
+        "aipw_influence": -0.09646099845337092,
+        "dim_influence": -0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0625,
+        "passage_index": 1,
+        "question_id": "3d93c79dbe68c7b52129e6e9"
+      },
+      {
+        "aipw_influence": 0.14947367185144295,
+        "dim_influence": 0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0625,
+        "passage_index": 2,
+        "question_id": "3d93c79dbe68c7b52129e6e9"
+      },
+      {
+        "aipw_influence": 0.0049095800325785754,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0625,
+        "passage_index": 3,
+        "question_id": "3d93c79dbe68c7b52129e6e9"
+      },
+      {
+        "aipw_influence": 0.17040456406079227,
+        "dim_influence": 0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0625,
+        "passage_index": 4,
+        "question_id": "3d93c79dbe68c7b52129e6e9"
+      },
+      {
+        "aipw_influence": 0.6391204766612952,
+        "dim_influence": 0.625,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.3125,
+        "passage_index": 0,
+        "question_id": "45f82fef133d5e881df613f0"
+      },
+      {
+        "aipw_influence": 0.12095574124786557,
+        "dim_influence": 0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.3125,
+        "passage_index": 1,
+        "question_id": "45f82fef133d5e881df613f0"
+      },
+      {
+        "aipw_influence": -0.3342658630219849,
+        "dim_influence": -0.375,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.3125,
+        "passage_index": 2,
+        "question_id": "45f82fef133d5e881df613f0"
+      },
+      {
+        "aipw_influence": 0.04829959710871204,
+        "dim_influence": 0.041666666666666685,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.3125,
+        "passage_index": 3,
+        "question_id": "45f82fef133d5e881df613f0"
+      },
+      {
+        "aipw_influence": -0.05338642360619772,
+        "dim_influence": -0.041666666666666685,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.3125,
+        "passage_index": 4,
+        "question_id": "45f82fef133d5e881df613f0"
+      },
+      {
+        "aipw_influence": -0.5954209239507742,
+        "dim_influence": -0.625,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5625,
+        "passage_index": 0,
+        "question_id": "47105d5adc5b194033be06a4"
+      },
+      {
+        "aipw_influence": -0.3915554970258408,
+        "dim_influence": -0.375,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5625,
+        "passage_index": 1,
+        "question_id": "47105d5adc5b194033be06a4"
+      },
+      {
+        "aipw_influence": 0.16873213310901625,
+        "dim_influence": 0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5625,
+        "passage_index": 2,
+        "question_id": "47105d5adc5b194033be06a4"
+      },
+      {
+        "aipw_influence": -0.12478232679489124,
+        "dim_influence": -0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5625,
+        "passage_index": 3,
+        "question_id": "47105d5adc5b194033be06a4"
+      },
+      {
+        "aipw_influence": 0.6867862666359511,
+        "dim_influence": 0.625,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5625,
+        "passage_index": 4,
+        "question_id": "47105d5adc5b194033be06a4"
+      },
+      {
+        "aipw_influence": 1.0056404099228118,
+        "dim_influence": 1.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5,
+        "passage_index": 0,
+        "question_id": "5485c4bdaa8483c175ff31ec"
+      },
+      {
+        "aipw_influence": -0.22726956218535627,
+        "dim_influence": -0.25,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5,
+        "passage_index": 1,
+        "question_id": "5485c4bdaa8483c175ff31ec"
+      },
+      {
+        "aipw_influence": 0.0018212257220455719,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5,
+        "passage_index": 2,
+        "question_id": "5485c4bdaa8483c175ff31ec"
+      },
+      {
+        "aipw_influence": 0.2348167473077395,
+        "dim_influence": 0.25,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5,
+        "passage_index": 3,
+        "question_id": "5485c4bdaa8483c175ff31ec"
+      },
+      {
+        "aipw_influence": -0.23177758953220484,
+        "dim_influence": -0.25,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5,
+        "passage_index": 4,
+        "question_id": "5485c4bdaa8483c175ff31ec"
+      },
+      {
+        "aipw_influence": 0.5153970392559515,
+        "dim_influence": 0.5178571428571429,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.7232142857142858,
+        "passage_index": 0,
+        "question_id": "5934858becd972e0875997d0"
+      },
+      {
+        "aipw_influence": -0.2615709690613059,
+        "dim_influence": -0.2678571428571429,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.7232142857142858,
+        "passage_index": 1,
+        "question_id": "5934858becd972e0875997d0"
+      },
+      {
+        "aipw_influence": 0.07201864697813437,
+        "dim_influence": 0.017857142857142905,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.7232142857142858,
+        "passage_index": 2,
+        "question_id": "5934858becd972e0875997d0"
+      },
+      {
+        "aipw_influence": -0.24764353889276242,
+        "dim_influence": -0.2678571428571429,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.7232142857142858,
+        "passage_index": 3,
+        "question_id": "5934858becd972e0875997d0"
+      },
+      {
+        "aipw_influence": 0.49220111636525776,
+        "dim_influence": 0.48214285714285715,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.7232142857142858,
+        "passage_index": 4,
+        "question_id": "5934858becd972e0875997d0"
+      },
+      {
+        "aipw_influence": -0.22112657455070844,
+        "dim_influence": -0.21805555555555556,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.3201388888888889,
+        "passage_index": 0,
+        "question_id": "5d0c509d60c88bd8dc7fe27c"
+      },
+      {
+        "aipw_influence": 0.6546054277525002,
+        "dim_influence": 0.6402777777777777,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.3201388888888889,
+        "passage_index": 1,
+        "question_id": "5d0c509d60c88bd8dc7fe27c"
+      },
+      {
+        "aipw_influence": 0.06412190933704062,
+        "dim_influence": 0.04861111111111105,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.3201388888888889,
+        "passage_index": 2,
+        "question_id": "5d0c509d60c88bd8dc7fe27c"
+      },
+      {
+        "aipw_influence": -0.1899887251648977,
+        "dim_influence": -0.2152777777777778,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.3201388888888889,
+        "passage_index": 3,
+        "question_id": "5d0c509d60c88bd8dc7fe27c"
+      },
+      {
+        "aipw_influence": 0.01296259638160599,
+        "dim_influence": 0.018055555555555547,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.3201388888888889,
+        "passage_index": 4,
+        "question_id": "5d0c509d60c88bd8dc7fe27c"
+      },
+      {
+        "aipw_influence": 0.04424223781664007,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 0,
+        "question_id": "5df2eb944eca6f7403300dee"
+      },
+      {
+        "aipw_influence": 0.021361447415499703,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 1,
+        "question_id": "5df2eb944eca6f7403300dee"
+      },
+      {
+        "aipw_influence": 0.025798633583962324,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 2,
+        "question_id": "5df2eb944eca6f7403300dee"
+      },
+      {
+        "aipw_influence": -0.014408601730686858,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 3,
+        "question_id": "5df2eb944eca6f7403300dee"
+      },
+      {
+        "aipw_influence": -0.025312790657255446,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 4,
+        "question_id": "5df2eb944eca6f7403300dee"
+      },
+      {
+        "aipw_influence": 0.03022358409299844,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 1.0,
+        "passage_index": 0,
+        "question_id": "5ff57566004f07ab6f170b2e"
+      },
+      {
+        "aipw_influence": 0.028625827776896214,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 1.0,
+        "passage_index": 1,
+        "question_id": "5ff57566004f07ab6f170b2e"
+      },
+      {
+        "aipw_influence": -0.011320266283276065,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 1.0,
+        "passage_index": 2,
+        "question_id": "5ff57566004f07ab6f170b2e"
+      },
+      {
+        "aipw_influence": 0.022791810962586374,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 1.0,
+        "passage_index": 3,
+        "question_id": "5ff57566004f07ab6f170b2e"
+      },
+      {
+        "aipw_influence": -0.01559538329546764,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 1.0,
+        "passage_index": 4,
+        "question_id": "5ff57566004f07ab6f170b2e"
+      },
+      {
+        "aipw_influence": 0.795432732385358,
+        "dim_influence": 0.75,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.375,
+        "passage_index": 0,
+        "question_id": "63081b7c5a3c68d1d4097195"
+      },
+      {
+        "aipw_influence": -0.5116042290652411,
+        "dim_influence": -0.5,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.375,
+        "passage_index": 1,
+        "question_id": "63081b7c5a3c68d1d4097195"
+      },
+      {
+        "aipw_influence": -0.0016303238889450178,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.375,
+        "passage_index": 2,
+        "question_id": "63081b7c5a3c68d1d4097195"
+      },
+      {
+        "aipw_influence": -0.4442832068586373,
+        "dim_influence": -0.5,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.375,
+        "passage_index": 3,
+        "question_id": "63081b7c5a3c68d1d4097195"
+      },
+      {
+        "aipw_influence": 0.002226567740747226,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.375,
+        "passage_index": 4,
+        "question_id": "63081b7c5a3c68d1d4097195"
+      },
+      {
+        "aipw_influence": 0.9929593461622703,
+        "dim_influence": 1.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5,
+        "passage_index": 0,
+        "question_id": "6bce924646c336f6df65f6fc"
+      },
+      {
+        "aipw_influence": 0.0018784522084384636,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5,
+        "passage_index": 1,
+        "question_id": "6bce924646c336f6df65f6fc"
+      },
+      {
+        "aipw_influence": 0.24596782863017325,
+        "dim_influence": 0.25,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5,
+        "passage_index": 2,
+        "question_id": "6bce924646c336f6df65f6fc"
+      },
+      {
+        "aipw_influence": 0.002031339738281304,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5,
+        "passage_index": 3,
+        "question_id": "6bce924646c336f6df65f6fc"
+      },
+      {
+        "aipw_influence": -0.24858182140756824,
+        "dim_influence": -0.25,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5,
+        "passage_index": 4,
+        "question_id": "6bce924646c336f6df65f6fc"
+      },
+      {
+        "aipw_influence": 0.0047993407962996365,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 0,
+        "question_id": "74e10f01529136f1ecfdf30e"
+      },
+      {
+        "aipw_influence": 0.07602076246388488,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 1,
+        "question_id": "74e10f01529136f1ecfdf30e"
+      },
+      {
+        "aipw_influence": 0.03982036677328894,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 2,
+        "question_id": "74e10f01529136f1ecfdf30e"
+      },
+      {
+        "aipw_influence": 0.016509942640528463,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 3,
+        "question_id": "74e10f01529136f1ecfdf30e"
+      },
+      {
+        "aipw_influence": 0.0023595801541379663,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 4,
+        "question_id": "74e10f01529136f1ecfdf30e"
+      },
+      {
+        "aipw_influence": 0.007528276194192454,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.041666666666666664,
+        "passage_index": 0,
+        "question_id": "764e96e8cb6adc8a6221691f"
+      },
+      {
+        "aipw_influence": -0.002949796179774991,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.041666666666666664,
+        "passage_index": 1,
+        "question_id": "764e96e8cb6adc8a6221691f"
+      },
+      {
+        "aipw_influence": 0.004546220796535397,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.041666666666666664,
+        "passage_index": 2,
+        "question_id": "764e96e8cb6adc8a6221691f"
+      },
+      {
+        "aipw_influence": 0.00901691711318596,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.041666666666666664,
+        "passage_index": 3,
+        "question_id": "764e96e8cb6adc8a6221691f"
+      },
+      {
+        "aipw_influence": -0.019793915753755165,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.041666666666666664,
+        "passage_index": 4,
+        "question_id": "764e96e8cb6adc8a6221691f"
+      },
+      {
+        "aipw_influence": -0.2745331843147505,
+        "dim_influence": -0.3035714285714286,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.3660714285714286,
+        "passage_index": 0,
+        "question_id": "7bbe290b60ebc4902dd95952"
+      },
+      {
+        "aipw_influence": 0.08086469745664401,
+        "dim_influence": 0.0535714285714286,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.3660714285714286,
+        "passage_index": 1,
+        "question_id": "7bbe290b60ebc4902dd95952"
+      },
+      {
+        "aipw_influence": -0.12699756862996534,
+        "dim_influence": -0.19642857142857145,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.3660714285714286,
+        "passage_index": 2,
+        "question_id": "7bbe290b60ebc4902dd95952"
+      },
+      {
+        "aipw_influence": 0.7589143564829148,
+        "dim_influence": 0.7321428571428572,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.3660714285714286,
+        "passage_index": 3,
+        "question_id": "7bbe290b60ebc4902dd95952"
+      },
+      {
+        "aipw_influence": 0.0480191766774641,
+        "dim_influence": 0.05357142857142855,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.3660714285714286,
+        "passage_index": 4,
+        "question_id": "7bbe290b60ebc4902dd95952"
+      },
+      {
+        "aipw_influence": 0.012453502375146974,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 0,
+        "question_id": "7c9be6a555ae2bb3155681a0"
+      },
+      {
+        "aipw_influence": -0.00651848300400331,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 1,
+        "question_id": "7c9be6a555ae2bb3155681a0"
+      },
+      {
+        "aipw_influence": 0.003312673722211737,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 2,
+        "question_id": "7c9be6a555ae2bb3155681a0"
+      },
+      {
+        "aipw_influence": 0.006853345098551476,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 3,
+        "question_id": "7c9be6a555ae2bb3155681a0"
+      },
+      {
+        "aipw_influence": -0.00734975176191853,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 4,
+        "question_id": "7c9be6a555ae2bb3155681a0"
+      },
+      {
+        "aipw_influence": 0.06309642317579463,
+        "dim_influence": 0.05000000000000002,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.225,
+        "passage_index": 0,
+        "question_id": "821a450092a3fd1f33be6a57"
+      },
+      {
+        "aipw_influence": 0.4593158301529502,
+        "dim_influence": 0.44999999999999996,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.225,
+        "passage_index": 1,
+        "question_id": "821a450092a3fd1f33be6a57"
+      },
+      {
+        "aipw_influence": 0.40407654229521767,
+        "dim_influence": 0.39999999999999997,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.225,
+        "passage_index": 2,
+        "question_id": "821a450092a3fd1f33be6a57"
+      },
+      {
+        "aipw_influence": -0.1048079015835228,
+        "dim_influence": -0.10000000000000003,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.225,
+        "passage_index": 3,
+        "question_id": "821a450092a3fd1f33be6a57"
+      },
+      {
+        "aipw_influence": -0.3030294372272498,
+        "dim_influence": -0.35000000000000003,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.225,
+        "passage_index": 4,
+        "question_id": "821a450092a3fd1f33be6a57"
+      },
+      {
+        "aipw_influence": 0.1732531926848284,
+        "dim_influence": 0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.9375,
+        "passage_index": 0,
+        "question_id": "82f8840baad6348d5099a254"
+      },
+      {
+        "aipw_influence": -0.10010812289393545,
+        "dim_influence": -0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.9375,
+        "passage_index": 1,
+        "question_id": "82f8840baad6348d5099a254"
+      },
+      {
+        "aipw_influence": 0.12396193182604917,
+        "dim_influence": 0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.9375,
+        "passage_index": 2,
+        "question_id": "82f8840baad6348d5099a254"
+      },
+      {
+        "aipw_influence": 0.08011461495730589,
+        "dim_influence": 0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.9375,
+        "passage_index": 3,
+        "question_id": "82f8840baad6348d5099a254"
+      },
+      {
+        "aipw_influence": 0.1698926643757468,
+        "dim_influence": 0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.9375,
+        "passage_index": 4,
+        "question_id": "82f8840baad6348d5099a254"
+      },
+      {
+        "aipw_influence": 0.04770758086571968,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 0,
+        "question_id": "899e9848a258bf432261ad2c"
+      },
+      {
+        "aipw_influence": 0.016399206665337535,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 1,
+        "question_id": "899e9848a258bf432261ad2c"
+      },
+      {
+        "aipw_influence": -0.015851908454999994,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 2,
+        "question_id": "899e9848a258bf432261ad2c"
+      },
+      {
+        "aipw_influence": 0.04792819874849332,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 3,
+        "question_id": "899e9848a258bf432261ad2c"
+      },
+      {
+        "aipw_influence": 0.0001727107787120874,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 4,
+        "question_id": "899e9848a258bf432261ad2c"
+      },
+      {
+        "aipw_influence": 0.645085920389387,
+        "dim_influence": 0.6666666666666666,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.3333333333333333,
+        "passage_index": 0,
+        "question_id": "95d6ce9a2909b25ae42f10c3"
+      },
+      {
+        "aipw_influence": 0.18744755589387657,
+        "dim_influence": 0.16666666666666663,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.3333333333333333,
+        "passage_index": 1,
+        "question_id": "95d6ce9a2909b25ae42f10c3"
+      },
+      {
+        "aipw_influence": 0.027333016237677032,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.3333333333333333,
+        "passage_index": 2,
+        "question_id": "95d6ce9a2909b25ae42f10c3"
+      },
+      {
+        "aipw_influence": 0.024172496876598226,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.3333333333333333,
+        "passage_index": 3,
+        "question_id": "95d6ce9a2909b25ae42f10c3"
+      },
+      {
+        "aipw_influence": 0.15178641723140138,
+        "dim_influence": 0.16666666666666663,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.3333333333333333,
+        "passage_index": 4,
+        "question_id": "95d6ce9a2909b25ae42f10c3"
+      },
+      {
+        "aipw_influence": 0.11374952116767578,
+        "dim_influence": 0.1277777777777778,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.14722222222222225,
+        "passage_index": 0,
+        "question_id": "a4ae4016a93f5eeb886eb3f5"
+      },
+      {
+        "aipw_influence": 0.04078879796113945,
+        "dim_influence": 0.027777777777777762,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.14722222222222225,
+        "passage_index": 1,
+        "question_id": "a4ae4016a93f5eeb886eb3f5"
+      },
+      {
+        "aipw_influence": 0.04126534638968794,
+        "dim_influence": 0.027777777777777762,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.14722222222222225,
+        "passage_index": 2,
+        "question_id": "a4ae4016a93f5eeb886eb3f5"
+      },
+      {
+        "aipw_influence": 0.058850998026661355,
+        "dim_influence": 0.07777777777777778,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.14722222222222225,
+        "passage_index": 3,
+        "question_id": "a4ae4016a93f5eeb886eb3f5"
+      },
+      {
+        "aipw_influence": -0.04707519180786336,
+        "dim_influence": -0.07222222222222223,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.14722222222222225,
+        "passage_index": 4,
+        "question_id": "a4ae4016a93f5eeb886eb3f5"
+      },
+      {
+        "aipw_influence": -0.23924511284540118,
+        "dim_influence": -0.25,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.625,
+        "passage_index": 0,
+        "question_id": "a5437f6847bbbafbfc680e36"
+      },
+      {
+        "aipw_influence": 0.7870199924430296,
+        "dim_influence": 0.75,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.625,
+        "passage_index": 1,
+        "question_id": "a5437f6847bbbafbfc680e36"
+      },
+      {
+        "aipw_influence": -0.4941258018897212,
+        "dim_influence": -0.5,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.625,
+        "passage_index": 2,
+        "question_id": "a5437f6847bbbafbfc680e36"
+      },
+      {
+        "aipw_influence": 0.04562686209958028,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.625,
+        "passage_index": 3,
+        "question_id": "a5437f6847bbbafbfc680e36"
+      },
+      {
+        "aipw_influence": 0.029947072319983482,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.625,
+        "passage_index": 4,
+        "question_id": "a5437f6847bbbafbfc680e36"
+      },
+      {
+        "aipw_influence": 0.02850197423860916,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 0,
+        "question_id": "a783c67c62a3ae3d58e4c5d1"
+      },
+      {
+        "aipw_influence": 0.088920759023768,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 1,
+        "question_id": "a783c67c62a3ae3d58e4c5d1"
+      },
+      {
+        "aipw_influence": 0.014956952601336726,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 2,
+        "question_id": "a783c67c62a3ae3d58e4c5d1"
+      },
+      {
+        "aipw_influence": 0.022510025822465668,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 3,
+        "question_id": "a783c67c62a3ae3d58e4c5d1"
+      },
+      {
+        "aipw_influence": 0.03794201739007562,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 4,
+        "question_id": "a783c67c62a3ae3d58e4c5d1"
+      },
+      {
+        "aipw_influence": 0.12033518872231275,
+        "dim_influence": 0.0625,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.40625,
+        "passage_index": 0,
+        "question_id": "abd291c33be09eb6c533c3a1"
+      },
+      {
+        "aipw_influence": 0.17187813935717505,
+        "dim_influence": 0.1875,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.40625,
+        "passage_index": 1,
+        "question_id": "abd291c33be09eb6c533c3a1"
+      },
+      {
+        "aipw_influence": -0.05126578605816662,
+        "dim_influence": -0.0625,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.40625,
+        "passage_index": 2,
+        "question_id": "abd291c33be09eb6c533c3a1"
+      },
+      {
+        "aipw_influence": 0.35789445866635716,
+        "dim_influence": 0.3125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.40625,
+        "passage_index": 3,
+        "question_id": "abd291c33be09eb6c533c3a1"
+      },
+      {
+        "aipw_influence": -0.2969316067965534,
+        "dim_influence": -0.3125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.40625,
+        "passage_index": 4,
+        "question_id": "abd291c33be09eb6c533c3a1"
+      },
+      {
+        "aipw_influence": -0.03581830451523991,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 0,
+        "question_id": "af7d8bdf9746c508a1313497"
+      },
+      {
+        "aipw_influence": -0.04829635283920511,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 1,
+        "question_id": "af7d8bdf9746c508a1313497"
+      },
+      {
+        "aipw_influence": 0.006149001227312913,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 2,
+        "question_id": "af7d8bdf9746c508a1313497"
+      },
+      {
+        "aipw_influence": 0.004547179398176504,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 3,
+        "question_id": "af7d8bdf9746c508a1313497"
+      },
+      {
+        "aipw_influence": 0.06433720917665883,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0,
+        "passage_index": 4,
+        "question_id": "af7d8bdf9746c508a1313497"
+      },
+      {
+        "aipw_influence": 0.5070025835349924,
+        "dim_influence": 0.5,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.25,
+        "passage_index": 0,
+        "question_id": "b07fdd95ec1ec92dde21d0ce"
+      },
+      {
+        "aipw_influence": -0.311105856940797,
+        "dim_influence": -0.25,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.25,
+        "passage_index": 1,
+        "question_id": "b07fdd95ec1ec92dde21d0ce"
+      },
+      {
+        "aipw_influence": 0.014489491742556787,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.25,
+        "passage_index": 2,
+        "question_id": "b07fdd95ec1ec92dde21d0ce"
+      },
+      {
+        "aipw_influence": -0.1555601523456261,
+        "dim_influence": -0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.25,
+        "passage_index": 3,
+        "question_id": "b07fdd95ec1ec92dde21d0ce"
+      },
+      {
+        "aipw_influence": 0.16738324162022727,
+        "dim_influence": 0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.25,
+        "passage_index": 4,
+        "question_id": "b07fdd95ec1ec92dde21d0ce"
+      },
+      {
+        "aipw_influence": 0.023043179611133845,
+        "dim_influence": 0.022321428571428603,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5944940476190476,
+        "passage_index": 0,
+        "question_id": "b17e411bd93a0d2901b0aa5d"
+      },
+      {
+        "aipw_influence": -0.04141161978475913,
+        "dim_influence": 0.0044642857142858094,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5944940476190476,
+        "passage_index": 1,
+        "question_id": "b17e411bd93a0d2901b0aa5d"
+      },
+      {
+        "aipw_influence": 0.08795316769855127,
+        "dim_influence": 0.0401785714285714,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5944940476190476,
+        "passage_index": 2,
+        "question_id": "b17e411bd93a0d2901b0aa5d"
+      },
+      {
+        "aipw_influence": 0.19083544055112212,
+        "dim_influence": 0.14434523809523792,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5944940476190476,
+        "passage_index": 3,
+        "question_id": "b17e411bd93a0d2901b0aa5d"
+      },
+      {
+        "aipw_influence": 0.03899747208127902,
+        "dim_influence": -0.007440476190476053,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5944940476190476,
+        "passage_index": 4,
+        "question_id": "b17e411bd93a0d2901b0aa5d"
+      },
+      {
+        "aipw_influence": -0.21221987438583334,
+        "dim_influence": -0.17916666666666675,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5770833333333334,
+        "passage_index": 0,
+        "question_id": "b9fde8a4f5080f1c361e4913"
+      },
+      {
+        "aipw_influence": 0.8536190667198106,
+        "dim_influence": 0.8458333333333333,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5770833333333334,
+        "passage_index": 1,
+        "question_id": "b9fde8a4f5080f1c361e4913"
+      },
+      {
+        "aipw_influence": -0.037071750588637015,
+        "dim_influence": -0.029166666666666674,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5770833333333334,
+        "passage_index": 2,
+        "question_id": "b9fde8a4f5080f1c361e4913"
+      },
+      {
+        "aipw_influence": -0.1619075487471613,
+        "dim_influence": -0.15416666666666667,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5770833333333334,
+        "passage_index": 3,
+        "question_id": "b9fde8a4f5080f1c361e4913"
+      },
+      {
+        "aipw_influence": -0.04993641961460482,
+        "dim_influence": -0.0708333333333333,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5770833333333334,
+        "passage_index": 4,
+        "question_id": "b9fde8a4f5080f1c361e4913"
+      },
+      {
+        "aipw_influence": -0.4488680117395235,
+        "dim_influence": -0.475,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.2375,
+        "passage_index": 0,
+        "question_id": "c7498fbb16a9375a72cccf01"
+      },
+      {
+        "aipw_influence": 0.4981399185641159,
+        "dim_influence": 0.475,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.2375,
+        "passage_index": 1,
+        "question_id": "c7498fbb16a9375a72cccf01"
+      },
+      {
+        "aipw_influence": 0.2819405645273041,
+        "dim_influence": 0.22499999999999998,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.2375,
+        "passage_index": 2,
+        "question_id": "c7498fbb16a9375a72cccf01"
+      },
+      {
+        "aipw_influence": -0.2091029591061354,
+        "dim_influence": -0.22499999999999998,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.2375,
+        "passage_index": 3,
+        "question_id": "c7498fbb16a9375a72cccf01"
+      },
+      {
+        "aipw_influence": 0.07500828326715396,
+        "dim_influence": 0.024999999999999994,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.2375,
+        "passage_index": 4,
+        "question_id": "c7498fbb16a9375a72cccf01"
+      },
+      {
+        "aipw_influence": 0.13251376446071697,
+        "dim_influence": 0.09523809523809512,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5952380952380952,
+        "passage_index": 0,
+        "question_id": "c9eb35caec15d59394e42e40"
+      },
+      {
+        "aipw_influence": 0.15139345172806723,
+        "dim_influence": 0.09523809523809512,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5952380952380952,
+        "passage_index": 1,
+        "question_id": "c9eb35caec15d59394e42e40"
+      },
+      {
+        "aipw_influence": 0.028476088022399492,
+        "dim_influence": 0.04761904761904767,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5952380952380952,
+        "passage_index": 2,
+        "question_id": "c9eb35caec15d59394e42e40"
+      },
+      {
+        "aipw_influence": -0.0605092598879646,
+        "dim_influence": -0.0714285714285714,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5952380952380952,
+        "passage_index": 3,
+        "question_id": "c9eb35caec15d59394e42e40"
+      },
+      {
+        "aipw_influence": 0.07814593452695315,
+        "dim_influence": 0.09523809523809512,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5952380952380952,
+        "passage_index": 4,
+        "question_id": "c9eb35caec15d59394e42e40"
+      },
+      {
+        "aipw_influence": 0.13658796482622193,
+        "dim_influence": 0.10416666666666663,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.4479166666666667,
+        "passage_index": 0,
+        "question_id": "cc9a99b02fdf5f0d0213de1e"
+      },
+      {
+        "aipw_influence": 0.0689408522174425,
+        "dim_influence": 0.02083333333333337,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.4479166666666667,
+        "passage_index": 1,
+        "question_id": "cc9a99b02fdf5f0d0213de1e"
+      },
+      {
+        "aipw_influence": 0.11778200545117566,
+        "dim_influence": 0.10416666666666663,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.4479166666666667,
+        "passage_index": 2,
+        "question_id": "cc9a99b02fdf5f0d0213de1e"
+      },
+      {
+        "aipw_influence": -0.07292881418095476,
+        "dim_influence": -0.10416666666666663,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.4479166666666667,
+        "passage_index": 3,
+        "question_id": "cc9a99b02fdf5f0d0213de1e"
+      },
+      {
+        "aipw_influence": -0.03423711788913543,
+        "dim_influence": -0.0625,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.4479166666666667,
+        "passage_index": 4,
+        "question_id": "cc9a99b02fdf5f0d0213de1e"
+      },
+      {
+        "aipw_influence": 0.31032700663901114,
+        "dim_influence": 0.25,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.125,
+        "passage_index": 0,
+        "question_id": "ccc911bdcac88febac59fb72"
+      },
+      {
+        "aipw_influence": -0.2364921482671883,
+        "dim_influence": -0.25,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.125,
+        "passage_index": 1,
+        "question_id": "ccc911bdcac88febac59fb72"
+      },
+      {
+        "aipw_influence": 0.30800815553454364,
+        "dim_influence": 0.25,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.125,
+        "passage_index": 2,
+        "question_id": "ccc911bdcac88febac59fb72"
+      },
+      {
+        "aipw_influence": -0.23289932308821107,
+        "dim_influence": -0.25,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.125,
+        "passage_index": 3,
+        "question_id": "ccc911bdcac88febac59fb72"
+      },
+      {
+        "aipw_influence": 0.023875329688447702,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.125,
+        "passage_index": 4,
+        "question_id": "ccc911bdcac88febac59fb72"
+      },
+      {
+        "aipw_influence": 0.0851717710988904,
+        "dim_influence": 0.06944444444444442,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.2986111111111111,
+        "passage_index": 0,
+        "question_id": "cd17e7586c6889fbbf1bad9f"
+      },
+      {
+        "aipw_influence": 0.037652418472740395,
+        "dim_influence": 0.013888888888888895,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.2986111111111111,
+        "passage_index": 1,
+        "question_id": "cd17e7586c6889fbbf1bad9f"
+      },
+      {
+        "aipw_influence": -0.36282868750887814,
+        "dim_influence": -0.3472222222222222,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.2986111111111111,
+        "passage_index": 2,
+        "question_id": "cd17e7586c6889fbbf1bad9f"
+      },
+      {
+        "aipw_influence": 0.1430411584277873,
+        "dim_influence": 0.09722222222222221,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.2986111111111111,
+        "passage_index": 3,
+        "question_id": "cd17e7586c6889fbbf1bad9f"
+      },
+      {
+        "aipw_influence": 0.17770344412440878,
+        "dim_influence": 0.19444444444444442,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.2986111111111111,
+        "passage_index": 4,
+        "question_id": "cd17e7586c6889fbbf1bad9f"
+      },
+      {
+        "aipw_influence": -0.21780686119864812,
+        "dim_influence": -0.1785714285714285,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.6607142857142858,
+        "passage_index": 0,
+        "question_id": "cf477311726fdd855fad93f0"
+      },
+      {
+        "aipw_influence": 0.10867893688013457,
+        "dim_influence": 0.09999999999999998,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.6607142857142858,
+        "passage_index": 1,
+        "question_id": "cf477311726fdd855fad93f0"
+      },
+      {
+        "aipw_influence": -0.19087435947771775,
+        "dim_influence": -0.20714285714285718,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.6607142857142858,
+        "passage_index": 2,
+        "question_id": "cf477311726fdd855fad93f0"
+      },
+      {
+        "aipw_influence": 0.09971060082314016,
+        "dim_influence": 0.09999999999999998,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.6607142857142858,
+        "passage_index": 3,
+        "question_id": "cf477311726fdd855fad93f0"
+      },
+      {
+        "aipw_influence": 0.008761740590194134,
+        "dim_influence": -0.0071428571428572285,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.6607142857142858,
+        "passage_index": 4,
+        "question_id": "cf477311726fdd855fad93f0"
+      },
+      {
+        "aipw_influence": 0.008410033846374907,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.041666666666666664,
+        "passage_index": 0,
+        "question_id": "d29267b671305cccc406f879"
+      },
+      {
+        "aipw_influence": -0.01904141200741355,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.041666666666666664,
+        "passage_index": 1,
+        "question_id": "d29267b671305cccc406f879"
+      },
+      {
+        "aipw_influence": -0.09131208721859592,
+        "dim_influence": -0.08333333333333333,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.041666666666666664,
+        "passage_index": 2,
+        "question_id": "d29267b671305cccc406f879"
+      },
+      {
+        "aipw_influence": 0.017377026322342358,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.041666666666666664,
+        "passage_index": 3,
+        "question_id": "d29267b671305cccc406f879"
+      },
+      {
+        "aipw_influence": 0.006152576371676308,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.041666666666666664,
+        "passage_index": 4,
+        "question_id": "d29267b671305cccc406f879"
+      },
+      {
+        "aipw_influence": 0.06940593234252762,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 1.0,
+        "passage_index": 0,
+        "question_id": "e1b6a3ea0d301fc90db79873"
+      },
+      {
+        "aipw_influence": 0.013050344100413003,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 1.0,
+        "passage_index": 1,
+        "question_id": "e1b6a3ea0d301fc90db79873"
+      },
+      {
+        "aipw_influence": 0.034868637392547155,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 1.0,
+        "passage_index": 2,
+        "question_id": "e1b6a3ea0d301fc90db79873"
+      },
+      {
+        "aipw_influence": 0.048446895444351934,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 1.0,
+        "passage_index": 3,
+        "question_id": "e1b6a3ea0d301fc90db79873"
+      },
+      {
+        "aipw_influence": 0.028678332251617145,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 1.0,
+        "passage_index": 4,
+        "question_id": "e1b6a3ea0d301fc90db79873"
+      },
+      {
+        "aipw_influence": -0.10307102265081661,
+        "dim_influence": -0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0625,
+        "passage_index": 0,
+        "question_id": "e1ff0a065574916147828e37"
+      },
+      {
+        "aipw_influence": -0.14109887665117826,
+        "dim_influence": -0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0625,
+        "passage_index": 1,
+        "question_id": "e1ff0a065574916147828e37"
+      },
+      {
+        "aipw_influence": 0.12164204729494002,
+        "dim_influence": 0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0625,
+        "passage_index": 2,
+        "question_id": "e1ff0a065574916147828e37"
+      },
+      {
+        "aipw_influence": 0.12733751985525552,
+        "dim_influence": 0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0625,
+        "passage_index": 3,
+        "question_id": "e1ff0a065574916147828e37"
+      },
+      {
+        "aipw_influence": 0.12630374445997852,
+        "dim_influence": 0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.0625,
+        "passage_index": 4,
+        "question_id": "e1ff0a065574916147828e37"
+      },
+      {
+        "aipw_influence": 0.02976636044166721,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.6666666666666666,
+        "passage_index": 0,
+        "question_id": "e9260c8e511da41c616e0b42"
+      },
+      {
+        "aipw_influence": 0.007488548037276339,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.6666666666666666,
+        "passage_index": 1,
+        "question_id": "e9260c8e511da41c616e0b42"
+      },
+      {
+        "aipw_influence": -0.0006024172294558858,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.6666666666666666,
+        "passage_index": 2,
+        "question_id": "e9260c8e511da41c616e0b42"
+      },
+      {
+        "aipw_influence": 0.029724340420251027,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.6666666666666666,
+        "passage_index": 3,
+        "question_id": "e9260c8e511da41c616e0b42"
+      },
+      {
+        "aipw_influence": 0.00800267143207102,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.6666666666666666,
+        "passage_index": 4,
+        "question_id": "e9260c8e511da41c616e0b42"
+      },
+      {
+        "aipw_influence": 0.6253590380668728,
+        "dim_influence": 0.625,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.4375,
+        "passage_index": 0,
+        "question_id": "e9a12f8788057733d4e9ca4e"
+      },
+      {
+        "aipw_influence": 0.10545512172955493,
+        "dim_influence": 0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.4375,
+        "passage_index": 1,
+        "question_id": "e9a12f8788057733d4e9ca4e"
+      },
+      {
+        "aipw_influence": -0.07595165212747268,
+        "dim_influence": -0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.4375,
+        "passage_index": 2,
+        "question_id": "e9a12f8788057733d4e9ca4e"
+      },
+      {
+        "aipw_influence": 0.3550587835801406,
+        "dim_influence": 0.375,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.4375,
+        "passage_index": 3,
+        "question_id": "e9a12f8788057733d4e9ca4e"
+      },
+      {
+        "aipw_influence": -0.30751949973258796,
+        "dim_influence": -0.375,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.4375,
+        "passage_index": 4,
+        "question_id": "e9a12f8788057733d4e9ca4e"
+      },
+      {
+        "aipw_influence": 0.09788177754620161,
+        "dim_influence": 0.07857142857142857,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.36071428571428577,
+        "passage_index": 0,
+        "question_id": "ea2f15b995e50d8424fa4d6d"
+      },
+      {
+        "aipw_influence": 0.09307593921019988,
+        "dim_influence": 0.07857142857142857,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.36071428571428577,
+        "passage_index": 1,
+        "question_id": "ea2f15b995e50d8424fa4d6d"
+      },
+      {
+        "aipw_influence": 0.03749114971204005,
+        "dim_influence": 0.021428571428571408,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.36071428571428577,
+        "passage_index": 2,
+        "question_id": "ea2f15b995e50d8424fa4d6d"
+      },
+      {
+        "aipw_influence": 0.03977172722024433,
+        "dim_influence": 0.021428571428571408,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.36071428571428577,
+        "passage_index": 3,
+        "question_id": "ea2f15b995e50d8424fa4d6d"
+      },
+      {
+        "aipw_influence": 0.1047266551414521,
+        "dim_influence": 0.12142857142857144,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.36071428571428577,
+        "passage_index": 4,
+        "question_id": "ea2f15b995e50d8424fa4d6d"
+      },
+      {
+        "aipw_influence": 0.4828774225648693,
+        "dim_influence": 0.49999999999999994,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.4880952380952381,
+        "passage_index": 0,
+        "question_id": "f225f9af24953f3711bcfb17"
+      },
+      {
+        "aipw_influence": -0.0853588385552599,
+        "dim_influence": -0.09523809523809523,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.4880952380952381,
+        "passage_index": 1,
+        "question_id": "f225f9af24953f3711bcfb17"
+      },
+      {
+        "aipw_influence": 0.350646788950363,
+        "dim_influence": 0.33333333333333326,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.4880952380952381,
+        "passage_index": 2,
+        "question_id": "f225f9af24953f3711bcfb17"
+      },
+      {
+        "aipw_influence": -0.1772915006058152,
+        "dim_influence": -0.16666666666666663,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.4880952380952381,
+        "passage_index": 3,
+        "question_id": "f225f9af24953f3711bcfb17"
+      },
+      {
+        "aipw_influence": 0.11135225945538087,
+        "dim_influence": 0.11904761904761901,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.4880952380952381,
+        "passage_index": 4,
+        "question_id": "f225f9af24953f3711bcfb17"
+      },
+      {
+        "aipw_influence": 0.5309717622899021,
+        "dim_influence": 0.5,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.25,
+        "passage_index": 0,
+        "question_id": "f2391f41500425c8f2eda12b"
+      },
+      {
+        "aipw_influence": -0.08031812484622486,
+        "dim_influence": -0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.25,
+        "passage_index": 1,
+        "question_id": "f2391f41500425c8f2eda12b"
+      },
+      {
+        "aipw_influence": 0.0002381223644915692,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.25,
+        "passage_index": 2,
+        "question_id": "f2391f41500425c8f2eda12b"
+      },
+      {
+        "aipw_influence": -0.21896065704888518,
+        "dim_influence": -0.25,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.25,
+        "passage_index": 3,
+        "question_id": "f2391f41500425c8f2eda12b"
+      },
+      {
+        "aipw_influence": 0.0780204030568399,
+        "dim_influence": 0.125,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.25,
+        "passage_index": 4,
+        "question_id": "f2391f41500425c8f2eda12b"
+      },
+      {
+        "aipw_influence": 0.02845446152630854,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 1.0,
+        "passage_index": 0,
+        "question_id": "f40f6d7dfcdfb075d84b3202"
+      },
+      {
+        "aipw_influence": -0.018666765233371074,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 1.0,
+        "passage_index": 1,
+        "question_id": "f40f6d7dfcdfb075d84b3202"
+      },
+      {
+        "aipw_influence": 0.022955139753471153,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 1.0,
+        "passage_index": 2,
+        "question_id": "f40f6d7dfcdfb075d84b3202"
+      },
+      {
+        "aipw_influence": 0.016261706029594772,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 1.0,
+        "passage_index": 3,
+        "question_id": "f40f6d7dfcdfb075d84b3202"
+      },
+      {
+        "aipw_influence": 0.007444333154490779,
+        "dim_influence": 0.0,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 1.0,
+        "passage_index": 4,
+        "question_id": "f40f6d7dfcdfb075d84b3202"
+      },
+      {
+        "aipw_influence": 0.060721380393090454,
+        "dim_influence": 0.03824404761904762,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.031026785714285715,
+        "passage_index": 0,
+        "question_id": "f80dfd4e0da3d96a8aa9085b"
+      },
+      {
+        "aipw_influence": 0.002801513845863378,
+        "dim_influence": -0.006994047619047622,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.031026785714285715,
+        "passage_index": 1,
+        "question_id": "f80dfd4e0da3d96a8aa9085b"
+      },
+      {
+        "aipw_influence": 0.062480672482950944,
+        "dim_influence": 0.03080357142857143,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.031026785714285715,
+        "passage_index": 2,
+        "question_id": "f80dfd4e0da3d96a8aa9085b"
+      },
+      {
+        "aipw_influence": 0.029160330727412396,
+        "dim_influence": 0.026339285714285714,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.031026785714285715,
+        "passage_index": 3,
+        "question_id": "f80dfd4e0da3d96a8aa9085b"
+      },
+      {
+        "aipw_influence": 0.029965675506311865,
+        "dim_influence": 0.06205357142857143,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.031026785714285715,
+        "passage_index": 4,
+        "question_id": "f80dfd4e0da3d96a8aa9085b"
+      },
+      {
+        "aipw_influence": 0.15660667597132852,
+        "dim_influence": 0.14583333333333337,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5104166666666667,
+        "passage_index": 0,
+        "question_id": "f9948f6b62bdcb1e6461d541"
+      },
+      {
+        "aipw_influence": -0.09250422491675138,
+        "dim_influence": -0.10416666666666663,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5104166666666667,
+        "passage_index": 1,
+        "question_id": "f9948f6b62bdcb1e6461d541"
+      },
+      {
+        "aipw_influence": 0.18463163031097984,
+        "dim_influence": 0.18750000000000006,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5104166666666667,
+        "passage_index": 2,
+        "question_id": "f9948f6b62bdcb1e6461d541"
+      },
+      {
+        "aipw_influence": 0.019015324757044164,
+        "dim_influence": -0.02083333333333337,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5104166666666667,
+        "passage_index": 3,
+        "question_id": "f9948f6b62bdcb1e6461d541"
+      },
+      {
+        "aipw_influence": 0.1449298909608287,
+        "dim_influence": 0.10416666666666663,
+        "n_control": 8,
+        "n_treated": 8,
+        "outcome_mean": 0.5104166666666667,
+        "passage_index": 4,
+        "question_id": "f9948f6b62bdcb1e6461d541"
+      }
+    ],
+    "estimators": {
+      "aipw_dim_spearman": 0.9539578906766317,
+      "cross_fitted_r2": -0.03302752798398223,
+      "incremental_cross_fitted_r2": 0.0016028546133641797,
+      "nuisance_only_r2": -0.03463038259734641,
+      "placebo_p_value": 0.004975124378109453,
+      "placebo_repetitions": 200,
+      "placebo_split_half_spearman_mean": -0.00941770514143391,
+      "question_effect_ranges": {
+        "1894c109f0d8561333b23d92": 0.8503698106588133,
+        "19c3dbda47fba82f8ec18d24": 1.2571767119904704,
+        "1cb6c5434e162164e98f176f": 0.09438262401267057,
+        "24b7ca352b3fb59b85df6313": 0.05001147014101316,
+        "277a2b0a578f0dc59897aaaf": 0.057611658750878175,
+        "2dfeb1daf5ca09b9a45a01f8": 0.8896227342512033,
+        "38a846a8c6d64c96ca3ad3dc": 0.4080597457638315,
+        "3d93c79dbe68c7b52129e6e9": 0.30071780084716204,
+        "45f82fef133d5e881df613f0": 0.9733863396832801,
+        "47105d5adc5b194033be06a4": 1.2822071905867252,
+        "5485c4bdaa8483c175ff31ec": 1.2374179994550167,
+        "5934858becd972e0875997d0": 0.7769680083172574,
+        "5d0c509d60c88bd8dc7fe27c": 0.8757320023032087,
+        "5df2eb944eca6f7403300dee": 0.06955502847389552,
+        "5ff57566004f07ab6f170b2e": 0.04581896738846608,
+        "63081b7c5a3c68d1d4097195": 1.3070369614505992,
+        "6bce924646c336f6df65f6fc": 1.2415411675698387,
+        "74e10f01529136f1ecfdf30e": 0.07366118230974691,
+        "764e96e8cb6adc8a6221691f": 0.028810832866941125,
+        "7bbe290b60ebc4902dd95952": 1.0334475407976653,
+        "7c9be6a555ae2bb3155681a0": 0.019803254137065504,
+        "821a450092a3fd1f33be6a57": 0.7623452673802,
+        "82f8840baad6348d5099a254": 0.27336131557876386,
+        "899e9848a258bf432261ad2c": 0.06378010720349331,
+        "95d6ce9a2909b25ae42f10c3": 0.6209134235127887,
+        "a4ae4016a93f5eeb886eb3f5": 0.16082471297553913,
+        "a5437f6847bbbafbfc680e36": 1.2811457943327507,
+        "a783c67c62a3ae3d58e4c5d1": 0.07396380642243128,
+        "abd291c33be09eb6c533c3a1": 0.6548260654629106,
+        "af7d8bdf9746c508a1313497": 0.11263356201586394,
+        "b07fdd95ec1ec92dde21d0ce": 0.8181084404757895,
+        "b17e411bd93a0d2901b0aa5d": 0.23224706033588124,
+        "b9fde8a4f5080f1c361e4913": 1.065838941105644,
+        "c7498fbb16a9375a72cccf01": 0.9470079303036394,
+        "c9eb35caec15d59394e42e40": 0.21190271161603183,
+        "cc9a99b02fdf5f0d0213de1e": 0.2095167790071767,
+        "ccc911bdcac88febac59fb72": 0.5468191549061995,
+        "cd17e7586c6889fbbf1bad9f": 0.540532131633287,
+        "cf477311726fdd855fad93f0": 0.3264857980787827,
+        "d29267b671305cccc406f879": 0.10868911354093827,
+        "e1b6a3ea0d301fc90db79873": 0.05635558824211462,
+        "e1ff0a065574916147828e37": 0.2684363965064338,
+        "e9260c8e511da41c616e0b42": 0.030368777671123094,
+        "e9a12f8788057733d4e9ca4e": 0.9328785377994607,
+        "ea2f15b995e50d8424fa4d6d": 0.06723550542941205,
+        "f225f9af24953f3711bcfb17": 0.6601689231706845,
+        "f2391f41500425c8f2eda12b": 0.7499324193387873,
+        "f40f6d7dfcdfb075d84b3202": 0.04712122675967961,
+        "f80dfd4e0da3d96a8aa9085b": 0.059679158637087566,
+        "f9948f6b62bdcb1e6461d541": 0.2771358552277312
+      },
+      "questions_with_effect_range_0_10_fraction": 0.7,
+      "split_half_ci95": {
+        "high": 0.3470511918394323,
+        "low": 0.11555136388158636,
+        "valid_samples": 5000
+      },
+      "split_half_spearman": 0.2360696971151538
+    },
+    "gate": {
+      "checks": {
+        "aipw_dim_agreement": true,
+        "incremental_cross_fitted_r2": false,
+        "placebo": true,
+        "question_effect_range": true,
+        "split_half_ci95_low": true,
+        "split_half_spearman": true
+      },
+      "decision": "stop_counterfactual_influence_direction",
+      "status": "fail"
+    },
+    "outcome": "f1",
+    "question_count": 50,
+    "schema_version": 1
+  },
+  "schema_version": 1,
+  "secondary": {
+    "em": {
+      "cross_fit": {
+        "fold_assignments": {
+          "1894c109f0d8561333b23d92": 1,
+          "19c3dbda47fba82f8ec18d24": 3,
+          "1cb6c5434e162164e98f176f": 4,
+          "24b7ca352b3fb59b85df6313": 2,
+          "277a2b0a578f0dc59897aaaf": 2,
+          "2dfeb1daf5ca09b9a45a01f8": 0,
+          "38a846a8c6d64c96ca3ad3dc": 3,
+          "3d93c79dbe68c7b52129e6e9": 0,
+          "45f82fef133d5e881df613f0": 2,
+          "47105d5adc5b194033be06a4": 2,
+          "5485c4bdaa8483c175ff31ec": 0,
+          "5934858becd972e0875997d0": 3,
+          "5d0c509d60c88bd8dc7fe27c": 0,
+          "5df2eb944eca6f7403300dee": 1,
+          "5ff57566004f07ab6f170b2e": 2,
+          "63081b7c5a3c68d1d4097195": 2,
+          "6bce924646c336f6df65f6fc": 0,
+          "74e10f01529136f1ecfdf30e": 1,
+          "764e96e8cb6adc8a6221691f": 0,
+          "7bbe290b60ebc4902dd95952": 2,
+          "7c9be6a555ae2bb3155681a0": 3,
+          "821a450092a3fd1f33be6a57": 0,
+          "82f8840baad6348d5099a254": 3,
+          "899e9848a258bf432261ad2c": 4,
+          "95d6ce9a2909b25ae42f10c3": 2,
+          "a4ae4016a93f5eeb886eb3f5": 0,
+          "a5437f6847bbbafbfc680e36": 3,
+          "a783c67c62a3ae3d58e4c5d1": 3,
+          "abd291c33be09eb6c533c3a1": 2,
+          "af7d8bdf9746c508a1313497": 4,
+          "b07fdd95ec1ec92dde21d0ce": 4,
+          "b17e411bd93a0d2901b0aa5d": 4,
+          "b9fde8a4f5080f1c361e4913": 4,
+          "c7498fbb16a9375a72cccf01": 1,
+          "c9eb35caec15d59394e42e40": 4,
+          "cc9a99b02fdf5f0d0213de1e": 2,
+          "ccc911bdcac88febac59fb72": 4,
+          "cd17e7586c6889fbbf1bad9f": 2,
+          "cf477311726fdd855fad93f0": 1,
+          "d29267b671305cccc406f879": 4,
+          "e1b6a3ea0d301fc90db79873": 1,
+          "e1ff0a065574916147828e37": 3,
+          "e9260c8e511da41c616e0b42": 3,
+          "e9a12f8788057733d4e9ca4e": 4,
+          "ea2f15b995e50d8424fa4d6d": 1,
+          "f225f9af24953f3711bcfb17": 4,
+          "f2391f41500425c8f2eda12b": 2,
+          "f40f6d7dfcdfb075d84b3202": 2,
+          "f80dfd4e0da3d96a8aa9085b": 3,
+          "f9948f6b62bdcb1e6461d541": 2
+        },
+        "folds": 5,
+        "question_grouped": true
+      },
+      "diagnostic_only": true,
+      "effect_count": 250,
+      "effects": [
+        {
+          "aipw_influence": -0.2522981863608233,
+          "dim_influence": -0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.125,
+          "passage_index": 0,
+          "question_id": "1894c109f0d8561333b23d92"
+        },
+        {
+          "aipw_influence": -0.25,
+          "dim_influence": -0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.125,
+          "passage_index": 1,
+          "question_id": "1894c109f0d8561333b23d92"
+        },
+        {
+          "aipw_influence": 0.2712141656611199,
+          "dim_influence": 0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.125,
+          "passage_index": 2,
+          "question_id": "1894c109f0d8561333b23d92"
+        },
+        {
+          "aipw_influence": -0.2525979726643933,
+          "dim_influence": -0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.125,
+          "passage_index": 3,
+          "question_id": "1894c109f0d8561333b23d92"
+        },
+        {
+          "aipw_influence": -0.002344266667771003,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.125,
+          "passage_index": 4,
+          "question_id": "1894c109f0d8561333b23d92"
+        },
+        {
+          "aipw_influence": -0.2448774173828595,
+          "dim_influence": -0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5,
+          "passage_index": 0,
+          "question_id": "19c3dbda47fba82f8ec18d24"
+        },
+        {
+          "aipw_influence": -0.24251910485190245,
+          "dim_influence": -0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5,
+          "passage_index": 1,
+          "question_id": "19c3dbda47fba82f8ec18d24"
+        },
+        {
+          "aipw_influence": 0.010580357890382268,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5,
+          "passage_index": 2,
+          "question_id": "19c3dbda47fba82f8ec18d24"
+        },
+        {
+          "aipw_influence": 1.007767025058734,
+          "dim_influence": 1.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5,
+          "passage_index": 3,
+          "question_id": "19c3dbda47fba82f8ec18d24"
+        },
+        {
+          "aipw_influence": -0.24276326394559355,
+          "dim_influence": -0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5,
+          "passage_index": 4,
+          "question_id": "19c3dbda47fba82f8ec18d24"
+        },
+        {
+          "aipw_influence": 0.012852736534805398,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "1cb6c5434e162164e98f176f"
+        },
+        {
+          "aipw_influence": -0.0026076508731095738,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "1cb6c5434e162164e98f176f"
+        },
+        {
+          "aipw_influence": 0.0030073797370605837,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "1cb6c5434e162164e98f176f"
+        },
+        {
+          "aipw_influence": 0.02403034555820185,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "1cb6c5434e162164e98f176f"
+        },
+        {
+          "aipw_influence": -0.004932500602689932,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "1cb6c5434e162164e98f176f"
+        },
+        {
+          "aipw_influence": -0.012242486661577179,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "24b7ca352b3fb59b85df6313"
+        },
+        {
+          "aipw_influence": -0.011998084810358606,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "24b7ca352b3fb59b85df6313"
+        },
+        {
+          "aipw_influence": -0.011268784383932279,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "24b7ca352b3fb59b85df6313"
+        },
+        {
+          "aipw_influence": -0.0006867112328282944,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "24b7ca352b3fb59b85df6313"
+        },
+        {
+          "aipw_influence": 0.027583944862594936,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "24b7ca352b3fb59b85df6313"
+        },
+        {
+          "aipw_influence": -0.0017929520908717411,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "277a2b0a578f0dc59897aaaf"
+        },
+        {
+          "aipw_influence": -0.004340314341324951,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "277a2b0a578f0dc59897aaaf"
+        },
+        {
+          "aipw_influence": 0.003214177708624054,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "277a2b0a578f0dc59897aaaf"
+        },
+        {
+          "aipw_influence": -0.008516522503240835,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "277a2b0a578f0dc59897aaaf"
+        },
+        {
+          "aipw_influence": 0.010573315727718333,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "277a2b0a578f0dc59897aaaf"
+        },
+        {
+          "aipw_influence": -1.4900783818962843e-05,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "2dfeb1daf5ca09b9a45a01f8"
+        },
+        {
+          "aipw_influence": -0.002646368318955858,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "2dfeb1daf5ca09b9a45a01f8"
+        },
+        {
+          "aipw_influence": 0.0004276627956441188,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "2dfeb1daf5ca09b9a45a01f8"
+        },
+        {
+          "aipw_influence": 0.00833101840466977,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "2dfeb1daf5ca09b9a45a01f8"
+        },
+        {
+          "aipw_influence": 0.005676292915018789,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "2dfeb1daf5ca09b9a45a01f8"
+        },
+        {
+          "aipw_influence": -0.13198396404516186,
+          "dim_influence": -0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0625,
+          "passage_index": 0,
+          "question_id": "38a846a8c6d64c96ca3ad3dc"
+        },
+        {
+          "aipw_influence": -0.20339843243666864,
+          "dim_influence": -0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0625,
+          "passage_index": 1,
+          "question_id": "38a846a8c6d64c96ca3ad3dc"
+        },
+        {
+          "aipw_influence": 0.08841178351712477,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0625,
+          "passage_index": 2,
+          "question_id": "38a846a8c6d64c96ca3ad3dc"
+        },
+        {
+          "aipw_influence": 0.11827271581248533,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0625,
+          "passage_index": 3,
+          "question_id": "38a846a8c6d64c96ca3ad3dc"
+        },
+        {
+          "aipw_influence": 0.1169976016742175,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0625,
+          "passage_index": 4,
+          "question_id": "38a846a8c6d64c96ca3ad3dc"
+        },
+        {
+          "aipw_influence": -0.0010834526085470447,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "3d93c79dbe68c7b52129e6e9"
+        },
+        {
+          "aipw_influence": 0.010195384197613438,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "3d93c79dbe68c7b52129e6e9"
+        },
+        {
+          "aipw_influence": 0.011543751104752257,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "3d93c79dbe68c7b52129e6e9"
+        },
+        {
+          "aipw_influence": 0.0008400174285945229,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "3d93c79dbe68c7b52129e6e9"
+        },
+        {
+          "aipw_influence": 0.015883312253228324,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "3d93c79dbe68c7b52129e6e9"
+        },
+        {
+          "aipw_influence": 0.009841501559127226,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "45f82fef133d5e881df613f0"
+        },
+        {
+          "aipw_influence": -0.005844975418241714,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "45f82fef133d5e881df613f0"
+        },
+        {
+          "aipw_influence": 0.030137949658129777,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "45f82fef133d5e881df613f0"
+        },
+        {
+          "aipw_influence": 0.011113876026423155,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "45f82fef133d5e881df613f0"
+        },
+        {
+          "aipw_influence": -0.007640655566708232,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "45f82fef133d5e881df613f0"
+        },
+        {
+          "aipw_influence": -0.6018772125144872,
+          "dim_influence": -0.625,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5625,
+          "passage_index": 0,
+          "question_id": "47105d5adc5b194033be06a4"
+        },
+        {
+          "aipw_influence": -0.3858806261158072,
+          "dim_influence": -0.375,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5625,
+          "passage_index": 1,
+          "question_id": "47105d5adc5b194033be06a4"
+        },
+        {
+          "aipw_influence": 0.15826084007454727,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5625,
+          "passage_index": 2,
+          "question_id": "47105d5adc5b194033be06a4"
+        },
+        {
+          "aipw_influence": -0.12276569550548957,
+          "dim_influence": -0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5625,
+          "passage_index": 3,
+          "question_id": "47105d5adc5b194033be06a4"
+        },
+        {
+          "aipw_influence": 0.6719011370812077,
+          "dim_influence": 0.625,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5625,
+          "passage_index": 4,
+          "question_id": "47105d5adc5b194033be06a4"
+        },
+        {
+          "aipw_influence": 1.0050599471519355,
+          "dim_influence": 1.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5,
+          "passage_index": 0,
+          "question_id": "5485c4bdaa8483c175ff31ec"
+        },
+        {
+          "aipw_influence": -0.23552279786724106,
+          "dim_influence": -0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5,
+          "passage_index": 1,
+          "question_id": "5485c4bdaa8483c175ff31ec"
+        },
+        {
+          "aipw_influence": -0.000636604315012862,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5,
+          "passage_index": 2,
+          "question_id": "5485c4bdaa8483c175ff31ec"
+        },
+        {
+          "aipw_influence": 0.24015089527015618,
+          "dim_influence": 0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5,
+          "passage_index": 3,
+          "question_id": "5485c4bdaa8483c175ff31ec"
+        },
+        {
+          "aipw_influence": -0.23824216187065478,
+          "dim_influence": -0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5,
+          "passage_index": 4,
+          "question_id": "5485c4bdaa8483c175ff31ec"
+        },
+        {
+          "aipw_influence": 0.6189908996178047,
+          "dim_influence": 0.625,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5625,
+          "passage_index": 0,
+          "question_id": "5934858becd972e0875997d0"
+        },
+        {
+          "aipw_influence": -0.3773743242231631,
+          "dim_influence": -0.375,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5625,
+          "passage_index": 1,
+          "question_id": "5934858becd972e0875997d0"
+        },
+        {
+          "aipw_influence": 0.14780967682345963,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5625,
+          "passage_index": 2,
+          "question_id": "5934858becd972e0875997d0"
+        },
+        {
+          "aipw_influence": -0.38667324240876166,
+          "dim_influence": -0.375,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5625,
+          "passage_index": 3,
+          "question_id": "5934858becd972e0875997d0"
+        },
+        {
+          "aipw_influence": 0.36914941754752273,
+          "dim_influence": 0.375,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5625,
+          "passage_index": 4,
+          "question_id": "5934858becd972e0875997d0"
+        },
+        {
+          "aipw_influence": -0.005251506006040962,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "5d0c509d60c88bd8dc7fe27c"
+        },
+        {
+          "aipw_influence": -0.0008811105708989263,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "5d0c509d60c88bd8dc7fe27c"
+        },
+        {
+          "aipw_influence": 0.00671783070873215,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "5d0c509d60c88bd8dc7fe27c"
+        },
+        {
+          "aipw_influence": -0.0003190217735154037,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "5d0c509d60c88bd8dc7fe27c"
+        },
+        {
+          "aipw_influence": 0.0003280172348070626,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "5d0c509d60c88bd8dc7fe27c"
+        },
+        {
+          "aipw_influence": 0.023998148809418866,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "5df2eb944eca6f7403300dee"
+        },
+        {
+          "aipw_influence": 0.0038728298434416615,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "5df2eb944eca6f7403300dee"
+        },
+        {
+          "aipw_influence": 0.01235308905664248,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "5df2eb944eca6f7403300dee"
+        },
+        {
+          "aipw_influence": -0.00777494523796687,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "5df2eb944eca6f7403300dee"
+        },
+        {
+          "aipw_influence": -0.013384900029291998,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "5df2eb944eca6f7403300dee"
+        },
+        {
+          "aipw_influence": 0.02366529685435996,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 1.0,
+          "passage_index": 0,
+          "question_id": "5ff57566004f07ab6f170b2e"
+        },
+        {
+          "aipw_influence": 0.0186305490969626,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 1.0,
+          "passage_index": 1,
+          "question_id": "5ff57566004f07ab6f170b2e"
+        },
+        {
+          "aipw_influence": -0.00018030741715033272,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 1.0,
+          "passage_index": 2,
+          "question_id": "5ff57566004f07ab6f170b2e"
+        },
+        {
+          "aipw_influence": 0.027856476922379372,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 1.0,
+          "passage_index": 3,
+          "question_id": "5ff57566004f07ab6f170b2e"
+        },
+        {
+          "aipw_influence": -0.01916179072876223,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 1.0,
+          "passage_index": 4,
+          "question_id": "5ff57566004f07ab6f170b2e"
+        },
+        {
+          "aipw_influence": 0.7877226917207851,
+          "dim_influence": 0.75,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.375,
+          "passage_index": 0,
+          "question_id": "63081b7c5a3c68d1d4097195"
+        },
+        {
+          "aipw_influence": -0.5011319241341352,
+          "dim_influence": -0.5,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.375,
+          "passage_index": 1,
+          "question_id": "63081b7c5a3c68d1d4097195"
+        },
+        {
+          "aipw_influence": 0.000927432941711992,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.375,
+          "passage_index": 2,
+          "question_id": "63081b7c5a3c68d1d4097195"
+        },
+        {
+          "aipw_influence": -0.4596764222643698,
+          "dim_influence": -0.5,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.375,
+          "passage_index": 3,
+          "question_id": "63081b7c5a3c68d1d4097195"
+        },
+        {
+          "aipw_influence": -0.0017060036273890133,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.375,
+          "passage_index": 4,
+          "question_id": "63081b7c5a3c68d1d4097195"
+        },
+        {
+          "aipw_influence": 0.990656087516394,
+          "dim_influence": 1.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5,
+          "passage_index": 0,
+          "question_id": "6bce924646c336f6df65f6fc"
+        },
+        {
+          "aipw_influence": 0.0028320801196080603,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5,
+          "passage_index": 1,
+          "question_id": "6bce924646c336f6df65f6fc"
+        },
+        {
+          "aipw_influence": 0.24413326143949024,
+          "dim_influence": 0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5,
+          "passage_index": 2,
+          "question_id": "6bce924646c336f6df65f6fc"
+        },
+        {
+          "aipw_influence": -0.0006277941208713174,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5,
+          "passage_index": 3,
+          "question_id": "6bce924646c336f6df65f6fc"
+        },
+        {
+          "aipw_influence": -0.24926162950170846,
+          "dim_influence": -0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5,
+          "passage_index": 4,
+          "question_id": "6bce924646c336f6df65f6fc"
+        },
+        {
+          "aipw_influence": 0.005361611987546488,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "74e10f01529136f1ecfdf30e"
+        },
+        {
+          "aipw_influence": 0.06445593793970791,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "74e10f01529136f1ecfdf30e"
+        },
+        {
+          "aipw_influence": 0.027363532760224317,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "74e10f01529136f1ecfdf30e"
+        },
+        {
+          "aipw_influence": 0.006944982058755149,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "74e10f01529136f1ecfdf30e"
+        },
+        {
+          "aipw_influence": 0.001022759076532008,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "74e10f01529136f1ecfdf30e"
+        },
+        {
+          "aipw_influence": 0.008266474444412742,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "764e96e8cb6adc8a6221691f"
+        },
+        {
+          "aipw_influence": 0.005600955854639881,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "764e96e8cb6adc8a6221691f"
+        },
+        {
+          "aipw_influence": 0.0027257268409791383,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "764e96e8cb6adc8a6221691f"
+        },
+        {
+          "aipw_influence": 0.005453858628019136,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "764e96e8cb6adc8a6221691f"
+        },
+        {
+          "aipw_influence": -0.003214971020714011,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "764e96e8cb6adc8a6221691f"
+        },
+        {
+          "aipw_influence": -0.3425289604240372,
+          "dim_influence": -0.375,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.1875,
+          "passage_index": 0,
+          "question_id": "7bbe290b60ebc4902dd95952"
+        },
+        {
+          "aipw_influence": 0.14863018729329322,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.1875,
+          "passage_index": 1,
+          "question_id": "7bbe290b60ebc4902dd95952"
+        },
+        {
+          "aipw_influence": -0.06689438105514384,
+          "dim_influence": -0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.1875,
+          "passage_index": 2,
+          "question_id": "7bbe290b60ebc4902dd95952"
+        },
+        {
+          "aipw_influence": 0.3989864449050664,
+          "dim_influence": 0.375,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.1875,
+          "passage_index": 3,
+          "question_id": "7bbe290b60ebc4902dd95952"
+        },
+        {
+          "aipw_influence": 0.12226150660285941,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.1875,
+          "passage_index": 4,
+          "question_id": "7bbe290b60ebc4902dd95952"
+        },
+        {
+          "aipw_influence": -0.01248495473273461,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "7c9be6a555ae2bb3155681a0"
+        },
+        {
+          "aipw_influence": 0.010160557234623105,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "7c9be6a555ae2bb3155681a0"
+        },
+        {
+          "aipw_influence": -0.031561558850272745,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "7c9be6a555ae2bb3155681a0"
+        },
+        {
+          "aipw_influence": 0.020540977062234927,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "7c9be6a555ae2bb3155681a0"
+        },
+        {
+          "aipw_influence": -0.02624459952289374,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "7c9be6a555ae2bb3155681a0"
+        },
+        {
+          "aipw_influence": 0.1290174435163458,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.1875,
+          "passage_index": 0,
+          "question_id": "821a450092a3fd1f33be6a57"
+        },
+        {
+          "aipw_influence": 0.38026997290166054,
+          "dim_influence": 0.375,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.1875,
+          "passage_index": 1,
+          "question_id": "821a450092a3fd1f33be6a57"
+        },
+        {
+          "aipw_influence": 0.3667541516538163,
+          "dim_influence": 0.375,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.1875,
+          "passage_index": 2,
+          "question_id": "821a450092a3fd1f33be6a57"
+        },
+        {
+          "aipw_influence": -0.12755135518449184,
+          "dim_influence": -0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.1875,
+          "passage_index": 3,
+          "question_id": "821a450092a3fd1f33be6a57"
+        },
+        {
+          "aipw_influence": -0.3560111134110716,
+          "dim_influence": -0.375,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.1875,
+          "passage_index": 4,
+          "question_id": "821a450092a3fd1f33be6a57"
+        },
+        {
+          "aipw_influence": 0.14582701902622974,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.9375,
+          "passage_index": 0,
+          "question_id": "82f8840baad6348d5099a254"
+        },
+        {
+          "aipw_influence": -0.12180536584187598,
+          "dim_influence": -0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.9375,
+          "passage_index": 1,
+          "question_id": "82f8840baad6348d5099a254"
+        },
+        {
+          "aipw_influence": 0.13469717590048585,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.9375,
+          "passage_index": 2,
+          "question_id": "82f8840baad6348d5099a254"
+        },
+        {
+          "aipw_influence": 0.09303228409641136,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.9375,
+          "passage_index": 3,
+          "question_id": "82f8840baad6348d5099a254"
+        },
+        {
+          "aipw_influence": 0.1520134376943226,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.9375,
+          "passage_index": 4,
+          "question_id": "82f8840baad6348d5099a254"
+        },
+        {
+          "aipw_influence": 0.03290500804287902,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "899e9848a258bf432261ad2c"
+        },
+        {
+          "aipw_influence": 0.004828173329257793,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "899e9848a258bf432261ad2c"
+        },
+        {
+          "aipw_influence": -0.004819757332189201,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "899e9848a258bf432261ad2c"
+        },
+        {
+          "aipw_influence": 0.0330852971587789,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "899e9848a258bf432261ad2c"
+        },
+        {
+          "aipw_influence": 0.00022991085343880557,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "899e9848a258bf432261ad2c"
+        },
+        {
+          "aipw_influence": -0.023477875992905007,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "95d6ce9a2909b25ae42f10c3"
+        },
+        {
+          "aipw_influence": 0.038679944345096445,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "95d6ce9a2909b25ae42f10c3"
+        },
+        {
+          "aipw_influence": 0.02482291162484746,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "95d6ce9a2909b25ae42f10c3"
+        },
+        {
+          "aipw_influence": 0.023500974635284548,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "95d6ce9a2909b25ae42f10c3"
+        },
+        {
+          "aipw_influence": -0.004674139027931505,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "95d6ce9a2909b25ae42f10c3"
+        },
+        {
+          "aipw_influence": -0.041759394435820135,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "a4ae4016a93f5eeb886eb3f5"
+        },
+        {
+          "aipw_influence": -0.0032965987002193595,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "a4ae4016a93f5eeb886eb3f5"
+        },
+        {
+          "aipw_influence": 0.007375581625486539,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "a4ae4016a93f5eeb886eb3f5"
+        },
+        {
+          "aipw_influence": 0.0020288587543774335,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "a4ae4016a93f5eeb886eb3f5"
+        },
+        {
+          "aipw_influence": 0.004805367377944665,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "a4ae4016a93f5eeb886eb3f5"
+        },
+        {
+          "aipw_influence": -0.24554249555901086,
+          "dim_influence": -0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.625,
+          "passage_index": 0,
+          "question_id": "a5437f6847bbbafbfc680e36"
+        },
+        {
+          "aipw_influence": 0.7655631854687159,
+          "dim_influence": 0.75,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.625,
+          "passage_index": 1,
+          "question_id": "a5437f6847bbbafbfc680e36"
+        },
+        {
+          "aipw_influence": -0.492536850851715,
+          "dim_influence": -0.5,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.625,
+          "passage_index": 2,
+          "question_id": "a5437f6847bbbafbfc680e36"
+        },
+        {
+          "aipw_influence": 0.018718693810231668,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.625,
+          "passage_index": 3,
+          "question_id": "a5437f6847bbbafbfc680e36"
+        },
+        {
+          "aipw_influence": 0.022584000527213877,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.625,
+          "passage_index": 4,
+          "question_id": "a5437f6847bbbafbfc680e36"
+        },
+        {
+          "aipw_influence": 0.012243731135192875,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "a783c67c62a3ae3d58e4c5d1"
+        },
+        {
+          "aipw_influence": 0.05062677468329622,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "a783c67c62a3ae3d58e4c5d1"
+        },
+        {
+          "aipw_influence": -0.0007360711148278187,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "a783c67c62a3ae3d58e4c5d1"
+        },
+        {
+          "aipw_influence": 0.009296231956087427,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "a783c67c62a3ae3d58e4c5d1"
+        },
+        {
+          "aipw_influence": 0.016237244032166885,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "a783c67c62a3ae3d58e4c5d1"
+        },
+        {
+          "aipw_influence": 0.03952444475125723,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.25,
+          "passage_index": 0,
+          "question_id": "abd291c33be09eb6c533c3a1"
+        },
+        {
+          "aipw_influence": 0.23957275353041418,
+          "dim_influence": 0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.25,
+          "passage_index": 1,
+          "question_id": "abd291c33be09eb6c533c3a1"
+        },
+        {
+          "aipw_influence": 0.018428043208552014,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.25,
+          "passage_index": 2,
+          "question_id": "abd291c33be09eb6c533c3a1"
+        },
+        {
+          "aipw_influence": 0.283541860899776,
+          "dim_influence": 0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.25,
+          "passage_index": 3,
+          "question_id": "abd291c33be09eb6c533c3a1"
+        },
+        {
+          "aipw_influence": 0.011091581973007858,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.25,
+          "passage_index": 4,
+          "question_id": "abd291c33be09eb6c533c3a1"
+        },
+        {
+          "aipw_influence": -0.0293705336365572,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "af7d8bdf9746c508a1313497"
+        },
+        {
+          "aipw_influence": -0.037987411616797,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "af7d8bdf9746c508a1313497"
+        },
+        {
+          "aipw_influence": 0.006155403653630438,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "af7d8bdf9746c508a1313497"
+        },
+        {
+          "aipw_influence": 0.006130771875992785,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "af7d8bdf9746c508a1313497"
+        },
+        {
+          "aipw_influence": 0.05580649375647811,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "af7d8bdf9746c508a1313497"
+        },
+        {
+          "aipw_influence": 0.0063282093009918525,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "b07fdd95ec1ec92dde21d0ce"
+        },
+        {
+          "aipw_influence": -0.0984032986054475,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "b07fdd95ec1ec92dde21d0ce"
+        },
+        {
+          "aipw_influence": 0.018056859872809597,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "b07fdd95ec1ec92dde21d0ce"
+        },
+        {
+          "aipw_influence": -0.04654706858325301,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "b07fdd95ec1ec92dde21d0ce"
+        },
+        {
+          "aipw_influence": 0.05875616537196383,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "b07fdd95ec1ec92dde21d0ce"
+        },
+        {
+          "aipw_influence": -0.00033842489111164664,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "b17e411bd93a0d2901b0aa5d"
+        },
+        {
+          "aipw_influence": -0.033284800971407,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "b17e411bd93a0d2901b0aa5d"
+        },
+        {
+          "aipw_influence": 0.03331399780717341,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "b17e411bd93a0d2901b0aa5d"
+        },
+        {
+          "aipw_influence": 0.0322990588630744,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "b17e411bd93a0d2901b0aa5d"
+        },
+        {
+          "aipw_influence": 0.03249497457755872,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "b17e411bd93a0d2901b0aa5d"
+        },
+        {
+          "aipw_influence": -0.30466944908720434,
+          "dim_influence": -0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5,
+          "passage_index": 0,
+          "question_id": "b9fde8a4f5080f1c361e4913"
+        },
+        {
+          "aipw_influence": 0.9963021243969601,
+          "dim_influence": 1.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5,
+          "passage_index": 1,
+          "question_id": "b9fde8a4f5080f1c361e4913"
+        },
+        {
+          "aipw_influence": 0.0036960403078793586,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5,
+          "passage_index": 2,
+          "question_id": "b9fde8a4f5080f1c361e4913"
+        },
+        {
+          "aipw_influence": 0.0036985652973465927,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5,
+          "passage_index": 3,
+          "question_id": "b9fde8a4f5080f1c361e4913"
+        },
+        {
+          "aipw_influence": -0.01113145949901706,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.5,
+          "passage_index": 4,
+          "question_id": "b9fde8a4f5080f1c361e4913"
+        },
+        {
+          "aipw_influence": -0.36070258216018236,
+          "dim_influence": -0.375,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.1875,
+          "passage_index": 0,
+          "question_id": "c7498fbb16a9375a72cccf01"
+        },
+        {
+          "aipw_influence": 0.38541690894519204,
+          "dim_influence": 0.375,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.1875,
+          "passage_index": 1,
+          "question_id": "c7498fbb16a9375a72cccf01"
+        },
+        {
+          "aipw_influence": 0.1586028658438988,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.1875,
+          "passage_index": 2,
+          "question_id": "c7498fbb16a9375a72cccf01"
+        },
+        {
+          "aipw_influence": -0.11483324969281301,
+          "dim_influence": -0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.1875,
+          "passage_index": 3,
+          "question_id": "c7498fbb16a9375a72cccf01"
+        },
+        {
+          "aipw_influence": 0.1576930767648784,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.1875,
+          "passage_index": 4,
+          "question_id": "c7498fbb16a9375a72cccf01"
+        },
+        {
+          "aipw_influence": 0.020417315937190116,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "c9eb35caec15d59394e42e40"
+        },
+        {
+          "aipw_influence": 0.03146543965665672,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "c9eb35caec15d59394e42e40"
+        },
+        {
+          "aipw_influence": -0.010754985620412723,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "c9eb35caec15d59394e42e40"
+        },
+        {
+          "aipw_influence": 0.00045833479671262417,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "c9eb35caec15d59394e42e40"
+        },
+        {
+          "aipw_influence": -0.009943515960402355,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "c9eb35caec15d59394e42e40"
+        },
+        {
+          "aipw_influence": 0.02588585380616022,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "cc9a99b02fdf5f0d0213de1e"
+        },
+        {
+          "aipw_influence": 0.02892545998289531,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "cc9a99b02fdf5f0d0213de1e"
+        },
+        {
+          "aipw_influence": 0.015027091932083,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "cc9a99b02fdf5f0d0213de1e"
+        },
+        {
+          "aipw_influence": 0.016744621881955683,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "cc9a99b02fdf5f0d0213de1e"
+        },
+        {
+          "aipw_influence": 0.02455882870155003,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "cc9a99b02fdf5f0d0213de1e"
+        },
+        {
+          "aipw_influence": 0.2861744326027589,
+          "dim_influence": 0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.125,
+          "passage_index": 0,
+          "question_id": "ccc911bdcac88febac59fb72"
+        },
+        {
+          "aipw_influence": -0.24456258974036882,
+          "dim_influence": -0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.125,
+          "passage_index": 1,
+          "question_id": "ccc911bdcac88febac59fb72"
+        },
+        {
+          "aipw_influence": 0.24869809644691823,
+          "dim_influence": 0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.125,
+          "passage_index": 2,
+          "question_id": "ccc911bdcac88febac59fb72"
+        },
+        {
+          "aipw_influence": -0.255939129567673,
+          "dim_influence": -0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.125,
+          "passage_index": 3,
+          "question_id": "ccc911bdcac88febac59fb72"
+        },
+        {
+          "aipw_influence": 0.015375673207494795,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.125,
+          "passage_index": 4,
+          "question_id": "ccc911bdcac88febac59fb72"
+        },
+        {
+          "aipw_influence": 0.13615583801931339,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0625,
+          "passage_index": 0,
+          "question_id": "cd17e7586c6889fbbf1bad9f"
+        },
+        {
+          "aipw_influence": -0.10172619353227934,
+          "dim_influence": -0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0625,
+          "passage_index": 1,
+          "question_id": "cd17e7586c6889fbbf1bad9f"
+        },
+        {
+          "aipw_influence": -0.13807472444443028,
+          "dim_influence": -0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0625,
+          "passage_index": 2,
+          "question_id": "cd17e7586c6889fbbf1bad9f"
+        },
+        {
+          "aipw_influence": 0.16113490042854706,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0625,
+          "passage_index": 3,
+          "question_id": "cd17e7586c6889fbbf1bad9f"
+        },
+        {
+          "aipw_influence": 0.11647229568928896,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0625,
+          "passage_index": 4,
+          "question_id": "cd17e7586c6889fbbf1bad9f"
+        },
+        {
+          "aipw_influence": -0.2796341547727877,
+          "dim_influence": -0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.125,
+          "passage_index": 0,
+          "question_id": "cf477311726fdd855fad93f0"
+        },
+        {
+          "aipw_influence": 0.006266073074268356,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.125,
+          "passage_index": 1,
+          "question_id": "cf477311726fdd855fad93f0"
+        },
+        {
+          "aipw_influence": -0.2404696101121354,
+          "dim_influence": -0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.125,
+          "passage_index": 2,
+          "question_id": "cf477311726fdd855fad93f0"
+        },
+        {
+          "aipw_influence": -0.004048088673093371,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.125,
+          "passage_index": 3,
+          "question_id": "cf477311726fdd855fad93f0"
+        },
+        {
+          "aipw_influence": -0.23969677609061338,
+          "dim_influence": -0.25,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.125,
+          "passage_index": 4,
+          "question_id": "cf477311726fdd855fad93f0"
+        },
+        {
+          "aipw_influence": 0.011732026190157209,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "d29267b671305cccc406f879"
+        },
+        {
+          "aipw_influence": -0.03453470357528443,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "d29267b671305cccc406f879"
+        },
+        {
+          "aipw_influence": -0.011725394246511206,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "d29267b671305cccc406f879"
+        },
+        {
+          "aipw_influence": 0.018775780145396697,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "d29267b671305cccc406f879"
+        },
+        {
+          "aipw_influence": 0.0067715302832541055,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "d29267b671305cccc406f879"
+        },
+        {
+          "aipw_influence": 0.043491101774216695,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 1.0,
+          "passage_index": 0,
+          "question_id": "e1b6a3ea0d301fc90db79873"
+        },
+        {
+          "aipw_influence": 0.0017099297114752526,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 1.0,
+          "passage_index": 1,
+          "question_id": "e1b6a3ea0d301fc90db79873"
+        },
+        {
+          "aipw_influence": 0.022036903802085478,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 1.0,
+          "passage_index": 2,
+          "question_id": "e1b6a3ea0d301fc90db79873"
+        },
+        {
+          "aipw_influence": 0.021339278278851584,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 1.0,
+          "passage_index": 3,
+          "question_id": "e1b6a3ea0d301fc90db79873"
+        },
+        {
+          "aipw_influence": 0.014742742188018937,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 1.0,
+          "passage_index": 4,
+          "question_id": "e1b6a3ea0d301fc90db79873"
+        },
+        {
+          "aipw_influence": -0.11344964289842513,
+          "dim_influence": -0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0625,
+          "passage_index": 0,
+          "question_id": "e1ff0a065574916147828e37"
+        },
+        {
+          "aipw_influence": -0.13395971255406616,
+          "dim_influence": -0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0625,
+          "passage_index": 1,
+          "question_id": "e1ff0a065574916147828e37"
+        },
+        {
+          "aipw_influence": 0.12834039141780215,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0625,
+          "passage_index": 2,
+          "question_id": "e1ff0a065574916147828e37"
+        },
+        {
+          "aipw_influence": 0.12120617236636207,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0625,
+          "passage_index": 3,
+          "question_id": "e1ff0a065574916147828e37"
+        },
+        {
+          "aipw_influence": 0.1207468073004998,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0625,
+          "passage_index": 4,
+          "question_id": "e1ff0a065574916147828e37"
+        },
+        {
+          "aipw_influence": -0.00228713548713437,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "e9260c8e511da41c616e0b42"
+        },
+        {
+          "aipw_influence": -0.0018457778259677073,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "e9260c8e511da41c616e0b42"
+        },
+        {
+          "aipw_influence": -0.00026631645360617254,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "e9260c8e511da41c616e0b42"
+        },
+        {
+          "aipw_influence": -0.002296050537631402,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "e9260c8e511da41c616e0b42"
+        },
+        {
+          "aipw_influence": -0.0016102613949357872,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "e9260c8e511da41c616e0b42"
+        },
+        {
+          "aipw_influence": 0.6246474513819044,
+          "dim_influence": 0.625,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.4375,
+          "passage_index": 0,
+          "question_id": "e9a12f8788057733d4e9ca4e"
+        },
+        {
+          "aipw_influence": 0.11422308700579639,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.4375,
+          "passage_index": 1,
+          "question_id": "e9a12f8788057733d4e9ca4e"
+        },
+        {
+          "aipw_influence": -0.10576829512767577,
+          "dim_influence": -0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.4375,
+          "passage_index": 2,
+          "question_id": "e9a12f8788057733d4e9ca4e"
+        },
+        {
+          "aipw_influence": 0.3642169923746782,
+          "dim_influence": 0.375,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.4375,
+          "passage_index": 3,
+          "question_id": "e9a12f8788057733d4e9ca4e"
+        },
+        {
+          "aipw_influence": -0.331284921096283,
+          "dim_influence": -0.375,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.4375,
+          "passage_index": 4,
+          "question_id": "e9a12f8788057733d4e9ca4e"
+        },
+        {
+          "aipw_influence": -0.005620956674145446,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "ea2f15b995e50d8424fa4d6d"
+        },
+        {
+          "aipw_influence": 0.007640426858734195,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "ea2f15b995e50d8424fa4d6d"
+        },
+        {
+          "aipw_influence": 0.0043314741014602795,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "ea2f15b995e50d8424fa4d6d"
+        },
+        {
+          "aipw_influence": -0.003566876056447092,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "ea2f15b995e50d8424fa4d6d"
+        },
+        {
+          "aipw_influence": 8.128670965454679e-05,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "ea2f15b995e50d8424fa4d6d"
+        },
+        {
+          "aipw_influence": -0.0236210238216991,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "f225f9af24953f3711bcfb17"
+        },
+        {
+          "aipw_influence": 0.006451428641757098,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "f225f9af24953f3711bcfb17"
+        },
+        {
+          "aipw_influence": 0.017707491351027862,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "f225f9af24953f3711bcfb17"
+        },
+        {
+          "aipw_influence": -0.02301095249878188,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "f225f9af24953f3711bcfb17"
+        },
+        {
+          "aipw_influence": -0.006417846088104324,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "f225f9af24953f3711bcfb17"
+        },
+        {
+          "aipw_influence": 0.02559934790521914,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "f2391f41500425c8f2eda12b"
+        },
+        {
+          "aipw_influence": 0.032651595662800244,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "f2391f41500425c8f2eda12b"
+        },
+        {
+          "aipw_influence": -0.0024794359038095813,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "f2391f41500425c8f2eda12b"
+        },
+        {
+          "aipw_influence": 0.015126749269555415,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "f2391f41500425c8f2eda12b"
+        },
+        {
+          "aipw_influence": -0.03108274043772641,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "f2391f41500425c8f2eda12b"
+        },
+        {
+          "aipw_influence": 0.021502929894721523,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 1.0,
+          "passage_index": 0,
+          "question_id": "f40f6d7dfcdfb075d84b3202"
+        },
+        {
+          "aipw_influence": -0.0058022466920769206,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 1.0,
+          "passage_index": 1,
+          "question_id": "f40f6d7dfcdfb075d84b3202"
+        },
+        {
+          "aipw_influence": 0.02381658763491648,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 1.0,
+          "passage_index": 2,
+          "question_id": "f40f6d7dfcdfb075d84b3202"
+        },
+        {
+          "aipw_influence": 0.014154060976518348,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 1.0,
+          "passage_index": 3,
+          "question_id": "f40f6d7dfcdfb075d84b3202"
+        },
+        {
+          "aipw_influence": -0.002209146719349131,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 1.0,
+          "passage_index": 4,
+          "question_id": "f40f6d7dfcdfb075d84b3202"
+        },
+        {
+          "aipw_influence": 0.006350518653723072,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 0,
+          "question_id": "f80dfd4e0da3d96a8aa9085b"
+        },
+        {
+          "aipw_influence": -0.004258124401813498,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 1,
+          "question_id": "f80dfd4e0da3d96a8aa9085b"
+        },
+        {
+          "aipw_influence": 0.0154122398427247,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 2,
+          "question_id": "f80dfd4e0da3d96a8aa9085b"
+        },
+        {
+          "aipw_influence": 0.009289948185807438,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 3,
+          "question_id": "f80dfd4e0da3d96a8aa9085b"
+        },
+        {
+          "aipw_influence": -0.02114430606061399,
+          "dim_influence": 0.0,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.0,
+          "passage_index": 4,
+          "question_id": "f80dfd4e0da3d96a8aa9085b"
+        },
+        {
+          "aipw_influence": 0.14495125426464683,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.1875,
+          "passage_index": 0,
+          "question_id": "f9948f6b62bdcb1e6461d541"
+        },
+        {
+          "aipw_influence": -0.36649099333197754,
+          "dim_influence": -0.375,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.1875,
+          "passage_index": 1,
+          "question_id": "f9948f6b62bdcb1e6461d541"
+        },
+        {
+          "aipw_influence": 0.13453986993311148,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.1875,
+          "passage_index": 2,
+          "question_id": "f9948f6b62bdcb1e6461d541"
+        },
+        {
+          "aipw_influence": 0.1375604415483238,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.1875,
+          "passage_index": 3,
+          "question_id": "f9948f6b62bdcb1e6461d541"
+        },
+        {
+          "aipw_influence": 0.1382372931239204,
+          "dim_influence": 0.125,
+          "n_control": 8,
+          "n_treated": 8,
+          "outcome_mean": 0.1875,
+          "passage_index": 4,
+          "question_id": "f9948f6b62bdcb1e6461d541"
+        }
+      ],
+      "estimators": {
+        "aipw_dim_spearman": 0.8492702340355891,
+        "cross_fitted_r2": -0.04845274778140318,
+        "incremental_cross_fitted_r2": -0.004013742437236845,
+        "nuisance_only_r2": -0.04443900534416634,
+        "placebo_p_value": 0.004975124378109453,
+        "placebo_repetitions": 200,
+        "placebo_split_half_spearman_mean": -0.056506325013854136,
+        "question_effect_ranges": {
+          "1894c109f0d8561333b23d92": 0.5238121383255132,
+          "19c3dbda47fba82f8ec18d24": 1.2526444424415937,
+          "1cb6c5434e162164e98f176f": 0.028962846160891783,
+          "24b7ca352b3fb59b85df6313": 0.03982643152417212,
+          "277a2b0a578f0dc59897aaaf": 0.019089838230959166,
+          "2dfeb1daf5ca09b9a45a01f8": 0.010977386723625629,
+          "38a846a8c6d64c96ca3ad3dc": 0.321671148249154,
+          "3d93c79dbe68c7b52129e6e9": 0.01696676486177537,
+          "45f82fef133d5e881df613f0": 0.03777860522483801,
+          "47105d5adc5b194033be06a4": 1.273778349595695,
+          "5485c4bdaa8483c175ff31ec": 1.2433021090225902,
+          "5934858becd972e0875997d0": 1.0056641420265664,
+          "5d0c509d60c88bd8dc7fe27c": 0.011969336714773113,
+          "5df2eb944eca6f7403300dee": 0.03738304883871087,
+          "5ff57566004f07ab6f170b2e": 0.0470182676511416,
+          "63081b7c5a3c68d1d4097195": 1.2888546158549203,
+          "6bce924646c336f6df65f6fc": 1.2399177170181024,
+          "74e10f01529136f1ecfdf30e": 0.0634331788631759,
+          "764e96e8cb6adc8a6221691f": 0.011481445465126753,
+          "7bbe290b60ebc4902dd95952": 0.7415154053291035,
+          "7c9be6a555ae2bb3155681a0": 0.05210253591250767,
+          "821a450092a3fd1f33be6a57": 0.7362810863127321,
+          "82f8840baad6348d5099a254": 0.2738188035361986,
+          "899e9848a258bf432261ad2c": 0.0379050544909681,
+          "95d6ce9a2909b25ae42f10c3": 0.06215782033800145,
+          "a4ae4016a93f5eeb886eb3f5": 0.04913497606130667,
+          "a5437f6847bbbafbfc680e36": 1.2581000363204309,
+          "a783c67c62a3ae3d58e4c5d1": 0.051362845798124036,
+          "abd291c33be09eb6c533c3a1": 0.27245027892676815,
+          "af7d8bdf9746c508a1313497": 0.09379390537327512,
+          "b07fdd95ec1ec92dde21d0ce": 0.15715946397741132,
+          "b17e411bd93a0d2901b0aa5d": 0.06659879877858041,
+          "b9fde8a4f5080f1c361e4913": 1.3009715734841645,
+          "c7498fbb16a9375a72cccf01": 0.7461194911053743,
+          "c9eb35caec15d59394e42e40": 0.04222042527706944,
+          "cc9a99b02fdf5f0d0213de1e": 0.01389836805081231,
+          "ccc911bdcac88febac59fb72": 0.5421135621704318,
+          "cd17e7586c6889fbbf1bad9f": 0.2992096248729773,
+          "cf477311726fdd855fad93f0": 0.28590022784705604,
+          "d29267b671305cccc406f879": 0.05331048372068113,
+          "e1b6a3ea0d301fc90db79873": 0.04178117206274144,
+          "e1ff0a065574916147828e37": 0.2623001039718683,
+          "e9260c8e511da41c616e0b42": 0.0020297340840252295,
+          "e9a12f8788057733d4e9ca4e": 0.9559323724781874,
+          "ea2f15b995e50d8424fa4d6d": 0.013261383532879641,
+          "f225f9af24953f3711bcfb17": 0.04132851517272696,
+          "f2391f41500425c8f2eda12b": 0.06373433610052665,
+          "f40f6d7dfcdfb075d84b3202": 0.0296188343269934,
+          "f80dfd4e0da3d96a8aa9085b": 0.03655654590333869,
+          "f9948f6b62bdcb1e6461d541": 0.5114422475966244
+        },
+        "questions_with_effect_range_0_10_fraction": 0.44,
+        "split_half_ci95": {
+          "high": 0.2731036996203404,
+          "low": -0.005671919641239831,
+          "valid_samples": 5000
+        },
+        "split_half_spearman": 0.13893767367881477
+      },
+      "gate": {
+        "checks": {
+          "aipw_dim_agreement": true,
+          "incremental_cross_fitted_r2": false,
+          "placebo": true,
+          "question_effect_range": true,
+          "split_half_ci95_low": false,
+          "split_half_spearman": false
+        },
+        "decision": "stop_counterfactual_influence_direction",
+        "status": "fail"
+      },
+      "outcome": "em",
+      "question_count": 50,
+      "schema_version": 1
+    }
+  }
+}
