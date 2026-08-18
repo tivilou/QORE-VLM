@@ -1,0 +1,90 @@
+phase:
+  name: phase9b_retrieval_ceiling
+  schema_version: 1
+  diagnostic_only: true
+  selection_mutation: false
+
+  dataset: nq_open
+  split: validation
+  sample_offset: 200
+  max_samples: 50
+  corpus_mode: wiki_dpr
+  wiki_dpr_config: psgs_w100.nq.compressed
+  wiki_dpr_nprobe: 64
+  top_k_retrieval: 50
+
+  shared_args:
+    dataset: nq_open
+    split: validation
+    sample_offset: 200
+    max_samples: 50
+    corpus_mode: wiki_dpr
+    wiki_dpr_config: psgs_w100.nq.compressed
+    wiki_dpr_nprobe: 64
+    top_k_retrieval: 50
+    method: qore
+    K: 5
+    seed: 42
+    gamma: 1.0
+    use_answer_scorer: true
+    answer_scorer_backend: dpr
+    max_new_tokens: 32
+
+  configurations:
+    - name: retrieval_top50_as
+      kind: retrieval_ceiling
+      args:
+        method: topk
+        K: 50
+        skip_generation: true
+      description: Top-50 answer-scorer retrieval ceiling without selection or generation.
+    - name: qore_as_select
+      kind: selection_observer
+      args:
+        method: qore
+        K: 5
+        skip_generation: true
+      description: Frozen QORE K=5 selection hit rate conditional on Top-50 retrieval hit.
+    - name: topk_as_select
+      kind: selection_observer
+      args:
+        method: topk
+        K: 5
+        skip_generation: true
+      description: Top-K K=5 selection recovery control with the same answer scorer.
+    - name: qore_as_generate
+      kind: generation_alignment
+      args:
+        method: qore
+        K: 5
+      description: Frozen QORE K=5 generation for F1/EM conditional alignment analysis.
+
+  gate:
+    maximum_retrieval_failure_rate: 0.20
+    minimum_selection_failure_rate: 0.10
+    minimum_topk_recovery_delta: 0.10
+    bootstrap_repetitions: 2000
+    bootstrap_seed: 9301
+    retrieval_failure_action: classify_retrieval_ceiling
+    selection_action: classify_selection_bottleneck
+    fallback_action: classify_generation_or_answer_alignment
+
+  max_new_tokens: 32
+  generator:
+    name: reference
+    model_id: NousResearch/Meta-Llama-3-8B-Instruct
+    revision: 53346005fb0ef11d3b6a83b12c895cca40156b6c
+    model_path_candidates:
+      - models/llama3-8b
+    resolver_order: [cli_override, project_candidate, hf_cache]
+    record_resolved_identity: true
+
+  outputs:
+    root: exchange/five_ideas/phase9b_retrieval_ceiling
+    compact_only: true
+    forbidden_fields:
+      - question
+      - passages
+      - gold_answers
+      - prediction
+      - raw_prompt

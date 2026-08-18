@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "QORE-VLM Phase 9B Top-50 retrieval-ceiling diagnostic",
+  "authorization": "implemented",
+  "baseline": {
+    "entry_point": "scripts/rag/eval/eval_rag_refactored.py retrieval -> select_passages -> Generator.generate",
+    "code_revision": "five-ideas-development after Phase 9A fail_f1_harm",
+    "equivalence_test": "qore_as_select and qore_as_generate use the unchanged QORE K=5 selector and evaluator; retrieval_top50_as changes only method=topk and K=50"
+  },
+  "core_invariants": [
+    "The diagnostic is observation-only and never feeds retrieval, selection, generation, or evaluator labels back into select_passages.",
+    "The nq_open validation[200:250] slice, compressed Wiki-DPR corpus, DPR Answer Scorer, seed, gamma, and retrieval settings are frozen.",
+    "Top-50 retrieval is the ceiling control; QORE K=5 and Top-K K=5 are matched selection controls over the same retrieved candidates.",
+    "The generation arm is exactly the frozen QORE K=5 path with no context transform or selector mutation.",
+    "All configurations must produce the same question ID set and the same answer_hit_at_retrieved value per question.",
+    "Exchange output is compact and never contains question, passage, gold-answer, prediction, or raw-prompt fields."
+  ],
+  "interfaces": [
+    {
+      "id": "retrieval_ceiling_observer_v1",
+      "type": "observer",
+      "input_schema": "scalar evaluator rows from Top-50 answer-scorer retrieval",
+      "output_schema": "Top-50 answer hit/failure rates and matched question count",
+      "invariants": [
+        "No generation call is made in the ceiling arm.",
+        "The answer hit flag is computed by the existing evaluator convention."
+      ]
+    },
+    {
+      "id": "selection_hit_observer_v1",
+      "type": "observer",
+      "input_schema": "scalar evaluator rows from QORE K=5 and Top-K K=5 selection",
+      "output_schema": "conditional selected-hit rates and paired Top-K recovery bootstrap",
+      "invariants": [
+        "Selection rates are conditional only on the matched Top-50 retrieval hit set.",
+        "No observer statistic is passed to select_passages."
+      ]
+    },
+    {
+      "id": "generation_alignment_observer_v1",
+      "type": "observer",
+      "input_schema": "scalar evaluator rows from frozen QORE K=5 generation",
+      "output_schema": "overall and selected-hit/miss F1, EM, and generation latency",
+      "invariants": [
+        "Generation uses the same model revision and max_new_tokens as the baseline.",
+        "Conditional summaries join only on stable question IDs and scalar selection/retrieval flags."
+      ]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "retrieval_top50_observer",
+      "version": "1.0.0",
+      "role": "diagnostic",
+      "interface": "retrieval_ceiling_observer_v1",
+      "insertion_point": "after unchanged retrieval and evaluator bookkeeping",
+      "hypothesis": "If the answer is absent from Top-50, no K=5 selector can recover it.",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "failure_signatures": ["retrieval failure rate exceeds the preregistered ceiling threshold"]
+    },
+    {
+      "id": "selection_hit_observer",
+      "version": "1.0.0",
+      "role": "diagnostic",
+      "interface": "selection_hit_observer_v1",
+      "insertion_point": "after unchanged QORE or Top-K selection",
+      "hypothesis": "A Top-K K=5 control recovers answer-bearing passages that QORE K=5 misses if selection is the bottleneck.",
+      "requires": ["retrieval_top50_observer"],
+      "conflicts": [],
+      "deterministic": true,
+      "failure_signatures": ["QORE conditional selection failure without paired Top-K recovery"]
+    },
+    {
+      "id": "generation_alignment_observer",
+      "version": "1.0.0",
+      "role": "diagnostic",
+      "interface": "generation_alignment_observer_v1",
+      "insertion_point": "after unchanged Generator.generate and evaluator scoring",
+      "hypothesis": "When retrieval and selection succeed but F1 remains low, the residual bottleneck is generation or answer alignment.",
+      "requires": ["selection_hit_observer"],
+      "conflicts": [],
+      "deterministic": true,
+      "failure_signatures": ["low F1 despite selected answer hit", "large selected-hit versus selected-miss alignment gap"]
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": ["retrieval_top50_observer", "selection_hit_observer", "generation_alignment_observer"]
+  },
+  "composition": {
+    "mode": "sequential_observation",
+    "order": ["retrieval_top50_observer", "selection_hit_observer", "generation_alignment_observer"],
+    "merge_rule": "The runner executes four fixed configurations, joins only compact scalar rows by question ID, and emits one summary; no diagnostic output can alter any configuration.",
+    "interaction_ablations": [
+      "Top-50 retrieval ceiling versus QORE K=5 selection",
+      "QORE K=5 versus Top-K K=5 conditional selection recovery",
+      "QORE K=5 generation overall versus selected-hit and selected-miss strata"
+    ]
+  },
+  "validation": {
+    "baseline_equivalence": "Synthetic fixtures preserve the same question IDs and retrieval-hit flags across all four arms.",
+    "tests": [
+      "config schema and frozen argument validation",
+      "compact-output forbidden-field validation",
+      "same-ID and same-retrieval-hit join validation",
+      "conditional selection-rate arithmetic",
+      "paired bootstrap determinism",
+      "retrieval-ceiling gate classification",
+      "selection-recovery gate classification",
+      "generation selected-hit/miss stratification",
+      "runner Python compilation and validate-only model resolution"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/phase9b_retrieval_ceiling.yaml",
+    "dataset_identity": "nq_open validation questions 200-249 with Wiki-DPR psgs_w100.nq.compressed, top-50 retrieval, fixed QORE K=5 selection",
+    "environment": "runner records Python executable/version, git revision, config SHA-256, plugin tree hash, resolved model path, model ID/revision, and model config hash",
+    "seeds": [42, 9301],
+    "output_manifest": "exchange/five_ideas/phase9b_retrieval_ceiling/<timestamp>/run_metadata.json"
+  },
+  "limitations": [
+    "This phase diagnoses the bottleneck and does not implement a selector or change the evaluator.",
+    "The 50-question slice is a development gate; a positive selection diagnosis requires held-out or multi-seed confirmation.",
+    "Top-K K=5 is a recovery control, not a proposed production method.",
+    "F1/EM alignment remains generator- and answer-normalization-dependent.",
+    "Full Wiki-DPR execution remains collaborator-only."
+  ]
+}
