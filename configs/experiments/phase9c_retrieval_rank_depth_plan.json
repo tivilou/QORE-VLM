@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "QORE-VLM Phase 9C retrieval rank-depth diagnostic",
+  "authorization": "implemented",
+  "baseline": {
+    "entry_point": "applications.rag.data.WikiDPRCorpusManager.retrieve_with_embeddings",
+    "code_revision": "five-ideas-development after Phase 9B retrieval_ceiling",
+    "equivalence_test": "The runner uses the stable DPR encoder, Wiki-DPR manager, and evaluator answer matcher while making no selector, scorer, generator, or label changes"
+  },
+  "core_invariants": [
+    "The diagnostic retrieves exactly once per question at Top-200 and derives hit-at-50, hit-at-100, and hit-at-200 from that same ranked list.",
+    "The fresh slice is nq_open validation[250:450], disjoint from the Phase 9B development slice.",
+    "Answer Scorer, select_passages, Generator, and evaluation metrics are not invoked or modified; gold answers are consumed only by the frozen matcher and never written to Exchange.",
+    "The stable token-boundary answer matcher is reused; only first answer rank and scalar cutoff flags cross the exchange boundary.",
+    "No diagnostic output can feed retrieval, selection, generation, or evaluation back into the runner.",
+    "Exchange output never contains question, passage, gold-answer, prediction, or raw-prompt fields."
+  ],
+  "interfaces": [
+    {
+      "id": "rank_depth_observer_v1",
+      "type": "transformer",
+      "input_schema": "one stable question ID, its gold answer strings, and one ordered Top-200 Wiki-DPR text list",
+      "output_schema": "stable question ID, nullable first_answer_rank, and boolean hit-at-50/100/200 flags",
+      "invariants": [
+        "first_answer_rank is one-based and null only when no answer-bearing passage occurs by rank 200",
+        "cutoff flags are deterministic functions of first_answer_rank"
+      ]
+    },
+    {
+      "id": "rank_depth_gate_v1",
+      "type": "combiner",
+      "input_schema": "compact per-question rank rows and frozen gate thresholds",
+      "output_schema": "cutoff hit/failure rates, rank bins, uncertainty intervals, and bottleneck classification",
+      "invariants": [
+        "classification uses only compact rows and preregistered point thresholds",
+        "no raw text or answer strings are consumed by the combiner"
+      ]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "top200_retrieval_observer",
+      "version": "1.0.0",
+      "role": "baseline",
+      "interface": "rank_depth_observer_v1",
+      "insertion_point": "after stable DPR query encoding and one Wiki-DPR Top-200 retrieval",
+      "hypothesis": "The answer-bearing passage may be present beyond rank 50 even when the Phase 9B Top-50 ceiling fails.",
+      "input_schema": "ordered Top-200 retrieved text sequence plus question ID and gold answers",
+      "output_schema": "compact rank and cutoff-hit row",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "One DPR query encoding and one Top-200 Wiki-DPR lookup per question; no reader or LLM forward",
+      "failure_signatures": [
+        "retrieval returns fewer than 200 rows",
+        "cutoff flags disagree with first_answer_rank",
+        "raw passage or question text is written to Exchange"
+      ]
+    },
+    {
+      "id": "rank_depth_gate",
+      "version": "1.0.0",
+      "role": "idea",
+      "interface": "rank_depth_gate_v1",
+      "insertion_point": "after compact rank rows are joined and validated",
+      "hypothesis": "A substantial Top-200 gain over Top-50 identifies a candidate-depth cutoff; persistent Top-200 failure identifies retriever-limited coverage.",
+      "input_schema": "compact rank rows and maximum-failure/minimum-gain thresholds",
+      "output_schema": "cutoff_limited, retriever_limited, no_top50_ceiling, or mixed_or_inconclusive decision",
+      "requires": ["top200_retrieval_observer"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "Scalar aggregation over at most 200 question rows; no model call",
+      "failure_signatures": [
+        "classification changes under deterministic replay",
+        "Top-200 gain or failure threshold is not recorded",
+        "an answer-bearing rank is inferred from non-compact text after the observation boundary"
+      ]
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": ["top200_retrieval_observer", "rank_depth_gate"]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": ["top200_retrieval_observer", "rank_depth_gate"],
+    "merge_rule": "The observer emits one scalar row per question; the gate consumes only those rows and cannot alter the retrieval call or any downstream component.",
+    "interaction_ablations": [
+      "hit-at-50 versus hit-at-100 versus hit-at-200 from the same retrieval list",
+      "first-answer-rank bins versus aggregate cutoff rates",
+      "point-threshold classification versus uncertainty interval reporting"
+    ]
+  },
+  "validation": {
+    "baseline_equivalence": "Synthetic fixtures prove cutoff flags are exact deterministic functions of the first rank and the runner disables scorer, selector, and generator paths.",
+    "tests": [
+      "baseline_equivalence",
+      "plugin_isolation",
+      "deterministic_replay",
+      "interaction_ablation",
+      "fresh slice and Top-200 configuration validation",
+      "first-rank and cutoff consistency validation",
+      "compact-output privacy validation",
+      "cutoff-limited and retriever-limited gate fixtures",
+      "runner validate-only and Python compilation"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/phase9c_retrieval_rank_depth.yaml",
+    "dataset_identity": "nq_open validation questions 250-449 with Wiki-DPR psgs_w100.nq.compressed, nprobe=64, one Top-200 DPR retrieval",
+    "environment": "runner records Python executable/version, git revision, config SHA-256, plugin tree hash, encoder IDs, corpus config, rank cutoffs, and output paths",
+    "seeds": [42],
+    "output_manifest": "exchange/five_ideas/phase9c_retrieval_rank_depth/<timestamp>/run_metadata.json"
+  },
+  "limitations": [
+    "The answer-bearing test uses the frozen lexical token-boundary matcher and may miss aliases or semantic evidence.",
+    "The 200-question fresh slice reduces but does not eliminate sampling uncertainty.",
+    "A cutoff-limited result authorizes only a separate candidate-depth validation; it is not evidence that a selector or retriever change improves F1.",
+    "A retriever-limited result requires a separate retriever-change diagnostic with frozen evaluation boundaries.",
+    "Full Wiki-DPR retrieval remains collaborator-only."
+  ]
+}
