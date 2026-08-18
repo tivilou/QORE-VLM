@@ -1,0 +1,211 @@
+{
+  "baseline": "qore_as_full",
+  "direction_consistency": {
+    "reader_window": false,
+    "uniform_head": false
+  },
+  "gate_thresholds": {
+    "maximum_f1_harm": 0.005,
+    "maximum_reader_span_failure_fraction": 0.05,
+    "minimum_f1_delta": 0.01,
+    "minimum_generation_time_reduction": 0.15,
+    "minimum_token_reduction": 0.25
+  },
+  "n_questions": 50,
+  "outcome": "fail_f1_harm",
+  "reader_beats_uniform_by_budget": {
+    "0.5": true,
+    "0.75": true
+  },
+  "schema_version": 1,
+  "variants": [
+    {
+      "context": {
+        "baseline_generation_time_ms": 277.1802011399859,
+        "baseline_tokens": 713.84,
+        "fallback_count": 0,
+        "generation_time_reduction_ratio": 0.23694925809946688,
+        "span_candidates": 0,
+        "span_failure_count": 0,
+        "span_failure_fraction": 0.0,
+        "span_found": 0,
+        "span_truncated": 0,
+        "span_truncated_fraction": 0.0,
+        "token_reduction_ratio": 0.5006163846240054,
+        "variant_generation_time_ms": 211.50255812000523,
+        "variant_tokens": 356.48
+      },
+      "em": {
+        "baseline_mean": 0.26,
+        "delta": {
+          "bootstrap_repetitions": 2000,
+          "bootstrap_seed": 9202,
+          "ci95_high": -0.02,
+          "ci95_low": -0.2,
+          "mean": -0.1
+        },
+        "variant_mean": 0.16
+      },
+      "f1": {
+        "baseline_mean": 0.4615238095238095,
+        "delta": {
+          "bootstrap_repetitions": 2000,
+          "bootstrap_seed": 9201,
+          "ci95_high": -0.019505158730158755,
+          "ci95_low": -0.19411250000000002,
+          "mean": -0.09991269841269843
+        },
+        "variant_mean": 0.3616111111111111
+      },
+      "gate": {
+        "efficiency_met": true,
+        "maximum_f1_harm_met": false,
+        "minimum_f1_delta_met": false,
+        "reader_span_retention_met": true
+      },
+      "n_questions": 50,
+      "name": "qore_as_uniform_head_050"
+    },
+    {
+      "context": {
+        "baseline_generation_time_ms": 277.1802011399859,
+        "baseline_tokens": 713.84,
+        "fallback_count": 0,
+        "generation_time_reduction_ratio": 0.1307417681744032,
+        "span_candidates": 0,
+        "span_failure_count": 0,
+        "span_failure_fraction": 0.0,
+        "span_found": 0,
+        "span_truncated": 0,
+        "span_truncated_fraction": 0.0,
+        "token_reduction_ratio": 0.250672419589824,
+        "variant_generation_time_ms": 240.94117154000742,
+        "variant_tokens": 534.9
+      },
+      "em": {
+        "baseline_mean": 0.26,
+        "delta": {
+          "bootstrap_repetitions": 2000,
+          "bootstrap_seed": 9202,
+          "ci95_high": 0.04,
+          "ci95_low": -0.1,
+          "mean": -0.02
+        },
+        "variant_mean": 0.24
+      },
+      "f1": {
+        "baseline_mean": 0.4615238095238095,
+        "delta": {
+          "bootstrap_repetitions": 2000,
+          "bootstrap_seed": 9201,
+          "ci95_high": 0.03557222222222213,
+          "ci95_low": -0.10844444444444445,
+          "mean": -0.034444444444444444
+        },
+        "variant_mean": 0.4270793650793651
+      },
+      "gate": {
+        "efficiency_met": true,
+        "maximum_f1_harm_met": false,
+        "minimum_f1_delta_met": false,
+        "reader_span_retention_met": true
+      },
+      "n_questions": 50,
+      "name": "qore_as_uniform_head_075"
+    },
+    {
+      "context": {
+        "baseline_generation_time_ms": 277.1802011399859,
+        "baseline_tokens": 713.84,
+        "fallback_count": 163,
+        "generation_time_reduction_ratio": 0.21347233639565022,
+        "span_candidates": 250,
+        "span_failure_count": 163,
+        "span_failure_fraction": 0.652,
+        "span_found": 87,
+        "span_truncated": 0,
+        "span_truncated_fraction": 0.0,
+        "token_reduction_ratio": 0.5002241398632747,
+        "variant_generation_time_ms": 218.00989600001685,
+        "variant_tokens": 356.76
+      },
+      "em": {
+        "baseline_mean": 0.26,
+        "delta": {
+          "bootstrap_repetitions": 2000,
+          "bootstrap_seed": 9202,
+          "ci95_high": 0.0,
+          "ci95_low": -0.14,
+          "mean": -0.06
+        },
+        "variant_mean": 0.2
+      },
+      "f1": {
+        "baseline_mean": 0.4615238095238095,
+        "delta": {
+          "bootstrap_repetitions": 2000,
+          "bootstrap_seed": 9201,
+          "ci95_high": 0.0058428571428571306,
+          "ci95_low": -0.1200031746031746,
+          "mean": -0.05336507936507937
+        },
+        "variant_mean": 0.40815873015873017
+      },
+      "gate": {
+        "efficiency_met": true,
+        "maximum_f1_harm_met": false,
+        "minimum_f1_delta_met": false,
+        "reader_span_retention_met": false
+      },
+      "n_questions": 50,
+      "name": "qore_as_reader_window_050"
+    },
+    {
+      "context": {
+        "baseline_generation_time_ms": 277.1802011399859,
+        "baseline_tokens": 713.84,
+        "fallback_count": 163,
+        "generation_time_reduction_ratio": 0.11043829889035595,
+        "span_candidates": 250,
+        "span_failure_count": 163,
+        "span_failure_fraction": 0.652,
+        "span_found": 87,
+        "span_truncated": 0,
+        "span_truncated_fraction": 0.0,
+        "token_reduction_ratio": 0.25047629720945874,
+        "variant_generation_time_ms": 246.56889123999918,
+        "variant_tokens": 535.04
+      },
+      "em": {
+        "baseline_mean": 0.26,
+        "delta": {
+          "bootstrap_repetitions": 2000,
+          "bootstrap_seed": 9202,
+          "ci95_high": 0.06,
+          "ci95_low": -0.06,
+          "mean": 0.0
+        },
+        "variant_mean": 0.26
+      },
+      "f1": {
+        "baseline_mean": 0.4615238095238095,
+        "delta": {
+          "bootstrap_repetitions": 2000,
+          "bootstrap_seed": 9201,
+          "ci95_high": 0.04468333333333324,
+          "ci95_low": -0.07733333333333334,
+          "mean": -0.016666666666666666
+        },
+        "variant_mean": 0.4448571428571429
+      },
+      "gate": {
+        "efficiency_met": true,
+        "maximum_f1_harm_met": false,
+        "minimum_f1_delta_met": false,
+        "reader_span_retention_met": false
+      },
+      "n_questions": 50,
+      "name": "qore_as_reader_window_075"
+    }
+  ]
+}
