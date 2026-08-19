@@ -1,0 +1,1427 @@
+{
+  "answer_scorer": false,
+  "config": {
+    "corpus_mode": "wiki_dpr",
+    "cutoffs": [
+      50,
+      100,
+      200
+    ],
+    "dataset": "nq_open",
+    "encoder_type": "dpr",
+    "max_samples": 200,
+    "sample_offset": 250,
+    "seed": 42,
+    "split": "validation",
+    "top_k_retrieval": 200,
+    "wiki_dpr_config": "psgs_w100.nq.compressed",
+    "wiki_dpr_nprobe": 64
+  },
+  "diagnostic_only": true,
+  "generation": false,
+  "phase": "phase9c_retrieval_rank_depth",
+  "samples": [
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_250"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 31,
+      "question_id": "nq_251"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": false,
+      "first_answer_rank": 54,
+      "question_id": "nq_252"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_253"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_254"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 18,
+      "question_id": "nq_255"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 3,
+      "question_id": "nq_256"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 6,
+      "question_id": "nq_257"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_258"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_259"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 25,
+      "question_id": "nq_260"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_261"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": false,
+      "first_answer_rank": 72,
+      "question_id": "nq_262"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_263"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_264"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_265"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 3,
+      "question_id": "nq_266"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 5,
+      "question_id": "nq_267"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 3,
+      "question_id": "nq_268"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 18,
+      "question_id": "nq_269"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_270"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_271"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_272"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": false,
+      "first_answer_rank": 54,
+      "question_id": "nq_273"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_274"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_275"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_276"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_277"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 5,
+      "question_id": "nq_278"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": false,
+      "first_answer_rank": 59,
+      "question_id": "nq_279"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 3,
+      "question_id": "nq_280"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_281"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 5,
+      "question_id": "nq_282"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 6,
+      "question_id": "nq_283"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_284"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_285"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_286"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_287"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_288"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_289"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_290"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_291"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 4,
+      "question_id": "nq_292"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_293"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_294"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_295"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 3,
+      "question_id": "nq_296"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_297"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_298"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 24,
+      "question_id": "nq_299"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_300"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_301"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 14,
+      "question_id": "nq_302"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_303"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_304"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 4,
+      "question_id": "nq_305"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_306"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_307"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_308"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_309"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_310"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 27,
+      "question_id": "nq_311"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_312"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 4,
+      "question_id": "nq_313"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_314"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_315"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 46,
+      "question_id": "nq_316"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_317"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_318"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_319"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 4,
+      "question_id": "nq_320"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_321"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 9,
+      "question_id": "nq_322"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 3,
+      "question_id": "nq_323"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_324"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 11,
+      "question_id": "nq_325"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 10,
+      "question_id": "nq_326"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 16,
+      "question_id": "nq_327"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 6,
+      "question_id": "nq_328"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_329"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_330"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_331"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_332"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_333"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_334"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_335"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_336"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_337"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_338"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_339"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_340"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": false,
+      "first_answer_rank": 75,
+      "question_id": "nq_341"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 5,
+      "question_id": "nq_342"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_343"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_344"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_345"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_346"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_347"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_348"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_349"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_350"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_351"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_352"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": false,
+      "first_answer_rank": 67,
+      "question_id": "nq_353"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": false,
+      "first_answer_rank": 146,
+      "question_id": "nq_354"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_355"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": false,
+      "first_answer_rank": 161,
+      "question_id": "nq_356"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 17,
+      "question_id": "nq_357"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_358"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_359"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_360"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_361"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 8,
+      "question_id": "nq_362"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_363"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_364"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_365"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 7,
+      "question_id": "nq_366"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 3,
+      "question_id": "nq_367"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_368"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 11,
+      "question_id": "nq_369"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_370"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_371"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_372"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_373"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_374"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_375"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 9,
+      "question_id": "nq_376"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 37,
+      "question_id": "nq_377"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 15,
+      "question_id": "nq_378"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_379"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_380"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 4,
+      "question_id": "nq_381"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_382"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_383"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_384"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 13,
+      "question_id": "nq_385"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_386"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 8,
+      "question_id": "nq_387"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_388"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_389"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 7,
+      "question_id": "nq_390"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 5,
+      "question_id": "nq_391"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_392"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_393"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_394"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_395"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_396"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_397"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_398"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_399"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_400"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_401"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_402"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_403"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_404"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_405"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_406"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_407"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 3,
+      "question_id": "nq_408"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 3,
+      "question_id": "nq_409"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_410"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_411"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_412"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_413"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 8,
+      "question_id": "nq_414"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": false,
+      "first_answer_rank": 58,
+      "question_id": "nq_415"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_416"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_417"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 3,
+      "question_id": "nq_418"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_419"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_420"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_421"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_422"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 3,
+      "question_id": "nq_423"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_424"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_425"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_426"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_427"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_428"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_429"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_430"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_431"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_432"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_433"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_434"
+    },
+    {
+      "answer_hit_at_100": false,
+      "answer_hit_at_200": false,
+      "answer_hit_at_50": false,
+      "first_answer_rank": null,
+      "question_id": "nq_435"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 17,
+      "question_id": "nq_436"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_437"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_438"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_439"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_440"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_441"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_442"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_443"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_444"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 1,
+      "question_id": "nq_445"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 11,
+      "question_id": "nq_446"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 2,
+      "question_id": "nq_447"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": true,
+      "first_answer_rank": 22,
+      "question_id": "nq_448"
+    },
+    {
+      "answer_hit_at_100": true,
+      "answer_hit_at_200": true,
+      "answer_hit_at_50": false,
+      "first_answer_rank": 99,
+      "question_id": "nq_449"
+    }
+  ],
+  "schema_version": 1,
+  "selection_mutation": false
+}

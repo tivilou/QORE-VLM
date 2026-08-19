@@ -1,0 +1,63 @@
+{
+  "answer_scorer": false,
+  "config": {
+    "path": "/root/QORE-VLM/configs/experiments/phase9c_retrieval_rank_depth.yaml",
+    "sha256": "1a71abf3df66c7f436c284dfacafc3a7848c15bd284a2573dfa8bfda05a689f3"
+  },
+  "dataset": {
+    "fresh_slice": true,
+    "max_samples": 200,
+    "name": "nq_open",
+    "sample_offset": 250,
+    "split": "validation"
+  },
+  "diagnostic_only": true,
+  "encoder": {
+    "passage_model": "facebook/dpr-ctx_encoder-single-nq-base",
+    "query_model": "facebook/dpr-question_encoder-single-nq-base",
+    "resolution": "existing_huggingface_cache_or_standard_model_loader",
+    "type": "dpr"
+  },
+  "generation": false,
+  "git": {
+    "commit": "a9c5378d2ea907b779b65b0433a002dd30accaa1",
+    "status": "## five-ideas-development...origin/five-ideas-development\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_full/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_reader_window_050/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_reader_window_075/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_uniform_head_050/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_uniform_head_075/"
+  },
+  "matcher": "scripts.rag.eval.eval_rag_refactored.answer_has_match_in_text",
+  "phase": "phase9c_retrieval_rank_depth",
+  "plugins": {
+    "allowlist": [
+      "top200_retrieval_observer",
+      "rank_depth_gate"
+    ],
+    "diagnostic_outputs_used_for_selection": false,
+    "tree_sha256": "2fad5361d14ee8dc1692bba24733f44832eb405fa0c4f0068290a30f9a0eaa15"
+  },
+  "python": {
+    "executable": "/root/miniconda3/bin/python",
+    "version": "3.10.20 (main, Mar 11 2026, 17:46:40) [GCC 14.3.0]"
+  },
+  "retrieval": {
+    "corpus_mode": "wiki_dpr",
+    "cutoffs": [
+      50,
+      100,
+      200
+    ],
+    "nprobe": 64,
+    "seed": 42,
+    "top_k_retrieval": 200,
+    "wiki_dpr_config": "psgs_w100.nq.compressed"
+  },
+  "schema_version": 1,
+  "selection_mutation": false,
+  "status": "completed",
+  "summary": {
+    "n_questions": 200,
+    "path": "/root/QORE-VLM/exchange/five_ideas/phase9c_retrieval_rank_depth/20260819T024537Z/summary.json",
+    "primary_bottleneck": "mixed_or_inconclusive"
+  },
+  "timing_ms": {
+    "retrieval_and_matching": 44493.372276
+  }
+}

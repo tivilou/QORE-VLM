@@ -1,0 +1,1 @@
+/root/miniconda3/bin/python /root/QORE-VLM/scripts/collab/five_ideas/run_phase9c_retrieval_rank_depth.py --config /root/QORE-VLM/configs/experiments/phase9c_retrieval_rank_depth.yaml

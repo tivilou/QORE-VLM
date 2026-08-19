@@ -1,0 +1,59 @@
+{
+  "cutoffs": {
+    "100": {
+      "failure_rate": 0.16500000000000004,
+      "hit_rate": 0.835,
+      "hit_rate_wilson95": [
+        0.7773421846094045,
+        0.8800314467178268
+      ],
+      "n_hits": 167,
+      "n_misses": 33
+    },
+    "200": {
+      "failure_rate": 0.15500000000000003,
+      "hit_rate": 0.845,
+      "hit_rate_wilson95": [
+        0.7883930940765792,
+        0.8886036307231068
+      ],
+      "n_hits": 169,
+      "n_misses": 31
+    },
+    "50": {
+      "failure_rate": 0.20499999999999996,
+      "hit_rate": 0.795,
+      "hit_rate_wilson95": [
+        0.7337430194757748,
+        0.8451382379616379
+      ],
+      "n_hits": 159,
+      "n_misses": 41
+    }
+  },
+  "decision": {
+    "primary_bottleneck": "mixed_or_inconclusive",
+    "thresholds": {
+      "maximum_top200_failure_rate": 0.2,
+      "maximum_top50_failure_rate": 0.2,
+      "minimum_top200_gain_over_top50": 0.1
+    },
+    "top200_gain_over_top50": 0.04999999999999993
+  },
+  "first_answer_rank": {
+    "bins": {
+      "not_in_200": 31,
+      "rank_101_200": 2,
+      "rank_1_50": 159,
+      "rank_51_100": 8
+    },
+    "mean": 8.988165680473372,
+    "median": 2.0,
+    "n_found_at_200": 169,
+    "n_not_found_at_200": 31,
+    "p25": 1.0,
+    "p75": 5.0
+  },
+  "n_questions": 200,
+  "schema_version": 1
+}
