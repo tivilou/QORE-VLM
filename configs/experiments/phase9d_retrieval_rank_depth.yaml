@@ -1,0 +1,49 @@
+phase:
+  name: phase9d_retrieval_rank_depth_replication
+  schema_version: 1
+  diagnostic_only: true
+  selection_mutation: false
+  generation: false
+  answer_scorer: false
+
+  dataset: nq_open
+  split: validation
+  sample_offset: 450
+  max_samples: 200
+  fresh_slice: true
+  corpus_mode: wiki_dpr
+  wiki_dpr_config: psgs_w100.nq.compressed
+  wiki_dpr_nprobe: 64
+  top_k_retrieval: 200
+  cutoffs: [50, 100, 200]
+  seed: 42
+
+  prior_result:
+    path: exchange/five_ideas/phase9c_retrieval_rank_depth/20260819T024537Z/result.json
+    sha256: c3aba9d9ea04cade55930d2feaf990d681a91cd6f4adb6dce57187368bb662c2
+    sample_offset: 250
+    max_samples: 200
+
+  encoder:
+    type: dpr
+    query_model: facebook/dpr-question_encoder-single-nq-base
+    passage_model: facebook/dpr-ctx_encoder-single-nq-base
+    resolution: existing_huggingface_cache_or_standard_model_loader
+
+  gate:
+    maximum_top50_failure_rate: 0.20
+    minimum_top200_gain_over_top50: 0.10
+    maximum_top200_failure_rate: 0.20
+    cutoff_limited_action: authorize_retrieval_depth_followup
+    retriever_limited_action: authorize_retriever_change_diagnostic
+    inconclusive_action: stop_and_collect_more_evidence
+
+  outputs:
+    root: exchange/five_ideas/phase9d_retrieval_rank_depth_replication
+    compact_only: true
+    forbidden_fields:
+      - question
+      - passages
+      - gold_answers
+      - prediction
+      - raw_prompt
