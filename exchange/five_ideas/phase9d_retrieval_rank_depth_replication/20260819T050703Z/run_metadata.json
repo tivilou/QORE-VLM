@@ -1,0 +1,70 @@
+{
+  "answer_scorer": false,
+  "config": {
+    "path": "/root/QORE-VLM/configs/experiments/phase9d_retrieval_rank_depth.yaml",
+    "sha256": "5da9cabf15142702e2791d0a32e8ca79056d17f1f4cf6053c34cb4a0ed1f5737"
+  },
+  "dataset": {
+    "fresh_slice": true,
+    "max_samples": 200,
+    "name": "nq_open",
+    "sample_offset": 450,
+    "split": "validation"
+  },
+  "diagnostic_only": true,
+  "encoder": {
+    "passage_model": "facebook/dpr-ctx_encoder-single-nq-base",
+    "query_model": "facebook/dpr-question_encoder-single-nq-base",
+    "resolution": "existing_huggingface_cache_or_standard_model_loader",
+    "type": "dpr"
+  },
+  "generation": false,
+  "git": {
+    "commit": "9b70fcfbeaa452abce17c6b05ab3ee66482abb05",
+    "status": "## five-ideas-development...origin/five-ideas-development\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_full/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_reader_window_050/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_reader_window_075/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_uniform_head_050/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_uniform_head_075/"
+  },
+  "matcher": "scripts.rag.eval.eval_rag_refactored.answer_has_match_in_text",
+  "phase": "phase9d_retrieval_rank_depth_replication",
+  "plugins": {
+    "allowlist": [
+      "top200_retrieval_observer",
+      "rank_depth_replication_combiner",
+      "rank_depth_gate"
+    ],
+    "diagnostic_outputs_used_for_selection": false,
+    "tree_sha256": "b47299bcab18af824f141d97b4b2ed430d12141bb93c208076c402d82ab6e598"
+  },
+  "prior_result": {
+    "n_questions": 200,
+    "path": "/root/QORE-VLM/exchange/five_ideas/phase9c_retrieval_rank_depth/20260819T024537Z/result.json",
+    "sha256": "c3aba9d9ea04cade55930d2feaf990d681a91cd6f4adb6dce57187368bb662c2"
+  },
+  "python": {
+    "executable": "/root/miniconda3/bin/python",
+    "version": "3.10.20 (main, Mar 11 2026, 17:46:40) [GCC 14.3.0]"
+  },
+  "retrieval": {
+    "corpus_mode": "wiki_dpr",
+    "cutoffs": [
+      50,
+      100,
+      200
+    ],
+    "nprobe": 64,
+    "seed": 42,
+    "top_k_retrieval": 200,
+    "wiki_dpr_config": "psgs_w100.nq.compressed"
+  },
+  "schema_version": 1,
+  "selection_mutation": false,
+  "status": "completed",
+  "summary": {
+    "combined_questions": 400,
+    "path": "/root/QORE-VLM/exchange/five_ideas/phase9d_retrieval_rank_depth_replication/20260819T050703Z/summary.json",
+    "primary_bottleneck": "no_top50_ceiling",
+    "replication_questions": 200
+  },
+  "timing_ms": {
+    "retrieval_and_matching": 39710.91218599997
+  }
+}
