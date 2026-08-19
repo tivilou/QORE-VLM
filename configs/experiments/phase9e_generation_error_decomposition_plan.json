@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "QORE-VLM Phase 9E generation error decomposition",
+  "authorization": "approved",
+  "baseline": {
+    "entry_point": "scripts/rag/eval/eval_rag_refactored.py plus applications.rag.generation.Generator.generate",
+    "code_revision": "five-ideas-development after clean Phase 9D audit",
+    "equivalence_test": "The frozen baseline arm calls the unchanged Generator.generate and uses the same DPR retrieval, Answer Scorer, QORE selector, evaluator metrics, seed, and max_new_tokens contract"
+  },
+  "core_invariants": [
+    "Each question is retrieved and selected exactly once before any probe output exists.",
+    "All arms use the same selected QORE K=5 passages, model identity, deterministic decoding, and evaluator normalization.",
+    "Probe outputs never feed back into select_passages, retrieval, generation, or labels.",
+    "The existing Generator, selector, evaluator, and stable answer matcher are not modified.",
+    "Gold answers are used only inside the diagnostic oracle and never cross the compact exchange boundary.",
+    "Gold-answer copy is attempted only for selected-hit baseline EM failures whose combined oracle arm also fails.",
+    "Exchange output contains only question IDs, hit flags, arm scalar metrics, timing, and predeclared cohort metadata."
+  ],
+  "interfaces": [
+    {
+      "id": "generation_probe_v1",
+      "type": "transformer",
+      "input_schema": "question, selected passage texts, and optionally deterministic gold-matched sentence or gold-answer oracle context",
+      "output_schema": "one scalar arm record with attempted, EM, F1, and generation time",
+      "invariants": [
+        "The baseline probe is byte-equivalent to Generator.generate.",
+        "Extractive prompt changes only prompt instructions.",
+        "Oracle context is observation-only and has no selector access."
+      ]
+    },
+    {
+      "id": "generation_error_combiner_v1",
+      "type": "combiner",
+      "input_schema": "compact per-question hit flags and scalar arm records",
+      "output_schema": "cohort means, paired bootstrap deltas, exclusive failure attribution counts, and a dominant/mixed/insufficient gate",
+      "invariants": [
+        "Primary attribution is restricted to selected-hit baseline EM errors.",
+        "No raw generation text is consumed or emitted by the combiner.",
+        "A follow-up is authorized only when one class exceeds both preregistered dominance thresholds."
+      ]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "frozen_baseline_observer",
+      "version": "1.0.0",
+      "role": "baseline",
+      "interface": "generation_probe_v1",
+      "insertion_point": "after unchanged QORE selection and before metric aggregation",
+      "hypothesis": "The current generation error rate is the reference against which diagnostic probes are compared.",
+      "input_schema": "question and unchanged selected QORE K=5 passage texts",
+      "output_schema": "baseline EM, F1, generation time",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "one unchanged generation per question",
+      "failure_signatures": ["baseline arm differs from Generator.generate", "model identity or decoding settings drift"]
+    },
+    {
+      "id": "extractive_prompt_probe",
+      "version": "1.0.0",
+      "role": "idea",
+      "interface": "generation_probe_v1",
+      "insertion_point": "same selected context, prompt construction only",
+      "hypothesis": "Some selected-hit errors are answer extraction/format failures that a verbatim-span instruction can recover.",
+      "input_schema": "question and unchanged selected QORE K=5 passage texts",
+      "output_schema": "extractive-prompt EM, F1, generation time",
+      "requires": ["frozen_baseline_observer"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "one additional generation per question",
+      "failure_signatures": ["prompt profile is not extractive_span_v1", "prompt arm changes context text"]
+    },
+    {
+      "id": "gold_evidence_oracle_probe",
+      "version": "1.0.0",
+      "role": "idea",
+      "interface": "generation_probe_v1",
+      "insertion_point": "selected-hit questions only, replace selected context with matched sentence windows",
+      "hypothesis": "Some errors are caused by relevant evidence being buried among selected passages rather than absent.",
+      "input_schema": "question and deterministic sentence windows containing a frozen lexical gold match",
+      "output_schema": "oracle-context EM, F1, generation time",
+      "requires": ["frozen_baseline_observer"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "one additional generation on selected-hit questions",
+      "failure_signatures": ["selected-hit and oracle-sentence flags disagree", "oracle sentence is emitted to exchange"]
+    },
+    {
+      "id": "gold_answer_copy_probe",
+      "version": "1.0.0",
+      "role": "adapter",
+      "interface": "generation_probe_v1",
+      "insertion_point": "adaptive diagnostic only after baseline and combined oracle EM failure",
+      "hypothesis": "If the model can copy an explicit gold answer but cannot answer from a matched sentence, the lexical hit is not sufficient evidence for the question.",
+      "input_schema": "question and one internal gold-answer candidate",
+      "output_schema": "conditional gold-copy EM, F1, generation time",
+      "requires": ["gold_evidence_oracle_probe"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "at most one extra generation per unresolved selected-hit baseline error",
+      "failure_signatures": ["copy probe runs outside its adaptive condition", "gold answer crosses exchange boundary"]
+    },
+    {
+      "id": "generation_error_combiner",
+      "version": "1.0.0",
+      "role": "idea",
+      "interface": "generation_error_combiner_v1",
+      "insertion_point": "after all compact arm records are written",
+      "hypothesis": "A dominant exclusive failure class can authorize at most one targeted follow-up.",
+      "input_schema": "compact rows from all probe arms",
+      "output_schema": "cohort summaries, paired bootstrap intervals, attribution, and gate decision",
+      "requires": ["frozen_baseline_observer", "extractive_prompt_probe", "gold_evidence_oracle_probe", "gold_answer_copy_probe"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "scalar aggregation and paired bootstrap only",
+      "failure_signatures": ["raw text is consumed", "small sample is treated as dominant", "gate changes under deterministic replay"]
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": ["frozen_baseline_observer", "extractive_prompt_probe", "gold_evidence_oracle_probe", "gold_answer_copy_probe", "generation_error_combiner"]
+  },
+  "composition": {
+    "mode": "parallel",
+    "order": ["frozen_baseline_observer", "extractive_prompt_probe", "gold_evidence_oracle_probe", "gold_answer_copy_probe", "generation_error_combiner"],
+    "merge_rule": "The runner retrieves/selects once, executes independent observation arms, adaptively invokes copy only for unresolved selected-hit baseline EM errors, and the combiner consumes scalar records only.",
+    "interaction_ablations": [
+      "baseline versus extractive prompt on identical selected context",
+      "baseline versus matched-sentence oracle on selected-hit questions",
+      "extractive prompt versus oracle context versus combined oracle",
+      "combined oracle failure versus conditional gold-answer copy"
+    ]
+  },
+  "validation": {
+    "baseline_equivalence": "Synthetic fixtures prove baseline invocation is unchanged and prompt probes cannot mutate selected passages or selector inputs.",
+    "tests": [
+      "config and allowlist validation",
+      "baseline_equivalence",
+      "plugin_isolation",
+      "deterministic_replay",
+      "interaction_ablation",
+      "baseline invocation and null-probe equivalence",
+      "selector/generator/evaluator boundaries remain isolated",
+      "prompt, sentence extraction, and bootstrap replay",
+      "baseline, prompt, oracle, combined, and copy arms",
+      "compact schema and forbidden-field privacy",
+      "adaptive copy-arm condition validation",
+      "attribution fixture for each failure class",
+      "validate-only smoke manifest"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/phase9e_generation_error_decomposition.yaml",
+    "dataset_identity": "nq_open validation[650:700], Wiki-DPR psgs_w100.nq.compressed, nprobe=64, one Top-50 DPR retrieval and one QORE K=5 selection per question",
+    "environment": "runner records Python executable/version, git revision, config SHA-256, plugin tree hash, resolved generator identity/config hash, retrieval/selection settings, and output paths",
+    "seeds": [42, 9501],
+    "output_manifest": "exchange/five_ideas/phase9e_generation_error_decomposition/<timestamp>/run_metadata.json"
+  },
+  "limitations": [
+    "A lexical answer match is not proof that a passage contains sufficient explanatory evidence.",
+    "The gold-answer copy arm is an oracle diagnostic and cannot support a production claim.",
+    "A 50-question fresh slice and one deterministic decoding seed cannot establish broad generalization.",
+    "All oracle outputs remain compact and no raw prompt, passage, answer, or prediction is exchanged.",
+    "A mixed or insufficient gate authorizes no intervention and requires more matched evidence."
+  ]
+}
