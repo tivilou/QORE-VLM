@@ -130,6 +130,18 @@ def generate_from_prompt(generator: Any, prompt: str) -> ProbeResult:
     return ProbeResult(prediction=answer, generation_time_ms=elapsed)
 
 
+def run_frozen_baseline_probe(
+    generator: Any, question: str, passages: list[str]
+) -> ProbeResult:
+    """Call the stable Generator.generate entry point without altering inputs."""
+    started = time.perf_counter()
+    prediction = generator.generate(question, passages)
+    return ProbeResult(
+        prediction=prediction,
+        generation_time_ms=(time.perf_counter() - started) * 1000.0,
+    )
+
+
 def run_extractive_probe(
     generator: Any, question: str, passages: Sequence[str]
 ) -> ProbeResult:
@@ -156,6 +168,7 @@ __all__ = [
     "build_gold_answer_copy_prompt",
     "extract_gold_matched_sentences",
     "generate_from_prompt",
+    "run_frozen_baseline_probe",
     "run_extractive_probe",
     "run_gold_answer_copy_probe",
 ]

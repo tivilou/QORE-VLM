@@ -31,6 +31,7 @@ try:
         GOLD_ANSWER_COPY_PROFILE,
         extract_gold_matched_sentences,
         run_extractive_probe,
+        run_frozen_baseline_probe,
         run_gold_answer_copy_probe,
     )
     from scripts.collab.five_ideas.phase9e_metrics import (
@@ -43,6 +44,7 @@ except ImportError:  # pragma: no cover - direct script execution
         GOLD_ANSWER_COPY_PROFILE,
         extract_gold_matched_sentences,
         run_extractive_probe,
+        run_frozen_baseline_probe,
         run_gold_answer_copy_probe,
     )
     from phase9e_metrics import Phase9EError, summarize_generation_errors
@@ -249,11 +251,8 @@ def _scored_arm(prediction: str, gold_answers: list[str], elapsed: float) -> dic
 def _baseline_arm(
     generator: Generator, question: str, passages: list[str], gold_answers: list[str]
 ) -> dict[str, Any]:
-    started = time.perf_counter()
-    prediction = generator.generate(question, passages)
-    return _scored_arm(
-        prediction, gold_answers, (time.perf_counter() - started) * 1000.0
-    )
+    result = run_frozen_baseline_probe(generator, question, passages)
+    return _scored_arm(result.prediction, gold_answers, result.generation_time_ms)
 
 
 def _parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:

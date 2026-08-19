@@ -9,6 +9,7 @@ from generation_error_probe import (
     build_extractive_prompt,
     build_gold_answer_copy_prompt,
     extract_gold_matched_sentences,
+    run_frozen_baseline_probe,
 )
 from phase9e_metrics import Phase9EError, summarize_generation_errors
 
@@ -27,6 +28,15 @@ class FakeTokenizer:
         assert tokenize is False
         assert add_generation_prompt is True
         return messages[0]["content"] + "\n" + messages[1]["content"]
+
+
+class FakeGenerator:
+    def __init__(self):
+        self.calls = []
+
+    def generate(self, question, passages):
+        self.calls.append((question, passages))
+        return "Paris"
 
 
 def arm(em, f1=None, attempted=True):
@@ -78,6 +88,14 @@ def row(index, *, category):
 
 
 class ProbeTests(unittest.TestCase):
+    def test_frozen_baseline_forwards_inputs_unchanged(self):
+        generator = FakeGenerator()
+        passages = [" first ", "second\nline"]
+        result = run_frozen_baseline_probe(generator, "Where?", passages)
+        self.assertEqual(result.prediction, "Paris")
+        self.assertEqual(generator.calls, [("Where?", passages)])
+        self.assertIs(generator.calls[0][1], passages)
+
     def test_sentence_extraction_is_deterministic_and_deduplicated(self):
         passages = ["First fact. The answer is Paris. Last fact.", "The answer is Paris."]
         first = extract_gold_matched_sentences(passages, ["Paris"])
