@@ -2,11 +2,11 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "schema_version": "research-plugin-architecture.plugin-plan.v1",
   "project": "QORE-VLM Phase 9E generation error decomposition",
-  "authorization": "approved",
+  "authorization": "implemented",
   "baseline": {
     "entry_point": "scripts/rag/eval/eval_rag_refactored.py plus applications.rag.generation.Generator.generate",
     "code_revision": "five-ideas-development after clean Phase 9D audit",
-    "equivalence_test": "The frozen baseline arm calls the unchanged Generator.generate and uses the same DPR retrieval, Answer Scorer, QORE selector, evaluator metrics, seed, and max_new_tokens contract"
+    "equivalence_test": "The frozen baseline arm calls the unchanged Generator.generate and explicitly reproduces the eval_rag_refactored DPR retrieval, Answer Scorer, QORE selector arguments including num_reads=100 and lam=2.0, evaluator metrics, seed, and max_new_tokens contract"
   },
   "core_invariants": [
     "Each question is retrieved and selected exactly once before any probe output exists.",
@@ -153,7 +153,7 @@
   },
   "reproducibility": {
     "config_path": "configs/experiments/phase9e_generation_error_decomposition.yaml",
-    "dataset_identity": "nq_open validation[650:700], Wiki-DPR psgs_w100.nq.compressed, nprobe=64, one Top-50 DPR retrieval and one QORE K=5 selection per question",
+    "dataset_identity": "nq_open validation[650:700], Wiki-DPR psgs_w100.nq.compressed, nprobe=64, one Top-50 DPR retrieval and one QORE K=5 selection with num_reads=100 and lam=2.0 per question",
     "environment": "runner records Python executable/version, git revision, config SHA-256, plugin tree hash, resolved generator identity/config hash, retrieval/selection settings, and output paths",
     "seeds": [42, 9501],
     "output_manifest": "exchange/five_ideas/phase9e_generation_error_decomposition/<timestamp>/run_metadata.json"

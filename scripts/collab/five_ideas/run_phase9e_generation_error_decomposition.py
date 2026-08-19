@@ -157,7 +157,12 @@ def _load_config(path: Path) -> dict[str, Any]:
         raise Phase9EConfigError("Phase 9E dataset/retrieval contract is not frozen")
     selection = phase["selection"]
     expected_selection = {
-        "method": "qore", "K": 5, "seed": 42, "gamma": 1.0,
+        "method": "qore", "K": 5, "num_reads": 100, "lam": 2.0,
+        "seed": 42, "gamma": 1.0, "delta": 0.0,
+        "complementarity_method": None, "qore_prefilter_size": None,
+        "direct_solve_max_n": 20, "lambda_mmr": 0.7,
+        "saturation_alpha": 1.0, "lambda_submodular": 0.5,
+        "dpp_quality_scale": 2.0, "dpp_jitter": 1.0e-8,
         "use_answer_scorer": True, "answer_scorer_backend": "dpr",
     }
     for key, expected in expected_selection.items():
@@ -371,7 +376,21 @@ def run(args: argparse.Namespace) -> Path | None:
             retrieved_embeddings,
             K=int(phase["selection"]["K"]),
             method="qore",
+            num_reads=int(phase["selection"]["num_reads"]),
+            lam=float(phase["selection"]["lam"]),
             gamma=float(phase["selection"]["gamma"]),
+            delta=float(phase["selection"]["delta"]),
+            complementarity_method=phase["selection"]["complementarity_method"],
+            qore_prefilter_size=phase["selection"]["qore_prefilter_size"],
+            direct_solve_max_n=int(phase["selection"]["direct_solve_max_n"]),
+            lambda_mmr=float(phase["selection"]["lambda_mmr"]),
+            saturation_alpha=float(phase["selection"]["saturation_alpha"]),
+            lambda_submodular=float(phase["selection"]["lambda_submodular"]),
+            dpp_quality_scale=float(phase["selection"]["dpp_quality_scale"]),
+            dpp_jitter=float(phase["selection"]["dpp_jitter"]),
+            answer_scorer=answer_scorer,
+            passage_texts=retrieved_texts,
+            question=question,
             seed=int(phase["selection"]["seed"]),
             relevance_scores=answer_scores,
         )
@@ -449,7 +468,8 @@ def run(args: argparse.Namespace) -> Path | None:
             "wiki_dpr_config": phase["wiki_dpr_config"],
             "wiki_dpr_nprobe": phase["wiki_dpr_nprobe"],
             "top_k_retrieval": phase["top_k_retrieval"],
-            "method": "qore", "K": 5, "seed": 42,
+            "method": "qore", "K": 5, "num_reads": 100, "lam": 2.0,
+            "seed": 42, "gamma": 1.0,
             "use_answer_scorer": True, "answer_scorer_backend": "dpr",
             "max_new_tokens": 32,
         },
