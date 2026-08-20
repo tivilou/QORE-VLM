@@ -1,0 +1,86 @@
+phase:
+  name: phase9f_evidence_sufficiency_localization
+  schema_version: 1
+  diagnostic_only: true
+  selection_mutation: false
+  authorization: one_targeted_followup_only
+  parent_phase: phase9e_generation_error_decomposition
+  parent_evidence:
+    result_commit: 70c4a91baefadc1adc685681479446717bf65ec4
+    result_sha256: 7455950838d6277acc752fee01ee3d9bb45552f2ead967179a276fc5c48f0490
+    decision: lexical_evidence_insufficiency_dominant
+
+  dataset: nq_open
+  split: validation
+  sample_offset: 700
+  max_samples: 50
+  fresh_slice: true
+  corpus_mode: wiki_dpr
+  wiki_dpr_config: psgs_w100.nq.compressed
+  wiki_dpr_nprobe: 64
+  top_k_retrieval: 50
+
+  selection:
+    method: qore
+    K: 5
+    num_reads: 100
+    lam: 2.0
+    seed: 42
+    gamma: 1.0
+    delta: 0.0
+    complementarity_method: null
+    qore_prefilter_size: null
+    direct_solve_max_n: 20
+    lambda_mmr: 0.7
+    saturation_alpha: 1.0
+    lambda_submodular: 0.5
+    dpp_quality_scale: 2.0
+    dpp_jitter: 1.0e-8
+    use_answer_scorer: true
+    answer_scorer_backend: dpr
+
+  generator:
+    name: reference
+    model_id: NousResearch/Meta-Llama-3-8B-Instruct
+    revision: 53346005fb0ef11d3b6a83b12c895cca40156b6c
+    max_new_tokens: 32
+    model_path_candidates:
+      - models/llama3-8b
+    resolver_order: [cli_override, project_candidate, hf_cache]
+    record_resolved_identity: true
+
+  plugins:
+    allowlist:
+      - frozen_baseline_observer
+      - gold_answer_copy_control
+      - gold_sentence_plain_probe
+      - gold_sentence_highlight_probe
+      - gold_window_plain_probe
+      - gold_window_highlight_probe
+      - evidence_sufficiency_combiner
+    evidence_variant_profile: gold_evidence_2x2_v1
+    gold_answer_copy_profile: gold_answer_copy_v1
+    diagnostic_outputs_used_for_selection: false
+
+  gate:
+    minimum_primary_errors: 10
+    minimum_copy_control_successes: 8
+    minimum_dominant_fraction: 0.40
+    minimum_dominance_margin: 0.10
+    bootstrap_repetitions: 2000
+    bootstrap_seed: 9601
+    dominant_action: report_only_no_production_change
+    mixed_action: stop_and_collect_more_evidence
+    insufficient_action: stop_and_do_not_intervene
+
+  outputs:
+    root: exchange/five_ideas/phase9f_evidence_sufficiency_localization
+    compact_only: true
+    forbidden_fields:
+      - question
+      - passages
+      - gold_answers
+      - prediction
+      - raw_prompt
+      - oracle_sentences
+      - gold_answer

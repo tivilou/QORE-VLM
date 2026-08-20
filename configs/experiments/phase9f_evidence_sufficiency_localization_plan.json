@@ -1,0 +1,215 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "QORE-VLM Phase 9F evidence sufficiency and localization",
+  "authorization": "implemented",
+  "baseline": {
+    "entry_point": "scripts/rag/eval/eval_rag_refactored.py plus applications.rag.generation.Generator.generate",
+    "code_revision": "five-ideas-development after the clean Phase 9E gate",
+    "equivalence_test": "The frozen baseline arm calls unchanged Generator.generate with the unchanged QORE and Answer Scorer contract; all evidence arms vary only internal diagnostic context text and never selection inputs"
+  },
+  "core_invariants": [
+    "Each question is retrieved and selected exactly once before any probe output exists.",
+    "The baseline, gold-copy control, and evidence variants use the same model identity, deterministic decoding, evaluator normalization, and question.",
+    "Evidence variants are constructed only from selected passages and internal gold lexical matches; no variant text crosses the compact boundary.",
+    "Gold-copy control and evidence probes run only after selected-hit baseline EM failure; evidence probes run only after gold-copy EM success.",
+    "Probe outputs never feed back into retrieval, selection, generation, or labels.",
+    "The existing Generator, selector, evaluator, and stable answer matcher are not modified.",
+    "A fresh held-out validation slice is used; no Phase 9E question IDs are reused.",
+    "The compact exchange output contains only IDs, flags, variant counts, timings, arm scalars, cohort summaries, and gate results."
+  ],
+  "interfaces": [
+    {
+      "id": "generation_probe_v1",
+      "type": "transformer",
+      "input_schema": "question and diagnostic context or copy-control candidate",
+      "output_schema": "one scalar arm record with attempted, EM, F1, and generation time",
+      "invariants": [
+        "Uses the frozen Generator identity and deterministic decoding.",
+        "Does not modify retrieval, selection, evaluator, or labels.",
+        "Raw prompt and prediction text remain outside compact exchange output."
+      ]
+    },
+    {
+      "id": "evidence_variant_probe_v1",
+      "type": "transformer",
+      "input_schema": "question and deterministic selected-hit evidence variants: sentence/window crossed with plain/highlighted text",
+      "output_schema": "one scalar arm record with attempted, EM, F1, and generation time",
+      "invariants": [
+        "Plain and highlighted variants use the frozen baseline prompt profile.",
+        "Highlight markers reveal only the location of an existing lexical match and never add answer text.",
+        "Window variants add only the immediately adjacent sentences from the same selected passage."
+      ]
+    },
+    {
+      "id": "evidence_sufficiency_combiner_v1",
+      "type": "combiner",
+      "input_schema": "compact baseline, copy-control, and 2x2 evidence arm records",
+      "output_schema": "eligible cohort, exclusive 2x2 attribution including both-main-effects and interaction-only classes, paired bootstrap deltas, and a dominant/mixed/insufficient gate",
+      "invariants": [
+        "Primary attribution is restricted to selected-hit baseline EM errors with a successful gold-copy control.",
+        "No raw generation text is consumed or emitted by the combiner.",
+        "A dominant result is diagnostic only and authorizes no production change."
+      ]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "frozen_baseline_observer",
+      "version": "1.0.0",
+      "role": "baseline",
+      "type": "observer",
+      "interface": "generation_probe_v1",
+      "insertion_point": "after unchanged QORE selection and before metric aggregation",
+      "hypothesis": "The unchanged generation arm is the reference for the held-out slice.",
+      "input_schema": "question and unchanged selected QORE K=5 passages",
+      "output_schema": "baseline EM, F1, and generation time",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "one generation per question",
+      "failure_signatures": ["baseline arm differs from Generator.generate", "model identity or decoding settings drift"]
+    },
+    {
+      "id": "gold_answer_copy_control",
+      "version": "1.0.0",
+      "role": "adapter",
+      "type": "adapter",
+      "interface": "generation_probe_v1",
+      "insertion_point": "selected-hit baseline EM failures only",
+      "hypothesis": "A gold-answer copy control separates output/evaluator inability from evidence-use inability.",
+      "input_schema": "question and one internal deterministic gold-answer candidate",
+      "output_schema": "conditional copy-control EM, F1, and generation time",
+      "requires": ["frozen_baseline_observer"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "at most one generation per selected-hit baseline EM failure",
+      "failure_signatures": ["copy control runs outside its condition", "gold answer crosses exchange boundary"]
+    },
+    {
+      "id": "gold_sentence_plain_probe",
+      "version": "1.0.0",
+      "role": "idea",
+      "type": "transformer",
+      "interface": "evidence_variant_probe_v1",
+      "insertion_point": "eligible selected-hit baseline error after copy-control success",
+      "hypothesis": "The exact answer-bearing sentence is sufficient when irrelevant selected context is the main obstruction.",
+      "input_schema": "question and all deterministic exact matched sentence variants",
+      "output_schema": "plain matched-sentence EM, F1, and generation time",
+      "requires": ["gold_answer_copy_control"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "one generation per eligible question",
+      "failure_signatures": ["sentence text is not derived from selected passages", "plain probe changes the prompt profile"]
+    },
+    {
+      "id": "gold_sentence_highlight_probe",
+      "version": "1.0.0",
+      "role": "idea",
+      "type": "transformer",
+      "interface": "evidence_variant_probe_v1",
+      "insertion_point": "same eligible cohort as gold_sentence_plain_probe",
+      "hypothesis": "Explicitly locating an existing answer span recovers failures caused by answer localization or extraction.",
+      "input_schema": "question and exact matched sentences with internal answer-span markers",
+      "output_schema": "highlighted-sentence EM, F1, and generation time",
+      "requires": ["gold_sentence_plain_probe"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "one generation per eligible question",
+      "failure_signatures": ["highlight markers add text not present in selected passages", "highlight probe is not paired with plain sentence"]
+    },
+    {
+      "id": "gold_window_plain_probe",
+      "version": "1.0.0",
+      "role": "idea",
+      "type": "transformer",
+      "interface": "evidence_variant_probe_v1",
+      "insertion_point": "same eligible cohort as gold_sentence_plain_probe",
+      "hypothesis": "A local neighboring sentence supplies missing evidence needed to interpret a lexical answer mention.",
+      "input_schema": "question and exact matched sentence plus its immediately adjacent sentences from each selected passage",
+      "output_schema": "plain-window EM, F1, and generation time",
+      "requires": ["gold_sentence_plain_probe"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "one generation per eligible question",
+      "failure_signatures": ["window extends beyond the same selected passage", "window probe adds a non-local passage"]
+    },
+    {
+      "id": "gold_window_highlight_probe",
+      "version": "1.0.0",
+      "role": "idea",
+      "type": "transformer",
+      "interface": "evidence_variant_probe_v1",
+      "insertion_point": "same eligible cohort as gold_sentence_plain_probe",
+      "hypothesis": "Neighbor evidence and explicit localization interact when both are needed.",
+      "input_schema": "question and highlighted sentence windows from selected passages",
+      "output_schema": "highlighted-window EM, F1, and generation time",
+      "requires": ["gold_sentence_highlight_probe", "gold_window_plain_probe"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "one generation per eligible question",
+      "failure_signatures": ["interaction arm is attempted without both main-effect arms", "window-highlight text crosses the compact boundary"]
+    },
+    {
+      "id": "evidence_sufficiency_combiner",
+      "version": "1.0.0",
+      "role": "idea",
+      "type": "combiner",
+      "interface": "evidence_sufficiency_combiner_v1",
+      "insertion_point": "after compact arm records are written",
+      "hypothesis": "A held-out 2x2 evidence presentation can distinguish local context sufficiency from answer localization.",
+      "input_schema": "compact rows from all arms",
+      "output_schema": "exclusive attribution, paired bootstrap intervals, and report-only gate",
+      "requires": ["frozen_baseline_observer", "gold_answer_copy_control", "gold_sentence_plain_probe", "gold_sentence_highlight_probe", "gold_window_plain_probe", "gold_window_highlight_probe"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "scalar aggregation and paired bootstrap only",
+      "failure_signatures": ["copy-control failures enter primary attribution", "small eligible cohort is treated as decisive", "gate changes under deterministic replay"]
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": ["frozen_baseline_observer", "gold_answer_copy_control", "gold_sentence_plain_probe", "gold_sentence_highlight_probe", "gold_window_plain_probe", "gold_window_highlight_probe", "evidence_sufficiency_combiner"]
+  },
+  "composition": {
+    "mode": "parallel",
+    "order": ["frozen_baseline_observer", "gold_answer_copy_control", "gold_sentence_plain_probe", "gold_sentence_highlight_probe", "gold_window_plain_probe", "gold_window_highlight_probe", "evidence_sufficiency_combiner"],
+    "merge_rule": "Retrieve/select once, run baseline, run copy control only on selected-hit baseline EM failures, run the four paired evidence arms only after copy-control EM success, and aggregate scalar records only.",
+    "interaction_ablations": [
+      "plain sentence versus highlighted sentence",
+      "plain sentence versus plain neighboring window",
+      "highlighted sentence versus highlighted neighboring window",
+      "gold-copy control versus all evidence presentations"
+    ]
+  },
+  "validation": {
+    "baseline_equivalence": "Synthetic fixtures prove frozen baseline forwarding is unchanged and custom evidence prompts use only context text.",
+    "tests": [
+      "baseline_equivalence",
+      "plugin_isolation",
+      "deterministic_replay",
+      "interaction_ablation",
+      "config and allowlist validation",
+      "exact sentence/window extraction and deterministic highlighting",
+      "adaptive copy and evidence-arm conditions",
+      "compact schema and forbidden-field privacy",
+      "2x2 attribution fixtures",
+      "bootstrap replay",
+      "validate-only smoke manifest"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/phase9f_evidence_sufficiency_localization.yaml",
+    "dataset_identity": "nq_open validation[700:750], Wiki-DPR psgs_w100.nq.compressed, nprobe=64, one Top-50 DPR retrieval and one frozen QORE K=5 selection per question",
+    "environment": "runner records Python executable/version, git revision, config SHA-256, plugin tree hash, resolved generator identity/config hash, retrieval/selection settings, and output paths",
+    "seeds": [42, 9601],
+    "output_manifest": "exchange/five_ideas/phase9f_evidence_sufficiency_localization/<timestamp>/run_metadata.json"
+  },
+  "limitations": [
+    "Gold copy and highlighted evidence are oracle diagnostics and cannot support a production claim by themselves.",
+    "A local neighboring sentence is only a proxy for evidence sufficiency and does not establish human-judged entailment.",
+    "A 50-question held-out slice and one deterministic decoding seed cannot establish broad generalization.",
+    "All oracle inputs remain internal and no raw prompt, passage, answer, or prediction is exchanged.",
+    "Every gate outcome is report-only and leaves the production selector and generator unchanged."
+  ]
+}
