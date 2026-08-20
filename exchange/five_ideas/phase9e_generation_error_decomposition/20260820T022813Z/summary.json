@@ -1,0 +1,93 @@
+{
+  "arms": {
+    "baseline": {
+      "em_mean": 0.26,
+      "f1_mean": 0.5236709956709956,
+      "generation_time_ms_mean": 244.389949600004,
+      "n_attempted": 50
+    },
+    "extractive": {
+      "em_mean": 0.28,
+      "f1_mean": 0.4494807284219049,
+      "generation_time_ms_mean": 259.8756558199989,
+      "n_attempted": 50
+    },
+    "gold_answer_copy": {
+      "em_mean": 1.0,
+      "f1_mean": 1.0,
+      "generation_time_ms_mean": 72.49196414999801,
+      "n_attempted": 20
+    },
+    "oracle_context": {
+      "em_mean": 0.28205128205128205,
+      "f1_mean": 0.5758852258852258,
+      "generation_time_ms_mean": 147.15364689742472,
+      "n_attempted": 39
+    },
+    "oracle_extractive": {
+      "em_mean": 0.38461538461538464,
+      "f1_mean": 0.5943972693972694,
+      "generation_time_ms_mean": 146.14001869231814,
+      "n_attempted": 39
+    }
+  },
+  "cohorts": {
+    "retrieval_hit": 41,
+    "selected_hit": 39,
+    "selected_hit_baseline_errors": 27
+  },
+  "decision": {
+    "dominant_class": "lexical_evidence_insufficiency",
+    "dominant_fraction": 0.6666666666666666,
+    "primary_failure_class": "lexical_evidence_insufficiency_dominant",
+    "runner_up_fraction": 0.18518518518518517,
+    "thresholds": {
+      "minimum_dominance_margin": 0.1,
+      "minimum_dominant_fraction": 0.4,
+      "minimum_primary_errors": 10
+    }
+  },
+  "n_questions": 50,
+  "primary_error_attribution": {
+    "counts": {
+      "both_main_effects": 1,
+      "context_localization": 1,
+      "generator_copy_failure": 0,
+      "interaction_only": 2,
+      "lexical_evidence_insufficiency": 18,
+      "prompt_format": 5
+    },
+    "fractions": {
+      "both_main_effects": 0.037037037037037035,
+      "context_localization": 0.037037037037037035,
+      "generator_copy_failure": 0.0,
+      "interaction_only": 0.07407407407407407,
+      "lexical_evidence_insufficiency": 0.6666666666666666,
+      "prompt_format": 0.18518518518518517
+    },
+    "paired_f1_deltas": {
+      "extractive": {
+        "bootstrap_repetitions": 2000,
+        "bootstrap_seed": 9501,
+        "ci95_high": 0.1712899772703694,
+        "ci95_low": -0.06671545048996029,
+        "mean": 0.052957524199354254
+      },
+      "oracle_context": {
+        "bootstrap_repetitions": 2000,
+        "bootstrap_seed": 9502,
+        "ci95_high": 0.15015512265512262,
+        "ci95_low": -0.07558601891935224,
+        "mean": 0.037999037999038
+      },
+      "oracle_extractive": {
+        "bootstrap_repetitions": 2000,
+        "bootstrap_seed": 9503,
+        "ci95_high": 0.2319548661215326,
+        "ci95_low": -0.03803972262305596,
+        "mean": 0.0935746352413019
+      }
+    }
+  },
+  "schema_version": 1
+}
