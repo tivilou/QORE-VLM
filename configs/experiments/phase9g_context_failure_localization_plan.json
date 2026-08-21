@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "QORE-VLM Phase 9G context failure localization",
+  "authorization": "implemented",
+  "baseline": {
+    "entry_point": "scripts/rag/eval/eval_rag_refactored.py plus applications.rag.generation.Generator.generate",
+    "code_revision": "five-ideas-development after the Phase 9F evidence-sufficiency gate",
+    "equivalence_test": "The baseline calls unchanged Generator.generate with the selected QORE K=5 list; every diagnostic arm calls the same stable method and varies only an internal passage subset, markers, or order without changing selection inputs"
+  },
+  "core_invariants": [
+    "Each question is retrieved and selected exactly once before any diagnostic output exists.",
+    "All arms use the same pinned model, deterministic decoding, evaluator normalization, and question.",
+    "Highlight markers are inserted only around lexical answer spans already present in passages.",
+    "Answer-first preserves selected passage membership and relative order within moved groups.",
+    "The Top-50 oracle contains only retrieved passages with an existing lexical answer match.",
+    "Probe outputs never feed back into retrieval, selection, generation, or labels.",
+    "The existing Generator, selector, evaluator, and stable answer matcher are not modified.",
+    "A fresh held-out validation slice is used and compact output contains no raw text."
+  ],
+  "interfaces": [
+    {
+      "id": "generation_probe_v1",
+      "type": "transformer",
+      "input_schema": "question and diagnostic passage list",
+      "output_schema": "one scalar arm record with attempted, EM, F1, and generation time",
+      "invariants": ["Uses the frozen Generator identity and deterministic decoding.", "Raw prompt and prediction remain outside compact exchange output."]
+    },
+    {
+      "id": "context_failure_combiner_v1",
+      "type": "combiner",
+      "input_schema": "compact baseline, copy-control, and four context arm records",
+      "output_schema": "cohorts, arm summaries, exclusive attribution, paired bootstrap deltas, and report-only gate",
+      "invariants": ["Attribution is restricted to selected-hit baseline EM errors with successful copy control.", "A dominant result authorizes no production change."]
+    }
+  ],
+  "plugins": [
+    {"id":"frozen_baseline_observer","version":"1.0.0","role":"baseline","type":"observer","interface":"generation_probe_v1","insertion_point":"after unchanged QORE selection","hypothesis":"The unchanged generation arm is the reference.","input_schema":"selected QORE K=5 passages","output_schema":"baseline EM, F1, and time","requires":[],"conflicts":[],"deterministic":true,"resource_estimate":"one generation per question","failure_signatures":["baseline differs from Generator.generate"]},
+    {"id":"gold_answer_copy_control","version":"1.0.0","role":"adapter","type":"adapter","interface":"generation_probe_v1","insertion_point":"selected-hit baseline EM failures only","hypothesis":"Copy control separates output inability from context-use inability.","input_schema":"internal gold candidate","output_schema":"conditional copy EM, F1, and time","requires":["frozen_baseline_observer"],"conflicts":[],"deterministic":true,"resource_estimate":"at most one generation per primary error","failure_signatures":["copy runs outside its condition"]},
+    {"id":"full_passage_plain_probe","version":"1.0.0","role":"idea","type":"transformer","interface":"generation_probe_v1","insertion_point":"eligible cohort","hypothesis":"Complete answer-bearing selected passages contain useful context omitted by the Phase 9F local window.","input_schema":"all answer-bearing selected passages in selected order","output_schema":"plain full-passage EM, F1, and time","requires":["gold_answer_copy_control"],"conflicts":[],"deterministic":true,"resource_estimate":"one generation per eligible question","failure_signatures":["probe includes a non-answer-bearing selected passage"]},
+    {"id":"full_passage_highlight_probe","version":"1.0.0","role":"idea","type":"transformer","interface":"generation_probe_v1","insertion_point":"eligible cohort","hypothesis":"Answer-span localization within complete answer-bearing passages is the obstruction.","input_schema":"answer-bearing selected passages with internal lexical span markers","output_schema":"highlighted-full EM, F1, and time","requires":["full_passage_plain_probe"],"conflicts":[],"deterministic":true,"resource_estimate":"one generation per eligible question","failure_signatures":["marker adds text not present in source"]},
+    {"id":"answer_passage_first_probe","version":"1.0.0","role":"idea","type":"transformer","interface":"generation_probe_v1","insertion_point":"eligible cohort","hypothesis":"Answer passage position or attention is the obstruction.","input_schema":"all selected passages stably reordered by answer match","output_schema":"answer-first EM, F1, and time","requires":["full_passage_plain_probe"],"conflicts":[],"deterministic":true,"resource_estimate":"one generation per eligible question","failure_signatures":["reordering changes membership or within-group order"]},
+    {"id":"retrieved_answer_oracle_probe","version":"1.0.0","role":"idea","type":"transformer","interface":"generation_probe_v1","insertion_point":"eligible cohort","hypothesis":"Additional answer-bearing Top-50 passages jointly provide missing evidence.","input_schema":"all answer-bearing Top-50 passages in retrieval order","output_schema":"Top-50 oracle EM, F1, and time","requires":["full_passage_plain_probe"],"conflicts":[],"deterministic":true,"resource_estimate":"one generation per eligible question","failure_signatures":["oracle includes a non-matching passage"]},
+    {"id":"context_failure_combiner","version":"1.0.0","role":"idea","type":"combiner","interface":"context_failure_combiner_v1","insertion_point":"after scalar records","hypothesis":"A weakest-success hierarchy separates within-passage context, localization, ordering, multi-passage, and residual failures.","input_schema":"compact arm records","output_schema":"exclusive hierarchical attribution and report-only gate","requires":["frozen_baseline_observer","gold_answer_copy_control","full_passage_plain_probe","full_passage_highlight_probe","answer_passage_first_probe","retrieved_answer_oracle_probe"],"conflicts":[],"deterministic":true,"resource_estimate":"scalar aggregation and paired bootstrap","failure_signatures":["copy failures enter attribution","hierarchy changes under replay","gate changes under replay"]}
+  ],
+  "discovery": {"mode":"explicit_allowlist","allowlist":["frozen_baseline_observer","gold_answer_copy_control","full_passage_plain_probe","full_passage_highlight_probe","answer_passage_first_probe","retrieved_answer_oracle_probe","context_failure_combiner"]},
+  "composition": {"mode":"parallel","order":["frozen_baseline_observer","gold_answer_copy_control","full_passage_plain_probe","full_passage_highlight_probe","answer_passage_first_probe","retrieved_answer_oracle_probe","context_failure_combiner"],"merge_rule":"Retrieve/select once, run baseline, copy control only on selected-hit baseline EM failures, then all four paired context arms only after copy-control success; aggregate scalars only.","interaction_ablations":["baseline versus answer-bearing full passages","plain versus highlighted full passages","original order versus answer-first order","selected answer passages versus Top-50 answer oracle"]},
+  "validation": {"baseline_equivalence":"Synthetic fixtures prove unchanged baseline Generator forwarding and deterministic diagnostic subsets/order.","tests":["baseline_equivalence","plugin_isolation","deterministic_replay","interaction_ablation","context membership/order invariants","adaptive copy and arm conditions","compact privacy","hierarchical attribution fixtures","bootstrap replay","validate-only smoke manifest"]},
+  "reproducibility": {"config_path":"configs/experiments/phase9g_context_failure_localization.yaml","dataset_identity":"nq_open validation[750:800], Wiki-DPR psgs_w100.nq.compressed, nprobe=64, one Top-50 retrieval and one frozen QORE K=5 selection per question","environment":"runner records Python executable/version, git revision, config SHA-256, plugin tree hash, resolved generator identity/config hash, retrieval/selection settings, and output paths","seeds":[42,9701],"output_manifest":"exchange/five_ideas/phase9g_context_failure_localization/<timestamp>/run_metadata.json"},
+  "limitations":["All context arms are oracle diagnostics and cannot support a production claim by themselves.","Lexical answer matching is not human-judged entailment.","The Top-50 oracle can be affected by the model input token limit.","A 50-question slice and deterministic decoding cannot establish broad generalization.","Every gate outcome is report-only and leaves production code unchanged."]
+}

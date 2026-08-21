@@ -1,0 +1,86 @@
+phase:
+  name: phase9g_context_failure_localization
+  schema_version: 1
+  diagnostic_only: true
+  selection_mutation: false
+  authorization: one_targeted_followup_only
+  parent_phase: phase9f_evidence_sufficiency_localization
+  parent_evidence:
+    result_commit: de3ced84e6d12fa2e8d32b98fa753e9ab8a16611
+    result_sha256: d9953b6d4a2e330b8966003b669a24550822c73fffddbc8aa7083d0fb9ea50bc
+    decision: beyond_local_context_dominant
+
+  dataset: nq_open
+  split: validation
+  sample_offset: 750
+  max_samples: 50
+  fresh_slice: true
+  corpus_mode: wiki_dpr
+  wiki_dpr_config: psgs_w100.nq.compressed
+  wiki_dpr_nprobe: 64
+  top_k_retrieval: 50
+
+  selection:
+    method: qore
+    K: 5
+    num_reads: 100
+    lam: 2.0
+    seed: 42
+    gamma: 1.0
+    delta: 0.0
+    complementarity_method: null
+    qore_prefilter_size: null
+    direct_solve_max_n: 20
+    lambda_mmr: 0.7
+    saturation_alpha: 1.0
+    lambda_submodular: 0.5
+    dpp_quality_scale: 2.0
+    dpp_jitter: 1.0e-8
+    use_answer_scorer: true
+    answer_scorer_backend: dpr
+
+  generator:
+    name: reference
+    model_id: NousResearch/Meta-Llama-3-8B-Instruct
+    revision: 53346005fb0ef11d3b6a83b12c895cca40156b6c
+    max_new_tokens: 32
+    model_path_candidates:
+      - models/llama3-8b
+    resolver_order: [cli_override, project_candidate, hf_cache]
+    record_resolved_identity: true
+
+  plugins:
+    allowlist:
+      - frozen_baseline_observer
+      - gold_answer_copy_control
+      - full_passage_plain_probe
+      - full_passage_highlight_probe
+      - answer_passage_first_probe
+      - retrieved_answer_oracle_probe
+      - context_failure_combiner
+    context_variant_profile: full_context_3way_v1
+    gold_answer_copy_profile: gold_answer_copy_v1
+    diagnostic_outputs_used_for_selection: false
+
+  gate:
+    minimum_primary_errors: 10
+    minimum_copy_control_successes: 8
+    minimum_dominant_fraction: 0.40
+    minimum_dominance_margin: 0.10
+    bootstrap_repetitions: 2000
+    bootstrap_seed: 9701
+    dominant_action: report_only_no_production_change
+    mixed_action: stop_and_collect_more_evidence
+    insufficient_action: stop_and_do_not_intervene
+
+  outputs:
+    root: exchange/five_ideas/phase9g_context_failure_localization
+    compact_only: true
+    forbidden_fields:
+      - question
+      - passages
+      - gold_answers
+      - prediction
+      - raw_prompt
+      - oracle_passages
+      - gold_answer
