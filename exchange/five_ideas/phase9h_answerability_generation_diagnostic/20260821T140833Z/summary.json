@@ -1,0 +1,81 @@
+{
+  "arms": {
+    "baseline": {
+      "em_mean": 0.48,
+      "f1_mean": 0.5891666666666666,
+      "generation_time_ms_mean": 237.26751615998978,
+      "n_attempted": 50
+    },
+    "extractive": {
+      "em_mean": 0.23529411764705882,
+      "f1_mean": 0.3349297761062467,
+      "generation_time_ms_mean": 322.9857892353072,
+      "n_attempted": 17
+    },
+    "gold_answer_copy": {
+      "em_mean": 1.0,
+      "f1_mean": 1.0,
+      "generation_time_ms_mean": 76.12714629411076,
+      "n_attempted": 17
+    },
+    "support_judge": {
+      "generation_time_ms_mean": 151.35957599998432,
+      "label_counts": {
+        "supported": 12,
+        "uncertain": 0,
+        "unsupported": 5
+      },
+      "n_attempted": 17
+    }
+  },
+  "cohorts": {
+    "copy_control_failures": 0,
+    "copy_control_successes": 17,
+    "retrieval_hit": 46,
+    "selected_hit": 41,
+    "selected_hit_baseline_errors": 17
+  },
+  "decision": {
+    "dominant_class": "model_judge_unsupported",
+    "dominant_fraction": 0.29411764705882354,
+    "primary_failure_class": "mixed_answerability_generation_failures",
+    "report_only": true,
+    "runner_up_fraction": 0.23529411764705882,
+    "support_judge_is_model_signal": true,
+    "thresholds": {
+      "minimum_copy_control_successes": 8,
+      "minimum_dominance_margin": 0.1,
+      "minimum_dominant_fraction": 0.4,
+      "minimum_primary_errors": 10
+    }
+  },
+  "n_questions": 50,
+  "primary_attribution": {
+    "counts": {
+      "answer_extraction_contract": 4,
+      "answer_format_mismatch": 4,
+      "conflicting_signals": 0,
+      "model_judge_unsupported": 5,
+      "semantic_generation_failure": 4,
+      "unresolved_residual": 0
+    },
+    "fractions": {
+      "answer_extraction_contract": 0.23529411764705882,
+      "answer_format_mismatch": 0.23529411764705882,
+      "conflicting_signals": 0.0,
+      "model_judge_unsupported": 0.29411764705882354,
+      "semantic_generation_failure": 0.23529411764705882,
+      "unresolved_residual": 0.0
+    },
+    "paired_f1_deltas": {
+      "extractive": {
+        "bootstrap_repetitions": 2000,
+        "bootstrap_seed": 9801,
+        "ci95_high": 0.1453526865291571,
+        "ci95_low": -0.10165349356525827,
+        "mean": 0.021204285910168274
+      }
+    }
+  },
+  "schema_version": 1
+}

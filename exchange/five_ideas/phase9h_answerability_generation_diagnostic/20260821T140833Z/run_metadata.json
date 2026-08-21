@@ -1,0 +1,79 @@
+{
+  "config": {
+    "path": "/root/QORE-VLM/configs/experiments/phase9h_answerability_generation_diagnostic.yaml",
+    "sha256": "e98afb626446830c2bc2b6497098d51f78e9ead3f76bd8326b97af1cbc14f1e3"
+  },
+  "dataset": {
+    "fresh_slice": true,
+    "max_samples": 50,
+    "name": "nq_open",
+    "sample_offset": 800,
+    "split": "validation"
+  },
+  "diagnostic_only": true,
+  "generator": {
+    "config_sha256": "61f3de03a16ca8046b05dc777bce72717022bc8522152eee61a69072272ef54b",
+    "model_id": "NousResearch/Meta-Llama-3-8B-Instruct",
+    "model_path": "/root/QORE-VLM/models/llama3-8b",
+    "resolution": "local_cache",
+    "revision": "53346005fb0ef11d3b6a83b12c895cca40156b6c"
+  },
+  "git": {
+    "commit": "7cac580ac642db5bef1289ebaece4de80345bcd8",
+    "status": "## five-ideas-development...origin/five-ideas-development\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_full/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_reader_window_050/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_reader_window_075/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_uniform_head_050/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_uniform_head_075/\n?? exchange/five_ideas/phase9h_answerability_generation_diagnostic/"
+  },
+  "parent_phase": "phase9g_context_failure_localization",
+  "phase": "phase9h_answerability_generation_diagnostic",
+  "plugins": {
+    "allowlist": [
+      "frozen_baseline_observer",
+      "gold_answer_copy_control",
+      "model_support_judge",
+      "extractive_answer_probe",
+      "baseline_format_audit",
+      "answerability_generation_combiner"
+    ],
+    "diagnostic_outputs_used_for_selection": false,
+    "tree_sha256": "aa218539e591791d3d7a0dc109af2b132c6349573b188af066d163ff083a9e73"
+  },
+  "python": {
+    "executable": "/root/miniconda3/bin/python",
+    "version": "3.10.20 (main, Mar 11 2026, 17:46:40) [GCC 14.3.0]"
+  },
+  "report_only": true,
+  "retrieval": {
+    "corpus_mode": "wiki_dpr",
+    "nprobe": 64,
+    "top_k_retrieval": 50,
+    "wiki_dpr_config": "psgs_w100.nq.compressed"
+  },
+  "schema_version": 1,
+  "selection": {
+    "K": 5,
+    "answer_scorer_backend": "dpr",
+    "complementarity_method": null,
+    "delta": 0.0,
+    "direct_solve_max_n": 20,
+    "dpp_jitter": 1e-08,
+    "dpp_quality_scale": 2.0,
+    "gamma": 1.0,
+    "lam": 2.0,
+    "lambda_mmr": 0.7,
+    "lambda_submodular": 0.5,
+    "method": "qore",
+    "num_reads": 100,
+    "qore_prefilter_size": null,
+    "saturation_alpha": 1.0,
+    "seed": 42,
+    "use_answer_scorer": true
+  },
+  "selection_mutation": false,
+  "status": "completed",
+  "summary": {
+    "path": "/root/QORE-VLM/exchange/five_ideas/phase9h_answerability_generation_diagnostic/20260821T140833Z/summary.json",
+    "primary_failure_class": "mixed_answerability_generation_failures"
+  },
+  "timing_ms": {
+    "total": 38635.72171600004
+  }
+}
