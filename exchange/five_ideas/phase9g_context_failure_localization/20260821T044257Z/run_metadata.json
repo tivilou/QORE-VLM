@@ -1,0 +1,80 @@
+{
+  "config": {
+    "path": "/root/QORE-VLM/configs/experiments/phase9g_context_failure_localization.yaml",
+    "sha256": "0adf9685dec8b343b9af00926c58cea056af653b51e896327190adeca8ea3ed9"
+  },
+  "dataset": {
+    "fresh_slice": true,
+    "max_samples": 50,
+    "name": "nq_open",
+    "sample_offset": 750,
+    "split": "validation"
+  },
+  "diagnostic_only": true,
+  "generator": {
+    "config_sha256": "61f3de03a16ca8046b05dc777bce72717022bc8522152eee61a69072272ef54b",
+    "model_id": "NousResearch/Meta-Llama-3-8B-Instruct",
+    "model_path": "/root/QORE-VLM/models/llama3-8b",
+    "resolution": "local_cache",
+    "revision": "53346005fb0ef11d3b6a83b12c895cca40156b6c"
+  },
+  "git": {
+    "commit": "e0c9f6de85cd4af5c1b98976d1864ede47718a3e",
+    "status": "## five-ideas-development...origin/five-ideas-development\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_full/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_reader_window_050/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_reader_window_075/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_uniform_head_050/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_uniform_head_075/"
+  },
+  "parent_phase": "phase9f_evidence_sufficiency_localization",
+  "phase": "phase9g_context_failure_localization",
+  "plugins": {
+    "allowlist": [
+      "frozen_baseline_observer",
+      "gold_answer_copy_control",
+      "full_passage_plain_probe",
+      "full_passage_highlight_probe",
+      "answer_passage_first_probe",
+      "retrieved_answer_oracle_probe",
+      "context_failure_combiner"
+    ],
+    "diagnostic_outputs_used_for_selection": false,
+    "tree_sha256": "449dc331782e160268b6225ff7adbdfe3721d907bb2e8061abb8279ce2ad7b6b"
+  },
+  "python": {
+    "executable": "/root/miniconda3/bin/python",
+    "version": "3.10.20 (main, Mar 11 2026, 17:46:40) [GCC 14.3.0]"
+  },
+  "report_only": true,
+  "retrieval": {
+    "corpus_mode": "wiki_dpr",
+    "nprobe": 64,
+    "top_k_retrieval": 50,
+    "wiki_dpr_config": "psgs_w100.nq.compressed"
+  },
+  "schema_version": 1,
+  "selection": {
+    "K": 5,
+    "answer_scorer_backend": "dpr",
+    "complementarity_method": null,
+    "delta": 0.0,
+    "direct_solve_max_n": 20,
+    "dpp_jitter": 1e-08,
+    "dpp_quality_scale": 2.0,
+    "gamma": 1.0,
+    "lam": 2.0,
+    "lambda_mmr": 0.7,
+    "lambda_submodular": 0.5,
+    "method": "qore",
+    "num_reads": 100,
+    "qore_prefilter_size": null,
+    "saturation_alpha": 1.0,
+    "seed": 42,
+    "use_answer_scorer": true
+  },
+  "selection_mutation": false,
+  "status": "completed",
+  "summary": {
+    "path": "/root/QORE-VLM/exchange/five_ideas/phase9g_context_failure_localization/20260821T044257Z/summary.json",
+    "primary_failure_class": "beyond_top50_context_dominant"
+  },
+  "timing_ms": {
+    "total": 48841.58927399994
+  }
+}

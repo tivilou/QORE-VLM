@@ -1,0 +1,110 @@
+{
+  "arms": {
+    "answer_first": {
+      "em_mean": 0.05555555555555555,
+      "f1_mean": 0.4878747795414462,
+      "generation_time_ms_mean": 234.85856994444828,
+      "n_attempted": 18
+    },
+    "baseline": {
+      "em_mean": 0.26,
+      "f1_mean": 0.45746031746031746,
+      "generation_time_ms_mean": 242.1863784399943,
+      "n_attempted": 50
+    },
+    "full_highlight": {
+      "em_mean": 0.1111111111111111,
+      "f1_mean": 0.6148589065255732,
+      "generation_time_ms_mean": 182.46973105555261,
+      "n_attempted": 18
+    },
+    "full_plain": {
+      "em_mean": 0.1111111111111111,
+      "f1_mean": 0.6130070546737214,
+      "generation_time_ms_mean": 189.96703083334725,
+      "n_attempted": 18
+    },
+    "gold_answer_copy": {
+      "em_mean": 1.0,
+      "f1_mean": 1.0,
+      "generation_time_ms_mean": 77.29691350001468,
+      "n_attempted": 18
+    },
+    "retrieved_answer_oracle": {
+      "em_mean": 0.1111111111111111,
+      "f1_mean": 0.4833774250440917,
+      "generation_time_ms_mean": 357.80928327777576,
+      "n_attempted": 18
+    }
+  },
+  "cohorts": {
+    "copy_control_failures": 0,
+    "copy_control_successes": 18,
+    "retrieval_hit": 34,
+    "selected_hit": 28,
+    "selected_hit_baseline_errors": 18
+  },
+  "decision": {
+    "dominant_class": "beyond_top50_context",
+    "dominant_fraction": 0.8333333333333334,
+    "primary_failure_class": "beyond_top50_context_dominant",
+    "report_only": true,
+    "runner_up_fraction": 0.1111111111111111,
+    "thresholds": {
+      "minimum_copy_control_successes": 8,
+      "minimum_dominance_margin": 0.1,
+      "minimum_dominant_fraction": 0.4,
+      "minimum_primary_errors": 10
+    }
+  },
+  "n_questions": 50,
+  "primary_attribution": {
+    "counts": {
+      "answer_passage_order": 0,
+      "beyond_top50_context": 15,
+      "full_passage_localization": 1,
+      "full_passage_sufficient": 2,
+      "multi_passage_evidence": 0,
+      "retrieved_oracle_nonincremental": 0
+    },
+    "fractions": {
+      "answer_passage_order": 0.0,
+      "beyond_top50_context": 0.8333333333333334,
+      "full_passage_localization": 0.05555555555555555,
+      "full_passage_sufficient": 0.1111111111111111,
+      "multi_passage_evidence": 0.0,
+      "retrieved_oracle_nonincremental": 0.0
+    },
+    "paired_f1_deltas": {
+      "answer_first": {
+        "bootstrap_repetitions": 2000,
+        "bootstrap_seed": 9703,
+        "ci95_high": 0.14074074074074072,
+        "ci95_low": 0.0,
+        "mean": 0.05925925925925926
+      },
+      "full_highlight": {
+        "bootstrap_repetitions": 2000,
+        "bootstrap_seed": 9702,
+        "ci95_high": 0.31851851851851853,
+        "ci95_low": 0.06746031746031746,
+        "mean": 0.18624338624338624
+      },
+      "full_plain": {
+        "bootstrap_repetitions": 2000,
+        "bootstrap_seed": 9701,
+        "ci95_high": 0.2933994708994708,
+        "ci95_low": 0.07248677248677249,
+        "mean": 0.18439153439153438
+      },
+      "retrieved_answer_oracle": {
+        "bootstrap_repetitions": 2000,
+        "bootstrap_seed": 9704,
+        "ci95_high": 0.22783730158730128,
+        "ci95_low": -0.1148148148148148,
+        "mean": 0.05476190476190476
+      }
+    }
+  },
+  "schema_version": 1
+}
