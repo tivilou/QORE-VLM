@@ -1,0 +1,140 @@
+phase:
+  name: phase9j_context_lift_candidate_ranking
+  schema_version: 1
+  diagnostic_only: true
+  selection_mutation: false
+  authorization: implemented
+  parent_phase: phase9i_candidate_coverage_grounded_ranking
+
+  dataset:
+    name: nq_open
+    split: validation
+    screen:
+      sample_offset: 1300
+      max_samples: 50
+      slice: "nq_open validation[1300:1350]"
+      fresh_slice: true
+    formal:
+      sample_offset: 1350
+      max_samples: 200
+      slice: "nq_open validation[1350:1550]"
+      fresh_slice: true
+    replication:
+      sample_offset: 1550
+      max_samples: 200
+      slice: "nq_open validation[1550:1750]"
+      fresh_slice: true
+
+  retrieval:
+    corpus_mode: wiki_dpr
+    wiki_dpr_config: psgs_w100.nq.compressed
+    nprobe: 64
+    top_k: 50
+
+  selection:
+    method: qore
+    K: 5
+    num_reads: 100
+    lam: 2.0
+    seed: 42
+    gamma: 1.0
+    delta: 0.0
+    complementarity_method: null
+    qore_prefilter_size: null
+    direct_solve_max_n: 20
+    lambda_mmr: 0.7
+    saturation_alpha: 1.0
+    lambda_submodular: 0.5
+    dpp_quality_scale: 2.0
+    dpp_jitter: 1.0e-8
+    use_answer_scorer: true
+    answer_scorer_backend: dpr
+
+  generator:
+    model_id: NousResearch/Meta-Llama-3-8B-Instruct
+    revision: 53346005fb0ef11d3b6a83b12c895cca40156b6c
+    max_new_tokens: 32
+    decoding: greedy
+    model_path_candidates:
+      - models/llama3-8b
+    resolver_order: [cli_override, project_candidate, hf_cache]
+    record_resolved_identity: true
+
+  plugins:
+    allowlist:
+      - frozen_baseline_observer
+      - gold_answer_copy_control
+      - extractive_span_candidate
+      - evidence_constrained_candidate
+      - candidate_set_coverage_combiner
+      - context_lift_candidate_ranker
+      - reader_span_support_candidate_ranker
+      - combined_candidate_ranker
+      - ranker_order_invariance_audit
+    candidate_profile: [baseline_v1, extractive_span_v1, evidence_constrained_v1]
+    ranker_profiles: [context_lift_v1, reader_span_support_v1, context_lift_reader_support_v1]
+    diagnostic_outputs_used_for_selection: false
+    production_intervention: false
+
+  candidate_contract:
+    candidate_count_max: 3
+    candidate_modes: [baseline_v1, extractive_span_v1, evidence_constrained_v1]
+    candidate_input: question_and_selected_context_only
+    candidate_text_persisted: false
+    parse_failures_excluded_from_oracle: true
+    abstention_token: "<ABSTAIN>"
+    duplicate_normalization: "lowercase, trim, collapse whitespace, preserve evaluator input separately"
+
+  ranker_contract:
+    profiles: [context_lift_v1, reader_span_support_v1, context_lift_reader_support_v1]
+    reader_weight: 1.0
+    order_audit: fixed_reverse_by_mode_id
+    candidate_score_formula: "rank(context_lift) + reader_weight * rank(reader_span_support)"
+    context_lift_formula: "mean_logprob(candidate|question,selected_context) - mean_logprob(candidate|question,empty_context)"
+    reader_support_formula: "maximum DPR reader start+end logit over an exact candidate token span, with relevance-logit fallback"
+    score_outputs_persisted: true
+
+  eligibility:
+    mode: offline_conditional_diagnostic
+    condition: selected_hit and baseline_em_zero and gold_copy_control_em_one
+    gold_available_to_ranker: false
+    noneligible_questions_keep_baseline_only: true
+
+  gate:
+    screen:
+      purpose: contract_diversity_privacy_runtime
+      null_policy: fatal_only
+      max_generation_equivalent_calls: 250
+      required_checks:
+        - fresh_slice_disjointness
+        - one_retrieval_and_selection_per_question
+        - baseline_equivalence
+        - candidate_mode_diversity
+        - gold_isolation
+        - ranker_order_invariance
+        - compact_output_privacy
+    formal:
+      sample_count: 200
+      bootstrap_repetitions: 2000
+      bootstrap_seed: 9911
+      candidate_oracle_em_uplift_min: 0.05
+      candidate_oracle_ci95_low_min: 0.0
+      ranker_em_uplift_min: 0.03
+      ranker_ci95_low_min: 0.0
+      ranker_f1_loss_max: 0.01
+      order_agreement_min: 0.90
+      score_to_baseline_ratio_max: 1.30
+      action_if_coverage_positive_ranker_negative: stop_candidate_ranking_path
+      action_if_combined_ranker_positive: replication_only_no_production_change
+      action_if_coverage_negative: stop_candidate_path
+    replication:
+      slice: "nq_open validation[1550:1750]"
+      only_if_formal_combined_ranker_gate_passes: true
+      same_frozen_contract: true
+      production_change_allowed: false
+
+  outputs:
+    root: exchange/five_ideas/phase9j_context_lift_candidate_ranking
+    compact_only: true
+    candidate_text_persisted: false
+    forbidden_fields: [question, passages, gold_answers, candidate_text, prediction, raw_prompt, evaluator_trace]

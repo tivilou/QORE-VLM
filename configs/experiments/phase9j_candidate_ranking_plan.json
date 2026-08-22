@@ -1,0 +1,128 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "Q-DUET-VLM",
+  "authorization": "implemented",
+  "baseline": {
+    "entry_point": "scripts/collab/five_ideas/run_phase9i_candidate_coverage_grounded_ranking.py",
+    "code_revision": "130031a",
+    "equivalence_test": "frozen QORE selection and baseline Generator output are unchanged on synthetic and collaborator screen fixtures"
+  },
+  "core_invariants": [
+    "one Wiki-DPR retrieval and one frozen QORE K=5 selection per question",
+    "Answer Scorer, Generator, evaluator, labels, and retrieval depth remain unchanged",
+    "candidate generation and ranking receive no gold, evaluator, or post-hoc metric values",
+    "diagnostic outputs never feed select_passages or production Generator settings",
+    "compact artifacts contain no question, passage, candidate text, prediction, prompt, or evaluator trace"
+  ],
+  "interfaces": [
+    {
+      "id": "candidate_ranker_v1",
+      "type": "combiner",
+      "input_schema": "candidate mode IDs and runtime candidate strings plus question and selected context",
+      "output_schema": "candidate mode choice, scalar scores, parse status, timing, and reverse-order agreement",
+      "invariants": ["choice is keyed by stable candidate mode ID", "gold and evaluator are unavailable", "score is deterministic under fixed model and tokenization"]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "frozen_baseline_observer",
+      "version": "v1",
+      "role": "baseline",
+      "interface": "candidate_ranker_v1",
+      "insertion_point": "after frozen baseline candidate set construction",
+      "hypothesis": "The baseline candidate remains the reference choice",
+      "input_schema": "question and selected context",
+      "output_schema": "baseline candidate mode and runtime string",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "one unchanged baseline generation",
+      "failure_signatures": ["baseline output differs from Phase 9I reference"]
+    },
+    {
+      "id": "context_lift_candidate_ranker",
+      "version": "v1",
+      "role": "idea",
+      "interface": "candidate_ranker_v1",
+      "insertion_point": "after candidate generation, before post-hoc evaluation",
+      "hypothesis": "Context-conditioned candidate likelihood lift identifies the supported answer",
+      "input_schema": "question, selected context, candidate strings",
+      "output_schema": "context_lift rank and candidate mode choice",
+      "requires": ["frozen_baseline_observer"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "one generator forward pass per candidate/context condition",
+      "failure_signatures": ["negative or unstable context lift", "order-dependent choice", "F1 loss"]
+    },
+    {
+      "id": "reader_span_support_candidate_ranker",
+      "version": "v1",
+      "role": "idea",
+      "interface": "candidate_ranker_v1",
+      "insertion_point": "after candidate generation, before post-hoc evaluation",
+      "hypothesis": "DPR reader span support distinguishes grounded candidates",
+      "input_schema": "question, selected context, candidate strings",
+      "output_schema": "reader support rank and candidate mode choice",
+      "requires": ["frozen_baseline_observer"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "one frozen DPR reader pass over selected passages",
+      "failure_signatures": ["support fallback dominates", "order-dependent choice", "no utility"]
+    },
+    {
+      "id": "combined_candidate_ranker",
+      "version": "v1",
+      "role": "idea",
+      "interface": "candidate_ranker_v1",
+      "insertion_point": "after candidate generation, before post-hoc evaluation",
+      "hypothesis": "Rank-normalized context lift plus reader support is more stable than either signal alone",
+      "input_schema": "candidate mode IDs and two scalar signals",
+      "output_schema": "combined candidate mode choice and scalar scores",
+      "requires": ["context_lift_candidate_ranker", "reader_span_support_candidate_ranker"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "no additional generation beyond the two component scores",
+      "failure_signatures": ["combined gate fails", "ranker cost exceeds 1.3x baseline", "F1 loss"]
+    },
+    {
+      "id": "ranker_order_invariance_audit",
+      "version": "v1",
+      "role": "adapter",
+      "interface": "candidate_ranker_v1",
+      "insertion_point": "parallel audit after each ranker choice",
+      "hypothesis": "Stable mode IDs remove candidate-list position bias",
+      "input_schema": "candidate modes, scores, and fixed reverse permutation",
+      "output_schema": "original choice, permuted choice, agreement flag",
+      "requires": ["context_lift_candidate_ranker", "reader_span_support_candidate_ranker", "combined_candidate_ranker"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "negligible scalar replay",
+      "failure_signatures": ["agreement below 0.90", "tie behavior changes with order"]
+    }
+  ],
+  "discovery": {"mode": "explicit_allowlist", "allowlist": ["frozen_baseline_observer", "context_lift_candidate_ranker", "reader_span_support_candidate_ranker", "combined_candidate_ranker", "ranker_order_invariance_audit"]},
+  "composition": {
+    "mode": "parallel",
+    "order": ["frozen_baseline_observer", "context_lift_candidate_ranker", "reader_span_support_candidate_ranker", "combined_candidate_ranker", "ranker_order_invariance_audit"],
+    "merge_rule": "all rankers consume the same immutable candidate set and emit mode-keyed scalar summaries; no ranker output changes candidate generation or selection",
+    "interaction_ablations": ["context_lift_only", "reader_support_only", "context_lift_plus_reader_support", "fixed_reverse_order_audit"]
+  },
+  "validation": {
+    "baseline_equivalence": "Phase 9I frozen baseline output and selection settings remain byte-equivalent at the compact scalar level",
+    "tests": ["baseline_equivalence", "plugin_isolation", "deterministic_replay", "interaction_ablation", "synthetic context-lift arithmetic", "candidate mode ID deterministic ranking", "reverse-order invariance", "compact schema/privacy rejection", "configured formal gate arithmetic", "invalid ranker cannot pass"]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/phase9j_context_lift_candidate_ranking.yaml",
+    "dataset_identity": "nq_open validation[1300:1350] screen; [1350:1550] formal; [1550:1750] replication",
+    "environment": "auto-resolved compatible Python; NousResearch/Meta-Llama-3-8B-Instruct revision 53346005fb0ef11d3b6a83b12c895cca40156b6c; frozen DPR reader",
+    "seeds": [42, 9911],
+    "output_manifest": "exchange/five_ideas/phase9j_context_lift_candidate_ranking/<timestamp>/run_metadata.json"
+  },
+  "limitations": [
+    "This is an observation-only diagnostic and cannot establish a production method claim.",
+    "Candidate ranking and answer likelihood scoring have high nearest-work collision risk.",
+    "The reader support fallback is a diagnostic proxy when exact token span matching fails.",
+    "A screen null is inconclusive for a training-dependent idea, but this implementation has no learned training stage.",
+    "Any positive formal result still requires disjoint replication and a bounded novelty audit."
+  ]
+}
