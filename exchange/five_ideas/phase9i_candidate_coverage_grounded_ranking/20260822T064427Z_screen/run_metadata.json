@@ -1,0 +1,88 @@
+{
+  "config": {
+    "path": "/root/QORE-VLM/configs/experiments/phase9i_candidate_coverage_grounded_ranking.yaml",
+    "sha256": "ed9311da4dec9e8a174e5b9c824ae539ac85e2b440fd818065295eba7741df78"
+  },
+  "dataset": {
+    "fresh_slice": true,
+    "max_samples": 50,
+    "name": "nq_open",
+    "sample_offset": 850,
+    "slice": "nq_open validation[850:900]",
+    "split": "validation"
+  },
+  "diagnostic_only": true,
+  "generator": {
+    "config_sha256": "61f3de03a16ca8046b05dc777bce72717022bc8522152eee61a69072272ef54b",
+    "model_id": "NousResearch/Meta-Llama-3-8B-Instruct",
+    "model_path": "/root/QORE-VLM/models/llama3-8b",
+    "resolution": "local_cache",
+    "revision": "53346005fb0ef11d3b6a83b12c895cca40156b6c"
+  },
+  "git": {
+    "commit": "130031a59fa2b9da567a6558db78b2ee6dbd5191",
+    "status": "## five-ideas-development...origin/five-ideas-development\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_full/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_reader_window_050/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_reader_window_075/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_uniform_head_050/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_uniform_head_075/\n?? exchange/five_ideas/phase9h_answerability_generation_diagnostic/20260821T133038Z/\n?? exchange/five_ideas/phase9h_answerability_generation_diagnostic/20260821T134859Z/"
+  },
+  "phase": "phase9i_candidate_coverage_grounded_ranking",
+  "plugins": {
+    "allowlist": [
+      "frozen_baseline_observer",
+      "gold_answer_copy_control",
+      "extractive_span_candidate",
+      "evidence_constrained_candidate",
+      "candidate_set_coverage_combiner",
+      "grounded_candidate_verifier",
+      "verifier_order_invariance_audit"
+    ],
+    "candidate_profile": [
+      "baseline_v1",
+      "extractive_span_v1",
+      "evidence_constrained_v1"
+    ],
+    "diagnostic_outputs_used_for_selection": false,
+    "order_audit_profile": "fixed_permutation_v1",
+    "tree_sha256": "eaa03cadfedd2cc1ce1ec2339b0d61563a3ecabc95906406cc9613c5221fe2ea",
+    "verifier_profile": "grounded_candidate_choice_v1"
+  },
+  "python": {
+    "executable": "/root/miniconda3/bin/python",
+    "version": "3.10.20 (main, Mar 11 2026, 17:46:40) [GCC 14.3.0]"
+  },
+  "report_only": true,
+  "retrieval": {
+    "corpus_mode": "wiki_dpr",
+    "nprobe": 64,
+    "top_k": 50,
+    "wiki_dpr_config": "psgs_w100.nq.compressed"
+  },
+  "schema_version": 1,
+  "selection": {
+    "K": 5,
+    "answer_scorer_backend": "dpr",
+    "complementarity_method": null,
+    "delta": 0.0,
+    "direct_solve_max_n": 20,
+    "dpp_jitter": 1e-08,
+    "dpp_quality_scale": 2.0,
+    "gamma": 1.0,
+    "lam": 2.0,
+    "lambda_mmr": 0.7,
+    "lambda_submodular": 0.5,
+    "method": "qore",
+    "num_reads": 100,
+    "qore_prefilter_size": null,
+    "saturation_alpha": 1.0,
+    "seed": 42,
+    "use_answer_scorer": true
+  },
+  "selection_mutation": false,
+  "stage": "screen",
+  "status": "completed",
+  "summary": {
+    "path": "/root/QORE-VLM/exchange/five_ideas/phase9i_candidate_coverage_grounded_ranking/20260822T064427Z_screen/summary.json",
+    "primary_failure_class": "screen_contract_only"
+  },
+  "timing_ms": {
+    "total": 57245.16825
+  }
+}
