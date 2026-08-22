@@ -105,7 +105,9 @@
     "mode": "parallel",
     "order": ["frozen_baseline_observer", "context_lift_candidate_ranker", "reader_span_support_candidate_ranker", "combined_candidate_ranker", "ranker_order_invariance_audit"],
     "merge_rule": "all rankers consume the same immutable candidate set and emit mode-keyed scalar summaries; no ranker output changes candidate generation or selection",
-    "interaction_ablations": ["context_lift_only", "reader_support_only", "context_lift_plus_reader_support", "fixed_reverse_order_audit"]
+    "interaction_ablations": ["context_lift_only", "reader_support_only", "context_lift_plus_reader_support", "fixed_reverse_order_audit"],
+    "formal_execution": "reader_support_only",
+    "replication_execution": "reader_support_only"
   },
   "validation": {
     "baseline_equivalence": "Phase 9I frozen baseline output and selection settings remain byte-equivalent at the compact scalar level",
@@ -116,7 +118,8 @@
     "dataset_identity": "nq_open validation[1300:1350] screen; [1350:1550] formal; [1550:1750] replication",
     "environment": "auto-resolved compatible Python; NousResearch/Meta-Llama-3-8B-Instruct revision 53346005fb0ef11d3b6a83b12c895cca40156b6c; frozen DPR reader",
     "seeds": [42, 9911],
-    "output_manifest": "exchange/five_ideas/phase9j_context_lift_candidate_ranking/<timestamp>/run_metadata.json"
+    "output_manifest": "exchange/five_ideas/phase9j_context_lift_candidate_ranking/<timestamp>/run_metadata.json",
+    "formal_primary_profile": "reader_span_support_v1"
   },
   "limitations": [
     "This is an observation-only diagnostic and cannot establish a production method claim.",

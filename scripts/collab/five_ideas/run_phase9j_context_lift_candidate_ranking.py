@@ -196,6 +196,17 @@ def _load_config(path: Path, stage: str) -> tuple[dict[str, Any], dict[str, Any]
     ranker = phase.get("ranker_contract", {})
     if ranker.get("profiles") != list(RANKER_PROFILES) or ranker.get("reader_weight") != 1.0 or ranker.get("order_audit") != "fixed_reverse_by_mode_id":
         raise Phase9JConfigError("ranker contract is not frozen")
+    expected_execution = {
+        "screen": list(RANKER_PROFILES),
+        "formal": [READER_SUPPORT_PROFILE],
+        "replication": [READER_SUPPORT_PROFILE],
+    }
+    if ranker.get("execution_profiles") != expected_execution:
+        raise Phase9JConfigError("ranker execution profiles are not frozen")
+    if phase.get("gate", {}).get("formal", {}).get("primary_ranker_profile") != READER_SUPPORT_PROFILE:
+        raise Phase9JConfigError("formal primary ranker must be reader-span support")
+    if phase.get("gate", {}).get("replication", {}).get("primary_ranker_profile") != READER_SUPPORT_PROFILE:
+        raise Phase9JConfigError("replication primary ranker must be reader-span support")
     return phase, dataset[stage]
 
 
@@ -287,25 +298,32 @@ def _reader_support_scores(answer_scorer: Any, question: str, passages: Sequence
     import torch
     tokenizer = answer_scorer.tokenizer
     values = {mode: float("-inf") for mode in candidates}
-    for passage in passages:
-        encoded = tokenizer(questions=[question], texts=[passage], return_tensors="pt", padding=True, truncation=True, max_length=350)
-        encoded_device = {key: value.to(answer_scorer.device) for key, value in encoded.items()}
-        with torch.no_grad():
-            outputs = answer_scorer.reader(**encoded_device)
-        ids = encoded["input_ids"][0].tolist()
-        token_types = encoded.get("token_type_ids")
-        type_ids = token_types[0].tolist() if token_types is not None else [1] * len(ids)
-        start_logits = outputs.start_logits[0].detach().float().cpu().tolist()
-        end_logits = outputs.end_logits[0].detach().float().cpu().tolist()
-        relevance = float(outputs.relevance_logits[0].detach().float().cpu().item())
+    if not passages:
+        raise Phase9JConfigError("reader support received no passages")
+    encoded = tokenizer(questions=[question] * len(passages), texts=list(passages), return_tensors="pt", padding=True, truncation=True, max_length=350)
+    encoded_device = {key: value.to(answer_scorer.device) for key, value in encoded.items()}
+    with torch.no_grad():
+        outputs = answer_scorer.reader(**encoded_device)
+    input_ids = encoded["input_ids"].detach().cpu().tolist()
+    token_types = encoded.get("token_type_ids")
+    type_ids = token_types.detach().cpu().tolist() if token_types is not None else None
+    start_logits = outputs.start_logits.detach().float().cpu().tolist()
+    end_logits = outputs.end_logits.detach().float().cpu().tolist()
+    relevance_logits = outputs.relevance_logits.detach().float().cpu().tolist()
+    for row_index in range(len(passages)):
+        ids = input_ids[row_index]
+        row_type_ids = type_ids[row_index] if type_ids is not None else [1] * len(ids)
+        row_start_logits = start_logits[row_index]
+        row_end_logits = end_logits[row_index]
+        relevance = float(relevance_logits[row_index])
         for mode, text in candidates.items():
             candidate_ids = tokenizer(str(text).strip(), add_special_tokens=False).get("input_ids", [])
             best = float("-inf")
             if candidate_ids:
                 size = len(candidate_ids)
                 for index in range(0, max(0, len(ids) - size + 1)):
-                    if type_ids[index : index + size] == [1] * size and ids[index : index + size] == candidate_ids:
-                        best = max(best, float(start_logits[index] + end_logits[index + size - 1]))
+                    if row_type_ids[index : index + size] == [1] * size and ids[index : index + size] == candidate_ids:
+                        best = max(best, float(row_start_logits[index] + row_end_logits[index + size - 1]))
             if not math.isfinite(best):
                 best = relevance - 5.0
             values[mode] = max(values[mode], best)
@@ -314,19 +332,30 @@ def _reader_support_scores(answer_scorer: Any, question: str, passages: Sequence
     return values
 
 
-def _ranker_arms(generator: Any, answer_scorer: Any, question: str, passages: Sequence[str], pairs: Sequence[tuple[str, str]], metrics: Mapping[str, Mapping[str, float]], baseline_time_ms: float) -> dict[str, dict[str, Any]]:
+def _ranker_arms(generator: Any, answer_scorer: Any, question: str, passages: Sequence[str], pairs: Sequence[tuple[str, str]], metrics: Mapping[str, Mapping[str, float]], baseline_time_ms: float, *, active_profiles: Sequence[str] = RANKER_PROFILES) -> dict[str, dict[str, Any]]:
+    active_profiles = tuple(active_profiles)
+    if not active_profiles or any(profile not in RANKER_PROFILES for profile in active_profiles):
+        raise Phase9JConfigError("ranker profiles are invalid")
     started = time.perf_counter()
     texts = {mode: text for mode, text in pairs}
-    raw_scores = {mode: {"context_lift": _candidate_context_lift(generator, question, passages, text), "reader_support": 0.0} for mode, text in pairs}
-    reader_values = _reader_support_scores(answer_scorer, question, passages, texts)
-    for mode in raw_scores:
-        raw_scores[mode]["reader_support"] = reader_values[mode]
+    needs_context = any(profile in {CONTEXT_LIFT_PROFILE, COMBINED_PROFILE} for profile in active_profiles)
+    needs_reader = any(profile in {READER_SUPPORT_PROFILE, COMBINED_PROFILE} for profile in active_profiles)
+    raw_scores = {mode: {"context_lift": 0.0, "reader_support": 0.0} for mode, _ in pairs}
+    if needs_context:
+        for mode, text in pairs:
+            raw_scores[mode]["context_lift"] = _candidate_context_lift(generator, question, passages, text)
+    if needs_reader:
+        reader_values = _reader_support_scores(answer_scorer, question, passages, texts)
+        for mode in raw_scores:
+            raw_scores[mode]["reader_support"] = reader_values[mode]
     scores = build_candidate_scores(raw_scores, reader_weight=1.0)
     elapsed = (time.perf_counter() - started) * 1000.0
     result: dict[str, dict[str, Any]] = {}
-    for profile in RANKER_PROFILES:
-        original = choose_candidate(scores, profile)
-        permuted = choose_candidate(scores, profile)
+    original_modes = [mode for mode, _ in pairs]
+    permuted_modes = list(reversed(original_modes))
+    for profile in active_profiles:
+        original = choose_candidate({mode: scores[mode] for mode in original_modes}, profile)
+        permuted = choose_candidate({mode: scores[mode] for mode in permuted_modes}, profile)
         chosen = metrics[original]
         result[profile] = {"attempted": True, "original_choice_mode": original, "permuted_choice_mode": permuted, "order_agreement": original == permuted, "parse_status": "ok", "em": chosen["em"], "f1": chosen["f1"], "score_time_ms": elapsed, "score_to_baseline_ratio": elapsed / max(float(baseline_time_ms), 1.0)}
     return result
@@ -352,9 +381,10 @@ def run(args: argparse.Namespace) -> Path | None:
     if args.bootstrap_reps is not None and args.bootstrap_reps < 100:
         raise Phase9JConfigError("--bootstrap-reps must be at least 100")
     if args.validate_only:
-        print(json.dumps({"status": "valid", "phase": phase["name"], "stage": args.stage, "slice": stage_spec["slice"], "plugins": list(EXPECTED_PLUGINS), "selection_mutation": False, "report_only": True}, sort_keys=True))
+        print(json.dumps({"status": "valid", "phase": phase["name"], "stage": args.stage, "slice": stage_spec["slice"], "plugins": list(EXPECTED_PLUGINS), "active_ranker_profiles": phase["ranker_contract"]["execution_profiles"][args.stage], "selection_mutation": False, "report_only": True}, sort_keys=True))
         return None
     identity = _resolve_generator(root, phase["generator"], args.model_path)
+    active_profiles = tuple(phase["ranker_contract"]["execution_profiles"][args.stage])
     output_root = Path(args.output_root or phase["outputs"]["root"])
     if not output_root.is_absolute():
         output_root = root / output_root
@@ -365,7 +395,7 @@ def run(args: argparse.Namespace) -> Path | None:
         run_dir = output_root / f"{timestamp}_{args.stage}_{suffix}"
         suffix += 1
     run_dir.mkdir(parents=True, exist_ok=False)
-    metadata: dict[str, Any] = {"schema_version": 1, "phase": phase["name"], "stage": args.stage, "status": "running", "diagnostic_only": True, "selection_mutation": False, "report_only": True, "config": {"path": str(config_path), "sha256": _sha256_file(config_path)}, "git": {"commit": _git(root, "rev-parse", "HEAD"), "status": _git(root, "status", "--short", "--branch")}, "python": {"executable": sys.executable, "version": sys.version}, "generator": identity, "dataset": {"name": phase["dataset"]["name"], "split": phase["dataset"]["split"], "sample_offset": stage_spec["sample_offset"], "max_samples": stage_spec["max_samples"], "slice": stage_spec["slice"], "fresh_slice": True}, "plugins": {"allowlist": list(EXPECTED_PLUGINS), "tree_sha256": _plugin_tree_hash(root), "profiles": list(RANKER_PROFILES), "diagnostic_outputs_used_for_selection": False}}
+    metadata: dict[str, Any] = {"schema_version": 1, "phase": phase["name"], "stage": args.stage, "status": "running", "diagnostic_only": True, "selection_mutation": False, "report_only": True, "config": {"path": str(config_path), "sha256": _sha256_file(config_path)}, "git": {"commit": _git(root, "rev-parse", "HEAD"), "status": _git(root, "status", "--short", "--branch")}, "python": {"executable": sys.executable, "version": sys.version}, "generator": identity, "dataset": {"name": phase["dataset"]["name"], "split": phase["dataset"]["split"], "sample_offset": stage_spec["sample_offset"], "max_samples": stage_spec["max_samples"], "slice": stage_spec["slice"], "fresh_slice": True}, "plugins": {"allowlist": list(EXPECTED_PLUGINS), "tree_sha256": _plugin_tree_hash(root), "profiles": list(RANKER_PROFILES), "active_profiles": list(active_profiles), "diagnostic_outputs_used_for_selection": False}}
     _write_json(run_dir / "run_metadata.json", metadata)
     sample_end = int(stage_spec["sample_offset"]) + int(stage_spec["max_samples"])
     questions = load_dataset_for_rag(phase["dataset"]["name"], phase["dataset"]["split"], sample_end)
@@ -414,11 +444,11 @@ def run(args: argparse.Namespace) -> Path | None:
             if not pairs:
                 raise Phase9JConfigError(f"{question_id}: eligible diagnostic has no valid candidates")
             candidate_set, metric_map = _candidate_metrics(pairs, gold_answers)
-            rankers = _ranker_arms(generator, answer_scorer, question, selected_texts, pairs, metric_map, baseline_result.generation_time_ms)
+            rankers.update(_ranker_arms(generator, answer_scorer, question, selected_texts, pairs, metric_map, baseline_result.generation_time_ms, active_profiles=active_profiles))
         samples.append({"question_id": question_id, "retrieval_hit": retrieval_hit, "selected_hit": selected_hit, "primary_error": primary_error, "copy_control_success": copy_success, "eligible": copy_success, "selection_time_ms": selection_time_ms, "arms": arms, "candidate_set": candidate_set, "rankers": rankers})
         if index % 5 == 0 or index == len(questions):
             print(f"  Phase 9J {args.stage}: {index}/{len(questions)}")
-    result = {"schema_version": 1, "phase": phase["name"], "stage": args.stage, "diagnostic_only": True, "selection_mutation": False, "report_only": True, "config": {"dataset": phase["dataset"]["name"], "split": phase["dataset"]["split"], "sample_offset": stage_spec["sample_offset"], "max_samples": stage_spec["max_samples"], "slice": stage_spec["slice"], "ranker_profiles": list(RANKER_PROFILES), "reader_weight": 1.0}, "samples": samples}
+    result = {"schema_version": 1, "phase": phase["name"], "stage": args.stage, "diagnostic_only": True, "selection_mutation": False, "report_only": True, "config": {"dataset": phase["dataset"]["name"], "split": phase["dataset"]["split"], "sample_offset": stage_spec["sample_offset"], "max_samples": stage_spec["max_samples"], "slice": stage_spec["slice"], "ranker_profiles": list(RANKER_PROFILES), "active_ranker_profiles": list(active_profiles), "reader_weight": 1.0}, "samples": samples}
     forbidden = _find_forbidden(result)
     if forbidden:
         raise Phase9JConfigError(f"compact result contains forbidden fields: {forbidden[:5]}")

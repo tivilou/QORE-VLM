@@ -373,6 +373,10 @@ def _ranker_summary(rows: Sequence[Mapping[str, Any]], profile: str) -> dict[str
 def summarize_phase9j(result: Mapping[str, Any], *, gate: Mapping[str, Any]) -> dict[str, Any]:
     rows = validate_result(result)
     eligible = [row for row in rows if row["eligible"]]
+    configured_profiles = result.get("config", {}).get("active_ranker_profiles", list(RANKER_PROFILES))
+    active_profiles = tuple(configured_profiles)
+    if not active_profiles or any(profile not in RANKER_PROFILES for profile in active_profiles):
+        raise Phase9JError("active ranker profiles are invalid")
     formal_gate = gate.get("formal", gate)
     repetitions = int(formal_gate.get("bootstrap_repetitions", 2000))
     seed = int(formal_gate.get("bootstrap_seed", 9911))
@@ -400,6 +404,9 @@ def summarize_phase9j(result: Mapping[str, Any], *, gate: Mapping[str, Any]) -> 
         oracle_pass = bool(oracle and oracle["mean"] >= oracle_min and oracle["ci95_low"] > oracle_low)
         gates = {}
         for profile in RANKER_PROFILES:
+            if profile not in active_profiles:
+                gates[profile] = None
+                continue
             em = paired[profile + "_em"]
             f1 = paired[profile + "_f1"]
             summary = ranker_summaries[profile]
@@ -419,10 +426,14 @@ def summarize_phase9j(result: Mapping[str, Any], *, gate: Mapping[str, Any]) -> 
             decision = "insufficient_eligible_cohort"
         elif not oracle_pass:
             decision = "candidate_coverage_gate_failed"
-        elif not gates["context_lift_reader_support_v1"]:
-            decision = "combined_ranker_gate_failed"
         else:
-            decision = "combined_ranker_gate_passed_replication_only"
+            primary_profile = str(formal_gate.get("primary_ranker_profile", "context_lift_reader_support_v1"))
+            if primary_profile not in active_profiles:
+                decision = "primary_ranker_not_run"
+            elif not gates[primary_profile]:
+                decision = "combined_ranker_gate_failed" if primary_profile == "context_lift_reader_support_v1" else f"{primary_profile}_gate_failed"
+            else:
+                decision = "combined_ranker_gate_passed_replication_only" if primary_profile == "context_lift_reader_support_v1" else f"{primary_profile}_gate_passed_replication_only"
     return {
         "schema_version": 1,
         "phase": result["phase"],

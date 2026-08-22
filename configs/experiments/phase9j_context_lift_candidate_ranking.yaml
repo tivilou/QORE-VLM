@@ -87,6 +87,10 @@ phase:
 
   ranker_contract:
     profiles: [context_lift_v1, reader_span_support_v1, context_lift_reader_support_v1]
+    execution_profiles:
+      screen: [context_lift_v1, reader_span_support_v1, context_lift_reader_support_v1]
+      formal: [reader_span_support_v1]
+      replication: [reader_span_support_v1]
     reader_weight: 1.0
     order_audit: fixed_reverse_by_mode_id
     candidate_score_formula: "rank(context_lift) + reader_weight * rank(reader_span_support)"
@@ -115,6 +119,7 @@ phase:
         - compact_output_privacy
     formal:
       sample_count: 200
+      primary_ranker_profile: reader_span_support_v1
       bootstrap_repetitions: 2000
       bootstrap_seed: 9911
       candidate_oracle_em_uplift_min: 0.05
@@ -129,7 +134,8 @@ phase:
       action_if_coverage_negative: stop_candidate_path
     replication:
       slice: "nq_open validation[1550:1750]"
-      only_if_formal_combined_ranker_gate_passes: true
+      primary_ranker_profile: reader_span_support_v1
+      only_if_formal_reader_ranker_gate_passes: true
       same_frozen_contract: true
       production_change_allowed: false
 
