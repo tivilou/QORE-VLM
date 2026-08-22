@@ -1,0 +1,145 @@
+{
+  "arms": {
+    "baseline": {
+      "em_mean": 0.22,
+      "f1_mean": 0.3534761904761905,
+      "generation_time_ms_mean": 231.13957860000258,
+      "n_attempted": 50
+    },
+    "evidence_constrained": {
+      "em_mean": 0.3888888888888889,
+      "f1_mean": 0.46632996632996637,
+      "generation_time_ms_mean": 173.33547366666835,
+      "n_attempted": 18
+    },
+    "extractive_span": {
+      "em_mean": 0.3888888888888889,
+      "f1_mean": 0.5,
+      "generation_time_ms_mean": 227.17178005555323,
+      "n_attempted": 18
+    },
+    "gold_answer_copy": {
+      "em_mean": 1.0,
+      "f1_mean": 1.0,
+      "generation_time_ms_mean": 85.8899195555662,
+      "n_attempted": 18
+    },
+    "rankers": {
+      "context_lift_reader_support_v1": {
+        "em_mean": 0.0,
+        "f1_mean": 0.26335978835978835,
+        "n_attempted": 18,
+        "n_valid": 18,
+        "order_agreement_rate": 1.0,
+        "score_time_ms_mean": 445.4445643889105,
+        "score_to_baseline_ratio_mean": 1.962793785931539
+      },
+      "context_lift_v1": {
+        "em_mean": 0.1111111111111111,
+        "f1_mean": 0.3828042328042328,
+        "n_attempted": 18,
+        "n_valid": 18,
+        "order_agreement_rate": 1.0,
+        "score_time_ms_mean": 445.4445643889105,
+        "score_to_baseline_ratio_mean": 1.962793785931539
+      },
+      "reader_span_support_v1": {
+        "em_mean": 0.3333333333333333,
+        "f1_mean": 0.43187830687830686,
+        "n_attempted": 18,
+        "n_valid": 18,
+        "order_agreement_rate": 1.0,
+        "score_time_ms_mean": 445.4445643889105,
+        "score_to_baseline_ratio_mean": 1.962793785931539
+      }
+    }
+  },
+  "cohorts": {
+    "eligible": 18,
+    "gold_copy_success": 18,
+    "selected_hit": 29,
+    "selected_hit_baseline_errors": 18
+  },
+  "decision": {
+    "candidate_oracle_gate_pass": null,
+    "diagnostic_outputs_used_for_selection": false,
+    "primary_failure_class": "screen_contract_only",
+    "ranker_gates": {
+      "context_lift_reader_support_v1": null,
+      "context_lift_v1": null,
+      "reader_span_support_v1": null
+    },
+    "report_only": true,
+    "thresholds": {
+      "candidate_oracle_ci95_low_min": 0.0,
+      "candidate_oracle_em_uplift_min": 0.05,
+      "order_agreement_min": 0.9,
+      "ranker_ci95_low_min": 0.0,
+      "ranker_em_uplift_min": 0.03,
+      "ranker_f1_loss_max": 0.01,
+      "score_to_baseline_ratio_max": 1.3
+    }
+  },
+  "n_questions": 50,
+  "paired_deltas": {
+    "candidate_oracle_em": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9911,
+      "ci95_high": 0.7222222222222222,
+      "ci95_low": 0.2777777777777778,
+      "mean": 0.5
+    },
+    "candidate_oracle_f1": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9912,
+      "ci95_high": 0.4750264550264549,
+      "ci95_low": 0.189021164021164,
+      "mean": 0.3255291005291005
+    },
+    "context_lift_reader_support_v1_em": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9919,
+      "ci95_high": 0.0,
+      "ci95_low": 0.0,
+      "mean": 0.0
+    },
+    "context_lift_reader_support_v1_f1": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9920,
+      "ci95_high": 0.04444444444444443,
+      "ci95_low": 0.0,
+      "mean": 0.014814814814814812
+    },
+    "context_lift_v1_em": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9915,
+      "ci95_high": 0.2777777777777778,
+      "ci95_low": 0.0,
+      "mean": 0.1111111111111111
+    },
+    "context_lift_v1_f1": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9916,
+      "ci95_high": 0.28703703703703703,
+      "ci95_low": 0.0,
+      "mean": 0.13425925925925924
+    },
+    "reader_span_support_v1_em": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9917,
+      "ci95_high": 0.5555555555555556,
+      "ci95_low": 0.1111111111111111,
+      "mean": 0.3333333333333333
+    },
+    "reader_span_support_v1_f1": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9918,
+      "ci95_high": 0.2981481481481481,
+      "ci95_low": 0.08148148148148147,
+      "mean": 0.18333333333333332
+    }
+  },
+  "phase": "phase9j_context_lift_candidate_ranking",
+  "schema_version": 1,
+  "stage": "screen"
+}
