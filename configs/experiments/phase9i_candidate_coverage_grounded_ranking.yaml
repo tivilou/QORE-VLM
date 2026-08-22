@@ -3,7 +3,7 @@ phase:
   schema_version: 1
   diagnostic_only: true
   selection_mutation: false
-  authorization: plan_only
+  authorization: implemented
   parent_phase: phase9h_answerability_generation_diagnostic
 
   dataset:
@@ -43,6 +43,10 @@ phase:
     qore_prefilter_size: null
     direct_solve_max_n: 20
     lambda_mmr: 0.7
+    saturation_alpha: 1.0
+    lambda_submodular: 0.5
+    dpp_quality_scale: 2.0
+    dpp_jitter: 1.0e-8
     use_answer_scorer: true
     answer_scorer_backend: dpr
 

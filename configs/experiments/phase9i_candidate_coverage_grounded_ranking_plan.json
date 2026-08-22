@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "schema_version": "research-plugin-architecture.plugin-plan.v1",
   "project": "QORE-VLM Phase 9I candidate-set coverage and context-grounded answer-ranking diagnostic",
-  "authorization": "plan_only",
+  "authorization": "implemented",
   "baseline": {
     "entry_point": "scripts/collab/five_ideas/run_phase9h_answerability_generation_diagnostic.py::run plus unchanged applications.rag.selector.select_passages and applications.rag.generation.Generator.generate",
     "code_revision": "origin/five-ideas-development@aaa1ac129db5156724c6842634e2aae8505bc969 (Phase 9H compact result ancestor)",
@@ -284,6 +284,6 @@
     "Lexical EM/F1 and candidate normalization do not establish human entailment or answer equivalence beyond the frozen evaluator.",
     "The screen is a contract and diversity check; a null screen is inconclusive unless it reveals a fatal implementation or privacy defect.",
     "A positive formal diagnostic authorizes at most a separate replication and does not authorize a production selector or Generator change.",
-    "No Phase 9I implementation or experiment execution is included in this plan-only artifact."
+    "The observation-only implementation is validated locally; no Phase 9I experiment execution is included in this artifact."
   ]
 }
