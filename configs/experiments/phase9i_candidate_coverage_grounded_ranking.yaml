@@ -1,0 +1,146 @@
+phase:
+  name: phase9i_candidate_coverage_grounded_ranking
+  schema_version: 1
+  diagnostic_only: true
+  selection_mutation: false
+  authorization: plan_only
+  parent_phase: phase9h_answerability_generation_diagnostic
+
+  dataset:
+    name: nq_open
+    split: validation
+    screen:
+      sample_offset: 850
+      max_samples: 50
+      slice: "nq_open validation[850:900]"
+      fresh_slice: true
+    formal:
+      sample_offset: 900
+      max_samples: 200
+      slice: "nq_open validation[900:1100]"
+      fresh_slice: true
+    replication:
+      sample_offset: 1100
+      max_samples: 200
+      slice: "nq_open validation[1100:1300]"
+      fresh_slice: true
+
+  retrieval:
+    corpus_mode: wiki_dpr
+    wiki_dpr_config: psgs_w100.nq.compressed
+    nprobe: 64
+    top_k: 50
+
+  selection:
+    method: qore
+    K: 5
+    num_reads: 100
+    lam: 2.0
+    seed: 42
+    gamma: 1.0
+    delta: 0.0
+    complementarity_method: null
+    qore_prefilter_size: null
+    direct_solve_max_n: 20
+    lambda_mmr: 0.7
+    use_answer_scorer: true
+    answer_scorer_backend: dpr
+
+  generator:
+    model_id: NousResearch/Meta-Llama-3-8B-Instruct
+    revision: 53346005fb0ef11d3b6a83b12c895cca40156b6c
+    max_new_tokens: 32
+    decoding: greedy
+    model_path_candidates:
+      - models/llama3-8b
+    resolver_order: [cli_override, project_candidate, hf_cache]
+    record_resolved_identity: true
+
+  plugins:
+    allowlist:
+      - frozen_baseline_observer
+      - gold_answer_copy_control
+      - extractive_span_candidate
+      - evidence_constrained_candidate
+      - candidate_set_coverage_combiner
+      - grounded_candidate_verifier
+      - verifier_order_invariance_audit
+    candidate_profile: [baseline_v1, extractive_span_v1, evidence_constrained_v1]
+    verifier_profile: grounded_candidate_choice_v1
+    order_audit_profile: fixed_permutation_v1
+    diagnostic_outputs_used_for_selection: false
+    production_intervention: false
+
+  candidate_contract:
+    candidate_count_max: 3
+    candidate_modes:
+      - baseline_v1
+      - extractive_span_v1
+      - evidence_constrained_v1
+    candidate_input: question_and_selected_context_only
+    candidate_text_persisted: false
+    parse_failures_excluded_from_oracle: true
+    abstention_token: "<ABSTAIN>"
+    duplicate_normalization: "lowercase, trim, collapse whitespace, preserve evaluator input separately"
+
+  verifier_contract:
+    input: question_selected_context_candidate_modes_and_runtime_candidate_strings
+    gold_access: false
+    evaluator_access: false
+    selection_score_access: false
+    passes_per_question: 2
+    second_pass_order: fixed_candidate_permutation
+    output: candidate_mode_or_index_only
+    raw_output_persisted: false
+
+  eligibility:
+    mode: offline_conditional_diagnostic
+    condition: selected_hit and baseline_em_zero and gold_copy_control_em_one
+    gold_available_to_candidate_or_verifier: false
+    noneligible_questions_keep_baseline_only: true
+
+  gate:
+    screen:
+      purpose: contract_diversity_privacy_runtime
+      null_policy: fatal_only
+      max_generation_equivalent_calls: 300
+      required_checks:
+        - fresh_slice_disjointness
+        - one_retrieval_and_selection_per_question
+        - baseline_equivalence
+        - candidate_mode_diversity
+        - gold_isolation
+        - verifier_order_balance
+        - compact_output_privacy
+    formal:
+      sample_count: 200
+      bootstrap_repetitions: 2000
+      bootstrap_seed: 9901
+      candidate_oracle_em_uplift_min: 0.05
+      candidate_oracle_ci95_low_min: 0.0
+      verifier_em_uplift_min: 0.03
+      verifier_ci95_low_min: 0.0
+      verifier_oracle_gain_recovery_min: 0.60
+      verifier_f1_loss_max: 0.01
+      action_if_coverage_positive_verifier_negative: ranking_research_only_no_production_change
+      action_if_coverage_negative: stop_candidate_path
+    replication:
+      slice: "nq_open validation[1100:1300]"
+      only_if_formal_verifier_gate_passes: true
+      same_frozen_contract: true
+      production_change_allowed: false
+
+  outputs:
+    root: exchange/five_ideas/phase9i_candidate_coverage_grounded_ranking
+    compact_only: true
+    candidate_text_persisted: false
+    forbidden_fields:
+      - question
+      - passages
+      - gold_answers
+      - candidate_text
+      - prediction
+      - verifier_raw_output
+      - raw_prompt
+      - gold_answer
+      - evaluator_trace

@@ -1,0 +1,289 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "QORE-VLM Phase 9I candidate-set coverage and context-grounded answer-ranking diagnostic",
+  "authorization": "plan_only",
+  "baseline": {
+    "entry_point": "scripts/collab/five_ideas/run_phase9h_answerability_generation_diagnostic.py::run plus unchanged applications.rag.selector.select_passages and applications.rag.generation.Generator.generate",
+    "code_revision": "origin/five-ideas-development@aaa1ac129db5156724c6842634e2aae8505bc969 (Phase 9H compact result ancestor)",
+    "equivalence_test": "With every Phase 9I plugin disabled, the runner performs one unchanged Wiki-DPR Top-50 retrieval, one unchanged QORE K=5 selection, and one unchanged Generator.generate call per question; baseline scalar output must match the frozen baseline observer fixture."
+  },
+  "core_invariants": [
+    "Retrieval, QORE selection, Generator implementation, evaluator, labels, and retrieval depth remain outside the Phase 9I plugin boundary.",
+    "Each question performs exactly one Top-50 retrieval and one frozen QORE K=5 selection before any candidate or verifier probe.",
+    "Candidate producers receive only the question and frozen selected context; they never receive gold answers, EM/F1, evaluator output, labels, or selection diagnostics.",
+    "The grounded verifier receives only the question, frozen selected context, and runtime candidate strings; it never receives gold, evaluator output, or passage-selection scores.",
+    "Candidate text and raw verifier output remain in memory only; compact artifacts contain scalar metrics, candidate counts, mode IDs, timing, order-agreement, hashes, and provenance.",
+    "Candidate-oracle metrics use gold only after inference through the unchanged evaluator and never feed back into candidate generation or verifier choice.",
+    "The gold-copy control is a conditional offline control for selected-hit baseline EM errors; it is never a candidate, verifier input, selector signal, or production arm.",
+    "All formal outcomes are report-only. No diagnostic output may change select_passages, Generator settings, evaluator behavior, or labels."
+  ],
+  "interfaces": [
+    {
+      "id": "generation_probe_v2",
+      "type": "transformer",
+      "input_schema": "question: str; selected_context: list[str]; frozen Generator callable",
+      "output_schema": "runtime candidate string plus compact scalar record {attempted, parse_status, generation_time_ms, candidate_mode}",
+      "invariants": [
+        "Uses the pinned generator and deterministic decoding.",
+        "Candidate string is never written to compact exchange output.",
+        "No gold or evaluator value is available at generation time."
+      ]
+    },
+    {
+      "id": "candidate_set_coverage_v1",
+      "type": "combiner",
+      "input_schema": "baseline/candidate scalar records, post-hoc evaluator EM/F1 values, candidate uniqueness and parse counters",
+      "output_schema": "candidate-oracle coverage, baseline comparison, candidate diversity, parse failure, and timing summaries",
+      "invariants": [
+        "Oracle coverage is computed only after all candidate inference completes.",
+        "The baseline candidate remains in the set and baseline equivalence is auditable.",
+        "Candidate set statistics never feed back into verifier inference or selection."
+      ]
+    },
+    {
+      "id": "grounded_verifier_v1",
+      "type": "transformer",
+      "input_schema": "question: str; selected_context: list[str]; candidate_mode IDs and runtime candidate strings",
+      "output_schema": "selected candidate mode/index, verifier score or choice, and generation time",
+      "invariants": [
+        "Verifier prompt contains no gold answer, EM/F1, evaluator output, or selection score.",
+        "A fixed candidate-order permutation is used for the order audit.",
+        "Raw verifier text and candidate strings are discarded before compact serialization."
+      ]
+    },
+    {
+      "id": "verifier_audit_v1",
+      "type": "combiner",
+      "input_schema": "two verifier choices over identical candidate sets under original and fixed-permuted order",
+      "output_schema": "choice agreement, position-sensitivity, selected-candidate post-hoc EM/F1, and report-only gate",
+      "invariants": [
+        "Order audit changes only candidate presentation order, never question, context, model, or candidate content.",
+        "Verifier agreement is computed without gold; selected-candidate EM/F1 is attached only after inference."
+      ]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "frozen_baseline_observer",
+      "version": "1.0.0",
+      "role": "baseline",
+      "interface": "generation_probe_v2",
+      "insertion_point": "after unchanged QORE K=5 selection and before diagnostic candidate arms",
+      "hypothesis": "The unchanged Generator.generate answer is the reference candidate and baseline metric.",
+      "input_schema": "question and selected QORE K=5 passages",
+      "output_schema": "baseline candidate runtime string and scalar EM/F1/time record",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "one existing generation per question",
+      "failure_signatures": [
+        "baseline output differs from the stable Generator fixture",
+        "baseline generation receives a diagnostic-only field"
+      ]
+    },
+    {
+      "id": "gold_answer_copy_control",
+      "version": "1.0.0",
+      "role": "adapter",
+      "interface": "generation_probe_v2",
+      "insertion_point": "conditional offline control after selected-hit baseline EM failure",
+      "hypothesis": "A successful gold-copy control identifies questions where the generator can emit the target form and leaves candidate support/ranking as the diagnostic question.",
+      "input_schema": "question and deterministic internal gold candidate; unavailable to candidate/verifier plugins",
+      "output_schema": "conditional copy-control scalar EM/F1/time",
+      "requires": [
+        "frozen_baseline_observer"
+      ],
+      "conflicts": [
+        "grounded_candidate_verifier"
+      ],
+      "deterministic": true,
+      "resource_estimate": "at most one control generation per selected-hit baseline EM error",
+      "failure_signatures": [
+        "copy control runs outside its declared condition",
+        "gold candidate reaches candidate or verifier prompt",
+        "copy control is treated as a production answer"
+      ]
+    },
+    {
+      "id": "extractive_span_candidate",
+      "version": "0.1.0",
+      "role": "idea",
+      "interface": "generation_probe_v2",
+      "insertion_point": "eligible observation cohort after copy-control success",
+      "hypothesis": "A verbatim span candidate can recover errors caused by the baseline answer-generation contract.",
+      "input_schema": "question and selected QORE context only",
+      "output_schema": "runtime extractive candidate and scalar parse/time record",
+      "requires": [
+        "frozen_baseline_observer",
+        "gold_answer_copy_control"
+      ],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "one deterministic generation per eligible question",
+      "failure_signatures": [
+        "prompt contains gold or evaluator output",
+        "candidate is not derived from the selected context",
+        "raw candidate is serialized"
+      ]
+    },
+    {
+      "id": "evidence_constrained_candidate",
+      "version": "0.1.0",
+      "role": "idea",
+      "interface": "generation_probe_v2",
+      "insertion_point": "eligible observation cohort after copy-control success",
+      "hypothesis": "A short answer constrained to direct support in the selected context provides a complementary candidate to the extractive span.",
+      "input_schema": "question and selected QORE context only",
+      "output_schema": "runtime evidence-constrained candidate and scalar parse/time record",
+      "requires": [
+        "frozen_baseline_observer",
+        "gold_answer_copy_control"
+      ],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "one deterministic generation per eligible question",
+      "failure_signatures": [
+        "candidate uses unsupported external knowledge",
+        "abstention/format parsing is ambiguous",
+        "prompt contains gold or evaluator output"
+      ]
+    },
+    {
+      "id": "candidate_set_coverage_combiner",
+      "version": "0.1.0",
+      "role": "idea",
+      "interface": "candidate_set_coverage_v1",
+      "insertion_point": "after candidate inference and post-hoc scalar evaluation",
+      "hypothesis": "The gap between candidate-oracle coverage and the frozen baseline separates missing-candidate failures from downstream choice failures.",
+      "input_schema": "compact candidate mode records and post-hoc evaluator scalars",
+      "output_schema": "candidate-oracle EM/F1, baseline deltas, unique-candidate counts, parse failures, and coverage gate",
+      "requires": [
+        "frozen_baseline_observer",
+        "extractive_span_candidate",
+        "evidence_constrained_candidate"
+      ],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "scalar aggregation and paired question-level bootstrap; no model call",
+      "failure_signatures": [
+        "oracle reads verifier output",
+        "duplicate candidates are counted as diversity",
+        "gold is used before candidate inference completes"
+      ]
+    },
+    {
+      "id": "grounded_candidate_verifier",
+      "version": "0.1.0",
+      "role": "idea",
+      "interface": "grounded_verifier_v1",
+      "insertion_point": "after the in-memory candidate set is built, before post-hoc evaluation",
+      "hypothesis": "When a correct candidate exists, a context-grounded verifier can select it without changing retrieval or QORE selection.",
+      "input_schema": "question, selected context, and candidate mode/string pairs only",
+      "output_schema": "selected candidate mode/index and scalar verifier timing/parse record",
+      "requires": [
+        "candidate_set_coverage_combiner"
+      ],
+      "conflicts": [
+        "gold_answer_copy_control"
+      ],
+      "deterministic": true,
+      "resource_estimate": "one deterministic verifier generation per eligible question",
+      "failure_signatures": [
+        "verifier sees gold, EM/F1, evaluator output, or selection scores",
+        "verifier emits an unparseable candidate ID",
+        "verifier changes the candidate set"
+      ]
+    },
+    {
+      "id": "verifier_order_invariance_audit",
+      "version": "0.1.0",
+      "role": "adapter",
+      "interface": "verifier_audit_v1",
+      "insertion_point": "immediately after the grounded verifier choice",
+      "hypothesis": "A valid candidate-ranking signal should be stable when the same candidates are shown under a fixed permutation.",
+      "input_schema": "same runtime candidate set with original and fixed-permuted presentation order",
+      "output_schema": "order agreement, position-sensitivity, selected candidate post-hoc EM/F1, and gate scalars",
+      "requires": [
+        "grounded_candidate_verifier"
+      ],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "one additional deterministic verifier generation per eligible question",
+      "failure_signatures": [
+        "candidate content changes between orders",
+        "order agreement is not reproducible",
+        "position bias is hidden from compact output"
+      ]
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": [
+      "frozen_baseline_observer",
+      "gold_answer_copy_control",
+      "extractive_span_candidate",
+      "evidence_constrained_candidate",
+      "candidate_set_coverage_combiner",
+      "grounded_candidate_verifier",
+      "verifier_order_invariance_audit"
+    ]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": [
+      "frozen_baseline_observer",
+      "gold_answer_copy_control",
+      "extractive_span_candidate",
+      "evidence_constrained_candidate",
+      "candidate_set_coverage_combiner",
+      "grounded_candidate_verifier",
+      "verifier_order_invariance_audit"
+    ],
+    "merge_rule": "Retrieve/select once; run the unchanged baseline; gate the observation cohort with the offline copy control; generate two additional candidates without gold; form the in-memory set; run the verifier twice under original and fixed-permuted order; attach evaluator scalars only after all inference; write compact scalar summaries and provenance only.",
+    "interaction_ablations": [
+      "frozen baseline candidate versus candidate-oracle set",
+      "baseline candidate plus extractive span versus baseline candidate plus evidence-constrained candidate",
+      "candidate-oracle choice versus gold-blind verifier choice",
+      "verifier original order versus fixed-permuted order",
+      "eligible-cohort conditional arms versus all-question baseline"
+    ]
+  },
+  "validation": {
+    "baseline_equivalence": "With candidate plugins disabled, fixed synthetic Generator fixtures produce the same baseline candidate and scalar metrics as the existing Phase 9H runner.",
+    "tests": [
+      "baseline_equivalence",
+      "schema_and_input_invariants",
+      "plugin_isolation",
+      "deterministic_replay",
+      "dependency_conflict_validation",
+      "interaction_ablation",
+      "candidate uniqueness and parse fixtures",
+      "gold isolation from candidate/verifier prompts",
+      "verifier candidate-ID parsing and order audit",
+      "candidate-oracle and verifier bootstrap replay",
+      "compact privacy scan",
+      "validate-only smoke manifest"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/phase9i_candidate_coverage_grounded_ranking.yaml",
+    "dataset_identity": "nq_open validation[850:900] screen; formal validation[900:1100]; replication validation[1100:1300]; Wiki-DPR psgs_w100.nq.compressed, nprobe=64, one Top-50 retrieval and one frozen QORE K=5 selection per question",
+    "environment": "Record resolved Python executable/version, git commit/status, config SHA-256, plugin-tree hash, pinned model ID/revision/config hash, retrieval/selection settings, candidate/verifier prompt profile IDs, ordering seed, timing, and output paths.",
+    "seeds": [
+      42,
+      9901,
+      9902
+    ],
+    "output_manifest": "exchange/five_ideas/phase9i_candidate_coverage_grounded_ranking/<timestamp>/run_metadata.json"
+  },
+  "limitations": [
+    "Candidate generation, verifier reranking, and grounded answer checking are established neighboring techniques; this plan claims only a diagnostic decomposition, with high novelty collision risk.",
+    "A correct candidate in the set is an offline oracle fact and does not prove that a deployable verifier can recover it.",
+    "The gold-copy control and post-hoc evaluator are diagnostic controls only; neither may enter inference or production selection.",
+    "Lexical EM/F1 and candidate normalization do not establish human entailment or answer equivalence beyond the frozen evaluator.",
+    "The screen is a contract and diversity check; a null screen is inconclusive unless it reveals a fatal implementation or privacy defect.",
+    "A positive formal diagnostic authorizes at most a separate replication and does not authorize a production selector or Generator change.",
+    "No Phase 9I implementation or experiment execution is included in this plan-only artifact."
+  ]
+}
