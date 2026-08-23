@@ -97,6 +97,18 @@ def _require_keys(value: Mapping[str, Any], expected: set[str], label: str) -> N
         )
 
 
+def _active_ranker_profiles(result: Mapping[str, Any]) -> tuple[str, ...]:
+    configured_profiles = result.get("config", {}).get(
+        "active_ranker_profiles", list(RANKER_PROFILES)
+    )
+    active_profiles = tuple(configured_profiles)
+    if not active_profiles or any(
+        profile not in RANKER_PROFILES for profile in active_profiles
+    ):
+        raise Phase9JError("active ranker profiles are invalid")
+    return active_profiles
+
+
 def _standard_arm(arm: Mapping[str, Any], *, attempted: bool, label: str) -> None:
     _require_keys(arm, {"attempted", "em", "f1", "generation_time_ms"}, label)
     if arm["attempted"] is not attempted:
@@ -200,6 +212,7 @@ def validate_result(result: Mapping[str, Any]) -> list[Mapping[str, Any]]:
         raise Phase9JError("result is not observation-only")
     if result["report_only"] is not True:
         raise Phase9JError("result is not report-only")
+    active_profiles = _active_ranker_profiles(result)
     samples = result["samples"]
     if not isinstance(samples, list) or not samples:
         raise Phase9JError("samples must be non-empty")
@@ -300,7 +313,9 @@ def validate_result(result: Mapping[str, Any]) -> list[Mapping[str, Any]]:
         _require_keys(rankers, set(RANKER_PROFILES), f"{question_id}/rankers")
         for profile in RANKER_PROFILES:
             _ranker_arm(
-                rankers[profile], attempted=bool(sample["eligible"]), label=f"{question_id}/{profile}"
+                rankers[profile],
+                attempted=bool(sample["eligible"]) and profile in active_profiles,
+                label=f"{question_id}/{profile}",
             )
     return samples
 
@@ -373,10 +388,7 @@ def _ranker_summary(rows: Sequence[Mapping[str, Any]], profile: str) -> dict[str
 def summarize_phase9j(result: Mapping[str, Any], *, gate: Mapping[str, Any]) -> dict[str, Any]:
     rows = validate_result(result)
     eligible = [row for row in rows if row["eligible"]]
-    configured_profiles = result.get("config", {}).get("active_ranker_profiles", list(RANKER_PROFILES))
-    active_profiles = tuple(configured_profiles)
-    if not active_profiles or any(profile not in RANKER_PROFILES for profile in active_profiles):
-        raise Phase9JError("active ranker profiles are invalid")
+    active_profiles = _active_ranker_profiles(result)
     formal_gate = gate.get("formal", gate)
     repetitions = int(formal_gate.get("bootstrap_repetitions", 2000))
     seed = int(formal_gate.get("bootstrap_seed", 9911))
