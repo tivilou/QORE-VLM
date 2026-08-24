@@ -168,11 +168,14 @@ def validate_result(result: Mapping[str, Any]) -> list[Mapping[str, Any]]:
         applicability = sample["applicability"]
         _require_keys(
             applicability,
-            {"apply", "reason_code", "chosen_mode", "baseline_score", "chosen_score", "reader_margin", "chosen_exact_span"},
+            {"apply", "reason_code", "chosen_mode", "baseline_score", "chosen_score", "reader_margin", "chosen_exact_span", "baseline_exact_span", "candidate_consensus"},
             f"{question_id}/applicability",
         )
         if not isinstance(applicability["apply"], bool) or applicability["reason_code"] not in REASON_CODES:
             raise Phase9KError(f"{question_id}: invalid applicability decision")
+        for key in ("baseline_exact_span", "candidate_consensus"):
+            if not isinstance(applicability[key], bool):
+                raise Phase9KError(f"{question_id}: {key} must be boolean")
         if applicability["apply"]:
             if not isinstance(applicability["chosen_mode"], str) or not isinstance(applicability["chosen_exact_span"], bool):
                 raise Phase9KError(f"{question_id}: applied decision missing fields")

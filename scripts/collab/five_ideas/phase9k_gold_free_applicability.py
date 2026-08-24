@@ -34,6 +34,8 @@ REASON_CODES = (
     "no_candidates",
     "duplicate_candidates",
     "baseline_selected",
+    "baseline_supported",
+    "no_candidate_consensus",
     "no_exact_span",
     "weak_reader_margin",
 )
@@ -52,6 +54,8 @@ class ApplicabilityDecision:
     chosen_score: float | None
     reader_margin: float | None
     chosen_exact_span: bool | None
+    baseline_exact_span: bool | None
+    candidate_consensus: bool | None
 
 
 def normalize_candidate(text: str) -> str:
@@ -83,6 +87,20 @@ def exact_span_supported(tokenizer: Any, passages: Sequence[str], candidate: str
     return False
 
 
+def candidate_consensus(candidates: Sequence[tuple[str, str]]) -> bool:
+    """Return whether both independent candidate prompts produced the same text."""
+    values = {
+        str(mode): normalize_candidate(text)
+        for mode, text in candidates
+        if str(mode) in {"extractive_span_v1", "evidence_constrained_v1"}
+    }
+    return (
+        set(values) == {"extractive_span_v1", "evidence_constrained_v1"}
+        and bool(values["extractive_span_v1"])
+        and values["extractive_span_v1"] == values["evidence_constrained_v1"]
+    )
+
+
 def decide_applicability(
     *,
     candidates: Sequence[tuple[str, str]],
@@ -91,6 +109,9 @@ def decide_applicability(
     reader_margin_min: float = 0.0,
     min_candidate_count: int = 2,
     min_unique_candidate_count: int = 2,
+    baseline_exact_span: bool = False,
+    require_baseline_not_exact: bool = True,
+    require_candidate_consensus: bool = True,
 ) -> tuple[ApplicabilityDecision, dict[str, CandidateScore]]:
     """Apply the preregistered label-free gate and return ranked scores.
 
@@ -115,6 +136,8 @@ def decide_applicability(
                 None,
                 None,
                 None,
+                None,
+                None,
             ),
             {},
         )
@@ -130,6 +153,8 @@ def decide_applicability(
                 None,
                 None,
                 None,
+                bool(baseline_exact_span),
+                False,
             ),
             {},
         )
@@ -146,8 +171,13 @@ def decide_applicability(
     chosen_raw = float(raw_scores[chosen_mode]["reader_support"])
     margin = chosen_raw - baseline_raw
     exact = bool(exact_span_modes[chosen_mode])
+    consensus = candidate_consensus(candidates)
     if chosen_mode == "baseline_v1":
         reason = "baseline_selected"
+    elif require_baseline_not_exact and baseline_exact_span:
+        reason = "baseline_supported"
+    elif require_candidate_consensus and not consensus:
+        reason = "no_candidate_consensus"
     elif not exact:
         reason = "no_exact_span"
     elif margin < float(reader_margin_min):
@@ -165,6 +195,8 @@ def decide_applicability(
             chosen_raw,
             margin,
             exact,
+            bool(baseline_exact_span),
+            consensus,
         ),
         scores,
     )
@@ -176,6 +208,7 @@ __all__ = [
     "REASON_CODES",
     "READER_PROFILE",
     "decide_applicability",
+    "candidate_consensus",
     "exact_span_supported",
     "normalize_candidate",
 ]

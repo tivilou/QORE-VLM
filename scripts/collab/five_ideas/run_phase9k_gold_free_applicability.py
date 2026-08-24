@@ -127,7 +127,7 @@ def _load_config(path: Path, stage: str) -> tuple[dict[str, Any], dict[str, Any]
         raise Phase9KConfigError("unexpected Phase 9K configuration")
     if phase.get("schema_version") != 1 or phase.get("diagnostic_only") is not True or phase.get("selection_mutation") is not False or phase.get("authorization") != "implemented":
         raise Phase9KConfigError("Phase 9K must be authorized and observation-only")
-    expected_slices = {"screen": (1750, 50), "formal": (1800, 200), "replication": (2000, 200)}
+    expected_slices = {"screen": (2200, 50), "formal": (2250, 200), "replication": (2450, 200)}
     dataset = phase.get("dataset", {})
     for name, (offset, count) in expected_slices.items():
         spec = dataset.get(name)
@@ -142,7 +142,7 @@ def _load_config(path: Path, stage: str) -> tuple[dict[str, Any], dict[str, Any]
     if generator.get("model_id") != MODEL_ID or generator.get("revision") != MODEL_REVISION or int(generator.get("max_new_tokens", -1)) != 32 or generator.get("decoding") != "greedy":
         raise Phase9KConfigError("generator contract is not frozen")
     applicability = phase.get("applicability", {})
-    if applicability != {"profile": "gold_free_reader_span_gate_v1", "min_candidate_count": 2, "min_unique_candidate_count": 2, "reader_margin_min": 0.0, "require_exact_span": True, "gold_used_for_decision": False}:
+    if applicability != {"profile": "gold_free_consensus_gate_v2", "min_candidate_count": 3, "min_unique_candidate_count": 2, "reader_margin_min": 0.0, "require_exact_span": True, "require_baseline_not_exact": True, "require_candidate_consensus": True, "gold_used_for_decision": False}:
         raise Phase9KConfigError("applicability policy is not frozen")
     if phase.get("plugins", {}).get("allowlist") != list(EXPECTED_PLUGINS) or phase.get("plugins", {}).get("diagnostic_outputs_used_for_selection") is not False or phase.get("plugins", {}).get("production_intervention") is not False:
         raise Phase9KConfigError("plugin contract is not frozen")
@@ -267,7 +267,7 @@ def run(args: argparse.Namespace) -> Path | None:
             reader_values = _reader_support_scores(answer_scorer, question, selected_texts, texts)
             raw_scores = {mode: {"context_lift": 0.0, "reader_support": float(score)} for mode, score in reader_values.items()}
             exact_modes = {mode: exact_span_supported(answer_scorer.tokenizer, selected_texts, text) for mode, text in pairs}
-            decision, scores = decide_applicability(candidates=pairs, raw_scores=raw_scores, exact_span_modes=exact_modes, reader_margin_min=float(phase["applicability"]["reader_margin_min"]), min_candidate_count=int(phase["applicability"]["min_candidate_count"]), min_unique_candidate_count=int(phase["applicability"]["min_unique_candidate_count"]))
+            decision, scores = decide_applicability(candidates=pairs, raw_scores=raw_scores, exact_span_modes=exact_modes, reader_margin_min=float(phase["applicability"]["reader_margin_min"]), min_candidate_count=int(phase["applicability"]["min_candidate_count"]), min_unique_candidate_count=int(phase["applicability"]["min_unique_candidate_count"]), baseline_exact_span=exact_modes.get("baseline_v1", False), require_baseline_not_exact=bool(phase["applicability"]["require_baseline_not_exact"]), require_candidate_consensus=bool(phase["applicability"]["require_candidate_consensus"]))
             chosen = decision.chosen_mode
             permuted = choose_candidate({mode: scores[mode] for mode, _ in reversed(pairs)}, RANKER_PROFILE) if scores else None
             ranker_score_time_ms = (time.perf_counter() - ranker_started) * 1000.0
@@ -276,9 +276,9 @@ def run(args: argparse.Namespace) -> Path | None:
                 chosen_metrics = evaluate_answer(chosen_text, gold_answers)
                 ranker = {"attempted": True, "choice_mode": chosen, "permuted_choice_mode": permuted, "order_agreement": chosen == permuted, "parse_status": "ok", "em": float(chosen_metrics["em"]), "f1": float(chosen_metrics["f1"]), "generation_time_ms": float(baseline_result.generation_time_ms), "score_time_ms": float(ranker_score_time_ms), "score_to_baseline_ratio": float(ranker_score_time_ms / max(float(baseline_result.generation_time_ms), 1.0))}
         if decision is None:
-            applicability = {"apply": False, "reason_code": "no_candidates", "chosen_mode": None, "baseline_score": None, "chosen_score": None, "reader_margin": None, "chosen_exact_span": None}
+            applicability = {"apply": False, "reason_code": "no_candidates", "chosen_mode": None, "baseline_score": None, "chosen_score": None, "reader_margin": None, "chosen_exact_span": None, "baseline_exact_span": exact_span_supported(answer_scorer.tokenizer, selected_texts, baseline_result.prediction), "candidate_consensus": False}
         else:
-            applicability = {"apply": decision.apply, "reason_code": decision.reason_code, "chosen_mode": decision.chosen_mode if decision.apply else None, "baseline_score": decision.baseline_score if decision.apply else None, "chosen_score": decision.chosen_score if decision.apply else None, "reader_margin": decision.reader_margin if decision.apply else None, "chosen_exact_span": decision.chosen_exact_span if decision.apply else None}
+            applicability = {"apply": decision.apply, "reason_code": decision.reason_code, "chosen_mode": decision.chosen_mode if decision.apply else None, "baseline_score": decision.baseline_score if decision.apply else None, "chosen_score": decision.chosen_score if decision.apply else None, "reader_margin": decision.reader_margin if decision.apply else None, "chosen_exact_span": decision.chosen_exact_span if decision.apply else None, "baseline_exact_span": bool(decision.baseline_exact_span), "candidate_consensus": bool(decision.candidate_consensus)}
         samples.append({"question_id": question_id, "retrieval_hit": retrieval_hit, "selected_hit": selected_hit, "selection_time_ms": selection_time_ms, "candidate_generation_time_ms": candidate_generation_time_ms, "candidate_count": len(pairs), "unique_candidate_count": len({" ".join(text.strip().lower().split()) for _, text in pairs}), "parse_failures": 3 - len(pairs), "applicability": applicability, "baseline": baseline, "ranker": ranker})
         if index % 5 == 0 or index == len(questions):
             print(f"  Phase 9K {args.stage}: {index}/{len(questions)}")

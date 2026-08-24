@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "schema_version": "research-plugin-architecture.plugin-plan.v1",
-  "project": "Q-DUET-VLM / Phase 9K gold-free applicability diagnostic",
+  "project": "Q-DUET-VLM / Phase 9K gold-free consensus applicability diagnostic",
   "authorization": "implemented",
   "baseline": {
     "entry_point": "scripts/collab/five_ideas/run_phase9k_gold_free_applicability.py",
@@ -19,7 +19,7 @@
     {
       "id": "gold_free_applicability_transform",
       "type": "transformer",
-      "input_schema": "candidate mode IDs, candidate strings, reader support scores, exact-span booleans",
+      "input_schema": "candidate mode IDs, candidate strings, reader support scores, exact-span booleans, candidate consensus boolean",
       "output_schema": "apply boolean, reason code, chosen mode, scalar reader margin, scalar scores",
       "invariants": ["No gold-derived value is accepted as input", "Decision is deterministic and order-invariant"]
     },
@@ -83,8 +83,8 @@
       "role": "idea",
       "interface": "gold_free_applicability_transform",
       "insertion_point": "between reader scoring and terminal answer evaluation",
-      "hypothesis": "Candidate diversity, non-baseline reader choice, exact span support, and nonnegative reader margin predict when the reader ranker should act.",
-      "input_schema": "candidate count, unique count, reader scores, exact-span booleans",
+      "hypothesis": "A reader ranker should act only when the baseline is not an exact selected-context span and two independent candidate prompts agree on an exact supported answer.",
+      "input_schema": "candidate count, unique count, reader scores, exact-span booleans, baseline support and candidate consensus booleans",
       "output_schema": "apply boolean, frozen reason code, scalar applicability trace",
       "requires": ["reader_span_support_candidate_ranker"],
       "conflicts": [],
@@ -135,13 +135,13 @@
   },
   "reproducibility": {
     "config_path": "configs/experiments/phase9k_gold_free_applicability.yaml",
-    "dataset_identity": "nq_open validation[1750:1800] screen, [1800:2000] formal, [2000:2200] replication",
+    "dataset_identity": "nq_open validation[2200:2250] screen, [2250:2450] formal, [2450:2650] replication",
     "environment": "Auto-resolved compatible Python; pinned NousResearch/Meta-Llama-3-8B-Instruct revision 53346005fb0ef11d3b6a83b12c895cca40156b6c; resolved model path and config hash in manifest",
     "seeds": [42, 9921],
     "output_manifest": "exchange/five_ideas/phase9k_gold_free_applicability/<timestamp>_<stage>/run_metadata.json"
   },
   "limitations": [
-    "The applicability thresholds are a fixed heuristic, not a learned calibrated probability.",
+    "The consensus and baseline-support conditions are a fixed conservative policy, not a learned calibrated probability.",
       "The first screen is report-only and cannot authorize a production selector change; total pipeline cost includes both candidate generations and reader scoring.",
     "The candidate generation and reader scoring ideas have high collision risk with ordinary answer reranking literature.",
     "A positive all-question gate would still require an independent replication before any production consideration."

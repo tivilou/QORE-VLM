@@ -16,8 +16,8 @@ from phase9k_gold_free_applicability import decide_applicability
 from phase9k_gold_free_metrics import Phase9KError, summarize_phase9k, validate_result
 
 
-def decision(candidates, raw_scores, exact):
-    return decide_applicability(candidates=candidates, raw_scores=raw_scores, exact_span_modes=exact, reader_margin_min=0.0)
+def decision(candidates, raw_scores, exact, *, baseline_exact_span=False):
+    return decide_applicability(candidates=candidates, raw_scores=raw_scores, exact_span_modes=exact, reader_margin_min=0.0, baseline_exact_span=baseline_exact_span)
 
 
 def arm(em: float) -> dict[str, object]:
@@ -40,7 +40,7 @@ def sample(index: int, *, applied: bool, baseline_em: float = 0.0, ranker_em: fl
         "candidate_count": 3,
         "unique_candidate_count": 3,
         "parse_failures": 0,
-        "applicability": {"apply": applied, "reason_code": "apply" if applied else "baseline_selected", "chosen_mode": "extractive_span_v1" if applied else None, "baseline_score": 1.0 if applied else None, "chosen_score": 2.0 if applied else None, "reader_margin": 1.0 if applied else None, "chosen_exact_span": True if applied else None},
+        "applicability": {"apply": applied, "reason_code": "apply" if applied else "baseline_selected", "chosen_mode": "extractive_span_v1" if applied else None, "baseline_score": 1.0 if applied else None, "chosen_score": 2.0 if applied else None, "reader_margin": 1.0 if applied else None, "chosen_exact_span": True if applied else None, "baseline_exact_span": False, "candidate_consensus": applied},
         "baseline": arm(baseline_em),
         "ranker": ranker(attempted=applied, em=ranker_em),
     }
@@ -52,11 +52,18 @@ def result(rows: list[dict[str, object]], stage: str = "formal") -> dict[str, ob
 
 class Phase9KTests(unittest.TestCase):
     def test_supported_nonbaseline_candidate_is_applied(self):
-        candidates = [("baseline_v1", "wrong"), ("extractive_span_v1", "correct"), ("evidence_constrained_v1", "other")]
+        candidates = [("baseline_v1", "wrong"), ("extractive_span_v1", "correct"), ("evidence_constrained_v1", "correct")]
         raw = {"baseline_v1": {"context_lift": 0.0, "reader_support": 1.0}, "extractive_span_v1": {"context_lift": 0.0, "reader_support": 3.0}, "evidence_constrained_v1": {"context_lift": 0.0, "reader_support": 2.0}}
         decision_result, _ = decision(candidates, raw, {"baseline_v1": False, "extractive_span_v1": True, "evidence_constrained_v1": True})
         self.assertTrue(decision_result.apply)
         self.assertEqual(decision_result.reason_code, "apply")
+
+    def test_baseline_exact_span_is_not_overridden(self):
+        candidates = [("baseline_v1", "supported"), ("extractive_span_v1", "correct"), ("evidence_constrained_v1", "correct")]
+        raw = {"baseline_v1": {"context_lift": 0.0, "reader_support": 1.0}, "extractive_span_v1": {"context_lift": 0.0, "reader_support": 3.0}, "evidence_constrained_v1": {"context_lift": 0.0, "reader_support": 2.0}}
+        decision_result, _ = decision(candidates, raw, {"baseline_v1": True, "extractive_span_v1": True, "evidence_constrained_v1": True}, baseline_exact_span=True)
+        self.assertFalse(decision_result.apply)
+        self.assertEqual(decision_result.reason_code, "baseline_supported")
 
     def test_duplicate_candidates_are_rejected(self):
         candidates = [("baseline_v1", "same"), ("extractive_span_v1", "same")]
@@ -70,7 +77,7 @@ class Phase9KTests(unittest.TestCase):
         raw = {"baseline_v1": {"context_lift": 0.0, "reader_support": 1.0}, "extractive_span_v1": {"context_lift": 0.0, "reader_support": 3.0}, "evidence_constrained_v1": {"context_lift": 0.0, "reader_support": 2.0}}
         decision_result, _ = decision(candidates, raw, {"baseline_v1": False, "extractive_span_v1": False, "evidence_constrained_v1": True})
         self.assertFalse(decision_result.apply)
-        self.assertEqual(decision_result.reason_code, "no_exact_span")
+        self.assertEqual(decision_result.reason_code, "no_candidate_consensus")
 
     def test_summary_uses_baseline_for_nonapplied_rows(self):
         summary = summarize_phase9k(result([sample(1, applied=True), sample(2, applied=False)]), gate={"formal": {"bootstrap_repetitions": 100}})

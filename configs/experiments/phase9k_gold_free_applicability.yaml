@@ -10,19 +10,19 @@ phase:
     name: nq_open
     split: validation
     screen:
-      sample_offset: 1750
+      sample_offset: 2200
       max_samples: 50
-      slice: "nq_open validation[1750:1800]"
+      slice: "nq_open validation[2200:2250]"
       fresh_slice: true
     formal:
-      sample_offset: 1800
+      sample_offset: 2250
       max_samples: 200
-      slice: "nq_open validation[1800:2000]"
+      slice: "nq_open validation[2250:2450]"
       fresh_slice: true
     replication:
-      sample_offset: 2000
+      sample_offset: 2450
       max_samples: 200
-      slice: "nq_open validation[2000:2200]"
+      slice: "nq_open validation[2450:2650]"
       fresh_slice: true
 
   retrieval:
@@ -61,11 +61,13 @@ phase:
     record_resolved_identity: true
 
   applicability:
-    profile: gold_free_reader_span_gate_v1
-    min_candidate_count: 2
+    profile: gold_free_consensus_gate_v2
+    min_candidate_count: 3
     min_unique_candidate_count: 2
     reader_margin_min: 0.0
     require_exact_span: true
+    require_baseline_not_exact: true
+    require_candidate_consensus: true
     gold_used_for_decision: false
 
   plugins:
