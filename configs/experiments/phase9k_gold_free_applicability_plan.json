@@ -142,7 +142,7 @@
   },
   "limitations": [
     "The applicability thresholds are a fixed heuristic, not a learned calibrated probability.",
-    "The first screen is report-only and cannot authorize a production selector change.",
+      "The first screen is report-only and cannot authorize a production selector change; total pipeline cost includes both candidate generations and reader scoring.",
     "The candidate generation and reader scoring ideas have high collision risk with ordinary answer reranking literature.",
     "A positive all-question gate would still require an independent replication before any production consideration."
   ]

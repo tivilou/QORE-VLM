@@ -102,6 +102,7 @@ phase:
       apply_rate_max: 0.60
       order_agreement_min: 0.90
       score_to_baseline_ratio_max: 1.30
+      total_pipeline_cost_to_baseline_ratio_max: 3.50
       action_if_gate_passes: replication_only_no_production_change
       action_if_gate_fails: stop_gold_free_selector_path
     replication:

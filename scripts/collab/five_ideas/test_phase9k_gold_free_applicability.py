@@ -36,6 +36,7 @@ def sample(index: int, *, applied: bool, baseline_em: float = 0.0, ranker_em: fl
         "retrieval_hit": True,
         "selected_hit": True,
         "selection_time_ms": 1.0,
+        "candidate_generation_time_ms": 10.0,
         "candidate_count": 3,
         "unique_candidate_count": 3,
         "parse_failures": 0,

@@ -150,7 +150,7 @@ def validate_result(result: Mapping[str, Any]) -> list[Mapping[str, Any]]:
         seen.add(question_id)
         _require_keys(
             sample,
-            {"question_id", "retrieval_hit", "selected_hit", "selection_time_ms", "candidate_count", "unique_candidate_count", "parse_failures", "applicability", "baseline", "ranker"},
+            {"question_id", "retrieval_hit", "selected_hit", "selection_time_ms", "candidate_generation_time_ms", "candidate_count", "unique_candidate_count", "parse_failures", "applicability", "baseline", "ranker"},
             question_id,
         )
         for key in ("retrieval_hit", "selected_hit"):
@@ -158,6 +158,8 @@ def validate_result(result: Mapping[str, Any]) -> list[Mapping[str, Any]]:
                 raise Phase9KError(f"{question_id}: {key} must be boolean")
         if not _finite(sample["selection_time_ms"]) or float(sample["selection_time_ms"]) < 0:
             raise Phase9KError(f"{question_id}: invalid selection time")
+        if not _finite(sample["candidate_generation_time_ms"]) or float(sample["candidate_generation_time_ms"]) < 0:
+            raise Phase9KError(f"{question_id}: invalid candidate generation time")
         for key in ("candidate_count", "unique_candidate_count", "parse_failures"):
             if not isinstance(sample[key], int) or sample[key] < 0:
                 raise Phase9KError(f"{question_id}: invalid {key}")
@@ -222,6 +224,7 @@ def summarize_phase9k(result: Mapping[str, Any], *, gate: Mapping[str, Any]) -> 
         f1 = all_deltas["f1"]
         order = statistics.fmean(1.0 if row["ranker"]["order_agreement"] else 0.0 for row in applied) if applied else 0.0
         score_ratio = statistics.fmean(float(row["ranker"]["score_to_baseline_ratio"]) for row in applied) if applied else math.inf
+        total_cost_ratio = float(statistics.fmean((float(row["baseline"]["generation_time_ms"]) + float(row["candidate_generation_time_ms"]) + (float(row["ranker"]["score_time_ms"]) if row["ranker"]["attempted"] else 0.0)) / max(float(row["baseline"]["generation_time_ms"]), 1.0) for row in rows))
         apply_rate = len(applied) / len(rows)
         gate_pass = bool(
             em
@@ -232,6 +235,7 @@ def summarize_phase9k(result: Mapping[str, Any], *, gate: Mapping[str, Any]) -> 
             and float(formal_gate.get("apply_rate_min", 0.05)) <= apply_rate <= float(formal_gate.get("apply_rate_max", 0.60))
             and order >= float(formal_gate.get("order_agreement_min", 0.90))
             and score_ratio <= float(formal_gate.get("score_to_baseline_ratio_max", 1.30))
+            and total_cost_ratio <= float(formal_gate.get("total_pipeline_cost_to_baseline_ratio_max", 3.50))
         )
         decision = "gold_free_gate_passed_replication_only" if gate_pass else "gold_free_gate_failed"
     reason_counts: dict[str, int] = {reason: 0 for reason in REASON_CODES}
@@ -249,6 +253,7 @@ def summarize_phase9k(result: Mapping[str, Any], *, gate: Mapping[str, Any]) -> 
             "ranker_attempted": len(applied),
             "ranker_em_mean": float(statistics.fmean(float(row["ranker"]["em"]) for row in applied)) if applied else None,
             "ranker_f1_mean": float(statistics.fmean(float(row["ranker"]["f1"]) for row in applied)) if applied else None,
+            "total_pipeline_cost_to_baseline_ratio_mean": float(statistics.fmean((float(row["baseline"]["generation_time_ms"]) + float(row["candidate_generation_time_ms"]) + (float(row["ranker"]["score_time_ms"]) if row["ranker"]["attempted"] else 0.0)) / max(float(row["baseline"]["generation_time_ms"]), 1.0) for row in rows)),
         },
         "paired_deltas": {"all_question_deployed_em": all_deltas["em"], "all_question_deployed_f1": all_deltas["f1"], "applied_cohort_em": applied_deltas["em"], "applied_cohort_f1": applied_deltas["f1"]},
         "decision": {
@@ -264,6 +269,7 @@ def summarize_phase9k(result: Mapping[str, Any], *, gate: Mapping[str, Any]) -> 
                 "apply_rate_max": float(formal_gate.get("apply_rate_max", 0.60)),
                 "order_agreement_min": float(formal_gate.get("order_agreement_min", 0.90)),
                 "score_to_baseline_ratio_max": float(formal_gate.get("score_to_baseline_ratio_max", 1.30)),
+                "total_pipeline_cost_to_baseline_ratio_max": float(formal_gate.get("total_pipeline_cost_to_baseline_ratio_max", 3.50)),
             },
         },
     }

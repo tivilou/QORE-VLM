@@ -257,6 +257,7 @@ def run(args: argparse.Namespace) -> Path | None:
         baseline = _arm(baseline_result.prediction, gold_answers, baseline_result.generation_time_ms)
         extractive = run_extractive_candidate_probe(generator, question, selected_texts)
         constrained = run_evidence_constrained_probe(generator, question, selected_texts)
+        candidate_generation_time_ms = float(extractive.generation_time_ms + constrained.generation_time_ms)
         pairs = candidate_pairs(baseline_result.prediction, extractive, constrained)
         ranker = _empty_ranker()
         decision = None
@@ -278,7 +279,7 @@ def run(args: argparse.Namespace) -> Path | None:
             applicability = {"apply": False, "reason_code": "no_candidates", "chosen_mode": None, "baseline_score": None, "chosen_score": None, "reader_margin": None, "chosen_exact_span": None}
         else:
             applicability = {"apply": decision.apply, "reason_code": decision.reason_code, "chosen_mode": decision.chosen_mode if decision.apply else None, "baseline_score": decision.baseline_score if decision.apply else None, "chosen_score": decision.chosen_score if decision.apply else None, "reader_margin": decision.reader_margin if decision.apply else None, "chosen_exact_span": decision.chosen_exact_span if decision.apply else None}
-        samples.append({"question_id": question_id, "retrieval_hit": retrieval_hit, "selected_hit": selected_hit, "selection_time_ms": selection_time_ms, "candidate_count": len(pairs), "unique_candidate_count": len({" ".join(text.strip().lower().split()) for _, text in pairs}), "parse_failures": 3 - len(pairs), "applicability": applicability, "baseline": baseline, "ranker": ranker})
+        samples.append({"question_id": question_id, "retrieval_hit": retrieval_hit, "selected_hit": selected_hit, "selection_time_ms": selection_time_ms, "candidate_generation_time_ms": candidate_generation_time_ms, "candidate_count": len(pairs), "unique_candidate_count": len({" ".join(text.strip().lower().split()) for _, text in pairs}), "parse_failures": 3 - len(pairs), "applicability": applicability, "baseline": baseline, "ranker": ranker})
         if index % 5 == 0 or index == len(questions):
             print(f"  Phase 9K {args.stage}: {index}/{len(questions)}")
     result = {"schema_version": 1, "phase": phase["name"], "stage": args.stage, "diagnostic_only": True, "selection_mutation": False, "report_only": True, "config": {"dataset": phase["dataset"]["name"], "split": phase["dataset"]["split"], "sample_offset": stage_spec["sample_offset"], "max_samples": stage_spec["max_samples"], "slice": stage_spec["slice"], "applicability_profile": phase["applicability"]["profile"], "ranker_profile": RANKER_PROFILE, "gold_used_for_decision": False}, "samples": samples}
