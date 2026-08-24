@@ -1,0 +1,72 @@
+{
+  "arms": {
+    "baseline_em_mean": 0.32,
+    "baseline_f1_mean": 0.4814285714285715,
+    "ranker_attempted": 33,
+    "ranker_em_mean": 0.45454545454545453,
+    "ranker_f1_mean": 0.5737373737373738,
+    "total_pipeline_cost_to_baseline_ratio_mean": 3.147225745378262
+  },
+  "cohorts": {
+    "applied": 33,
+    "apply_rate": 0.66,
+    "reason_counts": {
+      "apply": 33,
+      "baseline_selected": 14,
+      "duplicate_candidates": 3,
+      "no_candidates": 0,
+      "no_exact_span": 0,
+      "weak_reader_margin": 0
+    }
+  },
+  "decision": {
+    "diagnostic_outputs_used_for_selection": false,
+    "gold_free_gate_pass": null,
+    "primary_failure_class": "screen_contract_only",
+    "report_only": true,
+    "thresholds": {
+      "all_question_ci95_low_min": 0.0,
+      "all_question_em_uplift_min": 0.03,
+      "all_question_f1_loss_max": 0.01,
+      "apply_rate_max": 0.6,
+      "apply_rate_min": 0.05,
+      "order_agreement_min": 0.9,
+      "score_to_baseline_ratio_max": 1.3,
+      "total_pipeline_cost_to_baseline_ratio_max": 3.5
+    }
+  },
+  "n_questions": 50,
+  "paired_deltas": {
+    "all_question_deployed_em": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9921,
+      "ci95_high": 0.16,
+      "ci95_low": 0.02,
+      "mean": 0.08
+    },
+    "all_question_deployed_f1": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9922,
+      "ci95_high": 0.05523809523809524,
+      "ci95_low": -0.06133333333333333,
+      "mean": -0.002761904761904763
+    },
+    "applied_cohort_em": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9923,
+      "ci95_high": 0.24242424242424243,
+      "ci95_low": 0.030303030303030304,
+      "mean": 0.12121212121212122
+    },
+    "applied_cohort_f1": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9924,
+      "ci95_high": 0.07647907647907648,
+      "ci95_low": -0.08787878787878788,
+      "mean": -0.004184704184704187
+    }
+  },
+  "phase": "phase9k_gold_free_applicability",
+  "schema_version": 1,
+  "stage": "screen"
+}
