@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "Q-DUET-VLM / Phase 9K gold-free applicability diagnostic",
+  "authorization": "implemented",
+  "baseline": {
+    "entry_point": "scripts/collab/five_ideas/run_phase9k_gold_free_applicability.py",
+    "code_revision": "origin/five-ideas-development@9d868905",
+    "equivalence_test": "Frozen baseline generation, retrieval, QORE K=5 selection, evaluator, and model identity remain unchanged; the new runner records baseline before any ranker action."
+  },
+  "core_invariants": [
+    "Wiki-DPR retrieval and QORE selection execute exactly once per question with the Phase 9J frozen configuration.",
+    "Applicability uses only question, selected passages, generated candidate strings, DPR reader scores, and deterministic token-span matching.",
+    "Gold answers, labels, evaluator outputs, and retrieval-hit signals are unavailable until after candidate choice.",
+    "The diagnostic never mutates select_passages, Generator, evaluator, or production answer behavior.",
+    "Compact artifacts contain scalar metrics and stable mode IDs only; no raw question, passage, candidate, prompt, or prediction text is persisted."
+  ],
+  "interfaces": [
+    {
+      "id": "gold_free_applicability_transform",
+      "type": "transformer",
+      "input_schema": "candidate mode IDs, candidate strings, reader support scores, exact-span booleans",
+      "output_schema": "apply boolean, reason code, chosen mode, scalar reader margin, scalar scores",
+      "invariants": ["No gold-derived value is accepted as input", "Decision is deterministic and order-invariant"]
+    },
+    {
+      "id": "reader_span_candidate_combiner",
+      "type": "combiner",
+      "input_schema": "candidate mode IDs and DPR reader support scores",
+      "output_schema": "stable reader-span choice and reversed-order audit choice",
+      "invariants": ["Candidate mode IDs, not list positions, determine ranking"]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "frozen_baseline_observer",
+      "version": "1.0.0",
+      "role": "baseline",
+      "interface": "gold_free_applicability_transform",
+      "insertion_point": "post frozen generator, pre post-hoc evaluation",
+      "hypothesis": "The existing baseline remains the no-intervention comparator.",
+      "input_schema": "question and selected context",
+      "output_schema": "baseline answer in memory plus compact scalar evaluation",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "one frozen generation per question",
+      "failure_signatures": ["baseline mismatch", "changed retrieval or QORE call count"]
+    },
+    {
+      "id": "candidate_generation_adapter",
+      "version": "1.0.0",
+      "role": "adapter",
+      "interface": "gold_free_applicability_transform",
+      "insertion_point": "post baseline generation, pre reader scoring",
+      "hypothesis": "A fixed candidate set can be built without labels for every question.",
+      "input_schema": "question and selected context",
+      "output_schema": "up to three candidate mode IDs and in-memory strings",
+      "requires": ["frozen_baseline_observer"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "two additional frozen generations per question",
+      "failure_signatures": ["candidate parse failure", "candidate text persisted"]
+    },
+    {
+      "id": "reader_span_support_candidate_ranker",
+      "version": "1.0.0",
+      "role": "idea",
+      "interface": "reader_span_candidate_combiner",
+      "insertion_point": "post candidate generation, gated terminal answer choice",
+      "hypothesis": "DPR reader span support identifies a better candidate when a context-exact span exists.",
+      "input_schema": "question, selected context, candidate strings",
+      "output_schema": "candidate mode choice and scalar reader score audit",
+      "requires": ["candidate_generation_adapter"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "one batched DPR reader forward pass per question with >=2 candidates",
+      "failure_signatures": ["order-sensitive choice", "missing exact span", "score cost above gate"]
+    },
+    {
+      "id": "gold_free_applicability_gate",
+      "version": "1.0.0",
+      "role": "idea",
+      "interface": "gold_free_applicability_transform",
+      "insertion_point": "between reader scoring and terminal answer evaluation",
+      "hypothesis": "Candidate diversity, non-baseline reader choice, exact span support, and nonnegative reader margin predict when the reader ranker should act.",
+      "input_schema": "candidate count, unique count, reader scores, exact-span booleans",
+      "output_schema": "apply boolean, frozen reason code, scalar applicability trace",
+      "requires": ["reader_span_support_candidate_ranker"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "negligible CPU policy evaluation",
+      "failure_signatures": ["gold used before choice", "apply rate outside preregistered range", "harm on all-question gate"]
+    },
+    {
+      "id": "ranker_order_invariance_audit",
+      "version": "1.0.0",
+      "role": "adapter",
+      "interface": "reader_span_candidate_combiner",
+      "insertion_point": "parallel audit of candidate choice",
+      "hypothesis": "Stable candidate IDs make the policy invariant to candidate list order.",
+      "input_schema": "original and reversed candidate mode lists",
+      "output_schema": "boolean order agreement",
+      "requires": ["reader_span_support_candidate_ranker"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "negligible CPU replay",
+      "failure_signatures": ["original and reversed choices differ"]
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": ["frozen_baseline_observer", "candidate_generation_adapter", "reader_span_support_candidate_ranker", "gold_free_applicability_gate", "ranker_order_invariance_audit"]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": ["frozen_baseline_observer", "candidate_generation_adapter", "reader_span_support_candidate_ranker", "gold_free_applicability_gate", "ranker_order_invariance_audit"],
+    "merge_rule": "The gate may either keep the baseline or select the reader-ranked candidate; post-hoc evaluator output is never fed backward.",
+    "interaction_ablations": ["baseline only", "ranker always applied", "gold-free gate with reader ranker", "gold-free gate with reversed candidate order"]
+  },
+  "validation": {
+    "baseline_equivalence": "Compare baseline scalar outputs and generation calls against the frozen Phase 9J runner on a synthetic fixture; no production code path is imported for mutation.",
+    "tests": [
+      "baseline_equivalence",
+      "plugin_isolation",
+      "deterministic_replay",
+      "interaction_ablation",
+      "synthetic applicability gate accepts a supported non-baseline exact span",
+      "synthetic gate rejects duplicate candidates",
+      "synthetic gate rejects a non-exact top candidate",
+      "candidate order replay returns the same mode choice",
+      "compact schema rejects forbidden raw fields",
+      "all-question paired metric summary applies baseline on non-applied rows"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/phase9k_gold_free_applicability.yaml",
+    "dataset_identity": "nq_open validation[1750:1800] screen, [1800:2000] formal, [2000:2200] replication",
+    "environment": "Auto-resolved compatible Python; pinned NousResearch/Meta-Llama-3-8B-Instruct revision 53346005fb0ef11d3b6a83b12c895cca40156b6c; resolved model path and config hash in manifest",
+    "seeds": [42, 9921],
+    "output_manifest": "exchange/five_ideas/phase9k_gold_free_applicability/<timestamp>_<stage>/run_metadata.json"
+  },
+  "limitations": [
+    "The applicability thresholds are a fixed heuristic, not a learned calibrated probability.",
+    "The first screen is report-only and cannot authorize a production selector change.",
+    "The candidate generation and reader scoring ideas have high collision risk with ordinary answer reranking literature.",
+    "A positive all-question gate would still require an independent replication before any production consideration."
+  ]
+}

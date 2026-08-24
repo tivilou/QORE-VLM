@@ -1,0 +1,118 @@
+phase:
+  name: phase9k_gold_free_applicability
+  schema_version: 1
+  diagnostic_only: true
+  selection_mutation: false
+  authorization: implemented
+  parent_phase: phase9j_context_lift_candidate_ranking
+
+  dataset:
+    name: nq_open
+    split: validation
+    screen:
+      sample_offset: 1750
+      max_samples: 50
+      slice: "nq_open validation[1750:1800]"
+      fresh_slice: true
+    formal:
+      sample_offset: 1800
+      max_samples: 200
+      slice: "nq_open validation[1800:2000]"
+      fresh_slice: true
+    replication:
+      sample_offset: 2000
+      max_samples: 200
+      slice: "nq_open validation[2000:2200]"
+      fresh_slice: true
+
+  retrieval:
+    corpus_mode: wiki_dpr
+    wiki_dpr_config: psgs_w100.nq.compressed
+    nprobe: 64
+    top_k: 50
+
+  selection:
+    method: qore
+    K: 5
+    num_reads: 100
+    lam: 2.0
+    seed: 42
+    gamma: 1.0
+    delta: 0.0
+    complementarity_method: null
+    qore_prefilter_size: null
+    direct_solve_max_n: 20
+    lambda_mmr: 0.7
+    saturation_alpha: 1.0
+    lambda_submodular: 0.5
+    dpp_quality_scale: 2.0
+    dpp_jitter: 1.0e-8
+    use_answer_scorer: true
+    answer_scorer_backend: dpr
+
+  generator:
+    model_id: NousResearch/Meta-Llama-3-8B-Instruct
+    revision: 53346005fb0ef11d3b6a83b12c895cca40156b6c
+    max_new_tokens: 32
+    decoding: greedy
+    model_path_candidates:
+      - models/llama3-8b
+    resolver_order: [cli_override, project_candidate, hf_cache]
+    record_resolved_identity: true
+
+  applicability:
+    profile: gold_free_reader_span_gate_v1
+    min_candidate_count: 2
+    min_unique_candidate_count: 2
+    reader_margin_min: 0.0
+    require_exact_span: true
+    gold_used_for_decision: false
+
+  plugins:
+    allowlist:
+      - frozen_baseline_observer
+      - candidate_generation_adapter
+      - reader_span_support_candidate_ranker
+      - gold_free_applicability_gate
+      - ranker_order_invariance_audit
+    diagnostic_outputs_used_for_selection: false
+    production_intervention: false
+
+  gate:
+    screen:
+      purpose: contract_privacy_runtime_and_apply_rate
+      max_generation_equivalent_calls: 150
+      required_checks:
+        - fresh_slice_disjointness
+        - one_retrieval_and_selection_per_question
+        - baseline_equivalence
+        - gold_free_decision_order
+        - exact_span_policy
+        - ranker_order_invariance
+        - compact_output_privacy
+    formal:
+      sample_count: 200
+      primary_ranker_profile: reader_span_support_v1
+      bootstrap_repetitions: 2000
+      bootstrap_seed: 9921
+      all_question_em_uplift_min: 0.03
+      all_question_ci95_low_min: 0.0
+      all_question_f1_loss_max: 0.01
+      apply_rate_min: 0.05
+      apply_rate_max: 0.60
+      order_agreement_min: 0.90
+      score_to_baseline_ratio_max: 1.30
+      action_if_gate_passes: replication_only_no_production_change
+      action_if_gate_fails: stop_gold_free_selector_path
+    replication:
+      slice: "nq_open validation[2000:2200]"
+      primary_ranker_profile: reader_span_support_v1
+      only_if_formal_gold_free_gate_passes: true
+      same_frozen_contract: true
+      production_change_allowed: false
+
+  outputs:
+    root: exchange/five_ideas/phase9k_gold_free_applicability
+    compact_only: true
+    candidate_text_persisted: false
+    forbidden_fields: [question, passages, gold_answers, candidate_text, prediction, raw_prompt, evaluator_trace]
