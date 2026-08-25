@@ -1,0 +1,74 @@
+{
+  "arms": {
+    "baseline_em_mean": 0.26,
+    "baseline_f1_mean": 0.44565079365079363,
+    "ranker_attempted": 27,
+    "ranker_em_mean": 0.6296296296296297,
+    "ranker_f1_mean": 0.7024691358024691,
+    "total_pipeline_cost_to_baseline_ratio_mean": 3.209633425821322
+  },
+  "cohorts": {
+    "applied": 27,
+    "apply_rate": 0.135,
+    "reason_counts": {
+      "apply": 27,
+      "baseline_selected": 75,
+      "baseline_supported": 25,
+      "duplicate_candidates": 12,
+      "no_candidate_consensus": 61,
+      "no_candidates": 0,
+      "no_exact_span": 0,
+      "weak_reader_margin": 0
+    }
+  },
+  "decision": {
+    "diagnostic_outputs_used_for_selection": false,
+    "gold_free_gate_pass": true,
+    "primary_failure_class": "gold_free_gate_passed_replication_only",
+    "report_only": true,
+    "thresholds": {
+      "all_question_ci95_low_min": 0.0,
+      "all_question_em_uplift_min": 0.03,
+      "all_question_f1_loss_max": 0.01,
+      "apply_rate_max": 0.6,
+      "apply_rate_min": 0.05,
+      "order_agreement_min": 0.9,
+      "score_to_baseline_ratio_max": 1.3,
+      "total_pipeline_cost_to_baseline_ratio_max": 3.5
+    }
+  },
+  "n_questions": 200,
+  "paired_deltas": {
+    "all_question_deployed_em": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9921,
+      "ci95_high": 0.06,
+      "ci95_low": 0.005,
+      "mean": 0.03
+    },
+    "all_question_deployed_f1": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9922,
+      "ci95_high": 0.028452380952380955,
+      "ci95_low": -0.006047619047619048,
+      "mean": 0.010785714285714286
+    },
+    "applied_cohort_em": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9923,
+      "ci95_high": 0.4074074074074074,
+      "ci95_low": 0.037037037037037035,
+      "mean": 0.2222222222222222
+    },
+    "applied_cohort_f1": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9924,
+      "ci95_high": 0.19805996472663137,
+      "ci95_low": -0.05573192239858907,
+      "mean": 0.07989417989417989
+    }
+  },
+  "phase": "phase9k_gold_free_applicability",
+  "schema_version": 1,
+  "stage": "formal"
+}
