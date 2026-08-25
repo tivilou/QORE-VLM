@@ -1,0 +1,74 @@
+{
+  "arms": {
+    "baseline_em_mean": 0.25,
+    "baseline_f1_mean": 0.4384801587301588,
+    "ranker_attempted": 17,
+    "ranker_em_mean": 0.47058823529411764,
+    "ranker_f1_mean": 0.5,
+    "total_pipeline_cost_to_baseline_ratio_mean": 3.1609939914038048
+  },
+  "cohorts": {
+    "applied": 17,
+    "apply_rate": 0.085,
+    "reason_counts": {
+      "apply": 17,
+      "baseline_selected": 88,
+      "baseline_supported": 39,
+      "duplicate_candidates": 4,
+      "no_candidate_consensus": 52,
+      "no_candidates": 0,
+      "no_exact_span": 0,
+      "weak_reader_margin": 0
+    }
+  },
+  "decision": {
+    "diagnostic_outputs_used_for_selection": false,
+    "gold_free_gate_pass": false,
+    "primary_failure_class": "gold_free_gate_failed",
+    "report_only": true,
+    "thresholds": {
+      "all_question_ci95_low_min": 0.0,
+      "all_question_em_uplift_min": 0.03,
+      "all_question_f1_loss_max": 0.01,
+      "apply_rate_max": 0.6,
+      "apply_rate_min": 0.05,
+      "order_agreement_min": 0.9,
+      "score_to_baseline_ratio_max": 1.3,
+      "total_pipeline_cost_to_baseline_ratio_max": 3.5
+    }
+  },
+  "n_questions": 200,
+  "paired_deltas": {
+    "all_question_deployed_em": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9921,
+      "ci95_high": 0.0,
+      "ci95_low": 0.0,
+      "mean": 0.0
+    },
+    "all_question_deployed_f1": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9922,
+      "ci95_high": 0.0,
+      "ci95_low": -0.015,
+      "mean": -0.005833333333333333
+    },
+    "applied_cohort_em": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9923,
+      "ci95_high": 0.0,
+      "ci95_low": 0.0,
+      "mean": 0.0
+    },
+    "applied_cohort_f1": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9924,
+      "ci95_high": 0.0,
+      "ci95_low": -0.17647058823529413,
+      "mean": -0.06862745098039215
+    }
+  },
+  "phase": "phase9k_gold_free_applicability",
+  "schema_version": 1,
+  "stage": "replication"
+}
