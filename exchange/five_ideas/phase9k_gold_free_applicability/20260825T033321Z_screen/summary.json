@@ -1,0 +1,74 @@
+{
+  "arms": {
+    "baseline_em_mean": 0.24,
+    "baseline_f1_mean": 0.357047619047619,
+    "ranker_attempted": 8,
+    "ranker_em_mean": 0.75,
+    "ranker_f1_mean": 0.775,
+    "total_pipeline_cost_to_baseline_ratio_mean": 3.213429940279772
+  },
+  "cohorts": {
+    "applied": 8,
+    "apply_rate": 0.16,
+    "reason_counts": {
+      "apply": 8,
+      "baseline_selected": 15,
+      "baseline_supported": 5,
+      "duplicate_candidates": 2,
+      "no_candidate_consensus": 20,
+      "no_candidates": 0,
+      "no_exact_span": 0,
+      "weak_reader_margin": 0
+    }
+  },
+  "decision": {
+    "diagnostic_outputs_used_for_selection": false,
+    "gold_free_gate_pass": null,
+    "primary_failure_class": "screen_contract_only",
+    "report_only": true,
+    "thresholds": {
+      "all_question_ci95_low_min": 0.0,
+      "all_question_em_uplift_min": 0.03,
+      "all_question_f1_loss_max": 0.01,
+      "apply_rate_max": 0.6,
+      "apply_rate_min": 0.05,
+      "order_agreement_min": 0.9,
+      "score_to_baseline_ratio_max": 1.3,
+      "total_pipeline_cost_to_baseline_ratio_max": 3.5
+    }
+  },
+  "n_questions": 50,
+  "paired_deltas": {
+    "all_question_deployed_em": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9921,
+      "ci95_high": 0.1,
+      "ci95_low": 0.0,
+      "mean": 0.04
+    },
+    "all_question_deployed_f1": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9922,
+      "ci95_high": 0.038,
+      "ci95_low": -0.000888888888888888,
+      "mean": 0.013555555555555557
+    },
+    "applied_cohort_em": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9923,
+      "ci95_high": 0.625,
+      "ci95_low": 0.0,
+      "mean": 0.25
+    },
+    "applied_cohort_f1": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 9924,
+      "ci95_high": 0.2125,
+      "ci95_low": -0.00555555555555555,
+      "mean": 0.08472222222222223
+    }
+  },
+  "phase": "phase9k_gold_free_applicability",
+  "schema_version": 1,
+  "stage": "screen"
+}
