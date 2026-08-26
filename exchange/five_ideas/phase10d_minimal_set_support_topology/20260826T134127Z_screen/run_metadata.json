@@ -1,0 +1,98 @@
+{
+  "config": {
+    "path": "/root/QORE-VLM/configs/experiments/phase10d_minimal_set_support_topology.yaml",
+    "sha256": "07c02a0b258d71e152d58b1a424fc85109db3408a7df4da041d05c175214cdd8"
+  },
+  "dataset": {
+    "fresh_slice": true,
+    "max_samples": 50,
+    "name": "nq_open",
+    "sample_offset": 1800,
+    "slice": "nq_open validation[1800:1850]",
+    "split": "validation"
+  },
+  "diagnostic_only": true,
+  "environment": {
+    "python_executable": "/root/miniconda3/bin/python",
+    "python_version": "3.10.20 (main, Mar 11 2026, 17:46:40) [GCC 14.3.0]"
+  },
+  "evidence_packet": {
+    "path": "/root/QORE-VLM/configs/experiments/phase10d_minimal_set_support_topology_evidence_packet.json",
+    "sha256": "5bc6a0fdaa6c8526b481a323cf5097924525cced0a420b7cec44a5f0d22b49a2"
+  },
+  "generator": {
+    "config_sha256": "61f3de03a16ca8046b05dc777bce72717022bc8522152eee61a69072272ef54b",
+    "model_id": "NousResearch/Meta-Llama-3-8B-Instruct",
+    "model_path": "/root/QORE-VLM/models/llama3-8b",
+    "resolution": "local_cache",
+    "revision": "53346005fb0ef11d3b6a83b12c895cca40156b6c"
+  },
+  "git": {
+    "branch": "five-ideas-development",
+    "commit": "5796dabe3637fe352b286c54c5c866a626484589"
+  },
+  "mechanism_recovery": {
+    "path": "/root/QORE-VLM/configs/experiments/phase10d_minimal_set_support_topology_mechanism_recovery.json",
+    "sha256": "c5e7dc35381ec4e522b82949e52a0c7b5fd5e157f1abba784ba22737c7bdeda3"
+  },
+  "phase": "phase10d_minimal_set_support_topology",
+  "plugin_plan": {
+    "path": "/root/QORE-VLM/configs/experiments/phase10d_minimal_set_support_topology_plan.json",
+    "sha256": "f0ee9726a7f01cc1deb2d17114325382a47d89bed20fe12ff324d5ff8d93e32f",
+    "tree_sha256": "3c6e883d675990bd39f156f236433559685ddf05bcb04ef8539a00ab0a62b295"
+  },
+  "report_only": true,
+  "retrieval": {
+    "corpus_mode": "wiki_dpr",
+    "initial_top_k": 50,
+    "nprobe": 64,
+    "wiki_dpr_config": "psgs_w100.nq.compressed"
+  },
+  "schema_version": 1,
+  "selection": {
+    "K": 5,
+    "answer_scorer_backend": "dpr",
+    "complementarity_method": null,
+    "delta": 0.0,
+    "direct_solve_max_n": 20,
+    "gamma": 1.0,
+    "lam": 2.0,
+    "method": "qore",
+    "num_reads": 100,
+    "qore_prefilter_size": null,
+    "seed": 42,
+    "use_answer_scorer": true
+  },
+  "selection_mutation": false,
+  "stage": "screen",
+  "status": "completed",
+  "summary": {
+    "path": "/root/QORE-VLM/exchange/five_ideas/phase10d_minimal_set_support_topology/20260826T134127Z_screen/summary.json",
+    "primary_failure_class": "kill_phase10d_screen"
+  },
+  "support_topology": {
+    "distributed_set_interaction": "all_singletons_fail_and_any_multi_passage_subset_succeeds",
+    "eligibility": {
+      "baseline_em": 0.0,
+      "decision_order": "post_inference_only",
+      "gold_answer_copy_em": 1.0,
+      "selected_hit": true
+    },
+    "evaluator_input": false,
+    "full_mask_reuses_frozen_baseline": true,
+    "gold_or_evaluator_before_generation": false,
+    "nonempty_subset_count": 31,
+    "plugin_id": "minimal_set_support_topology",
+    "preserve_selected_order": true,
+    "prompt_change": false,
+    "qore_feedback": false,
+    "selected_K": 5,
+    "selected_context_only": true,
+    "singleton_definition": "subset_cardinality_equals_1",
+    "strict_interaction": "distributed_set_interaction_with_successful_subset_containing_non_answer_literal_member",
+    "success_metric": "em"
+  },
+  "timing_ms": {
+    "total": 132486.02019199997
+  }
+}

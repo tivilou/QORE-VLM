@@ -1,0 +1,50 @@
+{
+  "cohorts": {
+    "copy_control_failures": 0,
+    "copy_control_successes": 19,
+    "retrieval_hit": 43,
+    "selected_hit": 33,
+    "selected_hit_baseline_errors": 19
+  },
+  "decision": {
+    "primary_failure_class": "kill_phase10d_screen",
+    "report_only": true,
+    "selection_mutation": false,
+    "thresholds": {
+      "minimum_copy_control_successes": 8,
+      "minimum_primary_errors": 10,
+      "strict_interaction_bootstrap_ci95_low_min": 0.2,
+      "strict_interaction_fraction_min": 0.4
+    }
+  },
+  "gate": {
+    "enough_copy_control_successes": true,
+    "enough_primary_errors": true,
+    "strict_interaction_bootstrap_ci95_low": false,
+    "strict_interaction_fraction": false
+  },
+  "n_questions": 50,
+  "schema_version": 1,
+  "stage": "screen",
+  "topology": {
+    "counts": {
+      "answer_bearing_only_distributed_interaction": 0,
+      "beyond_selected_set": 11,
+      "singleton_sufficient": 6,
+      "strict_non_answer_assisted_interaction": 2
+    },
+    "fractions": {
+      "answer_bearing_only_distributed_interaction": 0.0,
+      "beyond_selected_set": 0.5789473684210527,
+      "singleton_sufficient": 0.3157894736842105,
+      "strict_non_answer_assisted_interaction": 0.10526315789473684
+    },
+    "strict_interaction_bootstrap": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 10601,
+      "ci95_high": 0.2631578947368421,
+      "ci95_low": 0.0,
+      "mean": 0.10526315789473684
+    }
+  }
+}
