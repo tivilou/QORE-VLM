@@ -1,0 +1,85 @@
+{
+  "config": {
+    "path": "/root/QORE-VLM/configs/experiments/phase10c_reader_span_energy.yaml",
+    "sha256": "8d31a01fa152178aed38c2489f7a888ea3bd72d935fb75668c85ca8231cb742a"
+  },
+  "dataset": {
+    "fresh_slice": true,
+    "max_samples": 50,
+    "name": "nq_open",
+    "sample_offset": 3150,
+    "slice": "nq_open validation[3150:3200]",
+    "split": "validation"
+  },
+  "diagnostic_only": true,
+  "environment": {
+    "python_executable": "/root/miniconda3/bin/python",
+    "python_version": "3.10.20 (main, Mar 11 2026, 17:46:40) [GCC 14.3.0]"
+  },
+  "generator": {
+    "config_sha256": "61f3de03a16ca8046b05dc777bce72717022bc8522152eee61a69072272ef54b",
+    "model_id": "NousResearch/Meta-Llama-3-8B-Instruct",
+    "model_path": "/root/QORE-VLM/models/llama3-8b",
+    "resolution": "local_cache",
+    "revision": "53346005fb0ef11d3b6a83b12c895cca40156b6c"
+  },
+  "git": {
+    "branch": "five-ideas-development",
+    "commit": "3a04508f5f093cee68e673bba9a3a712a2af8ddd"
+  },
+  "phase": "phase10c_reader_span_energy",
+  "plugin_plan": {
+    "path": "/root/QORE-VLM/configs/experiments/phase10c_reader_span_energy_plan.json",
+    "sha256": "f7d043fa17fa6474d8822bf5d78b68df646909e5bb8491e86eb3481ea672c155",
+    "tree_sha256": "2812309a2d5110fc4417e422fc507507ac5db519a5df302bb7d87f697ae0f5b5"
+  },
+  "reader_span_energy": {
+    "applicability_gate": false,
+    "candidate_generation": false,
+    "candidate_reranking": false,
+    "energy_coefficient": 1.0,
+    "energy_rule": "log1p_reader_mass",
+    "evaluator_input": false,
+    "final_context_K": 5,
+    "max_answer_span_tokens": 10,
+    "max_spans": 10,
+    "plugin_id": "reader_span_energy_decoding",
+    "prompt_change": false,
+    "qore_feedback": false,
+    "reader_backend": "dpr",
+    "span_source": "frozen_selected_context_only",
+    "top_m": 3
+  },
+  "report_only": true,
+  "retrieval": {
+    "corpus_mode": "wiki_dpr",
+    "initial_top_k": 50,
+    "nprobe": 64,
+    "wiki_dpr_config": "psgs_w100.nq.compressed"
+  },
+  "schema_version": 1,
+  "selection": {
+    "K": 5,
+    "answer_scorer_backend": "dpr",
+    "complementarity_method": null,
+    "delta": 0.0,
+    "direct_solve_max_n": 20,
+    "gamma": 1.0,
+    "lam": 2.0,
+    "method": "qore",
+    "num_reads": 100,
+    "qore_prefilter_size": null,
+    "seed": 42,
+    "use_answer_scorer": true
+  },
+  "selection_mutation": false,
+  "stage": "screen",
+  "status": "completed",
+  "summary": {
+    "decision": "kill_phase10c_screen",
+    "path": "/root/QORE-VLM/exchange/five_ideas/phase10c_reader_span_energy/20260826T104536Z_screen/summary.json"
+  },
+  "timing_ms": {
+    "total": 56619.64143
+  }
+}

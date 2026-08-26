@@ -1,0 +1,102 @@
+{
+  "arms": {
+    "matched_span_control": {
+      "em": {
+        "baseline_mean": 0.36,
+        "delta": {
+          "bootstrap_repetitions": 2000,
+          "bootstrap_seed": 10522,
+          "ci95_high": 0.0,
+          "ci95_low": 0.0,
+          "mean": 0.0
+        },
+        "variant_mean": 0.36
+      },
+      "energy_active_steps_mean": 6.68,
+      "f1": {
+        "baseline_mean": 0.5440952380952381,
+        "delta": {
+          "bootstrap_repetitions": 2000,
+          "bootstrap_seed": 10521,
+          "ci95_high": 0.0,
+          "ci95_low": 0.0,
+          "mean": 0.0
+        },
+        "variant_mean": 0.5440952380952381
+      },
+      "generation_time_ms": {
+        "baseline_total": 11921.305852000045,
+        "ratio": 0.9596696169891923,
+        "variant_total": 11440.5150209999
+      },
+      "lattice_available_rate": 1.0,
+      "n_questions": 50,
+      "pipeline_time_ms": {
+        "baseline_total": 29390.838171999916,
+        "ratio": 1.1167467734985834,
+        "variant_total": 32822.12369899991
+      }
+    },
+    "reader_span_energy": {
+      "em": {
+        "baseline_mean": 0.36,
+        "delta": {
+          "bootstrap_repetitions": 2000,
+          "bootstrap_seed": 10502,
+          "ci95_high": 0.0,
+          "ci95_low": 0.0,
+          "mean": 0.0
+        },
+        "variant_mean": 0.36
+      },
+      "energy_active_steps_mean": 6.54,
+      "f1": {
+        "baseline_mean": 0.5440952380952381,
+        "delta": {
+          "bootstrap_repetitions": 2000,
+          "bootstrap_seed": 10501,
+          "ci95_high": 0.0,
+          "ci95_low": 0.0,
+          "mean": 0.0
+        },
+        "variant_mean": 0.5440952380952381
+      },
+      "generation_time_ms": {
+        "baseline_total": 11921.305852000045,
+        "ratio": 0.9463566901194425,
+        "variant_total": 11281.807548000303
+      },
+      "lattice_available_rate": 1.0,
+      "n_questions": 50,
+      "pipeline_time_ms": {
+        "baseline_total": 29390.838171999916,
+        "ratio": 1.1113468773788882,
+        "variant_total": 32663.416226000336
+      }
+    }
+  },
+  "decision": "kill_phase10c_screen",
+  "gate": {
+    "context_parity": true,
+    "cost": true,
+    "f1_harm": true,
+    "reader_minus_control": false
+  },
+  "reader_minus_control": {
+    "em": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 10542,
+      "ci95_high": 0.0,
+      "ci95_low": 0.0,
+      "mean": 0.0
+    },
+    "f1": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 10541,
+      "ci95_high": 0.0,
+      "ci95_low": 0.0,
+      "mean": 0.0
+    }
+  },
+  "schema_version": 1
+}
