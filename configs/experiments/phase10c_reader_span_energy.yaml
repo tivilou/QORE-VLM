@@ -1,0 +1,112 @@
+phase:
+  name: phase10c_reader_span_energy
+  schema_version: 1
+  diagnostic_only: true
+  selection_mutation: false
+  authorization: implemented_screen_only
+  parent_phase: cumulative_phase1_10b_audit
+
+  dataset:
+    name: nq_open
+    split: validation
+    screen:
+      sample_offset: 3150
+      max_samples: 50
+      slice: "nq_open validation[3150:3200]"
+      fresh_slice: true
+    formal:
+      sample_offset: 3200
+      max_samples: 200
+      slice: "nq_open validation[3200:3400]"
+      fresh_slice: true
+      authorization: unavailable_pending_screen_and_user_approval
+    replication:
+      sample_offset: 3400
+      max_samples: 200
+      slice: "nq_open validation[3400:3600]"
+      fresh_slice: true
+      authorization: unavailable_pending_formal_and_user_approval
+
+  retrieval:
+    corpus_mode: wiki_dpr
+    wiki_dpr_config: psgs_w100.nq.compressed
+    nprobe: 64
+    initial_top_k: 50
+
+  selection:
+    method: qore
+    K: 5
+    num_reads: 100
+    lam: 2.0
+    seed: 42
+    gamma: 1.0
+    delta: 0.0
+    complementarity_method: null
+    qore_prefilter_size: null
+    direct_solve_max_n: 20
+    use_answer_scorer: true
+    answer_scorer_backend: dpr
+
+  generator:
+    model_id: NousResearch/Meta-Llama-3-8B-Instruct
+    revision: 53346005fb0ef11d3b6a83b12c895cca40156b6c
+    max_new_tokens: 32
+    decoding: greedy
+    model_path_candidates:
+      - models/llama3-8b
+    resolver_order: [cli_override, project_candidate, hf_cache]
+    record_resolved_identity: true
+
+  reader_span_energy:
+    plugin_id: reader_span_energy_decoding
+    span_source: frozen_selected_context_only
+    reader_backend: dpr
+    top_m: 3
+    max_answer_span_tokens: 10
+    max_spans: 10
+    energy_rule: log1p_reader_mass
+    energy_coefficient: 1.0
+    candidate_generation: false
+    candidate_reranking: false
+    applicability_gate: false
+    qore_feedback: false
+    prompt_change: false
+    evaluator_input: false
+    final_context_K: 5
+
+  arms: [baseline_greedy, reader_span_energy, matched_span_control]
+
+  gate:
+    screen:
+      purpose: contract_privacy_runtime_and_harm_check
+      bootstrap_repetitions: 2000
+      bootstrap_seed: 10501
+      total_pipeline_cost_ratio_max: 1.25
+      screen_f1_ci95_low_min: -0.02
+      screen_reader_minus_control_mean_min: 0.0
+      required_checks:
+        - fresh_slice_disjointness
+        - one_retrieval_and_qore_selection_per_question
+        - selected_K5_id_and_order_parity
+        - disabled_lattice_delegates_to_frozen_generator
+        - reader_lattice_selected_context_only
+        - matched_control_same_count_and_lengths
+        - no_gold_or_evaluator_input_to_decoding
+        - compact_output_privacy
+      clean_null_policy: inconclusive
+      action_if_gate_passes: user_authorization_required_before_formal
+      action_if_gate_fails: stop_reader_span_energy_formulation
+    formal:
+      authorization: unavailable
+      formal_f1_delta_min: 0.01
+      total_pipeline_cost_ratio_max: 1.25
+      action_if_gate_passes: user_authorization_required_before_replication
+      action_if_gate_fails: stop_reader_span_energy_formulation
+    replication:
+      authorization: unavailable
+      production_change_allowed: false
+
+  outputs:
+    root: exchange/five_ideas/phase10c_reader_span_energy
+    compact_only: true
+    forbidden_fields: [question, passages, gold_answers, prediction, candidate_text, span_text, raw_prompt, evaluator_trace, text, token_ids]

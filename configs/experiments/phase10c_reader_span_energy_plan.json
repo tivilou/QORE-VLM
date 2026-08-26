@@ -1,0 +1,165 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "Q-DUET-VLM",
+  "authorization": "implemented",
+  "baseline": {
+    "entry_point": "applications/rag/generation/generator.py:Generator.generate",
+    "code_revision": "resolved_at_run",
+    "equivalence_test": "test_disabled_lattice_delegates_to_generator"
+  },
+  "core_invariants": [
+    "Freeze Wiki-DPR retrieval, Answer Scorer, QORE selection, selected K=5 IDs and order, Generator prompt, evaluator, labels, and baseline Generator.generate.",
+    "No selector, Generator, evaluator, retrieval, prompt, label, or production mutation is permitted.",
+    "Reader spans come only from the frozen selected K=5 context and remain in memory; compact output contains no raw text, predictions, prompts, token IDs, passages, questions, or gold answers.",
+    "Only the report-only screen is executable. Formal and replication require future explicit authorization."
+  ],
+  "interfaces": [
+    {
+      "id": "selected_context_reader_lattice_interface",
+      "type": "transformer",
+      "input_schema": "selected K=5 passages plus frozen DPR reader span hypotheses",
+      "output_schema": "normalized immutable token-span lattice",
+      "invariants": [
+        "does not read gold answers, evaluator output, generated answer, retrieval candidates, or selector state",
+        "deterministic top-span ordering and normalized positive weights"
+      ]
+    },
+    {
+      "id": "decode_time_energy_interface",
+      "type": "transformer",
+      "input_schema": "frozen Generator, question, selected K=5 passages, token-span lattice",
+      "output_schema": "one greedy decoded answer with compact decoder statistics",
+      "invariants": [
+        "empty lattice delegates to Generator.generate exactly",
+        "non-empty lattice adds fixed log1p reader mass only to valid next continuations"
+      ]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "frozen_qore_context_observer",
+      "version": "1.0.0",
+      "role": "baseline",
+      "interface": "selected_context_reader_lattice_interface",
+      "insertion_point": "after frozen Wiki-DPR plus Answer Scorer plus QORE selection",
+      "hypothesis": "Frozen selected K=5 evidence is the sole context boundary for all arms.",
+      "input_schema": "question and frozen retrieval candidates",
+      "output_schema": "selected K=5 passages in baseline order",
+      "requires": [],
+      "conflicts": ["selector_feedback", "retrieval_expansion", "prompt_mutation"],
+      "deterministic": true,
+      "resource_estimate": "one frozen retrieval, Answer Scorer, and QORE selection per question",
+      "failure_signatures": ["selected-context parity failure", "K differs from five"]
+    },
+    {
+      "id": "selected_context_reader_lattice",
+      "version": "1.0.0",
+      "role": "idea",
+      "interface": "selected_context_reader_lattice_interface",
+      "insertion_point": "after frozen selected context and before decoding",
+      "hypothesis": "DPR reader-localized spans supply a useful token-continuation prior.",
+      "input_schema": "selected K=5 passages and frozen DPR reader outputs",
+      "output_schema": "bounded normalized reader span lattice",
+      "requires": ["frozen_qore_context_observer"],
+      "conflicts": ["candidate_generation", "candidate_reranking", "applicability_gate", "qore_feedback"],
+      "deterministic": true,
+      "resource_estimate": "one DPR reader span pass over the selected K=5 context",
+      "failure_signatures": ["empty reader lattice", "span source outside selected context", "nondeterministic ordering"]
+    },
+    {
+      "id": "reader_span_energy_decoder",
+      "version": "1.0.0",
+      "role": "idea",
+      "interface": "decode_time_energy_interface",
+      "insertion_point": "inside one external greedy decode loop",
+      "hypothesis": "Fixed reader span mass improves token allocation without changing context or prompting.",
+      "input_schema": "frozen Generator and reader span lattice",
+      "output_schema": "reader-span-energy decoded answer and scalar runtime statistics",
+      "requires": ["selected_context_reader_lattice"],
+      "conflicts": ["candidate_generation", "candidate_reranking", "multi_decode_reranking", "prompt_mutation"],
+      "deterministic": true,
+      "resource_estimate": "one cached greedy decode, no candidate answers",
+      "failure_signatures": ["disabled-path parity failure", "cost ratio above 1.25", "systematic all-question F1 harm"]
+    },
+    {
+      "id": "matched_span_control_decoder",
+      "version": "1.0.0",
+      "role": "adapter",
+      "interface": "decode_time_energy_interface",
+      "insertion_point": "parallel matched-control decode arm",
+      "hypothesis": "A score-independent selected-context lattice separates reader localization from generic copying bias.",
+      "input_schema": "selected K=5 passages and reader lattice shape",
+      "output_schema": "matched non-reader lattice decode",
+      "requires": ["selected_context_reader_lattice"],
+      "conflicts": ["reader_score_use", "selector_feedback"],
+      "deterministic": true,
+      "resource_estimate": "one cached greedy decode with same lattice count and token lengths",
+      "failure_signatures": ["shape mismatch", "matched control equals or exceeds reader F1"]
+    },
+    {
+      "id": "decoder_compact_audit",
+      "version": "1.0.0",
+      "role": "adapter",
+      "interface": "decode_time_energy_interface",
+      "insertion_point": "after evaluator and before compact artifact write",
+      "hypothesis": "Scalar-only artifacts retain contract evidence without leaking evaluation content.",
+      "input_schema": "in-memory predictions, metrics, and decoder statistics",
+      "output_schema": "compact scalar result and gate summary",
+      "requires": ["reader_span_energy_decoder", "matched_span_control_decoder"],
+      "conflicts": ["raw_text_persistence", "evaluator_feedback"],
+      "deterministic": true,
+      "resource_estimate": "negligible",
+      "failure_signatures": ["forbidden output field", "arm or question-ID mismatch"]
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": [
+      "frozen_qore_context_observer",
+      "selected_context_reader_lattice",
+      "reader_span_energy_decoder",
+      "matched_span_control_decoder",
+      "decoder_compact_audit"
+    ]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": [
+      "frozen_qore_context_observer",
+      "selected_context_reader_lattice",
+      "reader_span_energy_decoder",
+      "matched_span_control_decoder",
+      "decoder_compact_audit"
+    ],
+    "merge_rule": "All three paired arms share one frozen selected K=5 context; reader and control each use one decode-time lattice, while baseline calls Generator.generate unchanged.",
+    "interaction_ablations": [
+      "empty-lattice direct Generator.generate parity",
+      "reader lattice versus matched score-independent lattice",
+      "all-question paired reader versus frozen baseline"
+    ]
+  },
+  "validation": {
+    "baseline_equivalence": "An empty SpanLattice calls the unmodified Generator.generate path exactly.",
+    "tests": [
+      "synthetic disabled-path parity",
+      "deterministic span lattice construction",
+      "continuation-only energy",
+      "matched-control count and token-length parity",
+      "compact forbidden-field rejection",
+      "config and plugin-plan contract validation",
+      "screen-only authorization rejection"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/phase10c_reader_span_energy.yaml",
+    "dataset_identity": "nq_open validation fixed fresh screen[3150:3200]",
+    "environment": "record resolved model identity, revision, config hash, Python, git revision, config hash, and plugin-tree hash in run_metadata.json",
+    "seeds": [42, 10501],
+    "output_manifest": "exchange/five_ideas/phase10c_reader_span_energy/<timestamp>_screen/run_metadata.json"
+  },
+  "limitations": [
+    "This is a report-only L0 diagnostic, not a production selector or utility claim.",
+    "A clean short screen is inconclusive; only an explicitly authorized later formal and independent replication could change its evidence tier.",
+    "The reader lattice does not establish a label-free applicability policy."
+  ]
+}
