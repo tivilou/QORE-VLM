@@ -1,0 +1,90 @@
+{
+  "apply_rate": 0.34,
+  "arms": {
+    "adaptive": {
+      "em": {
+        "baseline_mean": 0.22,
+        "delta": {
+          "bootstrap_repetitions": 2000,
+          "bootstrap_seed": 10402,
+          "ci95_high": 0.0,
+          "ci95_low": -0.06,
+          "mean": -0.02
+        },
+        "variant_mean": 0.2
+      },
+      "f1": {
+        "baseline_mean": 0.4337460317460317,
+        "delta": {
+          "bootstrap_repetitions": 2000,
+          "bootstrap_seed": 10401,
+          "ci95_high": 0.01723809523809524,
+          "ci95_low": -0.04659047619047619,
+          "mean": -0.011333333333333332
+        },
+        "variant_mean": 0.4224126984126984
+      },
+      "generation_time_ms": {
+        "baseline_total": 12031.831869999905,
+        "ratio": 1.0581039311846654,
+        "variant_total": 12730.928600999845
+      },
+      "n_questions": 50
+    },
+    "always_wide": {
+      "em": {
+        "baseline_mean": 0.22,
+        "delta": {
+          "bootstrap_repetitions": 2000,
+          "bootstrap_seed": 10422,
+          "ci95_high": 0.04,
+          "ci95_low": -0.1,
+          "mean": -0.02
+        },
+        "variant_mean": 0.2
+      },
+      "f1": {
+        "baseline_mean": 0.4337460317460317,
+        "delta": {
+          "bootstrap_repetitions": 2000,
+          "bootstrap_seed": 10421,
+          "ci95_high": 0.047564682539682476,
+          "ci95_low": -0.07612738095238095,
+          "mean": -0.014650793650793652
+        },
+        "variant_mean": 0.41909523809523813
+      },
+      "generation_time_ms": {
+        "baseline_total": 12031.831869999905,
+        "ratio": 1.1813588349286153,
+        "variant_total": 14213.91088000007
+      },
+      "n_questions": 50
+    }
+  },
+  "decision": "inconclusive_or_kill_adaptive_context_screen",
+  "gate": {
+    "apply_rate_gate": false,
+    "cost_gate": true,
+    "em_gate": false,
+    "f1_gate": false,
+    "risk_bin_harm_gate": false
+  },
+  "risk_bins": {
+    "high": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 10452,
+      "ci95_high": 0.04509803921568628,
+      "ci95_low": -0.1257703081232493,
+      "mean": -0.03333333333333333
+    },
+    "low": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 10451,
+      "ci95_high": 0.0,
+      "ci95_low": 0.0,
+      "mean": 0.0
+    }
+  },
+  "schema_version": 1
+}
