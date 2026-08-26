@@ -1,0 +1,91 @@
+{
+  "schema_version": "experiment-grounded-ideation.mechanism-recovery.v1",
+  "evidence_packet": {
+    "path": "configs/experiments/phase10d_minimal_set_support_topology_evidence_packet.json",
+    "sha256": "5bc6a0fdaa6c8526b481a323cf5097924525cced0a420b7cec44a5f0d22b49a2",
+    "code_revision": "phase9f=a0e9d337a7df81482d62cbe72b32f9f84cea1d1e; phase9g=e0c9f6de85cd4af5c1b98976d1864ede47718a3e; phase10c=b3ac8cf17e71661f61d0fa492d383e5d5790ac65",
+    "validity_status": "clean"
+  },
+  "causal_trace": {
+    "intervention_execution": {
+      "claim": "Phase 9F and Phase 9G ran only post-inference oracle context probes after frozen QORE plus Answer Scorer K=5 selection; Phase 10C changed decoder energy but did not change utility.",
+      "evidence_refs": ["phase10d_minimal_set_support_topology_evidence_packet.json#phase9f_beyond_local_context", "phase10d_minimal_set_support_topology_evidence_packet.json#phase9g_beyond_top50_context", "phase10d_minimal_set_support_topology_evidence_packet.json#phase10c_reader_energy_null"]
+    },
+    "intended_intermediate": {
+      "claim": "The unmeasured causal link is whether support is distributed across the already selected K=5 passages, including a member with no answer literal, rather than residing in an answer-bearing passage alone.",
+      "evidence_refs": ["phase10d_minimal_set_support_topology_evidence_packet.json#phase9g_beyond_top50_context"]
+    },
+    "observable_output": {
+      "claim": "Phase 9G's answer-bearing-passage oracle found zero multi-passage evidence cases, but it did not enumerate all selected-set subsets or retain non-answer-bearing members.",
+      "evidence_refs": ["phase10d_minimal_set_support_topology_evidence_packet.json#phase9g_beyond_top50_context"]
+    },
+    "task_utility": {
+      "claim": "No tested label-free reader or retrieval intervention transferred conditional headroom to all-question utility, so this recovery action must remain observational.",
+      "evidence_refs": ["phase10d_minimal_set_support_topology_evidence_packet.json#phase10c_reader_energy_null", "phase10d_minimal_set_support_topology_evidence_packet.json#phase9g_beyond_top50_context"]
+    }
+  },
+  "failure_analysis": {
+    "primary_explanation": {
+      "statement": "The Phase 9F/9G residual may be a support-topology blind spot: their answer-bearing-only constructions can remove a non-answer literal passage that is necessary jointly with another selected passage.",
+      "evidence_refs": ["phase10d_minimal_set_support_topology_evidence_packet.json#phase9f_beyond_local_context", "phase10d_minimal_set_support_topology_evidence_packet.json#phase9g_beyond_top50_context"],
+      "confidence": "medium"
+    },
+    "alternative_explanations": [
+      {
+        "statement": "The residual truly lies beyond the selected K=5 set, so every selected-set subset will fail despite a successful gold-copy control.",
+        "evidence_refs": ["phase10d_minimal_set_support_topology_evidence_packet.json#phase9g_beyond_top50_context"],
+        "confidence": "high"
+      },
+      {
+        "statement": "A singleton selected passage can suffice under the frozen generator, so no distributed support mechanism is needed.",
+        "evidence_refs": ["phase10d_minimal_set_support_topology_evidence_packet.json#phase9f_beyond_local_context"],
+        "confidence": "medium"
+      },
+      {
+        "statement": "Any apparent multi-passage effect may involve only answer-bearing passages and would therefore not test the unmeasured non-answer-member mechanism.",
+        "evidence_refs": ["phase10d_minimal_set_support_topology_evidence_packet.json#phase9g_beyond_top50_context"],
+        "confidence": "high"
+      }
+    ],
+    "discriminating_measurement": {
+      "uncertainty": "Existing diagnostics did not test complete selected-set subset topology while preserving the original selected passage order.",
+      "measurement": "For each selected-hit baseline EM error with successful gold-copy control, enumerate all 31 non-empty ordered subsets of the frozen selected K=5 context and record scalar outcomes plus answer-match-count topology.",
+      "primary_outcome": "All singleton subsets fail and at least one successful multi-passage subset contains a selected passage with no gold-answer literal; this is strict non-answer-assisted distributed support.",
+      "alternative_outcome": "A successful singleton, a multi-passage success containing only answer-bearing members, or no successful subset separates singleton sufficiency, already-covered answer-bearing interaction, and beyond-selected-set failure."
+    },
+    "closed_family": {
+      "id": "fixed_reader_span_online_decoding_and_answer_bearing_context_oracles",
+      "rejected_variant_refs": ["Phase 9G answer-bearing selected/Top-50 context variants", "Phase 10C fixed reader-span energy decoding"],
+      "closure_evidence_refs": ["phase10d_minimal_set_support_topology_evidence_packet.json#phase9g_beyond_top50_context", "phase10d_minimal_set_support_topology_evidence_packet.json#phase10c_reader_energy_null"],
+      "forbidden_rescue_variants": ["reader-energy coefficient, span-count, threshold, or extra-slice retuning", "answer-bearing-passage aggregation or wider Top-50 answer oracle restatements", "any online selector, retrieval, generator, prompt, evaluator, label, or answer-path mutation"]
+    }
+  },
+  "positive_carryovers": [
+    {
+      "id": "gold_conditioned_selected_evidence_headroom",
+      "mechanism": "In both prior diagnostics, selected-hit baseline errors had a successful deterministic gold-copy control, so the frozen generator can realize an answer when the post-inference oracle construction is sufficient.",
+      "evidence_refs": ["phase10d_minimal_set_support_topology_evidence_packet.json#phase9f_beyond_local_context", "phase10d_minimal_set_support_topology_evidence_packet.json#phase9g_beyond_top50_context"],
+      "transport_constraint": "The carryover supports only post-inference measurement; gold answers and evaluator outputs must never reach selection, retrieval, prompting, or decoding."
+    }
+  ],
+  "recovery_outcome": {
+    "disposition": "candidate",
+    "selected_candidate": {
+      "id": "phase10d_minimal_set_support_topology",
+      "title": "Minimal selected-set support-topology diagnostic",
+      "positive_carryover_ids": ["gold_conditioned_selected_evidence_headroom"],
+      "recovery_mode": "new_causal_path",
+      "causal_difference": "Instead of mutating a reader, candidate ranker, retrieval depth, or answer-bearing context, this candidate measures whether a non-answer literal selected member is jointly necessary in a successful minimal subset.",
+      "changed_causal_links": ["intended_intermediate", "observable_output"],
+      "discriminating_measurement": "Strict non-answer-assisted distributed-set interaction rate with a question-cluster bootstrap lower bound.",
+      "success_gate": "On validation[1800:1850], at least 40% of gold-copy-eligible questions show strict non-answer-assisted distributed support and the 95% bootstrap lower bound is at least 20%; validation[1850:1900] must independently meet the same gate.",
+      "kill_condition": "Insufficient eligibility, either slice below the fraction or lower-bound gate, failure to preserve selected context/order, or any need for gold/evaluator feedback before generation closes this selector direction without tuning or online mutation.",
+      "authorization_boundary": "Authorized only for synthetic/config validation and a future collaborator-run observation-only diagnostic; a pass authorizes a separate method portfolio review, not a selector implementation."
+    }
+  },
+  "limitations": [
+    "A successful subset is an oracle headroom observation and remains L0 diagnostic evidence.",
+    "Exhaustive K=5 subset probing is intentionally too expensive and gold-dependent for inference-time use.",
+    "The diagnostic does not establish that a future label-free topology estimator exists or improves all-question utility."
+  ]
+}

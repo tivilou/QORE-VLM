@@ -1,0 +1,75 @@
+{
+  "schema_version": "experiment-grounded-ideation.experiment-evidence.v1",
+  "project": "Q-DUET-VLM",
+  "code_revision": "phase9f=a0e9d337a7df81482d62cbe72b32f9f84cea1d1e; phase9g=e0c9f6de85cd4af5c1b98976d1864ede47718a3e; phase10c=b3ac8cf17e71661f61d0fa492d383e5d5790ac65",
+  "dataset_identity": "nq_open validation; Phase 9F validation[700:750], Phase 9G validation[750:800], and Phase 10C validation[3150:3200] used frozen QORE plus Answer Scorer selected K=5 contexts.",
+  "validity": {
+    "status": "clean",
+    "defects": [
+      "Phase 9G only aggregated passages containing a gold answer literal and did not enumerate subsets of the complete frozen selected K=5 set.",
+      "The Phase 9F/9G cohorts are diagnostic, gold-conditioned post-inference subsets and do not establish a label-free selector effect."
+    ],
+    "baseline_parity": "Phase 9F/9G used one frozen Wiki-DPR Top-50 retrieval and QORE plus Answer Scorer K=5 selection before any oracle probe; Phase 10C independently confirmed selected-context parity across its arms.",
+    "statistical_treatment": "Phase 9F and Phase 9G summaries used fixed 2,000-repetition bootstrap procedures; Phase 10C reported exact paired all-question ties for baseline, reader, and matched control."
+  },
+  "observations": [
+    {
+      "id": "phase9f_beyond_local_context",
+      "claim": "Among 26 selected-hit baseline EM errors with successful gold-copy control, 16 were beyond the tested local sentence/window contexts.",
+      "metric": "beyond_local_context fraction",
+      "value": 0.6153846153846154,
+      "baseline": "frozen QORE plus Answer Scorer selected K=5 context",
+      "seeds": [42, 9601],
+      "evidence_refs": ["exchange/five_ideas/phase9f_evidence_sufficiency_localization/20260820T122207Z/summary.json"],
+      "interpretation_status": "observed"
+    },
+    {
+      "id": "phase9g_beyond_top50_context",
+      "claim": "Among 18 selected-hit baseline EM errors with successful gold-copy control, 15 were beyond the tested answer-bearing selected and Top-50 contexts; the answer-bearing multi-passage class was zero.",
+      "metric": "beyond_top50_context fraction",
+      "value": 0.8333333333333334,
+      "baseline": "frozen QORE plus Answer Scorer selected K=5 context",
+      "seeds": [42, 9701],
+      "evidence_refs": ["exchange/five_ideas/phase9g_context_failure_localization/20260821T044257Z/summary.json"],
+      "interpretation_status": "observed"
+    },
+    {
+      "id": "phase10c_reader_energy_null",
+      "claim": "Reader span energy changed decoding but tied both frozen greedy decoding and a matched non-reader control on all 50 questions.",
+      "metric": "all-question EM and F1 paired delta",
+      "value": 0.0,
+      "baseline": "frozen greedy Generator.generate with selected K=5 context",
+      "seeds": [42, 10501],
+      "evidence_refs": ["git:b3ac8cf17e71661f61d0fa492d383e5d5790ac65"],
+      "interpretation_status": "observed"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "exchange/five_ideas/phase9f_evidence_sufficiency_localization/20260820T122207Z/summary.json",
+      "role": "Phase 9F compact diagnostic summary",
+      "sha256": "12b1e8bcaa8c1052ece2b081663a291fc2d6afc3d6121b33ad203291d6623f81"
+    },
+    {
+      "path": "exchange/five_ideas/phase9g_context_failure_localization/20260821T044257Z/summary.json",
+      "role": "Phase 9G compact diagnostic summary",
+      "sha256": "ef4e2dcd7be3deb96fc5c63292d5ff1685b2c96ca24dcf9f35e06ba89535ceaa"
+    },
+    {
+      "path": "exchange/five_ideas/phase9g_context_failure_localization/20260821T044257Z/result.json",
+      "role": "Phase 9G compact per-question scalar result",
+      "sha256": "445f857558a42b627259964d0d2f5ac7fbac48642d7b5b9f80a8deb5fa6cf8ff"
+    },
+    {
+      "path": "git:b3ac8cf17e71661f61d0fa492d383e5d5790ac65",
+      "role": "Phase 10C committed screen result and implementation",
+      "sha256": "b3ac8cf17e71661f61d0fa492d383e5d5790ac65"
+    }
+  ],
+  "resource_budget": "A 50-question diagnostic executes frozen retrieval, Answer Scorer, QORE selection, and baseline generation once per question; only eligible questions execute one gold-copy control and 30 additional non-full selected-set subset generations.",
+  "limitations": [
+    "The evidence establishes a residual diagnostic uncertainty, not a utility gain or a selector mechanism.",
+    "All gold matching and answer evaluation remain oracle-only post-inference operations.",
+    "A positive topology diagnostic can authorize only a separately reviewed method portfolio, never an online mutation."
+  ]
+}

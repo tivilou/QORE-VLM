@@ -1,0 +1,205 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v2",
+  "project": "Q-DUET-VLM",
+  "authorization": "implemented",
+  "baseline": {
+    "entry_point": "applications/rag/generation/generator.py:Generator.generate",
+    "code_revision": "b3ac8cf17e71661f61d0fa492d383e5d5790ac65",
+    "equivalence_test": "test_full_mask_reuses_frozen_baseline_outcome"
+  },
+  "core_invariants": [
+    "Freeze Wiki-DPR retrieval, Answer Scorer, QORE selection, selected K=5 IDs and order, Generator prompt, evaluator, labels, and baseline Generator.generate.",
+    "Only a selected-hit baseline EM error with a successful post-inference gold-answer-copy control is eligible for subset probes.",
+    "All 31 non-empty selected-context subsets preserve the original selected order; the full mask reuses the exact frozen baseline outcome.",
+    "Gold matching, gold-copy generation, and evaluator results are oracle-only post-inference signals that must never feed selection, retrieval, prompt construction, or decoding.",
+    "No selector, Generator, evaluator, retrieval, prompt, label, answer-path, or production mutation is permitted.",
+    "Questions, passages, predictions, prompts, gold answers, token IDs, and retrieval IDs remain in memory; result.json contains only scalar and boolean compact fields in exchange."
+  ],
+  "interfaces": [
+    {
+      "id": "frozen_selected_context_interface",
+      "type": "transformer",
+      "input_schema": "question plus frozen Wiki-DPR Top-50 candidates",
+      "output_schema": "ordered frozen QORE plus Answer Scorer selected K=5 context",
+      "invariants": [
+        "one retrieval and selection per question",
+        "no diagnostic output reaches select_passages"
+      ]
+    },
+    {
+      "id": "post_inference_eligibility_interface",
+      "type": "filter",
+      "input_schema": "in-memory baseline outcome, gold answers, and selected context",
+      "output_schema": "post-inference boolean eligibility and scalar gold-match topology",
+      "invariants": [
+        "requires selected hit, baseline EM zero, and gold-copy EM one",
+        "never runs before frozen baseline generation"
+      ]
+    },
+    {
+      "id": "ordered_subset_probe_interface",
+      "type": "transformer",
+      "input_schema": "eligible ordered selected K=5 context",
+      "output_schema": "31 ordered non-empty subset outcomes and scalar topology",
+      "invariants": [
+        "no reordered or expanded contexts",
+        "full mask aliases the frozen baseline outcome"
+      ]
+    },
+    {
+      "id": "support_topology_summary_interface",
+      "type": "combiner",
+      "input_schema": "compact eligible-question subset outcomes",
+      "output_schema": "strict interaction fractions, bootstrap interval, and report-only gate",
+      "invariants": [
+        "strict interaction requires a successful multi-passage subset with a non-answer-literal member",
+        "summary cannot mutate selection"
+      ]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "frozen_qore_context_observer",
+      "version": "1.0.0",
+      "role": "baseline",
+      "interface": "frozen_selected_context_interface",
+      "insertion_point": "after frozen Wiki-DPR plus Answer Scorer plus QORE selection",
+      "hypothesis": "The original ordered selected K=5 context is the sole evidence boundary for every arm.",
+      "input_schema": "question and frozen retrieval candidates",
+      "output_schema": "ordered selected K=5 passages retained only in memory",
+      "requires": [],
+      "conflicts": ["selector_feedback", "retrieval_expansion", "prompt_mutation"],
+      "deterministic": true,
+      "resource_estimate": "one frozen retrieval, Answer Scorer, QORE selection, and baseline generation per question",
+      "failure_signatures": ["selected context differs across probe masks", "K differs from five"]
+    },
+    {
+      "id": "gold_copy_eligibility_observer",
+      "version": "1.0.0",
+      "role": "adapter",
+      "interface": "post_inference_eligibility_interface",
+      "insertion_point": "after frozen baseline evaluation",
+      "hypothesis": "A successful copy control isolates questions for which an oracle answer realization is executable.",
+      "input_schema": "baseline compact outcome and in-memory gold answers",
+      "output_schema": "post-inference eligibility and scalar selected answer-match counts",
+      "requires": ["frozen_qore_context_observer"],
+      "conflicts": ["pre_generation_gold_gate", "evaluator_feedback", "online_application"],
+      "deterministic": true,
+      "resource_estimate": "one gold-copy generation only for selected-hit baseline EM errors",
+      "failure_signatures": ["gold or evaluator read before baseline generation", "ineligible subset probe"]
+    },
+    {
+      "id": "ordered_selected_subset_scheduler",
+      "version": "1.0.0",
+      "role": "idea",
+      "interface": "ordered_subset_probe_interface",
+      "insertion_point": "after post-inference eligibility and before oracle subset generations",
+      "hypothesis": "A non-answer-literal selected passage can be jointly necessary with another selected passage even when no singleton context succeeds.",
+      "input_schema": "eligible ordered selected K=5 context",
+      "output_schema": "deterministic masks 1 through 31 with original-order contexts",
+      "requires": ["gold_copy_eligibility_observer"],
+      "conflicts": ["context_reordering", "retrieval_expansion", "answer_bearing_only_filter"],
+      "deterministic": true,
+      "resource_estimate": "30 additional generations per eligible question because the full-mask outcome aliases frozen baseline generation",
+      "failure_signatures": ["missing or duplicate mask", "full mask differs from frozen baseline", "subset order drift"]
+    },
+    {
+      "id": "subset_outcome_oracle",
+      "version": "1.0.0",
+      "role": "adapter",
+      "interface": "ordered_subset_probe_interface",
+      "insertion_point": "after each in-memory subset generation",
+      "hypothesis": "EM outcomes distinguish singleton sufficiency, broad distributed support, strict non-answer-assisted support, and beyond-selected-set failure.",
+      "input_schema": "in-memory prediction, gold answers, and subset answer-match flags",
+      "output_schema": "scalar EM/F1/runtime and boolean topology fields",
+      "requires": ["ordered_selected_subset_scheduler"],
+      "conflicts": ["evaluator_feedback", "raw_prediction_persistence"],
+      "deterministic": true,
+      "resource_estimate": "one evaluation per subset generation, all values remain post-inference",
+      "failure_signatures": ["evaluator output used before generation", "forbidden raw field"]
+    },
+    {
+      "id": "support_topology_compact_audit",
+      "version": "1.0.0",
+      "role": "adapter",
+      "interface": "support_topology_summary_interface",
+      "insertion_point": "after compact result construction",
+      "hypothesis": "A scalar-only topology summary can pre-register a diagnostic decision without exposing content or changing the baseline.",
+      "input_schema": "compact per-question eligibility and subset outcomes",
+      "output_schema": "cohort counts, strict interaction bootstrap, and gate decision",
+      "requires": ["subset_outcome_oracle"],
+      "conflicts": ["raw_text_persistence", "selector_mutation"],
+      "deterministic": true,
+      "resource_estimate": "negligible beyond 2,000 deterministic bootstrap draws",
+      "failure_signatures": ["question ID mismatch", "privacy audit failure", "gate evaluated with wrong cohort"]
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": [
+      "frozen_qore_context_observer",
+      "gold_copy_eligibility_observer",
+      "ordered_selected_subset_scheduler",
+      "subset_outcome_oracle",
+      "support_topology_compact_audit"
+    ]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": [
+      "frozen_qore_context_observer",
+      "gold_copy_eligibility_observer",
+      "ordered_selected_subset_scheduler",
+      "subset_outcome_oracle",
+      "support_topology_compact_audit"
+    ],
+    "merge_rule": "One frozen selected K=5 context is generated and evaluated first; only eligible questions enumerate ordered masks, and every compact outcome is summarized after all post-inference probes complete.",
+    "interaction_ablations": [
+      "full-mask outcome aliases frozen baseline outcome",
+      "singleton masks versus any multi-passage success",
+      "broad distributed success versus strict success containing a non-answer-literal member",
+      "all-subsets-fail beyond-selected-set category"
+    ]
+  },
+  "validation": {
+    "baseline_equivalence": "The full K=5 mask reuses the exact frozen baseline prediction, metrics, and selected order without a second generation call.",
+    "tests": [
+      "baseline_equivalence",
+      "plugin_isolation",
+      "deterministic_replay",
+      "interaction_ablation",
+      "all_31_masks_and_original_order",
+      "strict_non_answer_member_classification",
+      "compact_forbidden_field_rejection",
+      "config_plan_and_dossier_contract_validation",
+      "replication_authorization_rejection"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/phase10d_minimal_set_support_topology.yaml",
+    "dataset_identity": "nq_open validation fixed screen[1800:1850] followed only after gate and user approval by independent replication[1850:1900]",
+    "environment": "Record resolved generator identity, revision, config hash, evidence/dossier/plan hashes, Python, git revision, and plugin tree hash in run_metadata.json.",
+    "seeds": [42, 10601, 10602],
+    "output_manifest": "exchange/five_ideas/phase10d_minimal_set_support_topology/<timestamp>_<stage>/run_metadata.json"
+  },
+  "evidence_profile": {
+    "id": "full_real_data_l2",
+    "full_real_data_l2": {
+      "formal_data_scope": "Any later label-free method must first freeze a complete natural-data formal population; this Phase 10D oracle diagnostic is not that formal evaluation.",
+      "replication_unit": "independent_splits",
+      "data_exposure_policy": "Raw compact result.json remains exchange-only; GitHub receives only summary, manifest, hashes, and provenance.",
+      "l4_attribution_plan": "A later utility method must add matched classical control, independent natural transfer, finite-shot or implementation audit where relevant, and resource accounting before any L4 attribution claim."
+    }
+  },
+  "recovery_contract": {
+    "dossier_path": "configs/experiments/phase10d_minimal_set_support_topology_mechanism_recovery.json",
+    "dossier_sha256": "c5e7dc35381ec4e522b82949e52a0c7b5fd5e157f1abba784ba22737c7bdeda3",
+    "candidate_id": "phase10d_minimal_set_support_topology",
+    "discriminating_intermediate_measurement": "Strict non-answer-assisted distributed-set interaction rate with a question-cluster bootstrap lower bound."
+  },
+  "limitations": [
+    "Phase 10D is an L0, gold-conditioned, post-inference diagnostic and is not a utility intervention.",
+    "The gate can only close or justify a separate method portfolio review; it cannot authorize a selector mutation.",
+    "A clean null or positive diagnostic does not establish a label-free topology estimator."
+  ]
+}

@@ -1,0 +1,108 @@
+phase:
+  name: phase10d_minimal_set_support_topology
+  schema_version: 1
+  diagnostic_only: true
+  selection_mutation: false
+  authorization: implemented_observation_only
+  parent_phase: phase10c_reader_span_energy
+
+  dataset:
+    name: nq_open
+    split: validation
+    screen:
+      sample_offset: 1800
+      max_samples: 50
+      slice: "nq_open validation[1800:1850]"
+      fresh_slice: true
+    replication:
+      sample_offset: 1850
+      max_samples: 50
+      slice: "nq_open validation[1850:1900]"
+      fresh_slice: true
+      authorization: unavailable_pending_screen_gate_and_user_approval
+
+  retrieval:
+    corpus_mode: wiki_dpr
+    wiki_dpr_config: psgs_w100.nq.compressed
+    nprobe: 64
+    initial_top_k: 50
+
+  selection:
+    method: qore
+    K: 5
+    num_reads: 100
+    lam: 2.0
+    seed: 42
+    gamma: 1.0
+    delta: 0.0
+    complementarity_method: null
+    qore_prefilter_size: null
+    direct_solve_max_n: 20
+    use_answer_scorer: true
+    answer_scorer_backend: dpr
+
+  generator:
+    model_id: NousResearch/Meta-Llama-3-8B-Instruct
+    revision: 53346005fb0ef11d3b6a83b12c895cca40156b6c
+    max_new_tokens: 32
+    decoding: greedy
+    model_path_candidates:
+      - models/llama3-8b
+    resolver_order: [cli_override, project_candidate, hf_cache]
+    record_resolved_identity: true
+
+  support_topology:
+    plugin_id: minimal_set_support_topology
+    selected_context_only: true
+    selected_K: 5
+    preserve_selected_order: true
+    nonempty_subset_count: 31
+    full_mask_reuses_frozen_baseline: true
+    eligibility:
+      selected_hit: true
+      baseline_em: 0.0
+      gold_answer_copy_em: 1.0
+      decision_order: post_inference_only
+    success_metric: em
+    singleton_definition: subset_cardinality_equals_1
+    distributed_set_interaction: all_singletons_fail_and_any_multi_passage_subset_succeeds
+    strict_interaction: distributed_set_interaction_with_successful_subset_containing_non_answer_literal_member
+    gold_or_evaluator_before_generation: false
+    qore_feedback: false
+    prompt_change: false
+    evaluator_input: false
+
+  gate:
+    screen:
+      minimum_primary_errors: 10
+      minimum_copy_control_successes: 8
+      strict_interaction_fraction_min: 0.40
+      strict_interaction_bootstrap_ci95_low_min: 0.20
+      bootstrap_repetitions: 2000
+      bootstrap_seed: 10601
+      required_checks:
+        - fresh_slice_disjointness
+        - one_retrieval_and_qore_selection_per_question
+        - selected_K5_id_and_order_parity
+        - full_subset_reuses_frozen_baseline_output
+        - all_31_nonempty_subsets_enumerated_for_each_eligible_question
+        - strict_interaction_requires_non_answer_literal_member
+        - no_gold_or_evaluator_input_before_generation
+        - compact_output_privacy
+      action_if_gate_passes: user_authorization_required_before_independent_replication
+      action_if_gate_fails: stop_set_support_topology_selector_direction
+    replication:
+      minimum_primary_errors: 10
+      minimum_copy_control_successes: 8
+      strict_interaction_fraction_min: 0.40
+      strict_interaction_bootstrap_ci95_low_min: 0.20
+      bootstrap_repetitions: 2000
+      bootstrap_seed: 10602
+      action_if_gate_passes: method_portfolio_review_only
+      action_if_gate_fails: stop_set_support_topology_selector_direction
+
+  outputs:
+    root: exchange/five_ideas/phase10d_minimal_set_support_topology
+    compact_only: true
+    result_exchange_only: true
+    forbidden_fields: [question, passages, gold_answers, prediction, raw_prompt, prompt, text, token_ids, selected_ids, retrieved_ids, gold_answer]
