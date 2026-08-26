@@ -1,7 +1,7 @@
 {
   "schema_version": "research-plugin-architecture.plugin-plan.v1",
   "project": "Q-DUET-VLM",
-  "authorization": "planned_observation_only",
+  "authorization": "implemented_observation_only",
   "baseline": {
     "entry_point": "scripts/collab/five_ideas/run_phase10a_adaptive_context.py",
     "code_revision": "ee3e1f7",
@@ -120,6 +120,6 @@
     "The mechanism has medium-high collision risk with query expansion and answer-aware retrieval literature; no novelty claim is made.",
     "The screen is report-only and cannot establish L1 utility by itself.",
     "A clean short-screen null is inconclusive under the registered screen policy.",
-    "No formal or replication run is authorized by this plan."
+    "Only the 50-question report-only screen is authorized; formal and replication runs remain unauthorized."
   ]
 }

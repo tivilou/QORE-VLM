@@ -3,7 +3,7 @@ phase:
   schema_version: 1
   diagnostic_only: true
   selection_mutation: false
-  authorization: planned_observation_only
+  authorization: implemented_observation_only
   parent_phase: cumulative_phase1_10a_audit
 
   dataset:
