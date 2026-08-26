@@ -1,0 +1,76 @@
+{
+  "bridge": {
+    "decision_order": "pre_generation_only",
+    "final_context_K": 5,
+    "generated_answer_available": false,
+    "gold_or_evaluator_available": false,
+    "min_probability": 0.2,
+    "min_support": 2,
+    "plugin_id": "answer_hypothesis_evidence_bridge",
+    "qore_feedback": false,
+    "query_template": "question + answer_hypothesis"
+  },
+  "config": {
+    "path": "/root/QORE-VLM/configs/experiments/phase10b_answer_hypothesis_bridge.yaml",
+    "sha256": "1b42d196fd07d595784fc451b271c38103ae4dddb351655fb9ac925faac4a469"
+  },
+  "dataset": {
+    "fresh_slice": true,
+    "max_samples": 50,
+    "name": "nq_open",
+    "sample_offset": 2700,
+    "slice": "nq_open validation[2700:2750]",
+    "split": "validation"
+  },
+  "diagnostic_only": true,
+  "generator": {
+    "config_sha256": "61f3de03a16ca8046b05dc777bce72717022bc8522152eee61a69072272ef54b",
+    "model_id": "NousResearch/Meta-Llama-3-8B-Instruct",
+    "model_path": "/root/QORE-VLM/models/llama3-8b",
+    "resolution": "local_cache",
+    "revision": "53346005fb0ef11d3b6a83b12c895cca40156b6c"
+  },
+  "git": {
+    "commit": "8115ce3b8a775e83668e9826f0cb2e6d654b49a8",
+    "status": "## five-ideas-development...origin/five-ideas-development\n?? exchange/five_ideas/phase10b_answer_hypothesis_bridge/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_full/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_reader_window_050/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_reader_window_075/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_uniform_head_050/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_uniform_head_075/\n?? exchange/five_ideas/phase9h_answerability_generation_diagnostic/20260821T133038Z/\n?? exchange/five_ideas/phase9h_answerability_generation_diagnostic/20260821T134859Z/\n?? exchange/five_ideas/phase9j_context_lift_candidate_ranking/20260823T032605Z_formal/"
+  },
+  "phase": "phase10b_answer_hypothesis_bridge",
+  "python": {
+    "executable": "/root/miniconda3/bin/python",
+    "version": "3.10.20 (main, Mar 11 2026, 17:46:40) [GCC 14.3.0]"
+  },
+  "report_only": true,
+  "retrieval": {
+    "bridge_top_k": 50,
+    "corpus_mode": "wiki_dpr",
+    "initial_top_k": 50,
+    "nprobe": 64,
+    "union_max_candidates": 100,
+    "wiki_dpr_config": "psgs_w100.nq.compressed"
+  },
+  "schema_version": 1,
+  "selection": {
+    "K": 5,
+    "answer_scorer_backend": "dpr",
+    "complementarity_method": null,
+    "delta": 0.0,
+    "direct_solve_max_n": 20,
+    "gamma": 1.0,
+    "lam": 2.0,
+    "method": "qore",
+    "num_reads": 100,
+    "qore_prefilter_size": null,
+    "seed": 42,
+    "use_answer_scorer": true
+  },
+  "selection_mutation": false,
+  "stage": "screen",
+  "status": "completed",
+  "summary": {
+    "decision": "inconclusive_or_kill_phase10b_screen",
+    "path": "/root/QORE-VLM/exchange/five_ideas/phase10b_answer_hypothesis_bridge/20260826T063220Z_screen/summary.json"
+  },
+  "timing_ms": {
+    "total": 132905.47507999997
+  }
+}
