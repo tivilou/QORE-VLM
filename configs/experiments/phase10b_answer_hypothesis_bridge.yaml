@@ -1,0 +1,113 @@
+phase:
+  name: phase10b_answer_hypothesis_bridge
+  schema_version: 1
+  diagnostic_only: true
+  selection_mutation: false
+  authorization: planned_observation_only
+  parent_phase: cumulative_phase1_10a_audit
+
+  dataset:
+    name: nq_open
+    split: validation
+    screen:
+      sample_offset: 2700
+      max_samples: 50
+      slice: "nq_open validation[2700:2750]"
+      fresh_slice: true
+    formal:
+      sample_offset: 2750
+      max_samples: 200
+      slice: "nq_open validation[2750:2950]"
+      fresh_slice: true
+    replication:
+      sample_offset: 2950
+      max_samples: 200
+      slice: "nq_open validation[2950:3150]"
+      fresh_slice: true
+
+  retrieval:
+    corpus_mode: wiki_dpr
+    wiki_dpr_config: psgs_w100.nq.compressed
+    nprobe: 64
+    initial_top_k: 50
+    bridge_top_k: 50
+    union_max_candidates: 100
+
+  selection:
+    method: qore
+    K: 5
+    num_reads: 100
+    lam: 2.0
+    seed: 42
+    gamma: 1.0
+    delta: 0.0
+    complementarity_method: null
+    qore_prefilter_size: null
+    direct_solve_max_n: 20
+    use_answer_scorer: true
+    answer_scorer_backend: dpr
+
+  generator:
+    model_id: NousResearch/Meta-Llama-3-8B-Instruct
+    revision: 53346005fb0ef11d3b6a83b12c895cca40156b6c
+    max_new_tokens: 32
+    decoding: greedy
+    model_path_candidates:
+      - models/llama3-8b
+    resolver_order: [cli_override, project_candidate, hf_cache]
+    record_resolved_identity: true
+
+  bridge:
+    plugin_id: answer_hypothesis_evidence_bridge
+    min_support: 2
+    min_probability: 0.20
+    query_template: "question + answer_hypothesis"
+    decision_order: pre_generation_only
+    gold_or_evaluator_available: false
+    generated_answer_available: false
+    qore_feedback: false
+    final_context_K: 5
+
+  arms: [baseline_frozen_query, always_bridge, consensus_gated_bridge]
+
+  gate:
+    screen:
+      purpose: contract_privacy_runtime_and_bridge_coverage
+      max_generation_equivalent_calls: 150
+      apply_rate_min: 0.05
+      apply_rate_max: 0.25
+      selected_hit_gain_min_on_applied: 0.05
+      all_question_f1_ci95_low_min: 0.0
+      risk_bin_ci95_low_min: -0.02
+      total_pipeline_cost_ratio_max: 1.5
+      required_checks:
+        - fresh_slice_disjointness
+        - one_initial_retrieval_and_selection_per_question
+        - auxiliary_query_only_after_consensus_gate
+        - no_gold_or_post_generation_decision_inputs
+        - final_K5_preserved
+        - candidate_id_deduplication
+        - compact_output_privacy
+      clean_null_policy: inconclusive
+    formal:
+      sample_count: 200
+      bootstrap_repetitions: 2000
+      bootstrap_seed: 10402
+      all_question_f1_ci95_low_min: 0.0
+      selected_hit_gain_min_on_applied: 0.05
+      apply_rate_min: 0.05
+      apply_rate_max: 0.25
+      total_pipeline_cost_ratio_max: 1.5
+      action_if_gate_passes: replication_only_no_production_change
+      action_if_gate_fails: stop_bridge_route
+    replication:
+      only_if_formal_bridge_gate_passes: true
+      same_frozen_contract: true
+      production_change_allowed: false
+
+  outputs:
+    root: exchange/five_ideas/phase10b_answer_hypothesis_bridge
+    compact_only: true
+    bridge_query_persisted: false
+    candidate_text_persisted: false
+    forbidden_fields: [question, passages, gold_answers, prediction, candidate_text, bridge_query, raw_prompt, evaluator_trace]

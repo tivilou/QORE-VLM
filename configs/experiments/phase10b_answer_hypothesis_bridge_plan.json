@@ -1,0 +1,125 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "Q-DUET-VLM",
+  "authorization": "planned_observation_only",
+  "baseline": {
+    "entry_point": "scripts/collab/five_ideas/run_phase10a_adaptive_context.py",
+    "code_revision": "ee3e1f7",
+    "equivalence_test": "the baseline arm performs exactly one original query retrieval, one frozen QORE K=5 selection, one Answer Scorer pass, and one unchanged Generator call"
+  },
+  "core_invariants": [
+    "one initial Wiki-DPR retrieval and one frozen QORE K=5 selection per question",
+    "the bridge may issue at most one auxiliary retrieval query and never changes final K=5 context budget",
+    "answer hypothesis is formed before generation from reader spans only; no gold, evaluator output, labels, or generated answer is available",
+    "the bridge query is used only for retrieval direction; its score never enters QORE or Answer Scorer selection objectives",
+    "compact artifacts contain no question, passage, answer hypothesis, bridge query, candidate text, prediction, prompt, or evaluator trace"
+  ],
+  "interfaces": [
+    {
+      "id": "answer_hypothesis_bridge_v1",
+      "type": "retrieval_transform",
+      "input_schema": "question, initial retrieved passages, reader span hypotheses, initial candidate IDs",
+      "output_schema": "optional auxiliary query, deduplicated candidate IDs, consensus support scalars",
+      "invariants": ["distinct-passage support is counted once per passage", "decision is deterministic", "no gold or post-generation input"]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "frozen_initial_retrieval_observer",
+      "version": "v1",
+      "role": "baseline",
+      "interface": "answer_hypothesis_bridge_v1",
+      "insertion_point": "initial retrieval before bridge decision",
+      "hypothesis": "The original query neighborhood is the frozen reference",
+      "input_schema": "question and corpus manager",
+      "output_schema": "initial candidate IDs, texts, embeddings, and retrieval scalars",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "one unchanged Wiki-DPR retrieval"
+    },
+    {
+      "id": "consensus_hypothesis_builder",
+      "version": "v1",
+      "role": "idea",
+      "interface": "answer_hypothesis_bridge_v1",
+      "insertion_point": "after initial retrieval and Answer Scorer reader-span diagnostics",
+      "hypothesis": "Two distinct initial passages agreeing on a high-probability answer can provide a safe retrieval direction",
+      "input_schema": "reader top spans and probabilities per initial passage",
+      "output_schema": "optional normalized hypothesis, distinct support count, mean probability",
+      "requires": ["frozen_initial_retrieval_observer"],
+      "conflicts": ["gold access", "generated answer access", "evaluator access"],
+      "deterministic": true,
+      "resource_estimate": "negligible CPU"
+    },
+    {
+      "id": "auxiliary_bridge_retrieval",
+      "version": "v1",
+      "role": "idea",
+      "interface": "answer_hypothesis_bridge_v1",
+      "insertion_point": "only when consensus gate passes",
+      "hypothesis": "The hypothesis-augmented query reaches supporting evidence missed by the original query",
+      "input_schema": "question and consensus hypothesis",
+      "output_schema": "bridge candidate IDs and retrieval scores",
+      "requires": ["consensus_hypothesis_builder"],
+      "conflicts": ["changing initial query retrieval", "changing final K"],
+      "deterministic": true,
+      "resource_estimate": "one auxiliary query embedding and retrieval on applied questions"
+    },
+    {
+      "id": "frozen_union_qore_selector",
+      "version": "v1",
+      "role": "baseline_adapter",
+      "interface": "answer_hypothesis_bridge_v1",
+      "insertion_point": "after initial/bridge candidate merge",
+      "hypothesis": "The unchanged Answer Scorer plus QORE K=5 can select from the union without a new objective",
+      "input_schema": "deduplicated candidate union",
+      "output_schema": "five selected candidate IDs and compact selection scalars",
+      "requires": ["auxiliary_bridge_retrieval"],
+      "conflicts": ["bridge score as QUBO term", "final context K change"],
+      "deterministic": true,
+      "resource_estimate": "one unchanged Answer Scorer/QORE selection"
+    },
+    {
+      "id": "bridge_order_and_privacy_audit",
+      "version": "v1",
+      "role": "adapter",
+      "interface": "answer_hypothesis_bridge_v1",
+      "insertion_point": "parallel compact-output audit",
+      "hypothesis": "Candidate deduplication and compact privacy are invariant to input ordering",
+      "input_schema": "initial and bridge candidate IDs, plugin trace",
+      "output_schema": "order agreement, duplicate count, forbidden-field findings",
+      "requires": ["frozen_union_qore_selector"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "negligible CPU"
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": ["frozen_initial_retrieval_observer", "consensus_hypothesis_builder", "auxiliary_bridge_retrieval", "frozen_union_qore_selector", "bridge_order_and_privacy_audit"]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": ["frozen_initial_retrieval_observer", "consensus_hypothesis_builder", "auxiliary_bridge_retrieval", "frozen_union_qore_selector", "bridge_order_and_privacy_audit"],
+    "merge_rule": "initial candidates precede bridge candidates; duplicate global IDs are retained once; final selection is the unchanged QORE K=5 call",
+    "interaction_ablations": ["baseline frozen query", "always bridge", "consensus-gated bridge", "reversed candidate-order audit"]
+  },
+  "validation": {
+    "baseline_equivalence": "baseline mode never calls the bridge and preserves the frozen Phase 10A retrieval/selection/generation contract",
+    "tests": ["distinct-passage consensus support", "probability threshold", "deterministic query construction", "candidate ID deduplication", "bridge isolation from QORE", "forbidden-field rejection", "config and plan consistency", "fresh slice disjointness"]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/phase10b_answer_hypothesis_bridge.yaml",
+    "dataset_identity": "nq_open validation[2700:2750] screen; [2750:2950] formal; [2950:3150] replication",
+    "environment": "auto-resolved compatible Python; pinned NousResearch/Meta-Llama-3-8B-Instruct revision 53346005fb0ef11d3b6a83b12c895cca40156b6c; frozen DPR reader",
+    "seeds": [42, 10402],
+    "output_manifest": "exchange/five_ideas/phase10b_answer_hypothesis_bridge/<timestamp>_<stage>/run_metadata.json"
+  },
+  "limitations": [
+    "The mechanism has medium-high collision risk with query expansion and answer-aware retrieval literature; no novelty claim is made.",
+    "The screen is report-only and cannot establish L1 utility by itself.",
+    "A clean short-screen null is inconclusive under the registered screen policy.",
+    "No formal or replication run is authorized by this plan."
+  ]
+}
