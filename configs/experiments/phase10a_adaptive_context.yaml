@@ -1,0 +1,65 @@
+phase:
+  name: phase10a_adaptive_context
+  schema_version: 1
+  diagnostic_only: true
+  selection_mutation: false
+  authorization: implemented_observation_only
+  parent_phase: cumulative_phase1_9k_audit
+
+  dataset:
+    name: nq_open
+    split: validation
+    sample_offset: 2650
+    max_samples: 50
+    slice: "nq_open validation[2650:2700]"
+    fresh_slice: true
+
+  retrieval:
+    corpus_mode: wiki_dpr
+    wiki_dpr_config: psgs_w100.nq.compressed
+    nprobe: 64
+    top_k: 50
+
+  selection:
+    method: qore
+    K: 5
+    num_reads: 100
+    lam: 2.0
+    seed: 42
+    gamma: 1.0
+    delta: 0.0
+    use_answer_scorer: true
+    answer_scorer_backend: dpr
+
+  generator:
+    model_id: NousResearch/Meta-Llama-3-8B-Instruct
+    revision: 53346005fb0ef11d3b6a83b12c895cca40156b6c
+    max_new_tokens: 32
+    decoding: greedy
+    model_path_candidates: [models/llama3-8b]
+    resolver_order: [cli_override, project_candidate, hf_cache]
+    record_resolved_identity: true
+
+  routing:
+    extra_count: 3
+    risk_threshold: 0.55
+    formula: "0.50*(1-selected_confidence)+0.25*(1-score_margin)+0.25*selected_duplication"
+    source: [selected_answer_scorer_confidence, retrieved_score_margin, selected_lexical_duplication]
+    selection_feedback: false
+    gold_or_evaluator_available: false
+
+  arms: [baseline_k5, always_wide, adaptive]
+  gate:
+    bootstrap_repetitions: 2000
+    bootstrap_seed: 10401
+    f1_ci95_low_min: 0.0
+    em_delta_min: 0.03
+    apply_rate_min: 0.05
+    apply_rate_max: 0.30
+    cost_ratio_max: 1.5
+    risk_bin_ci95_low_min: -0.01
+
+  outputs:
+    root: exchange/five_ideas/phase10a_adaptive_context
+    compact_only: true
+    forbidden_fields: [question, passages, gold_answers, prediction, raw_prompt, text]
