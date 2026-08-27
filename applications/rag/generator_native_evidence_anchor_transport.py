@@ -232,8 +232,8 @@ def _binary_rows(value: Any, name: str, *, batch_size: int, width: int) -> Token
     normalized: list[tuple[int, ...]] = []
     for row in rows:
         converted = tuple(int(item) for item in row)
-        if name == "attention_mask" and any(item not in (0, 1) for item in converted):
-            raise BoundaryError("attention_mask_not_binary")
+        if name in {"attention_mask", "special_tokens_mask"} and any(item not in (0, 1) for item in converted):
+            raise BoundaryError(f"{name}_not_binary")
         normalized.append(converted)
     return tuple(normalized)
 
@@ -617,7 +617,8 @@ class ResidualAnchorHook(AbstractContextManager["ResidualAnchorHook"]):
         if len(active) > 1:
             raise BoundaryError("mutually_exclusive_arms_required")
         for row_index, arm in enumerate(arms):
-            if arm != "disabled" and (not mapping.reader_tokens[row_index] or not mapping.lexical_tokens[row_index]):
+            selected = mapping.reader_tokens[row_index] if arm == "reader" else mapping.control_tokens[row_index]
+            if arm != "disabled" and (not selected or not mapping.lexical_tokens[row_index]):
                 raise BoundaryError("active_arm_missing_geometry")
         self.model = model
         self.mapping = mapping

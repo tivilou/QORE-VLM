@@ -136,6 +136,14 @@ def test_registry_requires_frozen_allowlist_and_exclusive_transport_arm():
         registry.create_hook(object(), mapping, requested_arm="reader", decisions=decisions)
 
 
+def test_alpha_must_follow_architecture_rule():
+    prompts, tokenized, spans = _valid_two_row_fixture()
+    mapping = build_prompt_token_span_map(tokenized, prompts, spans)
+    with pytest.raises(BoundaryError, match="alpha_rule_violation"):
+        with ResidualAnchorHook(_TinyModel(), mapping, arms=("reader", "reader"), alpha=0.5):
+            pass
+
+
 class _TinyLayer(torch.nn.Module):
     def forward(self, hidden_states, **kwargs):
         return hidden_states
