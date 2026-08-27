@@ -1,0 +1,57 @@
+phase:
+  name: generator_native_evidence_anchor_transport_boundary
+  schema_version: 1
+  candidate_id: generator_native_evidence_anchor_transport
+  authorization: implemented_observation_only
+  diagnostic_only: true
+  selection_mutation: false
+  task_data_accessed: false
+  wiki_dpr_accessed: false
+  retrieval_called: false
+  selector_called: false
+  evaluator_called: false
+
+plugin:
+  discovery: explicit_allowlist
+  allowlist:
+    - prompt_span_provenance_adapter
+    - pre_final_anchor_capture_adapter
+    - disabled_anchor_transport
+    - reader_localized_anchor_transport
+    - geometry_matched_nonreader_transport
+  composition_order:
+    - prompt_span_provenance_adapter
+    - pre_final_anchor_capture_adapter
+    - disabled_anchor_transport
+    - reader_localized_anchor_transport
+    - geometry_matched_nonreader_transport
+  transport_arms: [disabled, reader, control]
+  insertion_layer: 30
+  minimum_downstream_blocks: 2
+  alpha_rule: 1/sqrt(num_hidden_layers)
+  lifecycle: context_manager_remove_in_finally
+
+mapping:
+  require_input_ids: true
+  require_attention_mask: true
+  require_offset_mapping: true
+  require_special_tokens_mask: true
+  allow_batch: true
+  allow_left_padding: true
+  allow_right_padding: true
+  reject_noncontiguous_attention: true
+  exact_prompt_token_identity: true
+
+fallback:
+  policy_id: per_question_disabled_zero_anchor
+  invalid_row_action: disabled_zero_anchor
+  drop_invalid_rows: false
+  retry_invalid_rows: false
+  feedback_to_selector: false
+  unresolved_rows_allowed: false
+
+outputs:
+  compact_only: true
+  report_only: true
+  path: exchange/five_ideas/generator_native_evidence_anchor_transport_boundary/report.json
+  forbidden_fields: [question, passage, answer, prediction, gold, raw_prompt, prompt_text, evaluator_trace]
