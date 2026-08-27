@@ -1,0 +1,82 @@
+phase:
+  name: generator_native_evidence_anchor_transport_screen
+  schema_version: 1
+  candidate_id: generator_native_evidence_anchor_transport
+  authorization: user_authorized_report_only_screen
+  diagnostic_only: true
+  selection_mutation: false
+  production_generator_source_modified: false
+  dataset:
+    name: nq_open
+    split: validation
+    sample_offset: 1900
+    max_samples: 50
+    slice: "nq_open validation[1900:1950]"
+    fresh_slice: true
+  retrieval:
+    corpus_mode: wiki_dpr
+    wiki_dpr_config: psgs_w100.nq.compressed
+    nprobe: 64
+    top_k: 50
+  selection:
+    method: qore
+    K: 5
+    num_reads: 100
+    lam: 2.0
+    seed: 42
+    gamma: 1.0
+    delta: 0.0
+    complementarity_method: null
+    qore_prefilter_size: null
+    direct_solve_max_n: 20
+    lambda_mmr: 0.7
+    saturation_alpha: 1.0
+    lambda_submodular: 0.5
+    dpp_quality_scale: 2.0
+    dpp_jitter: 1.0e-8
+    use_answer_scorer: true
+    answer_scorer_backend: dpr
+  generator:
+    model_id: NousResearch/Meta-Llama-3-8B-Instruct
+    revision: 53346005fb0ef11d3b6a83b12c895cca40156b6c
+    max_new_tokens: 32
+    decoding: greedy
+    model_path_candidates:
+      - models/llama3-8b
+    resolver_order: [cli_override, project_candidate, hf_cache]
+    record_resolved_identity: true
+  transport:
+    candidate_id: generator_native_evidence_anchor_transport
+    plugin_version: 0.3.0
+    plugin_allowlist:
+      - prompt_span_provenance_adapter
+      - pre_final_anchor_capture_adapter
+      - disabled_anchor_transport
+      - reader_localized_anchor_transport
+      - geometry_matched_nonreader_transport
+    active_arms: [disabled, reader, control]
+    layer: 30
+    alpha_rule: 1/sqrt(num_hidden_layers)
+    provider_id: frozen_dpr_reader_hypotheses_v1
+    diagnostic_outputs_used_for_selection: false
+    reader_scores_used_for_selection: false
+    production_generator_source_modified: false
+  arms: [baseline, disabled, reader, control]
+  gate:
+    bootstrap_repetitions: 2000
+    bootstrap_seed: 10501
+    minimum_reader_span_coverage: 0.50
+    reader_baseline_harm_ci95_low_min: -0.05
+    reader_control_f1_delta_min: 0.0
+    positive_reader_control_f1_delta_min: 0.02
+    max_pipeline_cost_ratio: 2.0
+    clean_null_policy: inconclusive
+    action_if_positive: user_authorization_required_before_formal_single_seed
+    action_if_null: remain_inconclusive_and_reassess_cumulative_evidence
+    action_if_contract_failure: stop_candidate
+  outputs:
+    root: exchange/five_ideas/generator_native_evidence_anchor_transport
+    compact_only: true
+    report_only: true
+    result_max_bytes: 1048576
+    forbidden_fields: [question, questions, passage, passages, answer, answers, gold, gold_answers, prediction, predictions, text, raw_prompt, prompt_text, span_text, token_ids, evaluator_trace]

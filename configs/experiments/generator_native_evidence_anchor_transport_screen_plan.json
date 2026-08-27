@@ -1,0 +1,206 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v2",
+  "project": "Q-DUET-VLM",
+  "authorization": "implemented",
+  "baseline": {
+    "entry_point": "remote:3080Ti:/home/Q-DUET-VLM/QORE-VLM-phase1-gate applications.rag.generation.Generator.generate",
+    "code_revision": "five-ideas-development@be45a2b",
+    "equivalence_test": "The disabled arm and no-hook path must preserve hidden tensors exactly, and every hook handle must be removed after a call or exception."
+  },
+  "core_invariants": [
+    "Production selector, retrieval, selected IDs/order, context, prompt, decode policy, evaluator, labels, answers, and candidate path remain frozen.",
+    "Reader spans are gold-free pre-generation locators only; gold, answer, evaluator, split, post-generation output, and result feedback are forbidden.",
+    "The hook is installed by a context manager for one Generator call and removed in finally; no process-global hook or implicit discovery.",
+    "Exactly one transport arm is active per call; invalid rows use a disabled zero-anchor fallback without dropping or retrying the question.",
+    "This screen is report-only and does not modify production selection; formal utility remains blocked pending preregistration, full-data run, and independent-executor replication."
+  ],
+  "interfaces": [
+    {
+      "id": "frozen_reader_span_provenance",
+      "type": "transformer",
+      "input_schema": "FrozenReaderSpanRecord.v1",
+      "output_schema": "PromptTokenSpanMap.v1",
+      "invariants": [
+        "Unchanged prompt serialization, token IDs, attention mask, offsets, and special-token mask are asserted; raw text is memory-only and never persisted."
+      ]
+    },
+    {
+      "id": "pre_final_anchor_capture",
+      "type": "transformer",
+      "input_schema": "PromptTokenSpanMap.v1 plus Layer30PrefillHidden.v1",
+      "output_schema": "ResidualAnchorSet.v1",
+      "invariants": [
+        "Anchors use the Generator's own layer-30 prompt states; each row removes its own shared lexical mean before normalization."
+      ]
+    },
+    {
+      "id": "pre_final_residual_transport",
+      "type": "transformer",
+      "input_schema": "ResidualAnchorSet.v1 plus GeneratorHookState.v1",
+      "output_schema": "GeneratorHookState.v1",
+      "invariants": [
+        "Only the input pre-hook of model.model.layers[30] may be modified; padding positions and disabled rows remain unchanged."
+      ]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "prompt_span_provenance_adapter",
+      "version": "0.3.0",
+      "role": "adapter",
+      "interface": "frozen_reader_span_provenance",
+      "insertion_point": "Frozen DPR reader hypotheses are uniquely located inside selected passages, then mapped through the existing prompt serializer/tokenizer boundary with exact prompt and token preservation.",
+      "hypothesis": "Frozen gold-free reader offsets can be mapped to existing Generator token indices without changing the prompt.",
+      "input_schema": "FrozenReaderSpanRecord.v1",
+      "output_schema": "PromptTokenSpanMap.v1",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "One frozen DPR reader hypotheses call plus CPU-only character/token offset mapping; scores are discarded and never reach selection.",
+      "failure_signatures": ["reader_provider_api_unavailable", "prompt_or_token_ids_change", "span_unmappable", "ambiguous_span", "forbidden_provenance"]
+    },
+    {
+      "id": "pre_final_anchor_capture_adapter",
+      "version": "0.3.0",
+      "role": "adapter",
+      "interface": "pre_final_anchor_capture",
+      "insertion_point": "First layer-30 pre-forward call, before residual modification.",
+      "hypothesis": "Layer-30 prompt states provide a native anchor space without external projection or span-text copying.",
+      "input_schema": "PromptTokenSpanMap.v1 plus Layer30PrefillHidden.v1",
+      "output_schema": "ResidualAnchorSet.v1",
+      "requires": ["prompt_span_provenance_adapter"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "One per-row mean and RMS normalization over already computed prompt states.",
+      "failure_signatures": ["layer_30_not_reached", "shape_or_dtype_mismatch", "reader_control_mean_mismatch", "raw_content_persisted"]
+    },
+    {
+      "id": "disabled_anchor_transport",
+      "version": "0.3.0",
+      "role": "baseline",
+      "interface": "pre_final_residual_transport",
+      "insertion_point": "Same scoped layer-30 pre-hook, returning hidden_states unchanged.",
+      "hypothesis": "Adapter plumbing has exact disabled-path parity with the frozen Generator.",
+      "input_schema": "ResidualAnchorSet.v1 plus GeneratorHookState.v1",
+      "output_schema": "GeneratorHookState.v1",
+      "requires": ["pre_final_anchor_capture_adapter"],
+      "conflicts": ["reader_localized_anchor_transport", "geometry_matched_nonreader_transport"],
+      "deterministic": true,
+      "resource_estimate": "No tensor copy for an all-disabled batch; scoped hook only.",
+      "failure_signatures": ["logit_drift", "token_or_path_hash_mismatch", "hook_handle_leak"]
+    },
+    {
+      "id": "reader_localized_anchor_transport",
+      "version": "0.3.0",
+      "role": "idea",
+      "interface": "pre_final_residual_transport",
+      "insertion_point": "Layer-30 pre-hook; add one fixed normalized anchor at each row's final non-padding prompt token and each cached decode token.",
+      "hypothesis": "Reader-localized native states can alter evidence use through downstream Transformer blocks, not a terminal logit bias.",
+      "input_schema": "ResidualAnchorSet.v1 plus GeneratorHookState.v1",
+      "output_schema": "GeneratorHookState.v1",
+      "requires": ["pre_final_anchor_capture_adapter"],
+      "conflicts": ["disabled_anchor_transport", "geometry_matched_nonreader_transport"],
+      "deterministic": true,
+      "resource_estimate": "One scoped pre-hook and one per-row hidden-state update; batch/padding safe.",
+      "failure_signatures": ["terminal_only", "linear_surrogate_r2_at_least_0.90", "gold_or_result_lineage", "frozen_path_drift", "cost_ceiling_failure"]
+    },
+    {
+      "id": "geometry_matched_nonreader_transport",
+      "version": "0.3.0",
+      "role": "idea",
+      "interface": "pre_final_residual_transport",
+      "insertion_point": "Identical layer-30 hook and answer-prefix positions with disjoint non-reader spans matching reader count and lengths.",
+      "hypothesis": "A deterministic matched null isolates reader content from generic prompt geometry and shared residual structure.",
+      "input_schema": "ResidualAnchorSet.v1 plus GeneratorHookState.v1",
+      "output_schema": "GeneratorHookState.v1",
+      "requires": ["pre_final_anchor_capture_adapter"],
+      "conflicts": ["disabled_anchor_transport", "reader_localized_anchor_transport"],
+      "deterministic": true,
+      "resource_estimate": "Same cost as the reader arm; no extra model loading.",
+      "failure_signatures": ["geometry_mismatch", "reader_overlap", "mean_ablation_failure", "reader_score_feedback"]
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": [
+      "prompt_span_provenance_adapter",
+      "pre_final_anchor_capture_adapter",
+      "disabled_anchor_transport",
+      "reader_localized_anchor_transport",
+      "geometry_matched_nonreader_transport"
+    ]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": [
+      "prompt_span_provenance_adapter",
+      "pre_final_anchor_capture_adapter",
+      "disabled_anchor_transport",
+      "reader_localized_anchor_transport",
+      "geometry_matched_nonreader_transport"
+    ],
+    "merge_rule": "Provenance and capture precede one mutually exclusive transport arm; invalid rows are disabled per question and no arm is composed with another.",
+    "interaction_ablations": [
+      "No-hook versus disabled-hook parity.",
+      "Reader versus matched non-reader at identical geometry, alpha, layer, decoding, and context.",
+      "Valid rows versus per-question disabled fallback under mixed left/right padding.",
+      "Each active arm versus final-linear-readout-plus-rescaling surrogate."
+    ]
+  },
+  "validation": {
+    "baseline_equivalence": "Disabled hook returns None and preserves hidden tensors exactly; all handles are removed after normal and exceptional exits.",
+    "tests": [
+      "baseline_equivalence",
+      "plugin_isolation",
+      "deterministic_replay",
+      "interaction_ablation",
+      "span_mapping_exactness",
+      "gold_free_reader_provider_accounting",
+      "unchanged_generator_serializer_fixture",
+      "no_generation_retry_after_hook_installation",
+      "batch_and_padding_safety",
+      "all_question_fallback_accounting",
+      "compact_manifest_schema"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/generator_native_evidence_anchor_transport_screen.yaml",
+    "dataset_identity": "nq_open validation[1900:1950], fresh report-only screen; compact output only",
+    "environment": "Python 3.10+ with project requirements; model and Wiki-DPR must already be available on executor; no code path downloads a model explicitly",
+    "seeds": ["architecture_fixed", 42],
+    "output_manifest": "exchange/five_ideas/generator_native_evidence_anchor_transport/UTC_screen/run_metadata.json"
+  },
+  "screen_contract": {
+    "stage": "screen",
+    "authorization": "user_authorized_report_only_screen",
+    "population": "complete frozen 50-question validation slice",
+    "arms": ["baseline", "disabled", "reader", "control"],
+    "primary_comparison": "reader_minus_matched_nonreader_f1",
+    "secondary_comparison": "reader_minus_frozen_baseline_f1",
+    "positive_signal_gate": "reader-minus-control F1 mean >= 0.02 and bootstrap CI95 low > 0 with reader span coverage >= 0.50",
+    "null_policy": "normal null is inconclusive; no automatic L1/L2 claim",
+    "fatal_conditions": ["contract/privacy failure", "all-question accounting failure", "reader F1 CI95 low < -0.20", "pipeline cost ratio > 2.0"],
+    "formal_followup": "requires separate user authorization and full-real-data L2 progression preregistration"
+  },
+  "evidence_profile": {
+    "id": "full_real_data_l2",
+    "full_real_data_l2": {
+      "formal_data_scope": "Complete preregistered natural NQ-open population fixed before any formal run; no post-hoc eligibility or slice selection.",
+      "replication_unit": "independent_executors",
+      "data_exposure_policy": "Git retains compact summaries at or below 1 MiB; larger raw result files use authenticated exchange and are represented by path, size, and SHA-256.",
+      "l4_attribution_plan": "After L2/L3 only, compare reader and matched-null transport with final-logit, finite-shot, and resource controls."
+    }
+  },
+  "recovery_contract": {
+    "dossier_path": ".research-radar/research-system/2026-08-27-4907559582f2/stage-results/generator_boundary_mechanism_recovery.json",
+    "dossier_sha256": "2acea6d89bdacccba4edc8aaebb42c1aa5c562cdbcd2f9272de1b08f809d36f5",
+    "candidate_id": "generator_native_evidence_anchor_transport",
+    "discriminating_intermediate_measurement": "Reader-minus-matched-null downstream answer-prefix attention redistribution and final-linear-readout-plus-rescaling R2 below 0.90."
+  },
+  "limitations": [
+    "The boundary and task adapter are implemented and validated only on synthetic token batches; no task data, retrieval, selector, evaluator, or production Generator mutation is included.",
+    "The task adapter reuses frozen DPR reader hypotheses and accepts only uniquely locatable, non-overlapping passage-local spans; rejected or unrepresentable rows become disabled rather than being tuned or retried.",
+    "Beam expansion and changing batch size are rejected by contract; use greedy fixed-batch generation or route the row to disabled fallback before hook installation.",
+    "Any real-data stage requires separate authorization and all-question accounting."
+  ]
+}
