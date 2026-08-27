@@ -1,0 +1,162 @@
+{
+  "arms": {
+    "control": {
+      "anchor_hash": "50d3ac4eb05541cfdacca884e3b191be62b49f78276d0478508a3fa9a913eb50",
+      "arm": "control",
+      "decode_shape": [
+        1,
+        1,
+        4096
+      ],
+      "first_score_hash": "ff2ac1c8f7a16fac0f99ecc16d154bc554071ee34fb0aaf407fc3efaa6cf104e",
+      "generated_token_count": 2,
+      "hook_call_count": 3,
+      "hook_prefill_seen": true,
+      "hooks_after": 0,
+      "hooks_before": 0,
+      "prefill_shape": [
+        1,
+        44,
+        4096
+      ],
+      "sequence_hash": "61753bde44f8bd590da43de19dce2cf0b83c4b2c878ac372877fe52563d518b9",
+      "sequence_length": 46
+    },
+    "disabled": {
+      "anchor_hash": "50d3ac4eb05541cfdacca884e3b191be62b49f78276d0478508a3fa9a913eb50",
+      "arm": "disabled",
+      "decode_shape": [
+        1,
+        1,
+        4096
+      ],
+      "first_score_hash": "abe95fa338e20b709ba88882ae5276951c295e8381858efcb298cb9eea099461",
+      "generated_token_count": 2,
+      "hook_call_count": 3,
+      "hook_prefill_seen": true,
+      "hooks_after": 0,
+      "hooks_before": 0,
+      "prefill_shape": [
+        1,
+        44,
+        4096
+      ],
+      "sequence_hash": "61753bde44f8bd590da43de19dce2cf0b83c4b2c878ac372877fe52563d518b9",
+      "sequence_length": 46
+    },
+    "reader": {
+      "anchor_hash": "9eda30fcff3ec6e873413168672454eb08b52a74842cfa000efd21d18cc527a0",
+      "arm": "reader",
+      "decode_shape": [
+        1,
+        1,
+        4096
+      ],
+      "first_score_hash": "5b4d55b94e3e5dde3efd3307bef5ca22c0fd6ca83ba3632610e87c59e85f4df4",
+      "generated_token_count": 2,
+      "hook_call_count": 3,
+      "hook_prefill_seen": true,
+      "hooks_after": 0,
+      "hooks_before": 0,
+      "prefill_shape": [
+        1,
+        44,
+        4096
+      ],
+      "sequence_hash": "61753bde44f8bd590da43de19dce2cf0b83c4b2c878ac372877fe52563d518b9",
+      "sequence_length": 46
+    }
+  },
+  "candidate_id": "generator_native_evidence_anchor_transport",
+  "checks": {
+    "disabled_path_parity": {
+      "max_abs_logit_delta": 0.0,
+      "status": "pass",
+      "tolerance": 1e-06
+    },
+    "geometry_matched_null": {
+      "control_anchor_hash": "50d3ac4eb05541cfdacca884e3b191be62b49f78276d0478508a3fa9a913eb50",
+      "control_centered_anchor_l2": 16.075902938842773,
+      "geometry_match": true,
+      "reader_anchor_hash": "9eda30fcff3ec6e873413168672454eb08b52a74842cfa000efd21d18cc527a0",
+      "shared_mean_ablated": true,
+      "shared_mean_delta": 0.0,
+      "status": "pass"
+    },
+    "hook_lifecycle_cleanup": {
+      "final_hooks": 0,
+      "initial_hooks": 0,
+      "status": "pass"
+    },
+    "layer_reachability": {
+      "downstream_blocks": 2,
+      "layer_index": 30,
+      "status": "pass",
+      "total_layers": 32
+    },
+    "non_logit_equivalence": {
+      "fitted_rescale": 0.4666367173194885,
+      "status": "pass",
+      "surrogate_r2": 0.33741843700408936,
+      "threshold": 0.9
+    },
+    "span_mapping": {
+      "attention_mask_hash": "9ac71e69251988f34c08cc3b0ee4cf3fca431504e7ec465c94958b1714ad38e7",
+      "control_token_count": 3,
+      "control_token_geometry": [
+        3
+      ],
+      "input_ids_hash": "16807f814c8a6a6f30e9ea2368ba482d37ec3587a7a4fd6d311b68850cbdd94d",
+      "lexical_token_count": 43,
+      "prompt_source": "synthetic_fixture_only",
+      "prompt_token_count": 44,
+      "reader_control_disjoint": true,
+      "reader_token_count": 3,
+      "reader_token_geometry": [
+        3
+      ],
+      "status": "pass"
+    }
+  },
+  "claim_ceiling": "diagnostic",
+  "failed_checks": [],
+  "fixture": "actual_model_no_task_data",
+  "interface": {
+    "alpha_rule": "1/sqrt(num_hidden_layers)",
+    "attention_mask_hash": "9ac71e69251988f34c08cc3b0ee4cf3fca431504e7ec465c94958b1714ad38e7",
+    "downstream_blocks": 2,
+    "hook": "register_forward_pre_hook(with_kwargs=True)",
+    "insertion_layer": 30,
+    "prompt_token_hash": "16807f814c8a6a6f30e9ea2368ba482d37ec3587a7a4fd6d311b68850cbdd94d"
+  },
+  "model": {
+    "hidden_size": 4096,
+    "model_id": "NousResearch/Meta-Llama-3-8B-Instruct",
+    "num_layers": 32,
+    "resolved_snapshot_path_sha256": "887f0f0a81a19df496281a9888d98412d3a5fdb4aef75d07606a280e0fb30360",
+    "revision": "53346005fb0ef11d3b6a83b12c895cca40156b6c",
+    "snapshot_config_sha256": "61f3de03a16ca8046b05dc777bce72717022bc8522152eee61a69072272ef54b",
+    "torch_dtype": "torch.float16"
+  },
+  "next_action": "synthetic_hook_contract_passed",
+  "provenance": {
+    "data_policy": "synthetic fixture only; no task data or raw prompt persisted",
+    "model_revision": "53346005fb0ef11d3b6a83b12c895cca40156b6c",
+    "project_git_revision": "5796dabe3637fe352b286c54c5c866a626484589"
+  },
+  "schema_version": "rag-selector.generator-native-hook-preflight.v1",
+  "scope": {
+    "evaluator_called": false,
+    "gpu_used": true,
+    "model_loaded": true,
+    "retrieval_called": false,
+    "selector_called": false,
+    "task_data_accessed": false,
+    "wiki_dpr_accessed": false
+  },
+  "sha256": "dbe2983d7a33b3da194868a2ab208c0d88b2c5499d00e07495775e2368ac54d5",
+  "status": "pass",
+  "timing": {
+    "wall_seconds": 97.82
+  }
+}

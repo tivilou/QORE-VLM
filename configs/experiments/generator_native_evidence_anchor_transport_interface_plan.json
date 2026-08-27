@@ -1,0 +1,158 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v2",
+  "project": "Q-DUET-VLM",
+  "authorization": "plan_only",
+  "baseline": {
+    "entry_point": "remote:3080Ti:/home/Q-DUET-VLM/QORE-VLM-phase1-gate Generator.generate",
+    "code_revision": "five-ideas-development@5796dabe",
+    "equivalence_test": "No-hook and disabled-hook paths must match token IDs, logits, generated-token count, and compact path hashes on a future no-task-data fixture."
+  },
+  "core_invariants": [
+    "Production selector, retrieval, selected IDs/order, context, prompt, decode policy, evaluator, labels, answers, and candidate path remain frozen.",
+    "Reader spans are gold-free pre-generation locators only; gold, answer, evaluator, split, post-generation output, and result feedback are forbidden.",
+    "The hook is installed by a context manager for one Generator call and removed in finally; no process-global hook or implicit discovery.",
+    "Exactly one mutually exclusive arm is active per call: disabled, reader, or geometry-matched non-reader control.",
+    "Formal utility remains blocked pending separately authorized screen, preregistration, full-data run, and independent-executor replication."
+  ],
+  "interfaces": [
+    {
+      "id": "frozen_reader_span_provenance",
+      "type": "transformer",
+      "input_schema": "FrozenReaderSpanRecord.v1",
+      "output_schema": "PromptTokenSpanMap.v1",
+      "invariants": ["Unchanged prompt serialization and token IDs are asserted; raw text is memory-only and never persisted."]
+    },
+    {
+      "id": "pre_final_anchor_capture",
+      "type": "transformer",
+      "input_schema": "PromptTokenSpanMap.v1 plus Layer30PrefillHidden.v1",
+      "output_schema": "ResidualAnchorSet.v1",
+      "invariants": ["Anchors use the Generator's own layer-30 prompt states; the same shared prompt mean is removed from reader and control anchors."]
+    },
+    {
+      "id": "pre_final_residual_transport",
+      "type": "transformer",
+      "input_schema": "ResidualAnchorSet.v1 plus GeneratorHookState.v1",
+      "output_schema": "GeneratorHookState.v1",
+      "invariants": ["Only the input pre-hook of model.model.layers[30] may be modified; layers 30 and 31 remain downstream."]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "prompt_span_provenance_adapter",
+      "version": "0.1.0-plan",
+      "role": "adapter",
+      "interface": "frozen_reader_span_provenance",
+      "insertion_point": "Existing prompt serializer/tokenizer boundary; assert exact prompt and token preservation.",
+      "hypothesis": "Frozen gold-free reader offsets can be mapped to existing Generator token indices without changing the prompt.",
+      "input_schema": "FrozenReaderSpanRecord.v1",
+      "output_schema": "PromptTokenSpanMap.v1",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "Plan only; future fixture uses tokenizer offset mapping without retrieval or evaluation.",
+      "failure_signatures": ["prompt_or_token_ids_change", "span_unmappable", "ambiguous_span", "forbidden_provenance"]
+    },
+    {
+      "id": "pre_final_anchor_capture_adapter",
+      "version": "0.1.0-plan",
+      "role": "adapter",
+      "interface": "pre_final_anchor_capture",
+      "insertion_point": "First layer-30 pre-forward call, before residual modification.",
+      "hypothesis": "Layer-30 prompt states provide a native anchor space without external projection or span-text copying.",
+      "input_schema": "PromptTokenSpanMap.v1 plus Layer30PrefillHidden.v1",
+      "output_schema": "ResidualAnchorSet.v1",
+      "requires": ["prompt_span_provenance_adapter"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "Plan only; persist compact tensor geometry and checksums only.",
+      "failure_signatures": ["layer_30_not_reached", "shape_or_dtype_mismatch", "reader_control_mean_mismatch", "raw_content_persisted"]
+    },
+    {
+      "id": "disabled_anchor_transport",
+      "version": "0.1.0-plan",
+      "role": "baseline",
+      "interface": "pre_final_residual_transport",
+      "insertion_point": "Same scoped layer-30 pre-hook, returning hidden_states unchanged.",
+      "hypothesis": "Adapter plumbing has exact disabled-path parity with the frozen Generator.",
+      "input_schema": "ResidualAnchorSet.v1 plus GeneratorHookState.v1",
+      "output_schema": "GeneratorHookState.v1",
+      "requires": ["pre_final_anchor_capture_adapter"],
+      "conflicts": ["reader_localized_anchor_transport", "geometry_matched_nonreader_transport"],
+      "deterministic": true,
+      "resource_estimate": "Plan only; one deterministic no-task-data parity fixture per arm.",
+      "failure_signatures": ["logit_drift", "token_or_path_hash_mismatch", "hook_handle_leak"]
+    },
+    {
+      "id": "reader_localized_anchor_transport",
+      "version": "0.1.0-plan",
+      "role": "idea",
+      "interface": "pre_final_residual_transport",
+      "insertion_point": "Layer-30 pre-hook; add one fixed anchor to the final non-padding prompt token and each cached decode token.",
+      "hypothesis": "Reader-localized native states can alter evidence use through two downstream Transformer blocks, not a terminal logit bias.",
+      "input_schema": "ResidualAnchorSet.v1 plus GeneratorHookState.v1",
+      "output_schema": "GeneratorHookState.v1",
+      "requires": ["pre_final_anchor_capture_adapter"],
+      "conflicts": ["disabled_anchor_transport", "geometry_matched_nonreader_transport"],
+      "deterministic": true,
+      "resource_estimate": "Unimplemented; future no-task-data fixture, then separately authorized report-only screen.",
+      "failure_signatures": ["terminal_only", "linear_surrogate_r2_at_least_0.90", "gold_or_result_lineage", "frozen_path_drift", "cost_ceiling_failure"]
+    },
+    {
+      "id": "geometry_matched_nonreader_transport",
+      "version": "0.1.0-plan",
+      "role": "idea",
+      "interface": "pre_final_residual_transport",
+      "insertion_point": "Identical layer-30 hook and answer-prefix positions with disjoint non-reader spans matching reader count and lengths.",
+      "hypothesis": "A deterministic matched null isolates reader content from generic prompt geometry and shared residual structure.",
+      "input_schema": "ResidualAnchorSet.v1 plus GeneratorHookState.v1",
+      "output_schema": "GeneratorHookState.v1",
+      "requires": ["pre_final_anchor_capture_adapter"],
+      "conflicts": ["disabled_anchor_transport", "reader_localized_anchor_transport"],
+      "deterministic": true,
+      "resource_estimate": "Unimplemented; no extra model loading beyond the corresponding active arm.",
+      "failure_signatures": ["geometry_mismatch", "reader_overlap", "mean_ablation_failure", "reader_score_feedback"]
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": ["prompt_span_provenance_adapter", "pre_final_anchor_capture_adapter", "disabled_anchor_transport", "reader_localized_anchor_transport", "geometry_matched_nonreader_transport"]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": ["prompt_span_provenance_adapter", "pre_final_anchor_capture_adapter", "disabled_anchor_transport"],
+    "merge_rule": "Provenance and capture precede exactly one mutually exclusive transport arm; active arms replace, never compose with, the disabled arm.",
+    "interaction_ablations": ["No-hook versus disabled-hook parity.", "Reader versus matched non-reader at identical geometry, alpha, layer, decoding, and context.", "Each active arm versus final-linear-readout-plus-rescaling surrogate."]
+  },
+  "validation": {
+    "baseline_equivalence": "No-hook and disabled-hook outputs must be exactly equal on a deterministic no-task-data fixture.",
+    "tests": ["baseline_equivalence", "plugin_isolation", "deterministic_replay", "interaction_ablation", "span_mapping_exactness", "hook_lifecycle_cleanup", "compact_manifest_schema"]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/generator_native_evidence_anchor_transport_interface_plan.json",
+    "dataset_identity": "plan-only: no task dataset, labels, answers, passages, predictions, or evaluator output",
+    "environment": "plan-only; source inspection of 3080Ti Llama-3 8B, Transformers 4.44.0, Torch 2.7.1+cu126",
+    "seeds": ["architecture_fixed"],
+    "output_manifest": "Future runs must emit compact model/config hashes, layer, shape, geometry, timing, and metrics only."
+  },
+  "evidence_profile": {
+    "id": "full_real_data_l2",
+    "full_real_data_l2": {
+      "formal_data_scope": "Complete preregistered natural NQ-open population fixed before any formal run; no post-hoc eligibility or slice selection.",
+      "replication_unit": "independent_executors",
+      "data_exposure_policy": "Git retains compact summaries at or below 1 MiB; larger raw result files use authenticated exchange and are represented by path, size, and SHA-256.",
+      "l4_attribution_plan": "After L2/L3 only, compare reader and matched-null transport with final-logit, finite-shot, and resource controls."
+    }
+  },
+  "recovery_contract": {
+    "dossier_path": ".research-radar/research-system/2026-08-27-4907559582f2/stage-results/generator_boundary_mechanism_recovery.json",
+    "dossier_sha256": "2acea6d89bdacccba4edc8aaebb42c1aa5c562cdbcd2f9272de1b08f809d36f5",
+    "candidate_id": "generator_native_evidence_anchor_transport",
+    "discriminating_intermediate_measurement": "Reader-minus-matched-null downstream answer-prefix attention redistribution and final-linear-readout-plus-rescaling R2 below 0.90."
+  },
+  "limitations": [
+    "Plan-only: no hook implementation, model loading, task data, generation, or utility result.",
+    "The project has no residual-plugin boundary or exact prompt-provenance adapter yet.",
+    "Any no-task-data model fixture or real-data stage requires separate authorization."
+  ]
+}

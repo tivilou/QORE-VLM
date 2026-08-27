@@ -1,0 +1,38 @@
+phase:
+  name: generator_native_evidence_anchor_transport_hook_preflight
+  schema_version: 1
+  fixture_only: true
+  authorization: actual_model_no_task_data
+  task_data_accessed: false
+  wiki_dpr_accessed: false
+  retrieval_called: false
+  selector_called: false
+  evaluator_called: false
+  download_allowed: false
+
+model:
+  model_id: NousResearch/Meta-Llama-3-8B-Instruct
+  revision: 53346005fb0ef11d3b6a83b12c895cca40156b6c
+  resolver_order: [cli_override, environment_override, hf_local_cache]
+  local_files_only: true
+  torch_dtype: float16
+
+interface:
+  hook: register_forward_pre_hook_with_kwargs
+  insertion_layer: 30
+  minimum_downstream_blocks: 2
+  alpha_rule: 1/sqrt(num_hidden_layers)
+  arms: [disabled, reader, control]
+  hook_lifecycle: context_manager_remove_in_finally
+
+gates:
+  disabled_path_max_abs_logit_delta: 1.0e-6
+  surrogate_max_r2: 0.90
+  require_geometry_matched_control: true
+  require_exact_prompt_token_hash: true
+  require_hook_cleanup: true
+
+outputs:
+  compact_only: true
+  path: exchange/five_ideas/generator_native_evidence_anchor_transport_hook_preflight/report.json
+  forbidden_fields: [question, passage, answer, prediction, gold, raw_prompt, prompt_text, evaluator_trace]
