@@ -1,13 +1,18 @@
 from __future__ import annotations
 
 import copy
+from pathlib import Path
 
 import pytest
 import torch
 
 from applications.rag.generator_native_evidence_anchor_transport import (
     BoundaryError,
+    FrozenDPRReaderSpanProvider,
+    GeneratorNativeEvidenceAnchorObserver,
+    GeneratorPromptSpanAdapter,
     ResidualAnchorHook,
+    ReaderSpanProvenance,
     ResidualPluginRegistry,
     assert_prompt_token_identity,
     build_compact_boundary_manifest,
@@ -16,6 +21,65 @@ from applications.rag.generator_native_evidence_anchor_transport import (
     find_forbidden_fields,
     validate_plugin_allowlist,
 )
+
+
+class _FakeReaderScorer:
+    def score_passages_with_hypotheses(self, question, passages, *, top_m, max_answer_tokens):
+        assert question == "Which color?"
+        assert top_m == 3
+        assert max_answer_tokens == 10
+        return [0.9] * len(passages), [
+            [{"text": "blue", "normalized": "blue", "probability": 1.0}],
+            [{"text": "blue", "normalized": "blue", "probability": 1.0}],
+        ]
+
+
+class _FakeTokenizer:
+    eos_token_id = 0
+    all_special_ids = ()
+
+    def __call__(self, prompt, *, return_tensors=None, truncation=False, max_length=None,
+                 return_offsets_mapping=False, return_special_tokens_mask=False, **kwargs):
+        tokens = []
+        offsets = []
+        for match in __import__("re").finditer(r"\S+", prompt):
+            tokens.append(sum((index + 1) * ord(char) for index, char in enumerate(match.group(0))) % 10000 + 1)
+            offsets.append([match.start(), match.end()])
+        if max_length is not None:
+            tokens = tokens[:max_length]
+            offsets = offsets[:max_length]
+        import torch
+        output = {
+            "input_ids": torch.tensor([tokens], dtype=torch.long),
+            "attention_mask": torch.ones((1, len(tokens)), dtype=torch.long),
+        }
+        if return_offsets_mapping:
+            output["offset_mapping"] = torch.tensor([offsets], dtype=torch.long)
+        if return_special_tokens_mask:
+            output["special_tokens_mask"] = torch.zeros((1, len(tokens)), dtype=torch.long)
+        return output
+
+
+class _FakeGenerator:
+    def __init__(self):
+        self.tokenizer = _FakeTokenizer()
+        self.model = _TinyModel()
+
+    def _build_prompt(self, question, passages):
+        context = "\n\n".join(f"Passage {i + 1}: {p}" for i, p in enumerate(passages))
+        return f"Context: {context} Question: {question} Answer:"
+
+    def generate(self, question, passages):
+        import torch
+        encoded = self.tokenizer(
+            self._build_prompt(question, passages),
+            return_tensors="pt",
+            truncation=True,
+            max_length=4096,
+        )
+        hidden = torch.zeros((1, len(encoded["input_ids"][0]), 4))
+        self.model(hidden)
+        return "stable"
 
 
 def _fixture():
@@ -211,3 +275,120 @@ def test_disabled_hook_is_exact_noop_and_cleanup_survives_body_exception():
         with ResidualAnchorHook(model, mapping, arms=("disabled",) * 3, alpha=None):
             raise RuntimeError("fixture failure")
     assert len(layer._forward_pre_hooks) == 0
+
+
+def test_gold_free_provider_locates_unique_hypothesis_and_rejects_ambiguous_text():
+    provider = FrozenDPRReaderSpanProvider(_FakeReaderScorer())
+    result = provider.provide("Which color?", ("The sky is blue.", "blue blue"))
+    assert result.provider_status == "ok"
+    assert result.passage_spans == (((11, 15),), ())
+    assert result.hypothesis_count == 2
+    assert result.located_count == 1
+    assert result.rejected_count == 1
+    assert result.compact()["gold_used"] is False
+
+
+def test_prompt_adapter_uses_unchanged_generator_serializer_and_observer_fallback():
+    generator = _FakeGenerator()
+    provider = FrozenDPRReaderSpanProvider(_FakeReaderScorer())
+    observer = GeneratorNativeEvidenceAnchorObserver(generator, provider)
+    observation = observer.generate(
+        "Which color?", ("The sky is blue.", "blue blue"), requested_arm="reader"
+    )
+    assert observation.text == "stable"
+    assert observation.decision.effective_arm == "reader"
+    assert observation.decision.fallback is False
+    assert observation.mapping is not None
+    assert observation.hook_prefill_seen is True
+    assert observation.hook_call_count >= 1
+    compact = observation.compact()
+    assert compact["raw_content_persisted"] is False
+    assert find_forbidden_fields(compact) == []
+
+
+def test_prompt_adapter_rejects_serializer_drift_before_hook_and_runs_disabled_generation():
+    class DriftingGenerator(_FakeGenerator):
+        def __init__(self):
+            super().__init__()
+            self.calls = 0
+
+        def _build_prompt(self, question, passages):
+            self.calls += 1
+            suffix = str(self.calls)
+            context = "\n\n".join(f"Passage {i + 1}: {p}" for i, p in enumerate(passages))
+            return f"Context: {context} Question: {question} Answer:{suffix}"
+
+    generator = DriftingGenerator()
+    observer = GeneratorNativeEvidenceAnchorObserver(generator, FrozenDPRReaderSpanProvider(_FakeReaderScorer()))
+    observation = observer.generate("Which color?", ("The sky is blue.", "blue blue"), requested_arm="reader")
+    assert observation.decision.effective_arm == "disabled"
+    assert observation.decision.fallback is True
+    assert observation.decision.reason == "prompt_serializer_nondeterministic"
+    assert observation.boundary_status == "unwrapped_disabled_fallback"
+
+
+def test_observer_does_not_retry_generation_after_hook_installation_failure():
+    class FailingGenerator(_FakeGenerator):
+        def __init__(self):
+            super().__init__()
+            self.generate_calls = 0
+
+        def generate(self, question, passages):
+            self.generate_calls += 1
+            prompt = self._build_prompt(question, passages)
+            encoded = self.tokenizer(
+                prompt, return_tensors="pt", truncation=True, max_length=4096
+            )
+            hidden = torch.zeros((1, len(encoded["input_ids"][0]), 4))
+            self.model(hidden)
+            raise RuntimeError("generation failed")
+
+    generator = FailingGenerator()
+    layer = generator.model.model.layers[30]
+    observer = GeneratorNativeEvidenceAnchorObserver(
+        generator, FrozenDPRReaderSpanProvider(_FakeReaderScorer())
+    )
+    with pytest.raises(RuntimeError, match="generation failed"):
+        observer.generate(
+            "Which color?", ("The sky is blue.", "blue blue"), requested_arm="reader"
+        )
+    assert generator.generate_calls == 1
+    assert len(layer._forward_pre_hooks) == 0
+
+
+def test_cached_llama_tokenizer_maps_the_frozen_generator_chat_prompt_without_drift():
+    revision = "53346005fb0ef11d3b6a83b12c895cca40156b6c"
+    snapshot = (
+        Path.home()
+        / ".cache/huggingface/hub/models--NousResearch--Meta-Llama-3-8B-Instruct"
+        / "snapshots"
+        / revision
+    )
+    if not (snapshot / "config.json").is_file():
+        pytest.skip("pinned Llama tokenizer is not cached")
+    from transformers import AutoTokenizer
+    from applications.rag.generation.generator import Generator
+
+    generator = Generator.__new__(Generator)
+    generator.tokenizer = AutoTokenizer.from_pretrained(snapshot, local_files_only=True)
+    generator.use_chat_template = True
+    passages = ("The synthetic marker is cobalt.", "A separate neutral passage has context.")
+    provenance = ReaderSpanProvenance(
+        passage_spans=(((24, 30),), ()),
+        hypothesis_count=1,
+        located_count=1,
+        rejected_count=0,
+        provider_status="ok",
+    )
+    mapping, decisions = GeneratorPromptSpanAdapter().build(
+        generator,
+        "Which synthetic marker is named?",
+        passages,
+        provenance,
+        requested_arm="reader",
+    )
+    assert decisions[0].effective_arm == "reader"
+    assert decisions[0].fallback is False
+    assert mapping.reader_tokens[0]
+    assert mapping.geometry_match
+    assert mapping.reader_control_disjoint

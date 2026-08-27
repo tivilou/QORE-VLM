@@ -4,7 +4,7 @@
   "authorization": "implemented",
   "baseline": {
     "entry_point": "remote:3080Ti:/home/Q-DUET-VLM/QORE-VLM-phase1-gate applications.rag.generation.Generator.generate",
-    "code_revision": "five-ideas-development@2cc0904",
+    "code_revision": "five-ideas-development@2f242e5",
     "equivalence_test": "The disabled arm and no-hook path must preserve hidden tensors exactly, and every hook handle must be removed after a call or exception."
   },
   "core_invariants": [
@@ -46,22 +46,22 @@
   "plugins": [
     {
       "id": "prompt_span_provenance_adapter",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "role": "adapter",
       "interface": "frozen_reader_span_provenance",
-      "insertion_point": "Existing prompt serializer/tokenizer boundary; assert exact prompt and token preservation.",
+      "insertion_point": "Frozen DPR reader hypotheses are uniquely located inside selected passages, then mapped through the existing prompt serializer/tokenizer boundary with exact prompt and token preservation.",
       "hypothesis": "Frozen gold-free reader offsets can be mapped to existing Generator token indices without changing the prompt.",
       "input_schema": "FrozenReaderSpanRecord.v1",
       "output_schema": "PromptTokenSpanMap.v1",
       "requires": [],
       "conflicts": [],
       "deterministic": true,
-      "resource_estimate": "CPU-only offset mapping; no task data or model load.",
-      "failure_signatures": ["prompt_or_token_ids_change", "span_unmappable", "ambiguous_span", "forbidden_provenance"]
+      "resource_estimate": "One frozen DPR reader hypotheses call plus CPU-only character/token offset mapping; scores are discarded and never reach selection.",
+      "failure_signatures": ["reader_provider_api_unavailable", "prompt_or_token_ids_change", "span_unmappable", "ambiguous_span", "forbidden_provenance"]
     },
     {
       "id": "pre_final_anchor_capture_adapter",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "role": "adapter",
       "interface": "pre_final_anchor_capture",
       "insertion_point": "First layer-30 pre-forward call, before residual modification.",
@@ -76,7 +76,7 @@
     },
     {
       "id": "disabled_anchor_transport",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "role": "baseline",
       "interface": "pre_final_residual_transport",
       "insertion_point": "Same scoped layer-30 pre-hook, returning hidden_states unchanged.",
@@ -91,7 +91,7 @@
     },
     {
       "id": "reader_localized_anchor_transport",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "role": "idea",
       "interface": "pre_final_residual_transport",
       "insertion_point": "Layer-30 pre-hook; add one fixed normalized anchor at each row's final non-padding prompt token and each cached decode token.",
@@ -106,7 +106,7 @@
     },
     {
       "id": "geometry_matched_nonreader_transport",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "role": "idea",
       "interface": "pre_final_residual_transport",
       "insertion_point": "Identical layer-30 hook and answer-prefix positions with disjoint non-reader spans matching reader count and lengths.",
@@ -155,6 +155,9 @@
       "deterministic_replay",
       "interaction_ablation",
       "span_mapping_exactness",
+      "gold_free_reader_provider_accounting",
+      "unchanged_generator_serializer_fixture",
+      "no_generation_retry_after_hook_installation",
       "batch_and_padding_safety",
       "all_question_fallback_accounting",
       "compact_manifest_schema"
@@ -183,8 +186,8 @@
     "discriminating_intermediate_measurement": "Reader-minus-matched-null downstream answer-prefix attention redistribution and final-linear-readout-plus-rescaling R2 below 0.90."
   },
   "limitations": [
-    "The boundary is implemented and validated only on synthetic token batches; no task data, retrieval, selector, evaluator, or production Generator mutation is included.",
-    "Task-level code must supply gold-free reader offsets in the exact serialized prompt coordinate system before a real-data screen.",
+    "The boundary and task adapter are implemented and validated only on synthetic token batches; no task data, retrieval, selector, evaluator, or production Generator mutation is included.",
+    "The task adapter reuses frozen DPR reader hypotheses and accepts only uniquely locatable, non-overlapping passage-local spans; rejected or unrepresentable rows become disabled rather than being tuned or retried.",
     "Beam expansion and changing batch size are rejected by contract; use greedy fixed-batch generation or route the row to disabled fallback before hook installation.",
     "Any real-data stage requires separate authorization and all-question accounting."
   ]

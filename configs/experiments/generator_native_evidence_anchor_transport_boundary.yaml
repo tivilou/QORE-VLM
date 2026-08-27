@@ -42,6 +42,28 @@ mapping:
   reject_noncontiguous_attention: true
   exact_prompt_token_identity: true
 
+reader_span_provider:
+  provider_id: frozen_dpr_reader_hypotheses_v1
+  backend: dpr
+  source: selected_passages_before_generation_only
+  top_m: 3
+  max_answer_tokens: 10
+  unique_text_location_required: true
+  overlapping_spans_rejected: true
+  scores_discarded: true
+  gold_used: false
+  answer_labels_used: false
+  evaluator_used: false
+  generation_output_used: false
+
+generator_adapter:
+  serializer: frozen_generator_build_prompt
+  tokenizer_arguments: frozen_generator_generate
+  second_serialization_identity_check: true
+  production_generator_source_modified: false
+  generation_retry_on_error: false
+  hook_scope: one_generate_call
+
 fallback:
   policy_id: per_question_disabled_zero_anchor
   invalid_row_action: disabled_zero_anchor

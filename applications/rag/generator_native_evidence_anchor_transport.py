@@ -11,6 +11,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import re
 from collections.abc import Mapping, Sequence
 from contextlib import AbstractContextManager
 from dataclasses import dataclass
@@ -18,7 +19,7 @@ from typing import Any
 
 
 CANDIDATE_ID = "generator_native_evidence_anchor_transport"
-PLUGIN_VERSION = "0.2.0"
+PLUGIN_VERSION = "0.3.0"
 INTERVENTION_LAYER = 30
 ARMS = ("disabled", "reader", "control")
 ACTIVE_ARMS = ("reader", "control")
@@ -63,6 +64,69 @@ class BoundaryError(ValueError):
 CharSpan = tuple[int, int]
 TokenRows = tuple[tuple[int, ...], ...]
 OffsetRows = tuple[tuple[CharSpan, ...], ...]
+
+
+@dataclass(frozen=True)
+class ReaderSpanProvenance:
+    """Gold-free reader spans in passage-local character coordinates."""
+
+    passage_spans: tuple[tuple[CharSpan, ...], ...]
+    hypothesis_count: int
+    located_count: int
+    rejected_count: int
+    provider_status: str
+
+    def __post_init__(self) -> None:
+        if self.provider_status not in {"ok", "empty", "provider_error"}:
+            raise BoundaryError("reader_provider_status_invalid")
+        if min(self.hypothesis_count, self.located_count, self.rejected_count) < 0:
+            raise BoundaryError("reader_provider_count_invalid")
+        if self.located_count + self.rejected_count != self.hypothesis_count:
+            raise BoundaryError("reader_provider_accounting_invalid")
+
+    def compact(self) -> dict[str, Any]:
+        return {
+            "provider_id": "frozen_dpr_reader_hypotheses_v1",
+            "provider_status": self.provider_status,
+            "passage_count": len(self.passage_spans),
+            "hypothesis_count": self.hypothesis_count,
+            "located_count": self.located_count,
+            "rejected_count": self.rejected_count,
+            "span_count": sum(len(row) for row in self.passage_spans),
+            "gold_used": False,
+            "answer_labels_used": False,
+            "evaluator_used": False,
+            "generation_output_used": False,
+        }
+
+
+@dataclass(frozen=True)
+class GenerationObservation:
+    """One wrapped generation plus a content-free diagnostic projection."""
+
+    text: str
+    decision: ArmDecision
+    provider: ReaderSpanProvenance
+    mapping: PromptTokenSpanMap | None
+    hook_call_count: int
+    hook_prefill_seen: bool
+    boundary_status: str
+
+    def compact(self) -> dict[str, Any]:
+        payload = {
+            "candidate_id": CANDIDATE_ID,
+            "plugin_version": PLUGIN_VERSION,
+            "boundary_status": self.boundary_status,
+            "decision": compact_decisions((self.decision,))[0],
+            "provider": self.provider.compact(),
+            "mapping": self.mapping.compact() if self.mapping is not None else None,
+            "hook_call_count": int(self.hook_call_count),
+            "hook_prefill_seen": bool(self.hook_prefill_seen),
+            "raw_content_persisted": False,
+        }
+        if find_forbidden_fields(payload):
+            raise BoundaryError("compact_privacy_violation")
+        return payload
 
 
 @dataclass(frozen=True)
@@ -513,6 +577,338 @@ def assert_prompt_token_identity(
         raise BoundaryError("special_tokens_identity_changed")
 
 
+def _locate_unique_hypothesis(passage: str, hypothesis: str) -> CharSpan | None:
+    """Locate one reader hypothesis without using answer labels or fuzzy scores."""
+    candidate = str(hypothesis).strip()
+    if not candidate:
+        return None
+    exact = [match.span() for match in re.finditer(re.escape(candidate), passage)]
+    if len(exact) == 1:
+        return int(exact[0][0]), int(exact[0][1])
+    if exact:
+        return None
+    pieces = [re.escape(piece) for piece in candidate.split()]
+    if not pieces:
+        return None
+    relaxed = [
+        match.span()
+        for match in re.finditer(r"\s+".join(pieces), passage, flags=re.IGNORECASE)
+    ]
+    if len(relaxed) != 1:
+        return None
+    return int(relaxed[0][0]), int(relaxed[0][1])
+
+
+class FrozenDPRReaderSpanProvider:
+    """Derive passage-local spans from the already-frozen DPR reader API.
+
+    The returned reader scores are deliberately discarded.  Only pre-generation
+    span hypotheses are consumed, and no label, gold answer, evaluator value,
+    generated output, or selector feedback enters this provider.
+    """
+
+    TOP_M = 3
+    MAX_ANSWER_TOKENS = 10
+
+    def __init__(self, answer_scorer: Any) -> None:
+        if not callable(getattr(answer_scorer, "score_passages_with_hypotheses", None)):
+            raise BoundaryError("reader_provider_api_unavailable")
+        self.answer_scorer = answer_scorer
+
+    def provide(self, question: str, passages: Sequence[str]) -> ReaderSpanProvenance:
+        passage_rows = tuple(str(passage) for passage in passages)
+        if not passage_rows:
+            return ReaderSpanProvenance((), 0, 0, 0, "empty")
+        try:
+            unused_scores, hypotheses = self.answer_scorer.score_passages_with_hypotheses(
+                str(question),
+                list(passage_rows),
+                top_m=self.TOP_M,
+                max_answer_tokens=self.MAX_ANSWER_TOKENS,
+            )
+            del unused_scores
+        except Exception:
+            return ReaderSpanProvenance(
+                tuple(() for _ in passage_rows), 0, 0, 0, "provider_error"
+            )
+        if not isinstance(hypotheses, Sequence) or len(hypotheses) != len(passage_rows):
+            return ReaderSpanProvenance(
+                tuple(() for _ in passage_rows), 0, 0, 0, "provider_error"
+            )
+        located_rows: list[tuple[CharSpan, ...]] = []
+        hypothesis_count = 0
+        rejected_count = 0
+        for passage, row in zip(passage_rows, hypotheses):
+            if not isinstance(row, Sequence):
+                return ReaderSpanProvenance(
+                    tuple(() for _ in passage_rows), 0, 0, 0, "provider_error"
+                )
+            accepted: list[CharSpan] = []
+            for item in row:
+                hypothesis_count += 1
+                if not isinstance(item, Mapping):
+                    rejected_count += 1
+                    continue
+                span = _locate_unique_hypothesis(
+                    passage, str(item.get("text") or item.get("normalized") or "")
+                )
+                if span is None or any(
+                    span[0] < existing[1] and span[1] > existing[0]
+                    for existing in accepted
+                ):
+                    rejected_count += 1
+                    continue
+                accepted.append(span)
+            located_rows.append(tuple(sorted(accepted)))
+        located_count = hypothesis_count - rejected_count
+        status = "ok" if located_count else "empty"
+        return ReaderSpanProvenance(
+            tuple(located_rows),
+            hypothesis_count,
+            located_count,
+            rejected_count,
+            status,
+        )
+
+
+class GeneratorPromptSpanAdapter:
+    """Map passage-local reader spans through the unchanged Generator prompt."""
+
+    MAX_LENGTH = 4096
+
+    @staticmethod
+    def _prompt_spans(
+        prompt: str,
+        passages: Sequence[str],
+        passage_spans: Sequence[Sequence[CharSpan]],
+    ) -> tuple[CharSpan, ...]:
+        if len(passages) != len(passage_spans):
+            raise BoundaryError("reader_passage_span_count_mismatch")
+        cursor = 0
+        result: list[CharSpan] = []
+        for index, (passage, spans) in enumerate(zip(passages, passage_spans), start=1):
+            prefix = f"Passage {index}: "
+            serialized = prefix + str(passage)
+            start = prompt.find(serialized, cursor)
+            if start < 0:
+                raise BoundaryError("prompt_passage_serialization_mismatch")
+            passage_start = start + len(prefix)
+            passage_length = len(str(passage))
+            for local_start, local_end in spans:
+                if not 0 <= int(local_start) < int(local_end) <= passage_length:
+                    raise BoundaryError("reader_span_out_of_passage")
+                result.append((passage_start + int(local_start), passage_start + int(local_end)))
+            cursor = start + len(serialized)
+        if not result:
+            raise BoundaryError("reader_span_empty")
+        return tuple(result)
+
+    @staticmethod
+    def _tokenize(tokenizer: Any, prompt: str, *, geometry: bool) -> Mapping[str, Any]:
+        kwargs: dict[str, Any] = {
+            "return_tensors": "pt",
+            "truncation": True,
+            "max_length": GeneratorPromptSpanAdapter.MAX_LENGTH,
+        }
+        if geometry:
+            kwargs.update(return_offsets_mapping=True, return_special_tokens_mask=True)
+        try:
+            encoded = tokenizer(prompt, **kwargs)
+        except Exception as exc:
+            raise BoundaryError("prompt_tokenizer_geometry_unavailable") from exc
+        if not isinstance(encoded, Mapping):
+            raise BoundaryError("tokenized_input_not_mapping")
+        return encoded
+
+    def build(
+        self,
+        generator: Any,
+        question: str,
+        passages: Sequence[str],
+        provenance: ReaderSpanProvenance,
+        *,
+        requested_arm: str,
+    ) -> tuple[PromptTokenSpanMap, tuple[ArmDecision, ...]]:
+        if requested_arm not in ARMS:
+            raise BoundaryError("unknown_arm")
+        passage_rows = tuple(str(passage) for passage in passages)
+        first_prompt = generator._build_prompt(str(question), list(passage_rows))
+        second_prompt = generator._build_prompt(str(question), list(passage_rows))
+        if first_prompt != second_prompt:
+            raise BoundaryError("prompt_serializer_nondeterministic")
+        geometry = dict(self._tokenize(generator.tokenizer, first_prompt, geometry=True))
+        production = self._tokenize(generator.tokenizer, second_prompt, geometry=False)
+        for key in ("input_ids", "attention_mask"):
+            if key not in production or key not in geometry:
+                raise BoundaryError(f"missing_{key}")
+            if _stable_hash(production[key]) != _stable_hash(geometry[key]):
+                raise BoundaryError(f"{key}_geometry_tokenization_changed")
+        if requested_arm == "disabled":
+            prompt_spans: tuple[CharSpan, ...] = ()
+        else:
+            try:
+                prompt_spans = self._prompt_spans(
+                    first_prompt, passage_rows, provenance.passage_spans
+                )
+            except BoundaryError:
+                prompt_spans = ()
+        mapping, decisions = build_prompt_token_span_batch_with_fallback(
+            geometry,
+            (first_prompt,),
+            (prompt_spans,),
+            requested_arm=requested_arm,
+        )
+        assert_prompt_token_identity(mapping, geometry, (first_prompt,))
+        return mapping, decisions
+
+
+class _TokenizerIdentityProxy:
+    def __init__(self, tokenizer: Any, mapping: PromptTokenSpanMap) -> None:
+        self._tokenizer = tokenizer
+        self._mapping = mapping
+        self.call_count = 0
+
+    def __getattr__(self, name: str) -> Any:
+        return getattr(self._tokenizer, name)
+
+    def __call__(self, prompt: str, *args: Any, **kwargs: Any) -> Any:
+        if args or kwargs != {
+            "return_tensors": "pt",
+            "truncation": True,
+            "max_length": GeneratorPromptSpanAdapter.MAX_LENGTH,
+        }:
+            raise BoundaryError("generator_tokenizer_arguments_changed")
+        if _prompt_hash(prompt) != self._mapping.prompt_hashes[0]:
+            raise BoundaryError("generator_prompt_identity_changed")
+        encoded = self._tokenizer(prompt, **kwargs)
+        if not isinstance(encoded, Mapping):
+            raise BoundaryError("tokenized_input_not_mapping")
+        if _stable_hash(encoded.get("input_ids")) != self._mapping.input_ids_hash:
+            raise BoundaryError("generator_input_ids_identity_changed")
+        if _stable_hash(encoded.get("attention_mask")) != self._mapping.attention_mask_hash:
+            raise BoundaryError("generator_attention_mask_identity_changed")
+        self.call_count += 1
+        return encoded
+
+
+class GeneratorCallIdentityGuard(AbstractContextManager["GeneratorCallIdentityGuard"]):
+    """Observe the actual stable Generator call and restore it on every exit."""
+
+    def __init__(self, generator: Any, mapping: PromptTokenSpanMap) -> None:
+        if mapping.batch_size != 1:
+            raise BoundaryError("generator_guard_requires_single_row")
+        self.generator = generator
+        self.mapping = mapping
+        self.original_builder: Any | None = None
+        self.original_tokenizer: Any | None = None
+        self.proxy: _TokenizerIdentityProxy | None = None
+        self.builder_call_count = 0
+
+    def __enter__(self) -> "GeneratorCallIdentityGuard":
+        self.original_builder = self.generator._build_prompt
+        self.original_tokenizer = self.generator.tokenizer
+        self.proxy = _TokenizerIdentityProxy(self.original_tokenizer, self.mapping)
+
+        def guarded_builder(question: str, passages: Sequence[str]) -> str:
+            prompt = self.original_builder(question, list(passages))
+            if _prompt_hash(prompt) != self.mapping.prompt_hashes[0]:
+                raise BoundaryError("generator_prompt_identity_changed")
+            self.builder_call_count += 1
+            return prompt
+
+        self.generator.tokenizer = self.proxy
+        self.generator._build_prompt = guarded_builder
+        return self
+
+    def __exit__(self, exc_type: Any, exc_value: Any, traceback: Any) -> None:
+        if self.original_builder is not None:
+            self.generator._build_prompt = self.original_builder
+        if self.original_tokenizer is not None:
+            self.generator.tokenizer = self.original_tokenizer
+        if exc_type is None and (
+            self.builder_call_count != 1
+            or self.proxy is None
+            or self.proxy.call_count != 1
+        ):
+            raise BoundaryError("generator_call_identity_not_observed")
+
+
+class GeneratorNativeEvidenceAnchorObserver:
+    """Call the stable Generator under one scoped, report-only transport arm."""
+
+    def __init__(
+        self,
+        generator: Any,
+        reader_provider: FrozenDPRReaderSpanProvider,
+        *,
+        adapter: GeneratorPromptSpanAdapter | None = None,
+        registry: "ResidualPluginRegistry | None" = None,
+    ) -> None:
+        self.generator = generator
+        self.reader_provider = reader_provider
+        self.adapter = adapter or GeneratorPromptSpanAdapter()
+        self.registry = registry or ResidualPluginRegistry()
+
+    @staticmethod
+    def _empty_provenance(passage_count: int, status: str) -> ReaderSpanProvenance:
+        return ReaderSpanProvenance(
+            tuple(() for _ in range(passage_count)), 0, 0, 0, status
+        )
+
+    def generate(
+        self,
+        question: str,
+        passages: Sequence[str],
+        *,
+        requested_arm: str,
+    ) -> GenerationObservation:
+        if requested_arm not in ARMS:
+            raise BoundaryError("unknown_arm")
+        passage_rows = tuple(str(passage) for passage in passages)
+        provenance = (
+            self._empty_provenance(len(passage_rows), "empty")
+            if requested_arm == "disabled"
+            else self.reader_provider.provide(str(question), passage_rows)
+        )
+        try:
+            mapping, decisions = self.adapter.build(
+                self.generator,
+                str(question),
+                passage_rows,
+                provenance,
+                requested_arm=requested_arm,
+            )
+            decision = decisions[0]
+            hook = self.registry.create_hook(
+                self.generator.model,
+                mapping,
+                requested_arm=requested_arm,
+                decisions=decisions,
+            )
+        except BoundaryError as exc:
+            text = self.generator.generate(str(question), list(passage_rows))
+            return GenerationObservation(
+                text=str(text),
+                decision=ArmDecision(requested_arm, "disabled", True, exc.code),
+                provider=provenance,
+                mapping=None,
+                hook_call_count=0,
+                hook_prefill_seen=False,
+                boundary_status="unwrapped_disabled_fallback",
+            )
+        with hook, GeneratorCallIdentityGuard(self.generator, mapping):
+            text = self.generator.generate(str(question), list(passage_rows))
+        return GenerationObservation(
+            text=str(text),
+            decision=decision,
+            provider=provenance,
+            mapping=mapping,
+            hook_call_count=hook.call_count,
+            hook_prefill_seen=hook.prefill_seen,
+            boundary_status="wrapped",
+        )
+
+
 def validate_plugin_allowlist(allowlist: Sequence[str], composition_order: Sequence[str] | None = None) -> tuple[str, ...]:
     """Validate the formal registry; filesystem discovery is never used."""
     resolved = tuple(str(item) for item in allowlist)
@@ -803,6 +1199,12 @@ __all__ = [
     "PLUGIN_ORDER",
     "PLUGIN_VERSION",
     "PromptTokenSpanMap",
+    "ReaderSpanProvenance",
+    "FrozenDPRReaderSpanProvider",
+    "GeneratorCallIdentityGuard",
+    "GeneratorPromptSpanAdapter",
+    "GenerationObservation",
+    "GeneratorNativeEvidenceAnchorObserver",
     "ResidualAnchorHook",
     "ResidualPluginRegistry",
     "assert_prompt_token_identity",

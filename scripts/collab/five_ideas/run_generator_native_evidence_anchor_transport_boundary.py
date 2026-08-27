@@ -30,6 +30,7 @@ else:  # pragma: no cover - malformed checkout
 from applications.rag.generator_native_evidence_anchor_transport import (  # noqa: E402
     BoundaryError,
     PLUGIN_ORDER,
+    PLUGIN_VERSION,
     assert_prompt_token_identity,
     build_compact_boundary_manifest,
     build_prompt_token_span_batch_with_fallback,
@@ -72,6 +73,8 @@ def _load_contract(config_path: Path, plan_path: Path) -> tuple[dict[str, Any], 
     phase = config.get("phase")
     plugin = config.get("plugin")
     mapping = config.get("mapping")
+    reader_span_provider = config.get("reader_span_provider")
+    generator_adapter = config.get("generator_adapter")
     fallback = config.get("fallback")
     if not isinstance(phase, dict) or phase.get("name") != "generator_native_evidence_anchor_transport_boundary":
         raise BoundaryError("config_phase_mismatch")
@@ -86,6 +89,32 @@ def _load_contract(config_path: Path, plan_path: Path) -> tuple[dict[str, Any], 
         raise BoundaryError("config_arm_order_mismatch")
     if not isinstance(mapping, dict) or any(mapping.get(key) is not True for key in ("require_input_ids", "require_attention_mask", "require_offset_mapping", "require_special_tokens_mask", "allow_batch", "allow_left_padding", "allow_right_padding", "reject_noncontiguous_attention", "exact_prompt_token_identity")):
         raise BoundaryError("config_mapping_contract_mismatch")
+    expected_provider = {
+        "provider_id": "frozen_dpr_reader_hypotheses_v1",
+        "backend": "dpr",
+        "source": "selected_passages_before_generation_only",
+        "top_m": 3,
+        "max_answer_tokens": 10,
+        "unique_text_location_required": True,
+        "overlapping_spans_rejected": True,
+        "scores_discarded": True,
+        "gold_used": False,
+        "answer_labels_used": False,
+        "evaluator_used": False,
+        "generation_output_used": False,
+    }
+    if reader_span_provider != expected_provider:
+        raise BoundaryError("config_reader_span_provider_mismatch")
+    expected_adapter = {
+        "serializer": "frozen_generator_build_prompt",
+        "tokenizer_arguments": "frozen_generator_generate",
+        "second_serialization_identity_check": True,
+        "production_generator_source_modified": False,
+        "generation_retry_on_error": False,
+        "hook_scope": "one_generate_call",
+    }
+    if generator_adapter != expected_adapter:
+        raise BoundaryError("config_generator_adapter_mismatch")
     if not isinstance(fallback, dict) or fallback.get("policy_id") != "per_question_disabled_zero_anchor" or fallback.get("invalid_row_action") != "disabled_zero_anchor" or any(fallback.get(key) is not False for key in ("drop_invalid_rows", "retry_invalid_rows", "feedback_to_selector")) or fallback.get("unresolved_rows_allowed") is not False:
         raise BoundaryError("config_fallback_contract_mismatch")
     if not isinstance(plan, dict) or plan.get("schema_version") != "research-plugin-architecture.plugin-plan.v2" or plan.get("project") != "Q-DUET-VLM" or plan.get("authorization") != "implemented":
@@ -93,6 +122,13 @@ def _load_contract(config_path: Path, plan_path: Path) -> tuple[dict[str, Any], 
     discovery = plan.get("discovery", {})
     composition = plan.get("composition", {})
     validate_plugin_allowlist(discovery.get("allowlist", ()), composition.get("order", ()))
+    plugins = plan.get("plugins")
+    if not isinstance(plugins, list) or len(plugins) != len(PLUGIN_ORDER):
+        raise BoundaryError("plan_plugin_count_mismatch")
+    if tuple(plugin.get("id") for plugin in plugins) != PLUGIN_ORDER:
+        raise BoundaryError("plan_plugin_order_mismatch")
+    if any(plugin.get("version") != PLUGIN_VERSION for plugin in plugins):
+        raise BoundaryError("plan_plugin_version_mismatch")
     if plan.get("reproducibility", {}).get("config_path") != "configs/experiments/generator_native_evidence_anchor_transport_boundary.yaml":
         raise BoundaryError("plan_config_path_mismatch")
     return config, plan
