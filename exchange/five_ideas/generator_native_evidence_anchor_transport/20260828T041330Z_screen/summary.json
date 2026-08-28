@@ -1,0 +1,67 @@
+{
+  "candidate_id": "generator_native_evidence_anchor_transport",
+  "claim_ceiling": "diagnostic; no L1/L2 claim from this screen",
+  "control_vs_baseline": {
+    "em": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 10503,
+      "ci95_high": 0.14,
+      "ci95_low": -0.02,
+      "mean": 0.06
+    },
+    "f1": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 10504,
+      "ci95_high": 0.07847738095238095,
+      "ci95_low": -0.03701071428571429,
+      "mean": 0.02147619047619047
+    }
+  },
+  "current_tier": "L0_diagnostic",
+  "decision": "screen_inconclusive",
+  "gates": {
+    "all_questions_accounted": true,
+    "pipeline_cost": true,
+    "reader_baseline_harm": true,
+    "reader_control_nonnegative": false,
+    "reader_span_coverage": true
+  },
+  "n_questions": 50,
+  "next_step": "pre-register full-data single-seed run only if user authorizes after inspecting this screen; otherwise close as inconclusive",
+  "pipeline_cost_ratio_reader_vs_baseline": 1.3566151842048415,
+  "reader_minus_control": {
+    "em": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 10521,
+      "ci95_high": 0.02,
+      "ci95_low": -0.18,
+      "mean": -0.08
+    },
+    "f1": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 10522,
+      "ci95_high": 0.055430952380952365,
+      "ci95_low": -0.07524999999999998,
+      "mean": -0.013380952380952374
+    }
+  },
+  "reader_span_coverage": 1.0,
+  "reader_vs_baseline": {
+    "em": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 10501,
+      "ci95_high": 0.0,
+      "ci95_low": -0.06,
+      "mean": -0.02
+    },
+    "f1": {
+      "bootstrap_repetitions": 2000,
+      "bootstrap_seed": 10502,
+      "ci95_high": 0.041428571428571426,
+      "ci95_low": -0.01714285714285714,
+      "mean": 0.008095238095238095
+    }
+  },
+  "schema_version": 1,
+  "stage": "screen"
+}
