@@ -1,0 +1,84 @@
+{
+  "candidate_id": "generator_native_evidence_anchor_transport",
+  "config": {
+    "path": "/root/QORE-VLM/configs/experiments/generator_native_evidence_anchor_transport_screen.yaml",
+    "sha256": "46ae45807baba2a0415606e7be3d818bf67e05517647e6bf9d80ff03e6d2b377"
+  },
+  "dataset": {
+    "fresh_slice": true,
+    "max_samples": 50,
+    "name": "nq_open",
+    "sample_offset": 1900,
+    "slice": "nq_open validation[1900:1950]",
+    "split": "validation"
+  },
+  "diagnostic_only": true,
+  "generator": {
+    "config_sha256": "61f3de03a16ca8046b05dc777bce72717022bc8522152eee61a69072272ef54b",
+    "model_id": "NousResearch/Meta-Llama-3-8B-Instruct",
+    "model_path": "/root/QORE-VLM/models/llama3-8b",
+    "resolution": "local_cache",
+    "revision": "53346005fb0ef11d3b6a83b12c895cca40156b6c"
+  },
+  "git": {
+    "branch": "five-ideas-development",
+    "commit": "ad13512e7a93a755f99c6bf5309005d69ae5a0d4"
+  },
+  "phase": "generator_native_evidence_anchor_transport_screen",
+  "plugin_version": "0.3.0",
+  "python": {
+    "executable": "/root/miniconda3/bin/python",
+    "version": "3.10.20 (main, Mar 11 2026, 17:46:40) [GCC 14.3.0]"
+  },
+  "report_only": true,
+  "result_bytes": 426003,
+  "result_sha256": "d7da2773897b6ebc0e5d642a9fc48caf2bfcab71701d468325db471498e5d964",
+  "retrieval": {
+    "corpus_mode": "wiki_dpr",
+    "nprobe": 64,
+    "top_k": 50,
+    "wiki_dpr_config": "psgs_w100.nq.compressed"
+  },
+  "schema_version": 1,
+  "selection": {
+    "K": 5,
+    "answer_scorer_backend": "dpr",
+    "complementarity_method": null,
+    "delta": 0.0,
+    "direct_solve_max_n": 20,
+    "dpp_jitter": 1e-08,
+    "dpp_quality_scale": 2.0,
+    "gamma": 1.0,
+    "lam": 2.0,
+    "lambda_mmr": 0.7,
+    "lambda_submodular": 0.5,
+    "method": "qore",
+    "num_reads": 100,
+    "qore_prefilter_size": null,
+    "saturation_alpha": 1.0,
+    "seed": 42,
+    "use_answer_scorer": true
+  },
+  "selection_mutation": false,
+  "stage": "screen",
+  "status": "completed",
+  "summary": {
+    "decision": "screen_inconclusive",
+    "path": "/root/QORE-VLM/exchange/five_ideas/generator_native_evidence_anchor_transport/20260828T085448Z_screen/summary.json"
+  },
+  "timing_ms": {
+    "total": 97372.28379099997
+  },
+  "transport": {
+    "diagnostic_outputs_used_for_selection": false,
+    "plugin_allowlist": [
+      "prompt_span_provenance_adapter",
+      "pre_final_anchor_capture_adapter",
+      "disabled_anchor_transport",
+      "reader_localized_anchor_transport",
+      "geometry_matched_nonreader_transport"
+    ],
+    "production_generator_source_modified": false,
+    "tree_sha256": "adad86e5a8c13236d314fa19f44876512c3bc4b44500388a043e22a483af8555"
+  }
+}
