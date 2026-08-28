@@ -1,0 +1,66 @@
+phase:
+  name: gold_evidence_alignment_audit
+  schema_version: 1
+  diagnostic_only: true
+  selection_mutation: false
+
+  dataset:
+    screen:
+      name: nq_open
+      split: validation
+      sample_offset: 200
+      max_samples: 50
+      fresh_slice: true
+
+  retrieval:
+    corpus_mode: wiki_dpr
+    wiki_dpr_config: psgs_w100.nq.compressed
+    nprobe: 64
+    top_k: 50
+
+  selection:
+    method: qore
+    K: 5
+    num_reads: 100
+    lam: 2.0
+    seed: 42
+    gamma: 1.0
+    delta: 0.0
+    complementarity_method: null
+    qore_prefilter_size: null
+    direct_solve_max_n: 20
+    lambda_mmr: 0.7
+    saturation_alpha: 1.0
+    lambda_submodular: 0.5
+    dpp_quality_scale: 2.0
+    dpp_jitter: 1.0e-8
+    use_answer_scorer: true
+    answer_scorer_backend: dpr
+
+  alignment:
+    scan_mode: full_corpus
+    annotation_dataset_names:
+      - google-research-datasets/natural_questions
+      - natural_questions
+    local_annotation_candidates:
+      - data/natural_questions/validation.jsonl
+      - data/natural_questions/nq-validation.jsonl
+      - data/nq_validation.jsonl
+    progress_every: 1000000
+
+  gate:
+    minimum_mapping_rate: 0.80
+    unmapped_action: stop_before_bottleneck_claim
+
+  outputs:
+    root: exchange/five_ideas/gold_evidence_alignment_audit
+    compact_only: true
+    forbidden_fields:
+      - question
+      - passages
+      - gold_answers
+      - prediction
+      - raw_prompt
+      - passage_text
+      - gold_text
+      - answer_text

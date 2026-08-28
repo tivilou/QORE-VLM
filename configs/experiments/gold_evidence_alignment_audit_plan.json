@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "QORE-VLM gold-evidence alignment audit",
+  "authorization": "implemented",
+  "baseline": {
+    "entry_point": "nq_open -> DPR query -> Wiki-DPR Top-50 -> frozen QORE Top-5",
+    "code_revision": "five-ideas-development",
+    "equivalence_test": "selection and retrieval settings are identical to the frozen Phase 9B path; only global passage IDs and source evidence labels are observed"
+  },
+  "core_invariants": [
+    "The audit is observation-only and never feeds gold labels or alignment statistics into retrieval, selection, generation, or evaluator code.",
+    "The nq_open validation[200:250] slice, compressed Wiki-DPR corpus, nprobe=64, DPR Answer Scorer, QORE K=5, and seed=42 are frozen.",
+    "Strict gold evidence requires original NQ document title plus short-answer token span text; support evidence is reported separately and cannot upgrade strict evidence.",
+    "The full-corpus scan retains only canonical passage IDs in the private alignment cache; compact exchange output contains no question, passage, answer, or prediction text."
+  ],
+  "interfaces": [
+    {
+      "id": "nq_annotation_extractor_v1",
+      "type": "transformer",
+      "input_schema": "original Natural Questions annotation record",
+      "output_schema": "document title, strict short-span answer tokens, support answer fallback, mapping source",
+      "invariants": ["Question text is used only for local join and is never emitted."]
+    },
+    {
+      "id": "wiki_dpr_gold_alignment_v1",
+      "type": "transformer",
+      "input_schema": "Wiki-DPR corpus rows with id/title/text",
+      "output_schema": "question ID -> strict/support global passage ID sets",
+      "invariants": ["Title equality and token-boundary answer matching are deterministic."]
+    },
+    {
+      "id": "retrieval_selection_alignment_observer_v1",
+      "type": "combiner",
+      "input_schema": "frozen Top-50 retrieval and QORE Top-5 local rows plus global alignment index",
+      "output_schema": "gold counts, Top-50/Top-5 coverage, retrieval hit, selected hit, conditional selection recall",
+      "invariants": ["Selection receives only the original DPR/Answer Scorer inputs and never the gold alignment."]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "nq_annotation_extractor",
+      "version": "1.0.0",
+      "role": "baseline",
+      "interface": "nq_annotation_extractor_v1",
+      "type": "transformer",
+      "insertion_point": "before the diagnostic join, outside production RAG",
+      "hypothesis": "Original NQ title and short-answer spans provide a stricter evidence label than answer-string occurrence alone.",
+      "input_schema": "NQ annotation record",
+      "output_schema": "GoldEvidence",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "CPU and annotation metadata only",
+      "failure_signatures": ["missing original annotation source", "missing document title", "missing short-answer span"]
+    },
+    {
+      "id": "wiki_dpr_gold_alignment",
+      "version": "1.0.0",
+      "role": "idea",
+      "interface": "wiki_dpr_gold_alignment_v1",
+      "type": "transformer",
+      "insertion_point": "full Wiki-DPR metadata scan, independent of selector",
+      "hypothesis": "A question's gold passage coverage can be measured by global Wiki-DPR IDs rather than answer-string heuristics.",
+      "input_schema": "Wiki-DPR id/title/text rows and GoldEvidence map",
+      "output_schema": "strict/support passage ID sets and title-seen counts",
+      "requires": ["nq_annotation_extractor"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "one full Wiki-DPR metadata scan; no generator calls",
+      "failure_signatures": ["no matching title", "no strict answer-bearing passage", "global ID instability"]
+    },
+    {
+      "id": "retrieval_selection_alignment_observer",
+      "version": "1.0.0",
+      "role": "idea",
+      "interface": "retrieval_selection_alignment_observer_v1",
+      "type": "observer",
+      "insertion_point": "after unchanged retrieval and unchanged QORE selection",
+      "hypothesis": "Separating Top-50 coverage from QORE Top-5 coverage identifies whether the next intervention belongs to retrieval or selection.",
+      "input_schema": "retrieved global IDs, selected global IDs, aligned strict/support IDs",
+      "output_schema": "compact per-question alignment rows",
+      "requires": ["wiki_dpr_gold_alignment"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "50 questions, 50 retrieval rows and 5 selected rows each",
+      "failure_signatures": ["mapping gate below 0.80", "retrieval/selection ID mismatch", "privacy schema violation"]
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": ["nq_annotation_extractor", "wiki_dpr_gold_alignment", "retrieval_selection_alignment_observer"]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": ["nq_annotation_extractor", "wiki_dpr_gold_alignment", "retrieval_selection_alignment_observer"],
+    "merge_rule": "Join only by stable nq_i question IDs and canonical global passage IDs; no diagnostic output reaches select_passages.",
+    "interaction_ablations": [
+      "strict gold versus support-only alignment",
+      "Top-50 retrieval coverage versus QORE Top-5 coverage",
+      "answer-string hit heuristic versus title-and-span strict label"
+    ]
+  },
+  "validation": {
+    "baseline_equivalence": "Synthetic rows preserve Top-50 and Top-5 IDs while alignment labels are changed only in the observer output.",
+    "tests": [
+      "baseline_equivalence",
+      "plugin_isolation",
+      "deterministic_replay",
+      "interaction_ablation",
+      "NQ nested annotation extraction and token-span filtering",
+      "title and token-boundary passage matching",
+      "canonical passage ID determinism",
+      "full-corpus alignment set arithmetic",
+      "conditional selection recall arithmetic",
+      "compact-output forbidden-field validation",
+      "frozen config and validate-only runner"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/gold_evidence_alignment_audit.yaml",
+    "dataset_identity": "nq_open validation questions 200-249; original NQ validation annotations; Wiki-DPR psgs_w100.nq.compressed",
+    "environment": "runner records Python executable/version, git revision, config SHA-256, annotation source, corpus config, and cache key",
+    "seeds": [42],
+    "output_manifest": "exchange/five_ideas/gold_evidence_alignment_audit/<timestamp>/run_metadata.json"
+  },
+  "limitations": [
+    "The strict mapping is title plus exact short-answer span text; it is not a full character-level Wikipedia provenance proof.",
+    "Questions with no usable original annotation remain support-only or unmapped and are excluded from strict bottleneck rates.",
+    "This audit diagnoses retrieval versus selection coverage; it does not claim a utility improvement or modify production behavior.",
+    "Full Wiki-DPR execution remains collaborator-only."
+  ]
+}
