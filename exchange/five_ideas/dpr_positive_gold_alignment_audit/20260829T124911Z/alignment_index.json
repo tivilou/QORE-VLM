@@ -1,0 +1,660 @@
+{
+  "identity_rules": {
+    "official_positive": "official_passage_id_or_normalized_title_full_text_sha256",
+    "question": "normalized_question_exact",
+    "wiki_dpr": "unique_exact_corpus_id_or_full_text_identity"
+  },
+  "matches": {
+    "nq_200": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_201": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_202": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_203": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_204": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_205": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_206": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_207": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_208": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_209": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_210": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_211": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_212": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_213": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_214": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_215": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_216": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_217": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_218": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_219": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_220": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_221": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_222": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_223": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_224": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_225": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_226": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_227": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_228": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_229": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_230": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_231": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_232": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_233": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_234": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_235": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_236": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_237": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_238": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_239": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_240": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_241": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_242": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_243": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_244": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_245": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_246": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_247": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_248": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    },
+    "nq_249": {
+      "ambiguous_positive_count": 0,
+      "identity_method_counts": {
+        "official_passage_id": 0,
+        "title_text_hash": 0,
+        "unique_text_hash": 0
+      },
+      "mapping_status": "no_question_join",
+      "official_positive_count": 0,
+      "unresolved_positive_count": 0,
+      "verified": [],
+      "verified_positive_count": 0
+    }
+  },
+  "schema_version": 2
+}

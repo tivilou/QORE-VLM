@@ -1,0 +1,89 @@
+{
+  "config": {
+    "path": "/root/QORE-VLM/configs/experiments/dpr_positive_gold_alignment_audit.yaml",
+    "sha256": "c56b781895de567849e353d15bafb2c293b87bc1ac5c807b487eb79440b4c053"
+  },
+  "dataset": {
+    "dpr_positive_source": {
+      "byte_count": 256239282,
+      "downloaded_for_this_run": true,
+      "path": "data/dpr/biencoder-nq-dev.json.gz",
+      "records_scanned": 6515,
+      "sha256": "b583e78adcad00fbd4b421f691fac60e477c30a1b142fbcba1cf24b3a782f621",
+      "source_name": "dpr_biencoder_nq_dev",
+      "source_url": "https://dl.fbaipublicfiles.com/dpr/data/retriever/biencoder-nq-dev.json.gz",
+      "target_records_retained": 0
+    },
+    "dpr_target_record_count": 0,
+    "fresh_slice": true,
+    "max_samples": 50,
+    "name": "nq_open",
+    "sample_offset": 200,
+    "split": "validation"
+  },
+  "diagnostic_only": true,
+  "git": {
+    "commit": "f83d2d6185072afde36420e07996929eada35f77",
+    "status": "## five-ideas-development...origin/five-ideas-development\n?? data/dpr/\n?? exchange/five_ideas/development_gate/20260813T081847Z/mmr_as/result.json\n?? exchange/five_ideas/development_gate/20260813T081847Z/qore_as_control/result.json\n?? exchange/five_ideas/development_gate/20260813T081847Z/qore_as_idea6/result.json\n?? exchange/five_ideas/development_gate/20260813T081847Z/qore_dpr/result.json\n?? exchange/five_ideas/development_gate/20260813T081847Z/topk_as/result.json\n?? exchange/five_ideas/development_gate/20260814T041313Z/cohesion_calibrated/result.json\n?? exchange/five_ideas/development_gate/20260814T041313Z/cohesion_disabled/result.json\n?? exchange/five_ideas/development_gate/20260814T041313Z/cohesion_fixed/result.json\n?? exchange/five_ideas/development_gate/20260814T041313Z/qore_as_control/result.json\n?? exchange/five_ideas/development_gate/20260814T065620Z/mobius_disabled/result.json\n?? exchange/five_ideas/development_gate/20260814T065620Z/mobius_pairwise/result.json\n?? exchange/five_ideas/development_gate/20260814T065620Z/qore_as_control/result.json\n?? exchange/five_ideas/diagnostic_pilot/20260809T153657/mmr_as/result.json\n?? exchange/five_ideas/diagnostic_pilot/20260809T153657/qore_as_control/result.json\n?? exchange/five_ideas/diagnostic_pilot/20260809T153657/qore_as_idea6/result.json\n?? exchange/five_ideas/diagnostic_pilot/20260809T153657/qore_dpr/result.json\n?? exchange/five_ideas/diagnostic_pilot/20260809T153657/topk_as/result.json\n?? exchange/five_ideas/phase10b_answer_hypothesis_bridge/20260826T063052Z_screen/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_full/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_reader_window_050/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_reader_window_075/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_uniform_head_050/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_uniform_head_075/\n?? exchange/five_ideas/phase9d_retrieval_rank_depth_replication/20260819T050703Z/result.json\n?? exchange/five_ideas/phase9e_generation_error_decomposition/20260820T022813Z/result.json\n?? exchange/five_ideas/phase9f_evidence_sufficiency_localization/20260820T122207Z/result.json\n?? exchange/five_ideas/phase9h_answerability_generation_diagnostic/20260821T133038Z/\n?? exchange/five_ideas/phase9h_answerability_generation_diagnostic/20260821T134859Z/\n?? exchange/five_ideas/phase9h_answerability_generation_diagnostic/20260821T140833Z/result.json\n?? exchange/five_ideas/phase9j_context_lift_candidate_ranking/20260823T032605Z_formal/\n?? exchange/five_ideas/spectral_dpp_gate/20260815T033011Z/mmr_as/result.json\n?? exchange/five_ideas/spectral_dpp_gate/20260815T033011Z/qore_as_control/result.json\n?? exchange/five_ideas/spectral_dpp_gate/20260815T033011Z/spectral_dpp_as/result.json\n?? exchange/five_ideas/spectral_dpp_gate/20260815T033011Z/topk_as/result.json\n?? exchange/five_ideas/submodular_gate/20260814T091515Z/mmr_as/result.json\n?? exchange/five_ideas/submodular_gate/20260814T091515Z/qore_as_control/result.json\n?? exchange/five_ideas/submodular_gate/20260814T091515Z/submodular_as/result.json\n?? exchange/five_ideas/submodular_gate/20260814T091515Z/topk_as/result.json\n?? exchange/p2_solver_idea6/20260729T131723/gamma0.3_delta0.1/\n?? exchange/p2_solver_idea6/20260729T131723/gamma0.3_delta0.3/\n?? exchange/p2_solver_idea6/20260729T131723/gamma0.3_delta0.5/\n?? exchange/p2_solver_idea6/20260729T131723/gamma0.5_delta0.0/\n?? exchange/p2_solver_idea6/20260729T131723/gamma0.5_delta0.1/\n?? exchange/p2_solver_idea6/20260729T131723/gamma0.5_delta0.3/\n?? exchange/p2_solver_idea6/20260729T131723/gamma0.5_delta0.5/\n?? exchange/p2_solver_idea6/20260729T131723/gamma0.7_delta0.1/\n?? exchange/p2_solver_idea6/20260729T131723/gamma0.7_delta0.3/\n?? exchange/p2_solver_idea6/20260729T131723/gamma0.7_delta0.5/"
+  },
+  "identity_rules": {
+    "official_positive": "official_passage_id_or_normalized_title_full_text_sha256",
+    "question": "normalized_question_exact",
+    "wiki_dpr": "unique_exact_corpus_id_or_full_text_identity"
+  },
+  "outputs": {
+    "alignment_cache": "alignment_index.json",
+    "compact_only": true
+  },
+  "phase": "dpr_positive_gold_alignment_audit",
+  "plugins": {
+    "allowlist": [
+      "dpr_question_identity_join",
+      "official_dpr_positive_contexts",
+      "wiki_dpr_identity_alignment",
+      "retrieval_top50_observer",
+      "qore_top5_observer"
+    ],
+    "diagnostic_outputs_used_for_selection": false
+  },
+  "python": {
+    "executable": "/root/miniconda3/bin/python",
+    "version": "3.10.20 (main, Mar 11 2026, 17:46:40) [GCC 14.3.0]"
+  },
+  "retrieval": {
+    "corpus_mode": "wiki_dpr",
+    "nprobe": 64,
+    "top_k": 50,
+    "wiki_dpr_config": "psgs_w100.nq.compressed"
+  },
+  "schema_version": 2,
+  "selection": {
+    "K": 5,
+    "answer_scorer_backend": "dpr",
+    "complementarity_method": null,
+    "delta": 0.0,
+    "direct_solve_max_n": 20,
+    "dpp_jitter": 1e-08,
+    "dpp_quality_scale": 2.0,
+    "gamma": 1.0,
+    "lam": 2.0,
+    "lambda_mmr": 0.7,
+    "lambda_submodular": 0.5,
+    "method": "qore",
+    "num_reads": 100,
+    "qore_prefilter_size": null,
+    "saturation_alpha": 1.0,
+    "seed": 42,
+    "use_answer_scorer": true
+  },
+  "selection_mutation": false,
+  "stage": "screen",
+  "status": "completed",
+  "summary": {
+    "path": "/root/QORE-VLM/exchange/five_ideas/dpr_positive_gold_alignment_audit/20260829T124911Z/summary.json",
+    "status": "mapping_incomplete"
+  },
+  "timing_ms": {
+    "total": 8058708.937297
+  }
+}

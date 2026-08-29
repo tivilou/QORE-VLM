@@ -1,0 +1,36 @@
+{
+  "decision": {
+    "interpretation": "Do not classify a retrieval, selector, or Generator bottleneck; repair label coverage first.",
+    "mapping_gate_pass": false,
+    "minimum_mapping_rate": 0.8,
+    "status": "mapping_incomplete"
+  },
+  "identity_traceability": {
+    "official_passage_identity_rule": "official_id_or_normalized_title_full_text_sha256",
+    "official_positive_count": 0,
+    "question_identity_rule": "normalized_question_exact",
+    "verified_positive_count": 0,
+    "verified_positive_rate": null,
+    "wiki_dpr_identity_rule": "unique_exact_corpus_id_or_full_text_identity"
+  },
+  "mapped_count": 0,
+  "mapping_rate": 0.0,
+  "mapping_status_counts": {
+    "ambiguous_question_join": 0,
+    "ambiguous_wiki_dpr_identity": 0,
+    "mapped": 0,
+    "no_positive_context": 0,
+    "no_question_join": 50,
+    "no_wiki_dpr_identity": 0,
+    "partial_wiki_dpr_identity": 0
+  },
+  "sample_count": 50,
+  "schema_version": 2,
+  "strict_alignment": {
+    "n_retrieval_hits": 0,
+    "n_selected_hits": 0,
+    "retrieval_top50_hit_rate_among_mapped": null,
+    "selected_top5_hit_rate_among_mapped": null,
+    "selected_top5_hit_rate_given_top50_gold": null
+  }
+}
