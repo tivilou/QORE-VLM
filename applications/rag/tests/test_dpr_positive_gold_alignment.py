@@ -19,6 +19,7 @@ from applications.rag.dpr_positive_gold_alignment import (
 from applications.rag.gold_evidence_alignment import GoldAlignmentError
 from scripts.collab.five_ideas.run_dpr_positive_gold_alignment_audit import (
     _iter_dpr_positive_records,
+    _question_join_preflight,
 )
 
 
@@ -121,6 +122,23 @@ class DprPositiveGoldAlignmentTests(unittest.TestCase):
                 [record["question"] for record in _iter_dpr_positive_records(path)],
                 ["A", "B"],
             )
+
+    def test_question_join_preflight_blocks_unreachable_mapping_gate(self) -> None:
+        questions = [{"id": "q1"}, {"id": "q2"}, {"id": "q3"}, {"id": "q4"}, {"id": "q5"}]
+        joins = {
+            "q1": ("no_question_join", None),
+            "q2": ("joined", object()),
+            "q3": ("no_question_join", None),
+            "q4": ("no_positive_context", object()),
+            "q5": ("joined", object()),
+        }
+        summary = _question_join_preflight(
+            questions, joins, minimum_mapping_rate=0.8
+        )
+        self.assertEqual(summary["joined_count"], 2)
+        self.assertEqual(summary["required_join_count"], 4)
+        self.assertFalse(summary["can_reach_mapping_gate"])
+        self.assertEqual(summary["join_status_counts"]["no_question_join"], 2)
 
 
 if __name__ == "__main__":

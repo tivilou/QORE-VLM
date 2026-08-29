@@ -12,6 +12,7 @@
     "Official DPR positives are evaluation-only and never reach retrieval, QORE, prompts, Generator, or evaluator.",
     "The nq_open validation[200:250] slice, Wiki-DPR psgs_w100.nq.compressed Top-50, QORE K=5, DPR Answer Scorer, and seed=42 are frozen.",
     "A strict question mapping requires normalized exact question identity and unique Wiki-DPR identity for every official DPR positive context.",
+    "A cheap question-join preflight must show that enough target questions join to reach the 0.80 mapping gate; otherwise the run stops before Wiki-DPR or model loading.",
     "Compact results retain only identifiers, counts, booleans, source fingerprints, and manifests; they contain no question, passage, answer, title, text, prompt, or prediction content."
   ],
   "interfaces": [
@@ -142,7 +143,8 @@
       "partial-positive exclusion from strict mapping coverage",
       "gzip streaming source parsing",
       "compact privacy and complete-chain validation",
-      "frozen config and validate-only runner"
+      "frozen config and validate-only runner",
+      "question-join preflight and early-stop before Wiki-DPR"
     ]
   },
   "reproducibility": {

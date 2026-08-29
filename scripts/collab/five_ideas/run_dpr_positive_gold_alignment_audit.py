@@ -9,10 +9,12 @@ reach retrieval, selection, prompting, generation, or evaluation.
 from __future__ import annotations
 
 import argparse
+import collections
 import datetime as dt
 import gzip
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import subprocess
@@ -411,6 +413,30 @@ def _sample_row(
     }
 
 
+def _question_join_preflight(
+    questions: Sequence[Mapping[str, Any]],
+    joins: Mapping[str, tuple[str, Any]],
+    *,
+    minimum_mapping_rate: float,
+) -> dict[str, Any]:
+    """Summarize the cheap question/source join before any Wiki-DPR work."""
+    status_counts = collections.Counter(status for status, _ in joins.values())
+    sample_count = len(questions)
+    joined_count = int(status_counts.get("joined", 0))
+    required_join_count = int(math.ceil(float(minimum_mapping_rate) * sample_count))
+    return {
+        "sample_count": sample_count,
+        "joined_count": joined_count,
+        "required_join_count": required_join_count,
+        "join_rate": (joined_count / sample_count) if sample_count else None,
+        "join_status_counts": {
+            status: int(status_counts.get(status, 0))
+            for status in ("joined", "no_question_join", "ambiguous_question_join", "no_positive_context")
+        },
+        "can_reach_mapping_gate": joined_count >= required_join_count,
+    }
+
+
 def _parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     root = _project_root()
     parser = argparse.ArgumentParser(description=__doc__)
@@ -422,6 +448,11 @@ def _parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--dpr-positives", default=None, help=argparse.SUPPRESS)
     parser.add_argument("--output-root", type=Path, default=None, help=argparse.SUPPRESS)
     parser.add_argument("--validate-only", action="store_true")
+    parser.add_argument(
+        "--preflight-only",
+        action="store_true",
+        help="Check the target-question/DPR-source join without starting Wiki-DPR or loading models",
+    )
     return parser.parse_args(argv)
 
 
@@ -470,6 +501,12 @@ def run(args: argparse.Namespace) -> Path | None:
         joins[question_id] = (status, evidence)
         question_verified[question_id] = status == "joined"
 
+    join_preflight = _question_join_preflight(
+        questions,
+        joins,
+        minimum_mapping_rate=float(phase["gate"]["minimum_mapping_rate"]),
+    )
+
     metadata: dict[str, Any] = {
         "schema_version": 2,
         "phase": phase["name"],
@@ -485,6 +522,7 @@ def run(args: argparse.Namespace) -> Path | None:
         "python": {"executable": sys.executable, "version": sys.version},
         "dataset": {"name": "nq_open", "split": "validation", **stage,
                     "dpr_positive_source": dpr_source, "dpr_target_record_count": len(dpr_records)},
+        "preflight": join_preflight,
         "retrieval": phase["retrieval"],
         "selection": phase["selection"],
         "identity_rules": phase["alignment"]["identity_rules"],
@@ -500,6 +538,43 @@ def run(args: argparse.Namespace) -> Path | None:
             "diagnostic_outputs_used_for_selection": False,
         },
     }
+    if args.preflight_only:
+        metadata["status"] = "preflight_completed"
+        _write_json(run_dir / "run_metadata.json", metadata)
+        _write_json(run_dir / "preflight.json", {
+            "schema_version": 2,
+            "phase": phase["name"],
+            "stage": args.stage,
+            "diagnostic_only": True,
+            "selection_mutation": False,
+            "dataset": {"name": "nq_open", "split": "validation", **stage},
+            "dpr_positive_source": dpr_source,
+            "preflight": join_preflight,
+        })
+        print(f"Completed DPR question-join preflight: {run_dir}")
+        print(json.dumps(join_preflight, sort_keys=True))
+        return run_dir
+    if not join_preflight["can_reach_mapping_gate"]:
+        metadata["status"] = "blocked_preflight"
+        metadata["decision"] = "question_join_below_mapping_gate"
+        _write_json(run_dir / "run_metadata.json", metadata)
+        _write_json(run_dir / "preflight.json", {
+            "schema_version": 2,
+            "phase": phase["name"],
+            "stage": args.stage,
+            "diagnostic_only": True,
+            "selection_mutation": False,
+            "dataset": {"name": "nq_open", "split": "validation", **stage},
+            "dpr_positive_source": dpr_source,
+            "preflight": join_preflight,
+            "decision": "do_not_start_wiki_dpr",
+        })
+        raise DprPositiveAlignmentConfigError(
+            "target-question/DPR join cannot reach the mapping gate; "
+            f"joined {join_preflight['joined_count']}/{join_preflight['sample_count']}, "
+            f"required {join_preflight['required_join_count']}; "
+            "run --preflight-only after fixing the dataset/source identity"
+        )
     _write_json(run_dir / "run_metadata.json", metadata)
 
     started = time.perf_counter()
