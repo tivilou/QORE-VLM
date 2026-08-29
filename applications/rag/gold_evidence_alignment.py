@@ -70,6 +70,39 @@ def _first(mapping: Mapping[str, Any], *keys: str) -> Any:
     return None
 
 
+def _is_sequence(value: Any) -> bool:
+    return isinstance(value, Sequence) and not isinstance(value, (str, bytes))
+
+
+def _column_length(value: Any) -> int:
+    """Return the row count of a Hugging Face columnar nested value."""
+    if isinstance(value, Mapping):
+        lengths = [_column_length(child) for child in value.values()]
+        return max(lengths, default=0)
+    return len(value) if _is_sequence(value) else 0
+
+
+def _column_at(value: Any, index: int) -> Any:
+    """Materialize one row from a nested dict-of-lists representation."""
+    if isinstance(value, Mapping):
+        return {str(key): _column_at(child, index) for key, child in value.items()}
+    if _is_sequence(value):
+        return value[index] if index < len(value) else None
+    return value
+
+
+def _columnar_rows(value: Any) -> list[Any]:
+    """Accept normal records and HF Sequence values returned as columns."""
+    if isinstance(value, Mapping):
+        length = _column_length(value)
+        if length:
+            return [_column_at(value, index) for index in range(length)]
+        return [value]
+    if _is_sequence(value):
+        return list(value)
+    return [] if value is None else [value]
+
+
 def _question_text(record: Mapping[str, Any]) -> str:
     question = record.get("question")
     if isinstance(question, Mapping):
@@ -85,7 +118,7 @@ def _document(record: Mapping[str, Any]) -> Mapping[str, Any]:
 def _tokens(record: Mapping[str, Any]) -> Sequence[Any]:
     document = _document(record)
     tokens = document.get("tokens") or record.get("tokens") or []
-    return tokens if isinstance(tokens, Sequence) and not isinstance(tokens, (str, bytes)) else []
+    return _columnar_rows(tokens)
 
 
 def _token_text(token: Any) -> tuple[str, bool]:
@@ -113,10 +146,17 @@ def _span_values(value: Any, tokens: Sequence[Any]) -> list[str]:
     if not isinstance(value, Mapping):
         return []
     explicit = _first(value, "text", "answer", "value")
+    if _is_sequence(explicit):
+        explicit = explicit[0] if explicit else None
     if explicit:
         return [normalize_text(explicit)]
-    text = _span_text(tokens, _first(value, "start_token", "start"),
-                      _first(value, "end_token", "end"))
+    start = _first(value, "start_token", "start")
+    end = _first(value, "end_token", "end")
+    if _is_sequence(start):
+        start = start[0] if start else None
+    if _is_sequence(end):
+        end = end[0] if end else None
+    text = _span_text(tokens, start, end)
     return [text] if text else []
 
 
@@ -144,25 +184,20 @@ def extract_gold_evidence(
     title = _first(document, "title", "document_title")
     title = title or _first(record, "document_title", "title") or ""
     tokens = _tokens(record)
-    annotations = record.get("annotations") or record.get("annotation") or []
-    if isinstance(annotations, Mapping):
-        annotations = [annotations]
-    if not isinstance(annotations, Sequence) or isinstance(annotations, (str, bytes)):
-        annotations = []
+    annotations = _columnar_rows(record.get("annotations") or record.get("annotation") or [])
 
     strict: list[str] = []
     has_short = False
     for annotation_raw in annotations:
         annotation = _mapping(annotation_raw)
-        short_answers = annotation.get("short_answers") or annotation.get("short_answer") or []
-        if isinstance(short_answers, Mapping):
-            short_answers = [short_answers]
-        if isinstance(short_answers, Sequence) and not isinstance(short_answers, (str, bytes)):
-            for span in short_answers:
-                values = _span_values(span, tokens)
-                if values:
-                    has_short = True
-                    strict.extend(values)
+        short_answers = _columnar_rows(
+            annotation.get("short_answers") or annotation.get("short_answer") or []
+        )
+        for span in short_answers:
+            values = _span_values(span, tokens)
+            if values:
+                has_short = True
+                strict.extend(values)
 
     fallback = [normalize_text(value) for value in fallback_answers if normalize_text(value)]
     strict_unique = tuple(dict.fromkeys(value for value in strict if value))
