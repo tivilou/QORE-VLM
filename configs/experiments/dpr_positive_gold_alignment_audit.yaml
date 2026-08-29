@@ -1,0 +1,84 @@
+phase:
+  name: dpr_positive_gold_alignment_audit
+  schema_version: 2
+  diagnostic_only: true
+  selection_mutation: false
+
+  dataset:
+    screen:
+      name: nq_open
+      split: validation
+      sample_offset: 200
+      max_samples: 50
+      fresh_slice: true
+
+  retrieval:
+    corpus_mode: wiki_dpr
+    wiki_dpr_config: psgs_w100.nq.compressed
+    nprobe: 64
+    top_k: 50
+
+  selection:
+    method: qore
+    K: 5
+    num_reads: 100
+    lam: 2.0
+    seed: 42
+    gamma: 1.0
+    delta: 0.0
+    complementarity_method: null
+    qore_prefilter_size: null
+    direct_solve_max_n: 20
+    lambda_mmr: 0.7
+    saturation_alpha: 1.0
+    lambda_submodular: 0.5
+    dpp_quality_scale: 2.0
+    dpp_jitter: 1.0e-8
+    use_answer_scorer: true
+    answer_scorer_backend: dpr
+
+  alignment:
+    scan_mode: full_corpus
+    identity_rules:
+      question: normalized_question_exact
+      official_positive: official_passage_id_or_normalized_title_full_text_sha256
+      wiki_dpr: unique_exact_corpus_id_or_full_text_identity
+    dpr_positive_candidates:
+      - data/dpr/biencoder-nq-dev.json
+      - data/dpr/biencoder-nq-dev.json.gz
+      - data/dpr/biencoder_nq_dev.json
+      - data/dpr/biencoder_nq_dev.json.gz
+      - data/nq/biencoder-nq-dev.json
+      - data/nq/biencoder-nq-dev.json.gz
+      - data/nq/biencoder_nq_dev.json
+      - data/nq/biencoder_nq_dev.json.gz
+      - data/biencoder-nq-dev.json
+      - data/biencoder-nq-dev.json.gz
+    official_dpr_download:
+      source_name: dpr_biencoder_nq_dev
+      url: https://dl.fbaipublicfiles.com/dpr/data/retriever/biencoder-nq-dev.json.gz
+      cache_path: data/dpr/biencoder-nq-dev.json.gz
+      timeout_seconds: 90
+    progress_every: 1000000
+
+  gate:
+    minimum_mapping_rate: 0.80
+    unmapped_action: stop_before_bottleneck_claim
+
+  outputs:
+    root: exchange/five_ideas/dpr_positive_gold_alignment_audit
+    compact_only: true
+    forbidden_fields:
+      - question
+      - query
+      - passages
+      - positive_ctxs
+      - positive_contexts
+      - answers
+      - prediction
+      - raw_prompt
+      - passage_text
+      - gold_text
+      - answer_text
+      - title
+      - text
