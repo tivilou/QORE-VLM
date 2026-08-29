@@ -1,0 +1,33 @@
+{
+  "decision": {
+    "interpretation": "Do not claim a bottleneck until the NQ-to-Wiki-DPR mapping is repaired.",
+    "mapping_gate_pass": false,
+    "minimum_mapping_rate": 0.8,
+    "status": "mapping_incomplete"
+  },
+  "mapped_count": 35,
+  "mapping_rate": 0.7,
+  "mapping_status_counts": {
+    "mapped": 35,
+    "no_matching_title": 7,
+    "no_strict_match": 8,
+    "source_unavailable": 0,
+    "support_only": 0
+  },
+  "sample_count": 50,
+  "schema_version": 1,
+  "strict_alignment": {
+    "conditional_selection_recall_mean": 0.31419680424764573,
+    "n_retrieval_hits": 28,
+    "n_selected_hits": 15,
+    "n_with_gold": 35,
+    "retrieval_top50_failure_rate": 0.19999999999999996,
+    "retrieval_top50_hit_rate": 0.8,
+    "selected_top5_failure_rate_conditional": 0.5714285714285714,
+    "selected_top5_hit_rate_conditional": 0.42857142857142855
+  },
+  "support_alignment": {
+    "retrieval_top50_hit_rate": 0.8,
+    "selected_top5_hit_rate": 0.42857142857142855
+  }
+}
