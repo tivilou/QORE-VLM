@@ -196,6 +196,168 @@ def _iter_json_array_records(path: Path) -> Iterable[Mapping[str, Any]]:
                 return
 
 
+_GOLD_INFO_FIELDS = ("question", "question_tokens", "title", "context", "example_id")
+
+
+def _gold_info_rows(path: Path) -> Iterable[Mapping[str, Any]]:
+    """Yield raw official gold-info rows without retaining or emitting content."""
+    opener = gzip.open if path.suffix == ".gz" else open
+    with opener(path, "rt", encoding="utf-8") as handle:
+        payload = json.load(handle)
+    if not isinstance(payload, Mapping):
+        raise DprPositiveAlignmentConfigError(
+            f"DPR gold-info source must be a JSON object: {path}"
+        )
+    rows = payload.get("data") or payload.get("records") or payload.get("examples")
+    if not isinstance(rows, list):
+        raise DprPositiveAlignmentConfigError(
+            f"DPR gold-info source has no data/records/examples list: {path}"
+        )
+    for raw in rows:
+        if isinstance(raw, Mapping):
+            yield raw
+
+
+def _coalesce_gold_value(*values: Any) -> Any:
+    for value in values:
+        if value is None:
+            continue
+        if isinstance(value, str) and not value.strip():
+            continue
+        return value
+    return None
+
+
+def _gold_info_values(record: Mapping[str, Any]) -> dict[str, Any]:
+    """Resolve official field aliases and nested document fallbacks."""
+    document = record.get("document")
+    document = document if isinstance(document, Mapping) else {}
+    question = _coalesce_gold_value(
+        record.get("question"), record.get("question_text"), record.get("query")
+    )
+    if isinstance(question, Mapping):
+        question = _coalesce_gold_value(question.get("text"), question.get("question"))
+    return {
+        "question": question,
+        "question_tokens": record.get("question_tokens"),
+        "title": _coalesce_gold_value(
+            record.get("title"), record.get("document_title"),
+            document.get("title"), document.get("document_title"),
+        ),
+        "context": _coalesce_gold_value(
+            record.get("context"), record.get("text"), record.get("passage"),
+            document.get("context"), document.get("text"),
+        ),
+        "example_id": _coalesce_gold_value(
+            record.get("example_id"), record.get("id"), record.get("passage_id"),
+            record.get("psg_id"), document.get("example_id"), document.get("id"),
+        ),
+    }
+
+
+def _value_type_shape(value: Any, *, present: bool) -> str:
+    if not present:
+        return "missing"
+    if value is None:
+        return "null"
+    if isinstance(value, bool):
+        return "bool"
+    if isinstance(value, str):
+        return "string"
+    if isinstance(value, Mapping):
+        return "mapping"
+    if isinstance(value, Sequence) and not isinstance(value, (str, bytes)):
+        return "sequence"
+    if isinstance(value, (int, float)):
+        return "number"
+    return type(value).__name__
+
+
+def _value_nonempty(value: Any) -> bool:
+    if value is None:
+        return False
+    if isinstance(value, str):
+        return bool(value.strip())
+    if isinstance(value, (Mapping, Sequence)) and not isinstance(value, (str, bytes)):
+        return bool(value)
+    return True
+
+
+def _gold_info_field_stats(rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
+    stats: dict[str, Any] = {}
+    for field in _GOLD_INFO_FIELDS:
+        present = 0
+        nonempty = 0
+        shapes: collections.Counter[str] = collections.Counter()
+        for row in rows:
+            exists = field in row
+            value = row.get(field)
+            if exists:
+                present += 1
+            if _value_nonempty(value):
+                nonempty += 1
+            shapes[_value_type_shape(value, present=exists)] += 1
+        stats[field] = {
+            "present": present,
+            "nonempty": nonempty,
+            "type_shape_counts": dict(sorted(shapes.items())),
+        }
+    return stats
+
+
+def _gold_info_adapted_context_stats(rows: Sequence[Mapping[str, Any]]) -> dict[str, int]:
+    counts = {
+        "title_nonempty": 0,
+        "context_nonempty": 0,
+        "usable_positive_context": 0,
+        "missing_title": 0,
+        "missing_context": 0,
+        "missing_title_and_context": 0,
+    }
+    for row in rows:
+        values = _gold_info_values(row)
+        title_ok = _value_nonempty(values["title"])
+        context_ok = _value_nonempty(values["context"])
+        counts["title_nonempty"] += int(title_ok)
+        counts["context_nonempty"] += int(context_ok)
+        counts["usable_positive_context"] += int(title_ok and context_ok)
+        counts["missing_title"] += int(not title_ok)
+        counts["missing_context"] += int(not context_ok)
+        counts["missing_title_and_context"] += int(not title_ok and not context_ok)
+    return counts
+
+
+def _gold_info_context_diagnostics(
+    path: Path, questions: Sequence[Mapping[str, Any]]
+) -> dict[str, Any]:
+    """Aggregate official field/schema coverage for source and target rows only."""
+    target_keys = {
+        normalized_question_identity(item.get("question"))
+        for item in questions
+        if normalized_question_identity(item.get("question"))
+    }
+    rows = list(_gold_info_rows(path))
+    target_rows = [
+        row for row in rows
+        if normalized_question_identity(_gold_info_values(row)["question"]) in target_keys
+    ]
+
+    def scope(rows_for_scope: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
+        return {
+            "record_count": len(rows_for_scope),
+            "field_stats": _gold_info_field_stats(rows_for_scope),
+            "adapted_context_stats": _gold_info_adapted_context_stats(rows_for_scope),
+        }
+
+    return {
+        "diagnostic_only": True,
+        "privacy": "aggregate_counts_only",
+        "target_question_count": len(target_keys),
+        "source_full": scope(rows),
+        "target_questions": scope(target_rows),
+    }
+
+
 def _iter_dpr_positive_records(path: Path) -> Iterable[Mapping[str, Any]]:
     """Yield a common question/positive-context shape for official DPR files.
 
@@ -206,49 +368,19 @@ def _iter_dpr_positive_records(path: Path) -> Iterable[Mapping[str, Any]]:
     exact and all source values stay in process memory.
     """
     if "gold_info" in path.name:
-        opener = gzip.open if path.suffix == ".gz" else open
-        with opener(path, "rt", encoding="utf-8") as handle:
-            payload = json.load(handle)
-        if not isinstance(payload, Mapping):
-            raise DprPositiveAlignmentConfigError(
-                f"DPR gold-info source must be a JSON object: {path}"
-            )
-        rows = payload.get("data") or payload.get("records") or payload.get("examples")
-        if not isinstance(rows, list):
-            raise DprPositiveAlignmentConfigError(
-                f"DPR gold-info source has no data/records/examples list: {path}"
-            )
-        for raw in rows:
-            if not isinstance(raw, Mapping):
-                continue
+        for raw in _gold_info_rows(path):
             # Official gold-info rows use question/title/context/example_id.
             # Preserve a native positive_ctxs row if a mirror already provides it.
             if raw.get("positive_ctxs") or raw.get("positive_contexts"):
                 yield raw
                 continue
-            document = raw.get("document")
-            document = document if isinstance(document, Mapping) else {}
-            question = raw.get("question") or raw.get("question_text") or raw.get("query")
-            if isinstance(question, Mapping):
-                question = question.get("text") or question.get("question")
-            title = (
-                raw.get("title") or raw.get("document_title")
-                or document.get("title") or document.get("document_title")
-            )
-            text = (
-                raw.get("context") or raw.get("text") or raw.get("passage")
-                or document.get("context") or document.get("text")
-            )
-            source_id = (
-                raw.get("example_id") or raw.get("passage_id") or raw.get("id")
-                or document.get("example_id") or document.get("id")
-            )
+            values = _gold_info_values(raw)
             yield {
-                "question": question,
+                "question": values["question"],
                 "positive_ctxs": [{
-                    "id": source_id,
-                    "title": title,
-                    "text": text,
+                    "id": values["example_id"],
+                    "title": values["title"],
+                    "text": values["context"],
                 }],
             }
         return
@@ -314,7 +446,8 @@ def _source_question_diagnostics(
     source_keys = {name: set() for name in variant_names}
     field_shapes = collections.Counter()
     records_with_question = 0
-    records_with_positive_contexts = 0
+    records_with_positive_context_containers = 0
+    records_with_usable_positive_contexts = 0
     source_question_lengths: list[int] = []
     for record in _iter_dpr_positive_records(path):
         raw_value = _record_question_value(record)
@@ -333,7 +466,15 @@ def _source_question_diagnostics(
                 if key:
                     source_keys[name].add(key)
         if record.get("positive_ctxs") or record.get("positive_contexts"):
-            records_with_positive_contexts += 1
+            records_with_positive_context_containers += 1
+            contexts = record.get("positive_ctxs") or record.get("positive_contexts") or ()
+            if any(
+                isinstance(context, Mapping)
+                and str(context.get("title") or "").strip()
+                and str(context.get("text") or context.get("passage") or "").strip()
+                for context in contexts
+            ):
+                records_with_usable_positive_contexts += 1
 
     overlaps = {
         name: {
@@ -346,7 +487,8 @@ def _source_question_diagnostics(
     return {
         "diagnostic_only": True,
         "source_records_with_question": records_with_question,
-        "source_records_with_positive_contexts": records_with_positive_contexts,
+        "source_records_with_positive_context_containers": records_with_positive_context_containers,
+        "source_records_with_usable_positive_contexts": records_with_usable_positive_contexts,
         "source_question_field_shapes": dict(sorted(field_shapes.items())),
         "source_question_length": {
             "min": min(source_question_lengths) if source_question_lengths else None,
@@ -651,6 +793,10 @@ def run(args: argparse.Namespace) -> Path | None:
         join_preflight["source_diagnostics"] = _source_question_diagnostics(
             source_path.resolve(), questions
         )
+        if "gold_info" in source_path.name:
+            join_preflight["source_diagnostics"]["official_gold_info_contexts"] = (
+                _gold_info_context_diagnostics(source_path.resolve(), questions)
+            )
 
     metadata: dict[str, Any] = {
         "schema_version": 2,

@@ -18,6 +18,7 @@ from applications.rag.dpr_positive_gold_alignment import (
 )
 from applications.rag.gold_evidence_alignment import GoldAlignmentError
 from scripts.collab.five_ideas.run_dpr_positive_gold_alignment_audit import (
+    _gold_info_context_diagnostics,
     _iter_dpr_positive_records,
     _source_question_diagnostics,
     _question_join_preflight,
@@ -139,6 +140,35 @@ class DprPositiveGoldAlignmentTests(unittest.TestCase):
         self.assertEqual(rows[0]["positive_ctxs"][0]["id"], "e1")
         joins = self._join(rows)
         self.assertEqual(joins["q1"][0], "joined")
+
+    def test_official_gold_info_field_diagnostics_are_aggregate_only(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "nq-test_gold_info.json.gz"
+            with gzip.open(path, "wt", encoding="utf-8") as handle:
+                json.dump({"data": [
+                    {"question": "Q1", "question_tokens": ["Q1"],
+                     "title": "Title", "context": "Context", "example_id": "e1"},
+                    {"question": "Q2", "question_tokens": "bad",
+                     "context": "Context only", "example_id": None},
+                    {"question": "Q3", "title": "", "context": "  "},
+                    {"question": "outside", "title": "Other", "context": "Other context"},
+                ]}, handle)
+            diagnostics = _gold_info_context_diagnostics(
+                path, [{"question": "Q1"}, {"question": "Q2"}, {"question": "Q3"}]
+            )
+        self.assertEqual(diagnostics["privacy"], "aggregate_counts_only")
+        self.assertEqual(diagnostics["target_questions"]["record_count"], 3)
+        target = diagnostics["target_questions"]
+        self.assertEqual(target["adapted_context_stats"]["usable_positive_context"], 1)
+        self.assertEqual(target["adapted_context_stats"]["missing_title"], 2)
+        self.assertEqual(target["adapted_context_stats"]["missing_context"], 1)
+        self.assertEqual(target["adapted_context_stats"]["missing_title_and_context"], 1)
+        self.assertEqual(target["field_stats"]["question"]["present"], 3)
+        self.assertEqual(target["field_stats"]["question_tokens"]["type_shape_counts"]["sequence"], 1)
+        self.assertEqual(target["field_stats"]["question_tokens"]["type_shape_counts"]["string"], 1)
+        serialized = json.dumps(diagnostics, sort_keys=True)
+        self.assertNotIn("Context only", serialized)
+        self.assertNotIn("Q1", serialized)
 
     def test_question_join_preflight_blocks_unreachable_mapping_gate(self) -> None:
         questions = [{"id": "q1"}, {"id": "q2"}, {"id": "q3"}, {"id": "q4"}, {"id": "q5"}]
