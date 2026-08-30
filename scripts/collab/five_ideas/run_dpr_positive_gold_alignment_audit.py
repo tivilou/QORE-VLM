@@ -197,6 +197,46 @@ def _iter_json_array_records(path: Path) -> Iterable[Mapping[str, Any]]:
 
 
 _GOLD_INFO_FIELDS = ("question", "question_tokens", "title", "context", "example_id")
+_GOLD_INFO_FIELD_PATHS = (
+    "question", "question.text", "question.question", "question_tokens",
+    "title", "document_title", "context", "text", "passage",
+    "example_id", "id", "passage_id", "psg_id", "document",
+    "document.title", "document.document_title", "document.context",
+    "document.text", "document.passage", "document.example_id",
+    "document.id", "document.passage_id",
+    "positive_ctxs", "positive_ctxs[].title", "positive_ctxs[].context",
+    "positive_ctxs[].text", "positive_ctxs[].passage", "positive_ctxs[].id",
+    "positive_ctxs[].psg_id", "positive_ctxs[].passage_id",
+    "positive_contexts", "positive_contexts[].title",
+    "positive_contexts[].context", "positive_contexts[].text",
+    "positive_contexts[].passage", "positive_contexts[].id",
+    "positive_contexts[].psg_id", "positive_contexts[].passage_id",
+    "contexts", "contexts[].title", "contexts[].context", "contexts[].text",
+    "contexts[].passage", "passages", "passages[].title",
+    "passages[].context", "passages[].text", "passages[].passage",
+)
+_GOLD_INFO_CANDIDATE_POSITIVE_PATHS = (
+    "title", "context", "text", "passage",
+    "document.title", "document.context", "document.text", "document.passage",
+    "positive_ctxs[].title", "positive_ctxs[].context",
+    "positive_ctxs[].text", "positive_ctxs[].passage",
+    "positive_contexts[].title", "positive_contexts[].context",
+    "positive_contexts[].text", "positive_contexts[].passage",
+    "contexts[].title", "contexts[].context", "contexts[].text",
+    "contexts[].passage", "passages[].title", "passages[].context",
+    "passages[].text", "passages[].passage",
+)
+_GOLD_INFO_CANDIDATE_TEXT_PATHS = tuple(
+    path for path in _GOLD_INFO_CANDIDATE_POSITIVE_PATHS
+    if not path.endswith("title")
+)
+_CONTEXT_LENGTH_BUCKETS = (
+    ("empty", 0, 0),
+    ("1_63", 1, 63),
+    ("64_255", 64, 255),
+    ("256_1023", 256, 1023),
+    ("1024_plus", 1024, None),
+)
 
 
 def _gold_info_rows(path: Path) -> Iterable[Mapping[str, Any]]:
@@ -283,6 +323,111 @@ def _value_nonempty(value: Any) -> bool:
     return True
 
 
+def _field_path_values(record: Mapping[str, Any], path: str) -> list[Any]:
+    """Resolve a fixed schema path without retaining it in output."""
+    values: list[Any] = [record]
+    for raw_segment in path.split("."):
+        expand_sequence = raw_segment.endswith("[]")
+        segment = raw_segment[:-2] if expand_sequence else raw_segment
+        resolved: list[Any] = []
+        for current in values:
+            if not isinstance(current, Mapping) or segment not in current:
+                continue
+            value = current[segment]
+            if expand_sequence:
+                if isinstance(value, Sequence) and not isinstance(value, (str, bytes)):
+                    resolved.extend(value)
+            else:
+                resolved.append(value)
+        values = resolved
+        if not values:
+            break
+    return values
+
+
+def _gold_info_path_stats(
+    rows: Sequence[Mapping[str, Any]], paths: Sequence[str]
+) -> dict[str, Any]:
+    stats: dict[str, Any] = {}
+    for path in paths:
+        present_records = 0
+        nonempty_records = 0
+        value_count = 0
+        nonempty_value_count = 0
+        shapes: collections.Counter[str] = collections.Counter()
+        for row in rows:
+            values = _field_path_values(row, path)
+            if not values:
+                shapes["missing"] += 1
+                continue
+            present_records += 1
+            value_count += len(values)
+            record_has_nonempty = False
+            for value in values:
+                shapes[_value_type_shape(value, present=True)] += 1
+                if _value_nonempty(value):
+                    nonempty_value_count += 1
+                    record_has_nonempty = True
+            nonempty_records += int(record_has_nonempty)
+        stats[path] = {
+            "present_record_count": present_records,
+            "nonempty_record_count": nonempty_records,
+            "value_count": value_count,
+            "nonempty_value_count": nonempty_value_count,
+            "type_shape_counts": dict(sorted(shapes.items())),
+        }
+    return stats
+
+
+def _length_bucket_name(length: int) -> str:
+    for name, minimum, maximum in _CONTEXT_LENGTH_BUCKETS:
+        if length >= minimum and (maximum is None or length <= maximum):
+            return name
+    raise AssertionError(f"uncovered context length: {length}")
+
+
+def _text_length_stats(values_by_record: Sequence[Sequence[Any]]) -> dict[str, Any]:
+    buckets: collections.Counter[str] = collections.Counter()
+    non_string_nonempty = 0
+    lengths: list[int] = []
+    for values in values_by_record:
+        string_values = [value for value in values if isinstance(value, str)]
+        non_string_nonempty += sum(
+            _value_nonempty(value) for value in values if not isinstance(value, str)
+        )
+        if not string_values:
+            buckets["empty"] += 1
+            continue
+        record_lengths = [len(value.strip()) for value in string_values]
+        length = max(record_lengths, default=0)
+        buckets[_length_bucket_name(length)] += 1
+        if length:
+            lengths.append(length)
+    return {
+        "record_length_bucket_counts": {
+            name: int(buckets.get(name, 0)) for name, _, _ in _CONTEXT_LENGTH_BUCKETS
+        },
+        "non_string_nonempty_value_count": int(non_string_nonempty),
+        "nonempty_length_min": min(lengths) if lengths else None,
+        "nonempty_length_max": max(lengths) if lengths else None,
+    }
+
+
+def _gold_info_candidate_positive_stats(
+    rows: Sequence[Mapping[str, Any]]
+) -> dict[str, Any]:
+    path_stats = _gold_info_path_stats(rows, _GOLD_INFO_CANDIDATE_POSITIVE_PATHS)
+    return {
+        "field_stats": path_stats,
+        "text_length_stats": {
+            path: _text_length_stats([
+                _field_path_values(row, path) for row in rows
+            ])
+            for path in _GOLD_INFO_CANDIDATE_TEXT_PATHS
+        },
+    }
+
+
 def _gold_info_field_stats(rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
     stats: dict[str, Any] = {}
     for field in _GOLD_INFO_FIELDS:
@@ -327,6 +472,14 @@ def _gold_info_adapted_context_stats(rows: Sequence[Mapping[str, Any]]) -> dict[
     return counts
 
 
+def _gold_info_adapted_context_length_stats(
+    rows: Sequence[Mapping[str, Any]]
+) -> dict[str, Any]:
+    return _text_length_stats([
+        [_gold_info_values(row)["context"]] for row in rows
+    ])
+
+
 def _gold_info_context_diagnostics(
     path: Path, questions: Sequence[Mapping[str, Any]]
 ) -> dict[str, Any]:
@@ -346,7 +499,16 @@ def _gold_info_context_diagnostics(
         return {
             "record_count": len(rows_for_scope),
             "field_stats": _gold_info_field_stats(rows_for_scope),
+            "field_path_stats": _gold_info_path_stats(
+                rows_for_scope, _GOLD_INFO_FIELD_PATHS
+            ),
+            "candidate_positive_fields": _gold_info_candidate_positive_stats(
+                rows_for_scope
+            ),
             "adapted_context_stats": _gold_info_adapted_context_stats(rows_for_scope),
+            "adapted_context_length_chars": _gold_info_adapted_context_length_stats(
+                rows_for_scope
+            ),
         }
 
     return {

@@ -149,25 +149,55 @@ class DprPositiveGoldAlignmentTests(unittest.TestCase):
                     {"question": "Q1", "question_tokens": ["Q1"],
                      "title": "Title", "context": "Context", "example_id": "e1"},
                     {"question": "Q2", "question_tokens": "bad",
-                     "context": "Context only", "example_id": None},
+                     "context": "x" * 70, "example_id": None},
                     {"question": "Q3", "title": "", "context": "  "},
+                    {"question": "Q4", "document": {
+                        "title": "Nested", "text": "y" * 300, "id": "d4"}},
+                    {"question": "Q5", "positive_contexts": [{
+                        "title": "Alternate", "text": "z" * 1100, "id": "p5"}]},
                     {"question": "outside", "title": "Other", "context": "Other context"},
                 ]}, handle)
             diagnostics = _gold_info_context_diagnostics(
-                path, [{"question": "Q1"}, {"question": "Q2"}, {"question": "Q3"}]
+                path, [
+                    {"question": "Q1"}, {"question": "Q2"}, {"question": "Q3"},
+                    {"question": "Q4"}, {"question": "Q5"},
+                ]
             )
         self.assertEqual(diagnostics["privacy"], "aggregate_counts_only")
-        self.assertEqual(diagnostics["target_questions"]["record_count"], 3)
+        self.assertEqual(diagnostics["target_questions"]["record_count"], 5)
         target = diagnostics["target_questions"]
-        self.assertEqual(target["adapted_context_stats"]["usable_positive_context"], 1)
-        self.assertEqual(target["adapted_context_stats"]["missing_title"], 2)
-        self.assertEqual(target["adapted_context_stats"]["missing_context"], 1)
-        self.assertEqual(target["adapted_context_stats"]["missing_title_and_context"], 1)
-        self.assertEqual(target["field_stats"]["question"]["present"], 3)
+        self.assertEqual(target["adapted_context_stats"]["usable_positive_context"], 2)
+        self.assertEqual(target["adapted_context_stats"]["missing_title"], 3)
+        self.assertEqual(target["adapted_context_stats"]["missing_context"], 2)
+        self.assertEqual(target["adapted_context_stats"]["missing_title_and_context"], 2)
+        self.assertEqual(target["field_stats"]["question"]["present"], 5)
         self.assertEqual(target["field_stats"]["question_tokens"]["type_shape_counts"]["sequence"], 1)
         self.assertEqual(target["field_stats"]["question_tokens"]["type_shape_counts"]["string"], 1)
+        self.assertEqual(
+            target["field_path_stats"]["document.text"]["nonempty_record_count"], 1
+        )
+        self.assertEqual(
+            target["candidate_positive_fields"]["field_stats"]
+            ["positive_contexts[].text"]["nonempty_record_count"],
+            1,
+        )
+        adapted_buckets = target["adapted_context_length_chars"][
+            "record_length_bucket_counts"
+        ]
+        self.assertEqual(adapted_buckets["empty"], 2)
+        self.assertEqual(adapted_buckets["1_63"], 1)
+        self.assertEqual(adapted_buckets["64_255"], 1)
+        self.assertEqual(adapted_buckets["256_1023"], 1)
+        alternate_buckets = target["candidate_positive_fields"]["text_length_stats"]
+        self.assertEqual(
+            alternate_buckets["positive_contexts[].text"]
+            ["record_length_bucket_counts"]["1024_plus"],
+            1,
+        )
         serialized = json.dumps(diagnostics, sort_keys=True)
-        self.assertNotIn("Context only", serialized)
+        self.assertNotIn("x" * 70, serialized)
+        self.assertNotIn("y" * 300, serialized)
+        self.assertNotIn("z" * 1100, serialized)
         self.assertNotIn("Q1", serialized)
 
     def test_question_join_preflight_blocks_unreachable_mapping_gate(self) -> None:
