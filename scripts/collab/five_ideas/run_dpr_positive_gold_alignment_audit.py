@@ -197,6 +197,61 @@ def _iter_json_array_records(path: Path) -> Iterable[Mapping[str, Any]]:
 
 
 def _iter_dpr_positive_records(path: Path) -> Iterable[Mapping[str, Any]]:
+    """Yield a common question/positive-context shape for official DPR files.
+
+    The retriever ``biencoder-*`` releases are JSON arrays with ``positive_ctxs``.
+    The matching NQ-Open test release is ``nq-test_gold_info.json.gz`` and is a
+    ``{"data": [...]}`` document whose rows contain one original-NQ context.
+    Normalize only that container/schema difference; identity matching remains
+    exact and all source values stay in process memory.
+    """
+    if "gold_info" in path.name:
+        opener = gzip.open if path.suffix == ".gz" else open
+        with opener(path, "rt", encoding="utf-8") as handle:
+            payload = json.load(handle)
+        if not isinstance(payload, Mapping):
+            raise DprPositiveAlignmentConfigError(
+                f"DPR gold-info source must be a JSON object: {path}"
+            )
+        rows = payload.get("data") or payload.get("records") or payload.get("examples")
+        if not isinstance(rows, list):
+            raise DprPositiveAlignmentConfigError(
+                f"DPR gold-info source has no data/records/examples list: {path}"
+            )
+        for raw in rows:
+            if not isinstance(raw, Mapping):
+                continue
+            # Official gold-info rows use question/title/context/example_id.
+            # Preserve a native positive_ctxs row if a mirror already provides it.
+            if raw.get("positive_ctxs") or raw.get("positive_contexts"):
+                yield raw
+                continue
+            document = raw.get("document")
+            document = document if isinstance(document, Mapping) else {}
+            question = raw.get("question") or raw.get("question_text") or raw.get("query")
+            if isinstance(question, Mapping):
+                question = question.get("text") or question.get("question")
+            title = (
+                raw.get("title") or raw.get("document_title")
+                or document.get("title") or document.get("document_title")
+            )
+            text = (
+                raw.get("context") or raw.get("text") or raw.get("passage")
+                or document.get("context") or document.get("text")
+            )
+            source_id = (
+                raw.get("example_id") or raw.get("passage_id") or raw.get("id")
+                or document.get("example_id") or document.get("id")
+            )
+            yield {
+                "question": question,
+                "positive_ctxs": [{
+                    "id": source_id,
+                    "title": title,
+                    "text": text,
+                }],
+            }
+        return
     opener = gzip.open if path.suffix == ".gz" else open
     if path.name.endswith((".jsonl", ".jsonl.gz")):
         with opener(path, "rt", encoding="utf-8") as handle:
@@ -361,7 +416,7 @@ def _load_dpr_positive_records(
     candidates: list[Path] = []
     if override:
         candidates.append(Path(os.path.expanduser(os.path.expandvars(override))))
-    for env_name in ("DPR_NQ_POSITIVES_PATH", "DPR_NQ_DEV_PATH"):
+    for env_name in ("DPR_NQ_POSITIVES_PATH", "DPR_NQ_GOLD_INFO_PATH"):
         value = os.environ.get(env_name)
         if value:
             candidates.append(Path(os.path.expanduser(os.path.expandvars(value))))

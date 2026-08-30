@@ -4,13 +4,13 @@
   "project": "QORE-VLM DPR positive-context gold alignment audit",
   "authorization": "implemented",
   "baseline": {
-    "entry_point": "nq_open -> DPR query -> Wiki-DPR Top-50 -> frozen QORE + Answer Scorer Top-5",
+    "entry_point": "nq_open -> official DPR NQ-test gold context -> Wiki-DPR Top-50 -> frozen QORE + Answer Scorer Top-5",
     "code_revision": "five-ideas-development",
     "equivalence_test": "The audit observes canonical IDs after frozen Top-50 retrieval and frozen QORE Top-5 selection; no diagnostic value is provided to the online path."
   },
   "core_invariants": [
     "Official DPR positives are evaluation-only and never reach retrieval, QORE, prompts, Generator, or evaluator.",
-    "The nq_open validation[200:250] slice, Wiki-DPR psgs_w100.nq.compressed Top-50, QORE K=5, DPR Answer Scorer, and seed=42 are frozen.",
+    "The nq_open validation[200:250] slice, official DPR nq-test_gold_info source, Wiki-DPR psgs_w100.nq.compressed Top-50, QORE K=5, DPR Answer Scorer, and seed=42 are frozen.",
     "A strict question mapping requires normalized exact question identity and unique Wiki-DPR identity for every official DPR positive context.",
     "A cheap question-join preflight must show that enough target questions join to reach the 0.80 mapping gate; otherwise the run stops before Wiki-DPR or model loading.",
     "Compact results retain only identifiers, counts, booleans, source fingerprints, and manifests; they contain no question, passage, answer, title, text, prompt, or prediction content."
@@ -26,7 +26,7 @@
     {
       "id": "official_dpr_positive_contexts_v1",
       "type": "transformer",
-      "input_schema": "official biencoder-nq-dev JSON array",
+      "input_schema": "official DPR nq-test_gold_info JSON object with data rows (adapted to positive-context records)",
       "output_schema": "target-slice positive passage IDs and normalized title/full-text SHA-256 identities",
       "invariants": ["The official source URL, local byte count, SHA-256, and retained record count are recorded in the run manifest."]
     },
@@ -52,7 +52,7 @@
       "role": "baseline",
       "interface": "dpr_question_identity_join_v1",
       "insertion_point": "offline observer before corpus scan",
-      "hypothesis": "Normalized exact question identity can join the frozen nq_open slice to the official DPR development source without heuristic matching.",
+      "hypothesis": "Normalized exact question identity can join the frozen nq_open slice to the official DPR NQ-test gold source without heuristic matching.",
       "input_schema": "question strings",
       "output_schema": "join status and source-positive reference",
       "requires": [],
@@ -68,13 +68,13 @@
       "interface": "official_dpr_positive_contexts_v1",
       "insertion_point": "offline source preparation before corpus scan",
       "hypothesis": "The official DPR positive contexts provide a more traceable gold-evidence source than v1 page-title/short-span matching.",
-      "input_schema": "official DPR biencoder-nq-dev source",
+      "input_schema": "official DPR nq-test_gold_info source",
       "output_schema": "positive passage identity records for the target slice",
       "requires": ["dpr_question_identity_join"],
       "conflicts": [],
       "deterministic": true,
-      "resource_estimate": "one streamed 256 MB compressed source read; target records only retained in memory",
-      "failure_signatures": ["official_source_unavailable", "source_hash_unrecorded", "positive_identity_missing"]
+      "resource_estimate": "one streamed/read-only 1.4 MB compressed NQ-test source read; target records only retained in memory",
+      "failure_signatures": ["official_source_unavailable", "source_hash_unrecorded", "positive_identity_missing", "wrong_population_source"]
     },
     {
       "id": "wiki_dpr_identity_alignment",
@@ -149,7 +149,7 @@
   },
   "reproducibility": {
     "config_path": "configs/experiments/dpr_positive_gold_alignment_audit.yaml",
-    "dataset_identity": "nq_open validation questions 200-249; DPR biencoder-nq-dev official source; Wiki-DPR psgs_w100.nq.compressed",
+    "dataset_identity": "nq_open validation questions 200-249; official DPR nq-test_gold_info source (the 3,610-question NQ-test population); Wiki-DPR psgs_w100.nq.compressed",
     "environment": "manifest records Python executable/version, git revision/status, config SHA-256, DPR URL/path/bytes/SHA-256, source scan count, corpus config, selection config, and seed",
     "seeds": [42],
     "output_manifest": "exchange/five_ideas/dpr_positive_gold_alignment_audit/<timestamp>/run_metadata.json"

@@ -124,6 +124,22 @@ class DprPositiveGoldAlignmentTests(unittest.TestCase):
                 ["A", "B"],
             )
 
+    def test_official_nq_test_gold_info_container_is_normalized(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "nq-test_gold_info.json.gz"
+            with gzip.open(path, "wt", encoding="utf-8") as handle:
+                json.dump({"data": [{
+                    "question": "Who wrote it?",
+                    "example_id": "e1",
+                    "title": "A Title",
+                    "context": "Exact evidence text",
+                }]}, handle)
+            rows = list(_iter_dpr_positive_records(path))
+        self.assertEqual(rows[0]["question"], "Who wrote it?")
+        self.assertEqual(rows[0]["positive_ctxs"][0]["id"], "e1")
+        joins = self._join(rows)
+        self.assertEqual(joins["q1"][0], "joined")
+
     def test_question_join_preflight_blocks_unreachable_mapping_gate(self) -> None:
         questions = [{"id": "q1"}, {"id": "q2"}, {"id": "q3"}, {"id": "q4"}, {"id": "q5"}]
         joins = {
