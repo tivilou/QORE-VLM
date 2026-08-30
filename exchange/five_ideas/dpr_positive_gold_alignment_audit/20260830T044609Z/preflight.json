@@ -1,0 +1,37 @@
+{
+  "dataset": {
+    "fresh_slice": true,
+    "max_samples": 50,
+    "name": "nq_open",
+    "sample_offset": 200,
+    "split": "validation"
+  },
+  "diagnostic_only": true,
+  "dpr_positive_source": {
+    "byte_count": 256239282,
+    "downloaded_for_this_run": false,
+    "path": "data/dpr/biencoder-nq-dev.json.gz",
+    "records_scanned": 6515,
+    "sha256": "b583e78adcad00fbd4b421f691fac60e477c30a1b142fbcba1cf24b3a782f621",
+    "source_name": "dpr_biencoder_nq_dev",
+    "source_url": "https://dl.fbaipublicfiles.com/dpr/data/retriever/biencoder-nq-dev.json.gz",
+    "target_records_retained": 0
+  },
+  "phase": "dpr_positive_gold_alignment_audit",
+  "preflight": {
+    "can_reach_mapping_gate": false,
+    "join_rate": 0.0,
+    "join_status_counts": {
+      "ambiguous_question_join": 0,
+      "joined": 0,
+      "no_positive_context": 0,
+      "no_question_join": 50
+    },
+    "joined_count": 0,
+    "required_join_count": 40,
+    "sample_count": 50
+  },
+  "schema_version": 2,
+  "selection_mutation": false,
+  "stage": "screen"
+}
