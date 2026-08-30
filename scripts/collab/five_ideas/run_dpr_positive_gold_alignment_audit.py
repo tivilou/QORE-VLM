@@ -17,9 +17,11 @@ import json
 import math
 import os
 from pathlib import Path
+import re
 import subprocess
 import sys
 import time
+import unicodedata
 from typing import Any, Iterable, Mapping, Sequence
 from urllib.error import URLError
 from urllib.request import Request, urlopen
@@ -218,6 +220,87 @@ def _record_question_identity(record: Mapping[str, Any]) -> str:
     if isinstance(value, Mapping):
         value = value.get("text") or value.get("question")
     return normalized_question_identity(value)
+
+
+def _record_question_value(record: Mapping[str, Any]) -> Any:
+    """Return the source question value for schema diagnostics only."""
+    value = record.get("question") or record.get("query") or record.get("question_text")
+    if isinstance(value, Mapping):
+        value = value.get("text") or value.get("question")
+    return value
+
+
+def _question_key_variants(value: Any) -> dict[str, str]:
+    """Build non-authoritative diagnostics for deterministic source mismatch."""
+    text = unicodedata.normalize("NFKC", str(value or ""))
+    casefolded = " ".join(text.casefold().split())
+    no_punctuation = " ".join(re.sub(r"[^\w\s]", " ", casefolded).split())
+    no_question_prefix = re.sub(r"^(?:question|query)\s*:\s*", "", casefolded)
+    return {
+        "current_exact": normalized_question_identity(value),
+        "nfkc_casefold_whitespace": casefolded,
+        "strip_punctuation": no_punctuation,
+        "strip_question_prefix": no_question_prefix,
+        "alnum_only": "".join(ch for ch in casefolded if ch.isalnum()),
+    }
+
+
+def _source_question_diagnostics(
+    path: Path, questions: Sequence[Mapping[str, Any]]
+) -> dict[str, Any]:
+    """Compare deterministic question keys without emitting question content."""
+    variant_names = tuple(_question_key_variants("").keys())
+    target_keys = {name: set() for name in variant_names}
+    for item in questions:
+        for name, key in _question_key_variants(item.get("question")).items():
+            if key:
+                target_keys[name].add(key)
+
+    source_keys = {name: set() for name in variant_names}
+    field_shapes = collections.Counter()
+    records_with_question = 0
+    records_with_positive_contexts = 0
+    source_question_lengths: list[int] = []
+    for record in _iter_dpr_positive_records(path):
+        raw_value = _record_question_value(record)
+        if raw_value is None:
+            field_shapes["missing"] += 1
+        elif isinstance(raw_value, str):
+            field_shapes["string"] += 1
+        elif isinstance(raw_value, Mapping):
+            field_shapes["mapping"] += 1
+        else:
+            field_shapes["other"] += 1
+        if raw_value is not None and str(raw_value).strip():
+            records_with_question += 1
+            source_question_lengths.append(len(str(raw_value)))
+            for name, key in _question_key_variants(raw_value).items():
+                if key:
+                    source_keys[name].add(key)
+        if record.get("positive_ctxs") or record.get("positive_contexts"):
+            records_with_positive_contexts += 1
+
+    overlaps = {
+        name: {
+            "target_unique_keys": len(target_keys[name]),
+            "source_unique_keys": len(source_keys[name]),
+            "target_source_key_overlap": len(target_keys[name] & source_keys[name]),
+        }
+        for name in variant_names
+    }
+    return {
+        "diagnostic_only": True,
+        "source_records_with_question": records_with_question,
+        "source_records_with_positive_contexts": records_with_positive_contexts,
+        "source_question_field_shapes": dict(sorted(field_shapes.items())),
+        "source_question_length": {
+            "min": min(source_question_lengths) if source_question_lengths else None,
+            "max": max(source_question_lengths) if source_question_lengths else None,
+        },
+        "key_variants": overlaps,
+        "strict_join_rule_unchanged": True,
+        "warning": "Variants are diagnostic only; they do not authorize heuristic joins.",
+    }
 
 
 def _project_relative_path(root: Path, path: Path) -> str:
@@ -506,6 +589,13 @@ def run(args: argparse.Namespace) -> Path | None:
         joins,
         minimum_mapping_rate=float(phase["gate"]["minimum_mapping_rate"]),
     )
+    if args.preflight_only or not join_preflight["can_reach_mapping_gate"]:
+        source_path = Path(str(dpr_source["path"]))
+        if not source_path.is_absolute():
+            source_path = root / source_path
+        join_preflight["source_diagnostics"] = _source_question_diagnostics(
+            source_path.resolve(), questions
+        )
 
     metadata: dict[str, Any] = {
         "schema_version": 2,

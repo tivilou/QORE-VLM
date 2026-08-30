@@ -19,6 +19,7 @@ from applications.rag.dpr_positive_gold_alignment import (
 from applications.rag.gold_evidence_alignment import GoldAlignmentError
 from scripts.collab.five_ideas.run_dpr_positive_gold_alignment_audit import (
     _iter_dpr_positive_records,
+    _source_question_diagnostics,
     _question_join_preflight,
 )
 
@@ -139,6 +140,23 @@ class DprPositiveGoldAlignmentTests(unittest.TestCase):
         self.assertEqual(summary["required_join_count"], 4)
         self.assertFalse(summary["can_reach_mapping_gate"])
         self.assertEqual(summary["join_status_counts"]["no_question_join"], 2)
+
+    def test_source_question_diagnostics_exposes_deterministic_variant_overlap(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "positives.json.gz"
+            with gzip.open(path, "wt", encoding="utf-8") as handle:
+                json.dump([{
+                    "question": "What is the answer",
+                    "positive_ctxs": [{"title": "T", "text": "P"}],
+                }], handle)
+            diagnostics = _source_question_diagnostics(
+                path,
+                [{"question": "What is the answer?"}],
+            )
+        variants = diagnostics["key_variants"]
+        self.assertEqual(variants["current_exact"]["target_source_key_overlap"], 0)
+        self.assertEqual(variants["strip_punctuation"]["target_source_key_overlap"], 1)
+        self.assertTrue(diagnostics["strict_join_rule_unchanged"])
 
 
 if __name__ == "__main__":
