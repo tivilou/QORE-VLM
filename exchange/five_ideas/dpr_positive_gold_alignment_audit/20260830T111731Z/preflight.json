@@ -1,0 +1,78 @@
+{
+  "dataset": {
+    "fresh_slice": true,
+    "max_samples": 50,
+    "name": "nq_open",
+    "sample_offset": 200,
+    "split": "validation"
+  },
+  "diagnostic_only": true,
+  "dpr_positive_source": {
+    "byte_count": 1408618,
+    "downloaded_for_this_run": true,
+    "path": "data/dpr/nq-test_gold_info.json.gz",
+    "records_scanned": 3610,
+    "sha256": "a1588adca9cc1db68ae1cd1507b48de110e016740f77812b2e91d5bb4dc6cf17",
+    "source_name": "dpr_nq_test_gold_info",
+    "source_url": "https://dl.fbaipublicfiles.com/dpr/data/nq_gold_info/nq-test_gold_info.json.gz",
+    "target_records_retained": 50
+  },
+  "phase": "dpr_positive_gold_alignment_audit",
+  "preflight": {
+    "can_reach_mapping_gate": false,
+    "join_rate": 0.54,
+    "join_status_counts": {
+      "ambiguous_question_join": 0,
+      "joined": 27,
+      "no_positive_context": 23,
+      "no_question_join": 0
+    },
+    "joined_count": 27,
+    "required_join_count": 40,
+    "sample_count": 50,
+    "source_diagnostics": {
+      "diagnostic_only": true,
+      "key_variants": {
+        "alnum_only": {
+          "source_unique_keys": 3610,
+          "target_source_key_overlap": 50,
+          "target_unique_keys": 50
+        },
+        "current_exact": {
+          "source_unique_keys": 3610,
+          "target_source_key_overlap": 50,
+          "target_unique_keys": 50
+        },
+        "nfkc_casefold_whitespace": {
+          "source_unique_keys": 3610,
+          "target_source_key_overlap": 50,
+          "target_unique_keys": 50
+        },
+        "strip_punctuation": {
+          "source_unique_keys": 3610,
+          "target_source_key_overlap": 50,
+          "target_unique_keys": 50
+        },
+        "strip_question_prefix": {
+          "source_unique_keys": 3610,
+          "target_source_key_overlap": 50,
+          "target_unique_keys": 50
+        }
+      },
+      "source_question_field_shapes": {
+        "string": 3610
+      },
+      "source_question_length": {
+        "max": 100,
+        "min": 25
+      },
+      "source_records_with_positive_contexts": 3610,
+      "source_records_with_question": 3610,
+      "strict_join_rule_unchanged": true,
+      "warning": "Variants are diagnostic only; they do not authorize heuristic joins."
+    }
+  },
+  "schema_version": 2,
+  "selection_mutation": false,
+  "stage": "screen"
+}
