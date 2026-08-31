@@ -629,6 +629,8 @@ def run(args: argparse.Namespace) -> Path | None:
         _write_json(run_dir / "run_metadata.json", metadata)
         raise DprPositiveAlignmentConfigError("source preflight failed; Wiki-DPR and models were not started")
 
+    from applications.rag.data import make_corpus_manager
+
     started = time.perf_counter()
     corpus_manager = make_corpus_manager("wiki_dpr", {
         "wiki_dpr_config": phase["retrieval"]["wiki_dpr_config"], "nprobe": int(phase["retrieval"]["nprobe"]),
@@ -660,7 +662,6 @@ def run(args: argparse.Namespace) -> Path | None:
     # The online baseline components are intentionally unavailable to both
     # --validate-only and every failed preflight/mapping-gate execution.
     from applications.rag.answer_scorer import make_answer_scorer
-    from applications.rag.data import make_corpus_manager
     from applications.rag.evaluation import evaluate_answer
     from applications.rag.generation import Generator
     from applications.rag.retrieval import make_encoder
