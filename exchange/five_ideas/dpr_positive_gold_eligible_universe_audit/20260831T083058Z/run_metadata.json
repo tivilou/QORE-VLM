@@ -1,0 +1,119 @@
+{
+  "config": {
+    "path": "configs/experiments/dpr_positive_gold_eligible_universe_audit.yaml",
+    "sha256": "ed6730c4da8025d651c726ddd67303353c6094942467e7eb81cf7bdbf84c16c2"
+  },
+  "dataset": {
+    "dpr_positive_source": {
+      "byte_count": 1408618,
+      "downloaded_for_this_run": false,
+      "path": "data/dpr/nq-test_gold_info.json.gz",
+      "records_scanned": 3610,
+      "sha256": "a1588adca9cc1db68ae1cd1507b48de110e016740f77812b2e91d5bb4dc6cf17",
+      "source_name": "dpr_nq_test_gold_info",
+      "source_url": "https://dl.fbaipublicfiles.com/dpr/data/nq_gold_info/nq-test_gold_info.json.gz",
+      "target_records_retained": 3610
+    },
+    "fresh_population": true,
+    "max_samples": 3610,
+    "name": "nq_open",
+    "split": "validation"
+  },
+  "diagnostic_only": true,
+  "git": {
+    "commit": "ea9dac2a1bdbfa3e3ca9c05dbc50e5e3ff753345",
+    "status": "## five-ideas-development...origin/five-ideas-development\n?? data/dpr/\n?? exchange/five_ideas/development_gate/20260813T081847Z/mmr_as/result.json\n?? exchange/five_ideas/development_gate/20260813T081847Z/qore_as_control/result.json\n?? exchange/five_ideas/development_gate/20260813T081847Z/qore_as_idea6/result.json\n?? exchange/five_ideas/development_gate/20260813T081847Z/qore_dpr/result.json\n?? exchange/five_ideas/development_gate/20260813T081847Z/topk_as/result.json\n?? exchange/five_ideas/development_gate/20260814T041313Z/cohesion_calibrated/result.json\n?? exchange/five_ideas/development_gate/20260814T041313Z/cohesion_disabled/result.json\n?? exchange/five_ideas/development_gate/20260814T041313Z/cohesion_fixed/result.json\n?? exchange/five_ideas/development_gate/20260814T041313Z/qore_as_control/result.json\n?? exchange/five_ideas/development_gate/20260814T065620Z/mobius_disabled/result.json\n?? exchange/five_ideas/development_gate/20260814T065620Z/mobius_pairwise/result.json\n?? exchange/five_ideas/development_gate/20260814T065620Z/qore_as_control/result.json\n?? exchange/five_ideas/diagnostic_pilot/20260809T153657/mmr_as/result.json\n?? exchange/five_ideas/diagnostic_pilot/20260809T153657/qore_as_control/result.json\n?? exchange/five_ideas/diagnostic_pilot/20260809T153657/qore_as_idea6/result.json\n?? exchange/five_ideas/diagnostic_pilot/20260809T153657/qore_dpr/result.json\n?? exchange/five_ideas/diagnostic_pilot/20260809T153657/topk_as/result.json\n?? exchange/five_ideas/dpr_positive_gold_alignment_audit/20260830T044609Z/run_metadata.json\n?? exchange/five_ideas/dpr_positive_gold_alignment_audit/20260830T044931Z/\n?? exchange/five_ideas/dpr_positive_gold_alignment_audit/20260831T023633Z/\n?? exchange/five_ideas/phase10b_answer_hypothesis_bridge/20260826T063052Z_screen/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_full/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_reader_window_050/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_reader_window_075/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_uniform_head_050/\n?? exchange/five_ideas/phase9a_context_intervention/20260818T082145Z/qore_as_uniform_head_075/\n?? exchange/five_ideas/phase9d_retrieval_rank_depth_replication/20260819T050703Z/result.json\n?? exchange/five_ideas/phase9e_generation_error_decomposition/20260820T022813Z/result.json\n?? exchange/five_ideas/phase9f_evidence_sufficiency_localization/20260820T122207Z/result.json\n?? exchange/five_ideas/phase9h_answerability_generation_diagnostic/20260821T133038Z/\n?? exchange/five_ideas/phase9h_answerability_generation_diagnostic/20260821T134859Z/\n?? exchange/five_ideas/phase9h_answerability_generation_diagnostic/20260821T140833Z/result.json\n?? exchange/five_ideas/phase9j_context_lift_candidate_ranking/20260823T032605Z_formal/\n?? exchange/five_ideas/spectral_dpp_gate/20260815T033011Z/mmr_as/result.json\n?? exchange/five_ideas/spectral_dpp_gate/20260815T033011Z/qore_as_control/result.json\n?? exchange/five_ideas/spectral_dpp_gate/20260815T033011Z/spectral_dpp_as/result.json\n?? exchange/five_ideas/spectral_dpp_gate/20260815T033011Z/topk_as/result.json\n?? exchange/five_ideas/submodular_gate/20260814T091515Z/mmr_as/result.json\n?? exchange/five_ideas/submodular_gate/20260814T091515Z/qore_as_control/result.json\n?? exchange/five_ideas/submodular_gate/20260814T091515Z/submodular_as/result.json\n?? exchange/five_ideas/submodular_gate/20260814T091515Z/topk_as/result.json\n?? exchange/p2_solver_idea6/20260729T131723/gamma0.3_delta0.1/\n?? exchange/p2_solver_idea6/20260729T131723/gamma0.3_delta0.3/\n?? exchange/p2_solver_idea6/20260729T131723/gamma0.3_delta0.5/\n?? exchange/p2_solver_idea6/20260729T131723/gamma0.5_delta0.0/\n?? exchange/p2_solver_idea6/20260729T131723/gamma0.5_delta0.1/\n?? exchange/p2_solver_idea6/20260729T131723/gamma0.5_delta0.3/\n?? exchange/p2_solver_idea6/20260729T131723/gamma0.5_delta0.5/\n?? exchange/p2_solver_idea6/20260729T131723/gamma0.7_delta0.1/\n?? exchange/p2_solver_idea6/20260729T131723/gamma0.7_delta0.3/\n?? exchange/p2_solver_idea6/20260729T131723/gamma0.7_delta0.5/"
+  },
+  "model_loaded": false,
+  "phase": "dpr_positive_gold_eligible_universe_audit",
+  "plugins": {
+    "allowlist": [
+      "dpr_question_identity_join",
+      "official_dpr_eligible_population_accounting",
+      "wiki_dpr_identity_alignment",
+      "frozen_retrieval_qore_generator_observer",
+      "eligible_universe_bottleneck_combiner"
+    ],
+    "diagnostic_outputs_used_for_selection": false,
+    "tree_sha256": "f6305942a86a738c4d2032422bf009404ca79490440b509e9a1e7f8362fc0ca5"
+  },
+  "preflight": {
+    "accounting": {
+      "all_questions": 3610,
+      "ambiguous_question_join_questions": 0,
+      "eligible_nonempty_context_questions": 1868,
+      "empty_context_questions": 1742,
+      "exact_question_joined": 3610,
+      "no_question_join_questions": 0,
+      "official_source_nonempty_context_questions": 1868,
+      "source_records_scanned": 3610,
+      "source_target_records_retained": 3610
+    },
+    "decision": {
+      "interpretation": "The official eligible universe is fully accounted for; strict Wiki-DPR mapping may start.",
+      "may_start_wiki_dpr": true,
+      "status": "preflight_passed"
+    },
+    "diagnostic_only": true,
+    "join_status_counts": {
+      "ambiguous_question_join": 0,
+      "joined": 1868,
+      "no_positive_context": 1742,
+      "no_question_join": 0
+    },
+    "model_loaded": false,
+    "schema_version": 1,
+    "selection_mutation": false,
+    "source_diagnostics": {
+      "context_field": {
+        "empty_or_missing_record_count": 1742,
+        "nonempty_record_count": 1868,
+        "present_record_count": 3610,
+        "string_record_count": 3610
+      },
+      "diagnostic_only": true,
+      "eligibility_rule": "official_context_is_nonempty_string",
+      "privacy": "aggregate_counts_only",
+      "target_question_record_count": 3610,
+      "title_field": {
+        "context_nonempty_title_empty_record_count": 0,
+        "nonempty_record_count": 3610
+      }
+    },
+    "source_population_match": true,
+    "wiki_dpr_started": false
+  },
+  "python": {
+    "executable": "/root/miniconda3/bin/python",
+    "version": "3.10.20 (main, Mar 11 2026, 17:46:40) [GCC 14.3.0]"
+  },
+  "retrieval": {
+    "corpus_mode": "wiki_dpr",
+    "nprobe": 64,
+    "top_k": 50,
+    "wiki_dpr_config": "psgs_w100.nq.compressed"
+  },
+  "schema_version": 1,
+  "selection": {
+    "K": 5,
+    "answer_scorer_backend": "dpr",
+    "complementarity_method": null,
+    "delta": 0.0,
+    "direct_solve_max_n": 20,
+    "dpp_jitter": 1e-08,
+    "dpp_quality_scale": 2.0,
+    "gamma": 1.0,
+    "lam": 2.0,
+    "lambda_mmr": 0.7,
+    "lambda_submodular": 0.5,
+    "method": "qore",
+    "num_reads": 100,
+    "qore_prefilter_size": null,
+    "saturation_alpha": 1.0,
+    "seed": 42,
+    "use_answer_scorer": true
+  },
+  "selection_mutation": false,
+  "status": "preflight_passed",
+  "wiki_dpr_started": false
+}

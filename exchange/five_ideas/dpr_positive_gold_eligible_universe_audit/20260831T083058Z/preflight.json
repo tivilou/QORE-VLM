@@ -1,0 +1,46 @@
+{
+  "accounting": {
+    "all_questions": 3610,
+    "ambiguous_question_join_questions": 0,
+    "eligible_nonempty_context_questions": 1868,
+    "empty_context_questions": 1742,
+    "exact_question_joined": 3610,
+    "no_question_join_questions": 0,
+    "official_source_nonempty_context_questions": 1868,
+    "source_records_scanned": 3610,
+    "source_target_records_retained": 3610
+  },
+  "decision": {
+    "interpretation": "The official eligible universe is fully accounted for; strict Wiki-DPR mapping may start.",
+    "may_start_wiki_dpr": true,
+    "status": "preflight_passed"
+  },
+  "diagnostic_only": true,
+  "join_status_counts": {
+    "ambiguous_question_join": 0,
+    "joined": 1868,
+    "no_positive_context": 1742,
+    "no_question_join": 0
+  },
+  "model_loaded": false,
+  "schema_version": 1,
+  "selection_mutation": false,
+  "source_diagnostics": {
+    "context_field": {
+      "empty_or_missing_record_count": 1742,
+      "nonempty_record_count": 1868,
+      "present_record_count": 3610,
+      "string_record_count": 3610
+    },
+    "diagnostic_only": true,
+    "eligibility_rule": "official_context_is_nonempty_string",
+    "privacy": "aggregate_counts_only",
+    "target_question_record_count": 3610,
+    "title_field": {
+      "context_nonempty_title_empty_record_count": 0,
+      "nonempty_record_count": 3610
+    }
+  },
+  "source_population_match": true,
+  "wiki_dpr_started": false
+}
