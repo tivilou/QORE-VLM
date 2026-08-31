@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "QORE-VLM strict full NQ-Open eligible-universe gold bottleneck audit",
+  "authorization": "implemented",
+  "baseline": {
+    "entry_point": "NQ-Open validation population -> official DPR gold-info contexts -> Wiki-DPR Top-50 -> frozen QORE + DPR Answer Scorer Top-5 -> unchanged Generator/evaluator observer",
+    "code_revision": "five-ideas-development",
+    "equivalence_test": "The audit observes canonical IDs and frozen baseline outputs after normal retrieval/selection; official gold values never control retrieval, selection, prompting, generation, or evaluation."
+  },
+  "core_invariants": [
+    "The source population is the complete NQ-Open validation population of 3,610 questions; official DPR gold-info has 1,868 target rows with a non-empty context and 1,742 rows with an empty or missing context. Title is not an eligibility requirement.",
+    "Exact normalized question identity and strict unique Wiki-DPR passage identity are required; fuzzy joins, answer matching, title-only matching, and manual repair are forbidden.",
+    "The 1,868 eligible rows are an analysis universe, not a production label source; all 3,610, exact joins, empty contexts, mapping failures, and exclusions remain explicitly accounted for.",
+    "Oracle Top-5 is an evidence-coverage ceiling only: if at least one strict gold passage is in frozen Top-50, an oracle Top-5 could contain evidence; gold is never inserted into a prompt.",
+    "Only rows with mapping_status=mapped may carry retrieval-hit, selected-hit, or oracle-ceiling signals; partial, unresolved, and ambiguous mappings retain accounting only and cannot be attributed to the online path.",
+    "Production retrieval, selector, Generator, evaluator, labels, selected order, and answer path remain unchanged.",
+    "Compact outputs contain only IDs, question fingerprints, counts, booleans, buckets, hashes, and manifests; no questions, passages, answers, predictions, prompts, titles, or text are emitted."
+  ],
+  "interfaces": [
+    {
+      "id": "eligible_population_accounting_v1",
+      "type": "transformer",
+      "input_schema": "all NQ-Open validation questions and official DPR gold-info source",
+      "output_schema": "aggregate population accounting and exact join statuses",
+      "invariants": ["Preflight runs without Wiki-DPR, model loading, retrieval, selection, generation, or evaluation."]
+    },
+    {
+      "id": "strict_wiki_identity_alignment_v1",
+      "type": "transformer",
+      "input_schema": "official DPR positive identities and full Wiki-DPR corpus rows",
+      "output_schema": "canonical passage IDs with strict/partial/unmapped status",
+      "invariants": ["Every positive must map uniquely for a strict mapped row."]
+    },
+    {
+      "id": "frozen_rag_observer_v1",
+      "type": "combiner",
+      "input_schema": "frozen Top-50 IDs, frozen QORE Top-5 IDs, unchanged Generator/evaluator outputs",
+      "output_schema": "compact evidence ceiling and retrieval/selector/generator strata",
+      "invariants": ["Observer outputs cannot feed any production decision."]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "dpr_question_identity_join",
+      "version": "1.0.0",
+      "role": "baseline",
+      "interface": "eligible_population_accounting_v1",
+      "insertion_point": "offline preflight before Wiki-DPR",
+      "hypothesis": "The official NQ-test gold-info population exactly covers the NQ-Open validation question identities.",
+      "input_schema": "question identity strings",
+      "output_schema": "exact join and empty-context status",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "3,610 source/question records",
+      "failure_signatures": ["source_population_mismatch", "no_question_join", "ambiguous_question_join"]
+    },
+    {
+      "id": "official_dpr_eligible_population_accounting",
+      "version": "1.0.0",
+      "role": "idea",
+      "interface": "eligible_population_accounting_v1",
+      "insertion_point": "offline source accounting",
+      "hypothesis": "The 1,868 non-empty official contexts define a traceable conditional audit universe while retaining the 3,610-question denominator.",
+      "input_schema": "official DPR nq-test_gold_info with non-empty context strings",
+      "output_schema": "aggregate source accounting and eligible exact-join rows",
+      "requires": ["dpr_question_identity_join"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "one small official source read",
+      "failure_signatures": ["expected_accounting_mismatch", "empty_context_count_mismatch", "privacy_schema_violation"]
+    },
+    {
+      "id": "strict_wiki_identity_alignment",
+      "version": "1.0.0",
+      "role": "idea",
+      "interface": "strict_wiki_identity_alignment_v1",
+      "insertion_point": "full Wiki-DPR offline identity scan",
+      "hypothesis": "Official positives can be uniquely mapped to the current Wiki-DPR corpus using official ID or exact title/full-text identities.",
+      "input_schema": "eligible official positives and Wiki-DPR rows",
+      "output_schema": "strict canonical gold passage IDs",
+      "requires": ["official_dpr_eligible_population_accounting"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "one full Wiki-DPR metadata scan",
+      "failure_signatures": ["no_wiki_dpr_identity", "ambiguous_wiki_dpr_identity", "partial_wiki_dpr_identity", "mapping_rate_below_0.80"]
+    },
+    {
+      "id": "frozen_retrieval_qore_generator_observer",
+      "version": "1.0.0",
+      "role": "idea",
+      "interface": "frozen_rag_observer_v1",
+      "insertion_point": "after unchanged retrieval, QORE, Generator, and evaluator",
+      "hypothesis": "Top-50 gold availability, Top-5 gold selection, and selected-hit generation correctness identify the dominant conditional bottleneck.",
+      "input_schema": "canonical IDs and normal baseline outputs",
+      "output_schema": "compact three-way bottleneck fields",
+      "requires": ["strict_wiki_identity_alignment"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "1,868 frozen normal RAG observations",
+      "failure_signatures": ["retrieval_selection_identity_mismatch", "generator_contract_drift", "answer_path_drift"]
+    },
+    {
+      "id": "eligible_universe_bottleneck_combiner",
+      "version": "1.0.0",
+      "role": "baseline",
+      "interface": "frozen_rag_observer_v1",
+      "insertion_point": "compact summary after the frozen observer",
+      "hypothesis": "Explicit denominators and three-way strata prevent source coverage from being mistaken for a production bottleneck.",
+      "input_schema": "compact observer rows",
+      "output_schema": "population, mapping, evidence-ceiling, and bottleneck summaries",
+      "requires": ["frozen_retrieval_qore_generator_observer"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "constant-time aggregate over eligible rows",
+      "failure_signatures": ["denominator_mismatch", "privacy_schema_violation"]
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": [
+      "dpr_question_identity_join",
+      "official_dpr_eligible_population_accounting",
+      "strict_wiki_identity_alignment",
+      "frozen_retrieval_qore_generator_observer",
+      "eligible_universe_bottleneck_combiner"
+    ]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": [
+      "dpr_question_identity_join",
+      "official_dpr_eligible_population_accounting",
+      "strict_wiki_identity_alignment",
+      "frozen_retrieval_qore_generator_observer",
+      "eligible_universe_bottleneck_combiner"
+    ],
+    "merge_rule": "Only canonical IDs and compact aggregate values cross observer stages; no official gold content reaches the online path.",
+    "interaction_ablations": [
+      "3,610 all-question denominator versus 1,868 eligible conditional denominator",
+      "Top-50 evidence ceiling versus frozen QORE Top-5 selected evidence",
+      "retrieval miss versus selector miss versus selected-hit generation error"
+    ]
+  },
+  "validation": {
+    "baseline_equivalence": "Synthetic fixtures prove that gold alignment changes only observer counts and cannot mutate frozen retrieval or selection inputs.",
+    "tests": [
+      "baseline_equivalence",
+      "plugin_isolation",
+      "deterministic_replay",
+      "interaction_ablation",
+      "complete 3,610/1,868 population accounting",
+      "empty-context exclusion and exact join status accounting",
+      "strict official ID/title-text/full-text mapping and ambiguity",
+      "oracle Top-5 evidence ceiling is Top-50 availability only",
+      "Top-5 IDs are a subset of Top-50 IDs",
+      "three-way bottleneck bucket accounting",
+      "compact privacy and fingerprint schema",
+      "preflight does not load Wiki-DPR or model",
+      "frozen configuration and validate-only runner",
+      "baseline equivalence and no gold feedback to selector"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/dpr_positive_gold_eligible_universe_audit.yaml",
+    "dataset_identity": "NQ-Open validation all 3,610; official DPR nq-test_gold_info; Wiki-DPR psgs_w100.nq.compressed; Top-50; QORE + DPR Answer Scorer K=5",
+    "environment": "Manifest records resolved source path/bytes/SHA-256, config hash, code revision/tree hash, Python identity, model ID/revision/config hash, and output hash.",
+    "seeds": [42],
+    "output_manifest": "exchange/five_ideas/dpr_positive_gold_eligible_universe_audit/<timestamp>/run_metadata.json"
+  },
+  "limitations": [
+    "The 1,868-row eligible universe is conditional source coverage based only on non-empty official context strings and does not represent all 3,610 questions.",
+    "The oracle field is an evidence-coverage ceiling, not an oracle generated answer or utility score.",
+    "Mapping failure is a source/corpus-version limitation and cannot be attributed to retrieval or QORE.",
+    "The full run is collaborator-side; no complete Wiki-DPR data or GPU experiment is run during implementation."
+  ]
+}

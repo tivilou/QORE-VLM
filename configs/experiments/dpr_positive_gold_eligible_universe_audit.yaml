@@ -1,0 +1,107 @@
+phase:
+  name: dpr_positive_gold_eligible_universe_audit
+  schema_version: 1
+  diagnostic_only: true
+  selection_mutation: false
+
+  dataset:
+    name: nq_open
+    split: validation
+    max_samples: 3610
+    fresh_population: true
+
+  expected_source_accounting:
+    all_questions: 3610
+    official_nonempty_context_questions: 1868
+
+  retrieval:
+    corpus_mode: wiki_dpr
+    wiki_dpr_config: psgs_w100.nq.compressed
+    nprobe: 64
+    top_k: 50
+
+  selection:
+    method: qore
+    K: 5
+    num_reads: 100
+    lam: 2.0
+    seed: 42
+    gamma: 1.0
+    delta: 0.0
+    complementarity_method: null
+    qore_prefilter_size: null
+    direct_solve_max_n: 20
+    lambda_mmr: 0.7
+    saturation_alpha: 1.0
+    lambda_submodular: 0.5
+    dpp_quality_scale: 2.0
+    dpp_jitter: 1.0e-8
+    use_answer_scorer: true
+    answer_scorer_backend: dpr
+
+  generator:
+    model_id: NousResearch/Meta-Llama-3-8B-Instruct
+    revision: 53346005fb0ef11d3b6a83b12c895cca40156b6c
+    max_new_tokens: 32
+    model_path_candidates:
+      - models/llama3-8b
+
+  alignment:
+    scan_mode: full_corpus
+    eligible_context_rule: official_context_is_nonempty_string
+    identity_rules:
+      question: normalized_question_exact
+      official_positive: official_passage_id_or_normalized_title_full_text_sha256
+      wiki_dpr: unique_official_id_or_title_full_text_hash_or_unique_full_text_hash
+    dpr_positive_candidates:
+      - data/dpr/nq-test_gold_info.json
+      - data/dpr/nq-test_gold_info.json.gz
+      - data/dpr/nq_test_gold_info.json
+      - data/dpr/nq_test_gold_info.json.gz
+      - data/nq/nq-test_gold_info.json
+      - data/nq/nq-test_gold_info.json.gz
+      - data/nq/nq_test_gold_info.json
+      - data/nq/nq_test_gold_info.json.gz
+      - data/gold_passages_info/nq-test_gold_info.json
+      - data/gold_passages_info/nq-test_gold_info.json.gz
+      - data/gold_passages_info/nq_test_gold_info.json
+      - data/gold_passages_info/nq_test_gold_info.json.gz
+    official_dpr_download:
+      source_name: dpr_nq_test_gold_info
+      url: https://dl.fbaipublicfiles.com/dpr/data/nq_gold_info/nq-test_gold_info.json.gz
+      cache_path: data/dpr/nq-test_gold_info.json.gz
+      timeout_seconds: 90
+    progress_every: 1000000
+
+  plugins:
+    allowlist:
+      - dpr_question_identity_join
+      - official_dpr_eligible_population_accounting
+      - wiki_dpr_identity_alignment
+      - frozen_retrieval_qore_generator_observer
+      - eligible_universe_bottleneck_combiner
+
+  gate:
+    minimum_mapping_rate: 0.80
+    preflight_failure_action: stop_before_wiki_dpr_or_model
+    mapping_failure_action: stop_before_retrieval_selector_or_generator
+    oracle_ceiling_definition: top50_contains_at_least_one_strict_gold
+
+  outputs:
+    root: exchange/five_ideas/dpr_positive_gold_eligible_universe_audit
+    compact_only: true
+    github_result_json_max_bytes: 1048576
+    forbidden_fields:
+      - question
+      - query
+      - passages
+      - positive_ctxs
+      - positive_contexts
+      - answers
+      - prediction
+      - raw_prompt
+      - passage_text
+      - gold_text
+      - answer_text
+      - title
+      - text
