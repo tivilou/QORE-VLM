@@ -9,10 +9,16 @@ export PYTHONPATH="$PROJECT_ROOT${PYTHONPATH:+:$PYTHONPATH}"
 if [[ -n "${PYTHON_BIN:-}" ]]; then
     candidates=("$PYTHON_BIN")
 else
-    candidates=("$(command -v python || true)" "$(command -v python3 || true)")
-    if [[ -n "${CONDA_PREFIX:-}" ]]; then
-        candidates+=("$CONDA_PREFIX/bin/python")
-    fi
+    shopt -s nullglob
+    candidates=(
+        "$(command -v python || true)"
+        "$(command -v python3 || true)"
+        "${CONDA_PREFIX:-}/bin/python"
+        /usr/local/miniconda3/envs/*/bin/python
+        /opt/conda/envs/*/bin/python
+        "$HOME"/miniconda3/envs/*/bin/python
+        "$HOME"/anaconda3/envs/*/bin/python
+    )
 fi
 
 PYTHON_BIN=""
