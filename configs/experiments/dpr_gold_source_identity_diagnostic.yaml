@@ -1,0 +1,18 @@
+phase:
+  name: dpr_gold_source_identity_diagnostic
+  schema_version: 1
+  diagnostic_only: true
+  data_download: false
+  wiki_dpr_config: psgs_w100.nq.compressed
+  source: data/dpr/nq-test_gold_info.json.gz
+  output_root: exchange/five_ideas/dpr_gold_source_identity_diagnostic
+  forbidden_actions:
+    - download_official_source
+    - load_wiki_dpr_dataset
+    - build_faiss_index
+    - load_generator
+    - run_retrieval
+    - run_selection
+    - fuzzy_matching
+    - answer_matching
+    - export_question_or_passage_content
