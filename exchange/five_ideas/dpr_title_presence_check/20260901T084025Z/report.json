@@ -1,0 +1,62 @@
+{
+  "config": "psgs_w100.nq.compressed",
+  "data_download": false,
+  "dataset": "facebook/wiki_dpr",
+  "diagnostic_only": true,
+  "gold_questions_checked": 3610,
+  "gold_source": {
+    "byte_count": 1408618,
+    "path": "data/dpr/nq-test_gold_info.json.gz",
+    "sha256": "a1588adca9cc1db68ae1cd1507b48de110e016740f77812b2e91d5bb4dc6cf17"
+  },
+  "interpretation": "Title presence only; a match does not prove the official NQ context is the same Wiki-DPR passage or establish retrieval/selector recall.",
+  "matched_title_count": 264,
+  "matched_title_multiplicity": {
+    "max_rows": 134,
+    "median_rows": 26,
+    "min_rows": 2
+  },
+  "missing_title_count": 3005,
+  "model_loaded": false,
+  "question_title_match_rate": 0.0778393351800554,
+  "questions_with_title_match": 281,
+  "retrieval_started": false,
+  "sample_matched_titles": [
+    "0",
+    "aarp",
+    "abacus",
+    "acetate",
+    "acronym",
+    "aeneas",
+    "africa",
+    "agamemnon",
+    "alabama",
+    "almora"
+  ],
+  "sample_missing_titles": [
+    "(if loving you is wrong) i don't want to be right",
+    "-ase",
+    "...baby one more time (song)",
+    "101 dalmatians (1996 film)",
+    "112th united states congress",
+    "114th united states congress",
+    "13 going on 30",
+    "13 reasons why",
+    "15 minutes of fame",
+    "17 (xxxtentacion album)"
+  ],
+  "selector_started": false,
+  "source_accounting": {
+    "duplicate_question_title_pairs": 0,
+    "nonempty_context_records": 1868,
+    "nonempty_title_records": 3610,
+    "records": 3610,
+    "unique_normalized_titles": 3269,
+    "unique_questions_with_nonempty_title": 3610
+  },
+  "status": "ok",
+  "title_match_rate": 0.08075864178647904,
+  "title_normalization": "NFKC + whitespace collapse + casefold",
+  "unique_gold_titles_checked": 3269,
+  "wiki_dpr_rows_scanned": 21015300
+}
