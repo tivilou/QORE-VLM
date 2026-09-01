@@ -1,0 +1,42 @@
+{
+  "decision": {
+    "interpretation": "Do not attribute failures to retrieval, selector, or generator below the mapping gate.",
+    "status": "mapping_incomplete"
+  },
+  "mapping": {
+    "mapping_gate_pass": false,
+    "mapping_rate": 0.0,
+    "mapping_status_counts": {
+      "ambiguous_question_join": 0,
+      "ambiguous_wiki_dpr_identity": 0,
+      "mapped": 0,
+      "no_positive_context": 0,
+      "no_question_join": 0,
+      "no_wiki_dpr_identity": 1868,
+      "partial_wiki_dpr_identity": 0
+    },
+    "minimum_mapping_rate": 0.8
+  },
+  "population": {
+    "all_questions": 3610,
+    "eligible_rows": 1868,
+    "excluded_rows": 1742,
+    "official_nonempty_context_questions": 1868,
+    "source_coverage_rate": 0.5174515235457063,
+    "strict_mapped_rows": 0
+  },
+  "schema_version": 1,
+  "strict_bottleneck_counts": {
+    "generator_bottleneck_questions": 0,
+    "generator_error_rate_given_selected_hit": null,
+    "mapped_questions": 0,
+    "oracle_top5_evidence_ceiling_questions": 0,
+    "oracle_top5_evidence_ceiling_rate_among_mapped": null,
+    "retrieval_bottleneck_questions": 0,
+    "retrieval_hit_questions": 0,
+    "retrieval_top50_hit_rate": null,
+    "selected_top5_hit_rate_among_mapped": null,
+    "selected_top5_hit_rate_given_top50_gold": null,
+    "selector_bottleneck_questions": 0
+  }
+}
