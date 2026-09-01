@@ -111,6 +111,7 @@ def _gold_title_records(rows: Iterable[Mapping[str, Any]]) -> tuple[dict[str, se
         "records": records,
         "nonempty_title_records": nonempty_titles,
         "unique_normalized_titles": len(title_to_questions),
+        "unique_questions_with_nonempty_title": len({q for values in title_to_questions.values() for q in values if q}),
         "nonempty_context_records": nonempty_contexts,
         "duplicate_question_title_pairs": duplicate_pairs,
     }
@@ -182,8 +183,10 @@ def main() -> int:
 
     matched_titles = {key for key, count in match_counts.items() if count > 0}
     missing_titles = set(match_counts) - matched_titles
-    matched_questions = sum(len(title_to_questions[key]) for key in matched_titles)
-    total_questions = sum(len(values) for values in title_to_questions.values())
+    matched_question_set = {q for key in matched_titles for q in title_to_questions[key] if q}
+    all_question_set = {q for values in title_to_questions.values() for q in values if q}
+    matched_questions = len(matched_question_set)
+    total_questions = len(all_question_set)
     report: dict[str, Any] = {
         "status": "ok", "diagnostic_only": True, "data_download": False,
         "model_loaded": False, "retrieval_started": False, "selector_started": False,
