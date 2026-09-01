@@ -1,0 +1,162 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "Q-DUET-VLM",
+  "authorization": "implemented",
+  "baseline": {
+    "entry_point": "applications/rag/selector.py:select_passages plus applications/rag/generation/generator.py:Generator.generate",
+    "code_revision": "resolved at runtime",
+    "equivalence_test": "all selectors receive identical one-shot Top-50 candidates and scorer values"
+  },
+  "core_invariants": [
+    "Freeze nq_open validation, the five predeclared sample positions, Wiki-DPR retrieval, Answer Scorer, Generator, evaluator, and answer labels.",
+    "Retrieve exactly once per question and pass the same Top-50 embeddings, texts, metadata, and Answer Scorer scores to every selector.",
+    "Selector outputs are observation-only; no case-study result, gold answer, or generated prediction reaches retrieval or selection.",
+    "Preserve each selector's returned Top-5 order when calling the frozen Generator.",
+    "Complete case-study files remain exchange-only; GitHub receives only compact provenance and upload metadata."
+  ],
+  "interfaces": [
+    {
+      "id": "frozen_retrieval_observer",
+      "type": "transformer",
+      "input_schema": "five fixed NQ-Open validation questions",
+      "output_schema": "one shared Top-50 list with id, title, text, rank, retrieval score, and Answer Scorer score",
+      "invariants": ["one retrieval per question", "same candidate list for all selectors"]
+    },
+    {
+      "id": "selector_comparison_observer",
+      "type": "transformer",
+      "input_schema": "shared query embedding, Top-50 passage embeddings/texts, and scorer scores",
+      "output_schema": "allowlisted selector Top-5 records in returned order",
+      "invariants": ["explicit allowlist", "K equals five", "no selector feedback"]
+    },
+    {
+      "id": "frozen_generator_case_observer",
+      "type": "transformer",
+      "input_schema": "question and one selector's ordered Top-5 context",
+      "output_schema": "prediction and EM/F1 plus answer-string-in-text proxy flags",
+      "invariants": ["same frozen Generator for every selector", "proxy flags are not strict gold passage labels"]
+    },
+    {
+      "id": "case_study_renderer",
+      "type": "combiner",
+      "input_schema": "complete in-memory case records",
+      "output_schema": "human Markdown, machine JSON, and compact hash manifest",
+      "invariants": ["raw content never enters compact files", "hashes computed after complete files are closed"]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "frozen_retrieval_observer",
+      "version": "1.0.0",
+      "role": "baseline",
+      "interface": "frozen_retrieval_observer",
+      "insertion_point": "after query encoding and before selector calls",
+      "hypothesis": "A shared candidate pool is required for an interpretable selector case study.",
+      "input_schema": "fixed NQ-Open questions and Wiki-DPR index",
+      "output_schema": "Top-50 records with global Wiki-DPR ids and full text",
+      "requires": [],
+      "conflicts": ["per_selector_retrieval", "retrieval_feedback"],
+      "deterministic": true,
+      "resource_estimate": "one Wiki-DPR query per question",
+      "failure_signatures": ["candidate ids or ranks differ between selectors", "Top-50 length mismatch"]
+    },
+    {
+      "id": "allowlisted_selector_comparator",
+      "version": "1.0.0",
+      "role": "idea",
+      "interface": "selector_comparison_observer",
+      "insertion_point": "after frozen retrieval observer",
+      "hypothesis": "Case-level differences among QORE and established baselines expose selection mechanisms on identical evidence.",
+      "input_schema": "shared Top-50 embeddings, texts, and scorer values",
+      "output_schema": "five unique selected passage records per allowlisted method",
+      "requires": ["frozen_retrieval_observer"],
+      "conflicts": ["gold_in_selection", "adaptive_selector"],
+      "deterministic": true,
+      "resource_estimate": "five selector calls per question",
+      "failure_signatures": ["unknown method", "duplicate selected id", "selector input mutation"]
+    },
+    {
+      "id": "frozen_generator_case_observer",
+      "version": "1.0.0",
+      "role": "adapter",
+      "interface": "frozen_generator_case_observer",
+      "insertion_point": "after each selector output",
+      "hypothesis": "The same selected passage can produce different answer behavior across selectors and reveals answer-realization failure modes.",
+      "input_schema": "question and selector-returned Top-5 context",
+      "output_schema": "raw prediction, EM/F1, and explicitly labelled answer-string proxy diagnostics",
+      "requires": ["allowlisted_selector_comparator"],
+      "conflicts": ["prompt_mutation", "prediction_postprocessing"],
+      "deterministic": true,
+      "resource_estimate": "one greedy generation per selector and question",
+      "failure_signatures": ["different model identity across selectors", "prediction rewritten before scoring"]
+    },
+    {
+      "id": "case_study_renderer",
+      "version": "1.0.0",
+      "role": "adapter",
+      "interface": "case_study_renderer",
+      "insertion_point": "after all in-memory generations and evaluations",
+      "hypothesis": "A content-complete private artifact makes mechanism inspection possible without leaking raw data to GitHub.",
+      "input_schema": "complete case records and runtime provenance",
+      "output_schema": "case_study.md, case_study.json, run_metadata.json, upload_manifest.json",
+      "requires": ["frozen_generator_case_observer"],
+      "conflicts": ["compact_raw_text_publication"],
+      "deterministic": true,
+      "resource_estimate": "linear rendering and hashing cost",
+      "failure_signatures": ["raw fields in compact files", "hash mismatch", "missing selector arm"]
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": [
+      "frozen_retrieval_observer",
+      "allowlisted_selector_comparator",
+      "frozen_generator_case_observer",
+      "case_study_renderer"
+    ]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": [
+      "frozen_retrieval_observer",
+      "allowlisted_selector_comparator",
+      "frozen_generator_case_observer",
+      "case_study_renderer"
+    ],
+    "merge_rule": "One shared retrieval/scorer result is fanned out to the explicit selector allowlist; each returned Top-5 is sent to the same frozen Generator.",
+    "interaction_ablations": [
+      "QORE versus top-k on identical candidate ranks",
+      "QORE versus diversity baselines on identical scorer values",
+      "selected passage-set intersection and symmetric differences",
+      "answer-string proxy flags versus generated EM/F1"
+    ]
+  },
+  "validation": {
+    "baseline_equivalence": "Candidate ids, texts, embeddings, and scorer scores are byte-equivalent inputs across selector arms.",
+    "tests": [
+      "baseline_equivalence",
+      "plugin_isolation",
+      "deterministic_replay",
+      "interaction_ablation",
+      "fixed slice and selector allowlist contract",
+      "deterministic selector specification",
+      "shared candidate identity and rank preservation",
+      "compact forbidden-field rejection",
+      "Markdown/JSON parity",
+      "hash and upload manifest consistency",
+      "validate-only does not load Wiki-DPR or Generator"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/rag_selector_case_study.yaml",
+    "dataset_identity": "nq_open validation fixed positions 1950, 1960, 1970, 1980, 1990 within validation[1950:2000]",
+    "environment": "Record resolved Generator identity, config and plan hashes, Python, git revision, and selector allowlist.",
+    "seeds": [42],
+    "output_manifest": "exchange/five_ideas/rag_selector_case_study/<timestamp>/upload_manifest.json"
+  },
+  "limitations": [
+    "This is an L0 diagnostic case study, not a population-level utility comparison.",
+    "Answer-string-in-text flags are proxies and must not be reported as strict gold passage alignment.",
+    "No conclusion about selector superiority or paper-level improvement may be drawn from five questions."
+  ]
+}
