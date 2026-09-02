@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "artifact_type": "rag_selector_case_study_upload_manifest",
+  "status": "ready_for_authenticated_exchange_upload",
+  "target_directory": "five_ideas/rag_selector_case_study/20260902T033124Z",
+  "generated_at_utc": "20260902T033124Z",
+  "git_commit": "7e9fb5a2c060007189614802e4f2bd1322f21cb7",
+  "required_upload_files": [
+    "case_study.md",
+    "case_study.json",
+    "run_metadata.json",
+    "upload_manifest.json"
+  ],
+  "files_with_precomputed_hashes": [
+    {
+      "name": "case_study.md",
+      "bytes": 274568,
+      "sha256": "3a76d3f7d4c921a9dfde3a73ed4327f9a31dc1bfa89a533743a0ff19fafdc349",
+      "exchange_path": "five_ideas/rag_selector_case_study/20260902T033124Z/case_study.md"
+    },
+    {
+      "name": "case_study.json",
+      "bytes": 601971,
+      "sha256": "7615a9ebd0050ca5e451725a5b023fc69da2b031bfb573ee9bed030c34701f50",
+      "exchange_path": "five_ideas/rag_selector_case_study/20260902T033124Z/case_study.json"
+    },
+    {
+      "name": "run_metadata.json",
+      "bytes": 3112,
+      "sha256": "e6f19b482f1e87d53b3e5479c9db0f17807e7635ee0fa3bae524d9ef1314cf2a",
+      "exchange_path": "five_ideas/rag_selector_case_study/20260902T033124Z/run_metadata.json"
+    }
+  ],
+  "github_policy": "Only this manifest and compact run_metadata may be committed; complete case-study files contain raw questions/passages/answers/predictions and remain exchange-only."
+}

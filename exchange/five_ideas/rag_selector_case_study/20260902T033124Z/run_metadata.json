@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "artifact_type": "rag_selector_case_study_metadata",
+  "status": "completed",
+  "diagnostic_only": true,
+  "selection_mutation": false,
+  "git": {
+    "commit": "7e9fb5a2c060007189614802e4f2bd1322f21cb7",
+    "branch": "five-ideas-development"
+  },
+  "environment": {
+    "python_executable": "/root/miniconda3/bin/python",
+    "python_version": "3.10.20"
+  },
+  "config": {
+    "path": "/root/QORE-VLM/configs/experiments/rag_selector_case_study.yaml",
+    "sha256": "14e6ca34af068a920f3c31af205582781bc64e69295e23f4877adb30e03a716c"
+  },
+  "plugin_plan": {
+    "path": "/root/QORE-VLM/configs/experiments/rag_selector_case_study_plan.json",
+    "sha256": "1d383bf6abad67337215df40345f99d09925f9f48c85ff7d6cf17b3101d58fa3"
+  },
+  "dataset": {
+    "name": "nq_open",
+    "split": "validation",
+    "parent_slice": "[1950:2000]",
+    "relative_positions": [
+      0,
+      10,
+      20,
+      30,
+      40
+    ],
+    "global_indices": [
+      1950,
+      1960,
+      1970,
+      1980,
+      1990
+    ],
+    "question_count": 5
+  },
+  "retrieval": {
+    "corpus_mode": "wiki_dpr",
+    "wiki_dpr_config": "psgs_w100.nq.compressed",
+    "nprobe": 64,
+    "top_k": 50,
+    "retrieval_calls": 5
+  },
+  "answer_scorer": {
+    "backend": "dpr",
+    "scoring_calls": 5
+  },
+  "selectors": {
+    "allowlist": [
+      "qore_as",
+      "topk_as",
+      "mmr_as",
+      "submodular_as",
+      "spectral_dpp_as"
+    ],
+    "calls": 25,
+    "K": 5
+  },
+  "generator": {
+    "model_id": "NousResearch/Meta-Llama-3-8B-Instruct",
+    "revision": "53346005fb0ef11d3b6a83b12c895cca40156b6c",
+    "model_path": "/root/QORE-VLM/models/llama3-8b",
+    "config_sha256": "61f3de03a16ca8046b05dc777bce72717022bc8522152eee61a69072272ef54b",
+    "resolution": "project_candidate"
+  },
+  "outputs": {
+    "target_directory": "five_ideas/rag_selector_case_study/20260902T033124Z",
+    "complete_files_exchange_only": true,
+    "complete_files": [
+      {
+        "name": "case_study.md",
+        "bytes": 274568,
+        "sha256": "3a76d3f7d4c921a9dfde3a73ed4327f9a31dc1bfa89a533743a0ff19fafdc349",
+        "exchange_path": "five_ideas/rag_selector_case_study/20260902T033124Z/case_study.md"
+      },
+      {
+        "name": "case_study.json",
+        "bytes": 601971,
+        "sha256": "7615a9ebd0050ca5e451725a5b023fc69da2b031bfb573ee9bed030c34701f50",
+        "exchange_path": "five_ideas/rag_selector_case_study/20260902T033124Z/case_study.json"
+      }
+    ]
+  },
+  "timing_ms": {
+    "total": 9236.029864999864
+  },
+  "validation": {
+    "contract": {
+      "status": "valid",
+      "phase": "rag_selector_case_study",
+      "dataset": "nq_open validation[1950:2000] positions 0,10,20,30,40",
+      "selected_global_indices": [
+        1950,
+        1960,
+        1970,
+        1980,
+        1990
+      ],
+      "selectors": [
+        "qore_as",
+        "topk_as",
+        "mmr_as",
+        "submodular_as",
+        "spectral_dpp_as"
+      ],
+      "selection_mutation": false,
+      "model_loaded": false,
+      "wiki_dpr_started": false
+    },
+    "answer_string_match_is_proxy_not_strict_gold": true
+  }
+}
