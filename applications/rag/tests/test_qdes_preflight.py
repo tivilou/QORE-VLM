@@ -79,6 +79,14 @@ class QDESPreflightTests(unittest.TestCase):
       analyze(_fixture(top50_count=49))
 
 
+  def test_passage_label_coverage_is_not_per_case_only(self) -> None:
+    fixture = _fixture()
+    del fixture["cases"][0]["top_50"][0]["evidence"]
+    result = analyze(fixture)
+    self.assertEqual(result["metrics"]["passage_label_coverage_candidate_rate"], 2499 / 2500)
+    self.assertFalse(result["gates"]["label_availability_gate"]["pass"])
+
+
   def test_replay_is_deterministic_and_output_is_compact(self) -> None:
     first = analyze(_fixture())
     second = analyze(_fixture())

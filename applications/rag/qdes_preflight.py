@@ -348,6 +348,7 @@ def analyze(root: Dict[str, Any], input_sha256: Optional[str] = None) -> Dict[st
     nondegenerate_cases = 0
     disagreement_cases = 0
     evidence_label_cases = 0
+    evidence_label_count_total = 0
 
     for case, position, qid_hash in zip(cases, positions, qid_hashes):
         slots = parser.parse(case["question"])
@@ -356,6 +357,7 @@ def analyze(root: Dict[str, Any], input_sha256: Optional[str] = None) -> Dict[st
         labels: List[Optional[bool]] = case["labels"]
         if any(label is not None for label in labels):
             evidence_label_cases += 1
+        evidence_label_count_total += sum(label is not None for label in labels)
         typed_scores = [typed_coverage(slots, candidate.text) for candidate in candidates]
         generic_scores = [generic_question_overlap(case["question"], candidate.text) for candidate in candidates]
         answer_scores = [candidate.answer_scorer_score for candidate in candidates]
@@ -448,8 +450,10 @@ def analyze(root: Dict[str, Any], input_sha256: Optional[str] = None) -> Dict[st
             "threshold": 0.50,
         },
         "label_availability_gate": {
-            "pass": evidence_label_cases == EXPECTED_CASE_COUNT and typed_auc_all is not None,
+            "pass": evidence_label_count_total == EXPECTED_CASE_COUNT * EXPECTED_TOP50_COUNT and typed_auc_all is not None,
             "cases_with_passage_labels": evidence_label_cases,
+            "labeled_candidates": evidence_label_count_total,
+            "required_candidates": EXPECTED_CASE_COUNT * EXPECTED_TOP50_COUNT,
             "required_cases": EXPECTED_CASE_COUNT,
         },
         "leakage_gate": {
@@ -468,10 +472,13 @@ def analyze(root: Dict[str, Any], input_sha256: Optional[str] = None) -> Dict[st
         "top50_count_per_case": EXPECTED_TOP50_COUNT,
         "parser_success_count": parser_successes,
         "parser_success_rate": parser_success_rate,
+        "parser_fallback_count": EXPECTED_CASE_COUNT - parser_successes,
+        "parser_fallback_rate": 1.0 - parser_success_rate,
         "typed_coverage_nonzero_rate": typed_nonzero_rate,
         "typed_coverage_nondegenerate_case_rate": nondegenerate_cases / EXPECTED_CASE_COUNT,
         "typed_answer_scorer_material_disagreement_case_rate": disagreement_cases / EXPECTED_CASE_COUNT,
         "passage_label_coverage_case_rate": evidence_label_cases / EXPECTED_CASE_COUNT,
+        "passage_label_coverage_candidate_rate": evidence_label_count_total / (EXPECTED_CASE_COUNT * EXPECTED_TOP50_COUNT),
         "auc_micro": {
             "typed_coverage": typed_auc_all,
             "generic_question_overlap": generic_auc_all,
