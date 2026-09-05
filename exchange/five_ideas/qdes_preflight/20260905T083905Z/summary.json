@@ -1,15 +1,18 @@
 {
   "schema_version": "qdes_no_gpu_preflight.v2",
-  "replay_digest": "19600d534113b63ef7b97b666a8a0062b7a86c3139a194190d903f3107df0289",
+  "replay_digest": "9afc23aa1b80e8205a3eea9efad10c9f83e3d0afc97b41531e2848b0c7c74047",
   "metrics": {
     "case_count": 50,
     "top50_count_per_case": 50,
     "parser_success_count": 45,
     "parser_success_rate": 0.9,
+    "parser_fallback_count": 5,
+    "parser_fallback_rate": 0.09999999999999998,
     "typed_coverage_nonzero_rate": 0.782,
     "typed_coverage_nondegenerate_case_rate": 0.9,
     "typed_answer_scorer_material_disagreement_case_rate": 0.9,
     "passage_label_coverage_case_rate": 1.0,
+    "passage_label_coverage_candidate_rate": 1.0,
     "auc_micro": {
       "typed_coverage": 0.643647846683097,
       "generic_question_overlap": 0.7305762040812264,
@@ -87,6 +90,8 @@
     "label_availability_gate": {
       "pass": true,
       "cases_with_passage_labels": 50,
+      "labeled_candidates": 2500,
+      "required_candidates": 2500,
       "required_cases": 50
     },
     "leakage_gate": {
