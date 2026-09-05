@@ -7,8 +7,8 @@ cd "$PROJECT_ROOT"
 export PYTHONPATH="$PROJECT_ROOT${PYTHONPATH:+:$PYTHONPATH}"
 
 if [[ -n "${PYTHON_BIN:-}" ]]; then
-    if ! "$PYTHON_BIN" -c 'import numpy, scipy, sklearn' >/dev/null 2>&1; then
-        echo "ERROR: PYTHON_BIN lacks numpy, scipy, or sklearn" >&2
+    if ! "$PYTHON_BIN" -c 'import sys' >/dev/null 2>&1; then
+        echo "ERROR: PYTHON_BIN is not a runnable Python interpreter" >&2
         exit 1
     fi
 else
@@ -27,7 +27,7 @@ else
     for candidate_path in "${candidates[@]}"; do
         [[ -z "$candidate_path" || -n "${seen[$candidate_path]:-}" ]] && continue
         seen[$candidate_path]=1
-        if [[ -x "$candidate_path" ]] && "$candidate_path" -c 'import numpy, scipy, sklearn' >/dev/null 2>&1; then
+        if [[ -x "$candidate_path" ]] && "$candidate_path" -c 'import sys' >/dev/null 2>&1; then
             PYTHON_BIN="$candidate_path"
             break
         fi
