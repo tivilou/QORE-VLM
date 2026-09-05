@@ -1,0 +1,13 @@
+{
+  "schema_version": "ecad_no_gpu_preflight.v1",
+  "case_study_path_name": "case_study.json",
+  "case_study_sha256": "2a7b8f96322a1200d8e2124c0bffc3413cf2e646e17aeda0d5708b2316693b88",
+  "pairwise_nli_artifact_sha256": null,
+  "pairwise_nli_model_id": null,
+  "pairwise_nli_revision": null,
+  "code_revision": "89a1793d1a009ce9d14bbf4c221860ccbe08ddee",
+  "python_version": "3.10.12",
+  "gpu_used": false,
+  "model_used": false,
+  "selector_executed": false
+}

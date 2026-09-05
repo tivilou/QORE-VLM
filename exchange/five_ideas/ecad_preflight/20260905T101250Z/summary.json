@@ -1,0 +1,83 @@
+{
+  "schema_version": "ecad_no_gpu_preflight.v1",
+  "replay_digest": "cb9a72e385626a169d05b0e77e4103e83f2eae28d6dd3b43e465436ec237c509",
+  "metrics": {
+    "case_count": 50,
+    "top50_count_per_case": 50,
+    "pair_count_total": 61250,
+    "score_source": "lexical_proxy",
+    "silver_labeled_candidate_count": 0,
+    "silver_positive_candidate_count": 0,
+    "silver_label_candidate_rate": 0.0,
+    "conflict_edge_rate_mean": 0.29655510204081625,
+    "conflict_edge_rate_min": 0.04,
+    "conflict_edge_rate_max": 0.5118367346938776,
+    "conflict_burden_auc": null,
+    "answer_scorer_auc_against_contradictory": null,
+    "conflict_auc_gain_vs_answer_scorer": null,
+    "qore_mean_conflict_score": 0.34529999999999994,
+    "probe_mean_conflict_score": 0.28809999999999997,
+    "probe_conflict_reduction": 0.16565305531421948,
+    "qore_mean_positive_consensus_count": 0.0,
+    "probe_mean_positive_consensus_count": 0.0,
+    "probe_positive_retention_delta": 0.0,
+    "probe_selection_change_rate": 0.9,
+    "qore_conflict_pair_count_total": 121,
+    "probe_conflict_pair_count_total": 93
+  },
+  "gates": {
+    "pairwise_nli_gate": {
+      "pass": false,
+      "required": true,
+      "score_source": "lexical_proxy",
+      "reason": "lexical proxy is diagnostic-only and cannot establish NLI conflict structure"
+    },
+    "graph_non_degenerate_gate": {
+      "pass": false,
+      "opportunity_case_count": 50,
+      "minimum_opportunity_cases": 5
+    },
+    "independent_signal_gate": {
+      "pass": false,
+      "conflict_burden_auc": null,
+      "answer_scorer_auc": null,
+      "auc_gain": null,
+      "minimum_auc": 0.55,
+      "minimum_gain": 0.02
+    },
+    "matched_ablation_gate": {
+      "pass": false,
+      "selection_change_rate": 0.9,
+      "conflict_reduction": 0.16565305531421948,
+      "positive_retention_delta": 0.0,
+      "thresholds": {
+        "selection_change_rate": 0.2,
+        "conflict_reduction": 0.3,
+        "max_positive_retention_drop": 0.05
+      }
+    },
+    "silver_label_availability_gate": {
+      "pass": false,
+      "labeled_candidates": 0,
+      "positive_candidates": 0,
+      "required_candidates": 2500,
+      "reason": "all candidate-level silver labels are required for matched positive-retention ablation"
+    },
+    "leakage_gate": {
+      "pass": true,
+      "selection_feedback": false,
+      "panel_feedback": false,
+      "gold_feedback": false,
+      "generator_feedback": false,
+      "evaluator_feedback": false
+    },
+    "overall": {
+      "pass": false
+    }
+  },
+  "pairwise_nli_check": {
+    "provided": false,
+    "pass": false,
+    "reason": "pairwise NLI artifact is required"
+  }
+}
