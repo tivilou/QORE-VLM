@@ -1,0 +1,11 @@
+{
+  "schema_version": "qdes_no_gpu_preflight.v2",
+  "case_study_path_name": "rag-selector-50-detail.json",
+  "case_study_sha256": "ab295e306505e2297a9416cb384c4e58ba31e01eba1fd2388166d8bcf33c6c44",
+  "code_revision": "50dc90ed14160185a46d91608cc803d588812dac",
+  "python_version": "3.14.0",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "gpu_used": false,
+  "model_used": false,
+  "selection_executed": false
+}

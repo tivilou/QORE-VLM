@@ -1,0 +1,109 @@
+{
+  "schema_version": "qdes_no_gpu_preflight.v2",
+  "replay_digest": "19600d534113b63ef7b97b666a8a0062b7a86c3139a194190d903f3107df0289",
+  "metrics": {
+    "case_count": 50,
+    "top50_count_per_case": 50,
+    "parser_success_count": 45,
+    "parser_success_rate": 0.9,
+    "typed_coverage_nonzero_rate": 0.782,
+    "typed_coverage_nondegenerate_case_rate": 0.9,
+    "typed_answer_scorer_material_disagreement_case_rate": 0.9,
+    "passage_label_coverage_case_rate": 1.0,
+    "auc_micro": {
+      "typed_coverage": 0.643647846683097,
+      "generic_question_overlap": 0.7305762040812264,
+      "answer_scorer": 0.7819477765721282,
+      "retrieval_score": 0.6755746468497705
+    },
+    "auc_macro": {
+      "typed_coverage": {
+        "mean": 0.72832227958949,
+        "min": 0.351981351981352,
+        "max": 1.0,
+        "n": 43
+      },
+      "generic_question_overlap": {
+        "mean": 0.7440503049327191,
+        "min": 0.30612244897959184,
+        "max": 1.0,
+        "n": 43
+      },
+      "answer_scorer": {
+        "mean": 0.8323562833082403,
+        "min": 0.3877551020408163,
+        "max": 1.0,
+        "n": 43
+      },
+      "retrieval_score": {
+        "mean": 0.7584142181774083,
+        "min": 0.2653061224489796,
+        "max": 1.0,
+        "n": 43
+      }
+    },
+    "typed_gain_vs_answer_scorer": -0.13829992988903117,
+    "typed_gain_vs_generic_overlap": -0.08692835739812932,
+    "proxy_top5_positive_case_rate": {
+      "typed_coverage": 0.68,
+      "answer_scorer": 0.76
+    }
+  },
+  "gates": {
+    "schema_gate": {
+      "pass": true,
+      "reason": "50 contiguous cases with 50 unique ranked candidates each"
+    },
+    "parser_gate": {
+      "pass": true,
+      "value": 0.9,
+      "threshold": 0.8,
+      "reason": "question-only typed parse; no unconditional fallback"
+    },
+    "typed_signal_gate": {
+      "pass": true,
+      "typed_nonzero_rate": 0.782,
+      "nondegenerate_case_rate": 0.9,
+      "thresholds": {
+        "typed_nonzero_rate": 0.5,
+        "nondegenerate_case_rate": 0.8
+      }
+    },
+    "separability_gate": {
+      "pass": false,
+      "typed_auc": 0.643647846683097,
+      "answer_scorer_auc": 0.7819477765721282,
+      "typed_gain_vs_answer_scorer": -0.13829992988903117,
+      "minimum_typed_auc": 0.55,
+      "minimum_gain": 0.02
+    },
+    "distinctness_gate": {
+      "pass": true,
+      "cases_with_material_order_disagreement": 45,
+      "material_disagreement_case_rate": 0.9,
+      "typed_gain_vs_generic_overlap": -0.08692835739812932,
+      "threshold": 0.5
+    },
+    "label_availability_gate": {
+      "pass": true,
+      "cases_with_passage_labels": 50,
+      "required_cases": 50
+    },
+    "leakage_gate": {
+      "pass": true,
+      "selection_feedback": false,
+      "panel_feedback": false,
+      "gold_feedback": false,
+      "generator_feedback": false,
+      "evaluator_feedback": false
+    },
+    "overall": {
+      "pass": false
+    }
+  },
+  "panel_schema_check": {
+    "provided": false,
+    "used_for_selection": false,
+    "pass": true
+  }
+}
