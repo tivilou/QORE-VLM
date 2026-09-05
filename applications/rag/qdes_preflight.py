@@ -11,6 +11,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import os
 import platform
 import re
 import subprocess
@@ -94,6 +95,9 @@ def _stable_json(value: Any) -> str:
 
 
 def _git_revision() -> Optional[str]:
+    override = os.environ.get("QDES_CODE_REVISION")
+    if override:
+        return override
     try:
         completed = subprocess.run(
             ["git", "rev-parse", "HEAD"],
