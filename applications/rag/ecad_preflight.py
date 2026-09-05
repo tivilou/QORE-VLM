@@ -323,12 +323,16 @@ def analyze(root: Dict[str, Any], pair_root: Optional[Dict[str, Any]] = None) ->
     probe_positive_counts: List[int] = []
     changed_cases = 0
     opportunity_cases = 0
+    positive_label_count_total = 0
+    positive_label_observed_total = 0
 
     for case, raw_case, position, qid_hash in zip(cases, raw_cases, positions, qid_hashes):
         candidates: List[CandidateView] = case["candidates"]
         pair_map, source = _pair_scores_for_case(pair_root, case["case_number"], candidates)
         burdens = _conflict_burdens(candidates, pair_map)
         labels, contradictory = _labels_from_raw_case(raw_case)
+        positive_label_count_total += sum(value is not None for value in labels.values())
+        positive_label_observed_total += sum(value is True for value in labels.values())
         qore_ids = _selected_ids(raw_case, "qore_as")
         if len(qore_ids) != 5:
             qore_ids = [candidate.passage_id for candidate in sorted(candidates, key=lambda item: (item.retrieved_rank, item.passage_id))[:5]]
@@ -400,7 +404,7 @@ def analyze(root: Dict[str, Any], pair_root: Optional[Dict[str, Any]] = None) ->
             "minimum_gain": MIN_AUC_GAIN,
         },
         "matched_ablation_gate": {
-            "pass": bool(pair_root is not None and opportunity_cases >= 5 and changed_cases / EXPECTED_CASE_COUNT >= MIN_SELECTION_CHANGE_RATE and reduction is not None and reduction >= MIN_CONFLICT_REDUCTION and retention_delta >= -MAX_POSITIVE_RETENTION_DROP),
+            "pass": bool(pair_root is not None and positive_label_count_total == EXPECTED_CASE_COUNT * EXPECTED_TOP50_COUNT and opportunity_cases >= 5 and changed_cases / EXPECTED_CASE_COUNT >= MIN_SELECTION_CHANGE_RATE and reduction is not None and reduction >= MIN_CONFLICT_REDUCTION and retention_delta >= -MAX_POSITIVE_RETENTION_DROP),
             "selection_change_rate": changed_cases / EXPECTED_CASE_COUNT,
             "conflict_reduction": reduction,
             "positive_retention_delta": retention_delta,
@@ -409,6 +413,13 @@ def analyze(root: Dict[str, Any], pair_root: Optional[Dict[str, Any]] = None) ->
                 "conflict_reduction": MIN_CONFLICT_REDUCTION,
                 "max_positive_retention_drop": MAX_POSITIVE_RETENTION_DROP,
             },
+        },
+        "silver_label_availability_gate": {
+            "pass": positive_label_count_total == EXPECTED_CASE_COUNT * EXPECTED_TOP50_COUNT,
+            "labeled_candidates": positive_label_count_total,
+            "positive_candidates": positive_label_observed_total,
+            "required_candidates": EXPECTED_CASE_COUNT * EXPECTED_TOP50_COUNT,
+            "reason": "all candidate-level silver labels are required for matched positive-retention ablation",
         },
         "leakage_gate": {
             "pass": True,
@@ -425,6 +436,9 @@ def analyze(root: Dict[str, Any], pair_root: Optional[Dict[str, Any]] = None) ->
         "top50_count_per_case": EXPECTED_TOP50_COUNT,
         "pair_count_total": sum(item["n_pairs"] for item in per_question),
         "score_source": pair_source,
+        "silver_labeled_candidate_count": positive_label_count_total,
+        "silver_positive_candidate_count": positive_label_observed_total,
+        "silver_label_candidate_rate": positive_label_count_total / (EXPECTED_CASE_COUNT * EXPECTED_TOP50_COUNT),
         "conflict_edge_rate_mean": sum(item["conflict_edge_rate"] for item in per_question) / EXPECTED_CASE_COUNT,
         "conflict_edge_rate_min": min(item["conflict_edge_rate"] for item in per_question),
         "conflict_edge_rate_max": max(item["conflict_edge_rate"] for item in per_question),
