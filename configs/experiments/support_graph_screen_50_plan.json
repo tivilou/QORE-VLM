@@ -1,0 +1,167 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v2",
+  "project": "Q-DUET-VLM",
+  "authorization": "implemented",
+  "baseline": {
+    "entry_point": "applications/rag/selector.py:select_passages plus applications/rag/generation/generator.py:Generator.generate",
+    "code_revision": "resolved at runtime",
+    "equivalence_test": "all four arms receive identical one-shot Top-50 candidates, embeddings, and Answer Scorer values"
+  },
+  "core_invariants": [
+    "Freeze nq_open validation[3150:3200], all 50 positions, Wiki-DPR retrieval, Answer Scorer, Generator, evaluator, and answer labels.",
+    "Retrieve exactly once and score exactly once per question; fan out the same Top-50 to all selector arms.",
+    "Selector inputs contain only question and ordinary Top-50 fields; no gold, panel, generation, or evaluator output reaches selection.",
+    "Preserve each selected Top-5 order when calling the frozen Generator.",
+    "Complete question/passage/prediction records remain exchange-only; compact summary, metadata, hashes, and provenance are safe for GitHub."
+  ],
+  "interfaces": [
+    {
+      "id": "frozen_retrieval_observer",
+      "type": "transformer",
+      "input_schema": "50 fixed NQ-Open questions and Wiki-DPR index",
+      "output_schema": "one shared Top-50 list with id, title, text, rank, retrieval score, embedding, and Answer Scorer score"
+    },
+    {
+      "id": "allowlisted_selector_comparator",
+      "type": "transformer",
+      "input_schema": "shared query embedding, Top-50 embeddings/texts/metadata, and scorer values",
+      "output_schema": "four ordered unique Top-5 records plus support trace for the graph arm and explicit null-control identity"
+    },
+    {
+      "id": "frozen_generator_case_observer",
+      "type": "transformer",
+      "input_schema": "question and one selector's ordered Top-5 context",
+      "output_schema": "prediction, EM/F1, proxy evidence flags, and elapsed time"
+    },
+    {
+      "id": "case_study_renderer",
+      "type": "combiner",
+      "input_schema": "complete case records and runtime provenance",
+      "output_schema": "case_study.md, case_study.json, summary.json, run_metadata.json, upload_manifest.json"
+    }
+  ],
+  "plugins": [
+    {
+      "id": "frozen_retrieval_observer",
+      "version": "1.0.0",
+      "role": "baseline",
+      "interface": "frozen_retrieval_observer",
+      "insertion_point": "after query encoding and before selector calls",
+      "hypothesis": "A shared candidate pool makes the selector comparison causal at the Top-50 to Top-5 boundary.",
+      "input_schema": "50 fixed NQ-Open questions and Wiki-DPR index",
+      "output_schema": "one shared Top-50 list with id, title, text, rank, retrieval score, embedding, and Answer Scorer score",
+      "requires": [],
+      "conflicts": ["per_selector_retrieval", "retrieval_feedback"],
+      "deterministic": true,
+      "resource_estimate": "one Wiki-DPR query and one Answer Scorer pass per question",
+      "failure_signatures": ["candidate ids differ between arms", "Top-50 length mismatch", "scorer call count not equal to 50"]
+    },
+    {
+      "id": "allowlisted_selector_comparator",
+      "version": "1.0.0",
+      "role": "idea",
+      "interface": "allowlisted_selector_comparator",
+      "insertion_point": "after frozen retrieval observer",
+      "hypothesis": "Anchor-conditioned corroboration can retain useful evidence that rank-only objectives drop; the null control keeps the same anchors with zero support weights.",
+      "input_schema": "shared query embedding, Top-50 embeddings/texts/metadata, and scorer values",
+      "output_schema": "four ordered unique Top-5 records plus a support trace for the graph arm and explicit null-control identity",
+      "requires": ["frozen_retrieval_observer"],
+      "conflicts": ["gold_in_selection", "adaptive_selector", "selector_feedback"],
+      "deterministic": true,
+      "resource_estimate": "four selector calls per question, 200 total",
+      "failure_signatures": ["unknown selector", "duplicate selected id", "support-disabled control differs from Top-k"]
+    },
+    {
+      "id": "frozen_generator_case_observer",
+      "version": "1.0.0",
+      "role": "adapter",
+      "interface": "frozen_generator_case_observer",
+      "insertion_point": "after each selector output",
+      "hypothesis": "Paired frozen generation exposes whether evidence retention transfers to answer utility.",
+      "input_schema": "question and one selector's ordered Top-5 context",
+      "output_schema": "prediction, EM/F1, proxy evidence flags, and elapsed time",
+      "requires": ["allowlisted_selector_comparator"],
+      "conflicts": ["prompt_mutation", "prediction_postprocessing"],
+      "deterministic": true,
+      "resource_estimate": "four greedy generations per question",
+      "failure_signatures": ["different model identity across arms", "prediction rewritten before scoring"]
+    },
+    {
+      "id": "case_study_renderer",
+      "version": "1.0.0",
+      "role": "adapter",
+      "interface": "case_study_renderer",
+      "insertion_point": "after all in-memory generations and evaluations",
+      "hypothesis": "Complete per-question traces distinguish retrieval, selector, and generation strata.",
+      "input_schema": "complete case records and runtime provenance",
+      "output_schema": "case_study.md, case_study.json, summary.json, run_metadata.json, upload_manifest.json",
+      "requires": ["frozen_generator_case_observer"],
+      "conflicts": ["compact_raw_text_publication"],
+      "deterministic": true,
+      "resource_estimate": "linear rendering and hashing cost",
+      "failure_signatures": ["raw fields in compact files", "hash mismatch", "missing arm or trace"]
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": ["frozen_retrieval_observer", "allowlisted_selector_comparator", "frozen_generator_case_observer", "case_study_renderer"]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": ["frozen_retrieval_observer", "allowlisted_selector_comparator", "frozen_generator_case_observer", "case_study_renderer"],
+    "merge_rule": "One shared retrieval/scorer result is fanned out to QORE, Top-k, Support Graph, and support-disabled control; all returned contexts use the same frozen Generator.",
+    "interaction_ablations": [
+      "QORE versus Top-k on identical candidate ranks",
+      "Support Graph versus the same-anchor zero-support null control",
+      "Support Graph versus Top-k selected-ID parity",
+      "answer-string proxy retention versus paired EM/F1",
+      "support trace components versus selected ranks"
+    ]
+  },
+  "validation": {
+    "baseline_equivalence": "Candidate ids, texts, embeddings, ranks, and scorer scores are identical across all four arm inputs.",
+    "tests": [
+      "baseline_equivalence",
+      "plugin_isolation",
+      "deterministic_replay",
+      "interaction_ablation",
+      "support-disabled control parity",
+      "fresh slice disjointness",
+      "selector allowlist and K=5 contract",
+      "support trace component arithmetic",
+      "compact forbidden-field rejection",
+      "Markdown/JSON content parity",
+      "hash and upload manifest consistency",
+      "validate-only does not load Wiki-DPR or Generator"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/support_graph_screen_50.yaml",
+    "dataset_identity": "nq_open validation all 50 positions 3150-3199 within validation[3150:3200]",
+    "environment": "Record resolved Generator identity, config and plan hashes, Python, git revision, selector allowlist, and timing.",
+    "seeds": [42, 20260908, 20260909],
+    "output_manifest": "exchange/five_ideas/support_graph_screen_50/<timestamp>/upload_manifest.json"
+  },
+  "gates": {
+    "fresh_screen": {
+      "support_graph_f1_delta_min": 0.01,
+      "support_graph_f1_ci95_low_min": 0.0,
+      "no_em_decrease": true,
+      "support_vs_disabled_f1_ci95_low_min": 0.0,
+      "cost_ratio_max": 1.5,
+      "action_if_pass": "eligible for independent full-data screen; no production change",
+      "action_if_fail": "close support-graph candidate without parameter rescue"
+    }
+  },
+  "limitations": [
+    "This is an L0 fresh selector screen, not a population-level utility claim.",
+    "Answer-string-in-text flags are proxies and cannot replace gold passage annotation.",
+    "A fresh screen pass authorizes a separate full-data experiment only after user review; it does not authorize production replacement."
+  ],
+  "recovery_contract": {
+    "dossier_path": ".ai-progress/workstreams/rag-selector/refs/mechanism_recovery_2026-09-08-support-graph.json",
+    "dossier_sha256": "2403f9ec1b676e778e5e21ad0b16fda3781b5496bca9f120868e7e76b5ca94ef",
+    "candidate_id": "anchor_conditioned_support_graph",
+    "discriminating_intermediate_measurement": "Paired fresh-50 task EM/F1, support-versus-control deltas, selected evidence proxy retention, selected-ID parity, support trace, and cost under a frozen Top-50."
+  }
+}

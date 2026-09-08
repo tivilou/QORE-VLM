@@ -1,0 +1,87 @@
+phase:
+  name: support_graph_screen_50
+  schema_version: 1
+  diagnostic_only: true
+  selection_mutation: false
+  authorization: implemented
+
+  dataset:
+    name: nq_open
+    split: validation
+    parent_slice:
+      sample_offset: 3150
+      max_samples: 50
+      slice: "nq_open validation[3150:3200]"
+      fresh_slice: true
+    selected_relative_positions: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49]
+    selected_global_indices: [3150, 3151, 3152, 3153, 3154, 3155, 3156, 3157, 3158, 3159, 3160, 3161, 3162, 3163, 3164, 3165, 3166, 3167, 3168, 3169, 3170, 3171, 3172, 3173, 3174, 3175, 3176, 3177, 3178, 3179, 3180, 3181, 3182, 3183, 3184, 3185, 3186, 3187, 3188, 3189, 3190, 3191, 3192, 3193, 3194, 3195, 3196, 3197, 3198, 3199]
+
+  retrieval:
+    corpus_mode: wiki_dpr
+    wiki_dpr_config: psgs_w100.nq.compressed
+    nprobe: 64
+    initial_top_k: 50
+    one_retrieval_per_question: true
+
+  answer_scorer:
+    backend: dpr
+    one_scoring_pass_per_question: true
+
+  selectors:
+    - id: qore_as
+      method: qore
+      K: 5
+      num_reads: 100
+      lam: 2.0
+      seed: 42
+      gamma: 1.0
+      delta: 0.0
+      complementarity_method: null
+      direct_solve_max_n: 20
+      qore_prefilter_size: null
+    - id: topk_as
+      method: topk
+      K: 5
+    - id: anchor_conditioned_support_graph
+      method: support_graph
+      K: 5
+      anchor_count: 2
+      support_passage_weight: 0.70
+      support_question_weight: 0.30
+    - id: support_disabled_control
+      method: support_graph
+      K: 5
+      anchor_count: 2
+      support_passage_weight: 0.0
+      support_question_weight: 0.0
+      control_of: anchor_conditioned_support_graph
+      support_objective_enabled: false
+
+  generator:
+    model_id: NousResearch/Meta-Llama-3-8B-Instruct
+    revision: 53346005fb0ef11d3b6a83b12c895cca40156b6c
+    max_new_tokens: 32
+    decoding: greedy
+    use_chat_template: true
+    model_path_candidates:
+      - models/llama3-8b
+    resolver_order: [cli_override, project_candidate, hf_cache]
+    record_resolved_identity: true
+
+  gates:
+    paired_bootstrap_repetitions: 2000
+    paired_bootstrap_seed_qore: 20260908
+    paired_bootstrap_seed_control: 20260909
+    support_graph_f1_delta_min: 0.01
+    support_graph_f1_ci95_low_min: 0.0
+    support_graph_em_delta_min: 0.0
+    support_vs_disabled_f1_ci95_low_min: 0.0
+    cost_ratio_max: 1.5
+    proxy_retention_policy: diagnostic_only
+
+  outputs:
+    root: exchange/five_ideas/support_graph_screen_50
+    complete_files: [case_study.md, case_study.json]
+    compact_files: [summary.json, run_metadata.json, upload_manifest.json]
+    complete_files_exchange_only: true
+    forbidden_compact_fields: [question, passages, gold_answers, prediction, raw_prompt, prompt, text, token_ids, selected_ids, retrieved_ids]

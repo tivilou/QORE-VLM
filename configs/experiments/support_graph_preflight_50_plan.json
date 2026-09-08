@@ -1,0 +1,88 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v2",
+  "project": "Q-DUET-VLM/rag-selector",
+  "authorization": "plan_only",
+  "baseline": {
+    "entry_point": "Top-50 -> Top-5 Answer Scorer ordering",
+    "code_revision": "fixed-case-study-artifact",
+    "equivalence_test": "baseline selection is computed from the same frozen candidate rows"
+  },
+  "core_invariants": [
+    "Retrieval, Generator, evaluator, and answer path remain frozen",
+    "Selector sees only question and online Top-50 candidate fields",
+    "Silver evidence labels are read only in the post-selection diagnostic branch",
+    "Exactly five unique passage IDs are emitted in deterministic order",
+    "No GPU, model loading, retrieval, or generation call is allowed in this preflight"
+  ],
+  "interfaces": [
+    {
+      "id": "top50_selector",
+      "type": "transformer",
+      "input_schema": "rag.top50.online.v1",
+      "output_schema": "rag.top5.ids.v1"
+    }
+  ],
+  "plugins": [
+    {
+      "id": "frozen_topk_answer_scorer",
+      "version": "1.0",
+      "role": "baseline",
+      "interface": "top50_selector",
+      "insertion_point": "top50_to_top5",
+      "hypothesis": "Answer Scorer ordering is the frozen baseline for the selector-only comparison",
+      "input_schema": "rag.top50.online.v1",
+      "output_schema": "rag.top5.ids.v1",
+      "deterministic": true,
+      "requires": [],
+      "conflicts": [],
+      "failure_signatures": ["baseline schema mismatch", "duplicate passage ID", "non-deterministic tie order"],
+      "resource_estimate": "CPU-only sort"
+    },
+    {
+      "id": "anchor_conditioned_support_graph",
+      "version": "1.0",
+      "role": "idea",
+      "interface": "top50_selector",
+      "insertion_point": "top50_to_top5",
+      "hypothesis": "After two strong anchors are fixed, corroborative passages form a more useful evidence chain than independent diversity alone",
+      "mechanism_delta": "Maximizes question-conditioned pairwise support; it does not reward uncovered terms, new fact units, or pairwise dissimilarity",
+      "input_schema": "rag.top50.online.v1",
+      "output_schema": "rag.top5.ids.v1",
+      "deterministic": true,
+      "requires": [],
+      "conflicts": ["gold-conditioned labels", "generation feedback", "retrieval changes"],
+      "failure_signatures": ["broad-positive total does not beat Top-k", "direct-positive retention falls below Top-k", "selector misses exceed threshold", "support graph collapses to an irrelevant duplicate cluster"],
+      "resource_estimate": "CPU-only tokenization and pairwise set support"
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": ["frozen_topk_answer_scorer", "anchor_conditioned_support_graph"]
+  },
+  "composition": {
+    "mode": "parallel",
+    "order": ["frozen_topk_answer_scorer", "anchor_conditioned_support_graph"],
+    "merge_rule": "Keep baseline and intervention selections separate; compare compact post-selection diagnostics",
+    "interaction_ablations": ["baseline versus intervention with identical frozen Top-50 and K=5"]
+  },
+  "validation": {
+    "baseline_equivalence": "Synthetic fixture reproduces deterministic Top-k ordering",
+    "tests": ["baseline_equivalence", "plugin_isolation", "deterministic_replay", "interaction_ablation", "schema_invariant", "compact_output"]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/support_graph_preflight_50.yaml",
+    "dataset_identity": "rag-selector-50-detail.json fixed nq_open validation[1950:2000] case study",
+    "environment": "Python standard library only; no GPU or model loading",
+    "seeds": ["deterministic-no-randomness"],
+    "output_manifest": "exchange/five_ideas/support_graph_preflight_50/<timestamp>/run_metadata.json"
+  },
+  "recovery_contract": {
+    "candidate_id": "anchor_conditioned_support_graph",
+    "discriminating_intermediate_measurement": "Broad-positive and direct-positive passage retention on fixed 50-question Top-50, with selector-miss count and support-score distribution"
+  },
+  "limitations": [
+    "Fixed 50-question silver case study is not population-level evidence",
+    "Three-model evidence labels are post-selection silver diagnostics, not gold labels",
+    "No formal selector screen or collaborator handoff is authorized by this plan"
+  ]
+}

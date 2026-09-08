@@ -1,0 +1,48 @@
+phase:
+  name: anchor_conditioned_support_graph
+  schema_version: 1
+  candidate_id: anchor_conditioned_support_graph
+  stage: fixed_50_no_gpu_preflight
+  synthetic_only: false
+  fixed_case_study_only: true
+  data_accessed: true
+  gpu_allowed: false
+  model_loading_allowed: false
+  retrieval_run_allowed: false
+  generation_run_allowed: false
+
+selector:
+  k: 5
+  anchor_count: 2
+  anchor_rule: "top two Answer Scorer values; ties by retrieved rank then passage ID"
+  support_rule: "greedy average support to the selected set"
+  support_edge: "0.70 passage-token Jaccard + 0.30 shared-question-token overlap normalized by passage union"
+  answer_scorer_use: "anchors only; then deterministic tie-breaker"
+  fallback: "Top-k Answer Scorer ordering when the question or candidate token signal is empty"
+  online_fields:
+    - question
+    - top_50[].id
+    - top_50[].text
+    - top_50[].retrieved_rank
+    - top_50[].retrieval_score
+    - top_50[].answer_scorer_score
+  forbidden_online_fields:
+    - gold_answers
+    - top_50[].evidence
+    - selectors
+    - prediction
+    - generation_panel
+    - evaluator
+
+preflight:
+  case_count: 50
+  top50_per_case: 50
+  output_compact: true
+  silver_labels: "post-selection diagnostic only"
+  no_gpu_or_model_calls: true
+
+gates:
+  broad_positive_total: "strictly greater than Top-k + Answer Scorer"
+  direct_positive_total: "not below Top-k + Answer Scorer"
+  broad_selector_miss_count: "at most 5 cases with available broad-positive evidence"
+  deterministic_replay: true
