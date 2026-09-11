@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "artifact_type": "support_graph_screen_50_summary",
+  "diagnostic_only": true,
+  "case_count": 50,
+  "selector_summaries": {
+    "qore_as": {
+      "case_count": 50,
+      "mean_em": 0.36,
+      "mean_f1": 0.544095,
+      "answer_string_proxy_top50_hit_cases": 44,
+      "answer_string_proxy_selected_hit_cases": 36,
+      "answer_string_proxy_selector_miss_cases": 8,
+      "mean_selection_and_generation_ms": 255.124,
+      "selected_id_order_valid": true
+    },
+    "topk_as": {
+      "case_count": 50,
+      "mean_em": 0.36,
+      "mean_f1": 0.529571,
+      "answer_string_proxy_top50_hit_cases": 44,
+      "answer_string_proxy_selected_hit_cases": 37,
+      "answer_string_proxy_selector_miss_cases": 7,
+      "mean_selection_and_generation_ms": 224.469,
+      "selected_id_order_valid": true
+    },
+    "anchor_conditioned_support_graph": {
+      "case_count": 50,
+      "mean_em": 0.4,
+      "mean_f1": 0.533762,
+      "answer_string_proxy_top50_hit_cases": 44,
+      "answer_string_proxy_selected_hit_cases": 37,
+      "answer_string_proxy_selector_miss_cases": 7,
+      "mean_selection_and_generation_ms": 226.323,
+      "selected_id_order_valid": true
+    },
+    "support_disabled_control": {
+      "case_count": 50,
+      "mean_em": 0.36,
+      "mean_f1": 0.529571,
+      "answer_string_proxy_top50_hit_cases": 44,
+      "answer_string_proxy_selected_hit_cases": 37,
+      "answer_string_proxy_selector_miss_cases": 7,
+      "mean_selection_and_generation_ms": 234.562,
+      "selected_id_order_valid": true
+    }
+  },
+  "paired_deltas": {
+    "support_graph_minus_qore": {
+      "em": 0.04,
+      "f1": -0.010333,
+      "f1_ci95_lower": -0.077342
+    },
+    "support_graph_minus_support_disabled": {
+      "f1": 0.00419,
+      "f1_ci95_lower": -0.057362
+    }
+  },
+  "gates": {
+    "contract_gate": {
+      "pass": true
+    },
+    "selected_id_order_gate": {
+      "pass": true
+    },
+    "support_graph_vs_qore_f1_gate": {
+      "pass": false,
+      "delta": -0.010333,
+      "ci95_lower": -0.077342,
+      "required_delta": 0.01
+    },
+    "no_em_drop_gate": {
+      "pass": true,
+      "delta": 0.04
+    },
+    "support_vs_disabled_gate": {
+      "pass": false,
+      "ci95_lower": -0.057362
+    },
+    "proxy_retention_direction_gate": {
+      "pass": true,
+      "support_graph_selected_hit_cases": 37,
+      "qore_selected_hit_cases": 36
+    },
+    "cost_gate": {
+      "pass": true,
+      "ratio": 0.88711,
+      "max_ratio": 1.5
+    }
+  },
+  "limitations": [
+    "This fresh 50-question screen is an L0 diagnostic screen, not population utility evidence.",
+    "answer-string-in-text is a proxy and not a strict gold passage label.",
+    "No silver panel, gold passage, generation output, or evaluator field is used online by selection."
+  ],
+  "control_parity": {
+    "support_disabled_matches_topk_order": true,
+    "support_disabled_matches_topk_set": true
+  },
+  "cost": {
+    "support_graph_to_qore_mean_time_ratio": 0.88711
+  },
+  "decision": "stop_candidate_after_fresh_screen"
+}
