@@ -48,6 +48,12 @@ phase:
         - exchange/five_ideas/support_graph_screen_50/**/*evidence*panel*.json
         - exchange/five_ideas/support_graph_screen_50/**/result.json
 
+  compact_evidence_bundle:
+    path: configs/experiments/silver_oracle_top5_100_votes.json
+    sha256: db364b18294437950e98ce0f6b526e1313d52131a31f9e9b69a199f7d9aff3bb
+    contains_raw_content: false
+    alignment: registered_case_number_and_original_top50_retrieval_rank
+
   input_integrity:
     case_count: 100
     candidate_count: 5000

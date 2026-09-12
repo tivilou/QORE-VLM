@@ -147,6 +147,14 @@ def validate_contract(config_path: Path, plan_path: Path) -> dict[str, Any]:
     if phase.get("selection_mutation") is not False or phase.get("retrieval_or_scoring_calls") != 0:
         raise OracleRunError("production selection and retrieval/scoring must remain frozen")
     specs = _source_specs(phase)
+    vote_bundle = phase.get("compact_evidence_bundle")
+    if vote_bundle != {
+        "path": "configs/experiments/silver_oracle_top5_100_votes.json",
+        "sha256": "db364b18294437950e98ce0f6b526e1313d52131a31f9e9b69a199f7d9aff3bb",
+        "contains_raw_content": False,
+        "alignment": "registered_case_number_and_original_top50_retrieval_rank",
+    }:
+        raise OracleRunError("compact evidence bundle identity changed")
     policy = phase.get("oracle_policy")
     if policy != {
         "k": 5,
@@ -354,6 +362,86 @@ def _panel_evidence(panel: Mapping[str, Any]) -> dict[int, dict[str, dict[str, A
     return output
 
 
+def _load_compact_vote_bundle(
+    root: Path, phase: Mapping[str, Any]
+) -> tuple[dict[str, Mapping[str, Any]], dict[str, Any]]:
+    specification = phase["compact_evidence_bundle"]
+    path = _resolve_path(root, str(specification["path"]))
+    if not path.is_file() or _sha256(path) != specification["sha256"]:
+        raise OracleRunError("registered compact evidence bundle is missing or has wrong SHA-256")
+    payload = _load_json(path)
+    if (
+        payload.get("schema_version") != 1
+        or payload.get("artifact_type") != "silver_oracle_rank_aligned_vote_bundle"
+        or payload.get("diagnostic_only") is not True
+        or payload.get("contains_raw_content") is not False
+        or payload.get("vote_tuple")
+        != ["direct_votes", "positive_votes", "mean_confidence"]
+    ):
+        raise OracleRunError("compact evidence bundle schema is invalid")
+    sources = payload.get("sources")
+    if not isinstance(sources, list) or [row.get("id") for row in sources if isinstance(row, Mapping)] != list(EXPECTED_SOURCE_IDS):
+        raise OracleRunError("compact evidence bundle source allowlist changed")
+    return {str(row["id"]): row for row in sources}, {
+        "path_name": path.name,
+        "sha256": specification["sha256"],
+        "bytes": path.stat().st_size,
+        "contains_raw_content": False,
+    }
+
+
+def _rank_aligned_vote_evidence(
+    case_payload: Mapping[str, Any],
+    source_spec: Mapping[str, Any],
+    bundled_source: Mapping[str, Any],
+) -> dict[int, dict[str, dict[str, Any]]]:
+    if (
+        bundled_source.get("case_study_sha256") != source_spec["case_study_sha256"]
+        or bundled_source.get("evidence_panel_sha256") != source_spec["evidence_panel_sha256"]
+    ):
+        raise OracleRunError("compact vote bundle source provenance mismatch")
+    cases = case_payload.get("cases")
+    vote_cases = bundled_source.get("cases")
+    if not isinstance(cases, list) or not isinstance(vote_cases, list) or len(cases) != 50 or len(vote_cases) != 50:
+        raise OracleRunError("compact vote bundle must align to 50 source cases")
+    output: dict[int, dict[str, dict[str, Any]]] = {}
+    for case_number, (case, votes) in enumerate(zip(cases, vote_cases), start=1):
+        top_50 = case.get("top_50") if isinstance(case, Mapping) else None
+        if not isinstance(top_50, list) or not isinstance(votes, list) or len(top_50) != 50 or len(votes) != 50:
+            raise OracleRunError("compact vote bundle rank alignment is invalid")
+        by_candidate: dict[str, dict[str, Any]] = {}
+        for passage, vote in zip(top_50, votes):
+            if not isinstance(passage, Mapping) or not isinstance(vote, list) or len(vote) != 3:
+                raise OracleRunError("compact vote tuple is invalid")
+            direct_votes, positive_votes, confidence = vote
+            if (
+                isinstance(direct_votes, bool)
+                or isinstance(positive_votes, bool)
+                or not isinstance(direct_votes, int)
+                or not isinstance(positive_votes, int)
+                or not 0 <= direct_votes <= positive_votes <= 3
+            ):
+                raise OracleRunError("compact vote counts are invalid")
+            confidence = float(confidence)
+            if not 0.0 <= confidence <= 1.0:
+                raise OracleRunError("compact mean confidence is invalid")
+            labels = (
+                ["direct"] * direct_votes
+                + ["partial"] * (positive_votes - direct_votes)
+                + ["irrelevant"] * (3 - positive_votes)
+            )
+            by_candidate[str(passage["id"])] = {
+                "model_labels": labels,
+                "mean_confidence": confidence,
+                "direct_votes": direct_votes,
+                "positive_votes": positive_votes,
+                "direct_consensus": direct_votes >= 2,
+                "positive_consensus": positive_votes >= 2,
+            }
+        output[case_number] = by_candidate
+    return output
+
+
 def _normalize_source_cases(
     payload: Mapping[str, Any],
     spec: Mapping[str, Any],
@@ -437,6 +525,8 @@ def _load_registered_source(
     detail_override: Path | None = None,
     case_override: Path | None = None,
     panel_override: Path | None = None,
+    bundled_source: Mapping[str, Any] | None = None,
+    bundle_provenance: Mapping[str, Any] | None = None,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     detail = _find_detail_source(root, spec, detail_override)
     if detail is not None:
@@ -457,6 +547,19 @@ def _load_registered_source(
         glob_patterns=spec.get("case_study_globs", []),
         label=f"{spec['id']} case study",
     )
+    case_payload = _load_json(case_path)
+    if bundled_source is not None:
+        evidence = _rank_aligned_vote_evidence(case_payload, spec, bundled_source)
+        return _normalize_source_cases(
+            case_payload, spec, evidence_by_case=evidence
+        ), {
+            "source_id": spec["id"],
+            "mode": "registered_compact_vote_join",
+            "case_path_name": case_path.name,
+            "case_study_sha256": _sha256(case_path),
+            "evidence_panel_sha256": spec["evidence_panel_sha256"],
+            "compact_vote_bundle": dict(bundle_provenance or {}),
+        }
     panel_path = _find_hash_match(
         root,
         expected_sha256=str(spec["evidence_panel_sha256"]),
@@ -467,7 +570,7 @@ def _load_registered_source(
     )
     evidence = _panel_evidence(_load_json(panel_path))
     return _normalize_source_cases(
-        _load_json(case_path), spec, evidence_by_case=evidence
+        case_payload, spec, evidence_by_case=evidence
     ), {
         "source_id": spec["id"],
         "mode": "raw_join",
@@ -517,6 +620,7 @@ def load_registered_cases(
     root: Path, phase: Mapping[str, Any], args: argparse.Namespace
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, int]]:
     specs = _source_specs(phase)
+    bundled_sources, bundle_provenance = _load_compact_vote_bundle(root, phase)
     overrides = (
         (args.detail_source_a, args.case_source_a, args.panel_source_a),
         (args.detail_source_b, args.case_source_b, args.panel_source_b),
@@ -530,6 +634,8 @@ def load_registered_cases(
             detail_override=override[0],
             case_override=override[1],
             panel_override=override[2],
+            bundled_source=bundled_sources.get(str(spec["id"])),
+            bundle_provenance=bundle_provenance,
         )
         cases.extend(source_cases)
         provenance.append(source_provenance)

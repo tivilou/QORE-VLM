@@ -124,6 +124,16 @@ class SilverOracleTop5100Tests(unittest.TestCase):
         self.assertIn("production_selector_registration", oracle["conflicts"])
         self.assertIn("observability_contract", oracle)
 
+    def test_compact_vote_bundle_is_small_and_contains_no_raw_fields(self) -> None:
+        path = ROOT / "configs/experiments/silver_oracle_top5_100_votes.json"
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        self.assertLessEqual(path.stat().st_size, MODULE.MAX_COMPACT_BYTES)
+        self.assertFalse(payload["contains_raw_content"])
+        self.assertFalse(MODULE._forbidden_fields(payload))
+        self.assertEqual([row["id"] for row in payload["sources"]], list(MODULE.EXPECTED_SOURCE_IDS))
+        self.assertEqual(len(payload["sources"][0]["cases"]), 50)
+        self.assertEqual(len(payload["sources"][0]["cases"][0]), 50)
+
 
 if __name__ == "__main__":
     unittest.main()

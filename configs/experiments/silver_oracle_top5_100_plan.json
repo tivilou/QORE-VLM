@@ -8,7 +8,7 @@
     "equivalence_test": "all three arms use registered Top-50 snapshots, exactly five unique members, ascending original retrieval-rank context order, and one frozen Generator identity"
   },
   "core_invariants": [
-    "Reuse only the registered nq_open validation[1950:2000] and validation[3150:3200] case-study and evidence-panel hashes.",
+    "Reuse only the registered nq_open validation[1950:2000] and validation[3150:3200] case-study and evidence-panel hashes; the bundled 62 KB rank-aligned vote artifact contains no raw question, passage, answer, prediction, or passage id.",
     "Perform zero retrieval and zero Answer Scorer calls; never download Wiki-DPR.",
     "Treat three-model labels as gold-answer-conditioned L0 silver diagnostics that may affect only the oracle arm.",
     "Preserve stored QORE and Top-k membership exactly, while reordering every arm by the same original retrieval-rank rule before generation.",
@@ -19,7 +19,7 @@
     {
       "id": "registered_case_panel_loader",
       "type": "transformer",
-      "input_schema": "two registered case-study/panel bundles with exact SHA-256 identities",
+      "input_schema": "two registered case studies plus an exact-hash compact rank-aligned vote bundle derived from the registered evidence panels",
       "output_schema": "100 questions and 5000 Top-50 candidate records with complete three-model silver labels",
       "invariants": ["50 cases per source", "50 candidates per case", "exact source hashes", "three labels per candidate"]
     },
@@ -60,12 +60,12 @@
       "interface": "registered_case_panel_loader",
       "insertion_point": "before any diagnostic membership construction",
       "hypothesis": "Hash-registered completed traces can isolate the Top-50 to Top-5 and Generator boundary without rerunning retrieval.",
-      "input_schema": "registered case-study and evidence-panel JSON files",
+      "input_schema": "registered case-study JSON files and the bundled privacy-valid rank-aligned vote JSON",
       "output_schema": "normalized 100-case candidate bundle",
       "requires": [],
       "conflicts": ["live_retrieval", "live_answer_scoring", "unregistered_source_substitution"],
       "deterministic": true,
-      "resource_estimate": "read and validate approximately 15-30 MB of existing JSON",
+      "resource_estimate": "read and validate approximately 12 MB of existing case studies plus a 62 KB compact vote bundle",
       "failure_signatures": ["hash mismatch", "source missing", "candidate-label join mismatch", "integrity-count mismatch"],
       "observability_contract": {
         "trace_schema": "silver-oracle-top5-100.case-study.v1",
