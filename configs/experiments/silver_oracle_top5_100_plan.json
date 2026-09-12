@@ -1,0 +1,244 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "Q-DUET-VLM",
+  "authorization": "implemented",
+  "baseline": {
+    "entry_point": "stored qore_as/topk_as memberships plus applications/rag/generation/generator.py:Generator.generate",
+    "code_revision": "resolved at runtime",
+    "equivalence_test": "all three arms use registered Top-50 snapshots, exactly five unique members, ascending original retrieval-rank context order, and one frozen Generator identity"
+  },
+  "core_invariants": [
+    "Reuse only the registered nq_open validation[1950:2000] and validation[3150:3200] case-study and evidence-panel hashes.",
+    "Perform zero retrieval and zero Answer Scorer calls; never download Wiki-DPR.",
+    "Treat three-model labels as gold-answer-conditioned L0 silver diagnostics that may affect only the oracle arm.",
+    "Preserve stored QORE and Top-k membership exactly, while reordering every arm by the same original retrieval-rank rule before generation.",
+    "Use the same frozen Generator model, revision, prompt path, decoding, and evaluator for exactly 300 calls.",
+    "Complete questions, passages, answers, predictions, and membership ids remain exchange-only; GitHub receives only compact privacy-valid files at most 1 MiB."
+  ],
+  "interfaces": [
+    {
+      "id": "registered_case_panel_loader",
+      "type": "transformer",
+      "input_schema": "two registered case-study/panel bundles with exact SHA-256 identities",
+      "output_schema": "100 questions and 5000 Top-50 candidate records with complete three-model silver labels",
+      "invariants": ["50 cases per source", "50 candidates per case", "exact source hashes", "three labels per candidate"]
+    },
+    {
+      "id": "silver_oracle_membership",
+      "type": "transformer",
+      "input_schema": "one Top-50 with evidence votes, confidence, Answer Scorer score, and retrieval rank",
+      "output_schema": "five unique diagnostic-only candidate members plus priority trace",
+      "invariants": ["direct consensus before broad consensus", "Answer Scorer only fills unused slots", "no production registration"]
+    },
+    {
+      "id": "common_context_order",
+      "type": "transformer",
+      "input_schema": "stored QORE, stored Top-k, and silver-oracle membership sets",
+      "output_schema": "three five-passage contexts sorted by ascending original retrieval rank",
+      "invariants": ["membership unchanged during ordering", "identical ordering policy across arms"]
+    },
+    {
+      "id": "frozen_generator_observer",
+      "type": "transformer",
+      "input_schema": "question and one common-order Top-5 context",
+      "output_schema": "unaltered prediction, EM, F1, and runtime",
+      "invariants": ["one frozen Generator", "greedy decoding", "no prediction rewriting"]
+    },
+    {
+      "id": "oracle_result_renderer",
+      "type": "combiner",
+      "input_schema": "100 complete paired three-arm traces and runtime provenance",
+      "output_schema": "private JSON/Markdown case study plus compact result, metadata, and upload manifest",
+      "invariants": ["paired bootstrap", "diagnostic strata", "privacy scan", "1 MiB gate"]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "registered_case_panel_loader",
+      "version": "1.0.0",
+      "role": "baseline",
+      "interface": "registered_case_panel_loader",
+      "insertion_point": "before any diagnostic membership construction",
+      "hypothesis": "Hash-registered completed traces can isolate the Top-50 to Top-5 and Generator boundary without rerunning retrieval.",
+      "input_schema": "registered case-study and evidence-panel JSON files",
+      "output_schema": "normalized 100-case candidate bundle",
+      "requires": [],
+      "conflicts": ["live_retrieval", "live_answer_scoring", "unregistered_source_substitution"],
+      "deterministic": true,
+      "resource_estimate": "read and validate approximately 15-30 MB of existing JSON",
+      "failure_signatures": ["hash mismatch", "source missing", "candidate-label join mismatch", "integrity-count mismatch"],
+      "observability_contract": {
+        "trace_schema": "silver-oracle-top5-100.case-study.v1",
+        "stages": ["source_load", "source_join"],
+        "emitted_fields": ["source provenance", "integrity counts"],
+        "checks": ["100 unique questions", "5000 candidates", "three labels per candidate"],
+        "deterministic_replay": true,
+        "replay": "exact source hashes reproduce the same normalized bundle"
+      }
+    },
+    {
+      "id": "silver_oracle_membership",
+      "version": "1.0.0",
+      "role": "idea",
+      "interface": "silver_oracle_membership",
+      "insertion_point": "after source normalization and only inside the diagnostic oracle arm",
+      "hypothesis": "If selector errors are materially limiting final utility, a Top-5 that maximizes three-model consensus evidence should improve frozen-Generator F1 over QORE and Top-k.",
+      "input_schema": "50 registered candidates with gold-conditioned three-model silver labels and ordinary stored scores",
+      "output_schema": "five unique member indices and auditable ranking trace",
+      "requires": ["registered_case_panel_loader"],
+      "conflicts": ["production_selector_registration", "online_gold_access", "baseline_membership_mutation"],
+      "deterministic": true,
+      "resource_estimate": "O(50 log 50) per question",
+      "failure_signatures": ["missing judge label", "duplicate candidate id", "non-finite score", "oracle output enters an online selector"],
+      "observability_contract": {
+        "trace_schema": "silver-oracle-top5-100.case-study.v1",
+        "stages": ["oracle_membership"],
+        "emitted_fields": ["priority tier", "direct votes", "positive votes", "confidence", "Answer Scorer score", "retrieval rank"],
+        "checks": ["five unique members", "direct-before-broad priority", "deterministic replay"],
+        "deterministic_replay": true,
+        "replay": "same candidate bundle yields byte-equivalent membership and trace"
+      }
+    },
+    {
+      "id": "common_context_order",
+      "version": "1.0.0",
+      "role": "adapter",
+      "interface": "common_context_order",
+      "insertion_point": "after membership and before Generator calls",
+      "hypothesis": "A common neutral order isolates membership utility from context-order effects.",
+      "input_schema": "three Top-5 membership sets",
+      "output_schema": "three contexts in ascending original retrieval rank",
+      "requires": ["registered_case_panel_loader", "silver_oracle_membership"],
+      "conflicts": ["arm_specific_ordering", "oracle_priority_order_generation"],
+      "deterministic": true,
+      "resource_estimate": "three five-item sorts per question",
+      "failure_signatures": ["membership changes during sorting", "rank order differs by arm policy"],
+      "observability_contract": {
+        "trace_schema": "silver-oracle-top5-100.case-study.v1",
+        "stages": ["context_order"],
+        "emitted_fields": ["context order identity", "original retrieval ranks"],
+        "checks": ["strictly ascending ranks", "membership-set parity before and after ordering"],
+        "deterministic_replay": true,
+        "replay": "same membership set yields the same context order"
+      }
+    },
+    {
+      "id": "frozen_generator_observer",
+      "version": "1.0.0",
+      "role": "adapter",
+      "interface": "frozen_generator_observer",
+      "insertion_point": "after common context ordering",
+      "hypothesis": "Paired frozen generation reveals whether improved evidence membership is answer-utility responsive.",
+      "input_schema": "question and one common-order Top-5 context",
+      "output_schema": "raw prediction, EM, F1, and elapsed time",
+      "requires": ["common_context_order"],
+      "conflicts": ["prompt_mutation", "different_model_per_arm", "prediction_postprocessing"],
+      "deterministic": true,
+      "resource_estimate": "300 greedy Generator calls",
+      "failure_signatures": ["model identity mismatch", "call count not 300", "decoding mismatch", "prediction rewritten"],
+      "observability_contract": {
+        "trace_schema": "silver-oracle-top5-100.case-study.v1",
+        "stages": ["generation", "evaluation"],
+        "emitted_fields": ["resolved model identity", "prediction", "EM", "F1", "runtime"],
+        "checks": ["same model revision", "same decoding", "exact arm coverage"],
+        "deterministic_replay": true,
+        "replay": "greedy generation under the recorded model/config is the replay contract"
+      }
+    },
+    {
+      "id": "oracle_result_renderer",
+      "version": "1.0.0",
+      "role": "adapter",
+      "interface": "oracle_result_renderer",
+      "insertion_point": "after all paired generations and evaluations",
+      "hypothesis": "Paired aggregate and case-level strata can separate selector-responsive utility from Generator-unresponsive evidence gains.",
+      "input_schema": "100 complete three-arm case traces",
+      "output_schema": "private complete artifacts and compact privacy-valid result artifacts",
+      "requires": ["frozen_generator_observer"],
+      "conflicts": ["raw_content_github_publication", "claim_tier_promotion"],
+      "deterministic": true,
+      "resource_estimate": "linear aggregation, 5000 bootstrap replicates, rendering, and hashing",
+      "failure_signatures": ["forbidden compact field", "compact file exceeds 1 MiB", "missing paired arm", "hash mismatch"],
+      "observability_contract": {
+        "trace_schema": "silver-oracle-top5-100.case-study.v1",
+        "stages": ["aggregate", "render", "publish_route"],
+        "emitted_fields": ["paired deltas", "bootstrap interval", "diagnostic strata", "gate", "file hashes"],
+        "checks": ["100 paired rows", "privacy scan", "size threshold", "complete/compact routing"],
+        "deterministic_replay": true,
+        "replay": "same complete traces and seeds reproduce compact metrics and gates"
+      }
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": [
+      "registered_case_panel_loader",
+      "silver_oracle_membership",
+      "common_context_order",
+      "frozen_generator_observer",
+      "oracle_result_renderer"
+    ]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": [
+      "registered_case_panel_loader",
+      "silver_oracle_membership",
+      "common_context_order",
+      "frozen_generator_observer",
+      "oracle_result_renderer"
+    ],
+    "merge_rule": "Load registered stored traces, preserve QORE/Top-k membership, construct the diagnostic oracle membership, apply one retrieval-rank ordering rule, and fan all three arms through one frozen Generator.",
+    "interaction_ablations": [
+      "silver oracle versus stored QORE membership under common order",
+      "silver oracle versus stored Top-k membership under common order",
+      "evidence-count gain versus per-question F1 response",
+      "Top-50 evidence absence versus selector headroom",
+      "membership effect isolated from context order"
+    ]
+  },
+  "validation": {
+    "baseline_equivalence": "Stored QORE and Top-k membership sets are unchanged, and every arm receives the same ordering, Generator, prompt path, decoding, and evaluator.",
+    "tests": [
+      "baseline_equivalence",
+      "plugin_isolation",
+      "deterministic_replay",
+      "interaction_ablation",
+      "plugin-plan schema validation",
+      "validate-only loads neither data nor model",
+      "exact source hash and 100-question integrity",
+      "three-label candidate coverage",
+      "oracle deterministic priority and Answer Scorer fill",
+      "baseline membership independence from silver labels",
+      "common retrieval-rank context order",
+      "exact K=5 and 300-call contracts",
+      "paired bootstrap and diagnostic strata",
+      "compact forbidden-field and 1 MiB gates"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/silver_oracle_top5_100.yaml",
+    "dataset_identity": "registered nq_open validation[1950:2000] and validation[3150:3200] stored Top-50 traces",
+    "environment": "Record git revision, config/plan hashes, source hashes, Python, resolved Generator identity, output hashes, and timing.",
+    "seeds": [20260912],
+    "output_manifest": "exchange/five_ideas/silver_oracle_top5_100/<timestamp>/upload_manifest.json"
+  },
+  "gates": {
+    "selector_responsiveness": {
+      "oracle_minus_qore_f1_delta_min": 0.03,
+      "oracle_minus_qore_f1_ci95_lower_strictly_above": 0.0,
+      "oracle_minus_qore_em_delta_min": 0.0,
+      "oracle_minus_topk_f1_strictly_positive": true,
+      "positive_f1_case_count_min": 5,
+      "action_if_pass": "prioritize a deployable gold-free selector that approximates oracle membership; no claim promotion",
+      "action_if_borderline": "inspect selector-responsive and Generator-unresponsive strata before one bounded refinement",
+      "action_if_fail": "do not optimize silver evidence retention as a surrogate for final F1"
+    }
+  },
+  "limitations": [
+    "This fixed-100 oracle experiment is L0 diagnostic only.",
+    "The three-model labels were conditioned on gold answers and therefore cannot enter a deployable selector.",
+    "A positive ceiling validates selector headroom through the frozen Generator, not the generalization or novelty of any online mechanism.",
+    "A negative result challenges the silver evidence surrogate or Generator responsiveness; it does not prove retrieval quality."
+  ]
+}

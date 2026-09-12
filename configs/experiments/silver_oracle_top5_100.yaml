@@ -1,0 +1,108 @@
+phase:
+  name: silver_oracle_top5_100
+  schema_version: 1
+  evidence_tier: L0_diagnostic
+  diagnostic_only: true
+  selection_mutation: false
+  retrieval_or_scoring_calls: 0
+
+  input_sources:
+    - id: nq_1950_1999
+      dataset_slice: "nq_open validation[1950:2000]"
+      global_start: 1950
+      global_end: 1999
+      case_count: 50
+      case_study_sha256: 2a7b8f96322a1200d8e2124c0bffc3413cf2e646e17aeda0d5708b2316693b88
+      evidence_panel_sha256: 22ad9616ce64c46288b8fb85236b1157579b281b28acff84e0a7b4c68b48bccf
+      merged_detail_candidates:
+        - research-web/apps/experiment-results/case-studies/rag-selector-50-detail.json
+        - ../research-web/apps/experiment-results/case-studies/rag-selector-50-detail.json
+      case_study_candidates:
+        - exchange/five_ideas/rag_selector_case_study_50/20260902T121037Z/case_study.json
+      case_study_globs:
+        - exchange/five_ideas/rag_selector_case_study_50/*/case_study.json
+      evidence_panel_candidates:
+        - exchange/five_ideas/rag_selector_case_study_50/rag_evidence_panel_50_complete_with_generation.json
+      evidence_panel_globs:
+        - exchange/five_ideas/rag_selector_case_study_50/**/*evidence*panel*.json
+        - exchange/five_ideas/rag_evidence_panel_50/**/*evidence*panel*.json
+        - exchange/five_ideas/rag_evidence_panel_50/**/result.json
+
+    - id: nq_3150_3199
+      dataset_slice: "nq_open validation[3150:3200]"
+      global_start: 3150
+      global_end: 3199
+      case_count: 50
+      case_study_sha256: 4e55bf9037bf48c98fcc13c1a8dbaff7beaf682615b5aa0d5c63241fe3c40943
+      evidence_panel_sha256: 2a20e9ed30d775bf687b8d96d9815fbfd373700ad538b5b1158894b0d9946ab6
+      merged_detail_candidates:
+        - research-web/apps/experiment-results/case-studies/support-graph-screen-50-detail.json
+        - ../research-web/apps/experiment-results/case-studies/support-graph-screen-50-detail.json
+      case_study_candidates:
+        - exchange/five_ideas/support_graph_screen_50/20260911T024206Z/case_study.json
+      case_study_globs:
+        - exchange/five_ideas/support_graph_screen_50/*/case_study.json
+      evidence_panel_candidates:
+        - exchange/five_ideas/support_graph_screen_50/20260911T024206Z/evidence_panel_3model.json
+      evidence_panel_globs:
+        - exchange/five_ideas/support_graph_screen_50/**/*evidence*panel*.json
+        - exchange/five_ideas/support_graph_screen_50/**/result.json
+
+  input_integrity:
+    case_count: 100
+    candidate_count: 5000
+    direct_consensus_candidates: 289
+    positive_consensus_candidates: 603
+    cases_with_direct_consensus: 77
+    cases_with_positive_consensus: 87
+
+  membership_integrity:
+    qore_common_order: {direct: 119, broad: 177}
+    topk_common_order: {direct: 138, broad: 203}
+    silver_oracle_common_order: {direct: 222, broad: 307}
+
+  oracle_policy:
+    k: 5
+    judge_count: 3
+    consensus_votes: 2
+    priority: [direct_consensus, positive_consensus, answer_scorer_fill]
+    positive_labels: [direct, partial]
+    tie_break: [direct_votes, positive_votes, mean_confidence, answer_scorer_score, retrieved_rank, candidate_id]
+    target_conditioned: true
+    deployable: false
+
+  comparison:
+    arms: [qore_common_order, topk_common_order, silver_oracle_common_order]
+    context_order: ascending_original_retrieval_rank
+    generator_calls: 300
+    reuse_stored_top50: true
+    rerun_retrieval: false
+    rerun_answer_scorer: false
+    rerun_all_generation_arms: true
+
+  generator:
+    model_id: NousResearch/Meta-Llama-3-8B-Instruct
+    revision: 53346005fb0ef11d3b6a83b12c895cca40156b6c
+    max_new_tokens: 32
+    decoding: greedy
+    use_chat_template: true
+    model_path_candidates: [models/llama3-8b]
+    resolver_order: [cli_override, project_candidate, hf_cache]
+    record_resolved_identity: true
+
+  gates:
+    paired_bootstrap_repetitions: 5000
+    paired_bootstrap_seed: 20260912
+    oracle_minus_qore_f1_delta_min: 0.03
+    oracle_minus_qore_f1_ci95_lower_min: 0.0
+    oracle_minus_qore_em_delta_min: 0.0
+    oracle_minus_topk_f1_delta_min: 0.0
+    positive_f1_case_count_min: 5
+
+  outputs:
+    root: exchange/five_ideas/silver_oracle_top5_100
+    complete_files: [case_study.json, case_study.md]
+    compact_files: [result.json, run_metadata.json, upload_manifest.json]
+    complete_files_exchange_only: true
+    github_max_bytes: 1048576
+    forbidden_compact_fields: [question, passages, gold_answers, prediction, raw_prompt, prompt, text, token_ids, selected_ids, retrieved_ids]
