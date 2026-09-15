@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "artifact_type": "silver_oracle_top5_100_run_metadata",
+  "status": "completed",
+  "evidence_tier": "L0_diagnostic",
+  "diagnostic_only": true,
+  "git": {
+    "commit": "b2c1a1162eec76420e5e28dba111066af4d09ac1",
+    "branch": "five-ideas-development"
+  },
+  "environment": {
+    "python_executable": "/root/miniconda3/bin/python",
+    "python_version": "3.10.20"
+  },
+  "config": {
+    "path_name": "silver_oracle_top5_100.yaml",
+    "sha256": "6384f13f6b580a5702edb545198c00b5bb778b99f2396146239774f90896ad76"
+  },
+  "plugin_plan": {
+    "path_name": "silver_oracle_top5_100_plan.json",
+    "sha256": "12e59110efae9fe63029160ea2eb23a16c743a80342bd4ef373c7e5d2e92687a"
+  },
+  "source_provenance": [
+    {
+      "source_id": "nq_1950_1999",
+      "mode": "registered_compact_vote_join",
+      "case_path_name": "case_study.json",
+      "case_study_sha256": "2a7b8f96322a1200d8e2124c0bffc3413cf2e646e17aeda0d5708b2316693b88",
+      "evidence_panel_sha256": "22ad9616ce64c46288b8fb85236b1157579b281b28acff84e0a7b4c68b48bccf",
+      "compact_vote_bundle": {
+        "path_name": "silver_oracle_top5_100_votes.json",
+        "sha256": "db364b18294437950e98ce0f6b526e1313d52131a31f9e9b69a199f7d9aff3bb",
+        "bytes": 62598,
+        "contains_raw_content": false
+      }
+    },
+    {
+      "source_id": "nq_3150_3199",
+      "mode": "registered_compact_vote_join",
+      "case_path_name": "case_study.json",
+      "case_study_sha256": "4e55bf9037bf48c98fcc13c1a8dbaff7beaf682615b5aa0d5c63241fe3c40943",
+      "evidence_panel_sha256": "2a20e9ed30d775bf687b8d96d9815fbfd373700ad538b5b1158894b0d9946ab6",
+      "compact_vote_bundle": {
+        "path_name": "silver_oracle_top5_100_votes.json",
+        "sha256": "db364b18294437950e98ce0f6b526e1313d52131a31f9e9b69a199f7d9aff3bb",
+        "bytes": 62598,
+        "contains_raw_content": false
+      }
+    }
+  ],
+  "input_integrity": {
+    "case_count": 100,
+    "candidate_count": 5000,
+    "direct_consensus_candidates": 289,
+    "positive_consensus_candidates": 603,
+    "cases_with_direct_consensus": 77,
+    "cases_with_positive_consensus": 87
+  },
+  "membership_integrity": {
+    "qore_common_order": {
+      "direct": 119,
+      "broad": 177
+    },
+    "topk_common_order": {
+      "direct": 138,
+      "broad": 203
+    },
+    "silver_oracle_common_order": {
+      "direct": 222,
+      "broad": 307
+    }
+  },
+  "generator": {
+    "model_id": "NousResearch/Meta-Llama-3-8B-Instruct",
+    "revision": "53346005fb0ef11d3b6a83b12c895cca40156b6c",
+    "config_sha256": "61f3de03a16ca8046b05dc777bce72717022bc8522152eee61a69072272ef54b",
+    "resolution": "project_candidate"
+  },
+  "arms": [
+    "qore_common_order",
+    "topk_common_order",
+    "silver_oracle_common_order"
+  ],
+  "generator_call_count": 300,
+  "retrieval_calls": 0,
+  "answer_scorer_calls": 0,
+  "outputs": {
+    "target_directory": "five_ideas/silver_oracle_top5_100/20260915T120525Z",
+    "complete_files_exchange_only": true,
+    "complete_files": [
+      {
+        "name": "case_study.json",
+        "bytes": 12685025,
+        "sha256": "b7fada9a172c3837c709ce511201749ef10dc299f88de03d338e5d2d83d6086a",
+        "exchange_path": "five_ideas/silver_oracle_top5_100/20260915T120525Z/case_study.json"
+      },
+      {
+        "name": "case_study.md",
+        "bytes": 4799982,
+        "sha256": "4050a7aae22882187a80333605b2d3b2177ec7821a1c445ea2b436dc72f7a82b",
+        "exchange_path": "five_ideas/silver_oracle_top5_100/20260915T120525Z/case_study.md"
+      }
+    ],
+    "compact_result": {
+      "name": "result.json",
+      "bytes": 3472,
+      "sha256": "0ed308ef5dad6a7322475eb6ec7abdcc1d4eeb3db98ae302e1b371276b5f30db"
+    }
+  },
+  "timing_ms": {
+    "total": 73063.49617099999
+  },
+  "decision": "borderline_selector_responsiveness"
+}

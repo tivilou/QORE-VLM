@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "artifact_type": "silver_oracle_top5_100_compact_result",
+  "status": "completed",
+  "evidence_tier": "L0_diagnostic",
+  "diagnostic_only": true,
+  "case_count": 100,
+  "generator_call_count": 300,
+  "arm_summaries": {
+    "qore_common_order": {
+      "case_count": 100,
+      "mean_em": 0.32,
+      "mean_f1": 0.481592,
+      "mean_direct_consensus_in_top5": 1.19,
+      "mean_positive_consensus_in_top5": 1.77,
+      "mean_generation_ms": 253.527
+    },
+    "topk_common_order": {
+      "case_count": 100,
+      "mean_em": 0.29,
+      "mean_f1": 0.444949,
+      "mean_direct_consensus_in_top5": 1.38,
+      "mean_positive_consensus_in_top5": 2.03,
+      "mean_generation_ms": 234.353
+    },
+    "silver_oracle_common_order": {
+      "case_count": 100,
+      "mean_em": 0.28,
+      "mean_f1": 0.495734,
+      "mean_direct_consensus_in_top5": 2.22,
+      "mean_positive_consensus_in_top5": 3.07,
+      "mean_generation_ms": 236.57
+    }
+  },
+  "paired_deltas": {
+    "silver_oracle_minus_qore": {
+      "mean_em_delta": -0.04,
+      "mean_f1_delta": 0.014143,
+      "f1_delta_ci95": [
+        -0.041715,
+        0.071531
+      ],
+      "positive_f1_cases": 13,
+      "unchanged_f1_cases": 73,
+      "negative_f1_cases": 14,
+      "largest_three_positive_gain_share": 0.3675
+    },
+    "silver_oracle_minus_topk": {
+      "mean_em_delta": -0.01,
+      "mean_f1_delta": 0.050786,
+      "f1_delta_ci95": [
+        -0.006962,
+        0.111287
+      ],
+      "positive_f1_cases": 14,
+      "unchanged_f1_cases": 79,
+      "negative_f1_cases": 7,
+      "largest_three_positive_gain_share": 0.336179
+    }
+  },
+  "diagnostic_strata": {
+    "retrieval_miss_no_positive_consensus": 13,
+    "no_qore_membership_headroom": 33,
+    "oracle_more_evidence_f1_up": 11,
+    "oracle_more_evidence_f1_same": 44,
+    "oracle_more_evidence_f1_down": 12
+  },
+  "gate": {
+    "pass": false,
+    "checks": {
+      "oracle_minus_qore_f1_delta": false,
+      "oracle_minus_qore_ci_lower": false,
+      "oracle_minus_qore_em": false,
+      "oracle_minus_topk_direction": true,
+      "distributed_gain": true
+    },
+    "thresholds": {
+      "paired_bootstrap_repetitions": 5000,
+      "paired_bootstrap_seed": 20260912,
+      "oracle_minus_qore_f1_delta_min": 0.03,
+      "oracle_minus_qore_f1_ci95_lower_min": 0.0,
+      "oracle_minus_qore_em_delta_min": 0.0,
+      "oracle_minus_topk_f1_delta_min": 0.0,
+      "positive_f1_case_count_min": 5
+    }
+  },
+  "decision": "borderline_selector_responsiveness",
+  "limitations": [
+    "The oracle uses gold-answer-conditioned three-model silver labels and is not deployable.",
+    "This is a fixed 100-question diagnostic ceiling, not L1/L2 evidence or a SOTA claim.",
+    "The experiment tests whether better Top-5 evidence membership transfers through the frozen Generator; it does not validate a new online selector."
+  ],
+  "validation": {
+    "contract": {
+      "status": "valid",
+      "phase": "silver_oracle_top5_100",
+      "evidence_tier": "L0_diagnostic",
+      "source_ids": [
+        "nq_1950_1999",
+        "nq_3150_3199"
+      ],
+      "case_count": 100,
+      "arms": [
+        "qore_common_order",
+        "topk_common_order",
+        "silver_oracle_common_order"
+      ],
+      "generator_calls": 300,
+      "model_loaded": false,
+      "wiki_dpr_started": false
+    },
+    "common_context_order": true,
+    "retrieval_calls": 0,
+    "answer_scorer_calls": 0,
+    "production_selector_mutated": false
+  }
+}

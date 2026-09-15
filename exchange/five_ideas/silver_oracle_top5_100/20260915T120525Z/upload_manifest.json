@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "artifact_type": "silver_oracle_top5_100_upload_manifest",
+  "status": "ready_for_authenticated_exchange_upload",
+  "target_directory": "five_ideas/silver_oracle_top5_100/20260915T120525Z",
+  "generated_at_utc": "20260915T120525Z",
+  "git_commit": "b2c1a1162eec76420e5e28dba111066af4d09ac1",
+  "exchange_required_files": [
+    "case_study.json",
+    "case_study.md"
+  ],
+  "github_allowed_if_unchanged": [
+    "result.json",
+    "run_metadata.json",
+    "upload_manifest.json"
+  ],
+  "files": [
+    {
+      "name": "case_study.json",
+      "bytes": 12685025,
+      "sha256": "b7fada9a172c3837c709ce511201749ef10dc299f88de03d338e5d2d83d6086a",
+      "exchange_path": "five_ideas/silver_oracle_top5_100/20260915T120525Z/case_study.json"
+    },
+    {
+      "name": "case_study.md",
+      "bytes": 4799982,
+      "sha256": "4050a7aae22882187a80333605b2d3b2177ec7821a1c445ea2b436dc72f7a82b",
+      "exchange_path": "five_ideas/silver_oracle_top5_100/20260915T120525Z/case_study.md"
+    },
+    {
+      "name": "result.json",
+      "bytes": 3472,
+      "sha256": "0ed308ef5dad6a7322475eb6ec7abdcc1d4eeb3db98ae302e1b371276b5f30db",
+      "exchange_path": "five_ideas/silver_oracle_top5_100/20260915T120525Z/result.json"
+    },
+    {
+      "name": "run_metadata.json",
+      "bytes": 3788,
+      "sha256": "718c4383998c5a7b64f6ecf611e7c621e64a406f77197b184be28353f4ef96e8",
+      "exchange_path": "five_ideas/silver_oracle_top5_100/20260915T120525Z/run_metadata.json"
+    }
+  ],
+  "publication_rule": "GitHub files must be at most 1 MiB and contain no raw question, passage, answer, prediction, or selected/retrieved ids."
+}
