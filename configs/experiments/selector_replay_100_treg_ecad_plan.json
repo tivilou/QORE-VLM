@@ -1,0 +1,113 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "Q-DUET-VLM",
+  "authorization": "implemented",
+  "baseline": {
+    "entry_point": "scripts/collab/five_ideas/run_treg_ecad_selector_replay_100.py",
+    "equivalence_test": "all selector arms receive the identical registered Top-50 and Answer Scorer fields",
+    "selection_scope": "fixed Top-50 -> Top-5"
+  },
+  "core_invariants": [
+    "The two registered 50-question source studies and rank-aligned Silver vote bundle define the 100-case input.",
+    "TREG and ECAD never receive Silver/gold labels, generated answers, or evaluator output at selection time.",
+    "TREG uses one fixed Reader identity and the declared gain(p|B4) arithmetic.",
+    "ECAD uses all 1225 rank-ordered pairs per question with one fixed three-way NLI identity.",
+    "Generator, evaluator, retrieval, and production selector interfaces remain unchanged.",
+    "Compact GitHub artifacts contain no raw question, passage, answer, evidence, prediction, or selected/retrieved id fields."
+  ],
+  "plugins": [
+    {
+      "id": "registered_100_case_loader",
+      "role": "baseline",
+      "type": "transformer",
+      "insertion_point": "before selector calls",
+      "requires": [],
+      "deterministic": true
+    },
+    {
+      "id": "treg_fixed_reader_gain",
+      "role": "idea",
+      "type": "transformer",
+      "insertion_point": "after case loading and before selector calls",
+      "requires": ["registered_100_case_loader"],
+      "deterministic": true,
+      "signal": "Reader(q,B4+p)-Reader(q,B4)"
+    },
+    {
+      "id": "ecad_pairwise_nli",
+      "role": "idea",
+      "type": "transformer",
+      "insertion_point": "after case loading and before selector calls",
+      "requires": ["registered_100_case_loader"],
+      "deterministic": true,
+      "signal": "provenance-locked contradiction/entailment/neutral scores for every candidate pair"
+    },
+    {
+      "id": "selector_only_comparator",
+      "role": "observer",
+      "type": "combiner",
+      "insertion_point": "after signal artifacts are validated",
+      "requires": ["treg_fixed_reader_gain", "ecad_pairwise_nli"],
+      "deterministic": true
+    },
+    {
+      "id": "compact_replay_renderer",
+      "role": "observer",
+      "type": "sink",
+      "insertion_point": "after all selections and post-hoc diagnostics",
+      "requires": ["selector_only_comparator"],
+      "deterministic": true
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": [
+      "registered_100_case_loader",
+      "treg_fixed_reader_gain",
+      "ecad_pairwise_nli",
+      "selector_only_comparator",
+      "compact_replay_renderer"
+    ]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": [
+      "registered_100_case_loader",
+      "treg_fixed_reader_gain",
+      "ecad_pairwise_nli",
+      "selector_only_comparator",
+      "compact_replay_renderer"
+    ],
+    "merge_rule": "one registered Top-50 is fanned out to QORE, Top-k, TREG, and ECAD; Silver labels are read only after selection"
+  },
+  "validation": {
+    "required_case_count": 100,
+    "required_top50_count": 50,
+    "required_ecad_pairs": 122500,
+    "checks": [
+      "base case-study and vote provenance",
+      "TREG gain arithmetic and B4 identity",
+      "ECAD pair coverage/order/probability normalization",
+      "selector input leakage rejection",
+      "deterministic selection",
+      "compact privacy and size threshold"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/selector_replay_100_treg_ecad.yaml",
+    "reader": {
+      "model_id": "facebook/dpr-reader-single-nq-base",
+      "revision": "38f47a4986084c53447ba92ab0a83076b58d86a8"
+    },
+    "nli": {
+      "model_id": "cross-encoder/nli-MiniLM2-L6-H768",
+      "revision": "b95119ce93d3e065de6214e38cd4a97b0f2f2c6d"
+    },
+    "seed": 42
+  },
+  "limitations": [
+    "Silver oracle alignment is L0 diagnostic evidence, not gold utility or L1/L2 evidence.",
+    "The replay does not run the Generator and cannot establish EM/F1 improvement.",
+    "A positive replay is only a gate for a later frozen-Generator screen."
+  ]
+}

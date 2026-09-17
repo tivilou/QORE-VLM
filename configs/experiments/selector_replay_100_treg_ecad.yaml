@@ -1,0 +1,64 @@
+phase:
+  name: selector_replay_100_treg_ecad
+  schema_version: 1
+  evidence_tier: L0_diagnostic
+  diagnostic_only: true
+  selection_mutation: false
+
+  # The two registered 50-question source studies and the compact vote bundle
+  # remain the sole input identity.  The runner validates this base contract
+  # before loading any model.
+  base_case_config: configs/experiments/silver_oracle_top5_100.yaml
+  base_case_plan: configs/experiments/silver_oracle_top5_100_plan.json
+
+  selectors:
+    - id: qore_as
+      source: registered_qore_membership
+    - id: topk_as
+      source: registered_topk_membership
+    - id: treg_reader_gain
+      source: fixed_reader_gain_artifact
+    - id: ecad_conflict_aware
+      source: provenance_locked_pairwise_nli_artifact
+
+  treg:
+    reader_model_id: facebook/dpr-reader-single-nq-base
+    reader_revision: 38f47a4986084c53447ba92ab0a83076b58d86a8
+    k: 5
+    b4_size: 4
+    gain_definition: Reader(q,B4+p)-Reader(q,B4)
+    context_order: ascending_original_retrieval_rank
+    passage_token_budget: 64
+    reader_max_length: 384
+    batch_size: 8
+
+  ecad:
+    nli_model_id: cross-encoder/nli-MiniLM2-L6-H768
+    nli_revision: b95119ce93d3e065de6214e38cd4a97b0f2f2c6d
+    k: 5
+    pair_count_per_case: 1225
+    pair_order: top50_position_i_lt_j
+    conflict_penalty: 0.20
+    batch_size: 64
+    max_length: 256
+
+  outputs:
+    root: exchange/five_ideas/selector_replay_100_treg_ecad
+    compact_files: [summary.json, run_metadata.json, upload_manifest.json]
+    exchange_files:
+      - treg_gain_artifact.json
+      - ecad_pairwise_nli.json
+      - report.md
+    github_max_bytes: 1048576
+    forbidden_compact_fields:
+      - question
+      - passages
+      - gold_answers
+      - prediction
+      - raw_prompt
+      - prompt
+      - text
+      - token_ids
+      - selected_ids
+      - retrieved_ids
+      - evidence
