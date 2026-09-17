@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "artifact_type": "selector_replay_100_treg_ecad_upload_manifest",
+  "status": "ready_for_authenticated_exchange_upload",
+  "diagnostic_only": true,
+  "target_directory": "five_ideas/selector_replay_100_treg_ecad/20260917T120002Z",
+  "github_allowed_if_unchanged": [
+    "summary.json",
+    "run_metadata.json",
+    "upload_manifest.json"
+  ],
+  "exchange_required_files": [
+    "treg_gain_artifact.json",
+    "ecad_pairwise_nli.json",
+    "report.md"
+  ],
+  "files": [
+    {
+      "name": "treg_gain_artifact.json",
+      "bytes": 521696,
+      "sha256": "0bff491241ccd6a7b3cfd7f0532314e05874aa775ba8bbabca577303947dcee3",
+      "exchange_path": "five_ideas/selector_replay_100_treg_ecad/20260917T120002Z/treg_gain_artifact.json"
+    },
+    {
+      "name": "ecad_pairwise_nli.json",
+      "bytes": 14159160,
+      "sha256": "16571e57789465ff0f12e377d1bc8f9e43aed41742261acaaf3579abffee6873",
+      "exchange_path": "five_ideas/selector_replay_100_treg_ecad/20260917T120002Z/ecad_pairwise_nli.json"
+    },
+    {
+      "name": "report.md",
+      "bytes": 1633,
+      "sha256": "dc8db2a866f78f6e5e8b0493c4b84865c6f5558ab97c2a4a94dbdba1fd1da6a2",
+      "exchange_path": "five_ideas/selector_replay_100_treg_ecad/20260917T120002Z/report.md"
+    },
+    {
+      "name": "summary.json",
+      "bytes": 515588,
+      "sha256": "1114d8f7717e00c97398b164e9c21b519476426259a3badd3b7f743aff5fd843",
+      "exchange_path": "five_ideas/selector_replay_100_treg_ecad/20260917T120002Z/summary.json"
+    },
+    {
+      "name": "run_metadata.json",
+      "bytes": 2563,
+      "sha256": "bcfe79cb24ff878f250f80e2dde2a526ebdbab54ee8f8d87f75588ee32b723ae",
+      "exchange_path": "five_ideas/selector_replay_100_treg_ecad/20260917T120002Z/run_metadata.json"
+    }
+  ],
+  "publication_rule": "Compact GitHub files must be <=1 MiB and contain no raw question, passage, answer, evidence, prediction, or selected/retrieved ids.",
+  "provenance": {
+    "git_revision": "1125a414d20b69900cefae26bef0c1f1b8146fe3",
+    "script": "scripts/collab/five_ideas/run_treg_ecad_selector_replay_100.py",
+    "script_sha256": "c9d00922289c2947e0bc1511152ac540703cda70d0c5374ca27ed9ae6b8e7886",
+    "source_provenance": [
+      {
+        "source_id": "nq_1950_1999",
+        "mode": "registered_compact_vote_join",
+        "case_path_name": "case_study.json",
+        "case_study_sha256": "2a7b8f96322a1200d8e2124c0bffc3413cf2e646e17aeda0d5708b2316693b88",
+        "evidence_panel_sha256": "22ad9616ce64c46288b8fb85236b1157579b281b28acff84e0a7b4c68b48bccf",
+        "compact_vote_bundle": {
+          "path_name": "silver_oracle_top5_100_votes.json",
+          "sha256": "db364b18294437950e98ce0f6b526e1313d52131a31f9e9b69a199f7d9aff3bb",
+          "bytes": 62598,
+          "contains_raw_content": false
+        }
+      },
+      {
+        "source_id": "nq_3150_3199",
+        "mode": "registered_compact_vote_join",
+        "case_path_name": "case_study.json",
+        "case_study_sha256": "4e55bf9037bf48c98fcc13c1a8dbaff7beaf682615b5aa0d5c63241fe3c40943",
+        "evidence_panel_sha256": "2a20e9ed30d775bf687b8d96d9815fbfd373700ad538b5b1158894b0d9946ab6",
+        "compact_vote_bundle": {
+          "path_name": "silver_oracle_top5_100_votes.json",
+          "sha256": "db364b18294437950e98ce0f6b526e1313d52131a31f9e9b69a199f7d9aff3bb",
+          "bytes": 62598,
+          "contains_raw_content": false
+        }
+      }
+    ]
+  }
+}

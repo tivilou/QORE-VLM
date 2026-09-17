@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "artifact_type": "selector_replay_100_treg_ecad_run_metadata",
+  "status": "completed",
+  "diagnostic_only": true,
+  "git": {
+    "commit": "1125a414d20b69900cefae26bef0c1f1b8146fe3",
+    "branch": "five-ideas-development"
+  },
+  "config": {
+    "path_name": "selector_replay_100_treg_ecad.yaml",
+    "sha256": "c9d2546e619be6bdb0d54e8069f7e2a8f3a658eb699551870613608a628e8727"
+  },
+  "plugin_plan": {
+    "path_name": "selector_replay_100_treg_ecad_plan.json",
+    "sha256": "0f22910d15b1e02ec718cc0bd556a8e3ec3aa8eebae3c8b3a198c0dbd28f0232"
+  },
+  "reader": {
+    "model_id": "facebook/dpr-reader-single-nq-base",
+    "revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+    "config_sha256": "cde351a43c18e763c1f3fa4f742b06dc24c65dcd59d3c327e994963b3943cd29"
+  },
+  "nli": {
+    "model_id": "cross-encoder/nli-MiniLM2-L6-H768",
+    "revision": "b95119ce93d3e065de6214e38cd4a97b0f2f2c6d",
+    "config_sha256": "eec2589197448062a9990e36efe23f19f559e53504709f6968023c44020b3eb8"
+  },
+  "source_provenance": [
+    {
+      "source_id": "nq_1950_1999",
+      "mode": "registered_compact_vote_join",
+      "case_path_name": "case_study.json",
+      "case_study_sha256": "2a7b8f96322a1200d8e2124c0bffc3413cf2e646e17aeda0d5708b2316693b88",
+      "evidence_panel_sha256": "22ad9616ce64c46288b8fb85236b1157579b281b28acff84e0a7b4c68b48bccf",
+      "compact_vote_bundle": {
+        "path_name": "silver_oracle_top5_100_votes.json",
+        "sha256": "db364b18294437950e98ce0f6b526e1313d52131a31f9e9b69a199f7d9aff3bb",
+        "bytes": 62598,
+        "contains_raw_content": false
+      }
+    },
+    {
+      "source_id": "nq_3150_3199",
+      "mode": "registered_compact_vote_join",
+      "case_path_name": "case_study.json",
+      "case_study_sha256": "4e55bf9037bf48c98fcc13c1a8dbaff7beaf682615b5aa0d5c63241fe3c40943",
+      "evidence_panel_sha256": "2a20e9ed30d775bf687b8d96d9815fbfd373700ad538b5b1158894b0d9946ab6",
+      "compact_vote_bundle": {
+        "path_name": "silver_oracle_top5_100_votes.json",
+        "sha256": "db364b18294437950e98ce0f6b526e1313d52131a31f9e9b69a199f7d9aff3bb",
+        "bytes": 62598,
+        "contains_raw_content": false
+      }
+    }
+  ],
+  "outputs": {
+    "root": "five_ideas/selector_replay_100_treg_ecad/20260917T120002Z",
+    "compact_files": [
+      "summary.json",
+      "run_metadata.json",
+      "upload_manifest.json"
+    ],
+    "exchange_files": [
+      "treg_gain_artifact.json",
+      "ecad_pairwise_nli.json",
+      "report.md"
+    ]
+  },
+  "timing_ms": {
+    "total": 313768.48990800005
+  }
+}
