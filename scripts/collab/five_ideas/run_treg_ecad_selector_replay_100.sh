@@ -27,7 +27,7 @@ declare -A SEEN=()
 for candidate in "${CANDIDATES[@]}"; do
     [[ -z "$candidate" || -n "${SEEN[$candidate]:-}" ]] && continue
     SEEN[$candidate]=1
-    if [[ -x "$candidate" ]] && "$candidate" -c 'import datasets, numpy, torch, yaml, transformers' >/dev/null 2>&1; then
+    if [[ -x "$candidate" ]] && "$candidate" -c 'import numpy, torch, yaml, transformers' >/dev/null 2>&1; then
         EXPERIMENT_PYTHON="$candidate"
         break
     fi
