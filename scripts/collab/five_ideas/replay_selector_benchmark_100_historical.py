@@ -20,6 +20,7 @@ from pathlib import Path
 import statistics
 import subprocess
 import sys
+import tempfile
 import time
 from typing import Any
 
@@ -30,10 +31,15 @@ ROOT = next(
      if (candidate / "configs").is_dir() and (candidate / "applications").is_dir()),
     SCRIPT_PATH.parents[3],
 )
-DEFAULT_INPUT = ROOT / "research-web/apps/experiment-results/case-studies/silver-oracle-top5-100-20260915T120525Z-detail.json"
 DEFAULT_CONFIG = ROOT / "configs/experiments/selector_replay_100_historical.yaml"
 DEFAULT_PLAN = ROOT / "configs/experiments/selector_replay_100_historical_plan.json"
 DEFAULT_OUTPUT_ROOT = ROOT / "exchange/five_ideas/selector_replay_100_historical"
+DEFAULT_EXCHANGE_INPUT_PATH = (
+    "five_ideas/selector_replay_100_historical_input/"
+    "silver-oracle-top5-100-20260915T120525Z-detail.json"
+)
+DEFAULT_EXCHANGE_INPUT_BYTES = 8046318
+DEFAULT_EXCHANGE_INPUT_SHA256 = "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731"
 EXPECTED_CASES = 100
 EXPECTED_TOP50 = 50
 K = 5
@@ -85,6 +91,41 @@ def _load_yaml(path: Path) -> dict[str, Any]:
     return value
 
 
+def _prepare_input(args: argparse.Namespace) -> tuple[Path, tempfile.TemporaryDirectory | None, dict[str, Any]]:
+    if args.input is not None:
+        input_path = args.input if args.input.is_absolute() else ROOT / args.input
+        return input_path.resolve(), None, {"source": "explicit_local"}
+    try:
+        from scripts.collab.lib.exchange_upload import (
+            ExchangeUploadError,
+            download_exchange_file,
+        )
+    except ImportError as exc:
+        raise ReplayError("exchange download helper is unavailable; pass --input explicitly") from exc
+    temporary_dir = tempfile.TemporaryDirectory(prefix="qore-selector-replay-input-")
+    input_path = Path(temporary_dir.name) / Path(DEFAULT_EXCHANGE_INPUT_PATH).name
+    try:
+        receipt = download_exchange_file(
+            DEFAULT_EXCHANGE_INPUT_PATH,
+            input_path,
+            base_url=args.exchange_url,
+            token_env=args.token_env,
+            expected_size=DEFAULT_EXCHANGE_INPUT_BYTES,
+            expected_sha256=DEFAULT_EXCHANGE_INPUT_SHA256,
+        )
+    except (ExchangeUploadError, OSError) as exc:
+        temporary_dir.cleanup()
+        raise ReplayError(
+            "cannot download the registered 100-case detail JSON from exchange; "
+            "set QORE_EXCHANGE_TOKEN or pass --input explicitly"
+        ) from exc
+    return input_path, temporary_dir, {
+        "source": "authenticated_exchange",
+        "exchange_path": receipt["path"],
+        "exchange_sha256": receipt["sha256"],
+    }
+
+
 def _finite(value: Any, field: str) -> float:
     if isinstance(value, bool) or not isinstance(value, (int, float)):
         raise ReplayError(f"{field} must be numeric")
@@ -110,7 +151,14 @@ def _validate_config(config_path: Path, plan_path: Path) -> dict[str, Any]:
         if phase.get(key) != value:
             raise ReplayError(f"replay config mismatch for {key}")
     input_spec = phase.get("input")
-    if not isinstance(input_spec, Mapping) or int(input_spec.get("case_count", -1)) != EXPECTED_CASES or int(input_spec.get("top50_count", -1)) != EXPECTED_TOP50:
+    if (
+        not isinstance(input_spec, Mapping)
+        or int(input_spec.get("case_count", -1)) != EXPECTED_CASES
+        or int(input_spec.get("top50_count", -1)) != EXPECTED_TOP50
+        or input_spec.get("exchange_path") != DEFAULT_EXCHANGE_INPUT_PATH
+        or int(input_spec.get("exchange_bytes", -1)) != DEFAULT_EXCHANGE_INPUT_BYTES
+        or input_spec.get("exchange_sha256") != DEFAULT_EXCHANGE_INPUT_SHA256
+    ):
         raise ReplayError("100-case input contract is not frozen")
     retrieval = phase.get("retrieval")
     if retrieval != {
@@ -463,11 +511,19 @@ def _unique_output_dir(root: Path, timestamp: str) -> Path:
     return candidate
 
 
-def run(args: argparse.Namespace) -> Path:
+def run(
+    args: argparse.Namespace,
+    *,
+    input_path: Path | None = None,
+    input_source: Mapping[str, Any] | None = None,
+) -> Path:
     config_path = args.config.resolve()
     plan_path = args.plan.resolve()
     phase = _validate_config(config_path, plan_path)
-    input_path = args.input.resolve()
+    if input_path is None:
+        if args.input is None:
+            raise ReplayError("input path was not prepared")
+        input_path = args.input.resolve()
     bundle = _load_json(input_path)
     cases = _validate_input(bundle)
     if args.skip_qubo_enhancers:
@@ -560,11 +616,17 @@ def run(args: argparse.Namespace) -> Path:
     output_root = args.output_root.resolve() if args.output_root else DEFAULT_OUTPUT_ROOT
     output_dir = _unique_output_dir(output_root, timestamp)
     target_directory = f"five_ideas/selector_replay_100_historical/{output_dir.name}"
+    input_record: dict[str, Any] = {
+        "path_name": input_path.name,
+        "sha256": _sha256(input_path),
+    }
+    if input_source:
+        input_record.update(dict(input_source))
     report: dict[str, Any] = {
         "schema_version": "rag.selector_replay_100_historical.v1",
         "artifact_type": "selector_only_historical_replay",
         "diagnostic_only": True,
-        "input": {"path_name": input_path.name, "sha256": _sha256(input_path)},
+        "input": input_record,
         "protocol": {
             "case_count": EXPECTED_CASES,
             "top50_count": EXPECTED_TOP50,
@@ -653,27 +715,34 @@ def run(args: argparse.Namespace) -> Path:
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
+    parser.add_argument("--input", type=Path, help="optional local detail JSON; default downloads the registered exchange artifact")
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
     parser.add_argument("--plan", type=Path, default=DEFAULT_PLAN)
+    parser.add_argument("--exchange-url", default=None, help="override the authenticated exchange URL")
+    parser.add_argument("--token-env", default="QORE_EXCHANGE_TOKEN", help="environment variable containing the exchange token")
     parser.add_argument("--output-root", type=Path)
     parser.add_argument("--skip-qubo-enhancers", action="store_true", help="Replay only stored/QORE-independent selector arms")
     parser.add_argument("--no-upload", action="store_true", help="Keep local artifacts without the automatic 18083 upload")
     parser.add_argument("--validate-only", action="store_true", help="Validate config and registered input without loading models")
     parser.add_argument("--progress", action="store_true")
     args = parser.parse_args(argv)
-    for field in ("input", "config", "plan"):
+    for field in ("config", "plan"):
         path = getattr(args, field)
         if not path.is_absolute():
             setattr(args, field, ROOT / path)
     try:
-        if args.validate_only:
-            phase = _validate_config(args.config.resolve(), args.plan.resolve())
-            bundle = _load_json(args.input.resolve())
-            cases = _validate_input(bundle)
-            print(json.dumps({"status": "valid", "phase": phase["name"], "case_count": len(cases), "top50_count": EXPECTED_TOP50}, ensure_ascii=False))
-            return 0
-        run(args)
+        input_path, temporary_dir, input_source = _prepare_input(args)
+        try:
+            if args.validate_only:
+                phase = _validate_config(args.config.resolve(), args.plan.resolve())
+                bundle = _load_json(input_path)
+                cases = _validate_input(bundle)
+                print(json.dumps({"status": "valid", "phase": phase["name"], "case_count": len(cases), "top50_count": EXPECTED_TOP50, "input": {"path_name": input_path.name, **input_source}}, ensure_ascii=False))
+                return 0
+            run(args, input_path=input_path, input_source=input_source)
+        finally:
+            if temporary_dir is not None:
+                temporary_dir.cleanup()
     except (ReplayError, ValueError, OSError) as exc:
         print(f"historical replay error: {exc}", file=sys.stderr)
         return 2

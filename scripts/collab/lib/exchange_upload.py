@@ -15,6 +15,7 @@ import os
 from pathlib import Path
 import re
 import sys
+import tempfile
 from typing import Any, Iterable, Mapping
 from urllib.parse import quote, urlsplit
 
@@ -162,6 +163,85 @@ def _upload_one(
     if receipt.get("sha256") != expected_hash:
         raise ExchangeUploadError(f"receipt SHA-256 mismatch for {exchange_path}")
     return receipt
+
+
+def download_exchange_file(
+    exchange_path: str,
+    local_path: Path,
+    *,
+    base_url: str | None = None,
+    token: str | None = None,
+    token_env: str = DEFAULT_TOKEN_ENV,
+    expected_size: int | None = None,
+    expected_sha256: str | None = None,
+    timeout: float = 300.0,
+) -> dict[str, Any]:
+    """Download one authenticated exchange file with atomic integrity checks."""
+
+    exchange_path = _safe_target(exchange_path)
+    token = token or os.environ.get(token_env)
+    if not token:
+        raise ExchangeUploadError(f"missing bearer token environment variable: {token_env}")
+    base_url = base_url or os.environ.get("QORE_EXCHANGE_URL", DEFAULT_URL)
+    local_path = local_path.resolve()
+    if local_path.exists() and local_path.is_symlink():
+        raise ExchangeUploadError(f"local download target is a symlink: {local_path}")
+    local_path.parent.mkdir(parents=True, exist_ok=True)
+    connection, prefix = _connection(base_url, timeout)
+    endpoint = "/files/" + quote(exchange_path, safe="/")
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/octet-stream",
+        "Connection": "close",
+    }
+    temporary_path: Path | None = None
+    try:
+        connection.request("GET", prefix + endpoint, headers=headers)
+        response = connection.getresponse()
+        if response.status != 200:
+            response.read(2 * 1024 * 1024)
+            raise ExchangeUploadError(
+                f"exchange GET rejected {exchange_path} (HTTP {response.status})"
+            )
+        fd, raw_path = tempfile.mkstemp(
+            prefix=f".{local_path.name}.", suffix=".download", dir=local_path.parent
+        )
+        temporary_path = Path(raw_path)
+        digest = hashlib.sha256()
+        received = 0
+        with os.fdopen(fd, "wb") as destination:
+            while True:
+                block = response.read(CHUNK_SIZE)
+                if not block:
+                    break
+                destination.write(block)
+                digest.update(block)
+                received += len(block)
+            destination.flush()
+            os.fsync(destination.fileno())
+        actual_hash = digest.hexdigest()
+        if expected_size is not None and received != int(expected_size):
+            raise ExchangeUploadError(
+                f"exchange download byte count mismatch for {exchange_path}"
+            )
+        if expected_sha256 is not None and actual_hash != expected_sha256:
+            raise ExchangeUploadError(
+                f"exchange download SHA-256 mismatch for {exchange_path}"
+            )
+        temporary_path.replace(local_path)
+        temporary_path = None
+        return {"path": exchange_path, "size_bytes": received, "sha256": actual_hash}
+    except OSError as exc:
+        raise ExchangeUploadError(
+            f"exchange GET failed for {exchange_path}: {type(exc).__name__}"
+        ) from exc
+    finally:
+        connection.close()
+        if temporary_path is not None:
+            try:
+                temporary_path.unlink()
+            except FileNotFoundError:
+                pass
 
 
 def _manifest_files(manifest: Mapping[str, Any], base_dir: Path) -> Iterable[tuple[Path, str]]:

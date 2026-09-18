@@ -28,6 +28,8 @@
   },
   "reproducibility": {
     "config_path": "configs/experiments/selector_replay_100_historical.yaml",
+    "input_exchange_path": "five_ideas/selector_replay_100_historical_input/silver-oracle-top5-100-20260915T120525Z-detail.json",
+    "input_exchange_sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
     "seed": 42,
     "retrieval": "facebook/wiki_dpr:psgs_w100.nq.compressed, nprobe=64",
     "generator_called": false,

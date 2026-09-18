@@ -7,6 +7,9 @@ phase:
   replay_profile: case_study_compatible
   input:
     path: research-web/apps/experiment-results/case-studies/silver-oracle-top5-100-20260915T120525Z-detail.json
+    exchange_path: five_ideas/selector_replay_100_historical_input/silver-oracle-top5-100-20260915T120525Z-detail.json
+    exchange_bytes: 8046318
+    exchange_sha256: 669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731
     case_count: 100
     top50_count: 50
   retrieval:
