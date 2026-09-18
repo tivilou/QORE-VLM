@@ -1,0 +1,37 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "Q-DUET-VLM",
+  "authorization": "implemented",
+  "artifact_type": "selector_only_historical_replay",
+  "diagnostic_only": true,
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": [
+      "registered_100_case_loader",
+      "dpr_top50_identity_rehydration",
+      "historical_selector_allowlist",
+      "qubo_enhancer_allowlist",
+      "compact_replay_renderer",
+      "exchange_manifest_uploader"
+    ]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": [
+      "registered_100_case_loader",
+      "dpr_top50_identity_rehydration",
+      "historical_selector_allowlist",
+      "qubo_enhancer_allowlist",
+      "compact_replay_renderer",
+      "exchange_manifest_uploader"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/selector_replay_100_historical.yaml",
+    "seed": 42,
+    "retrieval": "facebook/wiki_dpr:psgs_w100.nq.compressed, nprobe=64",
+    "generator_called": false,
+    "silver_labels_used_online": false
+  },
+  "claim_ceiling": "L0 diagnostic; fixed Top-50 selector alignment only"
+}

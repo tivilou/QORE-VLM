@@ -1,0 +1,112 @@
+phase:
+  name: selector_replay_100_historical
+  schema_version: 1
+  evidence_tier: L0_diagnostic
+  diagnostic_only: true
+  selection_mutation: false
+  replay_profile: case_study_compatible
+  input:
+    path: research-web/apps/experiment-results/case-studies/silver-oracle-top5-100-20260915T120525Z-detail.json
+    case_count: 100
+    top50_count: 50
+  retrieval:
+    corpus_mode: wiki_dpr
+    wiki_dpr_config: psgs_w100.nq.compressed
+    nprobe: 64
+    top_k: 50
+    exact_identity_required: true
+  online_fields:
+    - question
+    - id
+    - title
+    - text
+    - retrieved_rank
+    - retrieval_score
+    - answer_scorer_score
+    - dpr_passage_embedding
+  selectors:
+    - id: qore_as
+      kind: stored_baseline
+      source_selector_id: qore_common_order
+    - id: topk_as
+      kind: stored_baseline
+      source_selector_id: topk_common_order
+    - id: mmr_as
+      kind: selector
+      method: mmr
+      lambda_mmr: 0.7
+      K: 5
+    - id: submodular_as
+      kind: selector
+      method: submodular
+      saturation_alpha: 1.0
+      lambda_submodular: 0.5
+      K: 5
+    - id: spectral_dpp_as
+      kind: selector
+      method: spectral_dpp
+      dpp_quality_scale: 2.0
+      dpp_jitter: 1.0e-8
+      K: 5
+    - id: qore_mobius_pairwise
+      kind: qore_enhancer
+      method: qore
+      num_reads: 100
+      lam: 2.0
+      seed: 42
+      direct_solve_max_n: 20
+      enhancers:
+        - baseline
+        - mobius
+      enhancer_configs:
+        baseline:
+          gamma: 0.5
+        mobius:
+          mode: pairwise
+          beta: 0.1
+          clip: 1.0
+    - id: qore_cohesion_fixed
+      kind: qore_enhancer
+      method: qore
+      num_reads: 100
+      lam: 2.0
+      seed: 42
+      direct_solve_max_n: 20
+      enhancers:
+        - baseline
+        - cohesion
+      enhancer_configs:
+        baseline:
+          gamma: 0.5
+        cohesion:
+          mode: fixed
+          weight: 0.05
+    - id: qore_cohesion_calibrated
+      kind: qore_enhancer
+      method: qore
+      num_reads: 100
+      lam: 2.0
+      seed: 42
+      direct_solve_max_n: 20
+      enhancers:
+        - baseline
+        - cohesion
+      enhancer_configs:
+        baseline:
+          gamma: 0.5
+        cohesion:
+          mode: calibrated
+          eta: 0.1
+          eps: 1.0e-6
+  blocked:
+    - id: idea7_differentiable_qubo
+      reason: checkpoint and training provenance are not part of the fixed 100-case replay contract; prior real-data result was negative.
+  outputs:
+    root: exchange/five_ideas/selector_replay_100_historical
+    compact_files:
+      - summary.json
+      - report.md
+      - run_metadata.json
+      - upload_manifest.json
+    exchange_files:
+      - selector_trace.json
