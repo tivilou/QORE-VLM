@@ -1,0 +1,37 @@
+{
+  "schema_version": "rag.selector_replay_100_historical.upload_manifest.v1",
+  "artifact_type": "selector_replay_100_historical_upload_manifest",
+  "status": "ready_for_authenticated_exchange_upload",
+  "target_directory": "five_ideas/selector_replay_100_historical/20260919T155931Z",
+  "generated_at_utc": "20260919T155931Z",
+  "exchange_files": [
+    {
+      "name": "selector_trace.json",
+      "exchange_path": "five_ideas/selector_replay_100_historical/20260919T155931Z/selector_trace.json"
+    }
+  ],
+  "compact_files": [
+    {
+      "name": "summary.json",
+      "bytes": 11845,
+      "sha256": "fec9663eb1170c0b96da50f0c392fd5634a459735ebf06bcffd183e42135d89d"
+    },
+    {
+      "name": "report.md",
+      "bytes": 2336,
+      "sha256": "529eddd41138f5679432142d415ff284ef4d1dfced491322aacedb9101316487"
+    },
+    {
+      "name": "run_metadata.json",
+      "bytes": 3029,
+      "sha256": "69af023729db979e0222d235823e244d755852f2149f97682b99c0f4fe5aaefb"
+    }
+  ],
+  "privacy": {
+    "raw_passage_text_in_compact": false,
+    "gold_answers_in_compact": false,
+    "silver_labels_used_online": false,
+    "generator_outputs": false
+  },
+  "github_policy": "Commit compact files only when they pass the 1 MiB/privacy check; selector_trace.json is exchange-only."
+}

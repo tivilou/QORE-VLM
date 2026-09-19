@@ -1,0 +1,89 @@
+{
+  "schema_version": "rag.selector_replay_100_historical.metadata.v1",
+  "artifact_type": "selector_replay_100_historical_run_metadata",
+  "status": "completed",
+  "diagnostic_only": true,
+  "selection_mutation": false,
+  "generated_at_utc": "20260919T155931Z",
+  "input": {
+    "path_name": "silver-oracle-top5-100-20260915T120525Z-detail.json",
+    "sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
+    "source": "authenticated_exchange",
+    "exchange_path": "five_ideas/selector_replay_100_historical_input/silver-oracle-top5-100-20260915T120525Z-detail.json",
+    "exchange_sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731"
+  },
+  "provenance": {
+    "git_revision": "558ce4f686b2ad7ad6d9b788e330859439bd61a3",
+    "git_branch": "five-ideas-development",
+    "script": "scripts/collab/five_ideas/replay_selector_benchmark_100_historical.py",
+    "script_sha256": "d840fef839a86dd33ee4d127174b23ea7e05f0ca4a0f68d6ca43bab25547d279",
+    "config_path": "configs/experiments/selector_replay_100_historical.yaml",
+    "config_sha256": "50831937bf718cb552462f69857ed6be775e330f5e1c3e7551ede98efb570f4b",
+    "plan_path": "configs/experiments/selector_replay_100_historical_plan.json",
+    "plan_sha256": "2c263162c0338cadbe18c7b3ae7d3782d4a4955c0f65d15b93cfda58d320190a"
+  },
+  "protocol": {
+    "case_count": 100,
+    "top50_count": 50,
+    "k": 5,
+    "replay_profile": "case_study_compatible",
+    "online_fields": [
+      "question",
+      "id",
+      "title",
+      "text",
+      "retrieved_rank",
+      "retrieval_score",
+      "answer_scorer_score",
+      "dpr_passage_embedding"
+    ],
+    "silver_oracle_used_for_selection": false,
+    "generator_called": false,
+    "retrieval": {
+      "corpus_mode": "wiki_dpr",
+      "wiki_dpr_config": "psgs_w100.nq.compressed",
+      "nprobe": 64,
+      "top_k": 50,
+      "exact_identity_required": true
+    },
+    "selector_allowlist": [
+      "qore_as",
+      "topk_as",
+      "mmr_as",
+      "submodular_as",
+      "spectral_dpp_as",
+      "qore_mobius_pairwise",
+      "qore_cohesion_fixed",
+      "qore_cohesion_calibrated"
+    ]
+  },
+  "outputs": {
+    "root": "exchange/five_ideas/selector_replay_100_historical",
+    "target_directory": "five_ideas/selector_replay_100_historical/20260919T155931Z",
+    "exchange_files": [
+      "selector_trace.json"
+    ]
+  },
+  "timing_ms": {
+    "total": 99892.26055400002
+  },
+  "validation": {
+    "retrieval_miss_cases": 100,
+    "max_retrieval_score_abs_error": 0.0,
+    "exact_top50_identity_validated": true,
+    "case_count_validated": 100
+  },
+  "exchange_upload": {
+    "status": "uploaded",
+    "files": [
+      {
+        "path": "five_ideas/selector_replay_100_historical/20260919T155931Z/selector_trace.json",
+        "service": "qore-upload-v4",
+        "sha256": "d7419811f2ef5e67697da7331245ce056fb458dc7a763f0bda4039018defea24",
+        "size_bytes": 293464,
+        "status": "stored",
+        "uploaded_at": "2026-09-19T15:59:31.567521+00:00"
+      }
+    ]
+  }
+}
