@@ -168,7 +168,7 @@ def _validate_config(config_path: Path, plan_path: Path) -> dict[str, Any]:
     if not isinstance(gate, Mapping) or gate.get("max_total_cpu_seconds") != 600 or gate.get("strict_born_mean_silver_overlap_gt") != 3.55:
         raise ReplayError("F50-QWI replay gates changed")
     plan = _load_json(plan_path)
-    if plan.get("schema_version") != "research-plugin-architecture.plugin-plan.v1" or plan.get("authorization") != "implemented":
+    if plan.get("schema_version") not in {"research-plugin-architecture.plugin-plan.v1", "research-plugin-architecture.plugin-plan.v2"} or plan.get("authorization") != "implemented":
         raise ReplayError("F50-QWI plugin plan is not implemented")
     if plan.get("reproducibility", {}).get("silver_labels_used_online") is not False:
         raise ReplayError("plugin plan permits Silver leakage")
