@@ -1,0 +1,37 @@
+{
+  "schema_version": "rag.f50_qwi_selector_replay_100.upload_manifest.v1",
+  "artifact_type": "f50_qwi_selector_upload_manifest",
+  "status": "ready_for_authenticated_exchange_upload",
+  "target_directory": "five_ideas/f50_qwi_selector_replay_100/20260920T155859Z",
+  "generated_at_utc": "20260920T155859Z",
+  "exchange_files": [
+    {
+      "name": "selector_trace.json",
+      "exchange_path": "five_ideas/f50_qwi_selector_replay_100/20260920T155859Z/selector_trace.json"
+    }
+  ],
+  "compact_files": [
+    {
+      "name": "summary.json",
+      "bytes": 9180,
+      "sha256": "e429a4d502fb0240d1f7fbe5f1c03213290383e9e52c22cf24d0ab87305372b5"
+    },
+    {
+      "name": "report.md",
+      "bytes": 1322,
+      "sha256": "6e5c59714c52ecdc132ee8d3094378d83093b5a15af31b4a4f44e9fc7fd865a1"
+    },
+    {
+      "name": "run_metadata.json",
+      "bytes": 3661,
+      "sha256": "b377d2031c3792899022cb233efde5bf47f00f483c36d777a5f6fe82390c50f9"
+    }
+  ],
+  "privacy": {
+    "raw_passage_text_in_compact": false,
+    "gold_answers_in_compact": false,
+    "silver_labels_used_online": false,
+    "generator_outputs": false
+  },
+  "github_policy": "Commit compact files only when <=1 MiB and privacy-checked; selector_trace.json is exchange-only."
+}

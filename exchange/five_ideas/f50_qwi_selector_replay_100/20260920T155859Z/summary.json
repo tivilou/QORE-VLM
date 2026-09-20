@@ -1,0 +1,282 @@
+{
+  "schema_version": "rag.f50_qwi_selector_replay_100.v1",
+  "artifact_type": "f50_qwi_selector_l0_replay",
+  "diagnostic_only": true,
+  "input": {
+    "path_name": "silver-oracle-top5-100-20260915T120525Z-detail.json",
+    "sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
+    "source": "authenticated_exchange",
+    "exchange_path": "five_ideas/selector_replay_100_historical_input/silver-oracle-top5-100-20260915T120525Z-detail.json",
+    "exchange_sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731"
+  },
+  "protocol": {
+    "case_count": 100,
+    "top50_count": 50,
+    "k": 5,
+    "online_fields": [
+      "id",
+      "retrieved_rank",
+      "retrieval_score",
+      "answer_scorer_score",
+      "dpr_passage_embedding"
+    ],
+    "silver_oracle_used_for_selection": false,
+    "generator_called": false,
+    "evaluator_called": false,
+    "retrieval": {
+      "corpus_mode": "wiki_dpr",
+      "wiki_dpr_config": "psgs_w100.nq.compressed",
+      "nprobe": 64,
+      "top_k": 50,
+      "exact_identity_required": true
+    },
+    "mechanism": {
+      "register_qubits": 6,
+      "register_dimension": 64,
+      "valid_basis_states": "|0> through |49>",
+      "invalid_basis_states": "|50> through |63>, initialized at zero and block-isolated",
+      "score_normalization": "independent_top50_minmax(retrieval_score,answer_scorer_score)",
+      "retrieval_weight": 0.5,
+      "answer_scorer_weight": 0.5,
+      "initial_distribution": "softmax((0.5*r_norm+0.5*a_norm)/1.0)",
+      "diagonal_strength": 1.0,
+      "interaction_strength_kappa": 0.85,
+      "coupling": "off_diagonal_centered_l2_cosine_similarity_divided_by_spectral_norm",
+      "evolution_time_tau": 1.0,
+      "phase_scramble": "sha256(phase_seed:passage_id) mapped uniformly to [0,2pi)",
+      "phase_seed": 42,
+      "born_sampling": "none_exact_probabilities_only",
+      "tie_break": "retrieved_rank_then_passage_id",
+      "single_particle_marginal_ranking": true,
+      "classically_exactly_simulated": true
+    },
+    "control_allowlist": [
+      "born_exact",
+      "real_diffusion_control",
+      "dephased_control",
+      "phase_scramble_control"
+    ]
+  },
+  "provenance": {
+    "git_revision": "4de5151c53f5f86ebe7a91456994598c2bc5340b",
+    "git_branch": "five-ideas-development",
+    "script": "scripts/collab/five_ideas/replay_f50_qwi_selector_100.py",
+    "script_sha256": "5226e2f9b6dfede28f3e5ca4d08f42320b037b144cce41da11049b0991f41b59",
+    "selector_module": "applications/rag/f50_qwi_selector.py",
+    "selector_module_sha256": "27b59594067e6b4fa5542351a5435bbdebb806cbd3b8543add9674d4dabebc26",
+    "config_path": "configs/experiments/f50_qwi_selector_replay_100.yaml",
+    "config_sha256": "3a3c9edbf41399f20a5cdd61441275e51b66a21584bdb786bc176ec1631b92d3",
+    "plan_path": "configs/experiments/f50_qwi_selector_replay_100_plan.json",
+    "plan_sha256": "3f6f971b236bd1e01796c2591fe1e233dbac3c695ae4e94f4b0e438d711e67e0"
+  },
+  "summaries": {
+    "qore_as": {
+      "method": "qore_as",
+      "status": "registered_baseline",
+      "case_count": 100,
+      "mean_silver_oracle_overlap": 2.59,
+      "median_silver_oracle_overlap": 3.0,
+      "mean_silver_oracle_set_f1": 0.518,
+      "mean_selected_broad_positive_count": 1.77,
+      "mean_selected_direct_positive_count": 1.19,
+      "retrieval_miss_cases": 13,
+      "selector_miss_cases": 15,
+      "mean_embedding_cosine_redundancy": 0.7779034417525291,
+      "mean_selection_time_ms": 0.0,
+      "median_selection_time_ms": 0.0,
+      "overlap_distribution": {
+        "0": 5,
+        "1": 11,
+        "2": 30,
+        "3": 30,
+        "4": 22,
+        "5": 2
+      }
+    },
+    "topk_as": {
+      "method": "topk_as",
+      "status": "registered_baseline",
+      "case_count": 100,
+      "mean_silver_oracle_overlap": 3.55,
+      "median_silver_oracle_overlap": 4.0,
+      "mean_silver_oracle_set_f1": 0.7099999999999999,
+      "mean_selected_broad_positive_count": 2.03,
+      "mean_selected_direct_positive_count": 1.38,
+      "retrieval_miss_cases": 13,
+      "selector_miss_cases": 14,
+      "mean_embedding_cosine_redundancy": 0.83098367324642,
+      "mean_selection_time_ms": 0.0,
+      "median_selection_time_ms": 0.0,
+      "overlap_distribution": {
+        "0": 2,
+        "1": 4,
+        "2": 18,
+        "3": 21,
+        "4": 23,
+        "5": 32
+      }
+    },
+    "born_exact": {
+      "method": "born_exact",
+      "status": "f50_control",
+      "case_count": 100,
+      "mean_silver_oracle_overlap": 1.35,
+      "median_silver_oracle_overlap": 1.0,
+      "mean_silver_oracle_set_f1": 0.26999999999999974,
+      "mean_selected_broad_positive_count": 1.2,
+      "mean_selected_direct_positive_count": 0.78,
+      "retrieval_miss_cases": 13,
+      "selector_miss_cases": 23,
+      "mean_embedding_cosine_redundancy": 0.7452391749833506,
+      "mean_selection_time_ms": 5.245513740001115,
+      "median_selection_time_ms": 5.026337749995946,
+      "overlap_distribution": {
+        "0": 21,
+        "1": 36,
+        "2": 30,
+        "3": 13
+      }
+    },
+    "real_diffusion_control": {
+      "method": "real_diffusion_control",
+      "status": "f50_control",
+      "case_count": 100,
+      "mean_silver_oracle_overlap": 2.67,
+      "median_silver_oracle_overlap": 3.0,
+      "mean_silver_oracle_set_f1": 0.5339999999999999,
+      "mean_selected_broad_positive_count": 1.96,
+      "mean_selected_direct_positive_count": 1.35,
+      "retrieval_miss_cases": 13,
+      "selector_miss_cases": 13,
+      "mean_embedding_cosine_redundancy": 0.8400700451541274,
+      "mean_selection_time_ms": 5.245513740001115,
+      "median_selection_time_ms": 5.026337749995946,
+      "overlap_distribution": {
+        "0": 2,
+        "1": 12,
+        "2": 29,
+        "3": 36,
+        "4": 16,
+        "5": 5
+      }
+    },
+    "dephased_control": {
+      "method": "dephased_control",
+      "status": "f50_control",
+      "case_count": 100,
+      "mean_silver_oracle_overlap": 2.56,
+      "median_silver_oracle_overlap": 3.0,
+      "mean_silver_oracle_set_f1": 0.512,
+      "mean_selected_broad_positive_count": 2.01,
+      "mean_selected_direct_positive_count": 1.33,
+      "retrieval_miss_cases": 13,
+      "selector_miss_cases": 10,
+      "mean_embedding_cosine_redundancy": 0.8438733883580458,
+      "mean_selection_time_ms": 5.245513740001115,
+      "median_selection_time_ms": 5.026337749995946,
+      "overlap_distribution": {
+        "0": 1,
+        "1": 11,
+        "2": 36,
+        "3": 37,
+        "4": 13,
+        "5": 2
+      }
+    },
+    "phase_scramble_control": {
+      "method": "phase_scramble_control",
+      "status": "f50_control",
+      "case_count": 100,
+      "mean_silver_oracle_overlap": 1.97,
+      "median_silver_oracle_overlap": 2.0,
+      "mean_silver_oracle_set_f1": 0.39399999999999996,
+      "mean_selected_broad_positive_count": 1.71,
+      "mean_selected_direct_positive_count": 1.09,
+      "retrieval_miss_cases": 13,
+      "selector_miss_cases": 18,
+      "mean_embedding_cosine_redundancy": 0.8187305426507459,
+      "mean_selection_time_ms": 5.245513740001115,
+      "median_selection_time_ms": 5.026337749995946,
+      "overlap_distribution": {
+        "0": 5,
+        "1": 28,
+        "2": 40,
+        "3": 19,
+        "4": 8
+      }
+    }
+  },
+  "paired_comparisons": {
+    "born_exact": {
+      "vs_qore": {
+        "left_wins": 6,
+        "ties": 29,
+        "right_wins": 65
+      },
+      "vs_topk": {
+        "left_wins": 3,
+        "ties": 9,
+        "right_wins": 88
+      }
+    },
+    "real_diffusion_control": {
+      "vs_qore": {
+        "left_wins": 28,
+        "ties": 50,
+        "right_wins": 22
+      },
+      "vs_topk": {
+        "left_wins": 5,
+        "ties": 41,
+        "right_wins": 54
+      }
+    },
+    "dephased_control": {
+      "vs_qore": {
+        "left_wins": 26,
+        "ties": 47,
+        "right_wins": 27
+      },
+      "vs_topk": {
+        "left_wins": 7,
+        "ties": 31,
+        "right_wins": 62
+      }
+    },
+    "phase_scramble_control": {
+      "vs_qore": {
+        "left_wins": 16,
+        "ties": 32,
+        "right_wins": 52
+      },
+      "vs_topk": {
+        "left_wins": 5,
+        "ties": 22,
+        "right_wins": 73
+      }
+    }
+  },
+  "diagnostics": {
+    "exact_top50_identity_validated": true,
+    "max_retrieval_score_abs_error": 0.0,
+    "retrieval_miss_cases": 13,
+    "control_selection_difference_cases": {
+      "real_diffusion_control": 100,
+      "dephased_control": 100,
+      "phase_scramble_control": 100
+    },
+    "audit_failures": []
+  },
+  "gates": {
+    "mechanism_audit_pass": true,
+    "cpu_budget_pass": true,
+    "total_selector_seconds": 2.098205496000446,
+    "max_total_cpu_seconds": 600,
+    "born_mean_silver_overlap": 1.35,
+    "strict_topk_threshold": 3.55,
+    "born_strictly_beats_topk": false,
+    "next_complete_selector_replay_authorized": false
+  },
+  "claim_ceiling": "L0 diagnostic only: fixed 100-case Silver alignment, no utility or quantum-advantage claim.",
+  "next_step": "If and only if all listed gates pass, the user-authorized next complete selector replay may be prepared; do not hand off a full-data run or claim L1/L2 from this result."
+}
