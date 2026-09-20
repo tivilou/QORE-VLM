@@ -1,0 +1,66 @@
+phase:
+  name: f50_qwi_selector_replay_100
+  schema_version: 1
+  evidence_tier: L0_diagnostic
+  diagnostic_only: true
+  selection_mutation: false
+  generator_called: false
+  evaluator_called: false
+  silver_labels_used_online: false
+  replay_profile: fixed_top50_selector_alignment
+  input:
+    exchange_path: five_ideas/selector_replay_100_historical_input/silver-oracle-top5-100-20260915T120525Z-detail.json
+    exchange_bytes: 8046318
+    exchange_sha256: 669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731
+    case_count: 100
+    top50_count: 50
+  retrieval:
+    corpus_mode: wiki_dpr
+    wiki_dpr_config: psgs_w100.nq.compressed
+    nprobe: 64
+    top_k: 50
+    exact_identity_required: true
+  online_fields:
+    - id
+    - retrieved_rank
+    - retrieval_score
+    - answer_scorer_score
+    - dpr_passage_embedding
+  mechanism:
+    register_qubits: 6
+    register_dimension: 64
+    valid_basis_states: '|0> through |49>'
+    invalid_basis_states: '|50> through |63>, initialized at zero and block-isolated'
+    score_normalization: independent_top50_minmax(retrieval_score,answer_scorer_score)
+    retrieval_weight: 0.5
+    answer_scorer_weight: 0.5
+    initial_distribution: softmax((0.5*r_norm+0.5*a_norm)/1.0)
+    diagonal_strength: 1.0
+    interaction_strength_kappa: 0.85
+    coupling: off_diagonal_centered_l2_cosine_similarity_divided_by_spectral_norm
+    evolution_time_tau: 1.0
+    phase_scramble: 'sha256(phase_seed:passage_id) mapped uniformly to [0,2pi)'
+    phase_seed: 42
+    born_sampling: none_exact_probabilities_only
+    tie_break: retrieved_rank_then_passage_id
+    single_particle_marginal_ranking: true
+    classically_exactly_simulated: true
+  controls:
+    - born_exact
+    - real_diffusion_control
+    - dephased_control
+    - phase_scramble_control
+  gates:
+    max_total_cpu_seconds: 600
+    strict_born_mean_silver_overlap_gt: 3.55
+    identity_numerical_leakage_required: true
+    next_authorization: "Only a strict Born mean Silver overlap > 3.55/5 plus all mechanism, identity, leakage, and CPU gates unlocks a later complete selector replay; no full-data handoff or L1/L2 claim."
+  outputs:
+    root: exchange/five_ideas/f50_qwi_selector_replay_100
+    compact_files:
+      - summary.json
+      - report.md
+      - run_metadata.json
+      - upload_manifest.json
+    exchange_files:
+      - selector_trace.json

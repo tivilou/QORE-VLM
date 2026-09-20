@@ -1,0 +1,103 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v2",
+  "project": "Q-DUET-VLM",
+  "authorization": "implemented",
+  "artifact_type": "f50_qwi_selector_l0_replay",
+  "diagnostic_only": true,
+  "baseline": {
+    "entry_point": "applications/rag/selector.py:select_passages",
+    "code_revision": "existing fixed Top-k/QORE baseline; frozen by selector-only decision",
+    "equivalence_test": "tau_zero_answer_scorer_order_and_stored_topk_identity"
+  },
+  "core_invariants": [
+    "fixed Wiki-DPR Top-50 -> Top-5 scope",
+    "retrieval, generator, evaluator, labels, and answer path remain frozen",
+    "Silver evidence is read only after selection for L0 diagnostics",
+    "F50-QWI is a classical exact emulator of a single-particle marginal ranking",
+    "invalid register states are block-isolated and never selected"
+  ],
+  "interfaces": [
+    {"id": "selector_only_top50_to_top5", "type": "filter", "input_schema": "f50-qwi-online-candidate-v1", "output_schema": "selected-five-indices-and-probabilities-v1", "invariants": ["exactly 50 ordered unique IDs", "finite scores and normalized finite embeddings", "exactly 5 unique valid outputs"]}
+  ],
+  "plugins": [
+    {
+      "id": "f50_qwi_born_exact",
+      "version": "1.0",
+      "role": "idea",
+      "interface": "selector_only_top50_to_top5",
+      "insertion_point": "fixed Top-50 selector boundary, diagnostic replay only",
+      "hypothesis": "A fixed 50-state single-particle Hermitian walk can produce a Top-5 Silver alignment above Top-k through interference while preserving the full Top-50 boundary.",
+      "input_schema": "question-independent ordinary Top-50 IDs/ranks/scores/DPR embeddings; question only remains in the outer replay identity",
+      "output_schema": "five valid passage indices, exact Born marginal probabilities, numerical diagnostics",
+      "requires": [],
+      "conflicts": ["f50_qwi_real_diffusion_control", "f50_qwi_dephased_control", "f50_qwi_phase_scramble_control"],
+      "deterministic": true,
+      "resource_estimate": "64x64 Hermitian eigendecomposition per case; CPU-only; <=600 seconds for 100 cases",
+      "failure_signatures": ["non-Hermitian Hamiltonian", "invalid-state leakage", "probability normalization failure", "identity mismatch", "Born mean Silver overlap <= Top-k"],
+      "observability_contract": {"trace_schema": "sample-trace.v1", "stages": ["retrieval", "scoring", "selection", "diagnosis"], "input_fields": ["passage_id", "retrieved_rank", "retrieval_score", "answer_scorer_score", "dpr_passage_embedding"], "output_fields": ["selected_indices", "born_probabilities", "hamiltonian_hermitian_residual", "invalid_state_probability_mass"], "emitted_fields": ["variant", "selected_ids", "selected_ranks", "probability_sha256", "numerical_checks"], "shape_dtype_normalization": ["H is 64x64 complex128 Hermitian", "valid state block is 50x50", "embedding vectors are l2 normalized", "probabilities are nonnegative and sum to one"], "checks": ["same-sample baseline/intervention parity", "identity and leakage gates", "deterministic replay"], "deterministic_replay": true}
+    },
+    {
+      "id": "f50_qwi_real_diffusion_control",
+      "version": "1.0",
+      "role": "adapter",
+      "interface": "selector_only_top50_to_top5",
+      "insertion_point": "same fixed Top-50 selector boundary",
+      "hypothesis": "Any gain from the Born arm must exceed a matched real positive-affinity diffusion control.",
+      "input_schema": "f50-qwi-online-candidate-v1",
+      "output_schema": "real-diffusion-control-top5-v1",
+      "requires": [], "conflicts": [], "deterministic": true,
+      "resource_estimate": "50x50 symmetric eigendecomposition per case",
+      "failure_signatures": ["negative population", "normalization failure", "control unavailable"],
+      "observability_contract": {"trace_schema": "sample-trace.v1", "stages": ["retrieval", "scoring", "selection", "diagnosis"], "input_fields": ["passage_id", "retrieved_rank", "retrieval_score", "answer_scorer_score", "dpr_passage_embedding"], "output_fields": ["selected_indices", "control_probabilities"], "emitted_fields": ["variant", "selected_ids", "selected_ranks", "probability_sha256", "numerical_checks"], "shape_dtype_normalization": ["50x50 nonnegative affinity", "control probabilities sum to one"], "checks": ["matched input", "deterministic replay", "no invalid-state leakage"], "deterministic_replay": true}
+    },
+    {
+      "id": "f50_qwi_dephased_control",
+      "version": "1.0",
+      "role": "adapter",
+      "interface": "selector_only_top50_to_top5",
+      "insertion_point": "same fixed Top-50 selector boundary",
+      "hypothesis": "Removing coherent cross-term interference should remove any alleged interference-specific effect.",
+      "input_schema": "f50-qwi-online-candidate-v1",
+      "output_schema": "dephased-control-top5-v1",
+      "requires": [], "conflicts": [], "deterministic": true,
+      "resource_estimate": "64x64 unitary modulus-square propagation per case",
+      "failure_signatures": ["negative probability", "normalization failure", "control unavailable"],
+      "observability_contract": {"trace_schema": "sample-trace.v1", "stages": ["retrieval", "scoring", "selection", "diagnosis"], "input_fields": ["passage_id", "retrieved_rank", "retrieval_score", "answer_scorer_score", "dpr_passage_embedding"], "output_fields": ["selected_indices", "dephased_probabilities"], "emitted_fields": ["variant", "selected_ids", "selected_ranks", "probability_sha256", "numerical_checks"], "shape_dtype_normalization": ["64x64 block unitary", "valid population sums to one"], "checks": ["matched input", "deterministic replay", "no invalid-state leakage"], "deterministic_replay": true}
+    },
+    {
+      "id": "f50_qwi_phase_scramble_control",
+      "version": "1.0",
+      "role": "adapter",
+      "interface": "selector_only_top50_to_top5",
+      "insertion_point": "same fixed Top-50 selector boundary",
+      "hypothesis": "The exact Born arm must be stable relative to a preregistered candidate-identity phase scramble.",
+      "input_schema": "f50-qwi-online-candidate-v1",
+      "output_schema": "phase-scramble-control-top5-v1",
+      "requires": [], "conflicts": [], "deterministic": true,
+      "resource_estimate": "64x64 Hermitian eigendecomposition per case",
+      "failure_signatures": ["phase rule not reproducible", "negative probability", "normalization failure"],
+      "observability_contract": {"trace_schema": "sample-trace.v1", "stages": ["retrieval", "scoring", "selection", "diagnosis"], "input_fields": ["passage_id", "retrieved_rank", "retrieval_score", "answer_scorer_score", "dpr_passage_embedding"], "output_fields": ["selected_indices", "phase-scramble-probabilities"], "emitted_fields": ["variant", "selected_ids", "selected_ranks", "probability_sha256", "numerical_checks"], "shape_dtype_normalization": ["fixed SHA-256 phase in [0,2pi)", "probabilities are nonnegative and sum to one"], "checks": ["fixed seed", "deterministic replay", "no invalid-state leakage"], "deterministic_replay": true}
+    },
+    {
+      "id": "f50_qwi_null_adapter",
+      "version": "1.0",
+      "role": "baseline",
+      "interface": "selector_only_top50_to_top5",
+      "insertion_point": "fixed Top-50 selector boundary",
+      "hypothesis": "The disabled/null arm preserves the stored Top-k baseline identity.",
+      "input_schema": "stored-topk-selector-v1",
+      "output_schema": "stored-topk-five-ids-v1",
+      "requires": [], "conflicts": [], "deterministic": true,
+      "resource_estimate": "O(1) per case",
+      "failure_signatures": ["stored Top-k identity mismatch"],
+      "observability_contract": {"trace_schema": "sample-trace.v1", "stages": ["retrieval", "scoring", "selection", "diagnosis"], "input_fields": ["passage_id", "retrieved_rank"], "output_fields": ["selected_indices"], "emitted_fields": ["variant", "selected_ids", "selected_ranks"], "shape_dtype_normalization": ["five unique IDs"], "checks": ["baseline equivalence", "same-sample parity"], "deterministic_replay": true}
+    }
+  ],
+  "discovery": {"mode": "explicit_allowlist", "allowlist": ["f50_qwi_null_adapter", "f50_qwi_born_exact", "f50_qwi_real_diffusion_control", "f50_qwi_dephased_control", "f50_qwi_phase_scramble_control"]},
+  "composition": {"mode": "parallel", "order": ["f50_qwi_null_adapter", "f50_qwi_born_exact", "f50_qwi_real_diffusion_control", "f50_qwi_dephased_control", "f50_qwi_phase_scramble_control"], "merge_rule": "keep each arm's exact five IDs and compact numerical diagnostics; no score feedback between arms", "interaction_ablations": ["Born versus real diffusion", "Born versus dephased", "Born versus phase scramble", "Born versus null Top-k"]},
+  "trace_contract": {"enabled": true, "schema": "sample-trace.v1", "artifact_path": "exchange/five_ideas/f50_qwi_selector_replay_100/{timestamp}/selector_trace.json", "sample_selection_rule": "all registered 100 cases, same case order across arms", "target_boundary": "fixed Top-50 -> Top-5 selector only; no Generator/evaluator mutation", "required_stages": ["retrieval", "scoring", "selection", "diagnosis"]},
+  "validation": {"baseline_equivalence": "null adapter and tau=0 score-order control match stored Top-k identity", "tests": ["baseline_equivalence", "plugin_isolation", "deterministic_replay", "interaction_ablation", "schema_input_invariants", "hermitian_block_leakage", "probability_normalization", "exact_classical_emulator", "cpu_budget_gate"]},
+  "reproducibility": {"config_path": "configs/experiments/f50_qwi_selector_replay_100.yaml", "dataset_identity": "registered exchange 100-case detail JSON plus exact Wiki-DPR psgs_w100.nq.compressed rehydration", "environment": "collaborator-local wrapper discovers Python/dataset/model; no absolute path required", "seeds": [42], "output_manifest": "exchange/five_ideas/f50_qwi_selector_replay_100/{timestamp}/upload_manifest.json", "silver_labels_used_online": false, "generator_called": false},
+  "recovery_contract": {"dossier_path": "docs/rag-research-log/20260920T-f50-qwi-design.md", "dossier_sha256": "0fce882409f65732af94fdfd8fe182a5ebf1d9af823c5990a4b1e32d2b893447", "candidate_id": "f50_qwi", "discriminating_intermediate_measurement": "exact Born marginal Top-5 versus matched real-diffusion, dephased, and phase-scramble controls with strict Hermitian/normalization/leakage checks"},
+  "limitations": ["single-particle marginal ranking is classically exactly simulable", "Silver overlap is L0 diagnostic only", "no joint five-passage quantum state", "no full-data or Generator utility claim"]
+}
