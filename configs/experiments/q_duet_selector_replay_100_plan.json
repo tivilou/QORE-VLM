@@ -1,0 +1,45 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "Q-DUET-VLM",
+  "authorization": "implemented",
+  "artifact_type": "q_duet_selector_only_replay",
+  "diagnostic_only": true,
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": [
+      "registered_100_case_loader",
+      "dpr_top50_identity_rehydration",
+      "duet_dominant_qubo",
+      "duet_residual_qubo",
+      "duet_question_conditioned_qubo",
+      "historical_selector_baselines",
+      "compact_replay_renderer",
+      "exchange_manifest_uploader"
+    ]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": [
+      "registered_100_case_loader",
+      "dpr_top50_identity_rehydration",
+      "duet_dominant_qubo",
+      "duet_residual_qubo",
+      "duet_question_conditioned_qubo",
+      "historical_selector_baselines",
+      "compact_replay_renderer",
+      "exchange_manifest_uploader"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/q_duet_selector_replay_100.yaml",
+    "input_exchange_path": "five_ideas/selector_replay_100_historical_input/silver-oracle-top5-100-20260915T120525Z-detail.json",
+    "input_exchange_sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
+    "seed": 42,
+    "retrieval": "facebook/wiki_dpr:psgs_w100.nq.compressed, nprobe=64",
+    "generator_called": false,
+    "silver_labels_used_online": false,
+    "quantum_solver_backends": ["qaoa_qk", "qaoa_pl", "qaoa_tc"],
+    "screen_solver": "simulated_annealing_stage1_and_exact_brute_stage2"
+  },
+  "claim_ceiling": "L0 diagnostic; fixed Top-50 selector alignment only"
+}

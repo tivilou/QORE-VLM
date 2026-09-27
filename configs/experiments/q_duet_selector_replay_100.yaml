@@ -1,0 +1,66 @@
+phase:
+  name: q_duet_selector_replay_100
+  schema_version: 1
+  evidence_tier: L0_diagnostic
+  diagnostic_only: true
+  selection_mutation: false
+  input:
+    exchange_path: five_ideas/selector_replay_100_historical_input/silver-oracle-top5-100-20260915T120525Z-detail.json
+    exchange_bytes: 8046318
+    exchange_sha256: 669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731
+    case_count: 100
+    top50_count: 50
+  retrieval:
+    corpus_mode: wiki_dpr
+    wiki_dpr_config: psgs_w100.nq.compressed
+    nprobe: 64
+    top_k: 50
+    exact_identity_required: true
+  selectors:
+    - id: qore_as
+      kind: stored_baseline
+      source_selector_id: qore_common_order
+    - id: topk_as
+      kind: stored_baseline
+      source_selector_id: topk_common_order
+    - id: mmr_as
+      kind: selector
+      method: mmr
+      lambda_mmr: 0.7
+      K: 5
+    - id: submodular_as
+      kind: selector
+      method: submodular
+      saturation_alpha: 1.0
+      lambda_submodular: 0.5
+      K: 5
+    - id: spectral_dpp_as
+      kind: selector
+      method: spectral_dpp
+      dpp_quality_scale: 2.0
+      dpp_jitter: 1.0e-8
+      K: 5
+    - id: q_duet_rag
+      kind: quantum_ready_selector
+      method: q_duet
+      K: 5
+      stage1_budget: 12
+      dominant_budget: 3
+      stage1_solver: anneal
+      stage2_solver: brute
+      stage1_lam: 2.0
+      stage1_gamma: 0.35
+      stage2_lam: 2.0
+      stage2_gamma: 0.50
+      cross_complementarity: 0.08
+      num_reads: 100
+      seed: 42
+  outputs:
+    root: exchange/five_ideas/q_duet_selector_replay_100
+    compact_files:
+      - summary.json
+      - report.md
+      - run_metadata.json
+      - upload_manifest.json
+    exchange_files:
+      - selector_trace.json
