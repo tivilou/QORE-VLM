@@ -1,0 +1,98 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v2",
+  "project": "Q-DUET-VLM",
+  "authorization": "approved",
+  "artifact_type": "observation_only_feature_audit",
+  "diagnostic_only": true,
+  "candidate_id": "q_gsrr",
+  "dossier_reference": ".ai-progress/workstreams/rag-selector/decisions/2026-09-27-qgsrr-candidate-recovery.md",
+  "baseline": {
+    "entry_point": "observation_only.identity_preserving_null",
+    "code_revision": "feature-audit-only; no production selector mutation",
+    "equivalence_test": "disabled audit produces no selector output and leaves input identity unchanged"
+  },
+  "core_invariants": [
+    "fixed 100-case Top-50 input and rank identity",
+    "no Silver/evidence/answer/generator/evaluator access",
+    "no selector or production-path mutation",
+    "deterministic tokenization and sentence splitting"
+  ],
+  "interfaces": [
+    {
+      "id": "feature_audit_transformer",
+      "type": "transformer",
+      "input_schema": "question + fixed Top-50 candidate id/title/text/rank",
+      "output_schema": "per-candidate view features and per-case inversion trace",
+      "invariants": ["candidate IDs and rank order are preserved", "raw passage text is not emitted in compact artifacts"]
+    }
+  ],
+  "discovery": {"mode": "explicit_allowlist", "allowlist": ["qgsrr_feature_audit", "null_observation_baseline"]},
+  "composition": {"mode": "sequential", "order": ["null_observation_baseline", "qgsrr_feature_audit"], "merge_rule": "emit audit trace beside unchanged input; never feed it to selector", "interaction_ablations": ["disabled_audit", "remove_title_view", "remove_local_two_sentence_view"]},
+  "plugins": [
+    {
+      "id": "null_observation_baseline",
+      "version": "1.0.0",
+      "role": "baseline",
+      "interface": "feature_audit_transformer",
+      "insertion_point": "observation_only_before_selector",
+      "hypothesis": "The disabled observation path preserves the fixed input exactly.",
+      "input_schema": "question + fixed Top-50 candidate id/title/text/rank",
+      "output_schema": "unchanged input identity digest",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "CPU-only, no model calls",
+      "failure_signatures": ["input_identity_mismatch"],
+      "observability_contract": {
+        "trace_schema": "rag.qgsrr_feature_audit_100.trace.v1",
+        "emitted_fields": ["candidate_id_order_sha256"],
+        "checks": ["100x50 identity/rank validation", "no selector invocation"],
+        "deterministic_replay": true
+      }
+    },
+    {
+      "id": "qgsrr_feature_audit",
+      "version": "0.1.0",
+      "role": "idea",
+      "interface": "feature_audit_transformer",
+      "insertion_point": "observation_only_before_selector",
+      "hypothesis": "A fixed full-passage versus local-sentence multi-granularity inversion identifies a sparse safe rescue boundary.",
+      "input_schema": "question + fixed Top-50 id/title/text/rank",
+      "output_schema": "per-candidate fixed view coverage and per-case inversion trace",
+      "requires": [],
+      "conflicts": ["production_selector", "silver_labels", "generator_output", "evaluator_output"],
+      "deterministic": true,
+      "resource_estimate": "CPU-only, 100 cases, no model calls",
+      "failure_signatures": ["input_identity_mismatch", "label_access", "view_rule_drift", "fewer_than_15_canonical_inversion_cases"],
+      "observability_contract": {
+        "trace_schema": "rag.qgsrr_feature_audit_100.trace.v1",
+        "emitted_fields": ["candidate_id_order_sha256", "title_coverage", "full_coverage", "local_sentence_coverage", "local_two_sentence_coverage", "inversions"],
+        "checks": ["100x50 identity/rank validation", "silver_labels_read=false", "deterministic replay", "no raw passage text in compact outputs"],
+        "deterministic_replay": true
+      }
+    }
+  ],
+  "reproducibility": {
+    "config_path": "configs/experiments/qgsrr_feature_audit_100.yaml",
+    "dataset_identity": "registered exchange detail JSON sha256=669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
+    "environment": "collaborator-discovered Python; CPU-only; no external model calls",
+    "seeds": ["none_deterministic"],
+    "output_manifest": "exchange/five_ideas/qgsrr_feature_audit_100/<timestamp>/upload_manifest.json"
+  },
+  "validation": {
+    "baseline_equivalence": "null observation baseline preserves all candidate IDs, text digests and ranks",
+    "tests": ["baseline_equivalence", "plugin_isolation", "deterministic_replay", "interaction_ablation", "input schema validation", "label-access audit", "compact privacy audit", "no-selector/no-generator contract"]
+  },
+  "limitations": [
+    "This artifact is a feature-only L0 diagnostic and does not test selector utility.",
+    "The 100-case artifact is exploratory and Silver-conditioned at source, although labels are ignored by this audit.",
+    "No quantum circuit is implemented until the canonical inversion gate passes."
+  ],
+  "recovery_contract": {
+    "dossier_path": ".ai-progress/workstreams/rag-selector/decisions/2026-09-27-qgsrr-candidate-recovery.md",
+    "dossier_sha256": "6e9a451b8431b5dc29b8993b166deba67144955718ea89e868a2164bc6538990",
+    "candidate_id": "q_gsrr",
+    "discriminating_intermediate_measurement": "count of predeclared full-versus-local multi-granularity inversion cases in fixed rank-5 versus rank-6..10 band"
+  },
+  "claim_ceiling": "L0 feature-only mechanism diagnostic"
+}

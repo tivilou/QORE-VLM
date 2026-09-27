@@ -219,6 +219,9 @@ def _online_candidate(candidate: Mapping[str, Any]) -> dict[str, Any]:
         "retrieved_rank": rank,
         "retrieval_score": _finite(candidate.get("retrieval_score"), "retrieval_score"),
         "answer_scorer_score": _finite(candidate.get("answer_scorer_score"), "answer_scorer_score"),
+        # Preserve post-selection diagnostic labels for compact accounting.
+        # They are never passed to a selector.
+        "evidence": candidate.get("evidence"),
     }
 
 
@@ -271,7 +274,12 @@ def _redundancy(selected: Sequence[Mapping[str, Any]], embeddings: Sequence[Sequ
             pair_count += 1
             union = token_sets[left] | token_sets[right]
             token_sum += len(token_sets[left] & token_sets[right]) / len(union) if union else 0.0
-            cosine_sum += sum(float(a) * float(b) for a, b in zip(embeddings[left], embeddings[right]))
+            left_vector = [float(value) for value in embeddings[left]]
+            right_vector = [float(value) for value in embeddings[right]]
+            left_norm = math.sqrt(sum(value * value for value in left_vector))
+            right_norm = math.sqrt(sum(value * value for value in right_vector))
+            if left_norm and right_norm:
+                cosine_sum += sum(a * b for a, b in zip(left_vector, right_vector)) / (left_norm * right_norm)
             title_pairs += 1
             same_title += int(selected[left]["title"] == selected[right]["title"])
     return {

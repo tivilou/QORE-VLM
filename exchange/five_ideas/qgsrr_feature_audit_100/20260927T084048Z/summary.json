@@ -1,0 +1,50 @@
+{
+  "schema_version": "rag.qgsrr_feature_audit_100.v1",
+  "artifact_type": "qgsrr_observation_only_feature_audit",
+  "diagnostic_only": true,
+  "selector_called": false,
+  "generator_called": false,
+  "evaluator_called": false,
+  "silver_labels_read": false,
+  "input": {
+    "path_name": "qgsrr-feature-input.json",
+    "bytes": 8046318,
+    "sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731"
+  },
+  "protocol": {
+    "case_count": 100,
+    "top50_count": 50,
+    "base_rank": 5,
+    "challenger_band": [
+      6,
+      10
+    ],
+    "margin": 0.0,
+    "tokenization": "[a-z0-9]+(?:'[a-z0-9]+)?",
+    "sentence_split": "fixed punctuation split on .!? followed by whitespace and uppercase/number/quote",
+    "views": [
+      "title",
+      "full_passage",
+      "max_single_sentence",
+      "max_adjacent_two_sentence"
+    ],
+    "label_access": "forbidden and structurally ignored"
+  },
+  "summary": {
+    "case_count": 100,
+    "text_view_inversion_cases": 2,
+    "text_view_inversion_pairs": 3,
+    "all_view_inversion_cases": 2,
+    "all_view_inversion_pairs": 2,
+    "preflight_gate_min_cases": 15,
+    "text_view_gate_pass": false,
+    "all_view_gate_pass": false,
+    "canonical_gate": "all_view_inversion",
+    "canonical_gate_pass": false,
+    "decision": "stop_before_selector_implementation"
+  },
+  "provenance": {
+    "script": "scripts/collab/five_ideas/audit_qgsrr_feature_100.py",
+    "script_sha256": "d385467258338b0c72e63142087ff1fb4abc6257f5e7bc846f6a03ff539a1919"
+  }
+}

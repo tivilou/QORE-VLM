@@ -1,0 +1,27 @@
+{
+  "schema_version": "rag.qgsrr_feature_audit_100.upload_manifest.v1",
+  "artifact_type": "qgsrr_observation_only_feature_audit_upload_manifest",
+  "status": "ready_for_authenticated_exchange_upload",
+  "target_directory": "five_ideas/qgsrr_feature_audit_100/20260927T084048Z",
+  "exchange_files": [
+    {
+      "name": "feature_trace.json"
+    }
+  ],
+  "compact_files": [
+    {
+      "name": "summary.json",
+      "bytes": 1516,
+      "sha256": "ff45c35c02220de984dae320d69a7ff85cab379830c6e14de5992c0aeb85b9fc"
+    },
+    {
+      "name": "report.md",
+      "bytes": 1028,
+      "sha256": "bf237c5a927de1db10db01bfd6110f040bd6808364e3d0365e29b0ceca17f5ed"
+    }
+  ],
+  "privacy": {
+    "raw_passage_text_in_compact": false,
+    "silver_labels_used_online": false
+  }
+}

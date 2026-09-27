@@ -1,0 +1,28 @@
+phase:
+  name: qgsrr_feature_audit_100
+  schema_version: 1
+  evidence_tier: L0_diagnostic
+  diagnostic_only: true
+  selector_called: false
+  generator_called: false
+  evaluator_called: false
+  silver_labels_read: false
+  input:
+    exchange_path: five_ideas/selector_replay_100_historical_input/silver-oracle-top5-100-20260915T120525Z-detail.json
+    exchange_bytes: 8046318
+    exchange_sha256: 669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731
+    case_count: 100
+    top50_count: 50
+  views:
+    tokenization: "[a-z0-9]+(?:'[a-z0-9]+)?"
+    sentence_split: "fixed punctuation split"
+    names: [title, full_passage, max_single_sentence, max_adjacent_two_sentence]
+  boundary:
+    base_rank: 5
+    challenger_min_rank: 6
+    challenger_max_rank: 10
+    margin: 0.0
+  gate:
+    min_inversion_cases: 15
+    canonical_trigger: "full_passage(base)>full_passage(challenger), max_single_sentence(challenger)>base, max_adjacent_two_sentence(challenger)>base, title(challenger)>=title(base)"
+    failure_action: stop_before_selector_implementation
