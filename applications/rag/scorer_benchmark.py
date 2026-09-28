@@ -127,6 +127,14 @@ class LoadedScorer:
             self._load_sequence_classifier()
         else:
             raise ScorerBenchmarkError(f"unknown scorer backend: {self.spec.backend}")
+        if not self._resolved_revision:
+            raise ScorerBenchmarkError(
+                f"{self.spec.scorer_id} has no resolved model revision; pin a HF commit"
+            )
+        if not self._config_sha256:
+            raise ScorerBenchmarkError(
+                f"{self.spec.scorer_id} has no serializable model config hash"
+            )
 
     def _torch_device(self, torch: Any) -> Any:
         requested = self._device_name
@@ -144,7 +152,12 @@ class LoadedScorer:
         self.device = self._torch_device(torch)
         self.model.to(self.device)
         self.model.eval()
-        self._resolved_revision = getattr(self.model.config, "_commit_hash", None) or self.spec.revision
+        self._resolved_revision = (
+            getattr(self.model.config, "_commit_hash", None)
+            or getattr(self.model, "_commit_hash", None)
+            or getattr(self.tokenizer, "init_kwargs", {}).get("_commit_hash")
+            or self.spec.revision
+        )
         self._config_sha256 = _config_hash(self.model.config)
 
     def _load_sequence_classifier(self) -> None:
@@ -158,7 +171,12 @@ class LoadedScorer:
         self.device = self._torch_device(torch)
         self.model.to(self.device)
         self.model.eval()
-        self._resolved_revision = getattr(self.model.config, "_commit_hash", None) or self.spec.revision
+        self._resolved_revision = (
+            getattr(self.model.config, "_commit_hash", None)
+            or getattr(self.model, "_commit_hash", None)
+            or getattr(self.tokenizer, "init_kwargs", {}).get("_commit_hash")
+            or self.spec.revision
+        )
         self._config_sha256 = _config_hash(self.model.config)
 
     def score(self, question: str, passages: Sequence[str]) -> np.ndarray:
@@ -246,4 +264,3 @@ def score_summary(scores: Sequence[float]) -> dict[str, float]:
         "mean": float(values.mean()),
         "std": float(values.std()),
     }
-
