@@ -1,0 +1,44 @@
+{
+  "schema_version": "rag.classical_scorer_benchmark_100.plan.v1",
+  "artifact_type": "fixed_top50_classical_answer_scorer_benchmark_plan",
+  "status": "authorized_selector_only_screen",
+  "input": {
+    "case_count": 100,
+    "top50_count": 50,
+    "k": 5,
+    "exchange_path": "five_ideas/selector_replay_100_historical_input/silver-oracle-top5-100-20260915T120525Z-detail.json",
+    "bytes": 8046318,
+    "sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731"
+  },
+  "online_contract": {
+    "fields": ["question", "id", "text", "retrieved_rank", "retrieval_score"],
+    "silver_labels_used": false,
+    "gold_answers_used": false,
+    "generator_called": false,
+    "evaluator_called": false,
+    "retrieval_repeated": false
+  },
+  "scorers": [
+    {"scorer_id": "dpr_reader_single_nq", "backend": "dpr_reader", "model_id": "facebook/dpr-reader-single-nq-base", "revision": null, "max_length": 350, "trust_remote_code": false},
+    {"scorer_id": "dpr_reader_multiset", "backend": "dpr_reader", "model_id": "facebook/dpr-reader-multiset-base", "revision": null, "max_length": 350, "trust_remote_code": false},
+    {"scorer_id": "bge_reranker_large", "backend": "hf_sequence_classifier", "model_id": "BAAI/bge-reranker-large", "revision": null, "max_length": 512, "trust_remote_code": false},
+    {"scorer_id": "bge_reranker_v2_m3", "backend": "hf_sequence_classifier", "model_id": "BAAI/bge-reranker-v2-m3", "revision": null, "max_length": 512, "trust_remote_code": false},
+    {"scorer_id": "jina_reranker_v2_base_multilingual", "backend": "hf_sequence_classifier", "model_id": "jinaai/jina-reranker-v2-base-multilingual", "revision": null, "max_length": 1024, "trust_remote_code": true}
+  ],
+  "selection_arms": {
+    "direct": "stable descending scorer score, then retrieved_rank and id",
+    "qore": {"method": "qore", "lam": 2.0, "prefilter_size": 15, "num_reads": 100, "seed": 42, "embedding_model": "all-MiniLM-L6-v2"}
+  },
+  "gates": {
+    "must_preserve_top50_identity": true,
+    "must_emit_model_revision_and_config_hash": true,
+    "must_emit_direct_and_qore_arms": true,
+    "quantum_followup_requires_beating_matched_scorer_and_classical_control": true,
+    "silver_alignment_claim_ceiling": "L0_diagnostic"
+  },
+  "outputs": {
+    "compact_github": ["summary.json", "report.md", "run_metadata.json", "upload_manifest.json"],
+    "exchange_only": ["selector_trace.json"],
+    "exchange_target": "five_ideas/classical_scorer_benchmark_100/<timestamp>"
+  }
+}
