@@ -41,4 +41,4 @@ fi
 echo "Using Python: $PYTHON_BIN"
 exec "$PYTHON_BIN" "$SCRIPT_DIR/replay_classical_scorer_benchmark_100.py" \
     --config "$PROJECT_ROOT/configs/experiments/classical_scorer_benchmark_100.json" \
-    --upload --progress "$@"
+    --strict-models --upload --progress "$@"

@@ -435,6 +435,8 @@ def run(args: argparse.Namespace) -> Path:
         if not args.skip_qore:
             select_passages, embedder, qore_error = _load_qore(args)
         qore_ready = select_passages is not None and embedder is not None
+        if not qore_ready and not args.skip_qore and not args.allow_qore_failure:
+            raise BenchmarkError(f"matched QORE arm is unavailable: {qore_error}")
         method_rows: dict[str, list[dict[str, Any]]] = {}
         trace_cases: list[dict[str, Any]] = []
         retrieval_miss_cases = 0
@@ -621,6 +623,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument("--qore-num-reads", type=int, default=100)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--skip-qore", action="store_true")
+    parser.add_argument("--allow-qore-failure", action="store_true")
     parser.add_argument("--strict-models", action="store_true")
     parser.add_argument("--validate-only", action="store_true")
     parser.add_argument("--upload", action="store_true")
