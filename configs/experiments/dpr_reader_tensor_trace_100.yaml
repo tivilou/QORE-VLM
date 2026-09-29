@@ -1,0 +1,37 @@
+schema_version: rag.dpr_reader_tensor_trace_100.plan.v1
+artifact_type: dpr_reader_observation_only_tensor_trace_plan
+status: authorized_observation_only_diagnostic
+input:
+  exchange_path: five_ideas/selector_replay_100_historical_input/silver-oracle-top5-100-20260915T120525Z-detail.json
+  exchange_bytes: 8046318
+  exchange_sha256: 669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731
+  case_count: 100
+  top50_count: 50
+model:
+  model_id: facebook/dpr-reader-single-nq-base
+  revision: resolved_at_runtime_and_recorded
+online_contract:
+  fields: [question, title, text, id, retrieved_rank, retrieval_score]
+  silver_labels_used: false
+  gold_answers_used: false
+  selector_called: false
+  generator_called: false
+  evaluator_called: false
+trace:
+  compact_candidate_trace: 100x50
+  full_tensor_samples_per_case_max: 1
+  full_tensor_samples_total_max: 12
+  hidden_states: true
+  attentions: true
+  span_max_answer_tokens: 10
+  full_tensor_format: npz
+outputs:
+  compact_github: [summary.json, report.md, run_metadata.json, upload_manifest.json]
+  exchange_only: [candidate_trace.json, tensor_trace.npz, tensor_trace_metadata.json]
+  exchange_target: five_ideas/dpr_reader_tensor_trace_100/<timestamp>
+gates:
+  preserve_top50_identity: true
+  record_resolved_revision_and_config_hash: true
+  posthoc_labels_only: true
+  no_selector_or_generator_calls: true
+  claim_ceiling: L0_diagnostic
