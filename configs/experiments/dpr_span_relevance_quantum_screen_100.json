@@ -1,0 +1,101 @@
+{
+  "schema_version": "rag.dpr_span_relevance_quantum_screen_100.plan.v1",
+  "status": "approved_fixed_slice_screen",
+  "project": "Q-DUET-VLM rag-selector",
+  "scope": {
+    "input_path": "research-web/apps/experiment-results/case-studies/silver-oracle-top5-100-20260915T120525Z-detail.json",
+    "input_sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
+    "input_exchange_path": "five_ideas/selector_replay_100_historical_input/silver-oracle-top5-100-20260915T120525Z-detail.json",
+    "input_bytes": 8046318,
+    "questions": 100,
+    "candidates_per_question": 50,
+    "selected_per_question": 5,
+    "reader_trace_path": "five_ideas/dpr_reader_tensor_trace_100/20260930T143444Z/candidate_trace.json",
+    "reader_trace_sha256": "13db49c56c0a5d61edf28156c5308e958f2c279e56867c6e773a135c81d56fa2"
+  },
+  "hypothesis": "Within a fixed Top-50, combining frozen DPR Reader relevance with localized span confidence and boundary concentration can recover useful passages that relevance alone ranks low; a shallow entangling score interaction may encode these joint Reader signals while a separate redundancy-aware greedy ablation reduces near-duplicate competition.",
+  "online_features": [
+    "relevance_logit",
+    "span_logit",
+    "span_margin",
+    "start_entropy",
+    "end_entropy",
+    "passage title/text only for token-Jaccard redundancy"
+  ],
+  "feature_normalization": {
+    "grouping": "within-question Top-50",
+    "method": "population z-score, clip to [-3,3], divide by 3",
+    "constant_column": 0
+  },
+  "methods": {
+    "answer_scorer_topk": "descending raw relevance_logit; must exactly match stored topk_common_order",
+    "qore_answer_scorer": "stored qore_common_order on the same fixed candidate set",
+    "classical_span_fusion": {
+      "score": "0.5 * relevance + 0.5 * mean(best_span, span_margin, boundary_concentration)",
+      "weights_frozen_before_label_evaluation": true
+    },
+    "quantum_span_interaction": {
+      "qubits": 4,
+      "encoding": "RY(arccos(x_i))",
+      "entangler": "directed CNOT ring [(0,1),(1,2),(2,3),(3,0)]",
+      "observables": ["Z_i, i=0..3", "Z_i Z_(i+1 mod 4), i=0..3"],
+      "score": "0.5 * mean(local Z) + 0.5 * mean(ring ZZ)",
+      "trainable_parameters": 0,
+      "two_qubit_gates": 4,
+      "abstract_two_qubit_depth": 2,
+      "backend": "exact statevector"
+    },
+    "classical_matched_born": "independent parity-polynomial evaluation of the exact same Born expectations; must match the statevector score within 1e-10",
+    "redundancy_ablation": {
+      "selection": "greedy Top-5 over min-max normalized base scores minus penalty times maximum Jaccard with selected passages",
+      "tokenization": "lowercase ASCII alphanumeric tokens with apostrophe-preserving words",
+      "penalty": 0.12,
+      "threshold_for_near_duplicate_report": 0.8
+    }
+  },
+  "posthoc_only": [
+    "silver_oracle_common_order overlap",
+    "three-model broad/direct evidence flags",
+    "per-question paired comparisons and bootstrap intervals"
+  ],
+  "forbidden_online": [
+    "silver oracle IDs",
+    "evidence/panel labels",
+    "gold answers",
+    "Generator outputs",
+    "evaluator outputs"
+  ],
+  "controls": [
+    "raw DPR Answer Scorer Top-k",
+    "stored QORE + Answer Scorer Top-5",
+    "fixed classical span/relevance fusion",
+    "exact classical Born-equivalent control",
+    "matched redundancy penalty on classical and quantum score arms"
+  ],
+  "gates": {
+    "input_identity_mismatch": "abort",
+    "topk_baseline_id_mismatch": "abort",
+    "quantum_classical_parity_max_abs": 1e-10,
+    "primary_diagnostic": "Silver Top-5 overlap, post-hoc only",
+    "redundancy_metrics": ["mean token Jaccard", "near-duplicate pairs per Top-5", "unique title count"],
+    "claim_ceiling": "L0_diagnostic",
+    "advance_signal_mechanism_only_if": "a span-feature arm exceeds both stored baselines with paired 95% bootstrap lower bound above zero and no material redundancy regression",
+    "quantum_advantage_claim": "not tested; fixed circuit has zero trainable parameters and exact classical parity is required"
+  },
+  "runtime": {
+    "new_model_calls": 0,
+    "retrieval_calls": 0,
+    "generator_calls": 0,
+    "evaluator_calls": 0,
+    "new_required_python_dependency": "numpy (already required by the project)",
+    "exchange_token_env": "QORE_EXCHANGE_TOKEN",
+    "exchange_directory_created_at_runtime": true,
+    "exchange_downloads": ["fixed 100-case detail JSON when absent from the checkout", "candidate_trace.json"],
+    "exchange_uploads": ["upload_manifest.json", "score_trace.json and sample_trace.json when each exceeds the 1 MiB GitHub threshold"]
+  },
+  "outputs": {
+    "root": "five_ideas/dpr_reader_span_relevance_screen_100/<timestamp>",
+    "github_compact": ["result.json", "report.md", "run_metadata.json", "upload_manifest.json", "score_trace.json/sample_trace.json when each <= 1 MiB"],
+    "exchange_only": ["score_trace.json/sample_trace.json when each > 1 MiB", "upload_manifest.json receipt"]
+  }
+}

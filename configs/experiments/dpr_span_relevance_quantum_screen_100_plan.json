@@ -1,0 +1,170 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v1",
+  "project": "Q-DUET-VLM rag-selector",
+  "authorization": "approved",
+  "baseline": {
+    "entry_point": "fixed 100 x 50 replay: DPR Reader relevance_logit -> Answer Scorer Top-k; stored qore_common_order is the matched QORE baseline",
+    "code_revision": "b6f0ca31021808e9e1f14b6086f051bbd18b2629",
+    "equivalence_test": "Computed relevance Top-5 IDs must exactly equal stored topk_common_order IDs for all 100 cases; QORE IDs are read unchanged from qore_common_order."
+  },
+  "core_invariants": [
+    "The retrieved Top-50, candidate identity/order, K=5, DPR Reader model output trace, QORE selection, Generator, evaluator, and answer path are fixed.",
+    "The online selector receives only five DPR Reader signals and passage text/title for redundancy calculation; Silver/gold/panel labels are opened only after all predictions are frozen.",
+    "This is a fixed-slice L0 diagnostic, not a full-data result or a claim of answer accuracy.",
+    "No training, weight fitting, or Silver-driven threshold selection is allowed in this screen.",
+    "The fixed four-qubit circuit has zero trainable parameters; its classical Born control must match exactly and no quantum-advantage claim is possible from this screen."
+  ],
+  "interfaces": [
+    {
+      "id": "dpr-reader-feature-scores",
+      "type": "combiner",
+      "input_schema": "100 questions x 50 rows; id/rank/text/title plus relevance_logit/span_logit/span_margin/start_entropy/end_entropy",
+      "output_schema": "per-question deterministic Top-5 IDs, scores, and set-level redundancy selection",
+      "invariants": [
+        "Exactly 50 unique IDs and ranks 1..50 per question.",
+        "All feature values are finite and normalized within question.",
+        "Output contains exactly five unique IDs from the original Top-50."
+      ]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "answer-scorer-topk",
+      "version": "frozen-100-v1",
+      "role": "baseline",
+      "interface": "dpr-reader-feature-scores",
+      "insertion_point": "after the frozen DPR Reader relevance/span heads and before Top-5 output",
+      "hypothesis": "The historical relevance-only ordering is the direct reference for any span-signal intervention.",
+      "input_schema": "100 x 50 pinned compact Reader trace and candidate identity",
+      "output_schema": "Top-5 by descending relevance_logit with retrieval-rank/id stable ties",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "CPU-only score sort over 5,000 rows",
+      "failure_signatures": ["any case differs from stored topk_common_order", "candidate ID/order mismatch"],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2",
+        "stages": ["data", "scoring", "selection", "diagnosis"],
+        "input_fields": ["case_number", "candidate_id", "retrieved_rank", "relevance_logit"],
+        "output_fields": ["reader_topk_score", "reader_topk_order", "selected_ids"],
+        "input_refs": ["five_ideas/dpr_reader_tensor_trace_100/20260930T143444Z/candidate_trace.json"],
+        "output_refs": ["score_trace.json:answer_scorer_topk"],
+        "emitted_fields": ["all 5,000 candidate IDs/ranks/relevance values and per-method selected order"],
+        "shape_dtype_normalization": ["5,000 rows", "finite float64 score arithmetic", "100 groups of 50", "stable descending score ties by retrieved rank then ID"],
+        "checks": ["input hash", "trace hash", "candidate ID/order parity", "stored Top-k exact parity"],
+        "deterministic_replay": true
+      }
+    },
+    {
+      "id": "classical-span-fusion",
+      "version": "fixed-50-50-v1",
+      "role": "adapter",
+      "interface": "dpr-reader-feature-scores",
+      "insertion_point": "after the frozen DPR Reader heads and before Top-5 output",
+      "hypothesis": "A fixed equal-weight relevance/evidence blend can rescue sharply localized answer spans without using labels or learning weights.",
+      "input_schema": "question-normalized relevance, best span, span margin, and negative mean start/end entropy",
+      "output_schema": "one finite scalar fusion score per candidate",
+      "requires": ["answer-scorer-topk"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "CPU-only arithmetic over 5,000 rows",
+      "failure_signatures": ["Silver overlap below both stored baselines", "broad/direct evidence falls while redundancy rises", "baseline parity or finite-value check fails"],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2",
+        "stages": ["data", "scoring", "selection", "diagnosis"],
+        "input_fields": ["relevance_logit", "span_logit", "span_margin", "start_entropy", "end_entropy"],
+        "output_fields": ["four normalized features", "classical fusion score", "selected order"],
+        "input_refs": ["five_ideas/dpr_reader_tensor_trace_100/20260930T143444Z/candidate_trace.json"],
+        "output_refs": ["score_trace.json:classical_span_fusion"],
+        "emitted_fields": ["all 5,000 candidate features and classical scores"],
+        "shape_dtype_normalization": ["50 x 4 finite matrix per question", "population z-score clipped to [-3,3] then divided by 3", "fixed 0.5 relevance + 0.5 mean evidence weights"],
+        "checks": ["input allowlist", "no label access in scorer", "unique Top-5 from Top-50", "deterministic replay"],
+        "deterministic_replay": true
+      }
+    },
+    {
+      "id": "quantum-span-interaction",
+      "version": "four-qubit-fixed-ring-v1",
+      "role": "idea",
+      "interface": "dpr-reader-feature-scores",
+      "insertion_point": "after the frozen DPR Reader heads and before Top-5 output",
+      "hypothesis": "A shallow entangling map over relevance, localized span, boundary margin, and concentration can express joint Reader-signal interactions that a relevance-only score misses.",
+      "input_schema": "four question-normalized DPR Reader features in [-1,1]",
+      "output_schema": "one Born-expectation score per candidate, plus a matched exact classical parity score",
+      "requires": ["answer-scorer-topk"],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "4-qubit exact statevector per candidate; 4 CNOT, abstract two-qubit depth 2, 0 trainable parameters",
+      "failure_signatures": ["circuit-control parity error > 1e-10", "no span-signal gain over both stored baselines", "redundancy regression", "label leakage or candidate mismatch"],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2",
+        "stages": ["data", "scoring", "selection", "diagnosis"],
+        "input_fields": ["four normalized DPR Reader features"],
+        "output_fields": ["per-candidate statevector score", "matched classical Born score", "local Z and ring ZZ expectations", "selected order"],
+        "input_refs": ["score_trace.json:classical_span_fusion feature projection"],
+        "output_refs": ["score_trace.json:quantum_span_interaction"],
+        "emitted_fields": ["all 5,000 candidate feature vectors, circuit scores, classical Born scores, and selected order"],
+        "shape_dtype_normalization": ["4 qubits", "RY(arccos(x_i)) encoding", "directed CNOT ring", "8 finite observables", "exact complex128 statevector"],
+        "checks": ["circuit state norm", "finite observables", "statevector/parity-polynomial score agreement <= 1e-10", "same input IDs/order", "posthoc-only labels"],
+        "deterministic_replay": true
+      }
+    }
+  ],
+  "trace_contract": {
+    "enabled": true,
+    "schema": "sample-trace.v2",
+    "legacy_compatibility": false,
+    "artifact_path": "five_ideas/dpr_reader_span_relevance_screen_100/<timestamp>/sample_trace.json, with score_trace.json value shard; either artifact moves to 18083 when >1 MiB",
+    "sample_selection_rule": "all 100 fixed questions and all 50 candidates in registered order",
+    "target_boundary": "fixed Top-50 -> Top-5 only; no retrieval, Reader rerun, labels during scoring, Generator, or evaluator",
+    "required_stages": ["data", "scoring", "selection", "diagnosis"],
+    "semantic_roles": ["online feature", "classical control", "quantum interaction", "matched Born control", "posthoc diagnostic"],
+    "required_representations": ["candidate identity/rank", "five frozen Reader values", "four normalized features", "all score arms", "selected order", "posthoc overlap/redundancy metrics"],
+    "producer_owned_lineage": ["fixed detail JSON SHA-256", "DPR trace SHA-256", "plan/config SHA-256", "code revision/hash", "run timestamp", "exchange receipt when used"],
+    "readiness_checks": ["100x50 identity and order validation", "complete 5,000-row score trace", "no text/answer/label fields in compact score trace", "quantum/classical exact parity", "exact baseline equivalence", "posthoc metrics are computed after all selections"]
+  },
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": ["answer-scorer-topk", "classical-span-fusion", "quantum-span-interaction"]
+  },
+  "composition": {
+    "mode": "parallel",
+    "order": ["answer-scorer-topk", "classical-span-fusion", "quantum-span-interaction"],
+    "merge_rule": "Each arm independently selects exactly five IDs from the same unchanged Top-50; redundancy is a separate matched ablation using penalty=0.12.",
+    "interaction_ablations": ["classical linear fusion vs quantum interaction", "quantum statevector vs exact classical Born parity", "each score arm with and without identical redundancy penalty"]
+  },
+  "validation": {
+    "baseline_equivalence": "For all 100 cases, descending Reader relevance scores must exactly reproduce stored topk_common_order; the stored QORE baseline is read unchanged.",
+    "tests": [
+      "fixed 50x4 feature normalization and constant-column handling",
+      "quantum statevector scores match independent classical Born parity scores within 1e-10",
+      "five unique stable IDs are selected from the input Top-50",
+      "redundancy-aware selection lowers the synthetic duplicate rate",
+      "online projection excludes evidence labels, Silver oracle IDs, gold answers, and generated answers",
+      "fixed input and trace hashes, full 5,000-row coverage, and baseline parity",
+    "compact output size and authenticated exchange manifest receipt validation",
+    "reopen detached sample-trace.v2 and score trace, verify byte/hash identity, all 100 complete 50x8 numeric slices, candidate ID/rank coverage, and per-method Top-5 replay",
+    "local HTTP exchange contract test for directory creation, bearer authentication, streamed upload, and size/SHA-256 receipt",
+    "baseline_equivalence",
+      "plugin_isolation",
+      "deterministic_replay",
+      "interaction_ablation",
+      "trace_structural_validation",
+      "trace_semantic_validation",
+      "trace_replay"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/dpr_span_relevance_quantum_screen_100.json",
+    "dataset_identity": "Silver-oracle Top-5 case study, fixed 100 x 50, SHA-256 669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
+    "environment": "Collaborator-local Python with project NumPy; wrapper discovers Python and repository root; no model/GPU requirement.",
+    "seeds": [314159],
+    "output_manifest": "five_ideas/dpr_reader_span_relevance_screen_100/<timestamp>/upload_manifest.json"
+  },
+  "limitations": [
+    "This is a selected 100-question Silver diagnostic and remains L0; it is not a full-data result or answer-accuracy estimate.",
+    "The circuit has zero trainable parameters and an exact classical matched implementation; this is a feature-interaction screen, not a quantum-advantage test.",
+    "The screen uses only compact DPR logits/entropy statistics; the 12 full tensor samples do not establish population-level hidden-state causality.",
+    "A positive signal-mechanism screen must be followed by an independent-data evaluation and a separately pre-registered trainable quantum-versus-classical parameter-budget study."
+  ]
+}
