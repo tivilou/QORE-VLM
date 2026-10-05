@@ -1,0 +1,61 @@
+phase:
+  name: q_arcg_reader_integrated_residual
+  schema_version: 1
+  candidate_id: q_arcg_reader_integrated_residual
+  stage: synthetic_contract_preflight
+  synthetic_only: true
+  fixed_case_study_only: false
+  data_accessed: false
+  gpu_allowed: false
+  model_loading_allowed: false
+  retrieval_run_allowed: false
+  generation_run_allowed: false
+  evaluator_run_allowed: false
+
+reader_head:
+  anchor: "frozen DPR Reader relevance_logit"
+  features:
+    - relevance_anchor
+    - span_support
+    - span_margin
+    - relevance_span_disagreement
+  quantum_circuit:
+    qubits: 4
+    depth: 2
+    encoding: "RY(arccos(clipped normalized Reader features))"
+    trainable_layers: "RZ then RY on each qubit, directed CNOT ring"
+    observables: "four local Z and four ring ZZ expectations"
+  score_rule: "reader_relevance + applicability_gate * bounded_residual"
+  residual_bound: 0.25
+  null_initialization: "residual_scale=0, exact original Reader score"
+  training_loss: "Reader task loss plus pairwise Top-50 rank loss on available training positives"
+
+controls:
+  classical: "same circuit/readout parameter budget with bounded diagonal feature layers"
+  null: "disabled Q-ARCG returns the original Reader score exactly"
+
+online_boundary:
+  allowed_fields:
+    - reader_relevance_logit
+    - reader_start_logits
+    - reader_end_logits
+    - passage_token_mask
+  forbidden_fields:
+    - gold_answers
+    - silver_labels
+    - generated_answers
+    - evaluator_outputs
+    - posthoc_metrics
+
+preflight:
+  synthetic_rows: 8
+  output_schema: "rag.qarcg_reader_preflight.v1 plus sample-trace.v2"
+  torch_check_optional: true
+  no_real_data_or_model_load: true
+
+gates:
+  exact_null_equivalence: true
+  residual_is_bounded: true
+  matched_parameter_budget: true
+  differentiable_torch_path: "required for collaborator integration run"
+  independent_real_data_screen: "separate authorization"

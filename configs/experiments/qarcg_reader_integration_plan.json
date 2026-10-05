@@ -1,0 +1,115 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v2",
+  "project": "Q-DUET-VLM/rag-selector",
+  "authorization": "approved",
+  "baseline": {
+    "entry_point": "DPR Reader relevance head -> Top-5 ordering",
+    "code_revision": "Q-ARCG synthetic contract implementation",
+    "equivalence_test": "Initial residual_scale=0 must reproduce the original Reader scores and stable Top-k exactly."
+  },
+  "core_invariants": [
+    "Scope remains fixed Top-50 -> Top-5; retrieval, production QORE path, Generator, evaluator, and answer path remain frozen.",
+    "The online head sees only Reader outputs and passage-token masks; Silver/gold labels, generated answers, and evaluator outputs are forbidden.",
+    "Raw Reader relevance remains the score anchor; the Q-ARCG residual is applicability-gated and bounded.",
+    "The quantum arm and a same-parameter-budget classical control use the same features, split, loss, optimizer, and seeds.",
+    "The synthetic preflight is not a utility result and does not authorize a full-data run."
+  ],
+  "interfaces": [
+    {
+      "id": "reader_integrated_top50_reranker",
+      "type": "combiner",
+      "input_schema": "Reader relevance/start/end logits plus passage-token mask for one fixed candidate cohort",
+      "output_schema": "per-candidate score, applicability gate, bounded residual, and deterministic Top-5 order",
+      "invariants": [
+        "All candidate IDs/order are preserved until ranking.",
+        "Residual is zero at null initialization and bounded by configured score spread.",
+        "No post-selection label or generation field is accepted."
+      ]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "frozen_reader_topk",
+      "version": "1.0.0",
+      "role": "baseline",
+      "interface": "reader_integrated_top50_reranker",
+      "insertion_point": "DPR Reader relevance head before Top-5 ordering",
+      "hypothesis": "The historical Reader relevance ordering is the anchor that Q-ARCG must preserve or improve.",
+      "input_schema": "Reader relevance logit and candidate identity/rank",
+      "output_schema": "raw Reader score and stable Top-5 IDs",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "No additional model pass; CPU sort after Reader inference",
+      "failure_signatures": ["baseline ordering mismatch", "candidate identity mismatch", "non-finite Reader score"]
+    },
+    {
+      "id": "qarcg_reader_integrated_residual",
+      "version": "0.1.0",
+      "role": "idea",
+      "interface": "reader_integrated_top50_reranker",
+      "insertion_point": "Inside the Reader scoring path after relevance/span heads and before Top-5 ordering",
+      "hypothesis": "A learned applicability gate can open a bounded quantum residual only when span evidence is consistent enough to rescue an underestimated passage, avoiding the span-only false positives observed in the failed fixed fusion screen.",
+      "input_schema": "Reader relevance/start/end logits, passage-token mask, candidate identity/rank",
+      "output_schema": "final score, gate, bounded residual, quantum observables, stable Top-5 IDs",
+      "requires": ["frozen_reader_topk"],
+      "conflicts": ["silver_labels", "generator_feedback", "evaluator_feedback", "posthoc_selector_tuning"],
+      "deterministic": true,
+      "resource_estimate": "One shallow four-qubit differentiable statevector head per Reader batch; no extra corpus pass",
+      "failure_signatures": ["null_baseline_drift", "residual_bound_violation", "gate_hijacks_low_relevance_rows", "matched_classical_control_not_run", "no_gain_on_predeclared rescue pairs", "label_or_generator_leakage"],
+      "observability_contract": {
+        "trace_schema": "rag.qarcg_reader_preflight.v1",
+        "emitted_fields": ["candidate_count", "reader_feature_shape", "gate_range", "residual_bound", "parameter_count", "selected_candidate_indices", "label_access"],
+        "checks": ["exact null equivalence", "finite bounded features", "residual bound", "same-budget control", "stable deterministic Top-5", "no forbidden fields"],
+        "deterministic_replay": true
+      }
+    },
+    {
+      "id": "classical_matched_arcg_control",
+      "version": "0.1.0",
+      "role": "adapter",
+      "interface": "reader_integrated_top50_reranker",
+      "insertion_point": "Same Reader head boundary as Q-ARCG",
+      "hypothesis": "Any task utility gain must exceed a same-budget classical gated residual control before a quantum-specific claim is considered.",
+      "input_schema": "Identical Reader features and candidate identity/rank",
+      "output_schema": "classical control score, gate, bounded residual, stable Top-5 IDs",
+      "requires": ["frozen_reader_topk"],
+      "conflicts": ["silver_labels", "generator_feedback", "evaluator_feedback"],
+      "deterministic": true,
+      "resource_estimate": "CPU/Torch feature head with exactly the Q-ARCG trainable parameter count",
+      "failure_signatures": ["parameter_budget_mismatch", "different split/loss/seed", "control omitted"]
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": ["frozen_reader_topk", "qarcg_reader_integrated_residual", "classical_matched_arcg_control"]
+  },
+  "composition": {
+    "mode": "parallel",
+    "order": ["frozen_reader_topk", "qarcg_reader_integrated_residual", "classical_matched_arcg_control"],
+    "merge_rule": "Each arm scores the same unchanged Reader candidate cohort; only the final Top-5 order is compared, and no arm feeds its output to another.",
+    "interaction_ablations": ["null Q-ARCG versus frozen Reader Top-k", "Q-ARCG versus same-budget classical control", "remove applicability gate", "remove span-disagreement feature", "remove quantum entangling layers"]
+  },
+  "validation": {
+    "baseline_equivalence": "Synthetic and Torch null paths reproduce the original Reader scores exactly.",
+    "tests": ["baseline_equivalence", "plugin_isolation", "deterministic_replay", "interaction_ablation", "feature_schema_validation", "residual_bound", "matched_parameter_budget", "label_access_audit"]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/qarcg_reader_preflight.yaml",
+    "dataset_identity": "synthetic contract fixture only; no real data or model inference",
+    "environment": "Python 3.10+; NumPy for contract checks; Torch only for optional differentiability check",
+    "seeds": ["deterministic_synthetic", 42],
+    "output_manifest": "exchange/five_ideas/qarcg_reader_preflight/<timestamp>/run_metadata.json"
+  },
+  "recovery_contract": {
+    "dossier_path": ".ai-progress/workstreams/rag-selector/refs/mechanism_recovery_2026-10-05-q-arcg.json",
+    "dossier_sha256": "cb8ad7d9244bb0c691a9f092f78a2c5e3515d09596a63342d3b4a2d09375aa7c",
+    "candidate_id": "q_arcg_reader_integrated_residual",
+    "discriminating_intermediate_measurement": "Gate-open rate and positive-pair rank rescue in the middle-relevance/low-disagreement stratum, compared with the frozen Reader and same-budget classical control."
+  },
+  "limitations": [
+    "This implementation and its preflight are L0 engineering evidence only; no real-data utility or quantum advantage is established.",
+    "A future real-data run must train/infer the head inside the DPR Reader path with a frozen split, matched classical control, and independent executor.",
+    "The fixed four-qubit statevector can be classically simulated; utility and parameter-budget evidence must precede any quantum-specific claim."
+  ]
+}
