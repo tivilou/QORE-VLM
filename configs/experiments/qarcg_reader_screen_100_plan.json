@@ -1,0 +1,145 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v2",
+  "project": "Q-DUET-VLM/rag-selector",
+  "baseline": {
+    "entry_point": "Frozen DPR Reader relevance head -> fixed Top-50 -> Top-5 ordering",
+    "code_revision": "Q-ARCG Reader screen runner",
+    "equivalence_test": "Raw Reader relevance logits and null residual reproduce stable Top-5 exactly."
+  },
+  "core_invariants": [
+    "Top-50 -> Top-5 scope and production retrieval/selector/Generator/evaluator remain frozen.",
+    "Reader-side online head receives no gold, Silver, generation, or evaluator fields.",
+    "Weak answer-string containment is training-only and not official passage gold.",
+    "Quantum and classical arms use the same split, loss, optimizer, seed, and parameter count.",
+    "Silver labels are opened only after all online arms rank all cases."
+  ],
+  "interfaces": [{
+    "id": "reader_integrated_top50_reranker",
+    "type": "combiner",
+    "input_schema": "Reader relevance/start/end logits plus passage-token mask",
+    "output_schema": "per-candidate score, gate/residual, stable Top-5",
+    "invariants": ["candidate order preserved", "bounded residual", "no posthoc fields"]
+  }],
+  "plan_id": "qarcg_reader_screen_100",
+  "candidate_id": "q_arcg_reader_integrated_residual",
+  "authorization": "approved",
+  "scope": "fixed Top-50 to Top-5 selector screening with a Reader-integrated trainable head",
+  "frozen_components": ["retrieval", "registered evaluation Top-50", "production selector", "Generator", "evaluator"],
+  "online_boundary": {
+    "allowed": ["question", "passage title/text", "Reader relevance/start/end logits", "passage token mask"],
+    "forbidden": ["gold answers", "Silver labels", "generated answers", "evaluator outputs", "posthoc metrics"]
+  },
+  "training": {
+    "split": "nq_open/train",
+    "target": "answer_string_containment_in_retrieved_passage",
+    "target_status": "weak_supervision_only_not_official_gold",
+    "max_questions": 512,
+    "reader_frozen": true,
+    "same_training_cases_and_optimizer_for_quantum_and_classical": true
+  },
+  "evaluation": {
+    "input": "registered silver-oracle-top5-100 detail artifact",
+    "case_count": 100,
+    "top50_count": 50,
+    "top5_count": 5,
+    "silver_diagnostics": "posthoc_only",
+    "generator": "not_called",
+    "evaluator": "not_called"
+  },
+  "plugins": [
+    {
+      "id": "frozen_reader_topk",
+      "role": "baseline",
+      "version": "1.0.0",
+      "interface": "reader_integrated_top50_reranker",
+      "insertion_point": "DPR Reader relevance head before Top-5",
+      "hypothesis": "Raw Reader relevance is the stable anchor.",
+      "input_schema": "Reader relevance logit and candidate rank",
+      "output_schema": "stable Top-5 order",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "deterministic sort",
+      "failure_signatures": ["ordering mismatch", "identity mismatch"],
+      "online": "raw DPR Reader relevance logit stable Top-5",
+      "observability_contract": {"trace_schema": "sample-trace.v2", "stages": ["data", "training", "scoring", "selection", "diagnosis"], "input_fields": ["Reader score", "candidate rank"], "output_fields": ["score vector", "selected ranks"], "input_refs": ["registered detail input"], "output_refs": ["selector_trace.json"], "emitted_fields": ["case hash", "scores", "ranks"], "shape_dtype_normalization": ["50 finite scores"], "checks": ["same cohort", "stable Top-5"], "deterministic_replay": true}
+    },
+    {
+      "id": "trained_q_arcg",
+      "role": "idea",
+      "version": "0.1.0",
+      "interface": "reader_integrated_top50_reranker",
+      "insertion_point": "After Reader heads before Top-5",
+      "hypothesis": "A learned four-qubit gate opens a bounded residual only for reliable span rescue.",
+      "input_schema": "Reader relevance/start/end logits and passage-token mask",
+      "output_schema": "Q-ARCG score/gate/residual and Top-5",
+      "requires": ["frozen_reader_topk"],
+      "conflicts": ["silver_labels", "generated_answers", "evaluator_outputs"],
+      "deterministic": true,
+      "resource_estimate": "Frozen Reader plus four-qubit Torch head on 512 weak cases",
+      "failure_signatures": ["null drift", "residual bound violation", "no rescue gain", "label leakage"],
+      "online": "Reader relevance anchor plus four-qubit applicability-gated bounded residual",
+      "observability_contract": {"trace_schema": "sample-trace.v2", "stages": ["data", "training", "scoring", "selection", "diagnosis"], "input_fields": ["Reader logits", "passage mask", "weak mask during training"], "output_fields": ["gate", "residual", "score vector", "selected ranks"], "input_refs": ["nq_open train", "registered detail input"], "output_refs": ["selector_trace.json"], "emitted_fields": ["Reader identity", "gate", "residual", "scores", "ranks"], "shape_dtype_normalization": ["N x 4 features", "50 finite scores"], "checks": ["exact null", "bounded residual", "disjoint split", "posthoc Silver"], "deterministic_replay": true}
+    },
+    {
+      "id": "trained_same_budget_classical_control",
+      "role": "adapter",
+      "version": "0.1.0",
+      "interface": "reader_integrated_top50_reranker",
+      "insertion_point": "Same Reader boundary as Q-ARCG",
+      "hypothesis": "Task gains must exceed a matched classical control before quantum attribution.",
+      "input_schema": "Identical Reader features and cohorts",
+      "output_schema": "classical score/gate/residual and Top-5",
+      "requires": ["frozen_reader_topk"],
+      "conflicts": ["silver_labels", "generated_answers", "evaluator_outputs"],
+      "deterministic": true,
+      "resource_estimate": "Same Torch parameter budget and optimizer",
+      "failure_signatures": ["parameter mismatch", "split mismatch", "control omitted"],
+      "online": "matched diagonal classical feature layers, same parameter count/loss/split/seed",
+      "observability_contract": {"trace_schema": "sample-trace.v2", "stages": ["data", "training", "scoring", "selection", "diagnosis"], "input_fields": ["same Reader logits/features", "same weak mask"], "output_fields": ["score vector", "selected ranks", "paired delta"], "input_refs": ["same Q-ARCG artifacts"], "output_refs": ["selector_trace.json"], "emitted_fields": ["scores", "ranks", "paired delta"], "shape_dtype_normalization": ["same 50 rows", "finite scores"], "checks": ["matched budget", "same seed/split/loss"], "deterministic_replay": true}
+    }
+  ],
+  "discovery": {"mode": "explicit_allowlist", "allowlist": ["frozen_reader_topk", "trained_q_arcg", "trained_same_budget_classical_control"]},
+  "composition": {"mode": "parallel", "order": ["frozen_reader_topk", "trained_q_arcg", "trained_same_budget_classical_control"], "merge_rule": "Each arm scores the unchanged Reader cohort; no arm feeds another.", "interaction_ablations": ["null Q-ARCG vs Reader", "Q-ARCG vs classical", "gate-disabled"]},
+  "validation": {"baseline_equivalence": "Null residual reproduces raw Reader scores exactly.", "tests": ["baseline_equivalence", "plugin_isolation", "deterministic_replay", "interaction_ablation", "trace_structural_validation", "trace_semantic_validation", "trace_replay", "weak target boundary", "matched budget", "split disjointness", "privacy audit"]},
+  "reproducibility": {"config_path": "configs/experiments/qarcg_reader_screen_100.json", "dataset_identity": "nq_open/train weak slice plus registered detail input hash 669ce101...d5731", "environment": "Collaborator-local Torch/Transformers/Hugging Face cache and Wiki-DPR", "seeds": [20261005, 20261006], "output_manifest": "exchange/five_ideas/qarcg_reader_screen_100/<timestamp>/upload_manifest.json"},
+  "trace_contract": {
+    "enabled": true,
+    "schema": "sample-trace.v2",
+    "stages": ["data", "training", "scoring", "selection", "diagnosis"],
+    "exchange_only": ["selector_trace.json"],
+    "artifact_path": "selector_trace.json",
+    "sample_selection_rule": "all 100 cases and all three arms; no raw passage text",
+    "target_boundary": "Silver/evidence is posthoc-only; no labels in online head",
+    "required_stages": ["data", "training", "scoring", "selection", "diagnosis"],
+    "semantic_roles": ["frozen Reader baseline", "Q-ARCG candidate", "matched classical control"],
+    "required_representations": ["Reader identity", "50-candidate score vectors", "gate/residual", "selected ranks"],
+    "producer_owned_lineage": ["runner Reader forward", "head score transform", "posthoc Silver overlap"],
+    "readiness_checks": ["all 100 cases", "all arms per case", "finite vectors", "same cohort/order", "raw text absent from compact files"],
+    "compact_excludes_raw_text_answers_and_selected_ids": true
+  },
+  "gates": {
+    "utility": "Q-ARCG mean Silver overlap exceeds frozen Reader Top-k with paired bootstrap lower bound >= 0",
+    "attribution": "Q-ARCG mean Silver overlap exceeds matched classical control with paired bootstrap lower bound > 0",
+    "coverage": "weakly supervised training coverage >= 0.25",
+    "claim_ceiling": "L0 diagnostic until official gold and independent utility are available"
+  },
+  "kill_criteria": [
+    "null initialization is not exact",
+    "online boundary receives labels or generated/evaluator fields",
+    "Q-ARCG does not beat frozen Reader and matched classical control on predeclared paired diagnostics",
+    "gate systematically promotes low-relevance sharp-span false positives",
+    "training/evaluation question overlap is detected"
+  ],
+  "recovery_contract": {
+    "dossier_path": ".ai-progress/workstreams/rag-selector/refs/mechanism_recovery_2026-10-05-q-arcg.json",
+    "dossier_sha256": "cb8ad7d9244bb0c691a9f092f78a2c5e3515d09596a63342d3b4a2d09375aa7c",
+    "candidate_id": "q_arcg_reader_integrated_residual",
+    "discriminating_intermediate_measurement": "Gate-open rate and paired rank rescue in middle-relevance/low-disagreement candidates against Reader and matched classical control."
+  },
+  "limitations": [
+    "L0 diagnostic only: weak containment is noisy and Silver overlap is posthoc.",
+    "The Reader body is frozen; this is a trainable Reader-side head screen, not end-to-end fine-tuning.",
+    "The four-qubit statevector is classically simulable; no quantum advantage is claimed."
+  ]
+}

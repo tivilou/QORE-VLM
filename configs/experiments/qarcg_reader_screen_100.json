@@ -1,0 +1,96 @@
+{
+  "phase": {
+    "name": "qarcg_reader_screen_100",
+    "schema_version": 1,
+    "candidate_id": "q_arcg_reader_integrated_residual",
+    "authorization": "approved",
+    "diagnostic_only": true,
+    "selection_mutation": false,
+    "dataset": {
+      "name": "nq_open",
+      "training_split": "train",
+      "evaluation_input": "silver-oracle-top5-100-20260915T120525Z-detail.json",
+      "evaluation_cases": 100,
+      "evaluation_top_k": 50,
+      "evaluation_input_sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731"
+    },
+    "training": {
+      "max_questions": 512,
+      "seed": 20261005,
+      "weak_target": "answer_string_containment_in_retrieved_passage",
+      "weak_target_is_not_official_gold": true,
+      "minimum_positive_candidates": 1,
+      "minimum_negative_candidates": 1,
+      "epochs": 3,
+      "learning_rate": 0.003,
+      "weight_decay": 0.0001,
+      "anchor_penalty": 0.01,
+      "gradient_clip_norm": 5.0
+    },
+    "retrieval": {
+      "corpus_mode": "wiki_dpr",
+      "wiki_dpr_config": "psgs_w100.nq.compressed",
+      "nprobe": 64,
+      "top_k": 50,
+      "one_retrieval_per_training_question": true,
+      "evaluation_retrieval": "frozen_registered_top50_input"
+    },
+    "reader": {
+      "model_id": "facebook/dpr-reader-single-nq-base",
+      "revision": null,
+      "max_length": 350,
+      "max_answer_tokens": 10,
+      "freeze_reader": true,
+      "score_source": "raw_relevance_logit"
+    },
+    "head": {
+      "n_qubits": 4,
+      "depth": 2,
+      "residual_bound": 0.25,
+      "gate_temperature": 1.0,
+      "same_budget_classical_control": true
+    },
+    "controls": [
+      "frozen_reader_topk",
+      "trained_q_arcg",
+      "trained_same_budget_classical_control"
+    ],
+    "gates": {
+      "minimum_training_coverage": 0.25,
+      "minimum_q_arcg_minus_reader_silver_overlap": 0.0,
+      "minimum_q_arcg_minus_classical_silver_overlap": 0.0,
+      "bootstrap_replicates": 2000,
+      "bootstrap_seed": 20261006,
+      "quantum_attribution_requires_positive_paired_ci": true,
+      "claim_ceiling_without_official_gold": "L0_diagnostic"
+    },
+    "outputs": {
+      "root": "exchange/five_ideas/qarcg_reader_screen_100",
+      "exchange_namespace": "five_ideas/qarcg_reader_screen_100",
+      "exchange_url": "http://117.50.198.37:18083",
+      "exchange_only_files": ["selector_trace.json"]
+    },
+    "boundary": {
+      "online_fields": [
+        "question",
+        "title",
+        "text",
+        "retrieved_rank",
+        "reader_relevance_logit",
+        "reader_start_logits",
+        "reader_end_logits",
+        "passage_token_mask"
+      ],
+      "forbidden_online_fields": [
+        "gold_answers",
+        "silver_labels",
+        "generated_answers",
+        "evaluator_outputs",
+        "posthoc_metrics"
+      ],
+      "generator_called": false,
+      "evaluator_called": false,
+      "silver_used_for_training_or_selection": false
+    }
+  }
+}
