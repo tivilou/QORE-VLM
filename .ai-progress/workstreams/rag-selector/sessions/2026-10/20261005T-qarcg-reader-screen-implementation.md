@@ -31,5 +31,6 @@ the decision file.
 ## Git snapshot
 
 - Existing unrelated dirty files were preserved.
-- Agent-owned new screen files are not yet committed in this session; commit
-  only the listed code/config/progress files after the final ownership check.
+- Agent-owned screen files were committed locally as `31cbf1c` and mirrored to
+  the server development branch as `fa54ef0`; unrelated dirty files were not
+  staged.
