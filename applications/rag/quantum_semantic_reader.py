@@ -28,6 +28,39 @@ def semantic_pool(hidden: Any, question_mask: Any, passage_mask: Any) -> tuple[A
     return pooled, weights
 
 
+def reader_token_masks(encoded: Any, tokenizer: Any) -> tuple[Any, Any]:
+    """Recover disjoint question/passage token masks from a DPR Reader batch.
+
+    Transformers' DPR Reader tokenizers do not reliably emit ``token_type_ids``
+    (the slow tokenizer never does), so fall back to the first ``[SEP]``
+    boundary. For a question/text pair the first segment holds the question and
+    everything after the first ``[SEP]`` belongs to the passage.
+    """
+    import torch
+    if "input_ids" not in encoded or "attention_mask" not in encoded:
+        raise ValueError("Reader encoding is missing input_ids/attention_mask")
+    input_ids = encoded["input_ids"]
+    valid = encoded["attention_mask"].bool()
+    for token_id in getattr(tokenizer, "all_special_ids", ()) or ():
+        valid = valid & (input_ids != int(token_id))
+    token_types = encoded.get("token_type_ids")
+    if token_types is not None:
+        return valid & (token_types == 0), valid & (token_types == 1)
+    length = input_ids.shape[1]
+    positions = torch.arange(length, device=input_ids.device)
+    sep_id = getattr(tokenizer, "sep_token_id", None)
+    fallback = max(1, length // 2)
+    if sep_id is not None:
+        is_sep = input_ids == int(sep_id)
+        first_sep = is_sep.float().argmax(1)
+        split = torch.where(is_sep.any(1), first_sep, torch.full_like(first_sep, fallback))
+    else:
+        split = torch.full((input_ids.shape[0],), fallback, device=input_ids.device, dtype=torch.long)
+    question = valid & (positions[None, :] < split[:, None])
+    passage = valid & (positions[None, :] > split[:, None])
+    return question, passage
+
+
 def make_semantic_head(hidden_size: int, *, classical: bool = False, seed: int = 20261008,
                        config: QARCGConfig | None = None) -> Any:
     """Both arms share semantic input/projection initialization and parameter budget."""
@@ -73,13 +106,7 @@ def reader_semantic_forward(torch, tokenizer, reader, device, question, texts, *
             encoded = tokenizer(questions=[question] * len(batch), texts=batch, return_tensors="pt",
                                 padding=True, truncation=True, max_length=max_length)
             encoded = {k: v.to(device) for k, v in encoded.items()}
-            if "token_type_ids" not in encoded:
-                raise ValueError("Reader token types missing")
-            valid = encoded["attention_mask"].bool()
-            for token_id in tokenizer.all_special_ids:
-                valid &= encoded["input_ids"] != token_id
-            qm = valid & (encoded["token_type_ids"] == 0)
-            pm = valid & (encoded["token_type_ids"] == 1)
+            qm, pm = reader_token_masks(encoded, tokenizer)
             captured.clear()
             with torch.no_grad():
                 output = reader(input_ids=encoded["input_ids"], attention_mask=encoded["attention_mask"], return_dict=True)
