@@ -2,7 +2,7 @@
 
 - Date: 2026-10-08
 - Scope: rag-selector
-- Status: candidate; exploratory implementation/preflight complete, real-data screen pending
+- Status: blocked for training repair after 20261008T101111Z screen; broad semantic/quantum family inconclusive
 - Supersedes: None
 - Superseded By: None
 - Gate: synthetic tensor/replay/interface contracts pass before collaborator screen; positive/direct evidence metrics prospectively frozen
@@ -37,3 +37,7 @@ Formal dataset qualification, literature novelty, complete natural-data run and 
 ## Verified implementation
 
 Local combined regression: 28/28; primary server core/screen/semantic regression: 21/21. Actual randomly initialized Transformers DPRReader API/hook tests pass without downloading weights. Project v2 structural/semantic/value/checkpoint/selection replay passes on both environments; canonical four-plugin plan and recovery dossier pass. The old shared v1 trace validator is not claimed to validate this project v2 trace. Semantic encoding stays inside (-1,1) to avoid acos boundary gradients. Raw NPZ/trace are ignored under the new exchange namespace. Production code is untouched; rollback is to stop invoking the isolated runner, preserving outputs.
+
+## Result addendum
+
+The collaborator screen ran and replayed but both semantic heads collapsed to zero residual and exact Reader scores. Declared gates fail; no semantic or quantum utility gain is established. Preflight did not qualify real-distribution training health. Do not rerun this unchanged configuration. Follow [the training-repair gate](2026-10-08-semantic-reader-training-collapse.md); this addendum does not retrospectively change the config or success criteria.

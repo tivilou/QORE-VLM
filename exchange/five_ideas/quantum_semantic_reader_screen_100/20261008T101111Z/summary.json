@@ -1,0 +1,515 @@
+{
+  "schema_version": "rag.quantum_semantic_reader_screen.summary.v1",
+  "stage": "exploratory_screen",
+  "claim_ceiling": "L0_diagnostic",
+  "evaluation": {
+    "methods": {
+      "frozen_reader_topk": {
+        "positive_consensus_count": {
+          "total": 203,
+          "mean": 2.03
+        },
+        "direct_consensus_count": {
+          "total": 138,
+          "mean": 1.38
+        },
+        "all_models_positive_count": {
+          "total": 171,
+          "mean": 1.71
+        },
+        "fixed_silver_set_overlap": {
+          "total": 355,
+          "mean": 3.55
+        }
+      },
+      "quantum_semantic": {
+        "positive_consensus_count": {
+          "total": 203,
+          "mean": 2.03
+        },
+        "direct_consensus_count": {
+          "total": 138,
+          "mean": 1.38
+        },
+        "all_models_positive_count": {
+          "total": 171,
+          "mean": 1.71
+        },
+        "fixed_silver_set_overlap": {
+          "total": 355,
+          "mean": 3.55
+        }
+      },
+      "classical_semantic": {
+        "positive_consensus_count": {
+          "total": 203,
+          "mean": 2.03
+        },
+        "direct_consensus_count": {
+          "total": 138,
+          "mean": 1.38
+        },
+        "all_models_positive_count": {
+          "total": 171,
+          "mean": 1.71
+        },
+        "fixed_silver_set_overlap": {
+          "total": 355,
+          "mean": 3.55
+        }
+      },
+      "quantum_scalar_control": {
+        "positive_consensus_count": {
+          "total": 203,
+          "mean": 2.03
+        },
+        "direct_consensus_count": {
+          "total": 138,
+          "mean": 1.38
+        },
+        "all_models_positive_count": {
+          "total": 170,
+          "mean": 1.7
+        },
+        "fixed_silver_set_overlap": {
+          "total": 348,
+          "mean": 3.48
+        }
+      }
+    },
+    "paired_quantum_semantic_minus": {
+      "frozen_reader_topk": {
+        "positive_consensus_count": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "wins": 0,
+          "ties": 100,
+          "losses": 0
+        },
+        "direct_consensus_count": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "wins": 0,
+          "ties": 100,
+          "losses": 0
+        },
+        "all_models_positive_count": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "wins": 0,
+          "ties": 100,
+          "losses": 0
+        },
+        "fixed_silver_set_overlap": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "wins": 0,
+          "ties": 100,
+          "losses": 0
+        }
+      },
+      "classical_semantic": {
+        "positive_consensus_count": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "wins": 0,
+          "ties": 100,
+          "losses": 0
+        },
+        "direct_consensus_count": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "wins": 0,
+          "ties": 100,
+          "losses": 0
+        },
+        "all_models_positive_count": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "wins": 0,
+          "ties": 100,
+          "losses": 0
+        },
+        "fixed_silver_set_overlap": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "wins": 0,
+          "ties": 100,
+          "losses": 0
+        }
+      },
+      "quantum_scalar_control": {
+        "positive_consensus_count": {
+          "mean": 0.0,
+          "ci95": [
+            -0.04,
+            0.04
+          ],
+          "wins": 2,
+          "ties": 96,
+          "losses": 2
+        },
+        "direct_consensus_count": {
+          "mean": 0.0,
+          "ci95": [
+            -0.03,
+            0.03
+          ],
+          "wins": 1,
+          "ties": 98,
+          "losses": 1
+        },
+        "all_models_positive_count": {
+          "mean": 0.01,
+          "ci95": [
+            0.0,
+            0.03
+          ],
+          "wins": 1,
+          "ties": 99,
+          "losses": 0
+        },
+        "fixed_silver_set_overlap": {
+          "mean": 0.07,
+          "ci95": [
+            0.01,
+            0.14
+          ],
+          "wins": 9,
+          "ties": 89,
+          "losses": 2
+        }
+      }
+    },
+    "gates": {
+      "selection_diagnostic": false,
+      "quantum_attribution_diagnostic": false
+    },
+    "metric_population": "all 100 cases; per-case count; no zero-positive cases discarded"
+  },
+  "training": {
+    "requested": 512,
+    "usable": 434,
+    "coverage": 0.84765625,
+    "skipped": {
+      "no_containment_hit": 76,
+      "all_candidates_positive": 2
+    },
+    "arms": {
+      "quantum_semantic": {
+        "case_count": 434,
+        "mean_loss_by_epoch": [
+          0.2190362819807634,
+          0.21903628216090096,
+          0.21903628216090093
+        ],
+        "witnesses": [
+          {
+            "sample": 1,
+            "epoch": 1,
+            "loss": 0.03128518536686897,
+            "gradient_norm": 6.288420246019209e-16,
+            "value_prefix": "train_001__quantum_semantic__epoch1_preupdate"
+          },
+          {
+            "sample": 2,
+            "epoch": 1,
+            "loss": 0.00029074324993416667,
+            "gradient_norm": 3.8749022470983987e-19,
+            "value_prefix": "train_002__quantum_semantic__epoch1_preupdate"
+          },
+          {
+            "sample": 2,
+            "epoch": 2,
+            "loss": 0.00029074324993416667,
+            "gradient_norm": 0.0,
+            "value_prefix": "train_002__quantum_semantic__epoch2_preupdate"
+          },
+          {
+            "sample": 1,
+            "epoch": 2,
+            "loss": 0.03128518536686897,
+            "gradient_norm": 0.0,
+            "value_prefix": "train_001__quantum_semantic__epoch2_preupdate"
+          },
+          {
+            "sample": 2,
+            "epoch": 3,
+            "loss": 0.00029074324993416667,
+            "gradient_norm": 0.0,
+            "value_prefix": "train_002__quantum_semantic__epoch3_preupdate"
+          },
+          {
+            "sample": 1,
+            "epoch": 3,
+            "loss": 0.03128518536686897,
+            "gradient_norm": 0.0,
+            "value_prefix": "train_001__quantum_semantic__epoch3_preupdate"
+          }
+        ]
+      },
+      "classical_semantic": {
+        "case_count": 434,
+        "mean_loss_by_epoch": [
+          0.21903628230219538,
+          0.21903628216090096,
+          0.21903628216090093
+        ],
+        "witnesses": [
+          {
+            "sample": 1,
+            "epoch": 1,
+            "loss": 0.03128518536686897,
+            "gradient_norm": 3.203179908817244e-12,
+            "value_prefix": "train_001__classical_semantic__epoch1_preupdate"
+          },
+          {
+            "sample": 2,
+            "epoch": 1,
+            "loss": 0.00029074324993416667,
+            "gradient_norm": 6.53371509388219e-19,
+            "value_prefix": "train_002__classical_semantic__epoch1_preupdate"
+          },
+          {
+            "sample": 2,
+            "epoch": 2,
+            "loss": 0.00029074324993416667,
+            "gradient_norm": 0.0,
+            "value_prefix": "train_002__classical_semantic__epoch2_preupdate"
+          },
+          {
+            "sample": 1,
+            "epoch": 2,
+            "loss": 0.03128518536686897,
+            "gradient_norm": 0.0,
+            "value_prefix": "train_001__classical_semantic__epoch2_preupdate"
+          },
+          {
+            "sample": 2,
+            "epoch": 3,
+            "loss": 0.00029074324993416667,
+            "gradient_norm": 0.0,
+            "value_prefix": "train_002__classical_semantic__epoch3_preupdate"
+          },
+          {
+            "sample": 1,
+            "epoch": 3,
+            "loss": 0.03128518536686897,
+            "gradient_norm": 0.0,
+            "value_prefix": "train_001__classical_semantic__epoch3_preupdate"
+          }
+        ]
+      },
+      "quantum_scalar_control": {
+        "case_count": 434,
+        "mean_loss_by_epoch": [
+          0.21903569902519862,
+          0.21678152152560262,
+          0.21221839465482015
+        ],
+        "witnesses": [
+          {
+            "sample": 1,
+            "epoch": 1,
+            "loss": 0.03128518536686897,
+            "gradient_norm": 3.9871997614682186e-07,
+            "value_prefix": "train_001__quantum_scalar_control__epoch1_preupdate"
+          },
+          {
+            "sample": 2,
+            "epoch": 1,
+            "loss": 0.00029077159706503153,
+            "gradient_norm": 9.864672847470501e-07,
+            "value_prefix": "train_002__quantum_scalar_control__epoch1_preupdate"
+          },
+          {
+            "sample": 2,
+            "epoch": 2,
+            "loss": 0.0002935783995781094,
+            "gradient_norm": 1.3906447748013306e-05,
+            "value_prefix": "train_002__quantum_scalar_control__epoch2_preupdate"
+          },
+          {
+            "sample": 1,
+            "epoch": 2,
+            "loss": 0.033447906374931335,
+            "gradient_norm": 0.009974498301744461,
+            "value_prefix": "train_001__quantum_scalar_control__epoch2_preupdate"
+          },
+          {
+            "sample": 2,
+            "epoch": 3,
+            "loss": 0.0010319571010768414,
+            "gradient_norm": 0.0022369883954524994,
+            "value_prefix": "train_002__quantum_scalar_control__epoch3_preupdate"
+          },
+          {
+            "sample": 1,
+            "epoch": 3,
+            "loss": 0.03847173973917961,
+            "gradient_norm": 0.018150009214878082,
+            "value_prefix": "train_001__quantum_scalar_control__epoch3_preupdate"
+          }
+        ]
+      }
+    }
+  },
+  "parameter_counts": {
+    "quantum_semantic": 15399,
+    "classical_semantic": 15399,
+    "quantum_scalar_control": 35
+  },
+  "validation": {
+    "detached_values": "pass",
+    "pooling_slices": "pass",
+    "training_witness_replay": "pass",
+    "all_evaluation_replay": "pass",
+    "initial_null": "pass",
+    "project_trace_structure": "pass",
+    "project_trace_selection": "pass",
+    "json_archive_agreement": "pass"
+  },
+  "provenance": {
+    "code_revision": "5ce58baa075c6c43c65dfb639fd59195aa834df4",
+    "config_sha256": "5b4dafa4dde6aa1f634fbb234a18ce9ddfe3ae671212c6d059dd47a35cce6652",
+    "plugin_plan_sha256": "80e22da6f4ea3bafca9b4ed43b1716ffe5845c1ae455d7820bce875b941e3176",
+    "effective_config": {
+      "schema_version": "rag.quantum_semantic_reader_screen.v1",
+      "stage": "exploratory_screen",
+      "authorization": "collaborator_screen",
+      "reader": {
+        "model_id": "facebook/dpr-reader-single-nq-base",
+        "revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+        "max_length": 350,
+        "batch_size": 8
+      },
+      "representation": {
+        "roles": [
+          "cls",
+          "question_mean",
+          "question_conditioned_passage",
+          "question_passage_product",
+          "absolute_difference"
+        ],
+        "bottleneck": 4,
+        "reader_frozen": true
+      },
+      "head": {
+        "n_qubits": 4,
+        "depth": 2,
+        "residual_bound": 0.25,
+        "gate_temperature": 1.0
+      },
+      "training": {
+        "max_questions": 512,
+        "epochs": 3,
+        "seed": 20261008,
+        "learning_rate": 0.003,
+        "weight_decay": 0.0001,
+        "anchor_penalty": 0.01,
+        "gradient_clip_norm": 5.0,
+        "minimum_coverage": 0.25,
+        "target": "answer_string_containment_weak_not_official_gold",
+        "reader_frozen": true
+      },
+      "evaluation": {
+        "cases": 100,
+        "top50": 50,
+        "top5": 5,
+        "input_sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
+        "silver_posthoc_only": true,
+        "primary": "positive_consensus_count",
+        "protection": "direct_consensus_count",
+        "secondary": [
+          "all_models_positive_count",
+          "fixed_silver_set_overlap"
+        ],
+        "bootstrap_replicates": 2000,
+        "bootstrap_seed": 20261009
+      },
+      "methods": [
+        "frozen_reader_topk",
+        "quantum_semantic",
+        "classical_semantic",
+        "quantum_scalar_control"
+      ],
+      "trace": {
+        "schema": "sample-trace.v2",
+        "full_hidden_samples": "first retrieved candidate of first two usable training cases and first two evaluation cases",
+        "training_values": "complete base/pooled/scalar/weak-mask arrays for first two usable training cases",
+        "evaluation_values": "all 100x50 pooled/scalar/base scores plus per-method encoding/observables/gates/residuals",
+        "checkpoints": "initial and each epoch for all three trainable arms",
+        "replay_required": true
+      },
+      "output_namespace": "five_ideas/quantum_semantic_reader_screen_100",
+      "claim_ceiling": "L0_diagnostic",
+      "formal_run_authorized": false,
+      "limitations": [
+        "Weak labels remain a confounder; no causal claim that prior failure came from scalar compression.",
+        "The exposed 100-case Silver panel is a development diagnostic, not an untouched generalization test.",
+        "Classical projection and exactly simulated quantum head do not establish quantum resource or utility advantage."
+      ]
+    },
+    "input_sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
+    "reader": {
+      "model_id": "facebook/dpr-reader-single-nq-base",
+      "requested_revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+      "resolved_revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+      "config_sha256": "383c5dbe735db108976bcaef70048348151def480bfe24ed8ff5243cd1ce4751",
+      "device": "cuda",
+      "reader_frozen": true
+    },
+    "source_hashes": {
+      "scripts/collab/five_ideas/run_quantum_semantic_reader_screen_100.py": "229c93b9e90289cc800445e99935ad5808be2874278214419a0c5bc690cb0b26",
+      "applications/rag/quantum_semantic_reader.py": "b089470c7c0b15f7c1ea75206223d59e465072c496e6e95add5d72310ca4315a",
+      "applications/rag/qarcg_reader.py": "b5fce815ba8cdb1f9223e3bdcc2018ef25d6005dc9059d0602095a70cc43d20b"
+    },
+    "python": "3.10.20",
+    "torch": "2.5.1+cu121",
+    "numpy": "1.26.4"
+  },
+  "circuit": {
+    "qubits": 4,
+    "depth_blocks": 2,
+    "trainable_circuit_parameters": 16,
+    "cnot_gates": 8,
+    "input_ry_gates": 4,
+    "observables": 8,
+    "simulation": "exact Torch statevector",
+    "finite_shot": "not_run",
+    "quantum_advantage": "not_established",
+    "projection_is_classical": true
+  },
+  "generator_called": false,
+  "evaluator_called": false,
+  "silver_used_online": false,
+  "limitations": [
+    "Weak labels remain a confounder; no causal claim that prior failure came from scalar compression.",
+    "The exposed 100-case Silver panel is a development diagnostic, not an untouched generalization test.",
+    "Classical projection and exactly simulated quantum head do not establish quantum resource or utility advantage."
+  ]
+}

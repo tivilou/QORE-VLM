@@ -1,0 +1,55 @@
+{
+  "schema_version": "experiment-grounded-ideation.mechanism-recovery.v2",
+  "evidence_packet": {
+    "path": ".ai-progress/workstreams/rag-selector/refs/quantum_semantic_reader_20261008T101111Z_audit.json",
+    "sha256": "4ed8ad4441e088c1b6e4965ce62852c565e7c5a12063463aeca3e3f599edc1a8",
+    "code_revision": "44c9f7027a386b759ba4dfdfca703e09e87125a8",
+    "validity_status": "mixed"
+  },
+  "trace_adequacy": {
+    "status": "partial", "schema_version": "sample-trace.v2",
+    "artifact_refs": ["five_ideas/quantum_semantic_reader_screen_100/20261008T101111Z/selector_trace.json", "five_ideas/quantum_semantic_reader_screen_100/20261008T101111Z/semantic_values.npz", "quantum_semantic_reader_20261008T101111Z_audit.json"],
+    "selection_rule": "all 100 evaluation cases; first two usable train samples and four full hidden samples as declared; every changed scalar set is supplementary exploratory",
+    "covered_stages": ["data", "training checkpoints and sampled witnesses", "scoring", "selection", "diagnosis"],
+    "missing_stages": ["full per-step task gradients and Adam moments", "complete semantic inputs for other 432 usable train cases", "hashes of skipped training questions"],
+    "target_boundary": "Weak answer containment only in training; fixed evaluation Silver opened posthoc; decay-only arithmetic has no target or data input."
+  },
+  "causal_trace": {
+    "intervention_execution": {"claim": "Semantic modules ran but both final heads produce zero residuals and exactly baseline score vectors for all 100 cases; the intended learned ranking intervention is absent.", "evidence_refs": ["quantum_semantic_reader_20261008T101111Z_audit.json"]},
+    "intended_intermediate": {"claim": "Projection/readout magnitudes collapse; question-conditioned encodings vary at only about 1e-31. Initial semantic inputs and projection outputs had nonzero variance.", "evidence_refs": ["quantum_semantic_reader_20261008T101111Z_audit.json"]},
+    "observable_output": {"claim": "Reader/quantum semantic/classical semantic positive/direct/membership totals are 203/138/355 each. Scalar control changes 16 sets but positive/direct remain 203/138, membership 348.", "evidence_refs": ["quantum_semantic_reader_20261008T101111Z_audit.json"]},
+    "task_utility": {"claim": "No downstream utility or generalization gain is demonstrated. Semantics cannot be compared as successfully trained mechanisms in this run.", "evidence_refs": ["quantum_semantic_reader_20261008T101111Z_audit.json"]}
+  },
+  "failure_analysis": {
+    "primary_explanation": {
+      "statement": "Coupled Adam decay acts on all parameters while zero-scale anchoring suppresses initial gradients to projection/readout; recorded task gradients soon vanish and decay dominates, erasing semantic information. A label-free decay-only diagnostic nearly reproduces all three epoch projection norms and gate biases.",
+      "confidence": "high for observed collapse and decay compatibility; not a full replay of all task updates",
+      "evidence_refs": ["quantum_semantic_reader_20261008T101111Z_audit.json", "scripts/collab/five_ideas/run_quantum_semantic_reader_screen_100.py"]
+    },
+    "alternative_explanations": [
+      {"statement": "Noisy weak labels, insufficient positive/negative difficulty, small gate derivatives or early update interactions may contribute; only two training samples have full saved inputs, and optimizer states are absent.", "confidence": "unresolved", "evidence_refs": ["quantum_semantic_reader_20261008T101111Z_audit.json"]},
+      {"statement": "The later committed mask compatibility fix matches the executed source hashes; its midpoint fallback is an unresolved production hardening concern, but all four captured samples have real SEP boundaries. It does not explain the observed parameter-collapse trajectory by itself.", "confidence": "limited to captured samples", "evidence_refs": ["44c9f7027a386b759ba4dfdfca703e09e87125a8", "semantic_values.npz"]}
+    ],
+    "discriminating_measurement": {
+      "uncertainty": "Training-health failure versus ineffective semantic features or weak supervision",
+      "measurement": "Before another task screen, qualify finite, nonzero data gradients after leaving exact-null initialization, parameter/encoding variance preservation and nonzero score corrections on outcome-blind train-only cases; compare optimizer groups and null-compatible learning path without Silver.",
+      "primary_outcome": "Head learns a demonstrably input-dependent correction on training-only probes with preserved features, permitting a separately approved task screen.",
+      "alternative_outcome": "Gate/readout still collapse or remain input-independent: stop before collaborator screen and revise the learning path."
+    },
+    "closed_family": {
+      "id": "semantic_head_unqualified_coupled_decay_configuration",
+      "rejected_variant_refs": ["configs/experiments/quantum_semantic_reader_screen_100.json"],
+      "closure_evidence_refs": ["quantum_semantic_reader_20261008T101111Z_audit.json"],
+      "forbidden_rescue_variants": ["Rerun this unchanged configuration with more epochs or more questions", "Tune Silver coefficients or deepen the circuit to compensate for absent training", "Call zero correction a negative result for semantic or quantum expressive capacity"]
+    }
+  },
+  "positive_carryovers": [
+    {"id": "exact_relevance_anchor", "mechanism": "The disabled residual recovers the stable relevance baseline exactly.", "evidence_refs": ["quantum_semantic_reader_20261008T101111Z_audit.json"], "transport_constraint": "Retain exact-null behavior but verify a viable data-gradient path rather than permanent null output."},
+    {"id": "tensor_checkpoint_receipts", "mechanism": "Producer-side hashes, sampled states, checkpoints and full eval replay reveal collapse that final scores alone conceal.", "evidence_refs": ["quantum_semantic_reader_20261008T101111Z_audit.json"], "transport_constraint": "Reuse this registered artifact; keep raw arrays exchange-only and all-panel evaluation separate from examples."}
+  ],
+  "recovery_outcome": {
+    "disposition": "stop",
+    "stop_reason": "Stop new method selection and broader/further collaborator task runs until the observed training-path defect is repaired and qualified. This is evidence repair, not closure of the semantic/quantum family. User authorization is still required for that repair and a new screen."
+  },
+  "limitations": ["Single exposed 100-question Silver development panel and short weak-supervised budget; L0 only.", "Decoupled decay and staged learning are repair hypotheses, not measured task improvements.", "Previous Q-ARCG training provenance remains missing; this run does not reconstruct it."]
+}

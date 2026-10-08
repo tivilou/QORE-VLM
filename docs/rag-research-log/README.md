@@ -2,6 +2,8 @@
 
 ## 当前研究总览
 
+- 最新结果：[量子语义头训练退化分析](20261008T-101111Z-quantum-semantic-reader-training-collapse.md)。有效/直接证据数与 Reader 都为 `203/138`；两种语义头权重和残差退化，100 题全部回到原分数。下一步先修训练通路与预检，不直接放大实验；仍为 L0。
+
 - 最新实现：[量子语义 Reader 头初测](20261008T-date-only-quantum-semantic-reader-implementation.md)。保留相关分锚点、引入问题条件化隐藏表示，对比量子语义/经典语义/量子标量；主指标为有效证据命中。合成验证通过，真实实验待合作者运行，仍为 L0。
 
 - 最新更正：[Q-ARCG全部换位题语义分析](20261008T-date-only-qarcg-paired-case-analysis.md)。固定Silver集合含填充段，集合下降不等于证据下降；Q-ARCG/Reader有用证据`204/203`、直接证据`138/138`，仍无可靠提升。下一假设是保留锚点、引入问题条件化语义表示，训练来源待补齐。
@@ -14,6 +16,8 @@
 - 当前研究边界：只优化固定 Top-50 -> Top-5 selector；Generator、检索、evaluator 和答案实现不属于本轮候选。下一候选必须提供独立、可追溯且 gold-free 的证据关系信号；若只能继续依赖 token overlap、Answer Scorer 融合或 generic diversity，应停止该 selector 家族并先处理 provenance/calibration 阻塞。
 
 ## 时间线
+
+- [2026-10-08 | 量子语义 Reader 初测结果：训练退化，先修学习通路](20261008T-101111Z-quantum-semantic-reader-training-collapse.md)
 
 - [2026-10-08 | 量子语义 Reader 头实现与回放验证](20261008T-date-only-quantum-semantic-reader-implementation.md)
 

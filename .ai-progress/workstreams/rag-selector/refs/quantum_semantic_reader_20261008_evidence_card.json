@@ -1,0 +1,72 @@
+{
+  "schema_version": "evidence-tiered-idea-validation.evidence-card.v2",
+  "idea_id": "quantum_semantic_reader",
+  "title": "Quantum semantic Reader screen: training collapse",
+  "status": "blocked", "current_tier": "L0_diagnostic", "claim_ceiling": "diagnostic",
+  "rating_policy": {"id": "shared-evidence-tier-policy", "version": "2", "notes": "Exposed-panel screen; declared positive/direct gates fail. Training collapse blocks interpretation, not the broad quantum/semantic family."},
+  "hypothesis": "Question-conditioned hidden representations improve anchored Top-50 to Top-5 evidence retention.",
+  "mechanism": "Frozen DPR hidden pooling -> classical projection -> four-qubit interaction -> gated bounded relevance residual.",
+  "experiment": {
+    "stage": "screen", "training_budget": {"data_scope": "512 nq_open/train questions requested, 434 usable mixed weak-label cases", "epochs_or_steps": "3 epochs x 434 updates per trained arm", "selection_rule": "same train-only containment cohort, fixed registered 100 x 50 eval panel", "seed_policy": "training 20261008; bootstrap 20261009 plus predeclared comparison offsets"},
+    "conclusion_scope": "screen_inconclusive", "continuation_status": "inconclusive", "formal_run_authorized": false, "executor": "collaborator"
+  },
+  "intervention": {
+    "changes_attention": false, "target": "fixed Top-50 -> Top-5 selector; semantic arms end as exactly disabled relevance anchor",
+    "inference_mode": "label_free", "heldout_positive": false, "leakage_audit": "mixed",
+    "attention_action_evidence": {"status": "fail", "refs": ["quantum_semantic_reader_20261008T101111Z_audit.json"]}
+  },
+  "evidence": {
+    "data_scope": {"task_family": "NQ-Open fixed candidate evidence selection", "natural_task": true, "task_count": 1, "split_count": 1, "dataset_ids": ["nq_open/train weak supervision", "registered exposed 100-case Silver panel"]},
+    "runs": {"seed_count": 1, "seeds": [20261008], "independent_split_count": 1, "statistics": {"status": "fail", "method": "100-question paired bootstrap, 2000 replicates; zero primary effect", "p_value": null, "confidence_interval": [0.0, 0.0]}},
+    "metrics": [
+      {"name": "positive_consensus_count", "split": "fixed_100_development_panel", "variant": "quantum_semantic", "value": 2.03, "baseline_value": 2.03, "delta_vs_disabled": 0.0, "primary": true, "effect_direction": "higher", "evidence_refs": ["quantum_semantic_reader_20261008T101111Z_audit.json"]},
+      {"name": "direct_consensus_count", "split": "fixed_100_development_panel", "variant": "quantum_semantic", "value": 1.38, "baseline_value": 1.38, "delta_vs_disabled": 0.0, "primary": false, "effect_direction": "higher", "evidence_refs": ["quantum_semantic_reader_20261008T101111Z_audit.json"]},
+      {"name": "fixed_silver_set_overlap", "split": "fixed_100_development_panel", "variant": "quantum_semantic", "value": 3.55, "baseline_value": 3.55, "delta_vs_disabled": 0.0, "primary": false, "effect_direction": "higher", "evidence_refs": ["quantum_semantic_reader_20261008T101111Z_audit.json"]}
+    ],
+    "controls": [
+      {"id": "frozen_reader_topk", "kind": "disabled", "status": "pass", "notes": "Registered cohort baseline and exact null verified."},
+      {"id": "classical_semantic", "kind": "classical", "status": "partial", "notes": "Same parameter budget and initial projection; both semantic heads collapse, preventing substantive attribution."},
+      {"id": "quantum_scalar_control", "kind": "quantum", "status": "pass", "notes": "Same weak train cohort and budget; actively changes 16 sets but no net positive/direct gain."},
+      {"id": "decay_only_parameter_probe", "kind": "other", "status": "pass", "notes": "Label-free optimizer arithmetic nearly matches semantic epoch shrinkage; not full task training replay or a repair experiment."}
+    ]
+  },
+  "axes": {
+    "task_utility": {"status": "not_run", "notes": "No Generator/evaluator call or downstream utility measurement.", "evidence_refs": ["quantum_semantic_reader_20261008T101111Z_audit.json"]},
+    "robustness": {"status": "not_run", "notes": "One short run; no independent full-data replication.", "evidence_refs": []},
+    "natural_transfer": {"status": "not_run", "notes": "Exposed reduced panel only.", "evidence_refs": []},
+    "attention_alignment": {"status": "fail", "notes": "Direct evidence-selection diagnostic unchanged; semantic residual is zero, not a successful learned action.", "evidence_refs": ["quantum_semantic_reader_20261008T101111Z_audit.json"]},
+    "classical_attribution": {"status": "not_run", "notes": "Degenerate trained semantic heads do not establish expressive-capacity or attribution evidence.", "evidence_refs": ["quantum_semantic_reader_20261008T101111Z_audit.json"]},
+    "finite_shot": {"status": "not_run", "notes": "Exact Torch statevector only.", "evidence_refs": []},
+    "resource_audit": {"status": "partial", "notes": "15399 parameters each semantic arm, 35 scalar; no quantum advantage or runtime comparison.", "evidence_refs": ["quantum_semantic_reader_20261008T101111Z_audit.json"]}
+  },
+  "trace_completeness": "partial",
+  "trace_observability": {
+    "status": "partial", "schema_version": "sample-trace.v2",
+    "artifact_refs": ["five_ideas/quantum_semantic_reader_screen_100/20261008T101111Z/selector_trace.json", "five_ideas/quantum_semantic_reader_screen_100/20261008T101111Z/semantic_values.npz"],
+    "selection_rule": "all eval cases/candidates, first two usable train inputs, first candidate hidden of first two train/eval cases",
+    "coverage": {"data": "observed", "preprocess": "observed", "training": "observed", "scoring": "observed", "selection": "observed", "diagnosis": "observed", "generation": "not_applicable"},
+    "missing_stages": ["generation"],
+    "notes": "Generation is not applicable, not a missing applicable stage. All producer-declared samples/states replay successfully. Deeper training observability is partial: optimizer moments/per-step gradients and inputs for other 432 usable cases are absent. Skipped-question hashes are absent, limiting independent full-requested-split audit."
+  },
+  "mechanism_recovery": {
+    "dossier_path": ".ai-progress/workstreams/rag-selector/refs/semantic_reader_training_collapse_recovery_20261008.json",
+    "dossier_sha256": "f6262838212e61826d923eec78f66d39fdc1b2a8f9ecac68656240201ce90e10", "outcome": "stop"
+  },
+  "next_upgrade": {
+    "action": "Repair and qualify the training path on saved train-only representations before another task screen; preserve anchor/labels/eval boundaries and both semantic controls.",
+    "success_gate": "Exact null plus nonzero finite data gradients after leaving null, preserved input-dependent encodings and float32 score corrections on outcome-blind training probes; only then seek approval for a controlled task rerun.",
+    "kill_criteria": "Persistent collapse, absent effective learning, boundary/hash failure or nonfinite values stop before any broader/collaborator screen.",
+    "estimated_cost": "Initially reuse the two saved train cases and model-free head arithmetic; no dataset/model download; subsequent screen separately authorized.", "authorized": false
+  },
+  "failed_gates": ["selection_diagnostic", "quantum_attribution_diagnostic", "unregistered training-health qualification"],
+  "limitations": ["Exact baseline outputs invalidate the intended semantic intervention test, not all semantic/quantum designs.", "Short weak-supervised exposed-panel screen remains L0.", "Only source file hashes recover the mask-fixed execution; reported HEAD predates its later commit.", "No repair or new task run has been performed."],
+  "provenance": {
+    "code_revision": "reported 5ce58baa075c6c43c65dfb639fd59195aa834df4; executed source hashes match 44c9f7027a386b759ba4dfdfca703e09e87125a8",
+    "records": [
+      {"path": "five_ideas/quantum_semantic_reader_screen_100/20261008T101111Z/summary.json", "role": "compact producer summary", "sha256": "8dbda3f4c374bfcf55dc5a13cdf5f69ae6a491718f51371b21be006294af3efa"},
+      {"path": "five_ideas/quantum_semantic_reader_screen_100/20261008T101111Z/selector_trace.json", "role": "full eval trace", "sha256": "33e2ab8649fb10cdffc23b91bb7680f6015e9ab1d3cdc115986b3b5bb40421dd"},
+      {"path": "five_ideas/quantum_semantic_reader_screen_100/20261008T101111Z/semantic_values.npz", "role": "detached states/checkpoints", "sha256": "4d18cca65cfc8db290020ccc1fea1c5d64773b95be488c9a68d78b9e807c581a"},
+      {"path": ".ai-progress/workstreams/rag-selector/refs/quantum_semantic_reader_20261008T101111Z_audit.json", "role": "independent audit", "sha256": "4ed8ad4441e088c1b6e4965ce62852c565e7c5a12063463aeca3e3f599edc1a8"}
+    ]
+  }
+}

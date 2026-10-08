@@ -1,0 +1,139 @@
+{
+  "target_directory": "five_ideas/quantum_semantic_reader_screen_100/20261008T101111Z",
+  "exchange_files": [
+    {
+      "name": "summary.json",
+      "bytes": 15155,
+      "sha256": "8dbda3f4c374bfcf55dc5a13cdf5f69ae6a491718f51371b21be006294af3efa"
+    },
+    {
+      "name": "report.md",
+      "bytes": 588,
+      "sha256": "1ea17e6dcac5cd36a2b74c94aaafc6b5d637335055b0871ed18171440d8d0b34"
+    },
+    {
+      "name": "selector_trace.json",
+      "bytes": 10864589,
+      "sha256": "33e2ab8649fb10cdffc23b91bb7680f6015e9ab1d3cdc115986b3b5bb40421dd"
+    },
+    {
+      "name": "semantic_values.npz",
+      "bytes": 76987092,
+      "sha256": "4d18cca65cfc8db290020ccc1fea1c5d64773b95be488c9a68d78b9e807c581a"
+    },
+    {
+      "name": "run_metadata.json",
+      "bytes": 5034,
+      "sha256": "7c011fbe78efd07c6a561a2ed2b8f864a437b9b582cd239d154f66ba3d28412f"
+    }
+  ],
+  "github_files": [
+    "summary.json",
+    "report.md",
+    "run_metadata.json",
+    "upload_manifest.json"
+  ],
+  "exchange_only": [
+    "selector_trace.json",
+    "semantic_values.npz"
+  ],
+  "provenance": {
+    "code_revision": "5ce58baa075c6c43c65dfb639fd59195aa834df4",
+    "config_sha256": "5b4dafa4dde6aa1f634fbb234a18ce9ddfe3ae671212c6d059dd47a35cce6652",
+    "plugin_plan_sha256": "80e22da6f4ea3bafca9b4ed43b1716ffe5845c1ae455d7820bce875b941e3176",
+    "effective_config": {
+      "schema_version": "rag.quantum_semantic_reader_screen.v1",
+      "stage": "exploratory_screen",
+      "authorization": "collaborator_screen",
+      "reader": {
+        "model_id": "facebook/dpr-reader-single-nq-base",
+        "revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+        "max_length": 350,
+        "batch_size": 8
+      },
+      "representation": {
+        "roles": [
+          "cls",
+          "question_mean",
+          "question_conditioned_passage",
+          "question_passage_product",
+          "absolute_difference"
+        ],
+        "bottleneck": 4,
+        "reader_frozen": true
+      },
+      "head": {
+        "n_qubits": 4,
+        "depth": 2,
+        "residual_bound": 0.25,
+        "gate_temperature": 1.0
+      },
+      "training": {
+        "max_questions": 512,
+        "epochs": 3,
+        "seed": 20261008,
+        "learning_rate": 0.003,
+        "weight_decay": 0.0001,
+        "anchor_penalty": 0.01,
+        "gradient_clip_norm": 5.0,
+        "minimum_coverage": 0.25,
+        "target": "answer_string_containment_weak_not_official_gold",
+        "reader_frozen": true
+      },
+      "evaluation": {
+        "cases": 100,
+        "top50": 50,
+        "top5": 5,
+        "input_sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
+        "silver_posthoc_only": true,
+        "primary": "positive_consensus_count",
+        "protection": "direct_consensus_count",
+        "secondary": [
+          "all_models_positive_count",
+          "fixed_silver_set_overlap"
+        ],
+        "bootstrap_replicates": 2000,
+        "bootstrap_seed": 20261009
+      },
+      "methods": [
+        "frozen_reader_topk",
+        "quantum_semantic",
+        "classical_semantic",
+        "quantum_scalar_control"
+      ],
+      "trace": {
+        "schema": "sample-trace.v2",
+        "full_hidden_samples": "first retrieved candidate of first two usable training cases and first two evaluation cases",
+        "training_values": "complete base/pooled/scalar/weak-mask arrays for first two usable training cases",
+        "evaluation_values": "all 100x50 pooled/scalar/base scores plus per-method encoding/observables/gates/residuals",
+        "checkpoints": "initial and each epoch for all three trainable arms",
+        "replay_required": true
+      },
+      "output_namespace": "five_ideas/quantum_semantic_reader_screen_100",
+      "claim_ceiling": "L0_diagnostic",
+      "formal_run_authorized": false,
+      "limitations": [
+        "Weak labels remain a confounder; no causal claim that prior failure came from scalar compression.",
+        "The exposed 100-case Silver panel is a development diagnostic, not an untouched generalization test.",
+        "Classical projection and exactly simulated quantum head do not establish quantum resource or utility advantage."
+      ]
+    },
+    "input_sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
+    "reader": {
+      "model_id": "facebook/dpr-reader-single-nq-base",
+      "requested_revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+      "resolved_revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+      "config_sha256": "383c5dbe735db108976bcaef70048348151def480bfe24ed8ff5243cd1ce4751",
+      "device": "cuda",
+      "reader_frozen": true
+    },
+    "source_hashes": {
+      "scripts/collab/five_ideas/run_quantum_semantic_reader_screen_100.py": "229c93b9e90289cc800445e99935ad5808be2874278214419a0c5bc690cb0b26",
+      "applications/rag/quantum_semantic_reader.py": "b089470c7c0b15f7c1ea75206223d59e465072c496e6e95add5d72310ca4315a",
+      "applications/rag/qarcg_reader.py": "b5fce815ba8cdb1f9223e3bdcc2018ef25d6005dc9059d0602095a70cc43d20b"
+    },
+    "python": "3.10.20",
+    "torch": "2.5.1+cu121",
+    "numpy": "1.26.4"
+  }
+}
