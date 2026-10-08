@@ -57,6 +57,20 @@ exit: 0
 
 Server fixture JSON SHA256: `6cb69577b773466382e918b99d0f0423d67bff8b2d303224e8e87298eb92e5f3`.
 Server NPZ SHA256: `8e237346a3ac25d403ca209acb0b69a12fb33a5d32edc9325997d1f4b2a0914f`.
+After synchronizing the already completed paired audit helper, the final server combined regression also passed:
+
+```text
+python -m unittest applications.rag.tests.test_qarcg_reader scripts.collab.five_ideas.test_qarcg_reader_screen scripts.collab.five_ideas.test_qarcg_case_audit applications.rag.tests.test_quantum_semantic_reader -q
+Ran 28 tests in 3.026s
+OK
+exit: 0
+
+PATH=/usr/local/miniconda3/envs/py310/bin:$PATH bash scripts/collab/five_ideas/run_quantum_semantic_reader_screen_100.sh --validate-only
+{"status": "valid", "stage": "exploratory_screen", "methods": ["frozen_reader_topk", "quantum_semantic", "classical_semantic", "quantum_scalar_control"]}
+exit: 0
+```
+
+The environment-specific PATH above is a server validation command only, not part of the collaborator handoff.
 Archive bytes are not expected to match across Torch/platform versions. Each environment independently reopens and replays its own values, with numerical comparison tolerance `rtol=atol=1e-4`; JSON score vectors agree exactly with their own archives. This is the project v2 validator, not the old shared generic v1 validator.
 
 ## Behaviors and rollback
