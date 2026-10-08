@@ -1,0 +1,3 @@
+**/*.npz
+**/selector_trace.json
+**/upload_receipts.json

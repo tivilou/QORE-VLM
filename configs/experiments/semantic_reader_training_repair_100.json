@@ -1,0 +1,89 @@
+{
+  "schema_version": "rag.quantum_semantic_reader_screen.v1",
+  "stage": "exploratory_screen",
+  "authorization": "collaborator_screen",
+  "reader": {
+    "model_id": "facebook/dpr-reader-single-nq-base",
+    "revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+    "max_length": 350,
+    "batch_size": 8
+  },
+  "representation": {
+    "roles": [
+      "cls",
+      "question_mean",
+      "question_conditioned_passage",
+      "question_passage_product",
+      "absolute_difference"
+    ],
+    "bottleneck": 4,
+    "reader_frozen": true
+  },
+  "head": {
+    "n_qubits": 4,
+    "depth": 2,
+    "residual_bound": 0.25,
+    "gate_temperature": 1.0
+  },
+  "training": {
+    "max_questions": 512,
+    "epochs": 3,
+    "seed": 20261008,
+    "learning_rate": 0.003,
+    "weight_decay": 0.0001,
+    "anchor_penalty": 0.01,
+    "gradient_clip_norm": 5.0,
+    "minimum_coverage": 0.25,
+    "target": "answer_string_containment_weak_not_official_gold",
+    "reader_frozen": true,
+    "optimizer_policy": "adamw_projection_fanin_v1",
+    "health_contract": {
+      "probe_cases": "first two usable training cases only",
+      "checks_at": "update 64 and each epoch end",
+      "projection_norm_ratio_min": 1e-06,
+      "encoding_std_min": 1e-06,
+      "normalized_within_case_correction_std_min": 1e-06,
+      "data_gradients": "finite nonzero projection/readout/scale after null; current check window",
+      "fail_before_evaluation": true,
+      "preserve_failure_values": true
+    }
+  },
+  "evaluation": {
+    "cases": 100,
+    "top50": 50,
+    "top5": 5,
+    "input_sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
+    "silver_posthoc_only": true,
+    "primary": "positive_consensus_count",
+    "protection": "direct_consensus_count",
+    "secondary": [
+      "all_models_positive_count",
+      "fixed_silver_set_overlap"
+    ],
+    "bootstrap_replicates": 2000,
+    "bootstrap_seed": 20261009
+  },
+  "methods": [
+    "frozen_reader_topk",
+    "quantum_semantic",
+    "classical_semantic",
+    "quantum_scalar_control"
+  ],
+  "trace": {
+    "schema": "sample-trace.v2",
+    "full_hidden_samples": "first retrieved candidate of first two usable training cases and first two evaluation cases",
+    "training_values": "complete base/pooled/scalar/weak-mask arrays for first two usable training cases",
+    "evaluation_values": "all 100x50 pooled/scalar/base scores plus per-method encoding/observables/gates/residuals",
+    "checkpoints": "initial and each epoch for all three trainable arms",
+    "replay_required": true
+  },
+  "output_namespace": "five_ideas/semantic_reader_training_repair_100",
+  "claim_ceiling": "L0_diagnostic",
+  "formal_run_authorized": false,
+  "limitations": [
+    "Weak labels remain a confounder; no causal claim that prior failure came from scalar compression.",
+    "The exposed 100-case Silver panel is a development diagnostic, not an untouched generalization test.",
+    "Classical projection and exactly simulated quantum head do not establish quantum resource or utility advantage.",
+    "Optimizer repair, not a new quantum mechanism; two-case qualification is not utility."
+  ]
+}

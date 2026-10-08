@@ -2,6 +2,8 @@
 
 ## 当前研究总览
 
+- 最新修复：[语义评分头训练通路修复与预检](20261008T-date-only-semantic-reader-training-repair.md)。解耦衰减与按维度缩小投影学习率后，两条保存的训练样本上量子/经典头均保留候选差异；本地、服务器 44 项测试通过。已准备相同 100 题的一键重跑脚本，真实筛选收益尚未验证，仍为 L0。
+
 - 最新结果：[量子语义头训练退化分析](20261008T-101111Z-quantum-semantic-reader-training-collapse.md)。有效/直接证据数与 Reader 都为 `203/138`；两种语义头权重和残差退化，100 题全部回到原分数。下一步先修训练通路与预检，不直接放大实验；仍为 L0。
 
 - 最新实现：[量子语义 Reader 头初测](20261008T-date-only-quantum-semantic-reader-implementation.md)。保留相关分锚点、引入问题条件化隐藏表示，对比量子语义/经典语义/量子标量；主指标为有效证据命中。合成验证通过，真实实验待合作者运行，仍为 L0。
@@ -16,6 +18,8 @@
 - 当前研究边界：只优化固定 Top-50 -> Top-5 selector；Generator、检索、evaluator 和答案实现不属于本轮候选。下一候选必须提供独立、可追溯且 gold-free 的证据关系信号；若只能继续依赖 token overlap、Answer Scorer 融合或 generic diversity，应停止该 selector 家族并先处理 provenance/calibration 阻塞。
 
 ## 时间线
+
+- [2026-10-08 | 修复语义评分头的衰减与饱和，先检查是否学起来](20261008T-date-only-semantic-reader-training-repair.md)
 
 - [2026-10-08 | 量子语义 Reader 初测结果：训练退化，先修学习通路](20261008T-101111Z-quantum-semantic-reader-training-collapse.md)
 

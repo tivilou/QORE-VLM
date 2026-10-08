@@ -28,14 +28,14 @@ PLAN = ROOT / "configs/experiments/quantum_semantic_reader_screen_100_plan.json"
 METHODS = ("frozen_reader_topk", "quantum_semantic", "classical_semantic", "quantum_scalar_control")
 
 
-def validate_config(path):
+def validate_config(path, *, config_reference=CONFIG, plan_path=PLAN):
     cfg = old._load_json(path)
-    frozen = old._load_json(CONFIG)
+    frozen = old._load_json(config_reference)
     if cfg != frozen or cfg["schema_version"] != "rag.quantum_semantic_reader_screen.v1":
         raise ValueError("screen must match the committed preregistered config")
     if tuple(cfg["methods"]) != METHODS or cfg["evaluation"]["input_sha256"] != old.DEFAULT_INPUT_SHA256:
         raise ValueError("method/input contract changed")
-    plan = old._load_json(PLAN)
+    plan = old._load_json(plan_path)
     if tuple(plan["discovery"]["allowlist"]) != METHODS or tuple(plan["composition"]["order"]) != METHODS:
         raise ValueError("plugin allowlist/order mismatch")
     recovery = plan["recovery_contract"]
@@ -88,7 +88,15 @@ def restore(torch, head, method, epoch, arrays):
 
 def train_head(torch, method, head, cases, cfg, device, arrays):
     t = cfg["training"]
-    optimizer = torch.optim.Adam(head.parameters(), lr=t["learning_rate"], weight_decay=t["weight_decay"])
+    repaired = "optimizer_policy" in t
+    if repaired:
+        from applications.rag import semantic_reader_training as health
+        optimizer = health.make_optimizer(torch, head, t, t["optimizer_policy"])
+        initial_norm = health.norm(head.project.weight) if hasattr(head, "project") else None
+        gradient_rows, health_checks = [], []
+        gradient_totals = dict.fromkeys(("projection", "readout", "circuit", "scale"), 0.0)
+    else:
+        optimizer = torch.optim.Adam(head.parameters(), lr=t["learning_rate"], weight_decay=t["weight_decay"])
     checkpoint(head, method, "initial", arrays)
     losses, witnesses = [], []
     head.train()
@@ -107,23 +115,58 @@ def train_head(torch, method, head, cases, cfg, device, arrays):
             if not bool(torch.isfinite(loss)):
                 raise ValueError("non-finite training loss")
             loss.backward()
+            if repaired:
+                data_gradients = health.gradient_health(head)
+                gradient_rows.append([data_gradients[k] for k in gradient_totals])
+                for key in gradient_totals:
+                    gradient_totals[key] += data_gradients[key]
             gradient = torch.nn.utils.clip_grad_norm_(head.parameters(), t["gradient_clip_norm"])
             if not bool(torch.isfinite(gradient)):
                 raise ValueError("non-finite training gradient")
             if index < 2:
                 prefix = f"train_{index + 1:03d}__{method}__epoch{epoch + 1}_preupdate"
                 checkpoint(head, method, f"witness{epoch + 1}_{index + 1}", arrays)
+                if repaired:
+                    health.save_optimizer(optimizer, head, arrays, f"optimizer__{method}__witness{epoch + 1}_{index + 1}")
                 for key, value in zip(("scores", "gate", "residual", "observables", "encoded"), output):
                     arrays[prefix + "__" + key] = value.detach().cpu().numpy()
                 witnesses.append({"sample": int(index) + 1, "epoch": epoch + 1,
                                   "loss": float(loss.detach()), "gradient_norm": float(gradient.detach()),
                                   "value_prefix": prefix})
             optimizer.step()
+            if repaired and index < 2:
+                label = f"witness{epoch + 1}_{index + 1}_post"
+                checkpoint(head, method, label, arrays)
+                health.save_optimizer(optimizer, head, arrays, f"optimizer__{method}__{label}")
             epoch_losses.append(float(loss.detach()))
+            if repaired and (len(gradient_rows) == 64 or (index == order[-1] and len(gradient_rows) >= 64)):
+                probes = cases[:2]
+                with torch.no_grad():
+                    outputs = [head_forward(head, method, c, device) for c in probes]
+                measured = health.signal_health(head, outputs, [c["base"] for c in probes], initial_norm)
+                health_checks.append({"step": len(gradient_rows), "epoch": epoch + 1, **measured,
+                                      "data_gradient_norm_totals": gradient_totals.copy()})
+                arrays[f"health__{method}__data_gradient_norms"] = np.asarray(gradient_rows, dtype=np.float64)
+                try:
+                    health.require_learning(measured, gradient_totals, semantic=hasattr(head, "project"))
+                except ValueError as exc:
+                    checkpoint(head, method, "health_failure", arrays)
+                    health.save_optimizer(optimizer, head, arrays, f"optimizer__{method}__health_failure")
+                    raise health.TrainingHealthError(method, len(gradient_rows), measured, gradient_totals.copy(), str(exc)) from exc
+                gradient_totals = dict.fromkeys(gradient_totals, 0.0)
         losses.append(float(np.mean(epoch_losses)))
         checkpoint(head, method, str(epoch + 1), arrays)
+        if repaired:
+            health.save_optimizer(optimizer, head, arrays, f"optimizer__{method}__epoch{epoch + 1}")
     head.eval()
-    return {"case_count": len(cases), "mean_loss_by_epoch": losses, "witnesses": witnesses}
+    result = {"case_count": len(cases), "mean_loss_by_epoch": losses, "witnesses": witnesses}
+    if repaired:
+        result["training_health"] = {"status": "passed" if health_checks else "deferred_below_64_updates",
+                                     "policy": t["optimizer_policy"], "checks": health_checks,
+                                     "gradient_columns": list(gradient_totals),
+                                     "optimizer_groups": [{k: g[k] for k in ("parameter_names", "lr", "weight_decay")}
+                                                          for g in optimizer.param_groups]}
+    return result
 
 
 def _metric_values(case, selected):
@@ -242,7 +285,11 @@ def validate_values(torch, cfg, heads, arrays, metadata, device):
     finally:
         for method, head in heads.items():
             head.load_state_dict(current[method])
-    return {"detached_values": "pass", "pooling_slices": "pass", "training_witness_replay": "pass", "all_evaluation_replay": "pass", "initial_null": "pass"}
+    result = {"detached_values": "pass", "pooling_slices": "pass", "training_witness_replay": "pass", "all_evaluation_replay": "pass", "initial_null": "pass"}
+    if "optimizer_policy" in cfg["training"]:
+        from applications.rag.semantic_reader_training import validate_optimizer_witnesses
+        result.update(validate_optimizer_witnesses(torch, cfg, heads, arrays, device))
+    return result
 
 
 def validate_trace_file(path, archive_path, cfg):
@@ -324,8 +371,49 @@ def produce_fixture(directory, cfg):
     return verified
 
 
-def run(args):
-    cfg = validate_config(args.config)
+def save_training_failure(args, cfg, failure, arrays, metadata, training_identity):
+    """Preserve a failed learning gate before any evaluation inference is spent."""
+    run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    directory = args.output_root / run_id
+    directory.mkdir(parents=True, exist_ok=False)
+    np.savez_compressed(directory / "training_failure_values.npz", **arrays)
+    record = {"schema_version": "rag.semantic_reader_training_failure.v1", "status": "training_health_failed",
+              "failure": failure.record, "effective_config": cfg, "code_revision": old._git_revision(),
+              "evaluation_started": False, "population": metadata, "training_identity": training_identity,
+              "values_sha256": old._sha256(directory / "training_failure_values.npz")}
+    record["source_hashes"] = {p: old._sha256(ROOT / p) for p in (
+        "applications/rag/semantic_reader_training.py", "applications/rag/quantum_semantic_reader.py",
+        "applications/rag/qarcg_reader.py", "scripts/collab/five_ideas/run_quantum_semantic_reader_screen_100.py")}
+    record["config_sha256"] = old._sha256(args.config) if getattr(args, "config", None) else None
+    old._write_json(directory / "training_failure.json", record)
+    old._write_json(directory / "training_failure_summary.json", {
+        k: v for k, v in record.items() if k not in ("population", "training_identity")})
+    with np.load(directory / "training_failure_values.npz", allow_pickle=False) as archive:
+        if set(archive.files) != set(arrays):
+            raise ValueError("failure checkpoint readback mismatch")
+        for key in archive.files:
+            np.testing.assert_array_equal(archive[key], arrays[key])
+    if old._load_json(directory / "training_failure.json") != record:
+        raise ValueError("failure record readback mismatch")
+    files = ("training_failure.json", "training_failure_summary.json", "training_failure_values.npz")
+    compact = [n for n in files if (directory / n).stat().st_size <= old.MAX_GITHUB_BYTES and n.endswith(".json")]
+    manifest = {"target_directory": cfg["output_namespace"] + "/" + run_id,
+                "exchange_files": [{"name": n, "bytes": (directory / n).stat().st_size,
+                                    "sha256": old._sha256(directory / n)} for n in files],
+                "github_files": compact + ["upload_manifest.json"],
+                "exchange_only": [n for n in files if n not in compact]}
+    old._write_json(directory / "upload_manifest.json", manifest)
+    if args.upload:
+        from scripts.collab.lib.exchange_upload import upload_manifest, _upload_one
+        upload_manifest(directory / "upload_manifest.json", base_url=args.exchange_url, token_env=args.token_env)
+        _upload_one(args.exchange_url, os.environ[args.token_env], directory / "upload_manifest.json",
+                    manifest["target_directory"] + "/upload_manifest.json")
+    print(json.dumps({"training_health_failed": True, "output_dir": str(directory), "evaluation_started": False}), flush=True)
+    return directory
+
+
+def run(args, *, config_reference=CONFIG, plan_path=PLAN):
+    cfg = validate_config(args.config, config_reference=config_reference, plan_path=plan_path)
     if args.validate_only:
         print(json.dumps({"status": "valid", "stage": cfg["stage"], "methods": METHODS})); return
     if args.preflight:
@@ -377,7 +465,12 @@ def run(args):
         if coverage < cfg["training"]["minimum_coverage"]:
             raise ValueError("weak training coverage below preregistered gate")
         heads = make_heads(torch, reader.config.hidden_size, cfg, device)
-        training = {method: train_head(torch, method, head, train_cases, cfg, device, arrays) for method, head in heads.items()}
+        from applications.rag.semantic_reader_training import TrainingHealthError
+        try:
+            training = {method: train_head(torch, method, head, train_cases, cfg, device, arrays) for method, head in heads.items()}
+        except TrainingHealthError as failure:
+            save_training_failure(args, cfg, failure, arrays, metadata, training_identity)
+            raise
         trace = []
         for number, case in enumerate(cases, 1):
             candidates = case["top_50"]; texts = [old._online_text(p) for p in candidates]
@@ -414,10 +507,14 @@ def run(args):
         np.savez_compressed(run_dir / "semantic_values.npz", **arrays)
         with np.load(run_dir / "semantic_values.npz", allow_pickle=False) as archive:
             verified = validate_values(torch, cfg, heads, archive, metadata, device)
-        provenance = {"code_revision": old._git_revision(), "config_sha256": old._sha256(args.config), "plugin_plan_sha256": old._sha256(PLAN),
+        provenance = {"code_revision": old._git_revision(), "config_sha256": old._sha256(args.config), "plugin_plan_sha256": old._sha256(plan_path),
                       "effective_config": cfg, "input_sha256": old._sha256(input_path), "reader": reader_identity,
                       "source_hashes": {str(Path(p).relative_to(ROOT)): old._sha256(Path(p)) for p in (__file__, ROOT / "applications/rag/quantum_semantic_reader.py", ROOT / "applications/rag/qarcg_reader.py")},
                       "python": sys.version.split()[0], "torch": torch.__version__, "numpy": np.__version__}
+        if "optimizer_policy" in cfg["training"]:
+            for path in (ROOT / "applications/rag/semantic_reader_training.py",
+                         ROOT / "scripts/collab/five_ideas/run_semantic_reader_training_repair_100.py"):
+                provenance["source_hashes"][str(path.relative_to(ROOT))] = old._sha256(path)
         summary = {"schema_version": "rag.quantum_semantic_reader_screen.summary.v1", "stage": "exploratory_screen",
                    "claim_ceiling": "L0_diagnostic", "evaluation": evaluation,
                    "training": {"requested": len(questions), "usable": len(train_cases), "coverage": coverage, "skipped": dict(skipped), "arms": training},
