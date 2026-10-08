@@ -1,0 +1,147 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v2",
+  "project": "Q-DUET-VLM/rag-selector",
+  "plan_id": "quantum_semantic_reader_screen_100",
+  "candidate_id": "quantum_semantic_reader",
+  "authorization": "implemented",
+  "stage": "exploratory_screen_not_formal",
+  "baseline": {
+    "entry_point": "Frozen DPR Reader relevance -> fixed Top-50 -> Top-5",
+    "code_revision": "Pinned DPR revision 38f47a4986084c53447ba92ab0a83076b58d86a8; runner source hashes recorded at execution",
+    "equivalence_test": "Each head's zero residual initialization exactly equals frozen Reader scores."
+  },
+  "core_invariants": [
+    "Retrieval, evaluation candidates, production selector, Generator and evaluator remain unchanged.",
+    "All online heads accept only frozen Reader signals; Silver is opened after every arm ranks every case.",
+    "All trainable arms share weak train-only containment labels, cases, order, loss, optimizer and epochs.",
+    "Semantic quantum and classical arms share projection initialization and exact parameter count.",
+    "Positive consensus retention is primary; fixed Silver membership is only secondary.",
+    "No real-data screen, model or dataset download on development servers."
+  ],
+  "interfaces": [{
+    "id": "reader_semantic_residual", "type": "combiner",
+    "input_schema": "50 raw relevance scores plus N x 5H semantic pooled representations or N x 4 scalar features",
+    "output_schema": "50 scores, four encoded coordinates, eight observables, gate, bounded residual, stable Top-5"
+  }],
+  "plugins": [
+    {
+      "id": "frozen_reader_topk", "role": "baseline", "version": "1.0.0", "interface": "reader_semantic_residual",
+      "insertion_point": "Frozen Reader relevance output",
+      "hypothesis": "Raw Reader relevance remains the stable anchor.",
+      "input_schema": "50 relevance scores and fixed candidate identity/order",
+      "output_schema": "Stable Top-5", "requires": [], "conflicts": [], "deterministic": true,
+      "resource_estimate": "Same single minibatched Reader pass shared by all arms; deterministic sorting",
+      "failure_signatures": ["identity mismatch", "null drift"],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2", "stages": ["data", "training", "scoring", "selection", "diagnosis"],
+        "input_fields": ["raw relevance", "candidate hashes/ranks"], "output_fields": ["scores", "selected ranks"],
+        "input_refs": ["registered 100-case input"], "output_refs": ["selector_trace.json", "semantic_values.npz"],
+        "emitted_fields": ["input/model/code hashes", "raw relevance", "Top-5"],
+        "shape_dtype_normalization": ["50 finite float32 logits per case"],
+        "checks": ["same candidate identity/order", "stable Top-5"], "deterministic_replay": true
+      }
+    },
+    {
+      "id": "quantum_semantic", "role": "idea", "version": "0.1.0", "interface": "reader_semantic_residual",
+      "insertion_point": "Frozen Reader final encoder hidden state and relevance head",
+      "hypothesis": "Question-conditioned semantic features provide missing information for applicability-gated quantum residual ranking.",
+      "input_schema": "CLS, question mean, question-conditioned passage mean, product and absolute difference; no target fields",
+      "output_schema": "Bounded anchored score, encoding, observables, gate/residual, Top-5",
+      "requires": ["frozen_reader_topk"], "conflicts": ["online_silver", "online_gold", "generated_answers"], "deterministic": true,
+      "resource_estimate": "15399 trainable parameters at H=768, including 15364 classical projection and 16 circuit parameters; 4 qubits, 8 CNOT gates",
+      "failure_signatures": ["non-finite gradients", "bound violation", "no evidence gain", "target leakage"],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2", "stages": ["data", "training", "scoring", "selection", "diagnosis"],
+        "input_fields": ["last hidden states", "question/passage masks", "relevance anchor", "weak training mask only"],
+        "output_fields": ["pooled representation", "encoding", "observables", "gate/residual", "scores", "Top-5"],
+        "input_refs": ["nq_open/train weak slice", "registered 100-case input"],
+        "output_refs": ["semantic_values.npz", "selector_trace.json", "summary.json"],
+        "emitted_fields": ["detached numeric values", "initial/epoch/witness checkpoints", "loss/gradient witnesses", "all eval signals"],
+        "shape_dtype_normalization": ["50 x 5H pooled", "50 x 4 encoding inside (-1,1)", "50 x 8 observables", "finite float32 scores"],
+        "checks": ["exact null", "pooling replay", "witness/eval replay", "bounded residual", "posthoc labels"], "deterministic_replay": true
+      }
+    },
+    {
+      "id": "classical_semantic", "role": "adapter", "version": "0.1.0", "interface": "reader_semantic_residual",
+      "insertion_point": "Same semantic boundary as quantum arm",
+      "hypothesis": "Separate richer representation benefits from the quantum interaction choice.",
+      "input_schema": "Identical semantic input, initial projection, training cases and optimizer",
+      "output_schema": "Classical anchored scores, encoding, observables, gate/residual, Top-5",
+      "requires": ["frozen_reader_topk"], "conflicts": ["online_silver", "online_gold", "generated_answers"], "deterministic": true,
+      "resource_estimate": "Exactly same 15399 parameter budget at H=768; diagonal classical interaction and identical readout",
+      "failure_signatures": ["budget mismatch", "initialization mismatch", "cohort mismatch"],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2", "stages": ["data", "training", "scoring", "selection", "diagnosis"],
+        "input_fields": ["same semantic features", "same training mask"], "output_fields": ["encoding", "observables", "gate/residual", "scores", "Top-5"],
+        "input_refs": ["same registered input and training population"], "output_refs": ["semantic_values.npz", "selector_trace.json"],
+        "emitted_fields": ["all head signals", "checkpoints", "training witnesses"],
+        "shape_dtype_normalization": ["same shapes/dtypes as quantum semantic arm"],
+        "checks": ["matched budget/init", "same split/loss/seed", "witness/eval replay"], "deterministic_replay": true
+      }
+    },
+    {
+      "id": "quantum_scalar_control", "role": "adapter", "version": "0.1.0", "interface": "reader_semantic_residual",
+      "insertion_point": "Same Reader pass; historical scalar-feature Q-ARCG boundary",
+      "hypothesis": "Test whether representation changes help under the same weak target and training budget.",
+      "input_schema": "Cohort-normalized relevance, span score, span margin and localization features",
+      "output_schema": "Scalar Q-ARCG scores, features, observables, gate/residual, Top-5",
+      "requires": ["frozen_reader_topk"], "conflicts": ["online_silver", "online_gold", "generated_answers"], "deterministic": true,
+      "resource_estimate": "35 trainable parameters; not a parameter-matched semantic control",
+      "failure_signatures": ["different Reader pass", "different weak training cohort"],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2", "stages": ["data", "training", "scoring", "selection", "diagnosis"],
+        "input_fields": ["50 x 4 scalar features", "relevance anchor", "same weak mask"],
+        "output_fields": ["features", "observables", "gate/residual", "scores", "Top-5"],
+        "input_refs": ["same Reader extraction"], "output_refs": ["semantic_values.npz", "selector_trace.json"],
+        "emitted_fields": ["scalar features", "all signals", "checkpoints", "witnesses"],
+        "shape_dtype_normalization": ["50 x 4 features", "50 finite scores"],
+        "checks": ["same training budget", "exact null", "witness/eval replay"], "deterministic_replay": true
+      }
+    }
+  ],
+  "discovery": {"mode": "explicit_allowlist", "allowlist": ["frozen_reader_topk", "quantum_semantic", "classical_semantic", "quantum_scalar_control"]},
+  "composition": {
+    "mode": "parallel", "order": ["frozen_reader_topk", "quantum_semantic", "classical_semantic", "quantum_scalar_control"],
+    "merge_rule": "Independent scores from the same frozen Reader pass; no feedback or inter-arm selection.",
+    "interaction_ablations": ["exact initial null vs Reader", "quantum vs same-budget classical semantic", "semantic vs scalar quantum under same weak supervision"]
+  },
+  "validation": {
+    "baseline_equivalence": "All initial heads reproduce raw Reader scores exactly.",
+    "tests": ["baseline_equivalence", "plugin_isolation", "deterministic_replay", "interaction_ablation", "trace_structural_validation", "trace_semantic_validation", "trace_replay", "real DPR API without checkpoint download", "non-finite gradients", "compact privacy"]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/quantum_semantic_reader_screen_100.json",
+    "dataset_identity": "512 nq_open/train weak cases; fixed 100-case detail SHA256 669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
+    "environment": "Collaborator-local Torch/Transformers and existing Wiki-DPR; resolved environment recorded",
+    "seeds": [20261008, 20261009], "output_manifest": "exchange/five_ideas/quantum_semantic_reader_screen_100/<timestamp>/upload_manifest.json"
+  },
+  "trace_contract": {
+    "enabled": true, "schema": "sample-trace.v2", "artifact_path": "selector_trace.json",
+    "sample_selection_rule": "All 100 eval x 50 pooled/scalar/base and all arms; complete final hidden for first candidate of first two usable train and first two eval cases; first two train cases traced each epoch.",
+    "target_boundary": "Weak target only during training; Silver only after all online selections.",
+    "required_stages": ["data", "training", "scoring", "selection", "diagnosis"],
+    "semantic_roles": ["Reader anchor", "question-conditioned semantic input", "quantum interaction", "matched classical", "scalar control", "posthoc evidence"],
+    "required_representations": ["hidden/masks/pooling weights for declared subset", "all eval pooled/scalar/base", "encoded/observables/gate/residual", "checkpoints", "weak masks", "JSON Top-5"],
+    "producer_owned_lineage": ["Reader scoped hook -> pooling", "head checkpoint -> scored vector", "deterministic sort -> Top-5", "posthoc panel -> aggregate metrics"],
+    "readiness_checks": ["archive hash and shapes", "declared hidden sample population", "JSON/archive exact agreement", "initial null", "pooling and training/eval replay"]
+  },
+  "trace_readiness": {
+    "status": "passed", "fixture_path": "Generated by --preflight OUTPUT_DIR; fixture_trace.json and semantic_values.npz",
+    "structural_validation": "Project validate_trace_file reopens JSON and archive, validates population, methods, hash, identity and ordering.",
+    "semantic_validation": "validate_values verifies finite shapes, declared hidden sample coverage, pooling and residual bounds.",
+    "replay_test": "Reopen initial/epoch/witness checkpoints and all detached inputs; replay first-two training witnesses and every eval arm. Test fixture is synthetic only."
+  },
+  "recovery_contract": {
+    "dossier_path": ".ai-progress/workstreams/rag-selector/refs/semantic_reader_recovery_20261008.json",
+    "dossier_sha256": "1a5e17fc5cfa39f7b3a24d1b03092d6c3344c5ebd665352e4934c164032b0715",
+    "candidate_id": "quantum_semantic_reader",
+    "discriminating_intermediate_measurement": "Paired positive/direct retention and rescued/harmed passage ranks for semantic quantum versus scalar quantum and matched classical semantic with identical weak targets."
+  },
+  "gates": {
+    "selection": "Positive evidence paired mean >0 and bootstrap lower bound >0 vs Reader, with direct evidence mean delta >=0.",
+    "attribution": "Positive evidence paired mean and lower bound >0 vs matched classical semantic, assessed separately.",
+    "coverage": "At least 25 percent of 512 training questions yield mixed weak positive/negative candidates.",
+    "claim_ceiling": "L0; exposed panel, weak targets and one short run are not independent full-data validation."
+  },
+  "limitations": ["No quantum advantage claimed; classical projection dominates trainable count.", "Semantic vs scalar is not a parameter-matched comparison.", "Failure of this short run is inconclusive for the broad trained family.", "Project-level v2 validator; no claim of compatibility with the old generic v1 validator."]
+}

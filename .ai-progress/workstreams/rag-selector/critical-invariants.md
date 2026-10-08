@@ -8,6 +8,7 @@
 - Scope is fixed Top-50 -> Top-5; retrieval, production selector, Generator, evaluator, labels, order, and answer path stay frozen unless a binding decision changes it.
 - Plugins are isolated, allowlisted, deterministic where declared, and compared with disabled/original behavior.
 - Gold, evaluator/generation output, and panel labels are post-hoc diagnostics only; three-model labels are Silver L0.
+- Distinguish exact Silver-set overlap from positive/direct evidence retention: fixed-size references can contain fillers or omit valid alternatives. New metrics must be declared prospectively; supplementary diagnostics do not rewrite old gates. See [detail](decisions/2026-10-08-silver-membership-vs-evidence-retention.md).
 - Generator-native work uses one transport, exact mapping and zero-anchor fallback without retry/feedback.
 - Use exact source/question/passage identity; fuzzy/manual/answer-string substitutions cannot manufacture coverage.
 - Record dataset/model/revision/config hash/seed/split/code revision and compact provenance per artifact.
@@ -58,6 +59,27 @@
   this is L0 engineering evidence only. Do not claim utility, L1/L2, or
   quantum advantage until a separately authorized real-data train/validation
   screen beats frozen Reader Top-k and the matched classical control.
+- The Q-ARCG short-screen trace gives Reader/Q-ARCG/classical Silver overlap
+  `3.55/3.49/3.53`; Q-ARCG changes 13 cases, with `2/90/8` better/equal/worse.
+  This configuration is not promoted. The broader trained mechanism remains
+  inconclusive pending compact training/provenance artifacts; do not tune the
+  exposed Silver panel or treat this short run as full-budget falsification.
+- Q-ARCG's full-panel posthoc audit gives positive consensus `204/203` versus
+  Reader, direct `138/138`, and all-three-positive `171/171`: no reliable gain.
+  Six of eight membership losses leave positive/direct counts unchanged. Keep
+  the relevance anchor; the provisional next hypothesis changes the head's
+  information input to question-conditioned semantic representations, not span
+  coefficients. Previous training provenance remains missing. The subsequent
+  user-approved semantic-head exploratory screen does not resolve that gap.
+- The quantum semantic Reader screen is implemented for collaborator execution:
+  frozen final Reader states -> question-conditioned pooling -> trainable
+  classical projection -> four-qubit gated residual. Compare Reader, semantic
+  quantum, matched semantic classical and scalar quantum on the same weak
+  training cohort. Positive-consensus retention is primary, direct retention
+  is protected, and exact Silver membership is secondary. This is an exposed-
+  panel L0 screen, not end-to-end Reader fine-tuning or quantum advantage.
+  Reopened hidden/pooling/head/checkpoint/selection replay is mandatory; raw
+  NPZ/trace stay exchange-only and compact training reports are mirrored there.
 - The approved Q-ARCG screen trains only the head on up to 512 `nq_open/train`
   answer-string-containment weak labels; this is not official passage gold.
   The fixed 100 x 50 detail artifact is evaluation-only, Silver is posthoc,
@@ -116,6 +138,9 @@
 - [CLOSED] DPR Reader Span-Relevance Fusion Screen -> [detail](decisions/2026-10-01-dpr-reader-span-relevance-screen.md)
 - [ACTIVE CANDIDATE / PREFLIGHT PASSED] Q-ARCG Reader-integrated residual -> [detail](decisions/2026-10-05-qarcg-reader-integrated-residual.md)
 - [ACTIVE CANDIDATE / SCREEN IMPLEMENTED] Q-ARCG Reader 100-case screen -> [detail](decisions/2026-10-05-qarcg-reader-screen-implementation.md)
+- [ACTIVE / SCREEN GATE FAILED, PROVENANCE PENDING] Q-ARCG result follow-up -> [detail](decisions/2026-10-08-qarcg-screen-trace-gate.md)
+- [ACTIVE] Silver membership versus evidence retention -> [detail](decisions/2026-10-08-silver-membership-vs-evidence-retention.md)
+- [ACTIVE CANDIDATE / SCREEN IMPLEMENTED] Quantum semantic Reader head -> [detail](decisions/2026-10-08-quantum-semantic-reader-screen.md)
 
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.
