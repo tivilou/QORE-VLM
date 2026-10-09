@@ -1,0 +1,1407 @@
+{
+  "schema_version": "rag.semantic_support_fullcase_join.v1",
+  "claim_ceiling": "L0_diagnostic",
+  "source_case_sha256": "a729ea30b63b88acd3525058d574b78f4b552c06583fc586eb8e270431e18faf",
+  "source_support_review_sha256": "517d33cf521f09aebda169fcb7b0ebaa8f6c47b0a208888d5b5e49d22a6d143c",
+  "coverage": {
+    "reviewed_population": 783,
+    "all_population": 1600,
+    "remaining": 817,
+    "new_judgments": 165,
+    "prior_preserved": 618,
+    "fully_reviewed_cases": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "by_case": {
+      "1": 50,
+      "2": 50,
+      "3": 50,
+      "4": 50,
+      "5": 50,
+      "6": 50,
+      "7": 50,
+      "8": 50,
+      "9": 50,
+      "10": 50,
+      "11": 50,
+      "12": 50,
+      "13": 7,
+      "14": 7,
+      "15": 7,
+      "16": 12,
+      "17": 7,
+      "18": 7,
+      "19": 7,
+      "20": 7,
+      "21": 13,
+      "22": 11,
+      "23": 9,
+      "24": 10,
+      "25": 12,
+      "26": 9,
+      "27": 7,
+      "28": 11,
+      "29": 7,
+      "30": 7,
+      "31": 14,
+      "32": 12
+    }
+  },
+  "new_label_counts": {
+    "irrelevant": 144,
+    "direct": 3,
+    "partial": 17,
+    "uncertain": 1
+  },
+  "method_totals_existing_selected_union": {
+    "frozen_reader_topk": {
+      "selected_slots": 160,
+      "label_counts": {
+        "direct": 50,
+        "partial": 54,
+        "irrelevant": 48,
+        "contradictory": 2,
+        "uncertain": 6
+      },
+      "not_confirmed_answer_accuracy": true
+    },
+    "quantum_semantic": {
+      "selected_slots": 160,
+      "label_counts": {
+        "direct": 50,
+        "partial": 54,
+        "irrelevant": 48,
+        "contradictory": 2,
+        "uncertain": 6
+      },
+      "not_confirmed_answer_accuracy": true
+    },
+    "classical_semantic": {
+      "selected_slots": 160,
+      "label_counts": {
+        "direct": 50,
+        "partial": 54,
+        "irrelevant": 48,
+        "contradictory": 2,
+        "uncertain": 6
+      },
+      "not_confirmed_answer_accuracy": true
+    },
+    "quantum_scalar_control": {
+      "selected_slots": 160,
+      "label_counts": {
+        "direct": 50,
+        "partial": 53,
+        "irrelevant": 48,
+        "contradictory": 2,
+        "uncertain": 7
+      },
+      "not_confirmed_answer_accuracy": true
+    },
+    "monotonic_compression_control": {
+      "selected_slots": 160,
+      "label_counts": {
+        "direct": 50,
+        "partial": 54,
+        "irrelevant": 48,
+        "contradictory": 2,
+        "uncertain": 6
+      },
+      "not_confirmed_answer_accuracy": true
+    }
+  },
+  "fully_reviewed_cases": [
+    {
+      "audit_case_number": 1,
+      "review_case_id": "072cf5ed9a8e9c4094297a20488c79140859ed1fcc1129cfdf041a19f4898273",
+      "population_label_counts": {
+        "direct": 1,
+        "partial": 2,
+        "irrelevant": 47,
+        "contradictory": 0,
+        "uncertain": 0
+      },
+      "question_target_flag": null,
+      "formal_training_qualified": false,
+      "provisional_direct_slot_ceiling": 1,
+      "frozen_weak_boundary_pair_count": 0,
+      "methods": {
+        "frozen_reader_topk": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 2,
+            "irrelevant": 2,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "quantum_semantic": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 2,
+            "irrelevant": 2,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "classical_semantic": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 2,
+            "irrelevant": 2,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "quantum_scalar_control": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 2,
+            "irrelevant": 2,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "monotonic_compression_control": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 2,
+            "irrelevant": 2,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        }
+      }
+    },
+    {
+      "audit_case_number": 2,
+      "review_case_id": "1440a91de72510bc0ea23cf9baac6d4829324427cbc8c17b74cb3461099901a3",
+      "population_label_counts": {
+        "direct": 0,
+        "partial": 5,
+        "irrelevant": 45,
+        "contradictory": 0,
+        "uncertain": 0
+      },
+      "question_target_flag": {
+        "audit_case_number": 2,
+        "review_case_id": "1440a91de72510bc0ea23cf9baac6d4829324427cbc8c17b74cb3461099901a3",
+        "flag": "conditional_scenario_missing",
+        "rationale": "Neither-vessel原文限于特定迎面相遇或绝对权利；问题未给场景。",
+        "use_in_new_training": "blocked_pending_target_qualification",
+        "reference_rewritten": false,
+        "official_gold_correction": false
+      },
+      "formal_training_qualified": false,
+      "provisional_direct_slot_ceiling": 0,
+      "frozen_weak_boundary_pair_count": 0,
+      "methods": {
+        "frozen_reader_topk": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 2,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "quantum_semantic": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 2,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "classical_semantic": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 2,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "quantum_scalar_control": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 2,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "monotonic_compression_control": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 2,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        }
+      }
+    },
+    {
+      "audit_case_number": 3,
+      "review_case_id": "5c2b42563c1d60b4c3ef9b0da7a256991e201cc4d28f81f2b3e6830fc56f95e7",
+      "population_label_counts": {
+        "direct": 2,
+        "partial": 7,
+        "irrelevant": 41,
+        "contradictory": 0,
+        "uncertain": 0
+      },
+      "question_target_flag": null,
+      "formal_training_qualified": false,
+      "provisional_direct_slot_ceiling": 2,
+      "frozen_weak_boundary_pair_count": 2,
+      "methods": {
+        "frozen_reader_topk": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 4,
+            "irrelevant": 0,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 4,
+              "review_item_id": "30609a8808ace007688e9e5118601ce57c1ef3653e76318ed3024755bc5ff7a5",
+              "reader_rank": 9,
+              "weak_positive": false,
+              "support_quote": "carpus (knee) bones and joint, large metacarpal (cannon)",
+              "reader_gap_to_original_rank5": -1.5461757183074951,
+              "relative_correction_vs_original_rank5": 0.0
+            }
+          ],
+          "provisional_direct_slot_gap": 1
+        },
+        "quantum_semantic": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 4,
+            "irrelevant": 0,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 4,
+              "review_item_id": "30609a8808ace007688e9e5118601ce57c1ef3653e76318ed3024755bc5ff7a5",
+              "reader_rank": 9,
+              "weak_positive": false,
+              "support_quote": "carpus (knee) bones and joint, large metacarpal (cannon)",
+              "reader_gap_to_original_rank5": -1.5461757183074951,
+              "relative_correction_vs_original_rank5": 0.2916691303253174
+            }
+          ],
+          "provisional_direct_slot_gap": 1
+        },
+        "classical_semantic": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 4,
+            "irrelevant": 0,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 4,
+              "review_item_id": "30609a8808ace007688e9e5118601ce57c1ef3653e76318ed3024755bc5ff7a5",
+              "reader_rank": 9,
+              "weak_positive": false,
+              "support_quote": "carpus (knee) bones and joint, large metacarpal (cannon)",
+              "reader_gap_to_original_rank5": -1.5461757183074951,
+              "relative_correction_vs_original_rank5": 0.0041964054107666016
+            }
+          ],
+          "provisional_direct_slot_gap": 1
+        },
+        "quantum_scalar_control": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 4,
+            "irrelevant": 0,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 4,
+              "review_item_id": "30609a8808ace007688e9e5118601ce57c1ef3653e76318ed3024755bc5ff7a5",
+              "reader_rank": 9,
+              "weak_positive": false,
+              "support_quote": "carpus (knee) bones and joint, large metacarpal (cannon)",
+              "reader_gap_to_original_rank5": -1.5461757183074951,
+              "relative_correction_vs_original_rank5": 0.044317007064819336
+            }
+          ],
+          "provisional_direct_slot_gap": 1
+        },
+        "monotonic_compression_control": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 4,
+            "irrelevant": 0,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 4,
+              "review_item_id": "30609a8808ace007688e9e5118601ce57c1ef3653e76318ed3024755bc5ff7a5",
+              "reader_rank": 9,
+              "weak_positive": false,
+              "support_quote": "carpus (knee) bones and joint, large metacarpal (cannon)",
+              "reader_gap_to_original_rank5": -1.5461757183074951,
+              "relative_correction_vs_original_rank5": 0.7730878591537476
+            }
+          ],
+          "provisional_direct_slot_gap": 1
+        }
+      }
+    },
+    {
+      "audit_case_number": 4,
+      "review_case_id": "4a8f2398ebbb4b0847b85c53c8855fdcb1d61e4b3d0464a4e88c7bbdcc57bd65",
+      "population_label_counts": {
+        "direct": 0,
+        "partial": 3,
+        "irrelevant": 47,
+        "contradictory": 0,
+        "uncertain": 0
+      },
+      "question_target_flag": {
+        "audit_case_number": 4,
+        "review_case_id": "4a8f2398ebbb4b0847b85c53c8855fdcb1d61e4b3d0464a4e88c7bbdcc57bd65",
+        "flag": "serialized_formula_subscript_missing",
+        "rationale": "公式氧下标4在导出文本中丢失，严格分辨CaSO4/CaSO3需保留原始公式。",
+        "use_in_new_training": "blocked_pending_target_qualification",
+        "reference_rewritten": false,
+        "official_gold_correction": false
+      },
+      "formal_training_qualified": false,
+      "provisional_direct_slot_ceiling": 0,
+      "frozen_weak_boundary_pair_count": 4,
+      "methods": {
+        "frozen_reader_topk": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 2,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "quantum_semantic": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 2,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "classical_semantic": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 2,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "quantum_scalar_control": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 2,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "monotonic_compression_control": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 2,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        }
+      }
+    },
+    {
+      "audit_case_number": 5,
+      "review_case_id": "9fa259bec3e31ee388e3c94de30fed8b137bc1dee2837f2bf6b859b6a64e5448",
+      "population_label_counts": {
+        "direct": 3,
+        "partial": 2,
+        "irrelevant": 45,
+        "contradictory": 0,
+        "uncertain": 0
+      },
+      "question_target_flag": null,
+      "formal_training_qualified": false,
+      "provisional_direct_slot_ceiling": 3,
+      "frozen_weak_boundary_pair_count": 4,
+      "methods": {
+        "frozen_reader_topk": {
+          "selected_label_counts": {
+            "direct": 2,
+            "partial": 1,
+            "irrelevant": 2,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 1,
+              "review_item_id": "c033f73a3a904db63e44e664361054190819ca4094058c19f98d141d3fdcb370",
+              "reader_rank": 6,
+              "weak_positive": true,
+              "support_quote": "The part of Anarkali had first been offered to Suraiya but later went to Madhubala",
+              "reader_gap_to_original_rank5": -0.14018845558166504,
+              "relative_correction_vs_original_rank5": 0.0
+            }
+          ],
+          "provisional_direct_slot_gap": 1
+        },
+        "quantum_semantic": {
+          "selected_label_counts": {
+            "direct": 2,
+            "partial": 1,
+            "irrelevant": 2,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 1,
+              "review_item_id": "c033f73a3a904db63e44e664361054190819ca4094058c19f98d141d3fdcb370",
+              "reader_rank": 6,
+              "weak_positive": true,
+              "support_quote": "The part of Anarkali had first been offered to Suraiya but later went to Madhubala",
+              "reader_gap_to_original_rank5": -0.14018845558166504,
+              "relative_correction_vs_original_rank5": -0.0003260970115661621
+            }
+          ],
+          "provisional_direct_slot_gap": 1
+        },
+        "classical_semantic": {
+          "selected_label_counts": {
+            "direct": 2,
+            "partial": 1,
+            "irrelevant": 2,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 1,
+              "review_item_id": "c033f73a3a904db63e44e664361054190819ca4094058c19f98d141d3fdcb370",
+              "reader_rank": 6,
+              "weak_positive": true,
+              "support_quote": "The part of Anarkali had first been offered to Suraiya but later went to Madhubala",
+              "reader_gap_to_original_rank5": -0.14018845558166504,
+              "relative_correction_vs_original_rank5": 4.589557647705078e-06
+            }
+          ],
+          "provisional_direct_slot_gap": 1
+        },
+        "quantum_scalar_control": {
+          "selected_label_counts": {
+            "direct": 2,
+            "partial": 1,
+            "irrelevant": 2,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 1,
+              "review_item_id": "c033f73a3a904db63e44e664361054190819ca4094058c19f98d141d3fdcb370",
+              "reader_rank": 6,
+              "weak_positive": true,
+              "support_quote": "The part of Anarkali had first been offered to Suraiya but later went to Madhubala",
+              "reader_gap_to_original_rank5": -0.14018845558166504,
+              "relative_correction_vs_original_rank5": -0.1509600281715393
+            }
+          ],
+          "provisional_direct_slot_gap": 1
+        },
+        "monotonic_compression_control": {
+          "selected_label_counts": {
+            "direct": 2,
+            "partial": 1,
+            "irrelevant": 2,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 1,
+              "review_item_id": "c033f73a3a904db63e44e664361054190819ca4094058c19f98d141d3fdcb370",
+              "reader_rank": 6,
+              "weak_positive": true,
+              "support_quote": "The part of Anarkali had first been offered to Suraiya but later went to Madhubala",
+              "reader_gap_to_original_rank5": -0.14018845558166504,
+              "relative_correction_vs_original_rank5": 0.07009422779083252
+            }
+          ],
+          "provisional_direct_slot_gap": 1
+        }
+      }
+    },
+    {
+      "audit_case_number": 6,
+      "review_case_id": "e10267bb67b70742cb509fe2cbc01732e466f30b02146d55acd22e2b7a439a35",
+      "population_label_counts": {
+        "direct": 2,
+        "partial": 21,
+        "irrelevant": 27,
+        "contradictory": 0,
+        "uncertain": 0
+      },
+      "question_target_flag": null,
+      "formal_training_qualified": false,
+      "provisional_direct_slot_ceiling": 2,
+      "frozen_weak_boundary_pair_count": 0,
+      "methods": {
+        "frozen_reader_topk": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 4,
+            "irrelevant": 1,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 5,
+              "review_item_id": "8649b1baa65748014b13d6e39197abdff9f3dc69c2af028d9b5bd80b0c1173fb",
+              "reader_rank": 16,
+              "weak_positive": false,
+              "support_quote": "The project covers the site of the now demolished ground of White Hart Lane and areas adjacent to it.",
+              "reader_gap_to_original_rank5": -3.078679084777832,
+              "relative_correction_vs_original_rank5": 0.0
+            },
+            {
+              "candidate_index": 48,
+              "review_item_id": "9d3bf899a207be811dfad1ff692d70338029b8c8d8faa52d2f09406bdb90fe93",
+              "reader_rank": 8,
+              "weak_positive": false,
+              "support_quote": "the building of a new stadium in Tottenham",
+              "reader_gap_to_original_rank5": -1.1111817359924316,
+              "relative_correction_vs_original_rank5": 0.0
+            }
+          ],
+          "provisional_direct_slot_gap": 2
+        },
+        "quantum_semantic": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 4,
+            "irrelevant": 1,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 5,
+              "review_item_id": "8649b1baa65748014b13d6e39197abdff9f3dc69c2af028d9b5bd80b0c1173fb",
+              "reader_rank": 16,
+              "weak_positive": false,
+              "support_quote": "The project covers the site of the now demolished ground of White Hart Lane and areas adjacent to it.",
+              "reader_gap_to_original_rank5": -3.078679084777832,
+              "relative_correction_vs_original_rank5": 0.28803396224975586
+            },
+            {
+              "candidate_index": 48,
+              "review_item_id": "9d3bf899a207be811dfad1ff692d70338029b8c8d8faa52d2f09406bdb90fe93",
+              "reader_rank": 8,
+              "weak_positive": false,
+              "support_quote": "the building of a new stadium in Tottenham",
+              "reader_gap_to_original_rank5": -1.1111817359924316,
+              "relative_correction_vs_original_rank5": 0.2389240264892578
+            }
+          ],
+          "provisional_direct_slot_gap": 2
+        },
+        "classical_semantic": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 4,
+            "irrelevant": 1,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 5,
+              "review_item_id": "8649b1baa65748014b13d6e39197abdff9f3dc69c2af028d9b5bd80b0c1173fb",
+              "reader_rank": 16,
+              "weak_positive": false,
+              "support_quote": "The project covers the site of the now demolished ground of White Hart Lane and areas adjacent to it.",
+              "reader_gap_to_original_rank5": -3.078679084777832,
+              "relative_correction_vs_original_rank5": 0.17758846282958984
+            },
+            {
+              "candidate_index": 48,
+              "review_item_id": "9d3bf899a207be811dfad1ff692d70338029b8c8d8faa52d2f09406bdb90fe93",
+              "reader_rank": 8,
+              "weak_positive": false,
+              "support_quote": "the building of a new stadium in Tottenham",
+              "reader_gap_to_original_rank5": -1.1111817359924316,
+              "relative_correction_vs_original_rank5": 0.008090496063232422
+            }
+          ],
+          "provisional_direct_slot_gap": 2
+        },
+        "quantum_scalar_control": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 4,
+            "irrelevant": 1,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 5,
+              "review_item_id": "8649b1baa65748014b13d6e39197abdff9f3dc69c2af028d9b5bd80b0c1173fb",
+              "reader_rank": 16,
+              "weak_positive": false,
+              "support_quote": "The project covers the site of the now demolished ground of White Hart Lane and areas adjacent to it.",
+              "reader_gap_to_original_rank5": -3.078679084777832,
+              "relative_correction_vs_original_rank5": 0.359375
+            },
+            {
+              "candidate_index": 48,
+              "review_item_id": "9d3bf899a207be811dfad1ff692d70338029b8c8d8faa52d2f09406bdb90fe93",
+              "reader_rank": 8,
+              "weak_positive": false,
+              "support_quote": "the building of a new stadium in Tottenham",
+              "reader_gap_to_original_rank5": -1.1111817359924316,
+              "relative_correction_vs_original_rank5": 0.05794668197631836
+            }
+          ],
+          "provisional_direct_slot_gap": 2
+        },
+        "monotonic_compression_control": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 4,
+            "irrelevant": 1,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 5,
+              "review_item_id": "8649b1baa65748014b13d6e39197abdff9f3dc69c2af028d9b5bd80b0c1173fb",
+              "reader_rank": 16,
+              "weak_positive": false,
+              "support_quote": "The project covers the site of the now demolished ground of White Hart Lane and areas adjacent to it.",
+              "reader_gap_to_original_rank5": -3.078679084777832,
+              "relative_correction_vs_original_rank5": 1.539339542388916
+            },
+            {
+              "candidate_index": 48,
+              "review_item_id": "9d3bf899a207be811dfad1ff692d70338029b8c8d8faa52d2f09406bdb90fe93",
+              "reader_rank": 8,
+              "weak_positive": false,
+              "support_quote": "the building of a new stadium in Tottenham",
+              "reader_gap_to_original_rank5": -1.1111817359924316,
+              "relative_correction_vs_original_rank5": 0.5555908679962158
+            }
+          ],
+          "provisional_direct_slot_gap": 2
+        }
+      }
+    },
+    {
+      "audit_case_number": 7,
+      "review_case_id": "0031cb571a22179e59daa2d2cb1c544e73bb238ec7e5418a180e0c8a03c3dcbd",
+      "population_label_counts": {
+        "direct": 3,
+        "partial": 0,
+        "irrelevant": 47,
+        "contradictory": 0,
+        "uncertain": 0
+      },
+      "question_target_flag": null,
+      "formal_training_qualified": false,
+      "provisional_direct_slot_ceiling": 3,
+      "frozen_weak_boundary_pair_count": 0,
+      "methods": {
+        "frozen_reader_topk": {
+          "selected_label_counts": {
+            "direct": 3,
+            "partial": 0,
+            "irrelevant": 2,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "quantum_semantic": {
+          "selected_label_counts": {
+            "direct": 3,
+            "partial": 0,
+            "irrelevant": 2,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "classical_semantic": {
+          "selected_label_counts": {
+            "direct": 3,
+            "partial": 0,
+            "irrelevant": 2,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "quantum_scalar_control": {
+          "selected_label_counts": {
+            "direct": 3,
+            "partial": 0,
+            "irrelevant": 2,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "monotonic_compression_control": {
+          "selected_label_counts": {
+            "direct": 3,
+            "partial": 0,
+            "irrelevant": 2,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        }
+      }
+    },
+    {
+      "audit_case_number": 8,
+      "review_case_id": "fa9814edb9e26544f2437346fef3a1ad2971212a9a0d6b0e03f06bc4a7695cea",
+      "population_label_counts": {
+        "direct": 5,
+        "partial": 0,
+        "irrelevant": 45,
+        "contradictory": 0,
+        "uncertain": 0
+      },
+      "question_target_flag": null,
+      "formal_training_qualified": false,
+      "provisional_direct_slot_ceiling": 5,
+      "frozen_weak_boundary_pair_count": 0,
+      "methods": {
+        "frozen_reader_topk": {
+          "selected_label_counts": {
+            "direct": 4,
+            "partial": 0,
+            "irrelevant": 1,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 25,
+              "review_item_id": "d9ef4065c77de0ad7090526165977bbb42c946fd98ec81806573d8c919d8299e",
+              "reader_rank": 6,
+              "weak_positive": false,
+              "support_quote": "Stacy Haiduk had been cast as Susan; she made her first appearance as Susan on August 21, 2018.",
+              "reader_gap_to_original_rank5": -0.25506603717803955,
+              "relative_correction_vs_original_rank5": 0.0
+            }
+          ],
+          "provisional_direct_slot_gap": 1
+        },
+        "quantum_semantic": {
+          "selected_label_counts": {
+            "direct": 4,
+            "partial": 0,
+            "irrelevant": 1,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 25,
+              "review_item_id": "d9ef4065c77de0ad7090526165977bbb42c946fd98ec81806573d8c919d8299e",
+              "reader_rank": 6,
+              "weak_positive": false,
+              "support_quote": "Stacy Haiduk had been cast as Susan; she made her first appearance as Susan on August 21, 2018.",
+              "reader_gap_to_original_rank5": -0.25506603717803955,
+              "relative_correction_vs_original_rank5": -0.00040400028228759766
+            }
+          ],
+          "provisional_direct_slot_gap": 1
+        },
+        "classical_semantic": {
+          "selected_label_counts": {
+            "direct": 4,
+            "partial": 0,
+            "irrelevant": 1,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 25,
+              "review_item_id": "d9ef4065c77de0ad7090526165977bbb42c946fd98ec81806573d8c919d8299e",
+              "reader_rank": 6,
+              "weak_positive": false,
+              "support_quote": "Stacy Haiduk had been cast as Susan; she made her first appearance as Susan on August 21, 2018.",
+              "reader_gap_to_original_rank5": -0.25506603717803955,
+              "relative_correction_vs_original_rank5": 3.5762786865234375e-07
+            }
+          ],
+          "provisional_direct_slot_gap": 1
+        },
+        "quantum_scalar_control": {
+          "selected_label_counts": {
+            "direct": 4,
+            "partial": 0,
+            "irrelevant": 1,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 25,
+              "review_item_id": "d9ef4065c77de0ad7090526165977bbb42c946fd98ec81806573d8c919d8299e",
+              "reader_rank": 6,
+              "weak_positive": false,
+              "support_quote": "Stacy Haiduk had been cast as Susan; she made her first appearance as Susan on August 21, 2018.",
+              "reader_gap_to_original_rank5": -0.25506603717803955,
+              "relative_correction_vs_original_rank5": -0.07700252532958984
+            }
+          ],
+          "provisional_direct_slot_gap": 1
+        },
+        "monotonic_compression_control": {
+          "selected_label_counts": {
+            "direct": 4,
+            "partial": 0,
+            "irrelevant": 1,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 25,
+              "review_item_id": "d9ef4065c77de0ad7090526165977bbb42c946fd98ec81806573d8c919d8299e",
+              "reader_rank": 6,
+              "weak_positive": false,
+              "support_quote": "Stacy Haiduk had been cast as Susan; she made her first appearance as Susan on August 21, 2018.",
+              "reader_gap_to_original_rank5": -0.25506603717803955,
+              "relative_correction_vs_original_rank5": 0.12753301858901978
+            }
+          ],
+          "provisional_direct_slot_gap": 1
+        }
+      }
+    },
+    {
+      "audit_case_number": 9,
+      "review_case_id": "88e18b6f333f478f54a0168f1721687b6fc80a5205c7d671e2b21dd0880bcf8e",
+      "population_label_counts": {
+        "direct": 6,
+        "partial": 13,
+        "irrelevant": 31,
+        "contradictory": 0,
+        "uncertain": 0
+      },
+      "question_target_flag": null,
+      "formal_training_qualified": false,
+      "provisional_direct_slot_ceiling": 5,
+      "frozen_weak_boundary_pair_count": 0,
+      "methods": {
+        "frozen_reader_topk": {
+          "selected_label_counts": {
+            "direct": 3,
+            "partial": 2,
+            "irrelevant": 0,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 2,
+              "review_item_id": "008edc3f8e52405e5b05a87db9245c466a9bd46f18d70667130f7827112effa0",
+              "reader_rank": 6,
+              "weak_positive": true,
+              "support_quote": "They are composed predominantly of water ice",
+              "reader_gap_to_original_rank5": -0.0694427490234375,
+              "relative_correction_vs_original_rank5": 0.0
+            },
+            {
+              "candidate_index": 34,
+              "review_item_id": "158d4183092a9a8a2cb52f8965acd134d17a0e0fec262f1d18ff9085f573afb5",
+              "reader_rank": 21,
+              "weak_positive": false,
+              "support_quote": "Unlike the other rings, it is composed of microscopic particles rather than macroscopic ice chunks.",
+              "reader_gap_to_original_rank5": -7.9536396861076355,
+              "relative_correction_vs_original_rank5": 0.0
+            },
+            {
+              "candidate_index": 37,
+              "review_item_id": "958683df9a1bc09d58c72b4053e156e85b7c149230d89f7562071eace6af53fb",
+              "reader_rank": 22,
+              "weak_positive": false,
+              "support_quote": "These rings appear to be made of dust, rather than ice as with Saturn's rings.",
+              "reader_gap_to_original_rank5": -8.103909254074097,
+              "relative_correction_vs_original_rank5": 0.0
+            }
+          ],
+          "provisional_direct_slot_gap": 2
+        },
+        "quantum_semantic": {
+          "selected_label_counts": {
+            "direct": 3,
+            "partial": 2,
+            "irrelevant": 0,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 2,
+              "review_item_id": "008edc3f8e52405e5b05a87db9245c466a9bd46f18d70667130f7827112effa0",
+              "reader_rank": 6,
+              "weak_positive": true,
+              "support_quote": "They are composed predominantly of water ice",
+              "reader_gap_to_original_rank5": -0.0694427490234375,
+              "relative_correction_vs_original_rank5": 0.00014162063598632812
+            },
+            {
+              "candidate_index": 34,
+              "review_item_id": "158d4183092a9a8a2cb52f8965acd134d17a0e0fec262f1d18ff9085f573afb5",
+              "reader_rank": 21,
+              "weak_positive": false,
+              "support_quote": "Unlike the other rings, it is composed of microscopic particles rather than macroscopic ice chunks.",
+              "reader_gap_to_original_rank5": -7.9536396861076355,
+              "relative_correction_vs_original_rank5": 0.0017788410186767578
+            },
+            {
+              "candidate_index": 37,
+              "review_item_id": "958683df9a1bc09d58c72b4053e156e85b7c149230d89f7562071eace6af53fb",
+              "reader_rank": 22,
+              "weak_positive": false,
+              "support_quote": "These rings appear to be made of dust, rather than ice as with Saturn's rings.",
+              "reader_gap_to_original_rank5": -8.103909254074097,
+              "relative_correction_vs_original_rank5": 0.003652513027191162
+            }
+          ],
+          "provisional_direct_slot_gap": 2
+        },
+        "classical_semantic": {
+          "selected_label_counts": {
+            "direct": 3,
+            "partial": 2,
+            "irrelevant": 0,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 2,
+              "review_item_id": "008edc3f8e52405e5b05a87db9245c466a9bd46f18d70667130f7827112effa0",
+              "reader_rank": 6,
+              "weak_positive": true,
+              "support_quote": "They are composed predominantly of water ice",
+              "reader_gap_to_original_rank5": -0.0694427490234375,
+              "relative_correction_vs_original_rank5": -8.106231689453125e-06
+            },
+            {
+              "candidate_index": 34,
+              "review_item_id": "158d4183092a9a8a2cb52f8965acd134d17a0e0fec262f1d18ff9085f573afb5",
+              "reader_rank": 21,
+              "weak_positive": false,
+              "support_quote": "Unlike the other rings, it is composed of microscopic particles rather than macroscopic ice chunks.",
+              "reader_gap_to_original_rank5": -7.9536396861076355,
+              "relative_correction_vs_original_rank5": -3.069639205932617e-05
+            },
+            {
+              "candidate_index": 37,
+              "review_item_id": "958683df9a1bc09d58c72b4053e156e85b7c149230d89f7562071eace6af53fb",
+              "reader_rank": 22,
+              "weak_positive": false,
+              "support_quote": "These rings appear to be made of dust, rather than ice as with Saturn's rings.",
+              "reader_gap_to_original_rank5": -8.103909254074097,
+              "relative_correction_vs_original_rank5": -2.7298927307128906e-05
+            }
+          ],
+          "provisional_direct_slot_gap": 2
+        },
+        "quantum_scalar_control": {
+          "selected_label_counts": {
+            "direct": 3,
+            "partial": 2,
+            "irrelevant": 0,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 2,
+              "review_item_id": "008edc3f8e52405e5b05a87db9245c466a9bd46f18d70667130f7827112effa0",
+              "reader_rank": 6,
+              "weak_positive": true,
+              "support_quote": "They are composed predominantly of water ice",
+              "reader_gap_to_original_rank5": -0.0694427490234375,
+              "relative_correction_vs_original_rank5": -0.06934309005737305
+            },
+            {
+              "candidate_index": 34,
+              "review_item_id": "158d4183092a9a8a2cb52f8965acd134d17a0e0fec262f1d18ff9085f573afb5",
+              "reader_rank": 21,
+              "weak_positive": false,
+              "support_quote": "Unlike the other rings, it is composed of microscopic particles rather than macroscopic ice chunks.",
+              "reader_gap_to_original_rank5": -7.9536396861076355,
+              "relative_correction_vs_original_rank5": 0.49153369665145874
+            },
+            {
+              "candidate_index": 37,
+              "review_item_id": "958683df9a1bc09d58c72b4053e156e85b7c149230d89f7562071eace6af53fb",
+              "reader_rank": 22,
+              "weak_positive": false,
+              "support_quote": "These rings appear to be made of dust, rather than ice as with Saturn's rings.",
+              "reader_gap_to_original_rank5": -8.103909254074097,
+              "relative_correction_vs_original_rank5": 1.153635412454605
+            }
+          ],
+          "provisional_direct_slot_gap": 2
+        },
+        "monotonic_compression_control": {
+          "selected_label_counts": {
+            "direct": 3,
+            "partial": 2,
+            "irrelevant": 0,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 2,
+              "review_item_id": "008edc3f8e52405e5b05a87db9245c466a9bd46f18d70667130f7827112effa0",
+              "reader_rank": 6,
+              "weak_positive": true,
+              "support_quote": "They are composed predominantly of water ice",
+              "reader_gap_to_original_rank5": -0.0694427490234375,
+              "relative_correction_vs_original_rank5": 0.03472137451171875
+            },
+            {
+              "candidate_index": 34,
+              "review_item_id": "158d4183092a9a8a2cb52f8965acd134d17a0e0fec262f1d18ff9085f573afb5",
+              "reader_rank": 21,
+              "weak_positive": false,
+              "support_quote": "Unlike the other rings, it is composed of microscopic particles rather than macroscopic ice chunks.",
+              "reader_gap_to_original_rank5": -7.9536396861076355,
+              "relative_correction_vs_original_rank5": 3.9768198430538177
+            },
+            {
+              "candidate_index": 37,
+              "review_item_id": "958683df9a1bc09d58c72b4053e156e85b7c149230d89f7562071eace6af53fb",
+              "reader_rank": 22,
+              "weak_positive": false,
+              "support_quote": "These rings appear to be made of dust, rather than ice as with Saturn's rings.",
+              "reader_gap_to_original_rank5": -8.103909254074097,
+              "relative_correction_vs_original_rank5": 4.051954627037048
+            }
+          ],
+          "provisional_direct_slot_gap": 2
+        }
+      }
+    },
+    {
+      "audit_case_number": 10,
+      "review_case_id": "33f9a297bf7d65baa2ec4e9fc88c845592aecced4ff7718f82fab9909c3e34f1",
+      "population_label_counts": {
+        "direct": 0,
+        "partial": 8,
+        "irrelevant": 38,
+        "contradictory": 3,
+        "uncertain": 1
+      },
+      "question_target_flag": {
+        "audit_case_number": 10,
+        "review_case_id": "33f9a297bf7d65baa2ec4e9fc88c845592aecced4ff7718f82fab9909c3e34f1",
+        "flag": "reference_order_conflict",
+        "rationale": "first约束与原文following migration of followers冲突。",
+        "use_in_new_training": "blocked_pending_target_qualification",
+        "reference_rewritten": false,
+        "official_gold_correction": false
+      },
+      "formal_training_qualified": false,
+      "provisional_direct_slot_ceiling": 0,
+      "frozen_weak_boundary_pair_count": 6,
+      "methods": {
+        "frozen_reader_topk": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 1,
+            "irrelevant": 2,
+            "contradictory": 2,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "quantum_semantic": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 1,
+            "irrelevant": 2,
+            "contradictory": 2,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "classical_semantic": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 1,
+            "irrelevant": 2,
+            "contradictory": 2,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "quantum_scalar_control": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 1,
+            "irrelevant": 2,
+            "contradictory": 2,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "monotonic_compression_control": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 1,
+            "irrelevant": 2,
+            "contradictory": 2,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        }
+      }
+    },
+    {
+      "audit_case_number": 11,
+      "review_case_id": "07ebe9609889cec53f9c94d43db7ba02929b45b3eaefae01805912c9ad4b2947",
+      "population_label_counts": {
+        "direct": 0,
+        "partial": 1,
+        "irrelevant": 49,
+        "contradictory": 0,
+        "uncertain": 0
+      },
+      "question_target_flag": null,
+      "formal_training_qualified": false,
+      "provisional_direct_slot_ceiling": 0,
+      "frozen_weak_boundary_pair_count": 2,
+      "methods": {
+        "frozen_reader_topk": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 1,
+            "irrelevant": 4,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "quantum_semantic": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 1,
+            "irrelevant": 4,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "classical_semantic": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 1,
+            "irrelevant": 4,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "quantum_scalar_control": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 1,
+            "irrelevant": 4,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "monotonic_compression_control": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 1,
+            "irrelevant": 4,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        }
+      }
+    },
+    {
+      "audit_case_number": 12,
+      "review_case_id": "a8fb5d71aad5cb759e24aa2fa43a166eddd74708eaf81f10f6c82df05963a600",
+      "population_label_counts": {
+        "direct": 1,
+        "partial": 2,
+        "irrelevant": 47,
+        "contradictory": 0,
+        "uncertain": 0
+      },
+      "question_target_flag": null,
+      "formal_training_qualified": false,
+      "provisional_direct_slot_ceiling": 1,
+      "frozen_weak_boundary_pair_count": 0,
+      "methods": {
+        "frozen_reader_topk": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 1,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "quantum_semantic": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 1,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "classical_semantic": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 1,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "quantum_scalar_control": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 1,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "monotonic_compression_control": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 1,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        }
+      }
+    }
+  ],
+  "limits": [
+    "Single primary-model provisional labels, not official gold or three-model consensus.",
+    "Not independently blind; previous scores/results were seen, withheld in this reading.",
+    "Twelve full cases only; 817 passages and all434 training targets remain uncertified.",
+    "Existing trained heads saw these questions; no heldout utility or training authorization.",
+    "Missing, uncertain, partial and question-target-flagged data are not automatic negatives.",
+    "Do not infer population rates or use exposed100 Silver labels to fit a model."
+  ]
+}

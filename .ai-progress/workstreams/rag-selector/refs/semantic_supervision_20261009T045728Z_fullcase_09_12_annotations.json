@@ -1,0 +1,1351 @@
+{
+  "schema_version": "rag.explicit_primary_model_annotations.v1",
+  "reviewer": "primary_agent_single_model",
+  "source_support_review_sha256": "517d33cf521f09aebda169fcb7b0ebaa8f6c47b0a208888d5b5e49d22a6d143c",
+  "prior_review_sha256": "7a94783209e55ea0d1a058c1ed1fbb334cf70bbbcb6b6a89f7ab272da627cbb5",
+  "prior_review_file": "semantic_supervision_20261009T045728Z_fullcase_05_08_review.json",
+  "expected_prior_count": 618,
+  "new_case_numbers": [
+    9,
+    10,
+    11,
+    12
+  ],
+  "fully_reviewed_case_numbers": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "declared_new_judgments": 165,
+  "judgments": [
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 3,
+      "review_item_id": "ac049bec48bdb5c8be730a5465b19b66d80a9ec4c688126f637da80175353796",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 4,
+      "review_item_id": "56288801459e3e26dbb240c7b208c663a5df16c7a5d29b23b3df1b78e1b4d000",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 6,
+      "review_item_id": "c009a8dc9551fd769590fb99404cfea829a54deedda324ac54165ca97033ccdd",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 7,
+      "review_item_id": "81c948f68a9520d040616b6a53503e858508f09612fe09b9fbb1ebcbef9f99cd",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 8,
+      "review_item_id": "fb9f9c7211cf673c5379521836cb1b03029ccf2931eb6c5ed57faf1e8945051a",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 10,
+      "review_item_id": "464e3f00aaea7602c4a67966172d5fd5ff340b8b1088941bf91d2a5bde19e290",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 11,
+      "review_item_id": "af7a99a8bc4e75b4fa2268bd54d3792cf5dc48e9df5acefaa5d802df1d20a4fd",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 13,
+      "review_item_id": "25c594e7bf6880feb2b5f16543fa20f9c8a36b6a0aa24f6ef607536d53dbf9f7",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 14,
+      "review_item_id": "d7998ff065dc6eb8b9ae45e74c39c97ef7f7ce14650c73584f154c52af7cc6f6",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 16,
+      "review_item_id": "bbbf7ed48238cfa4f68b4d3c6b24720f9c2b1acb70d1a3de18225d964097c758",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 17,
+      "review_item_id": "99ba0a080c3f1ca26e9ca23c07a07d321c60f15497249d3e2e52fb39010feb40",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 22,
+      "review_item_id": "83a743d3b8e0de418f7aada2b9ca1875d01454177cee903b0ad091dd915caf5d",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 23,
+      "review_item_id": "7ba9a37cdb2963839720f0c5ffbd3a33b16028cfca84569addbb5f032ebdcec8",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 24,
+      "review_item_id": "02b9c8086e6ed1f93b836f9f9b4d12c658e4fd393773f0be4c142b219214a34d",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 25,
+      "review_item_id": "07e09e8db885b656766c87d3fb384fb9efb5e0247fbaeef0bc33c9acd726721f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 26,
+      "review_item_id": "570b1d2500efaf98c9a5334b3b6045a438dd3d7a039e2c687397439e27cd52ba",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 30,
+      "review_item_id": "1c8cb6df9a2733d92be8587562c49f0762e1b46a92affcc81f49994df3c886a2",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 31,
+      "review_item_id": "5588ccee4921b683d0e235c1d00d89f15f27828a8cca9dfcaa30f764084f6106",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 32,
+      "review_item_id": "a8acb3e39cd8c8a18459eda762655903cc0a9d052c0fe8fb37f81bf1dff6ba5c",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 33,
+      "review_item_id": "f3c41cd5a5bd88aae9258aedab9b2b527781e33c187d087a31af1fbab407e240",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 34,
+      "review_item_id": "26c4d54b77eac157f17f5ed41e7b75fd21a8a5191654b096740c2f08e8588cdd",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 37,
+      "review_item_id": "1a7595f4c06231531055b3fb65e07379e59df0ab11e563f407ddfd35ce669915",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 38,
+      "review_item_id": "7231ad565e316db40c4ab670397ab98c649135a457dcbd8d84a5672410eb9a91",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 39,
+      "review_item_id": "0bc642852d1f5c673e5d01f1e1ff5e9b8851706624a974e3fe3a3bbe0e904189",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 40,
+      "review_item_id": "40295ec4a7dc1325f0ccaa70b4f246bea4ac75abe8342a2579e773daaaca1a9c",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 41,
+      "review_item_id": "7bdc3da3a1d20fd911f665502f53a27002f5c54ec6bf1b92409b0892ae643224",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 43,
+      "review_item_id": "c4e2486d138c71c8f3ac6ae30397ed5b6490c155be45255e0ff7f005fe900cd1",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 45,
+      "review_item_id": "662469b57624904de46d1d0b71935519d5d779d6960fa9db3bda06844dad5995",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 46,
+      "review_item_id": "ab4ec4d950dcd931c10600ed8fe3faa46ba0058dedffd97aeda897a2ae06ebe8",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 48,
+      "review_item_id": "a8a6f449d803ec3071ab4ad28c4b2ebe635a51d85798ca783be468283d0641c8",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 50,
+      "review_item_id": "04609cf703e4acadaf3b5fac0bd191d72c6491a10ddf7142e44a53343889f5b7",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及环的轨道、结构、形成过程、观测，或其他行星/月球/土星本体，没有给出土星环的主要材料；形成来源、粒子尺寸或行星气体不等同环的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 5,
+      "review_item_id": "158d4183092a9a8a2cb52f8965acd134d17a0e0fec262f1d18ff9085f573afb5",
+      "support_label": "direct",
+      "support_quote": "Unlike the other rings, it is composed of microscopic particles rather than macroscopic ice chunks.",
+      "rationale": "在土星环条目中对比E环与其他环的宏观冰块，明确其他主体环的冰材料，支持冰这一组成答案；E环的特殊粒径不推广成全部环的粒径。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 9,
+      "review_item_id": "008edc3f8e52405e5b05a87db9245c466a9bd46f18d70667130f7827112effa0",
+      "support_label": "direct",
+      "support_quote": "They are composed predominantly of water ice",
+      "rationale": "土星条目明确环主要由水冰组成，直接回答mostly made of；微量杂质不改成主要材料。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 12,
+      "review_item_id": "17069e8ef8362530de5ce2779ef62c1bd71887bcdb144791ef470eb6911e79e4",
+      "support_label": "partial",
+      "support_quote": "the proportion of rocky silicates within this ring",
+      "rationale": "明确C环内有岩质硅酸盐并讨论比例来源，支持部分组成；没有给出整体土星环的多数成分。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 15,
+      "review_item_id": "27dca4f8838f218ea06bf1661300ae1a0879aca7864252aebf877ae95327d7de",
+      "support_label": "partial",
+      "support_quote": "This would explain the scarcity of rocky material within the rings.",
+      "rationale": "冰幔起源假说解释环中岩石少，支持冰多于岩石的组成线索；假说语气和起源模型不能当作独立实测多数比例。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 18,
+      "review_item_id": "2ae8a0ade7ece03605faed15da346bd98a803746fccc6040ad3edf677c72d0c7",
+      "support_label": "partial",
+      "support_quote": "the rings of Saturn and Uranus, which contain little dust (less than 0.1%)",
+      "rationale": "虽主要谈海王星，但明确对比土星环含尘很少，提供组成约束；不能把海王星的冰与有机物组成直接归给土星整体。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 19,
+      "review_item_id": "65ecace1ffee294bbb836bd3c5c7966282a887efc83564b00438d5f82370738b",
+      "support_label": "partial",
+      "support_quote": "with the rest of the G Ring consisting of dust",
+      "rationale": "说明G环弧含冰粒而其余为尘，支持子环的材料组成；不据单个子环判断整个环系mostly。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 20,
+      "review_item_id": "a3cf12b1d8c416137136b99eac6de5ed1e19bb3733bae62459ca061bfefe72d8",
+      "support_label": "partial",
+      "support_quote": "The material in the arc is believed to represent dust ejected from Methone",
+      "rationale": "描述Methone弧的尘材料来源，提供局部组成；不把微弱尘弧推广成土星环主要材料。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 21,
+      "review_item_id": "9455b8792fa56f0c2bbd959805e951f8219fbbce727f96e467c53f28bf251ff4",
+      "support_label": "partial",
+      "support_quote": "they may be silicate or icy dust",
+      "rationale": "一般环系统可含硅酸盐或冰尘，并提土星E环喷出物；只能作部分组成背景，不能由跨行星通述确定土星环的多数成分。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 28,
+      "review_item_id": "0f515d5098b66af6494cc4e084a1968d6752a068508fb8e9eb1c377da2a68303",
+      "support_label": "partial",
+      "support_quote": "Some ice in the E ring comes from the moon Enceladus's geysers.",
+      "rationale": "确认E环中有冰并讨论水含量变化，支持部分材料；本段未完整给出整个环系的主要组成。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 29,
+      "review_item_id": "094b8bb0872d27e99290ab58a7f6d14bf7c24b8433b5ffa17eccf890328ec7d2",
+      "support_label": "partial",
+      "support_quote": "water ice in the rings",
+      "rationale": "环上水冰的紫外反应提供存在性支持，但解释的是稀薄环大气；不能把氧/氢气体当作环的主要物质。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 36,
+      "review_item_id": "958683df9a1bc09d58c72b4053e156e85b7c149230d89f7562071eace6af53fb",
+      "support_label": "direct",
+      "support_quote": "These rings appear to be made of dust, rather than ice as with Saturn's rings.",
+      "rationale": "木星条目明确把土星环的冰与木星尘环对比，能支持土星环冰组成；不是仅由Jupiter标题把整段当错对象。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 44,
+      "review_item_id": "399ac2a89002aaa00dba9e3846aa5c6a6692deb7cea62cce38badfb2ef1c921c",
+      "support_label": "partial",
+      "support_quote": "temporary aggregates of ice boulders a few m across",
+      "rationale": "描述F环中暂时冰块聚集，并提出环基本结构解释，支持冰组成；局部观测与推测不等于全环的实测多数比例。"
+    },
+    {
+      "audit_case_number": 9,
+      "blind_ordinal": 47,
+      "review_item_id": "59cec20702b6c1998bdde5d71913d69b7e467df7878f7ce7a7f4f214d81c6b7b",
+      "support_label": "partial",
+      "support_quote": "many tiny (micron and sub-micron) particles of water ice with silicates, carbon dioxide and ammonia",
+      "rationale": "明确E环水冰与杂质，支持真实子环材料组成，未单独给出整个环系mostly的完整结论。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 5,
+      "review_item_id": "7afb2c03cb29c4150bef855be0acdc88619d8685b34d6b4a645bde45d3b4765a",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 6,
+      "review_item_id": "5f872c0b9627b7ddace89386117945694e7525bb1fc37a5bd41cc1ff6bdccd11",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 7,
+      "review_item_id": "ad93de8a616ed52b2f45b0f5aa78c3c758f3986c76442ae085f97bf76e2a5272",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 10,
+      "review_item_id": "25f452197067dd9156fdcaf8eedd082a583c2d817173b1e88184a7f33a911ad2",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 11,
+      "review_item_id": "bbd7af160cff50b3f65ee0a2ecd075851d35c642691e9afe07abf941e8315227",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 12,
+      "review_item_id": "40635851206dc975066908e602837e182690c5303c5d71f86c3806520556c337",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 13,
+      "review_item_id": "24323428f058e37f1b1bdea612ae556359c35249541614c09900d356df1071da",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 16,
+      "review_item_id": "9134ebd40c23e6b3d8a367a9f6e0742e3f47d136674e9dd66bf8069f2400cac0",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 17,
+      "review_item_id": "be8251c5dcfb680576a9048fced5ea1636e38c54bc7a26de0029a63e214ac988",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 18,
+      "review_item_id": "40606fcc5f36e8b5e14084c7baf345131b9b855e99ea44b594b23f8ef4fb5ac7",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 19,
+      "review_item_id": "eb54b7a9efb4ba3047b97fbe82da3b2bfd9b60ea033246a4a394f779a8305ace",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 20,
+      "review_item_id": "46336cce8ddfbea5ee01da2bb295f36b37c38875b59536f647bb54660b04af4c",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 21,
+      "review_item_id": "f5fd1387258fd23435ffdb036cc5fe132f28bbdecaa570f96893f7b2cb6f9c02",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 24,
+      "review_item_id": "b0205e4615d2bd70313c97b40376dc0cb9084cb7082a736a25a963bb99490684",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 27,
+      "review_item_id": "20420b6c3b9f2baafb44c1d0e72025788954d855ebb84613a2969a8365247222",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 28,
+      "review_item_id": "e6c8fb9998316f5b9191f40ee09694471cccc0f6d79c6285ea5e28607987b909",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 29,
+      "review_item_id": "9b1551ecc89055b619df16b5e721205e48047fc5e7c350a64e2cd0debeacb610",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 30,
+      "review_item_id": "524de38eb5aa76ae1ae02203af1126fcf527aa39c2972e7bdf4ba31df9c1ccc7",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 32,
+      "review_item_id": "6eaf5cc23945ffbd49977b0c2f560679228e2095a39a9be448ed36fcf3fa91c8",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 33,
+      "review_item_id": "e92987465c44732e79a8ba40383e4b0443e6858f772ac4854bd375c0491c3f77",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 34,
+      "review_item_id": "3e05cb316060478da408872d0d25a627a0c53f2c53d479653f60f1f4bcd50e7f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 37,
+      "review_item_id": "2aa6f00e317f21165c092ac032a3465b80cb38fc7d6ac8bf1592f96a79ddb03d",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 38,
+      "review_item_id": "07f0d2f7b6728536a8792b6a232643620b54a96b6e21eb686b0db838f2b36094",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 39,
+      "review_item_id": "9c20fdd10ba9af2d1da03f9df454c54b84728cfa3064e2ec0d7690052ffc8ce1",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 40,
+      "review_item_id": "79086a0a83fca521539eb30135e93fc0687ac9361069ec1c4854f3d23c3603cf",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 42,
+      "review_item_id": "52fdb0f4c21aeaf480cb0e8db966605c9925c6a5a385f091d0dbf33932eec594",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 46,
+      "review_item_id": "c7a78109d8db8c48c300e6aab1edc01a2ec7238590941c156a2bb9067b72fb85",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 48,
+      "review_item_id": "fc7a6b6817d1f0847fc604c8caa931548f161cefd21055f4b0845263f2afa8ab",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 49,
+      "review_item_id": "f7d0a642a0b1cde5b118ea5f17459755fc36b62f168986c88e82045fd9d4e9b4",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 50,
+      "review_item_id": "23176b0aaf13372a375bf211569b21afb6149267a040fc81135cfd4064d94981",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他目的地、族群、时代、定居/传教过程或阿比西尼亚迁移；没有给出最早迁往Madinah的个人，first字样不自动意味着本题所问的首次事件。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 4,
+      "review_item_id": "784a922383be767fe4684475bcf39727dd4ac7e2c24bc306cab2792e60314984",
+      "support_label": "partial",
+      "support_quote": "who emigrated with him from Mecca to Medina",
+      "rationale": "提供Muhajirun与Muhammad的同次迁移关系，但first converts指最早改宗者，不是第一个迁移者；不满足问题的顺序限定。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 8,
+      "review_item_id": "564037d799ff607aa334e5eaf3de375f57b89caee83c22af32c026652705ea6a",
+      "support_label": "partial",
+      "support_quote": "a second wave in came to Medina in 628, about 6 years later",
+      "rationale": "说明两波迁入Medina的时间先后，提供迁移背景；没有明确最早个人，且阿比西尼亚第一波不等于本题。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 15,
+      "review_item_id": "92b0fe70de4b4f4327c0ce5147ac2943c549d3f3d4a698aad1bea8be52ee2dd4",
+      "support_label": "uncertain",
+      "support_quote": "within a short period, most of the Muslims of Mecca migrated there.",
+      "rationale": "随后才叙述Muhammad在622迁往Yathrib，和参考答案的first约束冲突；本段未指明第一个人，保留不确定并隔离题目，不能将可靠顺序信息硬作负例。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 22,
+      "review_item_id": "416b0ef1bd58544e12ef31c528cc00400790d369f5c78198429f7287c60349ed",
+      "support_label": "partial",
+      "support_quote": "Muhammad encouraged his followers to emigrate to Yathrib",
+      "rationale": "给出鼓励跟随者迁出与后来Hijra的关系，支持事件背景；本段不指明谁最先，不能因为Muhammad姓名出现就支持first。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 26,
+      "review_item_id": "32726b48c5b13a9f11ebdb1fc86c0bdf3b12a0b35d4b5dea02d4927103fde959",
+      "support_label": "partial",
+      "support_quote": "in September 622 he arrived with a group of his followers",
+      "rationale": "说明Muhammad与跟随者抵达Medina时间，但同行不证明他是最早迁移者；不改参考答案。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 36,
+      "review_item_id": "6a1eb2e5eeace2f5305cdb64be37480d0dd2fab8a26e0836978b50e5bc4d2632",
+      "support_label": "partial",
+      "support_quote": "a second group rejoined them in Medina",
+      "rationale": "说明部分流亡者回归和在Medina会合，支持迁移群体关系；没有最早个人顺序。"
+    },
+    {
+      "audit_case_number": 10,
+      "blind_ordinal": 45,
+      "review_item_id": "9bd46c0bec63d4a26114c8c38126d6d110f99ef4107db779e15440dc697f6b55",
+      "support_label": "partial",
+      "support_quote": "Zayd joined the other Muslims in the \"Hijra\" to Medina",
+      "rationale": "Zayd参加Hijra且属于早期改宗者，提供迁移人物线索；改宗顺序不同于到达Medina的顺序，不判为first的完整答案。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 3,
+      "review_item_id": "026fd9636069d5fab8a277ccc59435fdda19363bda31b9a7ac85944cca05d716",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 6,
+      "review_item_id": "8e65d9e406161abbd472a989215441d0829fa3956358530489b5fa78f7484ec8",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 7,
+      "review_item_id": "b83e47ea688496aed6211287b658c665997b8709cc7c2626beefdf406cdf1da6",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 8,
+      "review_item_id": "27209aee2e48110a20ea41d8e06ef71a60b48437c3d87f0d532ff45ba7beaf73",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 9,
+      "review_item_id": "38e2d305ce845390a086fe009b6001238f6a9ed358d8d11b75a4c3d48614d325",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 10,
+      "review_item_id": "2b00785f9f401eefa01db22d08ffa80f67adbc1adeef4513b916dbf88bb39597",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 11,
+      "review_item_id": "688b4ae320cf73e65ce3e26e0c2f4513fb4280db83329aef4a2ebcbb6489d64c",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 12,
+      "review_item_id": "153dbd836163947cb6aa880f92db3b146170079f1e831d8d9892d8bb6c834a9c",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 13,
+      "review_item_id": "53f49938df01bd0e9cdf18fa531b712d4371c75578de752229e7d6cad9d9cf9f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 14,
+      "review_item_id": "6ad27363da476af8d62f6410a7e863f2043f1f62c3736f6c02d8c5cc0714e1ba",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 15,
+      "review_item_id": "e985beca6d93bbca46269ef436678d5cdf42713b4cc4d107559f3a7c079ebc52",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 16,
+      "review_item_id": "97f90ea32c3edda08ca5c533b7aa825a8b80ab20f1e3a47444ee9cc8dc32cbdf",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 17,
+      "review_item_id": "329f3f3cac528d90f60416d2c6eb5628153010678d9fbfe0828b8aeb33bdfea5",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 18,
+      "review_item_id": "bf7cb4e4948b7c14213d08f0ea3629f660adfd6d00dda03757de9a2d1dc9e304",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 19,
+      "review_item_id": "1a52ce946757ce1a75dfd96f224e7f7bb3957c883d3409278710de62cd6b4094",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 20,
+      "review_item_id": "8d45d30f1a4c31a7c1688d30d14e5daab6748b3966475116ee40dd2826d0b17b",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 21,
+      "review_item_id": "16e6b8f5e27a928fc47326a3635d56cb9417f0ef9e074f6257f53144d47cb69a",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 23,
+      "review_item_id": "fb2a7ea6245c20743aa1dcf48ab645b860184763109614257c0fb4c3ad96c1cf",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 24,
+      "review_item_id": "6dc4a115383aebdb93d04a344c8baf9213b61b6a654745b26dbafaa51b725ee3",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 25,
+      "review_item_id": "a1e6b111eb6490f93a1421bed2238dc79546450eb6d97a58fcf34c06d7d0f819",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 26,
+      "review_item_id": "6005be9669778d3377b39017abbf3931beeb7c1a06c3c703091a4172a65fbe45",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 28,
+      "review_item_id": "bab6ff497a8184748c283841aef9efc6c00bfbc048f7dda870f4637d450321de",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 29,
+      "review_item_id": "ee266ab0f5b77256d176d77283e7b2794f9d7ce1c5baa7b7122153f807d1a9aa",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 31,
+      "review_item_id": "a328ba08b90ad0315d1c1bf7a19442fc82b3dc8ce0d04b970c865c3321d8da18",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 32,
+      "review_item_id": "046d296fa332254261b335c4c18d3659de4a7552fab96bbfd6db468063479194",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 33,
+      "review_item_id": "61b98906a62d04ac0b92c273b697422dc9741abc873498100ce62656a8de0943",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 34,
+      "review_item_id": "00e7e4e8cd4de9a56e9623a2dc2bc53a586232840739c05789fa303651d3aeff",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 35,
+      "review_item_id": "c10b318ac85beb4549a0852d798f31a1adcd8194b7b255a28d8bb6e1372b2a65",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 36,
+      "review_item_id": "be1a04be6ed9c8505a390bafc87fb86dc28b90cfb771722ce3ae1a7d25d2ca92",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 37,
+      "review_item_id": "d243d0cf815d485b04c6b633ad53645843a9db141b1d2af5aa38cfc565c4f31d",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 38,
+      "review_item_id": "8f49cfa8181c32dfd8833b94287bb80b17e4773004319b490840c3e03a1a1acb",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 39,
+      "review_item_id": "9c6235a33919cb03925f8477c83894de71a934fc3604e9ec0bf53c1d8cbafe35",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 41,
+      "review_item_id": "4784e81c985771c29d1c0a8e185e45bde1816d809e04b87aa0a89aa869edd78f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 42,
+      "review_item_id": "7d7b2c6349b2f7d2e3d5204b0b27f018880e48f0b778d2987513681f2bb2ff3f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 43,
+      "review_item_id": "8b4c3284dda9958f46c8eeffcc730c3fc1c0543a45ea7661302a14fec4a0754e",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 45,
+      "review_item_id": "6659e89caf1bac6d31bebc9b8de6b13381b2e391c5327074218401607d95d0f7",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 46,
+      "review_item_id": "18d9b2095d9dbf771bfde9f572b0be2b8e14a421f553159b0e38817f6b5124a4",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 47,
+      "review_item_id": "7e7b40fe11fc28d11c178e0937b271b0b87cc6cd351a678b6719c67a9372e742",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 48,
+      "review_item_id": "85e44d0fbbf7bb359fbc67fe2d4f2751e39f4fd1a7df54c20857ecea11768c76",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 49,
+      "review_item_id": "745e99f163ebff51915de05f7e69f350ccd78b6ddf2818b52bc4c20c0eccf943",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 11,
+      "blind_ordinal": 50,
+      "review_item_id": "d703f285f08f44d7dcb598d39b0f6aafefce5b228db452cacc78ab9e93687342",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及NBA其他纪录、三分命中率、累计/大学三分、投篮赛、其他联盟或得分/出场/奖项；没有给出NBA总决赛单场三分命中最多的纪录持有人，不混同统计口径。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 3,
+      "review_item_id": "eeabdb5d3488f3066dd6f66504d2e2ea553eb7945e21dfdbe3795ded82396b4f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 4,
+      "review_item_id": "6727f647151b37af5971c1e25199576a30923c132296172e788f6e0e62ff2f63",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 5,
+      "review_item_id": "2819d2b36730964cfc110ddead73de06789ded354226f409b370a197fc2c8880",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 6,
+      "review_item_id": "12d7e36f2f280bdcac0d445babd60235f8cb323a0bd1d9c3325b64b0bb23efa2",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 10,
+      "review_item_id": "9cfec92fd210a876961bdfea096e2a536ec073434f54397ac3a4ccb981e1b8a2",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 11,
+      "review_item_id": "e3e8267bf72d242f49032abd314e8c0116746a94b2204c3197ec9ee8b43c505d",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 12,
+      "review_item_id": "47e1ed0572313d6a471f03db2435a279ac19b88040055ba2a7514ce90a0a1f73",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 13,
+      "review_item_id": "60f2ae5e3d72b190a954976667fa407671ff264af3cba56d4d4b0ab53b68e6d7",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 14,
+      "review_item_id": "e0ff9a3d34f77a321e22e91c436ea94a6bed3c1b55e8d72c141dd9e9f7178ade",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 15,
+      "review_item_id": "805826b9267bd21a02f6da57f37e3196b38cecdca2d8ce4880a70d71d29dd654",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 16,
+      "review_item_id": "11792d795ff68a8454a43d942b7640cb0b24cab70b252ba26c8bf3b3e48f0d4a",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 17,
+      "review_item_id": "5bbe192d0a2514741f0aaa5f694cf189a7193603f7b5680ebe028342c3849120",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 18,
+      "review_item_id": "7d501813d12e8d63fa17fb38881ea2656719605a1dbf4d33c4a6a52bb10c4222",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 19,
+      "review_item_id": "0dd04d48129707f371f924f4e20c00464621d1824c595b1aab2a3ae3b609697a",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 20,
+      "review_item_id": "42928a785ca3f9369b35680356f9198ac6291387b9f64052663966348d906527",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 21,
+      "review_item_id": "03417e00e0d7b858d8f96799c59cd215ff15572eca6bb59428ba0168aa05e9aa",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 22,
+      "review_item_id": "07b7503a6caaa078a7c8fafc39b2333fffb83751d1fd02763c36e4e95b56c92d",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 23,
+      "review_item_id": "ef9c131322c900b7f40bb4679355258d8817df6dc2577ef540f70ce15dd7b723",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 24,
+      "review_item_id": "eeecfdecfbb61d314bca45b3de79137c888edd82c488d977dde270d01b95fc99",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 26,
+      "review_item_id": "ff8647019d57e1e33109101afd6632f7adc54a214deff4bebf9d1b292c5c4762",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 27,
+      "review_item_id": "f20d2c2aa64d7a6f01bf0a7db87e35fb7b4e0efd548d2b3f3228335d44a9f1ae",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 28,
+      "review_item_id": "f0fb04e6d0bf839193e45cdc31982ad2e8470655ae25533502b1a6a2c950ae11",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 29,
+      "review_item_id": "b951eb9a4c373c68cc0866ec0ec612a540e78553bedd9aa1d2e424fd33ccbc35",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 30,
+      "review_item_id": "67fedfa974447c2a83fc2605cacd479a917f41f114dc0acfc2f9b8b990c7a95f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 31,
+      "review_item_id": "e6908c7a2c6a2bbc6e9bdd304a0e0e00e38d1237d615e02a4c544fa74a65b649",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 32,
+      "review_item_id": "16057072e1d86d559f96466d3d550d4b6ff433d89be78af40196d025e737d141",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 33,
+      "review_item_id": "11167307c1a80b67dd66ee30ad3a92769263da4b2ca07dcb60457fa068ccc5b5",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 34,
+      "review_item_id": "8f12488432bf6ec4c2e3a555b44df60edf0efe5362ac1afc04ba55ff9ccd01fb",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 35,
+      "review_item_id": "d29eb2c6d5248cf4df6880926542f502534c7b1f88604781a76470dd050ad279",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 36,
+      "review_item_id": "21af3cdc71f37c797257da24db95b3622b1a0e02ad3b9dd9e8c7c0c4ea0c3a5c",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 37,
+      "review_item_id": "3791f757ad6a714b3460c1afc19b4ed9103c2a3bb2a917390226b592b07ec429",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 38,
+      "review_item_id": "78cf562a533f1da4e2fbb78f437349d5e97927621f7835c6a5a7e02a2d20f397",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 40,
+      "review_item_id": "1bfc61a324645b1ba5ffbdbe1e9c294ebbfc5ce1de583ca96d8c048e56c321b5",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 41,
+      "review_item_id": "42167b6d08890c9afcb661a38371d44266b876bf910e0be9d5ba451c0839044a",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 42,
+      "review_item_id": "d73ebe6ddfb33b1973c6795a1c6e6c7198211eef91d7c0d6a4a176844ac60a62",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 43,
+      "review_item_id": "67500a9d2daafe962fe36af6bf3c6ae2884cf53342879b8684c799027df73bc3",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 44,
+      "review_item_id": "5d7a2386f1c4e20bd3ce2e22a7e63c08367026f1c277dc24f7d24a924793a1be",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 46,
+      "review_item_id": "491bdffeb0a0e0300013e1fd498c8c7db2aa50b4d483da55276eb89cfb7c4bf0",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 47,
+      "review_item_id": "3f73932bb7dd6fa2eb21a9f4fc2cd3feb0e1b4ddfb5587d6f02ac2690e04d9ce",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 48,
+      "review_item_id": "1b560302adae391485368fa743a361324c25e4950b59542698310f81eab5264f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 49,
+      "review_item_id": "582c58baab6bb17583d134be276b29498c7883eeb30eb0b68c9f06bcdbf77b2b",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 50,
+      "review_item_id": "d4d68610a766ee978dd3217deae7fe2b99395c38bbcc6a1e0b3dc552d4457fa7",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他联赛/体育项目、其他NBA统计，或仅描述非纪录连胜；连续出场、主场/公路局部纪录、冠军次数不等同NBA总体连续赢球纪录，未提供所问持有人。"
+    },
+    {
+      "audit_case_number": 12,
+      "blind_ordinal": 25,
+      "review_item_id": "68b1763a06215209d9ed1bf8eb9022456a8c02f7edfb4dd4c9ea7f35ec0df2e8",
+      "support_label": "partial",
+      "support_quote": "the second longest winning streak in NBA history",
+      "rationale": "明确勇士28连胜为第二长，并区分54次主场连胜，提供排除和口径比较；未指明总体第一是谁，不能把主场纪录当作总纪录。"
+    }
+  ]
+}

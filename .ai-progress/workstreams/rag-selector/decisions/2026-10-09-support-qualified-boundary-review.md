@@ -44,3 +44,11 @@ Stop if qualifying support remains inadequate or corrected signals only compress
 - [Incremental review](../refs/semantic_supervision_20261009T045728Z_fullcase_05_08_review.json)
 - [Fullcase and score join](../refs/semantic_supervision_20261009T045728Z_fullcase_05_08_join.json)
 - [Owner addendum](../../../../docs/rag-research-log/20261009T-date-only-fullcase-support-05-08.md)
+
+## Incremental checkpoint: original cases9-12 full Top50
+
+783/1600 reviewed: prior618 preserved+165 explicit;817 pending,cases1-12 each50/50. Case9 has6 direct,Reader3 plus2 partial;missed ranks6/21/22,last2 weakfalse,weak-boundary0 pairs. Do not force all6 into5 slots or partial into negatives. Case10 reference-first/order conflict retained;case11 whole50 has0 direct/1 partial,not a selector rescue target;case12 keeps its only direct. Source/reference/9 flags unchanged. No formal gold,training authorization or utility promotion;nextcases13-32.
+
+- [Review](../refs/semantic_supervision_20261009T045728Z_fullcase_09_12_review.json)
+- [Fullcase score join](../refs/semantic_supervision_20261009T045728Z_fullcase_09_12_join.json)
+- [Owner addendum](../../../../docs/rag-research-log/20261009T-date-only-fullcase-support-09-12.md)
