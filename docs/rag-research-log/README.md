@@ -2,6 +2,8 @@
 
 ## 当前研究总览
 
+- 最新检查点：[题5—8全段支持审阅](20261009T-date-only-fullcase-support-05-08.md)。累计618/1600；新地点/有日期的演员答案3段被弱标签漏掉，题6/8原边界审计各0对。先补982段，仍L0，不重训。
+
 - 最新检查点：[前4题全段支持审阅](20261009T-date-only-fullcase-support-01-04.md)。累计449/1600；发现Reader第9的隐式位置支持被字串弱标签漏掉，但各方法仍未选中。下一步继续原题序补1151段，不启动训练；单模型临时标签，L0。
 
 - 最新分析：[边界支持审阅](20261009T-boundary-support-review.md)。220个边界/控制/Top-5关键段已全部审阅，累计282/1600；弱标签既有误正例也有漏正例，各方法直接支持仍50，尚无提升。先补完整目标资格，不自动启动训练。
@@ -28,6 +30,8 @@
 - 当前研究边界：只优化固定 Top-50 -> Top-5 selector；Generator、检索、evaluator 和答案实现不属于本轮候选。下一候选必须提供独立、可追溯且 gold-free 的证据关系信号；若只能继续依赖 token overlap、Answer Scorer 融合或 generic diversity，应停止该 selector 家族并先处理 provenance/calibration 阻塞。
 
 ## 时间线
+
+- [2026-10-09 | 题5—8全审：618/1600，位置和版本替代答案漏标](20261009T-date-only-fullcase-support-05-08.md)
 
 - [2026-10-09 | 前4题50段全审：449/1600，隐式支持漏标](20261009T-date-only-fullcase-support-01-04.md)
 

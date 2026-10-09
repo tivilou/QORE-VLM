@@ -36,3 +36,11 @@ Stop if qualifying support remains inadequate or corrected signals only compress
 - [Incremental review](../refs/semantic_supervision_20261009T045728Z_fullcase_01_04_review.json)
 - [Fullcase join](../refs/semantic_supervision_20261009T045728Z_fullcase_01_04_join.json)
 - [Owner-readable addendum](../../../../docs/rag-research-log/20261009T-date-only-fullcase-support-01-04.md)
+
+## Incremental checkpoint: original cases5-8 full Top50
+
+618/1600 reviewed: prior449 unchanged+169 explicit judgments;982 remain. Cases1-8 each50/50. Added3 provisional direct weak negatives: case6 Reader ranks8/16(location alternatives),case8 rank6(dated actor replacement). All5 methods miss them; original weak-boundary pairs=0 for both cases6/8. This is a diagnostic blind spot, not proof zero training gradient. Do not auto-rewrite references or treat partial/geographic-granularity/temporal alternatives as certified gold. Case7 already retains all3 direct; no forced ranking changes. Gates unchanged; continue cases9-32, no training.
+
+- [Incremental review](../refs/semantic_supervision_20261009T045728Z_fullcase_05_08_review.json)
+- [Fullcase and score join](../refs/semantic_supervision_20261009T045728Z_fullcase_05_08_join.json)
+- [Owner addendum](../../../../docs/rag-research-log/20261009T-date-only-fullcase-support-05-08.md)

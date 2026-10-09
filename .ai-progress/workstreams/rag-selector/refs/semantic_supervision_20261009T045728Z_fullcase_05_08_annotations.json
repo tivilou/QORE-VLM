@@ -1,0 +1,1379 @@
+{
+  "schema_version": "rag.explicit_primary_model_annotations.v1",
+  "reviewer": "primary_agent_single_model",
+  "source_support_review_sha256": "517d33cf521f09aebda169fcb7b0ebaa8f6c47b0a208888d5b5e49d22a6d143c",
+  "prior_review_sha256": "82cae19bb84e80e197cadb22bb8517a19c7cdfdd0da126533e37091b57ff68a6",
+  "prior_review_file": "semantic_supervision_20261009T045728Z_fullcase_01_04_review.json",
+  "expected_prior_count": 449,
+  "new_case_numbers": [
+    5,
+    6,
+    7,
+    8
+  ],
+  "fully_reviewed_case_numbers": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "declared_new_judgments": 169,
+  "judgments": [
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 3,
+      "review_item_id": "3025298f4f65f2b49cd5928846b3fc3f9cc57ec031ccb75923c2113e57233263",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 5,
+      "review_item_id": "c83ff2629637dca0d6943ddd88998f66f433d31add7b1a6f8ef96e97417a5323",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 7,
+      "review_item_id": "0301149c75e57c4e0bd66a46c12ceb47c80f78e35d78dc2e75f975c24607f951",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 9,
+      "review_item_id": "59f32f271a0839dfaf58cc114859c16b8b9cbd0ab8461fb458378073f7cd2e5c",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 10,
+      "review_item_id": "dafa92748aae78c1331fa965ebaec189a1d92cd7d2a49beb68ec4ffbef865632",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 11,
+      "review_item_id": "de95ed9f11e7254de90540295698b81c26acaa6d41b91527cc2b4e770a194945",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 12,
+      "review_item_id": "4c4b969c5ad025225d198e3abb25fddc7f0fde026e2c01a6100b8bdf89fbbb4f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 13,
+      "review_item_id": "51052f647775b7cebd45201e2fe1c7114da5b39d89c061132f7c2991bae641e1",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 14,
+      "review_item_id": "11e7fdf42a0144ac476ac0807103ebbe78eb52158d254117451d62019870d316",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 15,
+      "review_item_id": "fc6d8f8122a28f81ce5e6fa2f63e8f32205596921f50d9d33260dee93111749f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 16,
+      "review_item_id": "d029fbf4cd8f1719566be8fe0d493d22f0076839b9cc0cc358c91b10e31c5960",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 17,
+      "review_item_id": "baddc80878782ef7e91d5ec517c7e0916b9087cc284f2a5701001cb9f6a1a813",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 19,
+      "review_item_id": "aa8c0366cedfefa67f6d4f6b8c851aba482aa051d2439c569e02cb7f040921bc",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 20,
+      "review_item_id": "84021eb829de6edc34447d3496b706bd55968ff051bd4cae8b8c028b81397f66",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 22,
+      "review_item_id": "f685e38f34915668317e278019c06a394a2c9e37584d2fe2e3f385cb7f0edb7c",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 24,
+      "review_item_id": "883dacdbce3f517ed15dcedfb902e397eae05b2a9f599ed793d9394a1687fa6e",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 25,
+      "review_item_id": "0e265bfca4e9280ed2d7a53d67f0c7f14b70a9b1a12d5c0cf0aa520224787407",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 26,
+      "review_item_id": "007830f2d16cc7444aea52e703835e616b3075c64371ddb821ed9696bb98dfbd",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 28,
+      "review_item_id": "9c0f06b35c3a50828c09405d05382895739db06b55e1b3db5e28ca305cf2bd73",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 29,
+      "review_item_id": "124753b419642cee3deaeb6cf4708cca243a7bfbe20c9f343774ee04d5c9c57a",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 30,
+      "review_item_id": "a8aed7052488eb6f2ec14c89104f5209e2c4091daaf39939c9000962828b59c2",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 32,
+      "review_item_id": "76d2d24adc2ec677560445ae156c75d459e4e1285d4402f0b36eb2bb2a4fffbd",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 33,
+      "review_item_id": "b527769558be9e4160f34becfe19e8b4a120cf3ccc0372088f95cd85da72e38b",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 35,
+      "review_item_id": "d500a1af4586cd66f3f255778d426830184ae78c12a8adc84524b4b1a7c14976",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 36,
+      "review_item_id": "ebb5e984b6223c47609756b3e4bac8f40c91d442f349cbddc6b88c3d8d6bc472",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 37,
+      "review_item_id": "a3eb94382e9cd3036a400c4b3c54eb31ab7cdfc160def706b51af2ffa168c4e0",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 39,
+      "review_item_id": "b6f927d62cf938e3ac5587c09c487ad77f968f85b2a9b5e7c476c7d2a660716f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 41,
+      "review_item_id": "8faec34b47e9c80e7f5c9a74df5d8f2a83455be6be2d61d7d8201e82e385f9bf",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 42,
+      "review_item_id": "de6992fd35683ba2049e849040b362dde5881a581078fbad89ebf74d208c3df8",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 44,
+      "review_item_id": "de1dd863054f1fb974b333bf8acc4bcb109de6c20833cbb455fca75594f2e98d",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 45,
+      "review_item_id": "ba58c328913f5c1f3596b53e4078a94b7d8bc57c195343b8085462b9a755b3f5",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 46,
+      "review_item_id": "cf007218dbb498a55abe85f68a795032eeb1b73e887e87d5290ece5908224f8e",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 47,
+      "review_item_id": "cc490d1df2e48770c56cb95d073c1528dc299787ce9cae8b76419972bd05a8b6",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 49,
+      "review_item_id": "7cac0b9cb751261ad80e82bb9a2d169ad237a0b51be4002a3d2fe7304d12411d",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他作品、版本、演员或Anarkali传说，没有给出Mughal-e-Azam中Anarkali的扮演者；同名角色或其他影片的演员不能替代本题。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 8,
+      "review_item_id": "dbac6cde2c8d0a72c40ef459e88681690fae2d3584a9c6f843ec5807e11be233",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段确属Mughal-e-Azam背景、剧情、制作或其他角色，但未连接Anarkali与扮演她的演员；同片主题相关仍未支持所问角色身份。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 18,
+      "review_item_id": "667d9e32cdda1fd94e416c7c45fca43b05a393dc5b92e999659133da39c592af",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段确属Mughal-e-Azam背景、剧情、制作或其他角色，但未连接Anarkali与扮演她的演员；同片主题相关仍未支持所问角色身份。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 34,
+      "review_item_id": "3d2eecad843c46be43db1aa8877955865d2f98c096514de0f137130b85ae8f6a",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段确属Mughal-e-Azam背景、剧情、制作或其他角色，但未连接Anarkali与扮演她的演员；同片主题相关仍未支持所问角色身份。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 38,
+      "review_item_id": "a49d5f6209e6b6d59b0454c619458a421e5cde9817c8968252c964447f543212",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段确属Mughal-e-Azam背景、剧情、制作或其他角色，但未连接Anarkali与扮演她的演员；同片主题相关仍未支持所问角色身份。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 43,
+      "review_item_id": "8facff1dfcba9bb760a291499425f45a10caad2437ddd6678d186722eab3a49a",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段确属Mughal-e-Azam背景、剧情、制作或其他角色，但未连接Anarkali与扮演她的演员；同片主题相关仍未支持所问角色身份。"
+    },
+    {
+      "audit_case_number": 5,
+      "blind_ordinal": 50,
+      "review_item_id": "f3bb7dcf650a4cdc8590529d551b5ebef05f2cb3d7ebf622a7b21bc6a8193897",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段确属Mughal-e-Azam背景、剧情、制作或其他角色，但未连接Anarkali与扮演她的演员；同片主题相关仍未支持所问角色身份。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 3,
+      "review_item_id": "4fd4ab76c2ef72e3d390940fcf9f43084f53c9a867fdda17b148222c6be665b1",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他地产、交通设施或球场项目，不是Tottenham的新球场建设地点；不能因London、新建或stadium词汇相似作为位置证据。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 5,
+      "review_item_id": "1874f5743b1860ef778efb6b0b563c8371fc48a73e8501bc7698714fa5c734f2",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他地产、交通设施或球场项目，不是Tottenham的新球场建设地点；不能因London、新建或stadium词汇相似作为位置证据。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 6,
+      "review_item_id": "4f4b7e4d4ae8903db1c721be0d9df7b97146cb4a549dab21b3d5cbe85bb1a015",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他地产、交通设施或球场项目，不是Tottenham的新球场建设地点；不能因London、新建或stadium词汇相似作为位置证据。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 8,
+      "review_item_id": "e33895e4334e086c948370a55492fe668ab8bffa665f6ccbea9c4ef2bf884537",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他地产、交通设施或球场项目，不是Tottenham的新球场建设地点；不能因London、新建或stadium词汇相似作为位置证据。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 10,
+      "review_item_id": "9e4a80d3c873722e1a0c6a191c40808698ba45ac761eea92a50c9f97b4e886bd",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他地产、交通设施或球场项目，不是Tottenham的新球场建设地点；不能因London、新建或stadium词汇相似作为位置证据。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 12,
+      "review_item_id": "ef9bfc93dca0b6f779ae8771c76c5d288329d52de55756a6b2e67a11dff38fc1",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他地产、交通设施或球场项目，不是Tottenham的新球场建设地点；不能因London、新建或stadium词汇相似作为位置证据。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 18,
+      "review_item_id": "9c7625e3810d562aac49e6823521beebaa8f340b6a70142f74870e2a4deb1747",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他地产、交通设施或球场项目，不是Tottenham的新球场建设地点；不能因London、新建或stadium词汇相似作为位置证据。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 19,
+      "review_item_id": "c5dfbb50541d8273de6b62bc888bbf14e31d6fe7d30a6573a2539461bac85414",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他地产、交通设施或球场项目，不是Tottenham的新球场建设地点；不能因London、新建或stadium词汇相似作为位置证据。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 20,
+      "review_item_id": "456f1b3331345d1ab15221f4033bcd915d37fc1b432c229cf254661661e1a6ab",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他地产、交通设施或球场项目，不是Tottenham的新球场建设地点；不能因London、新建或stadium词汇相似作为位置证据。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 24,
+      "review_item_id": "2b6bd1473bc8c4e3cea23c265c61ca2284ac85a3099871f39757a97e4523615c",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他地产、交通设施或球场项目，不是Tottenham的新球场建设地点；不能因London、新建或stadium词汇相似作为位置证据。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 27,
+      "review_item_id": "89ca233ce2b2ca749614fd203e71e1a149d424f4181c3ba98157e1a3c014cacf",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他地产、交通设施或球场项目，不是Tottenham的新球场建设地点；不能因London、新建或stadium词汇相似作为位置证据。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 29,
+      "review_item_id": "42836a2cb4ee5d760e57e7258152aa814f77ab1f92577586ae591c9a069ee150",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他地产、交通设施或球场项目，不是Tottenham的新球场建设地点；不能因London、新建或stadium词汇相似作为位置证据。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 36,
+      "review_item_id": "8993d37967209397dfcc73168760315b58e774a254c5305c84c13d218bb75971",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他地产、交通设施或球场项目，不是Tottenham的新球场建设地点；不能因London、新建或stadium词汇相似作为位置证据。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 37,
+      "review_item_id": "8c536b2e2390b8a65c2a7701316e7bbee8b3eceb3998cb5c4e2ba7c4c7c5560f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他地产、交通设施或球场项目，不是Tottenham的新球场建设地点；不能因London、新建或stadium词汇相似作为位置证据。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 38,
+      "review_item_id": "04b4d3bc4e4cc3a6714d000e4d814af4207beff395495f1d39f30ca37168669c",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他地产、交通设施或球场项目，不是Tottenham的新球场建设地点；不能因London、新建或stadium词汇相似作为位置证据。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 39,
+      "review_item_id": "58c9e9908cac18932ae80694db12d662a0c3416f10ee6ee62c8643cb543e3b93",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他地产、交通设施或球场项目，不是Tottenham的新球场建设地点；不能因London、新建或stadium词汇相似作为位置证据。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 41,
+      "review_item_id": "6368812a1eddeb5b5a8bae02bf99a54bdf01d3f4ae22f1eeab43e9103546100b",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他地产、交通设施或球场项目，不是Tottenham的新球场建设地点；不能因London、新建或stadium词汇相似作为位置证据。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 47,
+      "review_item_id": "589c12aea06e7fac2cff5155c00b02f0a7e76946a7d8a4810acf09e9c32e4c90",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他地产、交通设施或球场项目，不是Tottenham的新球场建设地点；不能因London、新建或stadium词汇相似作为位置证据。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 49,
+      "review_item_id": "e8ea38815ed6564470e47ac533d7ce8a7ff77acad9699009de5826ce6fd4ef6f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他地产、交通设施或球场项目，不是Tottenham的新球场建设地点；不能因London、新建或stadium词汇相似作为位置证据。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 50,
+      "review_item_id": "c1f8b3098787c13385c577c4dacb170d51727103a2287bc3df46aad20fb3ebcb",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是其他地产、交通设施或球场项目，不是Tottenham的新球场建设地点；不能因London、新建或stadium词汇相似作为位置证据。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 7,
+      "review_item_id": "27e1d9dbfc3596e4469f74382abe1fce6005974eb0f428cb1553fe529e2b824e",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍本项目的材料、施工时间、造价、保护审批或商业设施，没有给出新球场所在地；其他工程阶段或旧材料来源不能确定新球场位置。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 9,
+      "review_item_id": "b8e4a03021822988549bdf028e80adb818674ec717545d1723fe9ad1b38f02b9",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍本项目的材料、施工时间、造价、保护审批或商业设施，没有给出新球场所在地；其他工程阶段或旧材料来源不能确定新球场位置。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 11,
+      "review_item_id": "497703885f5f01433f6056b96042a097283c247f327cdd9caff5d4a7eb317035",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍本项目的材料、施工时间、造价、保护审批或商业设施，没有给出新球场所在地；其他工程阶段或旧材料来源不能确定新球场位置。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 35,
+      "review_item_id": "fe96dcf5db36e842c8e1c995b96e7c861b6b2d7c68ff6303ab582fdb3566b909",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍本项目的材料、施工时间、造价、保护审批或商业设施，没有给出新球场所在地；其他工程阶段或旧材料来源不能确定新球场位置。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 40,
+      "review_item_id": "c4102eb880ebb6db05bdebe131b2962d633c0482cc8258fe55d654c54e85988d",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍本项目的材料、施工时间、造价、保护审批或商业设施，没有给出新球场所在地；其他工程阶段或旧材料来源不能确定新球场位置。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 13,
+      "review_item_id": "9c1d936b17380bf50e09e4b09b6c90332e2b55932766f5503965e32e78f55f33",
+      "support_label": "partial",
+      "support_quote": "regeneration program planned by the Haringey Council",
+      "rationale": "把Northumberland项目和Haringey负责的Tottenham再生规划相连，提供区域线索，但列出的多个更新地区并非新球场具体位置。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 14,
+      "review_item_id": "5cef0f7fa8f3a5ef37b3d0ab6e8282e57619d18045c5af717b28d0aefdc190a3",
+      "support_label": "partial",
+      "support_quote": "the club concluded the Section 106 agreement with Haringey Council",
+      "rationale": "本地Tottenham留队与Haringey审批提供行政区域线索，不能仅凭审批机关把新球场具体地址认定为完整答案。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 16,
+      "review_item_id": "58453482d19f041787b73578f85f525b6733df848ae6b12f5869b930a3eec509",
+      "support_label": "partial",
+      "support_quote": "the revised plans were approved by Haringey Council",
+      "rationale": "Haringey批准新球场修订计划提供区域支持，但未直接陈述施工地点；临时替代场地更不能等同新球场址。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 21,
+      "review_item_id": "d92f8b0cf47d64006ac3aabd3e0455d7c3d4b829817569cf1ace3cb43fd0031d",
+      "support_label": "partial",
+      "support_quote": "remaining plots on the Paxton Road required for the development to proceed",
+      "rationale": "交代项目需要取得Paxton Road地块，支持建设区域，但未在本段明确这些地块与新球场主体的完整位置关系。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 22,
+      "review_item_id": "a82adaf2b6798e2c8a6858e10ca239c8d4f10c9839945b983d3d5247e7c27e8d",
+      "support_label": "partial",
+      "support_quote": "The Northumberland Park, Tottenham Hale and White Hart Lane station",
+      "rationale": "明确新球场相关的交通站点，提供附近地理线索；不能把多个交通站点直接当作球场精确所在地。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 23,
+      "review_item_id": "127c947d98a3996005e496b75346f4c1a6bf158d56af25b89a69f3cc688ce588",
+      "support_label": "partial",
+      "support_quote": "the new stadium would be built alongside the existing White Hart Lane",
+      "rationale": "明确初始方案的地点，但本段谈早期拟建方案而非最终施工方案；保留为部分支持，避免把历史计划当成当前布局。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 25,
+      "review_item_id": "f11252d0ad54a4c8090ddb40ceb98f81f3798a73fa75227526fb17d1690360d4",
+      "support_label": "partial",
+      "support_quote": "Tottenham announced that it would stay in North Tottenham",
+      "rationale": "球队留在North Tottenham并计划搬入新球场，提供地区线索；留队公告与当年原定搬入时间不等于最终球场具体位置。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 26,
+      "review_item_id": "8649b1baa65748014b13d6e39197abdff9f3dc69c2af028d9b5bd80b0c1173fb",
+      "support_label": "direct",
+      "support_quote": "The project covers the site of the now demolished ground of White Hart Lane and areas adjacent to it.",
+      "rationale": "该球场条目直接交代建设项目覆盖旧White Hart Lane及邻地，能回答新球场在哪里；地名粒度不同于参考行政区但仍是真实位置答案。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 30,
+      "review_item_id": "51b86eca5151c4196950052b07ed7a96a260f96858068861f67cbd1e2c7e7f8b",
+      "support_label": "partial",
+      "support_quote": "purchase of a factory on Paxton Road",
+      "rationale": "围绕球场延期的Paxton Road工厂及邻地交易提供地理线索，但本段不直接给新球场所在行政区或完整范围。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 31,
+      "review_item_id": "5c27415cbc1feca6c1b42819ec14c701a082ee93a86925c20e621227a9d88419",
+      "support_label": "partial",
+      "support_quote": "the area between the stadium and White Hart Lane station",
+      "rationale": "给出体育场与White Hart Lane站附近再生区的空间关系，提供地区支持；描述更新区而非直接定义新球场主体位置。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 32,
+      "review_item_id": "9118dc1b5687c50b5dba6e1f72879a8b8589cbb5e6a692636b11ca31a55820c7",
+      "support_label": "partial",
+      "support_quote": "after White Hart Lane had been demolished",
+      "rationale": "施工新南看台与拆除White Hart Lane相联，可支持旧场地附近的建设关系；本段未完整交代新球场的位置范围。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 33,
+      "review_item_id": "577bed5cfd0b803fae7666598d872c16fd4c4e3ee2e1595bf106746fe637efd5",
+      "support_label": "partial",
+      "support_quote": "The High Road pavement would be widened",
+      "rationale": "项目设计关联High Road和附近建筑，提供周边位置线索；没有直接定义新球场所在地。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 34,
+      "review_item_id": "112119d2395654baf0f23b43b30e751b2e1def8972c3c02bf9e7b7eb5232e606",
+      "support_label": "partial",
+      "support_quote": "bordered by Park Lane to the South, Worcester Avenue to the East, Northumberland Park to the North and the High Road to the West.",
+      "rationale": "明确整个发展项目的四至，支持所在区域；区分项目范围和球场主体范围，不把同段暂用Wembley当作建设地点。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 42,
+      "review_item_id": "ceac7ba3c2b56528a951d4be95850a4401b4fe563c03db0488818ce874e9627f",
+      "support_label": "partial",
+      "support_quote": "A revised plan was first approved in 2010 by the Haringey Council",
+      "rationale": "项目修订和Haringey审批提供行政区线索，但施工进度叙述并未直接指定球场地址。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 44,
+      "review_item_id": "9d3bf899a207be811dfad1ff692d70338029b8c8d8faa52d2f09406bdb90fe93",
+      "support_label": "direct",
+      "support_quote": "the building of a new stadium in Tottenham",
+      "rationale": "明确新球场建设在Tottenham，能回答所在地；不能因未逐字出现London Borough of Haringey而把有效地区答案标为负例。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 45,
+      "review_item_id": "993836b511b0f7ea9ee18d94e4670d1486bf5b4274ce5083259fbadf96b492af",
+      "support_label": "partial",
+      "support_quote": "a wider regeneration scheme in Tottenham",
+      "rationale": "明确项目关联Tottenham的更新区域，并谈旧场White Hart Lane；未直接陈述新球场建设地址，保留为位置背景支持。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 46,
+      "review_item_id": "5c208af902fdb238e54b682565f344003b17b79aef1f12ded895a62418171e05",
+      "support_label": "partial",
+      "support_quote": "the building of the new Tottenham Hotspur Stadium to replace White Hart Lane",
+      "rationale": "确认目标球场替换White Hart Lane，支持项目关系；替代旧场本身并不保证相同地址，单段缺具体地点。"
+    },
+    {
+      "audit_case_number": 6,
+      "blind_ordinal": 48,
+      "review_item_id": "7c66e56747a661e67608ad56d66f58cc2f22291259e5753ed7e8be0ed7f57632",
+      "support_label": "partial",
+      "support_quote": "the club office to the north of the White Hart Lane",
+      "rationale": "交代同项目第一阶段办公室相对White Hart Lane的位置，提供周边位置线索，但办公室位置不直接等于新球场位置。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 3,
+      "review_item_id": "dc7ec28c1da9fa2494c1de0726addc7f552a5dfe12b0112191ffd8b651a547c6",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 4,
+      "review_item_id": "1044aa90507b5eb833a2d0f302941493a93a4c2910a3d690985164d0b93bde4f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 5,
+      "review_item_id": "cfc0e95d795fd9c78fb68f617d6a77227283c1ba598fd23671d4b48e3453dd97",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 6,
+      "review_item_id": "1dc26469d6546761769d05092f93006fedaf836c85c986fb677d12438570aa5b",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 7,
+      "review_item_id": "55a5709f869787869e1528d7ed361309b21d2c16ff48d729d6f9409c79f063a8",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 9,
+      "review_item_id": "234013cd6900530e2f0288fd1668e226ef6862c7afd9b0e0cc7555cecfb658d4",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 12,
+      "review_item_id": "aaf8e6f5f93e83ceca5f792aab08a993219310dc8fdc2fe4d966cc97ecc0ffbf",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 13,
+      "review_item_id": "8aed75f5019373e7682c3e846c8d7b1ea17d842d4cfc2c928dcdfb3c6dd27cf2",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 16,
+      "review_item_id": "7cc1d73f866e4d7be846a993383bbf1bba335d7ca1f3a4efeb28658993b4d6d7",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 20,
+      "review_item_id": "1af3f9e1f8a0f36d4125a8531df993e8012d28cf23c9f380ec9e04b740630e37",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 22,
+      "review_item_id": "d0a3e2057a49a92123c0162855a821ec5a4c8b073abf5a8e95adb79fc6596264",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 24,
+      "review_item_id": "a5cdb0868bd5f21d0d7fe2a3d2fa4d4579a7578f9b080a879ca67751d340303b",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 26,
+      "review_item_id": "4ebe01e111146384a5a1ef15e266a4a1a4df2e1f5997f063920e73961ec4af6a",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 27,
+      "review_item_id": "a4c7afac6efb7d2a71bb4d32e614da8fddc8becbf34faeb0af3d5c2de0083997",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 30,
+      "review_item_id": "d852b9b68717b727ff6a30459625d4c32d46df94897cfcd290fd9d9866515b7c",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 35,
+      "review_item_id": "e0b19c8f7d904c091c1ded5388d26cb4e815729a8a096d97e0b0a706c9d84776",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 36,
+      "review_item_id": "94872e34d237d78f3f356ca5de587ec93f6ffdbe97a0e456d1ff5a42870b26d1",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 38,
+      "review_item_id": "3b7547c0e4fd1343e02efbb2a14d2d8606cc856a9de30e320c61a6767584cfdb",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 39,
+      "review_item_id": "1f0c75668fda3ba257790cc495cc6e65f5167b02acdd406c80095f727c5edc40",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 40,
+      "review_item_id": "5ede4a4165ee129b580ba389cdae50c7f674da89556921287125349bb0d08844",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 42,
+      "review_item_id": "e21aa1883631b6f849aa649a75ae4c94c68d8eb5c5ba9d92b2c79cc33d05548e",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 44,
+      "review_item_id": "1f967c549b1a440512f6daedc70dd65122873937862b82779e5673a98748be80",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 45,
+      "review_item_id": "90ebaad08e4a99d10ec83f2d9eb37246ae3e5add6aecdcf2c3a22223f868eeff",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 46,
+      "review_item_id": "b2b2bfe117e2829209850a5668c5cadf5f404259788e42891ec79626de53edb5",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 47,
+      "review_item_id": "bec14c9a8e58f8ef77a83939e068e00a2dc457160be35079935ee6dc12eb8052",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 48,
+      "review_item_id": "4c15343ad219833cca8a13add3ba1bc53375fbc18a641dcfe028366c331959f4",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段属于其他赛季、All Stars、特别节目或其他参赛者；未给出常规第8季的总冠军，不能把其他季冠军或单集胜者代入本题。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 11,
+      "review_item_id": "e449c1a88fc8a3b6b4b11dab4e372529fcae9f8078cdf102aaf6eff419ea7771",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是The Biggest Loser、Project Runway或The Amazing Race等其他节目；相同season 8、race或Bob词汇不构成RuPaul第8季冠军证据。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 14,
+      "review_item_id": "f7d98498e971124b9020459ae877647e14b4a870698c0f34a23c5c37ef1ae955",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是The Biggest Loser、Project Runway或The Amazing Race等其他节目；相同season 8、race或Bob词汇不构成RuPaul第8季冠军证据。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 15,
+      "review_item_id": "e66e650948fe75cb010032b30e00cb8f05f1be53b453e9a52cf2c3f8adc1acd9",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是The Biggest Loser、Project Runway或The Amazing Race等其他节目；相同season 8、race或Bob词汇不构成RuPaul第8季冠军证据。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 19,
+      "review_item_id": "12190519770b595e042c70760829da24afbcbfdc75cada4f296c7ebe368e2029",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是The Biggest Loser、Project Runway或The Amazing Race等其他节目；相同season 8、race或Bob词汇不构成RuPaul第8季冠军证据。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 21,
+      "review_item_id": "5d6c254f203adf25b721fd172baeb7af0e1f51c4ffed88a2e2dab3553d8331ff",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是The Biggest Loser、Project Runway或The Amazing Race等其他节目；相同season 8、race或Bob词汇不构成RuPaul第8季冠军证据。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 28,
+      "review_item_id": "fd4efd11b1a0cf226abb9972c6b1825773b331ed56f55c353af74b00dcedb50b",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是The Biggest Loser、Project Runway或The Amazing Race等其他节目；相同season 8、race或Bob词汇不构成RuPaul第8季冠军证据。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 29,
+      "review_item_id": "3cf3243fa011670a056ee2fd24f96ca3f47ddb7b9c7f07fbe43c2d417bfc724f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是The Biggest Loser、Project Runway或The Amazing Race等其他节目；相同season 8、race或Bob词汇不构成RuPaul第8季冠军证据。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 33,
+      "review_item_id": "6606deb38081dcadcba13ac0adb19341d478f57c6cf8984f045a317c9f42ad50",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是The Biggest Loser、Project Runway或The Amazing Race等其他节目；相同season 8、race或Bob词汇不构成RuPaul第8季冠军证据。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 34,
+      "review_item_id": "2b018a83ae2b0cd4c9a4e80f2144341c6fad458f3ab3b0846d8f2133be4936a5",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是The Biggest Loser、Project Runway或The Amazing Race等其他节目；相同season 8、race或Bob词汇不构成RuPaul第8季冠军证据。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 37,
+      "review_item_id": "dd23dd642c1423723f2ce57accffe24d8fcac09880c08d6cd2a5c7508fc9af41",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是The Biggest Loser、Project Runway或The Amazing Race等其他节目；相同season 8、race或Bob词汇不构成RuPaul第8季冠军证据。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 41,
+      "review_item_id": "34a18f30b9725b7058b4292612638184f7faa381643ae744f7920f1ae7d4cb13",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是The Biggest Loser、Project Runway或The Amazing Race等其他节目；相同season 8、race或Bob词汇不构成RuPaul第8季冠军证据。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 49,
+      "review_item_id": "15a91e86418441e9ddcf95261ad3e9008e82533426c734f24bc384fabdbbbb8b",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是The Biggest Loser、Project Runway或The Amazing Race等其他节目；相同season 8、race或Bob词汇不构成RuPaul第8季冠军证据。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 50,
+      "review_item_id": "9eda02d1e6bc9272e5509b7e7ea88874499cf8ed6b0824dae7a28c2cd4548911",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段是The Biggest Loser、Project Runway或The Amazing Race等其他节目；相同season 8、race或Bob词汇不构成RuPaul第8季冠军证据。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 8,
+      "review_item_id": "e5fc0340c2e8a5acc212facb973bc9c5d1b5fa842db07dcfcf2d51338435fb24",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "属于正确赛季的参赛者或赛季介绍，但没有判定最终谁赢；参赛和奖金描述不等于总冠军身份。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 23,
+      "review_item_id": "9a302692263e6b165dec8a229f1064135dbd897f2f26f16ca55e8837088e007d",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "属于正确赛季的参赛者或赛季介绍，但没有判定最终谁赢；参赛和奖金描述不等于总冠军身份。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 25,
+      "review_item_id": "380825a23ee34c7260054d5f95970cb4f8966b8349f7231610c2de02f2865cce",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段说Cynthia在第8季获得Miss Congeniality，奖项类型与赛季总冠军不同；不是本题冠军证据，也不把该原文误说成自相矛盾。"
+    },
+    {
+      "audit_case_number": 7,
+      "blind_ordinal": 32,
+      "review_item_id": "5328fd76338c35aff8673a123428565a585be25761243d5db143014839c67e31",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段说Cynthia在第8季获得Miss Congeniality，奖项类型与赛季总冠军不同；不是本题冠军证据，也不把该原文误说成自相矛盾。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 3,
+      "review_item_id": "996626e30ccc675f5fcde9c3da2060fca2a12a53594448b886b181756e7ea874",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段虽涉及Days of Our Lives，却是Julie、Anjelica或Nicole等其他角色，或演员名字含Susan；未给出所问Susan角色的扮演者。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 20,
+      "review_item_id": "63392f799e335d8aed6e1e1c2e4cad6d1f3e5dc0cb2c7d998aa7b3ac82ddf175",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段虽涉及Days of Our Lives，却是Julie、Anjelica或Nicole等其他角色，或演员名字含Susan；未给出所问Susan角色的扮演者。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 35,
+      "review_item_id": "ab04d1840bc4c0c3f2350e080c22139f249faebc98d94d1e541e3e30c52f70bb",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段虽涉及Days of Our Lives，却是Julie、Anjelica或Nicole等其他角色，或演员名字含Susan；未给出所问Susan角色的扮演者。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 4,
+      "review_item_id": "c7b537059a2e8e5d7770fd4e5a52dbbfc1d2cff98071d63721e76d8f98df9aad",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 5,
+      "review_item_id": "f311dbc15cfe235f6172c002042da4c10df8d1dc8aba8f0fec60ac02fd6d2cfe",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 7,
+      "review_item_id": "78087b686afa7983368eb9bf028b5373e8d73d6152171df6a225b95550d46746",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 8,
+      "review_item_id": "2f86e4eb55fb398e72abad3cfe819b88ce5da7595f872f125d4bcc4048441f48",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 9,
+      "review_item_id": "93d36ad089e0addfe1894b02283183bc2c140f80c5ef84fb2c6e07c5633eb069",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 10,
+      "review_item_id": "b880d5c67bb3e5202747c1f49bd3f439cccf6cd43119fdfedb0dfb582399bf3a",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 12,
+      "review_item_id": "2993395d506fd86df08eb988fd99733cf5c64b39694abd3c4bd5d833750b3133",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 13,
+      "review_item_id": "0975793240261e627cfdd88e28045dbfde1153ff853a580e966f17ccd32e5e5b",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 15,
+      "review_item_id": "04505e910ac6e1ff8e514f644117c8512dd2a27ef6bda17009e273b8839abce1",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 16,
+      "review_item_id": "dd9b40461fe33ac93bf85be5ffb75c647c51a2ae49acb963b550a7b77191d0ed",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 17,
+      "review_item_id": "b166abf48d06a0b62877740ffea7c217c4853afa4327816a99ea9a375cad542e",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 18,
+      "review_item_id": "859735deec1e28eb65796bbed0680a55021dae4bfea4122fa586b035c6ba8f8f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 19,
+      "review_item_id": "617cb140d21e746d7797ace07fdcf5dd89d0ec4d2f90716a5266e3a98d456800",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 21,
+      "review_item_id": "4ca949436ddb0c6075dd1c7278c30f390af8f4b8fea002a2ff72af0568d1f442",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 22,
+      "review_item_id": "580409a3fdd5db345eeba9c7821ba78385d6d1a56e352a2c4fdb59fc54482d22",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 23,
+      "review_item_id": "f905b65ed27f92154bfd2baa5fd2ed2bf2c32bb3c21ac4af50fee5ebecd3a142",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 24,
+      "review_item_id": "136e9b902364ff727c4423d046a650a14c2df852726a1a68807206f5737bb48f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 25,
+      "review_item_id": "522f785144cfba584b3faff3ce78f7fee10273f64fd855e3d368314a6eed3e20",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 27,
+      "review_item_id": "99197399578295ca1f6e69a5fe45df4e1a49fdeb5b887abe1dfcd6dcb9aabea1",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 28,
+      "review_item_id": "29fc143113e39bcc01624d490bc81d7d0f9842d8932021f1da226235587d5d77",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 29,
+      "review_item_id": "4f7a1afad6ac6ec02400f66ae1745ccf36b8a3a1fe6a4f6a1ed7e066f4586d67",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 30,
+      "review_item_id": "847c0504bba5a0ffaf0c0c39e7ea9236ef1030237b37ef7680ec175bf68ac893",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 31,
+      "review_item_id": "9cd0e137529b42ce51c2a6c322df9022ccb780777d9cd674765366ffd2a3910b",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 32,
+      "review_item_id": "eca30ccb49861b7d5124d9be8ca89485d668420c169db1dbe584c2b9e4da623c",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 33,
+      "review_item_id": "b709869d281b2de6745a39ee05d170bf7bcf64febc358a622a66e7f203941874",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 34,
+      "review_item_id": "b95855f3b199938706ef4f60b6be6b081c68b817561f9136f2fab6978b2b1fe2",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 36,
+      "review_item_id": "8459cbb071ab969027b3b1f71935d9fa07e41060b95d3274e90a27dc7f6b2ac3",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 37,
+      "review_item_id": "87e181ad1717ab9fa05928d8a74b8a58a45681667da9c9e85703d37ee2ca67e6",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 39,
+      "review_item_id": "3efeb0e0edea8d716f4e9da9e19ffd10bacc71c976d0df78d37cdd139f075d1f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 40,
+      "review_item_id": "28b86d9db3a6b8c83f2fc926ab068fa2a980c7746ad09d501bc69933bfa196c4",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 41,
+      "review_item_id": "8bf191f318f5b8258128ffacc4fd0523317cdaab2bb115888233284568389733",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 42,
+      "review_item_id": "f2a930c7adc5df9559696e2b96806240ae8c59a976b4b8c5ca87a9af12d098d9",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 44,
+      "review_item_id": "b7972278a325f84194c9a9078d2b1137f1042acffbf335740f769a0829a4ca1b",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 45,
+      "review_item_id": "909117ecbb46c506285c04ae0b6589bcc1b5bb7fd46573edaa1f398dfdda8b85",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 46,
+      "review_item_id": "a2320dbf3e83154e563e0147d9fc2bfa5a557521bd56363dec6ac17205fe25b3",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 48,
+      "review_item_id": "11cb6809d6b3f18b01708228bc41185ff25a43f74755d00b772e515979a1e16d",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 49,
+      "review_item_id": "d6c2aa533bee31cb33f0eaf8e612590c2ecba9aaa93e95a62b5259078c24fcfd",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 50,
+      "review_item_id": "523e8fe80cfcc73618eb6ac27e9729567480d062e0b07422c5c0e2a7f7b3224d",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他节目中同名Susan、其他演员或无关经历，没有匹配Days of Our Lives中Susan的角色—演员关系；人名/角色名相同不足以支持答案。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 14,
+      "review_item_id": "d9ef4065c77de0ad7090526165977bbb42c946fd98ec81806573d8c919d8299e",
+      "support_label": "direct",
+      "support_quote": "Stacy Haiduk had been cast as Susan; she made her first appearance as Susan on August 21, 2018.",
+      "rationale": "同一Susan Banks条目明确Stacy Haiduk饰演Susan及2018首次出场，支持有日期限定的有效角色答案；参考名单未包含她不等于段落错误，原参考保留。"
+    },
+    {
+      "audit_case_number": 8,
+      "blind_ordinal": 38,
+      "review_item_id": "f02eeda4d6dbbcfc4ab88223f8b5acf13466acef6ef9bfea2666b4dbb24b3241",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "原文括号Haiduk连的是Kristen，剧情说Kristen迫使Susan交换身份；没有确认谁饰演Susan，不能把剧情冒充关系当演员归属。"
+    }
+  ]
+}

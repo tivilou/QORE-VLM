@@ -1,0 +1,38 @@
+{
+  "commands": [
+    {
+      "command": [
+        "D:/Software/Dev/Language/Anaconda3/envs/lambeq/python.exe",
+        "E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs\\semantic_supervision_20261009T045728Z_fullcase_05_08_validate.py",
+        "--source-dir",
+        "C:/Users/14630/AppData/Local/Temp/qore-supervision-result-20261009T045728Z",
+        "--records-dir",
+        "E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs",
+        "--output-dir",
+        "C:/Users/14630/AppData/Local/Temp/fullcase_05_08_readback",
+        "--annotations",
+        "semantic_supervision_20261009T045728Z_fullcase_05_08_annotations.json",
+        "--output-prefix",
+        "semantic_supervision_20261009T045728Z_fullcase_05_08_"
+      ],
+      "inputs": "original texts+169 explicit model annotations; no inference or fitting",
+      "stdout": "{\"coverage\": {\"reviewed_population\": 618, \"all_population\": 1600, \"remaining\": 982, \"new_judgments\": 169, \"prior_preserved\": 449, \"fully_reviewed_cases\": [1, 2, 3, 4, 5, 6, 7, 8], \"by_case\": {\"1\": 50, \"2\": 50, \"3\": 50, \"4\": 50, \"5\": 50, \"6\": 50, \"7\": 50, \"8\": 50, \"9\": 6, \"10\": 13, \"11\": 9, \"12\": 7, \"13\": 7, \"14\": 7, \"15\": 7, \"16\": 12, \"17\": 7, \"18\": 7, \"19\": 7, \"20\": 7, \"21\": 13, \"22\": 11, \"23\": 9, \"24\": 10, \"25\": 12, \"26\": 9, \"27\": 7, \"28\": 11, \"29\": 7, \"30\": 7, \"31\": 14, \"32\": 12}}, \"new_label_counts\": {\"irrelevant\": 150, \"partial\": 16, \"direct\": 3}, \"methods\": {\"frozen_reader_topk\": {\"selected_slots\": 160, \"label_counts\": {\"direct\": 50, \"partial\": 54, \"irrelevant\": 48, \"contradictory\": 2, \"uncertain\": 6}, \"not_confirmed_answer_accuracy\": true}, \"quantum_semantic\": {\"selected_slots\": 160, \"label_counts\": {\"direct\": 50, \"partial\": 54, \"irrelevant\": 48, \"contradictory\": 2, \"uncertain\": 6}, \"not_confirmed_answer_accuracy\": true}, \"classical_semantic\": {\"selected_slots\": 160, \"label_counts\": {\"direct\": 50, \"partial\": 54, \"irrelevant\": 48, \"contradictory\": 2, \"uncertain\": 6}, \"not_confirmed_answer_accuracy\": true}, \"quantum_scalar_control\": {\"selected_slots\": 160, \"label_counts\": {\"direct\": 50, \"partial\": 53, \"irrelevant\": 48, \"contradictory\": 2, \"uncertain\": 7}, \"not_confirmed_answer_accuracy\": true}, \"monotonic_compression_control\": {\"selected_slots\": 160, \"label_counts\": {\"direct\": 50, \"partial\": 54, \"irrelevant\": 48, \"contradictory\": 2, \"uncertain\": 6}, \"not_confirmed_answer_accuracy\": true}}}\n",
+      "stderr": "",
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "D:/Software/Dev/Language/Anaconda3/envs/lambeq/python.exe",
+        "E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs\\semantic_supervision_20261009T045728Z_fullcase_05_08_tests.py",
+        "--source-dir",
+        "C:/Users/14630/AppData/Local/Temp/qore-supervision-result-20261009T045728Z",
+        "--records-dir",
+        "E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs"
+      ],
+      "inputs": "original texts+169 explicit model annotations; no inference or fitting",
+      "stdout": "{\"checks_passed\": 12, \"checks\": [\"exact_record_replay_and_prior_direct_identity\", \"new_missed_direct_weak_negative_and_zero_pairs\", \"season8_positive_retention_already_complete\", \"duplicate_explicit_id\", \"missing_passage_not_complete\", \"false_full32_coverage\", \"wrong_source_hash\", \"wrong_prior_review_hash\", \"wrong_blind_id\", \"fabricated_support_quote\", \"direct_missing_quote\", \"unread_null_not_negative\"], \"source_rewritten\": false, \"training_or_inference\": false, \"reviewed\": 618, \"remaining\": 982}\n",
+      "stderr": "",
+      "exit_status": 0
+    }
+  ]
+}
