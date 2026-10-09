@@ -52,3 +52,14 @@ Stop if qualifying support remains inadequate or corrected signals only compress
 - [Review](../refs/semantic_supervision_20261009T045728Z_fullcase_09_12_review.json)
 - [Fullcase score join](../refs/semantic_supervision_20261009T045728Z_fullcase_09_12_join.json)
 - [Owner addendum](../../../../docs/rag-research-log/20261009T-date-only-fullcase-support-09-12.md)
+
+## Complete checkpoint: all32 cases/1600 passages
+
+User finish line: remaining817 all reviewed before report. Completed817 explicit additions+783 unchanged=1600,eachcase50;remaining0. Single-primary provisional/not independentlyblind,not gold/training-qualified. Existing9 flags/source/references unchanged. Complete labelsD97/P223/I1259/C3/U18. Among23 unflagged-notqualified:13 direct-slot gaps(total25,Reader48 vs capped73),3 no direct(11/22/25),7 capped direct already retained. Prioritize qualification of9 direct-vs-selected-irrelevant candidates(5/6/8/13/16/17/21/26/27);separate4 direct-vs-partial-only(3/9/19/29),protect positives. Weakcontainment32 direct false-negatives/58 irrelevant positives confined to this audit. Quantum/classical semantic selected support totals unchanged;no utility/quantum advantage claim.
+
+Next: target-scope/confidence qualification,missing/partial-aware boundary compiler and synthetic tests,then full434qualification/fresh347/87 protocol. No immediate training,no tuning exposed100Silver. Complete review stored hash-linked prior783+delta817(each<1MiB);explicit UTF-8/LF delta bytes,byte-preserving attributes prevent cross-platform hash drift.
+
+- [Complete manifest](../refs/semantic_supervision_20261009T045728Z_complete_review_manifest.json)
+- [Full32 score join](../refs/semantic_supervision_20261009T045728Z_complete_join.json)
+- [Audit diagnostics](../refs/semantic_supervision_20261009T045728Z_complete_diagnostics.json)
+- [Owner report](../../../../docs/rag-research-log/20261009T-date-only-complete-support-audit.md)

@@ -1,0 +1,53 @@
+{
+  "commands": [
+    {
+      "command": [
+        "D:/Software/Dev/Language/Anaconda3/envs/lambeq/python.exe",
+        "E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs\\semantic_supervision_20261009T045728Z_complete_validate.py",
+        "--source-dir",
+        "C:/Users/14630/AppData/Local/Temp/qore-supervision-result-20261009T045728Z",
+        "--records-dir",
+        "E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs",
+        "--output-dir",
+        "C:/Users/14630/AppData/Local/Temp/complete_support_readback",
+        "--annotations",
+        "semantic_supervision_20261009T045728Z_complete_annotations.json",
+        "--output-prefix",
+        "semantic_supervision_20261009T045728Z_complete_"
+      ],
+      "inputs": "immutable32-case source+817 explicitly adjudicated passages+prior783;no inference/fitting",
+      "stdout": "{\"coverage\": {\"reviewed_population\": 1600, \"all_population\": 1600, \"remaining\": 0, \"new_judgments\": 817, \"prior_preserved\": 783, \"fully_reviewed_cases\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32], \"by_case\": {\"1\": 50, \"2\": 50, \"3\": 50, \"4\": 50, \"5\": 50, \"6\": 50, \"7\": 50, \"8\": 50, \"9\": 50, \"10\": 50, \"11\": 50, \"12\": 50, \"13\": 50, \"14\": 50, \"15\": 50, \"16\": 50, \"17\": 50, \"18\": 50, \"19\": 50, \"20\": 50, \"21\": 50, \"22\": 50, \"23\": 50, \"24\": 50, \"25\": 50, \"26\": 50, \"27\": 50, \"28\": 50, \"29\": 50, \"30\": 50, \"31\": 50, \"32\": 50}}, \"new_label_counts\": {\"irrelevant\": 673, \"partial\": 105, \"direct\": 33, \"uncertain\": 6}, \"methods\": {\"frozen_reader_topk\": {\"selected_slots\": 160, \"label_counts\": {\"direct\": 50, \"partial\": 54, \"irrelevant\": 48, \"contradictory\": 2, \"uncertain\": 6}, \"not_confirmed_answer_accuracy\": true}, \"quantum_semantic\": {\"selected_slots\": 160, \"label_counts\": {\"direct\": 50, \"partial\": 54, \"irrelevant\": 48, \"contradictory\": 2, \"uncertain\": 6}, \"not_confirmed_answer_accuracy\": true}, \"classical_semantic\": {\"selected_slots\": 160, \"label_counts\": {\"direct\": 50, \"partial\": 54, \"irrelevant\": 48, \"contradictory\": 2, \"uncertain\": 6}, \"not_confirmed_answer_accuracy\": true}, \"quantum_scalar_control\": {\"selected_slots\": 160, \"label_counts\": {\"direct\": 50, \"partial\": 53, \"irrelevant\": 48, \"contradictory\": 2, \"uncertain\": 7}, \"not_confirmed_answer_accuracy\": true}, \"monotonic_compression_control\": {\"selected_slots\": 160, \"label_counts\": {\"direct\": 50, \"partial\": 54, \"irrelevant\": 48, \"contradictory\": 2, \"uncertain\": 6}, \"not_confirmed_answer_accuracy\": true}}}\n",
+      "stderr": "",
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "D:/Software/Dev/Language/Anaconda3/envs/lambeq/python.exe",
+        "E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs\\semantic_supervision_20261009T045728Z_complete_analyze.py",
+        "--source-dir",
+        "C:/Users/14630/AppData/Local/Temp/qore-supervision-result-20261009T045728Z",
+        "--records-dir",
+        "E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs"
+      ],
+      "inputs": "immutable32-case source+817 explicitly adjudicated passages+prior783;no inference/fitting",
+      "stdout": "{\"schema_version\": \"rag.complete_support_audit_diagnostics.v1\", \"claim_ceiling\": \"L0_diagnostic\", \"all_audit_cases\": 32, \"all_passages\": 1600, \"remaining\": 0, \"label_counts\": {\"direct\": 97, \"irrelevant\": 1259, \"partial\": 223, \"uncertain\": 18, \"contradictory\": 3}, \"existing_question_flags_retained\": 9, \"unflagged_not_formally_qualified\": 23, \"unflagged_zero_direct_cases\": [11, 22, 25], \"unflagged_direct_slot_gap_cases\": [3, 5, 6, 8, 9, 13, 16, 17, 19, 21, 26, 27, 29], \"unflagged_direct_slot_gap_total\": 25, \"unflagged_direct_slot_ceiling\": 73, \"unflagged_reader_direct_selected\": 48, \"provisional_rescue_with_selected_irrelevant_cases\": [5, 6, 8, 13, 16, 17, 21, 26, 27], \"provisional_gap_only_against_selected_partial_cases\": [3, 9, 19, 29], \"weak_label_cross_table\": {\"weak_positive\": {\"direct\": 65, \"partial\": 81, \"irrelevant\": 58, \"contradictory\": 2, \"uncertain\": 7}, \"weak_negative\": {\"irrelevant\": 1201, \"partial\": 142, \"direct\": 32, \"contradictory\": 1, \"uncertain\": 11}}, \"direct_reader_rank_bins_all_cases_including_flagged\": {\"1-5\": 50, \"6-10\": 17, \"11-20\": 13, \"21-50\": 17}, \"missed_direct_reader_rank_bins_all_cases_including_flagged\": {\"6-10\": 17, \"11-20\": 13, \"21-50\": 17}, \"training_qualified\": false, \"independent_blind_review\": false, \"official_gold\": false, \"limits\": [\"Counts confined to selected32 old-training questions; not whole434 or heldout100.\", \"Direct-slot ceiling is not generator utility, answer accuracy or validated gold oracle.\", \"Partial is not a negative; direct-vs-direct preferences not established.\", \"Historical/time-specific sources and implicit entailments need independent qualification.\", \"No new fitting, inference, train targets or hyperparameter tuning.\"]}\n",
+      "stderr": "",
+      "exit_status": 0
+    },
+    {
+      "command": [
+        "D:/Software/Dev/Language/Anaconda3/envs/lambeq/python.exe",
+        "E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs\\semantic_supervision_20261009T045728Z_complete_tests.py",
+        "--source-dir",
+        "C:/Users/14630/AppData/Local/Temp/qore-supervision-result-20261009T045728Z",
+        "--records-dir",
+        "E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs"
+      ],
+      "inputs": "immutable32-case source+817 explicitly adjudicated passages+prior783;no inference/fitting",
+      "stdout": "{\"checks_passed\": 24, \"checks\": [\"exact_delta_manifest_join_replay\", \"full32_by50_unique_complete\", \"prior783_metadata_and9_flags_unchanged\", \"explicit817_only_no_default_classification\", \"coverage_not_training_or_gold_qualification\", \"all160_selected_slots_per_method_unchanged\", \"sub1MiB_shards_hash_reconstruction\", \"audit_only_support_ceiling_not_answer_accuracy\", \"partial_not_hard_negative_retention_cases_separated\", \"more_than5_direct_not_forced_into5\", \"duplicate_explicit_id\", \"missing_passage_not_negative\", \"false_partial_completion\", \"wrong_source_hash\", \"wrong_prior_review_hash\", \"wrong_blind_id\", \"wrong_case_ordinal\", \"wrong_reviewer\", \"fabricated_support_quote\", \"direct_missing_quote\", \"partial_missing_quote\", \"unread_null_not_negative\", \"unknown_label\", \"missing_rationale\"], \"source_rewritten\": false, \"training_or_inference\": false, \"reviewed\": 1600, \"remaining\": 0}\n",
+      "stderr": "",
+      "exit_status": 0
+    }
+  ],
+  "corrected_failure": "First byte manifest hash failed on Windows CRLF text serialization. Corrected new delta output to explicit UTF-8/LF bytes and preserved hashes in .gitattributes. Replayed labels unchanged."
+}

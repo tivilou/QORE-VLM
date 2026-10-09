@@ -1,0 +1,93 @@
+{
+  "schema_version": "rag.complete_support_audit_diagnostics.v1",
+  "claim_ceiling": "L0_diagnostic",
+  "all_audit_cases": 32,
+  "all_passages": 1600,
+  "remaining": 0,
+  "label_counts": {
+    "direct": 97,
+    "irrelevant": 1259,
+    "partial": 223,
+    "uncertain": 18,
+    "contradictory": 3
+  },
+  "existing_question_flags_retained": 9,
+  "unflagged_not_formally_qualified": 23,
+  "unflagged_zero_direct_cases": [
+    11,
+    22,
+    25
+  ],
+  "unflagged_direct_slot_gap_cases": [
+    3,
+    5,
+    6,
+    8,
+    9,
+    13,
+    16,
+    17,
+    19,
+    21,
+    26,
+    27,
+    29
+  ],
+  "unflagged_direct_slot_gap_total": 25,
+  "unflagged_direct_slot_ceiling": 73,
+  "unflagged_reader_direct_selected": 48,
+  "provisional_rescue_with_selected_irrelevant_cases": [
+    5,
+    6,
+    8,
+    13,
+    16,
+    17,
+    21,
+    26,
+    27
+  ],
+  "provisional_gap_only_against_selected_partial_cases": [
+    3,
+    9,
+    19,
+    29
+  ],
+  "weak_label_cross_table": {
+    "weak_positive": {
+      "direct": 65,
+      "partial": 81,
+      "irrelevant": 58,
+      "contradictory": 2,
+      "uncertain": 7
+    },
+    "weak_negative": {
+      "irrelevant": 1201,
+      "partial": 142,
+      "direct": 32,
+      "contradictory": 1,
+      "uncertain": 11
+    }
+  },
+  "direct_reader_rank_bins_all_cases_including_flagged": {
+    "1-5": 50,
+    "6-10": 17,
+    "11-20": 13,
+    "21-50": 17
+  },
+  "missed_direct_reader_rank_bins_all_cases_including_flagged": {
+    "6-10": 17,
+    "11-20": 13,
+    "21-50": 17
+  },
+  "training_qualified": false,
+  "independent_blind_review": false,
+  "official_gold": false,
+  "limits": [
+    "Counts confined to selected32 old-training questions; not whole434 or heldout100.",
+    "Direct-slot ceiling is not generator utility, answer accuracy or validated gold oracle.",
+    "Partial is not a negative; direct-vs-direct preferences not established.",
+    "Historical/time-specific sources and implicit entailments need independent qualification.",
+    "No new fitting, inference, train targets or hyperparameter tuning."
+  ]
+}

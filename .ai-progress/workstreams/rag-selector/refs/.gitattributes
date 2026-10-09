@@ -1,0 +1,4 @@
+# Preserve physical bytes for immutable review hashes on Windows and Linux.
+semantic_supervision_20261009T045728Z_*_review.json -text
+semantic_supervision_20261009T045728Z_complete_review_delta.json -text
+semantic_supervision_20261009T045728Z_complete_review_manifest.json -text

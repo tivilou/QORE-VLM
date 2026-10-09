@@ -2,6 +2,8 @@
 
 ## 当前研究总览
 
+- 最新完整审计：[32题1600段全部审完](20261009T-date-only-complete-support-audit.md)。剩余817已完成，未读0；23题未flag中13题有25个direct槽位差，但9个目标风险与整434监督仍待资格。优先资格化干净边界，保护已有支持，不立即重训，仍L0。
+
 - 最新检查点：[题9—12全段审阅](20261009T-date-only-fullcase-support-09-12.md)。累计783/1600；题9有direct可救但已选partial也有用，题11固定50段无direct，题10目标顺序冲突。先补817段，不训练，L0。
 
 - 最新检查点：[题5—8全段支持审阅](20261009T-date-only-fullcase-support-05-08.md)。累计618/1600；新地点/有日期的演员答案3段被弱标签漏掉，题6/8原边界审计各0对。先补982段，仍L0，不重训。
@@ -32,6 +34,8 @@
 - 当前研究边界：只优化固定 Top-50 -> Top-5 selector；Generator、检索、evaluator 和答案实现不属于本轮候选。下一候选必须提供独立、可追溯且 gold-free 的证据关系信号；若只能继续依赖 token overlap、Answer Scorer 融合或 generic diversity，应停止该 selector 家族并先处理 provenance/calibration 阻塞。
 
 ## 时间线
+
+- [2026-10-09 | 1600/1600完整支持审阅：监督噪声与真正边界分开](20261009T-date-only-complete-support-audit.md)
 
 - [2026-10-09 | 题9—12全审：783/1600，可救/无证据/目标冲突分开](20261009T-date-only-fullcase-support-09-12.md)
 

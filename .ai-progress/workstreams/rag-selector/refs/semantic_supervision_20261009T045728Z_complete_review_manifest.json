@@ -1,0 +1,17 @@
+{
+  "schema_version": "rag.complete_provisional_support_review_manifest.v1",
+  "prior_file": "semantic_supervision_20261009T045728Z_fullcase_09_12_review.json",
+  "prior_sha256": "4569d01b01b5a69d5d29ed8e94c2c1645885d2cf14c610dfa4709a0dd7e1881f",
+  "delta_file": "semantic_supervision_20261009T045728Z_complete_review_delta.json",
+  "delta_sha256": "41ef7684d7eb9ffa8a1688644f65eef44528ec8be41c7bfc955d0ddb05550b69",
+  "prior_count": 783,
+  "delta_count": 817,
+  "merged_count": 1600,
+  "remaining": 0,
+  "source_case_sha256": "a729ea30b63b88acd3525058d574b78f4b552c06583fc586eb8e270431e18faf",
+  "source_support_review_sha256": "517d33cf521f09aebda169fcb7b0ebaa8f6c47b0a208888d5b5e49d22a6d143c",
+  "merge_rule": "prior.judgments followed by delta.judgments; preserve all prior metadata",
+  "official_gold": false,
+  "training_qualified": false,
+  "claim_ceiling": "L0_diagnostic"
+}
