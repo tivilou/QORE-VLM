@@ -160,6 +160,8 @@
 
 - [ACTIVE / L0; 73/1600 PARTIAL REVIEW] Training containment/support conflicts and gated quantum boundary candidate -> [detail](decisions/2026-10-09-semantic-supervision-result.md)
 
+- [ACTIVE / 220 KEY ITEMS REVIEWED; FULL LABELS PENDING] Confidence-qualified support and protected quantum boundary target -> [detail](decisions/2026-10-09-support-qualified-boundary-review.md)
+
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.
 - Rationale: `decisions/`; outcomes: `sessions/`; evidence: `refs/`; owner logs: `docs/rag-research-log/`.

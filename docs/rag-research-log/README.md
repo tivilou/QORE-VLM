@@ -2,6 +2,8 @@
 
 ## 当前研究总览
 
+- 最新分析：[边界支持审阅](20261009T-boundary-support-review.md)。220个边界/控制/Top-5关键段已全部审阅，累计282/1600；弱标签既有误正例也有漏正例，各方法直接支持仍50，尚无提升。先补完整目标资格，不自动启动训练。
+
 - 最新分析：[32题监督审计结果](20261009T-045728Z-semantic-supervision-audit-result.md)。两条语义头均未改变Reader Top-5；弱命中87/87/87/89/87不是正确率。73/1600段部分审閱揭示实体/事件/问答类型冲突；下一步先补支持判定，再设计量子边界监督，仍为L0。
 
 - 最新实现：[训练监督与选段边界审计](20261009T-date-only-semantic-reader-supervision-audit.md)。固定原训练32题×50段，不训练、重放旧头，保存全文/数值与独立盲审材料；36项合成回归和上传预检通过，已收到导出，数值审计完成；支持审阅部分完成。
@@ -24,6 +26,8 @@
 - 当前研究边界：只优化固定 Top-50 -> Top-5 selector；Generator、检索、evaluator 和答案实现不属于本轮候选。下一候选必须提供独立、可追溯且 gold-free 的证据关系信号；若只能继续依赖 token overlap、Answer Scorer 融合或 generic diversity，应停止该 selector 家族并先处理 provenance/calibration 阻塞。
 
 ## 时间线
+
+- [2026-10-09 | 边界标签补齐：不要把缺答案字串的好段当负例](20261009T-boundary-support-review.md)
 
 - [2026-10-09 | 监督审计暴露“含答案不等于支持”，先校准训练目标](20261009T-045728Z-semantic-supervision-audit-result.md)
 

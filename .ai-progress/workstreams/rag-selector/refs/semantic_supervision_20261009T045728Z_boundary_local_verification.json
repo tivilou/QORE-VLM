@@ -1,0 +1,107 @@
+{
+  "checks": 6,
+  "passed": 6,
+  "semantic_truth_not_tested": true,
+  "source_sha256": {
+    "case_study.json": "a729ea30b63b88acd3525058d574b78f4b552c06583fc586eb8e270431e18faf",
+    "support_review.json": "517d33cf521f09aebda169fcb7b0ebaa8f6c47b0a208888d5b5e49d22a6d143c"
+  },
+  "commands": [
+    {
+      "label": "full_scope_readback",
+      "command": [
+        "D:\\Software\\Dev\\Language\\Anaconda3\\envs\\lambeq\\python.exe",
+        "E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs\\semantic_supervision_20261009T045728Z_boundary_join.py",
+        "--source-dir",
+        "C:\\Users\\14630\\AppData\\Local\\Temp\\qore-supervision-result-20261009T045728Z",
+        "--records-dir",
+        "E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs",
+        "--output-dir",
+        "C:\\Users\\14630\\AppData\\Local\\Temp\\qore-boundary-review-tests-20261009-r2\\valid"
+      ],
+      "exit_status": 0,
+      "stdout": "{\n  \"coverage\": {\n    \"declared_scope\": 220,\n    \"declared_scope_reviewed\": 220,\n    \"reviewed_population\": 282,\n    \"all_population\": 1600,\n    \"new_judgments\": 209,\n    \"old_preserved\": 73,\n    \"all_selected_slots_covered\": true,\n    \"all_registered_boundary_control_items_covered\": true,\n    \"all_swaps_covered\": true\n  },\n  \"methods\": {\n    \"frozen_reader_topk\": {\n      \"selected_slots\": 160,\n      \"label_counts\": {\n        \"direct\": 50,\n        \"partial\": 54,\n        \"irrelevant\": 48,\n        \"contradictory\": 2,\n        \"uncertain\": 6\n      },\n      \"direct_or_partial_count\": 104,\n      \"question_target_provisionally_unflagged\": 23,\n      \"unflagged_label_counts\": {\n        \"direct\": 48,\n        \"partial\": 36,\n        \"irrelevant\": 31,\n        \"contradictory\": 0,\n        \"uncertain\": 0\n      },\n      \"not_confirmed_accuracy\": true\n    },\n    \"quantum_semantic\": {\n      \"selected_slots\": 160,\n      \"label_counts\": {\n        \"direct\": 50,\n        \"partial\": 54,\n        \"irrelevant\": 48,\n        \"contradictory\": 2,\n        \"uncertain\": 6\n      },\n      \"direct_or_partial_count\": 104,\n      \"question_target_provisionally_unflagged\": 23,\n      \"unflagged_label_counts\": {\n        \"direct\": 48,\n        \"partial\": 36,\n        \"irrelevant\": 31,\n        \"contradictory\": 0,\n        \"uncertain\": 0\n      },\n      \"not_confirmed_accuracy\": true\n    },\n    \"classical_semantic\": {\n      \"selected_slots\": 160,\n      \"label_counts\": {\n        \"direct\": 50,\n        \"partial\": 54,\n        \"irrelevant\": 48,\n        \"contradictory\": 2,\n        \"uncertain\": 6\n      },\n      \"direct_or_partial_count\": 104,\n      \"question_target_provisionally_unflagged\": 23,\n      \"unflagged_label_counts\": {\n        \"direct\": 48,\n        \"partial\": 36,\n        \"irrelevant\": 31,\n        \"contradictory\": 0,\n        \"uncertain\": 0\n      },\n      \"not_confirmed_accuracy\": true\n    },\n    \"quantum_scalar_control\": {\n      \"selected_slots\": 160,\n      \"label_counts\": {\n        \"direct\": 50,\n        \"partial\": 53,\n        \"irrelevant\": 48,\n        \"contradictory\": 2,\n        \"uncertain\": 7\n      },\n      \"direct_or_partial_count\": 103,\n      \"question_target_provisionally_unflagged\": 23,\n      \"unflagged_label_counts\": {\n        \"direct\": 48,\n        \"partial\": 36,\n        \"irrelevant\": 31,\n        \"contradictory\": 0,\n        \"uncertain\": 0\n      },\n      \"not_confirmed_accuracy\": true\n    },\n    \"monotonic_compression_control\": {\n      \"selected_slots\": 160,\n      \"label_counts\": {\n        \"direct\": 50,\n        \"partial\": 54,\n        \"irrelevant\": 48,\n        \"contradictory\": 2,\n        \"uncertain\": 6\n      },\n      \"direct_or_partial_count\": 104,\n      \"question_target_provisionally_unflagged\": 23,\n      \"unflagged_label_counts\": {\n        \"direct\": 48,\n        \"partial\": 36,\n        \"irrelevant\": 31,\n        \"contradictory\": 0,\n        \"uncertain\": 0\n      },\n      \"not_confirmed_accuracy\": true\n    }\n  },\n  \"scope_only_weak_positive_label_counts\": {\n    \"direct\": 47,\n    \"partial\": 45,\n    \"irrelevant\": 19,\n    \"contradictory\": 2,\n    \"uncertain\": 6\n  },\n  \"scope_only_weak_negative_label_counts\": {\n    \"irrelevant\": 62,\n    \"partial\": 26,\n    \"direct\": 9,\n    \"contradictory\": 1,\n    \"uncertain\": 3\n  },\n  \"clean_contrast_diagnostic\": {\n    \"frozen_reader_topk\": {\n      \"clean_dependent_pair_count\": 5,\n      \"clean_distinct_questions\": 3,\n      \"positive_relative_correction\": 0,\n      \"strict_crossings\": 0,\n      \"clean_matched_pairs\": 5,\n      \"positive_more_favored_than_matched_irrelevant\": 0\n    },\n    \"quantum_semantic\": {\n      \"clean_dependent_pair_count\": 5,\n      \"clean_distinct_questions\": 3,\n      \"positive_relative_correction\": 4,\n      \"strict_crossings\": 0,\n      \"clean_matched_pairs\": 5,\n      \"positive_more_favored_than_matched_irrelevant\": 1\n    },\n    \"classical_semantic\": {\n      \"clean_dependent_pair_count\": 5,\n      \"clean_distinct_questions\": 3,\n      \"positive_relative_correction\": 5,\n      \"strict_crossings\": 0,\n      \"clean_matched_pairs\": 5,\n      \"positive_more_favored_than_matched_irrelevant\": 2\n    },\n    \"quantum_scalar_control\": {\n      \"clean_dependent_pair_count\": 5,\n      \"clean_distinct_questions\": 3,\n      \"positive_relative_correction\": 3,\n      \"strict_crossings\": 0,\n      \"clean_matched_pairs\": 5,\n      \"positive_more_favored_than_matched_irrelevant\": 1\n    },\n    \"monotonic_compression_control\": {\n      \"clean_dependent_pair_count\": 5,\n      \"clean_distinct_questions\": 3,\n      \"positive_relative_correction\": 5,\n      \"strict_crossings\": 0,\n      \"clean_matched_pairs\": 5,\n      \"positive_more_favored_than_matched_irrelevant\": 2\n    }\n  }\n}\nmissed_direct [(5, [(6, True)]), (16, [(31, True), (39, True)]), (21, [(6, True)]), (23, [(7, True)]), (31, [(7, False)])]\n",
+      "stderr": ""
+    },
+    {
+      "label": "missing_scope_item",
+      "command": [
+        "D:\\Software\\Dev\\Language\\Anaconda3\\envs\\lambeq\\python.exe",
+        "E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs\\semantic_supervision_20261009T045728Z_boundary_join.py",
+        "--source-dir",
+        "C:\\Users\\14630\\AppData\\Local\\Temp\\qore-supervision-result-20261009T045728Z",
+        "--records-dir",
+        "C:\\Users\\14630\\AppData\\Local\\Temp\\qore-boundary-review-tests-20261009-r2\\missing_scope_item",
+        "--output-dir",
+        "C:\\Users\\14630\\AppData\\Local\\Temp\\qore-boundary-review-tests-20261009-r2\\missing_scope_item_out"
+      ],
+      "exit_status": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs\\semantic_supervision_20261009T045728Z_boundary_join.py\", line 22, in <module>\n    assert {(r['case_number'],r['candidate_index']) for r in scope['items']}==expected\nAssertionError\n"
+    },
+    {
+      "label": "fake_quote",
+      "command": [
+        "D:\\Software\\Dev\\Language\\Anaconda3\\envs\\lambeq\\python.exe",
+        "E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs\\semantic_supervision_20261009T045728Z_boundary_join.py",
+        "--source-dir",
+        "C:\\Users\\14630\\AppData\\Local\\Temp\\qore-supervision-result-20261009T045728Z",
+        "--records-dir",
+        "C:\\Users\\14630\\AppData\\Local\\Temp\\qore-boundary-review-tests-20261009-r2\\fake_quote",
+        "--output-dir",
+        "C:\\Users\\14630\\AppData\\Local\\Temp\\qore-boundary-review-tests-20261009-r2\\fake_quote_out"
+      ],
+      "exit_status": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs\\semantic_supervision_20261009T045728Z_boundary_join.py\", line 36, in <module>\n    assert quote=='-' or quote in p['text'],(key,quote)\nAssertionError: ('1:4', 'QUOTE_NOT_IN_SOURCE')\n"
+    },
+    {
+      "label": "duplicate_judgment",
+      "command": [
+        "D:\\Software\\Dev\\Language\\Anaconda3\\envs\\lambeq\\python.exe",
+        "E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs\\semantic_supervision_20261009T045728Z_boundary_join.py",
+        "--source-dir",
+        "C:\\Users\\14630\\AppData\\Local\\Temp\\qore-supervision-result-20261009T045728Z",
+        "--records-dir",
+        "C:\\Users\\14630\\AppData\\Local\\Temp\\qore-boundary-review-tests-20261009-r2\\duplicate_judgment",
+        "--output-dir",
+        "C:\\Users\\14630\\AppData\\Local\\Temp\\qore-boundary-review-tests-20261009-r2\\duplicate_judgment_out"
+      ],
+      "exit_status": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs\\semantic_supervision_20261009T045728Z_boundary_join.py\", line 33, in <module>\n    assert key not in keys;keys.add(key)\n    ^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    },
+    {
+      "label": "missing_judgment",
+      "command": [
+        "D:\\Software\\Dev\\Language\\Anaconda3\\envs\\lambeq\\python.exe",
+        "E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs\\semantic_supervision_20261009T045728Z_boundary_join.py",
+        "--source-dir",
+        "C:\\Users\\14630\\AppData\\Local\\Temp\\qore-supervision-result-20261009T045728Z",
+        "--records-dir",
+        "C:\\Users\\14630\\AppData\\Local\\Temp\\qore-boundary-review-tests-20261009-r2\\missing_judgment",
+        "--output-dir",
+        "C:\\Users\\14630\\AppData\\Local\\Temp\\qore-boundary-review-tests-20261009-r2\\missing_judgment_out"
+      ],
+      "exit_status": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs\\semantic_supervision_20261009T045728Z_boundary_join.py\", line 40, in <module>\n    assert len(new)==209 and len(judgments)==282\nAssertionError\n"
+    },
+    {
+      "label": "source_sha_mismatch",
+      "command": [
+        "D:\\Software\\Dev\\Language\\Anaconda3\\envs\\lambeq\\python.exe",
+        "E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs\\semantic_supervision_20261009T045728Z_boundary_join.py",
+        "--source-dir",
+        "C:\\Users\\14630\\AppData\\Local\\Temp\\qore-supervision-result-20261009T045728Z",
+        "--records-dir",
+        "C:\\Users\\14630\\AppData\\Local\\Temp\\qore-boundary-review-tests-20261009-r2\\source_sha_mismatch",
+        "--output-dir",
+        "C:\\Users\\14630\\AppData\\Local\\Temp\\qore-boundary-review-tests-20261009-r2\\source_sha_mismatch_out"
+      ],
+      "exit_status": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs\\semantic_supervision_20261009T045728Z_boundary_join.py\", line 14, in <module>\n    assert sha(C/'case_study.json')==scope['source_case_sha256']\nAssertionError\n"
+    }
+  ]
+}

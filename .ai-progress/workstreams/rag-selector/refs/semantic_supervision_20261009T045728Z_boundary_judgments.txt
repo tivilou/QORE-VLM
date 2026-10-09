@@ -1,0 +1,209 @@
+1:4|partial|film "Hot Tub Time Machine"|同页连接电影与滑雪场，但切片首部断句，没有完整的拍摄地点陈述。
+1:5|partial|for exterior location shots of the Hollywood|写明该滑雪场用于外景，电影名在切片之外，尚缺完整实体连接。
+1:13|irrelevant|-|影片宣传活动和影评，不是拍摄地点。
+1:32|irrelevant|-|另一游乐园的历史，没有本片拍摄关系。
+2:0|partial|Neither vessel has "right of way".|这一结论明确限于两艘动力船迎面相遇；问题未说明相遇条件，不能推广为全部情形。
+2:1|partial|No vessel ever has absolute "right of way" over other vessels.|支持没有绝对优先权，并区分让路船与直航船；题意未区分绝对权利和具体情形。
+2:13|irrelevant|-|公海主权和航行自由，不说明船舶避碰优先关系。
+2:35|irrelevant|-|边界水域条约和水利审批，不说明两船通行优先权。
+2:44|irrelevant|-|海底管理和公约批准，没有船舶通行优先关系。
+3:7|partial|run down either side of the cannon bone|说明炮骨与夹骨、关节的位置关系，但未明确膝盖以下。
+3:13|partial|Below the cannon bone is the fetlock joint|给出炮骨下方的关节，可作解剖背景，未直接定位膝盖以下。
+3:18|irrelevant|-|人的臀部和骨盆解剖，不是马炮骨。
+3:25|partial|Bones of the lower limb, present in both the front and hind legs, include the cannon bone|确认马的下肢有炮骨，但未明确膝盖参照位置。
+3:43|partial|between the cannon bones|说明马腿和炮骨周围结构，切片断在位置关系中，未完整回答。
+4:0|partial|Calcium sulfate (or calcium sulphate) is the inorganic compound with the formula CaSO|化合物名称与化学式相关，但导出公式下标4丢失，不能用此切片严格区分硫酸盐和亚硫酸盐。
+4:4|irrelevant|-|汽车型号O4，不是化学式。
+4:19|partial|Calcium sulfate (or calcium sulphate) is the inorganic compound with the formula CaSO|同化合物名称与公式相关，但切片缺少氧下标4。
+4:21|irrelevant|-|描述CaS制备及硫酸盐作原料，没有给出目标CaSO4的名称映射。
+4:26|partial|Anhydrite is a mineral—anhydrous calcium sulfate, CaSO.|化合物名称可支持推断，导出式同样缺氧下标4，严格公式映射不完整。
+4:34|irrelevant|-|氰化钙性质和用途，不是目标化合物。
+4:37|irrelevant|-|亚硫酸钙结构和氧化生成石膏，未给出目标式名称映射。
+4:38|irrelevant|-|元素钙和钾性质，不是化合物名称。
+4:47|irrelevant|-|氯化铯来源和制备，不是目标化合物。
+5:1|direct|The part of Anarkali had first been offered to Suraiya but later went to Madhubala|明确最终角色由Madhubala出演，并区分先前邀约。
+5:2|irrelevant|-|早期方案将Nargis列为角色演员，未说明最后上映版本，不支持题目所问最终演员。
+5:3|partial|Starring Prithviraj Kapoor, Dilip Kumar, Madhubala, and Durga Khote|提供本片演员表和角色剧情，但没有演员角色对应关系。
+5:4|direct|with actress Madhubala in the role of Anarkali|明确1960年电影和角色演员映射。
+5:7|irrelevant|-|其他电影和Salim选角，不回答本片Anarkali演员。
+5:9|direct|Anarkali (Madhubala)|在本片剧情中明确角色演员对应。
+5:28|irrelevant|-|音乐剧的演员，不是1960年电影。
+5:31|partial|focused on the acting and dancing "gifts" of Madhubala|确认演员参与影片但没有Anarkali角色映射。
+6:0|partial|London Borough of Haringey|规划和征地涉及该区，提供场址背景但没有明确体育场位置陈述。
+6:11|partial|a compulsory purchase order made by the London Borough of Haringey enabling the project to proceed|同项目征地背景支持区位推断，不等于直接声明建在哪里。
+6:16|partial|rename the White Hart Lane station to Tottenham Hotspur|相关车站和交通方案可辅助定位，但没有完整区名或体育场位置。
+6:18|partial|a new design approved by Haringey Council|场馆和区议会审批提供背景，审批机构本身不是严格地理定位。
+6:49|irrelevant|-|Battersea住宅区，与Tottenham新场馆无关。
+7:0|direct|The winner of the eighth season of "RuPaul's Drag Race" was Bob the Drag Queen|明确第八季胜者。
+7:2|irrelevant|-|第九季胜者和第八季回归选手，不回答第八季胜者。
+7:5|direct|The winner of the eighth season of "RuPaul's Drag Race" was Bob the Drag Queen|明确第八季胜者。
+7:6|irrelevant|-|第七季胜者与第八季开播信息，不回答第八季胜者。
+7:10|direct|known for winning the eighth season of "RuPaul's Drag Race"|人物传记明确其赢得第八季。
+8:0|direct|She was played by Eileen Davidson|角色页直接给出演员，另明确Brynn Thayer接替的时间。
+8:1|direct|She was played by Eileen Davidson|切片中角色名称、剧名与演员对应明确。
+8:19|direct|A recast was made with actress Brynn Thayer filling in.|同段明确Susan角色的替换演员。
+8:33|direct|Stacy Haiduk debuted as Susan on August 21, 2018.|给出带时间的角色演员，属于参考名单之外的有效替代；问题没有限定年份。
+8:43|irrelevant|-|Susan Mayer和Teri Hatcher是另一角色与剧集，不是Susan Banks。
+9:0|direct|The ring particles are made almost entirely of water ice|明确主要组成是水冰，岩石只占微量。
+9:5|direct|they are composed of 99.9% pure water ice|同页明确环的水冰占比。
+9:8|partial|If the initial massive rings contained chunks of rocky material|讨论早期环的假设组成，不直接描述目前主要组成。
+9:18|partial|of the water ice in Saturn's rings|确认水冰存在，但不说明主要成分比例。
+10:2|partial|migration or journey of the Islamic prophet Muhammad and his followers|明确迁移人物与地点，但没有谁最先的次序。
+10:5|partial|who emigrated with him from Mecca to Medina|确认随行迁移，不证明Muhammad是最先一人。
+10:20|irrelevant|-|Saleh和另一地点的历史，不是迁往Medina的最先人物。
+10:23|contradictory|his followers had left Mecca.|叙述追随者已离开后Muhammad逃离并迁移，反对将其直接当最先迁移者的参考命题。
+10:26|irrelevant|-|菲律宾移民传说，目的地和人物不是本题。
+10:28|contradictory|came to Medina following the migration of his followers|明确发生在追随者迁移后，未支持参考名字为第一位的顺序。
+10:41|irrelevant|-|记载Umar迁移但没有最先的比较关系。
+10:45|irrelevant|-|Medina部族及更早定居背景，没有本题所指最先迁移者的明确答案。
+10:47|irrelevant|-|部族迁往Nubia/Sudan且提到Muhammad亲属，不是迁往Medina的先后。
+10:49|irrelevant|-|阿拉伯化和征服历史，没有迁往Medina的先后。
+11:7|irrelevant|-|Fisher生涯三分里程碑，不是总决赛单场最多三分纪录。
+11:20|irrelevant|-|球队阵容调整和比赛趋势，不给出本题纪录。
+11:24|irrelevant|-|球队单场三分纪录，不是个人纪录持有者。
+11:28|irrelevant|-|生日蛋糕和总决赛颁奖，Ray Allen名字出现但无三分纪录。
+11:32|partial|a game-tying three-pointer by Ray Allen|提到总决赛个人关键三分，但没有单场最多纪录。
+11:39|irrelevant|-|球队赛季成绩和打法，没有单场个人三分纪录。
+11:42|irrelevant|-|Spurs球员得分与系列赛胜利，没有目标三分纪录。
+12:1|direct|the longest undefeated streak in NBA history|同句明确Lakers的33连胜和最长纪录。
+12:17|partial|33 games — 1971–72 Los Angeles Lakers|明确球队和连胜数，切片缺少具体最长NBA项目表头。
+12:19|irrelevant|-|连续总冠军次数，不是连续比赛胜场。
+12:35|irrelevant|-|球队总胜数和总决赛次数，不是连胜纪录。
+12:39|irrelevant|-|球员三分和其他单场纪录，没有球队最长连胜。
+13:1|direct|the next Winter Olympics after 1992 was in 1994|同句说明冬夏分离、偶数年交替及1994开始的时间。
+13:2|partial|Until 1992 the Winter and Summer Olympic Games were held in the same years|提供改制前时间，切片停在1986决定后，未给出1994执行年份。
+13:3|direct|beginning with the 1994 Games, the Winter Olympics were held every four years, two years after each Summer Olympics|明确1994开始交替，两类各自仍四年一次。
+13:26|partial|The 1994 Winter Olympics, held in Lillehammer, Norway, were the first Winter Games to be held separately from the Summer Games|给出首次分离年份，交替两年间距在切片之外。
+13:49|irrelevant|-|运动项目恢复和审批年份，不是冬夏交替时间。
+14:0|partial|"Garden Party" features a substantial appearance by Josh Groban|集剧情中兄弟出现及演员客串，但未明确对应关系。
+14:6|irrelevant|-|Dwight的兄弟演员，不是Andy的兄弟。
+14:8|direct|his younger brother Walter Bernard, Jr. (Josh Groban)|明确Andy弟弟与演员对应。
+14:17|direct|Josh Groban as Andy's father, mother and brother, respectively|完整同句按序对应三位演员与父母兄弟。
+14:47|direct|Josh Groban were cast as Andy's father, mother and brother, respectively|同句提供按序对应关系。
+15:0|partial|Donald Trump of New York and Governor Mike Pence of Indiana won the 2016 election|是2016选举获胜，不等于2016任职；问题两种含义混淆。
+15:3|partial|He managed the company until his 2017 inauguration.|明确2017就职，可辅助区分选举和任职，但没有2016在任总统姓名。
+15:10|partial|began at noon EST on January 20, 2017|同句给出2017就职并继任Obama，可推断之前任职；题问2016还是2016选举含义未固定。
+15:19|irrelevant|-|候选人的宪法观点和批评，没有2016任职者信息。
+15:39|irrelevant|-|军队政策和后来的争议，不回答2016任职者。
+16:0|irrelevant|-|不同历史任期的议长人选，不支持参考时点Paul Ryan。
+16:1|direct|The current House Speaker is Congressman Paul Ryan from Wisconsin.|在文中历史时点直接给出议长姓名。
+16:2|irrelevant|-|1998年议长选举背景，不支持参考时点人物。
+16:4|direct|The incumbent speaker, Paul Ryan, was re-elected.|同段定义议长是众议院主持者，并给出2017人选。
+16:18|irrelevant|-|1855年议长人选，任期与参考目标不同。
+16:20|partial|As presiding officer of the|讨论议长与总统关系，主持者句被截断，没有参考时期姓名。
+16:41|irrelevant|-|党团领袖和党鞭，不是议长/主持者。
+16:43|direct|House Speaker Paul Ryan requested Conroy's resignation|虽主题为牧师辞职，但明确2018年议长姓名，支持同一历史时点的身份。
+16:44|irrelevant|-|资深议员Dean的沿革，不是目标时期主持者。
+16:46|direct|serving since 2015 as the 54th Speaker of the United States House of Representatives|人物传记明确Paul Ryan的议长职务和起点。
+17:1|partial|The Kuru Kingdom, the earliest Vedic "state", was formed|描述社会发展和国家形成，但未明确大规模城市国家的目标表述。
+17:2|direct|The end of the Vedic period witnessed the rise of Mahajanapada (large, urbanised states)|明确时期、发展变化和对应对象。
+17:5|direct|the political units consolidated into large kingdoms called Mahajanapadas|同段紧接城市化进程，支持大规模城市国家的发展。
+17:10|irrelevant|-|史料、文本和考古研究，没有目标社会发展陈述。
+17:47|irrelevant|-|宗教思想和后世解释，没有城市国家发展。
+18:0|direct|Deep Roy was cast to play the Oompa-Loompas|明确角色选角并属于目标影片。
+18:1|direct|the Oompa-Loompas in "Charlie and the Chocolate Factory"|人物传记明确角色与影片。
+18:2|direct|the Oompa-Loompas in "Charlie and the Chocolate Factory"|同传记明确角色与影片。
+18:3|direct|all played by Deep Roy|影评明确Oompa-Loompas由该演员出演。
+18:4|direct|the Oompa-Loompas (Deep Roy)|角色括号直接对应演员。
+19:5|direct|The movie explores themes of nostalgia and modernism.|明确两种主题。
+19:8|direct|The movie explores themes of nostalgia and modernism.|明确两种主题。
+19:23|partial|its tidy parable structure|影评评论结构与时间旅行形式，未明确两个参考主题。
+19:24|direct|despite the allure of nostalgia, any time can eventually become a dull "present"|剧情明确怀旧和珍惜当下的中心意旨，支持nostalgia主题。
+19:44|partial|centered on a man who works in a nostalgia shop|剧中小说和主人公背景涉及怀旧，但不等于完整影片主题陈述。
+20:0|partial|Virendra Pratap (Govind Namdeo)|给出本片一个配角演员，不完整提供主演阵容。
+20:3|direct|The film stars Fardeen Khan opposite debutant Richa Pallod.|明确主要演员。
+20:7|direct|Abhay (Fardeen Khan)|同段还给出Farida Jalal和Richa Pallod的角色映射，可回答演员阵容。
+20:9|direct|The film stars Fardeen Khan opposite debutant Richa Pallod.|明确本片主演。
+20:29|irrelevant|-|另一部电影Hum的拍摄和制作，不是目标影片。
+21:0|direct|By volume, it is the largest known living single-stem tree on Earth.|同段给出General Sherman在美国的位置，明确按体积最大的现存单干树。
+21:1|irrelevant|-|President是第二大而非目标最大；giant sequoia字符串不能推出最大树身份。
+21:3|partial|Sherman Tree is neither the tallest known living tree on Earth|说明最大不等于最高最宽，缺少最大体积的正面陈述。
+21:21|irrelevant|-|东部最高白松，不是全国按体积最大树。
+21:32|irrelevant|-|最高树Hyperion和断在最大树引句，未给出所问最大树。
+21:34|direct|where the largest tree in the world lives - the General Sherman.|明确General Sherman是最大树，Monroe仅为周边背景。
+21:39|direct|General Sherman was identified as the largest tree in the world|明确最大树并说明体积比较标准。
+21:40|irrelevant|-|President是第二大树，不是最大树身份。
+21:42|irrelevant|-|最古老生物和树龄，不是最大体积。
+21:44|partial|The redwood species contains the largest and tallest trees in the world.|支持相关树种类别但未确定单株及体积标准。
+21:49|direct|where the largest tree in the world lives - the General Sherman.|明确General Sherman而非Monroe为最大树。
+22:3|partial|England's Geoff Hurst|确认1966世界杯参赛球员，但没有West Ham俱乐部关联。
+22:11|irrelevant|-|赛程和战术，没有目标球员与俱乐部关系。
+22:12|irrelevant|-|比赛事件和Bobby Charlton，不给出West Ham球员身份。
+22:15|partial|Martin Peters put England in the lead|给出两名进球者，未给出West Ham俱乐部关联。
+22:21|partial|Moore and other West Ham United players' contribution to the win|确认Moore与West Ham并列其他领奖者，但未清楚区分所有名单成员的俱乐部归属。
+22:22|irrelevant|-|小组赛及其他球员，不给出目标West Ham球员。
+22:30|partial|Geoff Hurst scores a hat-trick, with Martin Peters scoring the other goal.|确认两位世界杯球员，没有俱乐部所属关系。
+22:42|partial|England's World Cup winning team featuring captain Bobby Moore and goalscorers Geoff Hurst and Martin Peters|确认三位队员名单，但片段开头截断了影响主体，West Ham关系未完整出现。
+22:48|irrelevant|-|1970年世界杯和Martin Peters，不是1966年West Ham球员名单。
+23:0|direct|Wilder was officially cast for the role|目标1971电影页明确最终Wilder选角，但名字在此切片仅姓氏；结合片段和标题可直接确定。
+23:1|direct|Wilder's performance as Willy Wonka|同段明确Gene Wilder，支持原版角色演员。
+23:4|direct|what Gene Wilder did in the 1971 film adaptation|比较Depp与1971年Gene Wilder表演，明确原版演员。
+23:5|direct|Gene Wilder's characterization of Willy Wonka|同段明确1971电影改编与原版角色。
+23:8|direct|starring Gene Wilder as Willy Wonka|明确1971年影片演员角色对应。
+23:9|direct|starring Gene Wilder as Willy Wonka|明确1971年影片演员角色对应。
+23:17|irrelevant|-|Willy Loman为另一角色，不是Willy Wonka。
+24:1|uncertain|the Pledge was first used in public schools on October 12, 1892|支持首次使用年份1892，与参考1942所指官方认可不同，未固定start含义。
+24:2|uncertain|was composed in August 1892 by Francis Bellamy|创制年份与参考正式采用年份不同，问题事件未固定。
+24:6|partial|an official program for universal use in all the schools|1892学校活动背景，缺少完整誓词首次使用或正式采用的陈述。
+24:7|uncertain|Congress officially recognized the Pledge for the first time|给出1942年首次官方认可，但不能确定问题start是不是认可而非创制或使用。
+24:8|partial|Flag Code language first passed into law on June 22, 1942|给出相关法典时间，未直接说明誓词首次创制/使用事件。
+24:9|irrelevant|-|1954添加under God及1942法典背景，非目标首次事件。
+24:27|irrelevant|-|更早的另一版本敬礼方式，不提供目标誓词的起始日期。
+25:0|partial|Vivo began its international expansion in 2014 when it entered the Thai market.|后句列印度，但2014明确连接泰国，不能完整证明印度首款手机上市日期。
+25:7|irrelevant|-|印度赛事赞助及其他国家市场时间，不是印度首款手机上市。
+25:12|irrelevant|-|ASUS VivoPC电脑，不是Vivo公司手机。
+25:13|irrelevant|-|Vivox语音服务公司，不是Vivo手机。
+25:18|irrelevant|-|HTC手机印度上市，不是Vivo。
+25:27|irrelevant|-|HTC Desire手机，不是Vivo。
+25:30|irrelevant|-|ASUS产品线和2014年份，不是Vivo公司印度首发。
+25:34|irrelevant|-|Motorola手机2014上市，不是Vivo。
+25:46|irrelevant|-|Lenovo平板2014发布，不是Vivo。
+25:49|irrelevant|-|Android电视产品时间，不是Vivo手机印度上市。
+26:0|direct|her heir apparent is her eldest son, Charles, Prince of Wales|明确原文Elizabeth II在位时的继承人，仅按文中历史时点判断。
+26:2|partial|the first two heirs at the time of the agreement (Charles, Prince of Wales, and his son Prince William, Duke of Cambridge)|历史协议中的继承顺序提供信息，缺少该题所指时点。
+26:4|partial|Currently, the Duke is 2nd in the line of Succession|从第二位William的顺序可辅助排除，但没有第一位的完整明确陈述。
+26:9|direct|is the heir apparent to the British throne as the eldest child of Queen Elizabeth II|人物页明确历史时点继承关系，不作当前现实陈述。
+26:15|irrelevant|-|萨克森王位和其他王室成员，不是英国该时点继承人。
+26:22|partial|The title Prince of Wales is not automatically held by the heir apparent|提到Charles超越历史继承人纪录，但未明确题目时点的继承顺序。
+26:40|partial|the Prince of Wales' succession as King|相关爵位继承提到未来继位，没有所问人物姓名的直接映射。
+27:0|direct|She was married to Alf Stewart|Ailsa角色页明确配偶。
+27:3|direct|Ailsa, who he marries in 1988|Alf角色页明确婚姻对象和时间。
+27:5|partial|Ailsa was paired with Alf Stewart (Ray Meagher) and they couple became engaged.|给出订婚关系，没有实际结婚的陈述。
+27:6|direct|Alf married a local woman called Martha Baldivis|明确另一位曾经的配偶，问题未限定时期；属于参考名单外的有效答案关系。
+27:21|irrelevant|-|只是并列当地角色和演员，没有婚姻关系。
+28:5|uncertain|on 19 April 2009|提供某场半决赛日期，但问题未指定赛季且参考是地点，不能确定目标。
+28:6|irrelevant|-|决赛和较早轮次抽签，不是半决赛日期。
+28:9|uncertain|this took effect in 2008|描述场地政策开始年份，不是某届半决赛日期；问答类型冲突。
+28:16|irrelevant|-|第四轮比赛和资格赛背景，不是半决赛日期。
+28:27|irrelevant|-|决赛场地历史，不是半决赛日期。
+28:34|irrelevant|-|第三和第四轮赛程，不是半决赛。
+28:41|irrelevant|-|第五轮和四分之一决赛抽签，不是半决赛日期。
+29:2|partial|a close advisor of President Saddam Hussein|给出总统名字及同段任期背景，但未直接连接海湾战争时期。
+29:10|partial|Saddam Hussein publicly maintained that it was in Iraq's interest not to engage with Iran|相关领导行为但对象是伊朗冲突，不直接连接海湾战争时期。
+29:15|partial|A first cousin of former Ba'athist Iraqi President Saddam Hussein|确认总统名字且涉及侵科威特背景，时间与任职连接仍间接。
+29:37|partial|appointed Iraqi governor of Kuwait by Saddam Hussein during the 1991 Gulf War|明确战争时Saddam的任命权力，未直接给出总统或国家领导人职务。
+29:47|partial|Iraqi President Saddam Hussein|明确1983总统及战前背景，但非战争期间的直接任职陈述。
+30:0|partial|Claude Akins|演员在1960电影名单中，没有preacher角色对应。
+30:5|irrelevant|-|其他主要角色和舞台重演阵容，不是所问preacher演员映射。
+30:6|irrelevant|-|舞台首演时间和主要演员，没有所问角色对应。
+30:8|uncertain|playing Rev. Brown|明确Tom Aldredge饰演舞台版牧师；题未指明电影版本，参考Claude属于另一版本。
+30:30|irrelevant|-|电影主题和不同翻拍版本，不提供牧师角色演员。
+31:0|partial|The Constitution of Puerto Rico was approved by a Constitutional Convention on February 6, 1952|宪法及美军登陆背景，不是明确获得领土日期。
+31:1|partial|The people of Puerto Rico were declared U.S. citizens in 1917.|公民身份事件不同于领土加入事件。
+31:3|direct|the United States acquired Puerto Rico under the terms of the Treaty of Paris|同句明确1898获得领土，支持字面题意但与参考1950冲突；整题不进入训练目标。
+31:5|partial|which granted Puerto Ricans born on or after April 25, 1898, U.S. citizenship|1917公民身份立法，不是领土获得事件。
+31:6|direct|Spain ceded Puerto Rico, along with the Philippines and Guam|同段战争与条约生效时间支持领土转移事件，但与参考1950冲突。
+31:8|partial|collectively making Puerto Ricans United States citizens|1917公民身份，不是领土加入日期。
+31:21|partial|after the Treaty of Paris of 1898|名称变化涉及条约年份，但没有明确获得领土的关系。
+31:23|direct|With its 1898 victory, the United States acquired Puerto Rico from Spain|明确1898获得领土，与参考1950冲突须隔离整题。
+31:24|partial|On February 4, 1952, the convention approved Resolution 22|Commonwealth命名及宪法事件，不是领土获得。
+31:30|partial|In 1950, the U.S. Congress approved Public Law 600|1950允许起草本地宪法，不是领土获得事件；字串命中不是支持。
+32:5|partial|Congress may not delegate its lawmaking responsibilities to any other agency.|介绍法律和法院限制立法授权，未给最终权威关系。
+32:6|irrelevant|-|行政权归总统及选举制度，不是最终司法权威。
+32:9|partial|Supreme Court decision in McCulloch v. Maryland (1819)|法院扩大联邦权力的背景，未说明最终权威。
+32:14|partial|it is the Supreme Court makes final|最接近目标关系，但切片断在final后，最终什么未完整提供。
+32:29|partial|requires the establishment of a Supreme Court|司法组织建立，不是最终权威的明确关系。
+32:34|partial|checks and balances|分权和法院也受制衡，不能推出笼统最终权威。
+32:38|irrelevant|-|澳大利亚和欧盟权限划分，没有本题最终权威机构。
+32:44|partial|each department may exercise only its own constitutional powers|分权原则背景，未给最终权威机构。
+32:45|partial|requires the establishment of a Supreme Court|司法组织结构，没有完整最终裁决权威陈述。

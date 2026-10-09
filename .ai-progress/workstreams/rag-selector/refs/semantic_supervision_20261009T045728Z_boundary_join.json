@@ -1,0 +1,3704 @@
+{
+  "schema_version": "rag.semantic_support_boundary_join.v1",
+  "source_run": "five_ideas/semantic_reader_supervision_audit/20261009T045728Z",
+  "claim_ceiling": "L0_diagnostic",
+  "coverage": {
+    "declared_scope": 220,
+    "declared_scope_reviewed": 220,
+    "reviewed_population": 282,
+    "all_population": 1600,
+    "new_judgments": 209,
+    "old_preserved": 73,
+    "all_selected_slots_covered": true,
+    "all_registered_boundary_control_items_covered": true,
+    "all_swaps_covered": true
+  },
+  "semantic_modes": "single_primary_model, provisional, new scored context not independent blind",
+  "methods": {
+    "frozen_reader_topk": {
+      "selected_slots": 160,
+      "label_counts": {
+        "direct": 50,
+        "partial": 54,
+        "irrelevant": 48,
+        "contradictory": 2,
+        "uncertain": 6
+      },
+      "direct_or_partial_count": 104,
+      "question_target_provisionally_unflagged": 23,
+      "unflagged_label_counts": {
+        "direct": 48,
+        "partial": 36,
+        "irrelevant": 31,
+        "contradictory": 0,
+        "uncertain": 0
+      },
+      "not_confirmed_accuracy": true
+    },
+    "quantum_semantic": {
+      "selected_slots": 160,
+      "label_counts": {
+        "direct": 50,
+        "partial": 54,
+        "irrelevant": 48,
+        "contradictory": 2,
+        "uncertain": 6
+      },
+      "direct_or_partial_count": 104,
+      "question_target_provisionally_unflagged": 23,
+      "unflagged_label_counts": {
+        "direct": 48,
+        "partial": 36,
+        "irrelevant": 31,
+        "contradictory": 0,
+        "uncertain": 0
+      },
+      "not_confirmed_accuracy": true
+    },
+    "classical_semantic": {
+      "selected_slots": 160,
+      "label_counts": {
+        "direct": 50,
+        "partial": 54,
+        "irrelevant": 48,
+        "contradictory": 2,
+        "uncertain": 6
+      },
+      "direct_or_partial_count": 104,
+      "question_target_provisionally_unflagged": 23,
+      "unflagged_label_counts": {
+        "direct": 48,
+        "partial": 36,
+        "irrelevant": 31,
+        "contradictory": 0,
+        "uncertain": 0
+      },
+      "not_confirmed_accuracy": true
+    },
+    "quantum_scalar_control": {
+      "selected_slots": 160,
+      "label_counts": {
+        "direct": 50,
+        "partial": 53,
+        "irrelevant": 48,
+        "contradictory": 2,
+        "uncertain": 7
+      },
+      "direct_or_partial_count": 103,
+      "question_target_provisionally_unflagged": 23,
+      "unflagged_label_counts": {
+        "direct": 48,
+        "partial": 36,
+        "irrelevant": 31,
+        "contradictory": 0,
+        "uncertain": 0
+      },
+      "not_confirmed_accuracy": true
+    },
+    "monotonic_compression_control": {
+      "selected_slots": 160,
+      "label_counts": {
+        "direct": 50,
+        "partial": 54,
+        "irrelevant": 48,
+        "contradictory": 2,
+        "uncertain": 6
+      },
+      "direct_or_partial_count": 104,
+      "question_target_provisionally_unflagged": 23,
+      "unflagged_label_counts": {
+        "direct": 48,
+        "partial": 36,
+        "irrelevant": 31,
+        "contradictory": 0,
+        "uncertain": 0
+      },
+      "not_confirmed_accuracy": true
+    }
+  },
+  "scope_only_weak_positive_label_counts": {
+    "direct": 47,
+    "partial": 45,
+    "irrelevant": 19,
+    "contradictory": 2,
+    "uncertain": 6
+  },
+  "scope_only_weak_negative_label_counts": {
+    "irrelevant": 62,
+    "partial": 26,
+    "direct": 9,
+    "contradictory": 1,
+    "uncertain": 3
+  },
+  "scope_noise_rates_are_not_population_rates": true,
+  "target_flags": [
+    {
+      "audit_case_number": 2,
+      "review_case_id": "1440a91de72510bc0ea23cf9baac6d4829324427cbc8c17b74cb3461099901a3",
+      "flag": "conditional_scenario_missing",
+      "rationale": "Neither-vessel原文限于特定迎面相遇或绝对权利；问题未给场景。",
+      "use_in_new_training": "blocked_pending_target_qualification",
+      "reference_rewritten": false,
+      "official_gold_correction": false
+    },
+    {
+      "audit_case_number": 4,
+      "review_case_id": "4a8f2398ebbb4b0847b85c53c8855fdcb1d61e4b3d0464a4e88c7bbdcc57bd65",
+      "flag": "serialized_formula_subscript_missing",
+      "rationale": "公式氧下标4在导出文本中丢失，严格分辨CaSO4/CaSO3需保留原始公式。",
+      "use_in_new_training": "blocked_pending_target_qualification",
+      "reference_rewritten": false,
+      "official_gold_correction": false
+    },
+    {
+      "audit_case_number": 10,
+      "review_case_id": "33f9a297bf7d65baa2ec4e9fc88c845592aecced4ff7718f82fab9909c3e34f1",
+      "flag": "reference_order_conflict",
+      "rationale": "first约束与原文following migration of followers冲突。",
+      "use_in_new_training": "blocked_pending_target_qualification",
+      "reference_rewritten": false,
+      "official_gold_correction": false
+    },
+    {
+      "audit_case_number": 15,
+      "review_case_id": "09737f68352a06d3f476d81fa4bf3f75619033b506098973ff0f89bc8593842b",
+      "flag": "election_vs_office_ambiguous",
+      "rationale": "2016选举胜者与2016在任总统不同，参考名单合并两者。",
+      "use_in_new_training": "blocked_pending_target_qualification",
+      "reference_rewritten": false,
+      "official_gold_correction": false
+    },
+    {
+      "audit_case_number": 24,
+      "review_case_id": "c833d72cbc94fd38dc877669d2011849a4dce47769397b3948d2677fbe51a484",
+      "flag": "event_start_ambiguous",
+      "rationale": "首次创制/使用与1942官方认可的事件未区分。",
+      "use_in_new_training": "blocked_pending_target_qualification",
+      "reference_rewritten": false,
+      "official_gold_correction": false
+    },
+    {
+      "audit_case_number": 28,
+      "review_case_id": "da09815bd0fa28b674b4ff8d5abbf207e9923a4b65fdeca3991745955d6a8717",
+      "flag": "question_reference_type_mismatch",
+      "rationale": "when时间问题的参考答案是体育场；且未给赛季。",
+      "use_in_new_training": "blocked_pending_target_qualification",
+      "reference_rewritten": false,
+      "official_gold_correction": false
+    },
+    {
+      "audit_case_number": 30,
+      "review_case_id": "f983612fd41e08fce8d2c670c0d93d2cee52b788b35d716c16e6e13a83fc2882",
+      "flag": "adaptation_version_unspecified",
+      "rationale": "影片与舞台版相同角色不同演员；问题未声明版本。",
+      "use_in_new_training": "blocked_pending_target_qualification",
+      "reference_rewritten": false,
+      "official_gold_correction": false
+    },
+    {
+      "audit_case_number": 31,
+      "review_case_id": "1724cbdfcb0127d2deb731b1f94d450c942ba729b6c39365565b48a5fd88ff5a",
+      "flag": "acquisition_vs_constitution_conflict",
+      "rationale": "1898领土获得与1950制宪授权是不同事件。",
+      "use_in_new_training": "blocked_pending_target_qualification",
+      "reference_rewritten": false,
+      "official_gold_correction": false
+    },
+    {
+      "audit_case_number": 32,
+      "review_case_id": "6ca38d903d408ac94a36b0cb89110220d59733bf9e12294e54293b7680d95f12",
+      "flag": "jurisdiction_and_authority_scope_unspecified",
+      "rationale": "哪个联邦制度、哪种最终权威未声明，片段未给完整关系。",
+      "use_in_new_training": "blocked_pending_target_qualification",
+      "reference_rewritten": false,
+      "official_gold_correction": false
+    }
+  ],
+  "registered_pair_count": 60,
+  "registered_pairs_weak_positive_labels": {
+    "irrelevant": 22,
+    "partial": 24,
+    "direct": 8,
+    "contradictory": 2,
+    "uncertain": 4
+  },
+  "clean_contrast_diagnostic": {
+    "frozen_reader_topk": {
+      "clean_dependent_pair_count": 5,
+      "clean_distinct_questions": 3,
+      "positive_relative_correction": 0,
+      "strict_crossings": 0,
+      "clean_matched_pairs": 5,
+      "positive_more_favored_than_matched_irrelevant": 0
+    },
+    "quantum_semantic": {
+      "clean_dependent_pair_count": 5,
+      "clean_distinct_questions": 3,
+      "positive_relative_correction": 4,
+      "strict_crossings": 0,
+      "clean_matched_pairs": 5,
+      "positive_more_favored_than_matched_irrelevant": 1
+    },
+    "classical_semantic": {
+      "clean_dependent_pair_count": 5,
+      "clean_distinct_questions": 3,
+      "positive_relative_correction": 5,
+      "strict_crossings": 0,
+      "clean_matched_pairs": 5,
+      "positive_more_favored_than_matched_irrelevant": 2
+    },
+    "quantum_scalar_control": {
+      "clean_dependent_pair_count": 5,
+      "clean_distinct_questions": 3,
+      "positive_relative_correction": 3,
+      "strict_crossings": 0,
+      "clean_matched_pairs": 5,
+      "positive_more_favored_than_matched_irrelevant": 1
+    },
+    "monotonic_compression_control": {
+      "clean_dependent_pair_count": 5,
+      "clean_distinct_questions": 3,
+      "positive_relative_correction": 5,
+      "strict_crossings": 0,
+      "clean_matched_pairs": 5,
+      "positive_more_favored_than_matched_irrelevant": 2
+    }
+  },
+  "per_case": [
+    {
+      "audit_case_number": 1,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "direct": 1,
+          "partial": 2,
+          "irrelevant": 2
+        },
+        "quantum_semantic": {
+          "direct": 1,
+          "partial": 2,
+          "irrelevant": 2
+        },
+        "classical_semantic": {
+          "direct": 1,
+          "partial": 2,
+          "irrelevant": 2
+        },
+        "quantum_scalar_control": {
+          "direct": 1,
+          "partial": 2,
+          "irrelevant": 2
+        },
+        "monotonic_compression_control": {
+          "direct": 1,
+          "partial": 2,
+          "irrelevant": 2
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 2,
+      "target_flag": "conditional_scenario_missing",
+      "selected": {
+        "frozen_reader_topk": {
+          "partial": 2,
+          "irrelevant": 3
+        },
+        "quantum_semantic": {
+          "partial": 2,
+          "irrelevant": 3
+        },
+        "classical_semantic": {
+          "partial": 2,
+          "irrelevant": 3
+        },
+        "quantum_scalar_control": {
+          "partial": 2,
+          "irrelevant": 3
+        },
+        "monotonic_compression_control": {
+          "partial": 2,
+          "irrelevant": 3
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 3,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "direct": 1,
+          "partial": 4
+        },
+        "quantum_semantic": {
+          "direct": 1,
+          "partial": 4
+        },
+        "classical_semantic": {
+          "direct": 1,
+          "partial": 4
+        },
+        "quantum_scalar_control": {
+          "direct": 1,
+          "partial": 4
+        },
+        "monotonic_compression_control": {
+          "direct": 1,
+          "partial": 4
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 4,
+      "target_flag": "serialized_formula_subscript_missing",
+      "selected": {
+        "frozen_reader_topk": {
+          "partial": 2,
+          "irrelevant": 3
+        },
+        "quantum_semantic": {
+          "partial": 2,
+          "irrelevant": 3
+        },
+        "classical_semantic": {
+          "partial": 2,
+          "irrelevant": 3
+        },
+        "quantum_scalar_control": {
+          "partial": 2,
+          "irrelevant": 3
+        },
+        "monotonic_compression_control": {
+          "partial": 2,
+          "irrelevant": 3
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 5,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "partial": 1,
+          "direct": 2,
+          "irrelevant": 2
+        },
+        "quantum_semantic": {
+          "partial": 1,
+          "direct": 2,
+          "irrelevant": 2
+        },
+        "classical_semantic": {
+          "partial": 1,
+          "direct": 2,
+          "irrelevant": 2
+        },
+        "quantum_scalar_control": {
+          "partial": 1,
+          "direct": 2,
+          "irrelevant": 2
+        },
+        "monotonic_compression_control": {
+          "partial": 1,
+          "direct": 2,
+          "irrelevant": 2
+        }
+      },
+      "missed_direct_in_declared_scope": [
+        {
+          "candidate_index": 1,
+          "reader_rank": 6,
+          "weak_positive": true,
+          "review_item_id": "c033f73a3a904db63e44e664361054190819ca4094058c19f98d141d3fdcb370"
+        }
+      ]
+    },
+    {
+      "audit_case_number": 6,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "partial": 4,
+          "irrelevant": 1
+        },
+        "quantum_semantic": {
+          "partial": 4,
+          "irrelevant": 1
+        },
+        "classical_semantic": {
+          "partial": 4,
+          "irrelevant": 1
+        },
+        "quantum_scalar_control": {
+          "partial": 4,
+          "irrelevant": 1
+        },
+        "monotonic_compression_control": {
+          "partial": 4,
+          "irrelevant": 1
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 7,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "direct": 3,
+          "irrelevant": 2
+        },
+        "quantum_semantic": {
+          "direct": 3,
+          "irrelevant": 2
+        },
+        "classical_semantic": {
+          "direct": 3,
+          "irrelevant": 2
+        },
+        "quantum_scalar_control": {
+          "direct": 3,
+          "irrelevant": 2
+        },
+        "monotonic_compression_control": {
+          "direct": 3,
+          "irrelevant": 2
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 8,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "direct": 4,
+          "irrelevant": 1
+        },
+        "quantum_semantic": {
+          "direct": 4,
+          "irrelevant": 1
+        },
+        "classical_semantic": {
+          "direct": 4,
+          "irrelevant": 1
+        },
+        "quantum_scalar_control": {
+          "direct": 4,
+          "irrelevant": 1
+        },
+        "monotonic_compression_control": {
+          "direct": 4,
+          "irrelevant": 1
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 9,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "direct": 3,
+          "partial": 2
+        },
+        "quantum_semantic": {
+          "direct": 3,
+          "partial": 2
+        },
+        "classical_semantic": {
+          "direct": 3,
+          "partial": 2
+        },
+        "quantum_scalar_control": {
+          "direct": 3,
+          "partial": 2
+        },
+        "monotonic_compression_control": {
+          "direct": 3,
+          "partial": 2
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 10,
+      "target_flag": "reference_order_conflict",
+      "selected": {
+        "frozen_reader_topk": {
+          "partial": 1,
+          "irrelevant": 2,
+          "contradictory": 2
+        },
+        "quantum_semantic": {
+          "partial": 1,
+          "irrelevant": 2,
+          "contradictory": 2
+        },
+        "classical_semantic": {
+          "partial": 1,
+          "irrelevant": 2,
+          "contradictory": 2
+        },
+        "quantum_scalar_control": {
+          "partial": 1,
+          "irrelevant": 2,
+          "contradictory": 2
+        },
+        "monotonic_compression_control": {
+          "partial": 1,
+          "irrelevant": 2,
+          "contradictory": 2
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 11,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "irrelevant": 4,
+          "partial": 1
+        },
+        "quantum_semantic": {
+          "irrelevant": 4,
+          "partial": 1
+        },
+        "classical_semantic": {
+          "irrelevant": 4,
+          "partial": 1
+        },
+        "quantum_scalar_control": {
+          "irrelevant": 4,
+          "partial": 1
+        },
+        "monotonic_compression_control": {
+          "irrelevant": 4,
+          "partial": 1
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 12,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "irrelevant": 3,
+          "direct": 1,
+          "partial": 1
+        },
+        "quantum_semantic": {
+          "irrelevant": 3,
+          "direct": 1,
+          "partial": 1
+        },
+        "classical_semantic": {
+          "irrelevant": 3,
+          "direct": 1,
+          "partial": 1
+        },
+        "quantum_scalar_control": {
+          "irrelevant": 3,
+          "direct": 1,
+          "partial": 1
+        },
+        "monotonic_compression_control": {
+          "irrelevant": 3,
+          "direct": 1,
+          "partial": 1
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 13,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "direct": 2,
+          "partial": 2,
+          "irrelevant": 1
+        },
+        "quantum_semantic": {
+          "direct": 2,
+          "partial": 2,
+          "irrelevant": 1
+        },
+        "classical_semantic": {
+          "direct": 2,
+          "partial": 2,
+          "irrelevant": 1
+        },
+        "quantum_scalar_control": {
+          "direct": 2,
+          "partial": 2,
+          "irrelevant": 1
+        },
+        "monotonic_compression_control": {
+          "direct": 2,
+          "partial": 2,
+          "irrelevant": 1
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 14,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "direct": 3,
+          "partial": 1,
+          "irrelevant": 1
+        },
+        "quantum_semantic": {
+          "direct": 3,
+          "partial": 1,
+          "irrelevant": 1
+        },
+        "classical_semantic": {
+          "direct": 3,
+          "partial": 1,
+          "irrelevant": 1
+        },
+        "quantum_scalar_control": {
+          "direct": 3,
+          "partial": 1,
+          "irrelevant": 1
+        },
+        "monotonic_compression_control": {
+          "direct": 3,
+          "partial": 1,
+          "irrelevant": 1
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 15,
+      "target_flag": "election_vs_office_ambiguous",
+      "selected": {
+        "frozen_reader_topk": {
+          "partial": 3,
+          "irrelevant": 2
+        },
+        "quantum_semantic": {
+          "partial": 3,
+          "irrelevant": 2
+        },
+        "classical_semantic": {
+          "partial": 3,
+          "irrelevant": 2
+        },
+        "quantum_scalar_control": {
+          "partial": 3,
+          "irrelevant": 2
+        },
+        "monotonic_compression_control": {
+          "partial": 3,
+          "irrelevant": 2
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 16,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "direct": 2,
+          "irrelevant": 2,
+          "partial": 1
+        },
+        "quantum_semantic": {
+          "direct": 2,
+          "irrelevant": 2,
+          "partial": 1
+        },
+        "classical_semantic": {
+          "direct": 2,
+          "irrelevant": 2,
+          "partial": 1
+        },
+        "quantum_scalar_control": {
+          "direct": 2,
+          "irrelevant": 2,
+          "partial": 1
+        },
+        "monotonic_compression_control": {
+          "direct": 2,
+          "irrelevant": 2,
+          "partial": 1
+        }
+      },
+      "missed_direct_in_declared_scope": [
+        {
+          "candidate_index": 43,
+          "reader_rank": 31,
+          "weak_positive": true,
+          "review_item_id": "459c1aa350748d2687a8615eca79541355774c373a1e15deff91cd6fd9a6ee24"
+        },
+        {
+          "candidate_index": 46,
+          "reader_rank": 39,
+          "weak_positive": true,
+          "review_item_id": "3f68cb8a2a750e881ae30051ea7cbec8046e54ac871a8dcf3e0a10b4d3f44a05"
+        }
+      ]
+    },
+    {
+      "audit_case_number": 17,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "direct": 2,
+          "partial": 1,
+          "irrelevant": 2
+        },
+        "quantum_semantic": {
+          "direct": 2,
+          "partial": 1,
+          "irrelevant": 2
+        },
+        "classical_semantic": {
+          "direct": 2,
+          "partial": 1,
+          "irrelevant": 2
+        },
+        "quantum_scalar_control": {
+          "direct": 2,
+          "partial": 1,
+          "irrelevant": 2
+        },
+        "monotonic_compression_control": {
+          "direct": 2,
+          "partial": 1,
+          "irrelevant": 2
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 18,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "direct": 5
+        },
+        "quantum_semantic": {
+          "direct": 5
+        },
+        "classical_semantic": {
+          "direct": 5
+        },
+        "quantum_scalar_control": {
+          "direct": 5
+        },
+        "monotonic_compression_control": {
+          "direct": 5
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 19,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "direct": 3,
+          "partial": 2
+        },
+        "quantum_semantic": {
+          "direct": 3,
+          "partial": 2
+        },
+        "classical_semantic": {
+          "direct": 3,
+          "partial": 2
+        },
+        "quantum_scalar_control": {
+          "direct": 3,
+          "partial": 2
+        },
+        "monotonic_compression_control": {
+          "direct": 3,
+          "partial": 2
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 20,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "direct": 3,
+          "partial": 1,
+          "irrelevant": 1
+        },
+        "quantum_semantic": {
+          "direct": 3,
+          "partial": 1,
+          "irrelevant": 1
+        },
+        "classical_semantic": {
+          "direct": 3,
+          "partial": 1,
+          "irrelevant": 1
+        },
+        "quantum_scalar_control": {
+          "direct": 3,
+          "partial": 1,
+          "irrelevant": 1
+        },
+        "monotonic_compression_control": {
+          "direct": 3,
+          "partial": 1,
+          "irrelevant": 1
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 21,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "direct": 3,
+          "partial": 1,
+          "irrelevant": 1
+        },
+        "quantum_semantic": {
+          "direct": 3,
+          "partial": 1,
+          "irrelevant": 1
+        },
+        "classical_semantic": {
+          "direct": 3,
+          "partial": 1,
+          "irrelevant": 1
+        },
+        "quantum_scalar_control": {
+          "direct": 3,
+          "partial": 1,
+          "irrelevant": 1
+        },
+        "monotonic_compression_control": {
+          "direct": 3,
+          "partial": 1,
+          "irrelevant": 1
+        }
+      },
+      "missed_direct_in_declared_scope": [
+        {
+          "candidate_index": 49,
+          "reader_rank": 6,
+          "weak_positive": true,
+          "review_item_id": "8c542ebb6a078a15babe2b0d6a93622b563de96c417103cbb2704a3f399bef2a"
+        }
+      ]
+    },
+    {
+      "audit_case_number": 22,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "partial": 3,
+          "irrelevant": 2
+        },
+        "quantum_semantic": {
+          "partial": 3,
+          "irrelevant": 2
+        },
+        "classical_semantic": {
+          "partial": 3,
+          "irrelevant": 2
+        },
+        "quantum_scalar_control": {
+          "partial": 3,
+          "irrelevant": 2
+        },
+        "monotonic_compression_control": {
+          "partial": 3,
+          "irrelevant": 2
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 23,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "direct": 5
+        },
+        "quantum_semantic": {
+          "direct": 5
+        },
+        "classical_semantic": {
+          "direct": 5
+        },
+        "quantum_scalar_control": {
+          "direct": 5
+        },
+        "monotonic_compression_control": {
+          "direct": 5
+        }
+      },
+      "missed_direct_in_declared_scope": [
+        {
+          "candidate_index": 5,
+          "reader_rank": 7,
+          "weak_positive": true,
+          "review_item_id": "9debd5a0bf46b6488495f1cac420072724c3ca2489968519644b5ce5eedab331"
+        }
+      ]
+    },
+    {
+      "audit_case_number": 24,
+      "target_flag": "event_start_ambiguous",
+      "selected": {
+        "frozen_reader_topk": {
+          "uncertain": 3,
+          "partial": 1,
+          "irrelevant": 1
+        },
+        "quantum_semantic": {
+          "uncertain": 3,
+          "partial": 1,
+          "irrelevant": 1
+        },
+        "classical_semantic": {
+          "uncertain": 3,
+          "partial": 1,
+          "irrelevant": 1
+        },
+        "quantum_scalar_control": {
+          "uncertain": 3,
+          "partial": 1,
+          "irrelevant": 1
+        },
+        "monotonic_compression_control": {
+          "uncertain": 3,
+          "partial": 1,
+          "irrelevant": 1
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 25,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "partial": 1,
+          "irrelevant": 4
+        },
+        "quantum_semantic": {
+          "partial": 1,
+          "irrelevant": 4
+        },
+        "classical_semantic": {
+          "partial": 1,
+          "irrelevant": 4
+        },
+        "quantum_scalar_control": {
+          "partial": 1,
+          "irrelevant": 4
+        },
+        "monotonic_compression_control": {
+          "partial": 1,
+          "irrelevant": 4
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 26,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "direct": 2,
+          "partial": 2,
+          "irrelevant": 1
+        },
+        "quantum_semantic": {
+          "direct": 2,
+          "partial": 2,
+          "irrelevant": 1
+        },
+        "classical_semantic": {
+          "direct": 2,
+          "partial": 2,
+          "irrelevant": 1
+        },
+        "quantum_scalar_control": {
+          "direct": 2,
+          "partial": 2,
+          "irrelevant": 1
+        },
+        "monotonic_compression_control": {
+          "direct": 2,
+          "partial": 2,
+          "irrelevant": 1
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 27,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "direct": 3,
+          "partial": 1,
+          "irrelevant": 1
+        },
+        "quantum_semantic": {
+          "direct": 3,
+          "partial": 1,
+          "irrelevant": 1
+        },
+        "classical_semantic": {
+          "direct": 3,
+          "partial": 1,
+          "irrelevant": 1
+        },
+        "quantum_scalar_control": {
+          "direct": 3,
+          "partial": 1,
+          "irrelevant": 1
+        },
+        "monotonic_compression_control": {
+          "direct": 3,
+          "partial": 1,
+          "irrelevant": 1
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 28,
+      "target_flag": "question_reference_type_mismatch",
+      "selected": {
+        "frozen_reader_topk": {
+          "uncertain": 2,
+          "partial": 1,
+          "irrelevant": 2
+        },
+        "quantum_semantic": {
+          "uncertain": 2,
+          "partial": 1,
+          "irrelevant": 2
+        },
+        "classical_semantic": {
+          "uncertain": 2,
+          "partial": 1,
+          "irrelevant": 2
+        },
+        "quantum_scalar_control": {
+          "uncertain": 2,
+          "partial": 1,
+          "irrelevant": 2
+        },
+        "monotonic_compression_control": {
+          "uncertain": 2,
+          "partial": 1,
+          "irrelevant": 2
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 29,
+      "target_flag": null,
+      "selected": {
+        "frozen_reader_topk": {
+          "partial": 5
+        },
+        "quantum_semantic": {
+          "partial": 5
+        },
+        "classical_semantic": {
+          "partial": 5
+        },
+        "quantum_scalar_control": {
+          "partial": 5
+        },
+        "monotonic_compression_control": {
+          "partial": 5
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 30,
+      "target_flag": "adaptation_version_unspecified",
+      "selected": {
+        "frozen_reader_topk": {
+          "partial": 1,
+          "uncertain": 1,
+          "irrelevant": 3
+        },
+        "quantum_semantic": {
+          "partial": 1,
+          "uncertain": 1,
+          "irrelevant": 3
+        },
+        "classical_semantic": {
+          "partial": 1,
+          "uncertain": 1,
+          "irrelevant": 3
+        },
+        "quantum_scalar_control": {
+          "partial": 1,
+          "uncertain": 1,
+          "irrelevant": 3
+        },
+        "monotonic_compression_control": {
+          "partial": 1,
+          "uncertain": 1,
+          "irrelevant": 3
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    },
+    {
+      "audit_case_number": 31,
+      "target_flag": "acquisition_vs_constitution_conflict",
+      "selected": {
+        "frozen_reader_topk": {
+          "direct": 2,
+          "partial": 3
+        },
+        "quantum_semantic": {
+          "direct": 2,
+          "partial": 3
+        },
+        "classical_semantic": {
+          "direct": 2,
+          "partial": 3
+        },
+        "quantum_scalar_control": {
+          "direct": 2,
+          "partial": 2,
+          "uncertain": 1
+        },
+        "monotonic_compression_control": {
+          "direct": 2,
+          "partial": 3
+        }
+      },
+      "missed_direct_in_declared_scope": [
+        {
+          "candidate_index": 3,
+          "reader_rank": 7,
+          "weak_positive": false,
+          "review_item_id": "dee7952244047b9c410ce6bc34d94da0c0ef2b48baece0aae345e7105f2f5a4b"
+        }
+      ]
+    },
+    {
+      "audit_case_number": 32,
+      "target_flag": "jurisdiction_and_authority_scope_unspecified",
+      "selected": {
+        "frozen_reader_topk": {
+          "irrelevant": 1,
+          "partial": 4
+        },
+        "quantum_semantic": {
+          "irrelevant": 1,
+          "partial": 4
+        },
+        "classical_semantic": {
+          "irrelevant": 1,
+          "partial": 4
+        },
+        "quantum_scalar_control": {
+          "irrelevant": 1,
+          "partial": 4
+        },
+        "monotonic_compression_control": {
+          "irrelevant": 1,
+          "partial": 4
+        }
+      },
+      "missed_direct_in_declared_scope": []
+    }
+  ],
+  "pairs": [
+    {
+      "audit_case_number": 3,
+      "pair_ordinal": 0,
+      "positive_reader_rank": 39,
+      "positive_review_id": "de8907cbe2e7b06586d944e45e9ca7776b01c2bef7c932c67f33dc86c22753ae",
+      "negative_review_id": "e37a5509983ce49d3bce21f4b9c846c80f32ffaa6646db3d960b7194fe38fc55",
+      "control_review_id": "7bf9249b86c20d29773a4a09f94c8fb57b99f173ee3c1f1742daba753e530e05",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "partial",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.550265371799469,
+          "control_relative_correction": 0.5481482148170471,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 1.0850213170051575,
+          "control_relative_correction": 1.0849869847297668,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 1.2055824995040894,
+          "control_relative_correction": 1.103916049003601,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 5.855054557323456,
+          "control_relative_correction": 5.785224139690399,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 3,
+      "pair_ordinal": 1,
+      "positive_reader_rank": 39,
+      "positive_review_id": "de8907cbe2e7b06586d944e45e9ca7776b01c2bef7c932c67f33dc86c22753ae",
+      "negative_review_id": "63a81f80d6d14b57af8ef423864f1e3b35d95e5973e9c41fbbef9e2628685bb2",
+      "control_review_id": "7bf9249b86c20d29773a4a09f94c8fb57b99f173ee3c1f1742daba753e530e05",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "partial",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.4431889057159424,
+          "control_relative_correction": 0.4410717487335205,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 1.084301233291626,
+          "control_relative_correction": 1.0842669010162354,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 1.0700042247772217,
+          "control_relative_correction": 0.9683377742767334,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 3.798393130302429,
+          "control_relative_correction": 3.7285627126693726,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 4,
+      "pair_ordinal": 0,
+      "positive_reader_rank": 6,
+      "positive_review_id": "cb066fcabe1771143a1e0d4d52a824334e2b0a1251edbb1b5ba1c2abbe52bb1b",
+      "negative_review_id": "3aee6271122653a58f6cd5b85ee20e1e050b0fc8e43d5c34317f237facfc2a3d",
+      "control_review_id": "34eb74d2df2511eed347f0444f4d52576de2ee4bde7f7d2d19d1e02baaa41cdc",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": "serialized_formula_subscript_missing",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.18479013442993164,
+          "control_relative_correction": 0.18742036819458008,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.1576380729675293,
+          "control_relative_correction": 0.5993733406066895,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": -0.039044857025146484,
+          "control_relative_correction": 0.12233209609985352,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 1.33597993850708,
+          "control_relative_correction": 2.373319625854492,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 4,
+      "pair_ordinal": 1,
+      "positive_reader_rank": 6,
+      "positive_review_id": "cb066fcabe1771143a1e0d4d52a824334e2b0a1251edbb1b5ba1c2abbe52bb1b",
+      "negative_review_id": "7392e89eefec957d2320233134552f8080a552426cdb64ba93fa4ec96ac90de1",
+      "control_review_id": "34eb74d2df2511eed347f0444f4d52576de2ee4bde7f7d2d19d1e02baaa41cdc",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": "serialized_formula_subscript_missing",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": -0.0011124610900878906,
+          "control_relative_correction": 0.0015177726745605469,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.027316570281982422,
+          "control_relative_correction": 0.4690518379211426,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.035269737243652344,
+          "control_relative_correction": 0.19664669036865234,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.37974977493286133,
+          "control_relative_correction": 1.4170894622802734,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 4,
+      "pair_ordinal": 2,
+      "positive_reader_rank": 21,
+      "positive_review_id": "4543b5260ba6b80b2518e9d53d46470fc31843d3f0547df95acbbcd828fc65e2",
+      "negative_review_id": "3aee6271122653a58f6cd5b85ee20e1e050b0fc8e43d5c34317f237facfc2a3d",
+      "control_review_id": "96756129ae04edc858a15e5a67ca7b50d9dc6909687f0ad54e97253e3413d944",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": "serialized_formula_subscript_missing",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.18769407272338867,
+          "control_relative_correction": 0.18759489059448242,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.608151912689209,
+          "control_relative_correction": 0.6077618598937988,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.582099437713623,
+          "control_relative_correction": 0.3400588035583496,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 3.3338632583618164,
+          "control_relative_correction": 3.352210521697998,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 4,
+      "pair_ordinal": 3,
+      "positive_reader_rank": 21,
+      "positive_review_id": "4543b5260ba6b80b2518e9d53d46470fc31843d3f0547df95acbbcd828fc65e2",
+      "negative_review_id": "7392e89eefec957d2320233134552f8080a552426cdb64ba93fa4ec96ac90de1",
+      "control_review_id": "96756129ae04edc858a15e5a67ca7b50d9dc6909687f0ad54e97253e3413d944",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": "serialized_formula_subscript_missing",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.0017914772033691406,
+          "control_relative_correction": 0.0016922950744628906,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.4778304100036621,
+          "control_relative_correction": 0.47744035720825195,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.6564140319824219,
+          "control_relative_correction": 0.41437339782714844,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 2.3776330947875977,
+          "control_relative_correction": 2.3959803581237793,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 5,
+      "pair_ordinal": 0,
+      "positive_reader_rank": 6,
+      "positive_review_id": "c033f73a3a904db63e44e664361054190819ca4094058c19f98d141d3fdcb370",
+      "negative_review_id": "83a7b3382985e5506523b3d09028f36f49bef220e6705c8df596eb587a074e28",
+      "control_review_id": "c70d5746352cf50c04c0b30cd0a8912a947ce75b192c5d5bb39fbdbaf0ae0aa2",
+      "weak_positive_support_label": "direct",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": true,
+      "clean_matched_control": true,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.00030237436294555664,
+          "control_relative_correction": 0.0052196672186255455,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 6.616115570068359e-06,
+          "control_relative_correction": 5.4745934903621674e-05,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.009731411933898926,
+          "control_relative_correction": 0.04954299237579107,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.46655040979385376,
+          "control_relative_correction": 1.222754969727248,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 5,
+      "pair_ordinal": 1,
+      "positive_reader_rank": 6,
+      "positive_review_id": "c033f73a3a904db63e44e664361054190819ca4094058c19f98d141d3fdcb370",
+      "negative_review_id": "ac0951793bd7a89ab0dbca7d974d0cc3cd7156e2e8d3f7394d7f14bcfce02413",
+      "control_review_id": "c70d5746352cf50c04c0b30cd0a8912a947ce75b192c5d5bb39fbdbaf0ae0aa2",
+      "weak_positive_support_label": "direct",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": true,
+      "clean_matched_control": true,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": -0.0003260970115661621,
+          "control_relative_correction": 0.004591195844113827,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 4.589557647705078e-06,
+          "control_relative_correction": 5.271937698125839e-05,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": -0.1509600281715393,
+          "control_relative_correction": -0.11114844772964716,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.07009422779083252,
+          "control_relative_correction": 0.8262987877242267,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 5,
+      "pair_ordinal": 2,
+      "positive_reader_rank": 7,
+      "positive_review_id": "466d495b3db3dde981f118aa058719c0352e35dfb927d6ba3594feed16e6bcc8",
+      "negative_review_id": "83a7b3382985e5506523b3d09028f36f49bef220e6705c8df596eb587a074e28",
+      "control_review_id": "c70d5746352cf50c04c0b30cd0a8912a947ce75b192c5d5bb39fbdbaf0ae0aa2",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.0004534721374511719,
+          "control_relative_correction": 0.0052196672186255455,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 1.33514404296875e-05,
+          "control_relative_correction": 5.4745934903621674e-05,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.12163013219833374,
+          "control_relative_correction": 0.04954299237579107,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.5141361951828003,
+          "control_relative_correction": 1.222754969727248,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 5,
+      "pair_ordinal": 3,
+      "positive_reader_rank": 7,
+      "positive_review_id": "466d495b3db3dde981f118aa058719c0352e35dfb927d6ba3594feed16e6bcc8",
+      "negative_review_id": "ac0951793bd7a89ab0dbca7d974d0cc3cd7156e2e8d3f7394d7f14bcfce02413",
+      "control_review_id": "c70d5746352cf50c04c0b30cd0a8912a947ce75b192c5d5bb39fbdbaf0ae0aa2",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": -0.00017499923706054688,
+          "control_relative_correction": 0.004591195844113827,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 1.1324882507324219e-05,
+          "control_relative_correction": 5.271937698125839e-05,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": -0.03906130790710449,
+          "control_relative_correction": -0.11114844772964716,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.11768001317977905,
+          "control_relative_correction": 0.8262987877242267,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 10,
+      "pair_ordinal": 0,
+      "positive_reader_rank": 17,
+      "positive_review_id": "02a09fa69b746b0d5be60a2a89e09f61f67cfdc2fa96d8bdec6b1965b9f5ea20",
+      "negative_review_id": "fbce99ef736ba64141c5d2dd2045c6419f223cb36c9af883270e4a3db5153db3",
+      "control_review_id": "bbda9810e4ba5ae63a3737e14cedebbf1b15923224708423e88c37685d52e2c6",
+      "weak_positive_support_label": "contradictory",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": "reference_order_conflict",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.5405216217041016,
+          "control_relative_correction": 0.5409731864929199,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.504417896270752,
+          "control_relative_correction": 0.45371150970458984,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.6754708290100098,
+          "control_relative_correction": 0.48911046981811523,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 5.972707033157349,
+          "control_relative_correction": 5.945042848587036,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 10,
+      "pair_ordinal": 1,
+      "positive_reader_rank": 17,
+      "positive_review_id": "02a09fa69b746b0d5be60a2a89e09f61f67cfdc2fa96d8bdec6b1965b9f5ea20",
+      "negative_review_id": "f2f37293b5fc90165622f510bc036de777e4668d2b97413e80aeebe757aa8966",
+      "control_review_id": "bbda9810e4ba5ae63a3737e14cedebbf1b15923224708423e88c37685d52e2c6",
+      "weak_positive_support_label": "contradictory",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": "reference_order_conflict",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.4935872554779053,
+          "control_relative_correction": 0.49403882026672363,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.5039160251617432,
+          "control_relative_correction": 0.45320963859558105,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.417574405670166,
+          "control_relative_correction": 0.23121404647827148,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 2.0373488664627075,
+          "control_relative_correction": 2.009684681892395,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 10,
+      "pair_ordinal": 2,
+      "positive_reader_rank": 32,
+      "positive_review_id": "8315b077707c4715707f002ee21b09cae772ebeba6bf21994be004f727dd2ae9",
+      "negative_review_id": "fbce99ef736ba64141c5d2dd2045c6419f223cb36c9af883270e4a3db5153db3",
+      "control_review_id": "c6c8eadac1b8f6d92b0a77251ece945841c5e66ae273151e4b4ea58d021bd710",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": "reference_order_conflict",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.5434865951538086,
+          "control_relative_correction": 0.5434751510620117,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 1.0718588829040527,
+          "control_relative_correction": 1.0710797309875488,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.7643699645996094,
+          "control_relative_correction": 1.0569934844970703,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 7.2271177768707275,
+          "control_relative_correction": 7.302343130111694,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 10,
+      "pair_ordinal": 3,
+      "positive_reader_rank": 32,
+      "positive_review_id": "8315b077707c4715707f002ee21b09cae772ebeba6bf21994be004f727dd2ae9",
+      "negative_review_id": "f2f37293b5fc90165622f510bc036de777e4668d2b97413e80aeebe757aa8966",
+      "control_review_id": "c6c8eadac1b8f6d92b0a77251ece945841c5e66ae273151e4b4ea58d021bd710",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": "reference_order_conflict",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.4965522289276123,
+          "control_relative_correction": 0.49654078483581543,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 1.071357011795044,
+          "control_relative_correction": 1.07057785987854,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.5064735412597656,
+          "control_relative_correction": 0.7990970611572266,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 3.2917596101760864,
+          "control_relative_correction": 3.3669849634170532,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 10,
+      "pair_ordinal": 4,
+      "positive_reader_rank": 38,
+      "positive_review_id": "fcbd53b1284d5e2c40dfce64f8022d6de942119241587ea9e4742886cc2d07e0",
+      "negative_review_id": "fbce99ef736ba64141c5d2dd2045c6419f223cb36c9af883270e4a3db5153db3",
+      "control_review_id": "dec5722e31b6c2046cc332ddf1840186d74e9f9a06425eee057c8a27bfe40458",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": "reference_order_conflict",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.5436897277832031,
+          "control_relative_correction": 0.5436983108520508,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 1.072007656097412,
+          "control_relative_correction": 1.0719695091247559,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 1.2281322479248047,
+          "control_relative_correction": 1.1757888793945312,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 7.683579683303833,
+          "control_relative_correction": 7.684676885604858,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 10,
+      "pair_ordinal": 5,
+      "positive_reader_rank": 38,
+      "positive_review_id": "fcbd53b1284d5e2c40dfce64f8022d6de942119241587ea9e4742886cc2d07e0",
+      "negative_review_id": "f2f37293b5fc90165622f510bc036de777e4668d2b97413e80aeebe757aa8966",
+      "control_review_id": "dec5722e31b6c2046cc332ddf1840186d74e9f9a06425eee057c8a27bfe40458",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": "reference_order_conflict",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.49675536155700684,
+          "control_relative_correction": 0.4967639446258545,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 1.0715057849884033,
+          "control_relative_correction": 1.071467638015747,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.9702358245849609,
+          "control_relative_correction": 0.9178924560546875,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 3.748221516609192,
+          "control_relative_correction": 3.7493187189102173,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 11,
+      "pair_ordinal": 0,
+      "positive_reader_rank": 6,
+      "positive_review_id": "b272c365bb90fafe4f48c34a27033daa29abd31c9050856a00bf18076cc1bfb8",
+      "negative_review_id": "0d8d255e1962d9e863c22c6aeb87e20123afba4828861324bf8907c983544ec7",
+      "control_review_id": "4c35f189d10240c6339d6c716a518799e745eafcf230b4f5192eb5cf0b644299",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.09142875671386719,
+          "control_relative_correction": 0.05403947830200195,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.0022246837615966797,
+          "control_relative_correction": 0.0005242824554443359,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": -0.49571657180786133,
+          "control_relative_correction": -0.37119269371032715,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 3.4730247259140015,
+          "control_relative_correction": 3.571691632270813,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 11,
+      "pair_ordinal": 1,
+      "positive_reader_rank": 6,
+      "positive_review_id": "b272c365bb90fafe4f48c34a27033daa29abd31c9050856a00bf18076cc1bfb8",
+      "negative_review_id": "ad198e22ed46c0b1cd1df052f195fae7153859802cb60d049583cf2600fed593",
+      "control_review_id": "4c35f189d10240c6339d6c716a518799e745eafcf230b4f5192eb5cf0b644299",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.060430288314819336,
+          "control_relative_correction": 0.0230410099029541,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.0015344619750976562,
+          "control_relative_correction": -0.0001659393310546875,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.08556795120239258,
+          "control_relative_correction": 0.21009182929992676,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.3729121685028076,
+          "control_relative_correction": 0.47157907485961914,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 16,
+      "pair_ordinal": 0,
+      "positive_reader_rank": 31,
+      "positive_review_id": "459c1aa350748d2687a8615eca79541355774c373a1e15deff91cd6fd9a6ee24",
+      "negative_review_id": "d4a9d2495e7edc5e81dcdcf124330b9d565906c981c74861e09f661a492919ca",
+      "control_review_id": "e25ae5b06ac7876f9cd90630b46e5013bacca4feb7841acbf99fe34aa2d6ab92",
+      "weak_positive_support_label": "direct",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": true,
+      "clean_matched_control": true,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.34982025623321533,
+          "control_relative_correction": 0.3498793840408325,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.3742859363555908,
+          "control_relative_correction": 0.5248024463653564,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.5986073017120361,
+          "control_relative_correction": 0.6844079494476318,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 2.6565433144569397,
+          "control_relative_correction": 2.637381613254547,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 16,
+      "pair_ordinal": 1,
+      "positive_reader_rank": 31,
+      "positive_review_id": "459c1aa350748d2687a8615eca79541355774c373a1e15deff91cd6fd9a6ee24",
+      "negative_review_id": "2813558a7aac651a2fdf61d78a107d4eae70209d3c8a62f5a90f173e3bed90b2",
+      "control_review_id": "e25ae5b06ac7876f9cd90630b46e5013bacca4feb7841acbf99fe34aa2d6ab92",
+      "weak_positive_support_label": "direct",
+      "weak_negative_support_label": "partial",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.3428950309753418,
+          "control_relative_correction": 0.342954158782959,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.37419605255126953,
+          "control_relative_correction": 0.5247125625610352,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.6838436126708984,
+          "control_relative_correction": 0.7696442604064941,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 2.500235080718994,
+          "control_relative_correction": 2.4810733795166016,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 16,
+      "pair_ordinal": 2,
+      "positive_reader_rank": 39,
+      "positive_review_id": "3f68cb8a2a750e881ae30051ea7cbec8046e54ac871a8dcf3e0a10b4d3f44a05",
+      "negative_review_id": "d4a9d2495e7edc5e81dcdcf124330b9d565906c981c74861e09f661a492919ca",
+      "control_review_id": "f8de18cf642073b11774fb233d037c01bc943beee8787822ab72ee5cf658d6bb",
+      "weak_positive_support_label": "direct",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": true,
+      "clean_matched_control": true,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.35180580615997314,
+          "control_relative_correction": 0.35167229175567627,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.688554048538208,
+          "control_relative_correction": 0.6706259250640869,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.7461364269256592,
+          "control_relative_correction": 0.6572043895721436,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 3.1874080300331116,
+          "control_relative_correction": 3.1636934876441956,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 16,
+      "pair_ordinal": 3,
+      "positive_reader_rank": 39,
+      "positive_review_id": "3f68cb8a2a750e881ae30051ea7cbec8046e54ac871a8dcf3e0a10b4d3f44a05",
+      "negative_review_id": "2813558a7aac651a2fdf61d78a107d4eae70209d3c8a62f5a90f173e3bed90b2",
+      "control_review_id": "f8de18cf642073b11774fb233d037c01bc943beee8787822ab72ee5cf658d6bb",
+      "weak_positive_support_label": "direct",
+      "weak_negative_support_label": "partial",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.3448805809020996,
+          "control_relative_correction": 0.34474706649780273,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.6884641647338867,
+          "control_relative_correction": 0.6705360412597656,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.8313727378845215,
+          "control_relative_correction": 0.7424407005310059,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 3.031099796295166,
+          "control_relative_correction": 3.00738525390625,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 21,
+      "pair_ordinal": 0,
+      "positive_reader_rank": 6,
+      "positive_review_id": "8c542ebb6a078a15babe2b0d6a93622b563de96c417103cbb2704a3f399bef2a",
+      "negative_review_id": "953ca41945437ecfda0de4ca3ae50aacc386b393d398e69e98452b37fce8471e",
+      "control_review_id": "977553836dab6b4cc508fc61212df6ee47ed7a8a7812baa0157578767b6e5605",
+      "weak_positive_support_label": "direct",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": true,
+      "clean_matched_control": true,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.0027817487716674805,
+          "control_relative_correction": 0.0073091983795166016,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 7.414817810058594e-05,
+          "control_relative_correction": 6.592273712158203e-05,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": -0.0006774663925170898,
+          "control_relative_correction": 0.18355202674865723,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.34619587659835815,
+          "control_relative_correction": 0.5567189455032349,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 21,
+      "pair_ordinal": 1,
+      "positive_reader_rank": 9,
+      "positive_review_id": "bd025f01b62782aee27837e45075fee5c7e32dab72f8affb994ab0730d8b76d2",
+      "negative_review_id": "953ca41945437ecfda0de4ca3ae50aacc386b393d398e69e98452b37fce8471e",
+      "control_review_id": "82aad8b302377ba357c09895faebf3ce8d25459eff0b1fcfbbf49d6c80f7c47b",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.009603261947631836,
+          "control_relative_correction": 0.018263578414916992,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.00017535686492919922,
+          "control_relative_correction": 0.0002595186233520508,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.09455442428588867,
+          "control_relative_correction": 0.07758831977844238,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.8362442255020142,
+          "control_relative_correction": 0.8780101537704468,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 21,
+      "pair_ordinal": 2,
+      "positive_reader_rank": 41,
+      "positive_review_id": "4049950d03113ae3e3a8b1a7ffe6030a2f5aad6f6bf0542e8eff01d35c431aa3",
+      "negative_review_id": "953ca41945437ecfda0de4ca3ae50aacc386b393d398e69e98452b37fce8471e",
+      "control_review_id": "82d1fbcef751e4a473386bb50566e97163e9e9282db2da7a841636713cccbf00",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "partial",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.4312410354614258,
+          "control_relative_correction": 0.4319033622741699,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.7418869733810425,
+          "control_relative_correction": 0.7530454397201538,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.9856464862823486,
+          "control_relative_correction": 0.9676549434661865,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 3.31078839302063,
+          "control_relative_correction": 3.3778581619262695,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 22,
+      "pair_ordinal": 0,
+      "positive_reader_rank": 6,
+      "positive_review_id": "ba4cecf3c0c82b353150cd760bf58b5c4f3d1dab3da6f6122ec1796b21ec880b",
+      "negative_review_id": "6c4e54921538950b348ab0901f796e23102a372d445eeca8c941dfa3747fff2f",
+      "control_review_id": "3f2d05f061b670f4fb7a82532c4b3d167d005774ddcbe886c3fea2d9b6feff7d",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.011691808700561523,
+          "control_relative_correction": 0.04974007606506348,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.0002238750457763672,
+          "control_relative_correction": 0.0017001628875732422,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": -0.029567241668701172,
+          "control_relative_correction": -0.0007109642028808594,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.35617566108703613,
+          "control_relative_correction": 0.722794771194458,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 22,
+      "pair_ordinal": 1,
+      "positive_reader_rank": 6,
+      "positive_review_id": "ba4cecf3c0c82b353150cd760bf58b5c4f3d1dab3da6f6122ec1796b21ec880b",
+      "negative_review_id": "8ce0cf3a39772efeef8e1de4606546a31ebf06ee0909cd65ce62987f05f97312",
+      "control_review_id": "3f2d05f061b670f4fb7a82532c4b3d167d005774ddcbe886c3fea2d9b6feff7d",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": -0.008544921875,
+          "control_relative_correction": 0.029503345489501953,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.00012111663818359375,
+          "control_relative_correction": 0.0015974044799804688,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": -0.06267619132995605,
+          "control_relative_correction": -0.03381991386413574,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.15576279163360596,
+          "control_relative_correction": 0.5223819017410278,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 22,
+      "pair_ordinal": 2,
+      "positive_reader_rank": 7,
+      "positive_review_id": "6a9e5db9d5c7c69d6bfa91f9bb4f41d288b7dd1516861f697cc9fecc97eef348",
+      "negative_review_id": "6c4e54921538950b348ab0901f796e23102a372d445eeca8c941dfa3747fff2f",
+      "control_review_id": "3f2d05f061b670f4fb7a82532c4b3d167d005774ddcbe886c3fea2d9b6feff7d",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.06526398658752441,
+          "control_relative_correction": 0.04974007606506348,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.0012843608856201172,
+          "control_relative_correction": 0.0017001628875732422,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.20768308639526367,
+          "control_relative_correction": -0.0007109642028808594,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.704014778137207,
+          "control_relative_correction": 0.722794771194458,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 22,
+      "pair_ordinal": 3,
+      "positive_reader_rank": 7,
+      "positive_review_id": "6a9e5db9d5c7c69d6bfa91f9bb4f41d288b7dd1516861f697cc9fecc97eef348",
+      "negative_review_id": "8ce0cf3a39772efeef8e1de4606546a31ebf06ee0909cd65ce62987f05f97312",
+      "control_review_id": "3f2d05f061b670f4fb7a82532c4b3d167d005774ddcbe886c3fea2d9b6feff7d",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.04502725601196289,
+          "control_relative_correction": 0.029503345489501953,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.0011816024780273438,
+          "control_relative_correction": 0.0015974044799804688,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.1745741367340088,
+          "control_relative_correction": -0.03381991386413574,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.5036019086837769,
+          "control_relative_correction": 0.5223819017410278,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 22,
+      "pair_ordinal": 4,
+      "positive_reader_rank": 9,
+      "positive_review_id": "27471a246fa5a06f6ee921b0af1c8ccf323ff24fffa403bb1304da2904c069d4",
+      "negative_review_id": "6c4e54921538950b348ab0901f796e23102a372d445eeca8c941dfa3747fff2f",
+      "control_review_id": "3f2d05f061b670f4fb7a82532c4b3d167d005774ddcbe886c3fea2d9b6feff7d",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.04235410690307617,
+          "control_relative_correction": 0.04974007606506348,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.0009260177612304688,
+          "control_relative_correction": 0.0017001628875732422,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.09307265281677246,
+          "control_relative_correction": -0.0007109642028808594,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.7326697111129761,
+          "control_relative_correction": 0.722794771194458,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 22,
+      "pair_ordinal": 5,
+      "positive_reader_rank": 9,
+      "positive_review_id": "27471a246fa5a06f6ee921b0af1c8ccf323ff24fffa403bb1304da2904c069d4",
+      "negative_review_id": "8ce0cf3a39772efeef8e1de4606546a31ebf06ee0909cd65ce62987f05f97312",
+      "control_review_id": "3f2d05f061b670f4fb7a82532c4b3d167d005774ddcbe886c3fea2d9b6feff7d",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.02211737632751465,
+          "control_relative_correction": 0.029503345489501953,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.0008232593536376953,
+          "control_relative_correction": 0.0015974044799804688,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.05996370315551758,
+          "control_relative_correction": -0.03381991386413574,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.5322568416595459,
+          "control_relative_correction": 0.5223819017410278,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 23,
+      "pair_ordinal": 0,
+      "positive_reader_rank": 7,
+      "positive_review_id": "9debd5a0bf46b6488495f1cac420072724c3ca2489968519644b5ce5eedab331",
+      "negative_review_id": "bfec7849aa91afd96dc567c45ff8d74b6f431dd29e1a166f935ed200195d6ac6",
+      "control_review_id": "3921c1c8cefc900a68715cd3d8463bff0bab296bc833793470eded4c172cc994",
+      "weak_positive_support_label": "direct",
+      "weak_negative_support_label": "direct",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.0029463768005371094,
+          "control_relative_correction": 0.0009351968765258789,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 6.139278411865234e-06,
+          "control_relative_correction": 4.887580871582031e-06,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.0947268009185791,
+          "control_relative_correction": 0.14875900745391846,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.5422403812408447,
+          "control_relative_correction": 0.1798751950263977,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 24,
+      "pair_ordinal": 0,
+      "positive_reader_rank": 7,
+      "positive_review_id": "310da11a4a1e1c18ceef35e4c16e3b581474b14597ef4b554cb72e7632e08c0b",
+      "negative_review_id": "7275cdb28811e7563587a0efa9d5c41fb51200ff8616147e51a80313a219b8d1",
+      "control_review_id": "85e255e39ac6a31b00edd2eea940ce188453cf887e189cc3499b870a845b8f94",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "partial",
+      "matched_control_support_label": "uncertain",
+      "target_flag": "event_start_ambiguous",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.00022172927856445312,
+          "control_relative_correction": 0.0003097057342529297,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": -7.152557373046875e-07,
+          "control_relative_correction": -4.76837158203125e-07,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.18828535079956055,
+          "control_relative_correction": 0.0068700313568115234,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 1.3963154554367065,
+          "control_relative_correction": 1.6497235298156738,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 24,
+      "pair_ordinal": 1,
+      "positive_reader_rank": 7,
+      "positive_review_id": "310da11a4a1e1c18ceef35e4c16e3b581474b14597ef4b554cb72e7632e08c0b",
+      "negative_review_id": "6b54a8c792d2fd83c246b079983b9a33c41c6ec5e7c8d53d8a511b363538ba4b",
+      "control_review_id": "85e255e39ac6a31b00edd2eea940ce188453cf887e189cc3499b870a845b8f94",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "uncertain",
+      "target_flag": "event_start_ambiguous",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.0002994537353515625,
+          "control_relative_correction": 0.00038743019104003906,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 2.384185791015625e-07,
+          "control_relative_correction": 4.76837158203125e-07,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.29689550399780273,
+          "control_relative_correction": 0.11548018455505371,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.8425902128219604,
+          "control_relative_correction": 1.0959982872009277,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 24,
+      "pair_ordinal": 2,
+      "positive_reader_rank": 9,
+      "positive_review_id": "1ddb669bb2ce3b6a48e09f792899488dfe36b59bc29f75da0a180928e1a80a37",
+      "negative_review_id": "7275cdb28811e7563587a0efa9d5c41fb51200ff8616147e51a80313a219b8d1",
+      "control_review_id": "85e255e39ac6a31b00edd2eea940ce188453cf887e189cc3499b870a845b8f94",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "partial",
+      "matched_control_support_label": "uncertain",
+      "target_flag": "event_start_ambiguous",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.0004012584686279297,
+          "control_relative_correction": 0.0003097057342529297,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": -4.76837158203125e-07,
+          "control_relative_correction": -4.76837158203125e-07,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.23471379280090332,
+          "control_relative_correction": 0.0068700313568115234,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 1.7713321447372437,
+          "control_relative_correction": 1.6497235298156738,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 24,
+      "pair_ordinal": 3,
+      "positive_reader_rank": 9,
+      "positive_review_id": "1ddb669bb2ce3b6a48e09f792899488dfe36b59bc29f75da0a180928e1a80a37",
+      "negative_review_id": "6b54a8c792d2fd83c246b079983b9a33c41c6ec5e7c8d53d8a511b363538ba4b",
+      "control_review_id": "85e255e39ac6a31b00edd2eea940ce188453cf887e189cc3499b870a845b8f94",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "uncertain",
+      "target_flag": "event_start_ambiguous",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.00047898292541503906,
+          "control_relative_correction": 0.00038743019104003906,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 4.76837158203125e-07,
+          "control_relative_correction": 4.76837158203125e-07,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.3433239459991455,
+          "control_relative_correction": 0.11548018455505371,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 1.2176069021224976,
+          "control_relative_correction": 1.0959982872009277,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 25,
+      "pair_ordinal": 0,
+      "positive_reader_rank": 6,
+      "positive_review_id": "4a3ff88814145a69d2424fe1fdd8971e3c0dc1f596a5ec9554ebd995f05b4365",
+      "negative_review_id": "f1caea2bc39d67a2e474389b6f53109ca3d6365aca41abef7001a5cda4ccedbf",
+      "control_review_id": "f75bf1113f2eed0abf56245eee458942001a0e12119cf05cb906e7647d37cf2f",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.02727055549621582,
+          "control_relative_correction": 0.11446380615234375,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.0002715587615966797,
+          "control_relative_correction": 0.001039266586303711,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": -0.0023937225341796875,
+          "control_relative_correction": 0.018597841262817383,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.4448120594024658,
+          "control_relative_correction": 0.7407293319702148,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 25,
+      "pair_ordinal": 1,
+      "positive_reader_rank": 6,
+      "positive_review_id": "4a3ff88814145a69d2424fe1fdd8971e3c0dc1f596a5ec9554ebd995f05b4365",
+      "negative_review_id": "aaf80ad21486ebb16ab9034ab91c690017d7d8ba6e171b084ce23078bfd61819",
+      "control_review_id": "f75bf1113f2eed0abf56245eee458942001a0e12119cf05cb906e7647d37cf2f",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.011784076690673828,
+          "control_relative_correction": 0.09897732734680176,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.00016021728515625,
+          "control_relative_correction": 0.0009279251098632812,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.013855695724487305,
+          "control_relative_correction": 0.034847259521484375,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.19754743576049805,
+          "control_relative_correction": 0.49346470832824707,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 25,
+      "pair_ordinal": 2,
+      "positive_reader_rank": 7,
+      "positive_review_id": "eb123015c5e632067bac1079372f51a0083e08afdbc8b2d5c16be38b648de3a6",
+      "negative_review_id": "f1caea2bc39d67a2e474389b6f53109ca3d6365aca41abef7001a5cda4ccedbf",
+      "control_review_id": "f75bf1113f2eed0abf56245eee458942001a0e12119cf05cb906e7647d37cf2f",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.007831335067749023,
+          "control_relative_correction": 0.11446380615234375,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.0001049041748046875,
+          "control_relative_correction": 0.001039266586303711,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.12657499313354492,
+          "control_relative_correction": 0.018597841262817383,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.4531465768814087,
+          "control_relative_correction": 0.7407293319702148,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 25,
+      "pair_ordinal": 3,
+      "positive_reader_rank": 7,
+      "positive_review_id": "eb123015c5e632067bac1079372f51a0083e08afdbc8b2d5c16be38b648de3a6",
+      "negative_review_id": "aaf80ad21486ebb16ab9034ab91c690017d7d8ba6e171b084ce23078bfd61819",
+      "control_review_id": "f75bf1113f2eed0abf56245eee458942001a0e12119cf05cb906e7647d37cf2f",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": -0.007655143737792969,
+          "control_relative_correction": 0.09897732734680176,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": -6.4373016357421875e-06,
+          "control_relative_correction": 0.0009279251098632812,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.14282441139221191,
+          "control_relative_correction": 0.034847259521484375,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.20588195323944092,
+          "control_relative_correction": 0.49346470832824707,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 25,
+      "pair_ordinal": 4,
+      "positive_reader_rank": 37,
+      "positive_review_id": "d4e6b354e91f872354fed30b69179790ed5e389353e1cb699fddd8c841ad7a0d",
+      "negative_review_id": "f1caea2bc39d67a2e474389b6f53109ca3d6365aca41abef7001a5cda4ccedbf",
+      "control_review_id": "ec04363da5a7b4222a80ecc652471a103dd9b3b34b5966befb704284b060ca31",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.3343489170074463,
+          "control_relative_correction": 0.33423686027526855,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.6388440132141113,
+          "control_relative_correction": 0.654780387878418,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.44745302200317383,
+          "control_relative_correction": 0.5860958099365234,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 2.358258605003357,
+          "control_relative_correction": 2.3090535402297974,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 25,
+      "pair_ordinal": 5,
+      "positive_reader_rank": 37,
+      "positive_review_id": "d4e6b354e91f872354fed30b69179790ed5e389353e1cb699fddd8c841ad7a0d",
+      "negative_review_id": "aaf80ad21486ebb16ab9034ab91c690017d7d8ba6e171b084ce23078bfd61819",
+      "control_review_id": "ec04363da5a7b4222a80ecc652471a103dd9b3b34b5966befb704284b060ca31",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.3188624382019043,
+          "control_relative_correction": 0.31875038146972656,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.6387326717376709,
+          "control_relative_correction": 0.6546690464019775,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.4637024402618408,
+          "control_relative_correction": 0.6023452281951904,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 2.110993981361389,
+          "control_relative_correction": 2.0617889165878296,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 26,
+      "pair_ordinal": 0,
+      "positive_reader_rank": 8,
+      "positive_review_id": "d922a7925e8e92aecf48b104f44bc78e53e541f0aedd3490c7934d11fa5cd4f4",
+      "negative_review_id": "f87e9eebb8e6d2e7d554ade6a5ef1889ab6a043866167b6e57f80f0e66aab338",
+      "control_review_id": "47085f3b7ddc8255d2724cbb1570a3e282ae5ed597f9dc1a918c8a722bfd5e46",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "partial",
+      "matched_control_support_label": "partial",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.005735814571380615,
+          "control_relative_correction": 0.004859864711761475,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 3.743171691894531e-05,
+          "control_relative_correction": 4.2438507080078125e-05,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.1485270857810974,
+          "control_relative_correction": 0.09722751379013062,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.8604241758584976,
+          "control_relative_correction": 0.8825367838144302,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 26,
+      "pair_ordinal": 1,
+      "positive_reader_rank": 8,
+      "positive_review_id": "d922a7925e8e92aecf48b104f44bc78e53e541f0aedd3490c7934d11fa5cd4f4",
+      "negative_review_id": "28a6bc0b399d5ab86b1ba0128fa15220ef61b2602562d1643c271ce6ab54d2e2",
+      "control_review_id": "47085f3b7ddc8255d2724cbb1570a3e282ae5ed597f9dc1a918c8a722bfd5e46",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "partial",
+      "matched_control_support_label": "partial",
+      "target_flag": null,
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.0017108917236328125,
+          "control_relative_correction": 0.0008349418640136719,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 2.0623207092285156e-05,
+          "control_relative_correction": 2.562999725341797e-05,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.04840433597564697,
+          "control_relative_correction": -0.0028952360153198242,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.2445904016494751,
+          "control_relative_correction": 0.2667030096054077,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 28,
+      "pair_ordinal": 0,
+      "positive_reader_rank": 8,
+      "positive_review_id": "aa59eebba69d220b5ab24023dd291857616166039e57297be5aa28e40e2fd832",
+      "negative_review_id": "51565d50b6dd9b5172d17a02a3ebc4622ca9d3ff501932c779510434b1279eee",
+      "control_review_id": "bf02f32feed478f7a0f0bf72e8667277deb778785f704c743240d7dcb59cb5f9",
+      "weak_positive_support_label": "uncertain",
+      "weak_negative_support_label": "partial",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": "question_reference_type_mismatch",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.12035667896270752,
+          "control_relative_correction": 0.1497713327407837,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.0018148422241210938,
+          "control_relative_correction": 0.0026254653930664062,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": -0.30041348934173584,
+          "control_relative_correction": -0.3141716718673706,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 3.288740813732147,
+          "control_relative_correction": 3.2850400805473328,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 28,
+      "pair_ordinal": 1,
+      "positive_reader_rank": 8,
+      "positive_review_id": "aa59eebba69d220b5ab24023dd291857616166039e57297be5aa28e40e2fd832",
+      "negative_review_id": "7c4b35ad9a2f7060521e8264bab0495cadc1ea0852a198e686fef4dca4f420e5",
+      "control_review_id": "bf02f32feed478f7a0f0bf72e8667277deb778785f704c743240d7dcb59cb5f9",
+      "weak_positive_support_label": "uncertain",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": "question_reference_type_mismatch",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.07931780815124512,
+          "control_relative_correction": 0.10873246192932129,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.0013196468353271484,
+          "control_relative_correction": 0.002130270004272461,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.11337637901306152,
+          "control_relative_correction": 0.09961819648742676,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.6435235738754272,
+          "control_relative_correction": 0.6398228406906128,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 28,
+      "pair_ordinal": 2,
+      "positive_reader_rank": 34,
+      "positive_review_id": "29314d68ece5e1b5fce36f3f75a153b3f9598548c2839d9c1c0a35776f686afc",
+      "negative_review_id": "51565d50b6dd9b5172d17a02a3ebc4622ca9d3ff501932c779510434b1279eee",
+      "control_review_id": "84162f59ec0e85bd85834e8f379788676b04e075149307bdd978543f0be6e55d",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "partial",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": "question_reference_type_mismatch",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.41258203983306885,
+          "control_relative_correction": 0.41271650791168213,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.8134217262268066,
+          "control_relative_correction": 0.8140931129455566,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.4907737970352173,
+          "control_relative_correction": 0.4624572992324829,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 5.631440341472626,
+          "control_relative_correction": 5.65844601392746,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 28,
+      "pair_ordinal": 3,
+      "positive_reader_rank": 34,
+      "positive_review_id": "29314d68ece5e1b5fce36f3f75a153b3f9598548c2839d9c1c0a35776f686afc",
+      "negative_review_id": "7c4b35ad9a2f7060521e8264bab0495cadc1ea0852a198e686fef4dca4f420e5",
+      "control_review_id": "84162f59ec0e85bd85834e8f379788676b04e075149307bdd978543f0be6e55d",
+      "weak_positive_support_label": "irrelevant",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": "question_reference_type_mismatch",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.37154316902160645,
+          "control_relative_correction": 0.3716776371002197,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.8129265308380127,
+          "control_relative_correction": 0.8135979175567627,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.9045636653900146,
+          "control_relative_correction": 0.8762471675872803,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 2.9862231016159058,
+          "control_relative_correction": 3.0132287740707397,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 31,
+      "pair_ordinal": 0,
+      "positive_reader_rank": 6,
+      "positive_review_id": "9b8ba51d49f0329285d00aa795ac54d6f552d9e216613e05e2c7d54e94c999bd",
+      "negative_review_id": "625e86f9fdc16d94aef04993efc9ba20a13ab64956b1a7c6cc38c97654ebfd43",
+      "control_review_id": "dee7952244047b9c410ce6bc34d94da0c0ef2b48baece0aae345e7105f2f5a4b",
+      "weak_positive_support_label": "uncertain",
+      "weak_negative_support_label": "direct",
+      "matched_control_support_label": "direct",
+      "target_flag": "acquisition_vs_constitution_conflict",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": -7.3909759521484375e-06,
+          "control_relative_correction": 8.988380432128906e-05,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": -1.4066696166992188e-05,
+          "control_relative_correction": -1.3828277587890625e-05,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.044875144958496094,
+          "control_relative_correction": -0.08073878288269043,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 2.6817702054977417,
+          "control_relative_correction": 2.8013182878494263,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 31,
+      "pair_ordinal": 1,
+      "positive_reader_rank": 6,
+      "positive_review_id": "9b8ba51d49f0329285d00aa795ac54d6f552d9e216613e05e2c7d54e94c999bd",
+      "negative_review_id": "b3748c7cb56bf7cb56edbd699a93af305f52d8df91b123fd275bbdfedecf5c54",
+      "control_review_id": "dee7952244047b9c410ce6bc34d94da0c0ef2b48baece0aae345e7105f2f5a4b",
+      "weak_positive_support_label": "uncertain",
+      "weak_negative_support_label": "partial",
+      "matched_control_support_label": "direct",
+      "target_flag": "acquisition_vs_constitution_conflict",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": -4.315376281738281e-05,
+          "control_relative_correction": 5.412101745605469e-05,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": -2.384185791015625e-07,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.08589410781860352,
+          "control_relative_correction": -0.03971982002258301,
+          "crossed": true
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.023273587226867676,
+          "control_relative_correction": 0.14282166957855225,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 31,
+      "pair_ordinal": 2,
+      "positive_reader_rank": 10,
+      "positive_review_id": "4f20c0e768d89fff9b62f57535d5966f4f2ef8d99d46fa0e97c61120b3b8600e",
+      "negative_review_id": "625e86f9fdc16d94aef04993efc9ba20a13ab64956b1a7c6cc38c97654ebfd43",
+      "control_review_id": "46c4aca7cd828327c9c1632dfd38a94aeb784e124330d0c35da27eb78723f18f",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "direct",
+      "matched_control_support_label": "partial",
+      "target_flag": "acquisition_vs_constitution_conflict",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.00016164779663085938,
+          "control_relative_correction": 0.000270843505859375,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": -1.3828277587890625e-05,
+          "control_relative_correction": -1.33514404296875e-05,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.027978181838989258,
+          "control_relative_correction": 0.30609965324401855,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 3.3025201559066772,
+          "control_relative_correction": 3.2830032110214233,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 31,
+      "pair_ordinal": 3,
+      "positive_reader_rank": 10,
+      "positive_review_id": "4f20c0e768d89fff9b62f57535d5966f4f2ef8d99d46fa0e97c61120b3b8600e",
+      "negative_review_id": "b3748c7cb56bf7cb56edbd699a93af305f52d8df91b123fd275bbdfedecf5c54",
+      "control_review_id": "46c4aca7cd828327c9c1632dfd38a94aeb784e124330d0c35da27eb78723f18f",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "partial",
+      "matched_control_support_label": "partial",
+      "target_flag": "acquisition_vs_constitution_conflict",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.000125885009765625,
+          "control_relative_correction": 0.00023508071899414062,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 4.76837158203125e-07,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.06899714469909668,
+          "control_relative_correction": 0.347118616104126,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.6440235376358032,
+          "control_relative_correction": 0.6245065927505493,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 31,
+      "pair_ordinal": 4,
+      "positive_reader_rank": 29,
+      "positive_review_id": "be0a1a6dacd8f8a784318dfaa3bf96708fece5d7acaf3e56d7b1d40144272958",
+      "negative_review_id": "625e86f9fdc16d94aef04993efc9ba20a13ab64956b1a7c6cc38c97654ebfd43",
+      "control_review_id": "85305843d9d856cc555dda78c4e04a2e3761e0794da400fbec05faab7ab48344",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "direct",
+      "matched_control_support_label": "partial",
+      "target_flag": "acquisition_vs_constitution_conflict",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.0035864412784576416,
+          "control_relative_correction": 0.003240257501602173,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 1.3619661331176758e-05,
+          "control_relative_correction": 1.7315149307250977e-05,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.7125298976898193,
+          "control_relative_correction": 0.7564841061830521,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 4.854560032486916,
+          "control_relative_correction": 4.83534337580204,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 31,
+      "pair_ordinal": 5,
+      "positive_reader_rank": 29,
+      "positive_review_id": "be0a1a6dacd8f8a784318dfaa3bf96708fece5d7acaf3e56d7b1d40144272958",
+      "negative_review_id": "b3748c7cb56bf7cb56edbd699a93af305f52d8df91b123fd275bbdfedecf5c54",
+      "control_review_id": "85305843d9d856cc555dda78c4e04a2e3761e0794da400fbec05faab7ab48344",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "partial",
+      "matched_control_support_label": "partial",
+      "target_flag": "acquisition_vs_constitution_conflict",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.0035506784915924072,
+          "control_relative_correction": 0.0032044947147369385,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 2.7447938919067383e-05,
+          "control_relative_correction": 3.11434268951416e-05,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.7535488605499268,
+          "control_relative_correction": 0.7975030690431595,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 2.1960634142160416,
+          "control_relative_correction": 2.176846757531166,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 32,
+      "pair_ordinal": 0,
+      "positive_reader_rank": 6,
+      "positive_review_id": "41a9c71ece8accd21bb8ebfad0b7363337708742d31ab67412f0b01f787630a9",
+      "negative_review_id": "919e790a2fbb83399860487ce9b12a4f9614e0e93210abc561dc9fe1e9197b81",
+      "control_review_id": "c391daaafbf4a4bd1eebb62de56cc01df46e572e66bd5366cba3801001ad8dea",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "partial",
+      "target_flag": "jurisdiction_and_authority_scope_unspecified",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.0004622936248779297,
+          "control_relative_correction": 0.0006753206253051758,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 1.6689300537109375e-06,
+          "control_relative_correction": 3.337860107421875e-06,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.05871152877807617,
+          "control_relative_correction": 0.09873735904693604,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 1.6976224184036255,
+          "control_relative_correction": 1.9500139355659485,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 32,
+      "pair_ordinal": 1,
+      "positive_reader_rank": 6,
+      "positive_review_id": "41a9c71ece8accd21bb8ebfad0b7363337708742d31ab67412f0b01f787630a9",
+      "negative_review_id": "5c04ac46359c7bc2e804d317d6fd4297ee6dd425d0a3bf51ab24c9b034560caa",
+      "control_review_id": "c391daaafbf4a4bd1eebb62de56cc01df46e572e66bd5366cba3801001ad8dea",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "partial",
+      "matched_control_support_label": "partial",
+      "target_flag": "jurisdiction_and_authority_scope_unspecified",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": -5.328655242919922e-05,
+          "control_relative_correction": 0.00015974044799804688,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": -4.76837158203125e-07,
+          "control_relative_correction": 1.1920928955078125e-06,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.01432490348815918,
+          "control_relative_correction": 0.05435073375701904,
+          "crossed": true
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.0025985240936279297,
+          "control_relative_correction": 0.2549900412559509,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 32,
+      "pair_ordinal": 2,
+      "positive_reader_rank": 7,
+      "positive_review_id": "91127ba52e782ec937acc5cb8c883473c8eea07ab92bdfd4aa81aa72272e5d83",
+      "negative_review_id": "919e790a2fbb83399860487ce9b12a4f9614e0e93210abc561dc9fe1e9197b81",
+      "control_review_id": "c391daaafbf4a4bd1eebb62de56cc01df46e572e66bd5366cba3801001ad8dea",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "partial",
+      "target_flag": "jurisdiction_and_authority_scope_unspecified",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.0005114078521728516,
+          "control_relative_correction": 0.0006753206253051758,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 2.6226043701171875e-06,
+          "control_relative_correction": 3.337860107421875e-06,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.03468596935272217,
+          "control_relative_correction": 0.09873735904693604,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 1.8337919116020203,
+          "control_relative_correction": 1.9500139355659485,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 32,
+      "pair_ordinal": 3,
+      "positive_reader_rank": 7,
+      "positive_review_id": "91127ba52e782ec937acc5cb8c883473c8eea07ab92bdfd4aa81aa72272e5d83",
+      "negative_review_id": "5c04ac46359c7bc2e804d317d6fd4297ee6dd425d0a3bf51ab24c9b034560caa",
+      "control_review_id": "c391daaafbf4a4bd1eebb62de56cc01df46e572e66bd5366cba3801001ad8dea",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "partial",
+      "matched_control_support_label": "partial",
+      "target_flag": "jurisdiction_and_authority_scope_unspecified",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": -4.172325134277344e-06,
+          "control_relative_correction": 0.00015974044799804688,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 4.76837158203125e-07,
+          "control_relative_correction": 1.1920928955078125e-06,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": -0.009700655937194824,
+          "control_relative_correction": 0.05435073375701904,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 0.1387680172920227,
+          "control_relative_correction": 0.2549900412559509,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 32,
+      "pair_ordinal": 4,
+      "positive_reader_rank": 43,
+      "positive_review_id": "681f0bd1fcda9de09720ca8c3f604692fb136e523d65d5da9a8cbac54dbb9fb7",
+      "negative_review_id": "919e790a2fbb83399860487ce9b12a4f9614e0e93210abc561dc9fe1e9197b81",
+      "control_review_id": "b312387c6d833c27c136010ab782e4726fd534bddd895bc263271cbb5f970120",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "irrelevant",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": "jurisdiction_and_authority_scope_unspecified",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.01146697998046875,
+          "control_relative_correction": 0.016221046447753906,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.00023889541625976562,
+          "control_relative_correction": 0.00022912025451660156,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.8583805561065674,
+          "control_relative_correction": 0.8309991359710693,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 4.207444548606873,
+          "control_relative_correction": 4.1711543798446655,
+          "crossed": false
+        }
+      }
+    },
+    {
+      "audit_case_number": 32,
+      "pair_ordinal": 5,
+      "positive_reader_rank": 43,
+      "positive_review_id": "681f0bd1fcda9de09720ca8c3f604692fb136e523d65d5da9a8cbac54dbb9fb7",
+      "negative_review_id": "5c04ac46359c7bc2e804d317d6fd4297ee6dd425d0a3bf51ab24c9b034560caa",
+      "control_review_id": "b312387c6d833c27c136010ab782e4726fd534bddd895bc263271cbb5f970120",
+      "weak_positive_support_label": "partial",
+      "weak_negative_support_label": "partial",
+      "matched_control_support_label": "irrelevant",
+      "target_flag": "jurisdiction_and_authority_scope_unspecified",
+      "clean_direct_vs_irrelevant_pair": false,
+      "clean_matched_control": false,
+      "methods": {
+        "frozen_reader_topk": {
+          "relative_correction": 0.0,
+          "control_relative_correction": 0.0,
+          "crossed": false
+        },
+        "quantum_semantic": {
+          "relative_correction": 0.010951399803161621,
+          "control_relative_correction": 0.015705466270446777,
+          "crossed": false
+        },
+        "classical_semantic": {
+          "relative_correction": 0.00023674964904785156,
+          "control_relative_correction": 0.0002269744873046875,
+          "crossed": false
+        },
+        "quantum_scalar_control": {
+          "relative_correction": 0.8139939308166504,
+          "control_relative_correction": 0.7866125106811523,
+          "crossed": false
+        },
+        "monotonic_compression_control": {
+          "relative_correction": 2.512420654296875,
+          "control_relative_correction": 2.476130485534668,
+          "crossed": false
+        }
+      }
+    }
+  ],
+  "limits": [
+    "single-model provisional interpretation, not three-model consensus or official gold",
+    "all1600 population not complete; scope selected from already observed trace",
+    "old heads trained on all434, no heldout validation",
+    "do not infer corpus noise rate or causal supervision effect",
+    "do not use this282 diagnostic review to train old exposed100 Silver panel or assume434 complete labels"
+  ]
+}
