@@ -1,0 +1,260 @@
+{
+  "schema_version": "evidence-tiered-idea-validation.evidence-card.v2",
+  "idea_id": "quantum_semantic_reader",
+  "title": "Quantum semantic Reader after optimizer repair: one rescue, inconclusive screen",
+  "status": "candidate",
+  "current_tier": "L0_diagnostic",
+  "claim_ceiling": "diagnostic",
+  "rating_policy": {
+    "id": "shared-evidence-tier-policy",
+    "version": "2",
+    "notes": "Active learned selection but exposed Silver and primary CI touches zero; no L1/L2 or quantum-attribution promotion."
+  },
+  "hypothesis": "Question-conditioned hidden representations improve anchored Top-50 to Top-5 evidence retention.",
+  "mechanism": "Frozen DPR hidden pooling -> classical projection -> four-qubit interaction -> gated bounded relevance residual.",
+  "experiment": {
+    "stage": "screen",
+    "training_budget": {
+      "data_scope": "512 nq_open/train questions requested, 434 usable mixed weak-label cases",
+      "epochs_or_steps": "3 epochs x 434 updates per trained arm",
+      "selection_rule": "same train-only containment cohort, fixed registered 100 x 50 eval panel",
+      "seed_policy": "training 20261008; bootstrap 20261009 plus predeclared comparison offsets"
+    },
+    "conclusion_scope": "screen_inconclusive",
+    "continuation_status": "inconclusive",
+    "formal_run_authorized": false,
+    "executor": "collaborator"
+  },
+  "intervention": {
+    "changes_attention": false,
+    "target": "Fixed Top-50 to Top-5; 5000 nonzero corrections and 2 changed quantum sets",
+    "inference_mode": "label_free",
+    "heldout_positive": false,
+    "leakage_audit": "mixed",
+    "attention_action_evidence": {
+      "status": "pass",
+      "refs": [
+        "semantic_reader_repair_20261008T145652Z_audit.json"
+      ]
+    }
+  },
+  "evidence": {
+    "data_scope": {
+      "task_family": "NQ-Open fixed candidate evidence selection",
+      "natural_task": true,
+      "task_count": 1,
+      "split_count": 1,
+      "dataset_ids": [
+        "nq_open/train weak supervision",
+        "registered exposed 100-case Silver panel"
+      ]
+    },
+    "runs": {
+      "seed_count": 1,
+      "seeds": [
+        20261008
+      ],
+      "independent_split_count": 1,
+      "statistics": {
+        "status": "fail",
+        "method": "100-question paired bootstrap, 2000 replicates; 1 positive improvement, 99 ties",
+        "p_value": null,
+        "confidence_interval": [
+          0.0,
+          0.03
+        ]
+      }
+    },
+    "metrics": [
+      {
+        "name": "positive_consensus_count",
+        "split": "fixed_100_development_panel",
+        "variant": "quantum_semantic",
+        "value": 2.04,
+        "baseline_value": 2.03,
+        "delta_vs_disabled": 0.01,
+        "primary": true,
+        "effect_direction": "higher",
+        "evidence_refs": [
+          "semantic_reader_repair_20261008T145652Z_audit.json"
+        ]
+      },
+      {
+        "name": "direct_consensus_count",
+        "split": "fixed_100_development_panel",
+        "variant": "quantum_semantic",
+        "value": 1.39,
+        "baseline_value": 1.38,
+        "delta_vs_disabled": 0.01,
+        "primary": false,
+        "effect_direction": "higher",
+        "evidence_refs": [
+          "semantic_reader_repair_20261008T145652Z_audit.json"
+        ]
+      },
+      {
+        "name": "fixed_silver_set_overlap",
+        "split": "fixed_100_development_panel",
+        "variant": "quantum_semantic",
+        "value": 3.56,
+        "baseline_value": 3.55,
+        "delta_vs_disabled": 0.01,
+        "primary": false,
+        "effect_direction": "higher",
+        "evidence_refs": [
+          "semantic_reader_repair_20261008T145652Z_audit.json"
+        ]
+      }
+    ],
+    "controls": [
+      {
+        "id": "frozen_reader_topk",
+        "kind": "disabled",
+        "status": "pass",
+        "notes": "Exact baseline scores/cohort parity and null verified."
+      },
+      {
+        "id": "classical_semantic",
+        "kind": "classical",
+        "status": "pass",
+        "notes": "Matched budget/init/optimizer/cohort; active training, no significant difference."
+      },
+      {
+        "id": "quantum_scalar_control",
+        "kind": "quantum",
+        "status": "pass",
+        "notes": "10 changed sets; positive gains/harm cancel. Not parameter matched."
+      }
+    ]
+  },
+  "axes": {
+    "task_utility": {
+      "status": "not_run",
+      "notes": "Selector Silver diagnostic only; downstream answer utility not run.",
+      "evidence_refs": [
+        "semantic_reader_repair_20261008T145652Z_audit.json"
+      ]
+    },
+    "robustness": {
+      "status": "not_run",
+      "notes": "One short run; no independent full-data replication.",
+      "evidence_refs": []
+    },
+    "natural_transfer": {
+      "status": "not_run",
+      "notes": "Exposed reduced panel only.",
+      "evidence_refs": []
+    },
+    "attention_alignment": {
+      "status": "partial",
+      "notes": "One-question positive/direct rescue; strict-positive paired lower CI fails.",
+      "evidence_refs": [
+        "semantic_reader_repair_20261008T145652Z_audit.json"
+      ]
+    },
+    "classical_attribution": {
+      "status": "fail",
+      "notes": "Matched classical comparison CI [0,0.03] touches zero; no demonstrated quantum advantage.",
+      "evidence_refs": [
+        "semantic_reader_repair_20261008T145652Z_audit.json"
+      ]
+    },
+    "finite_shot": {
+      "status": "not_run",
+      "notes": "Exact Torch statevector only.",
+      "evidence_refs": []
+    },
+    "resource_audit": {
+      "status": "partial",
+      "notes": "15399 parameters each semantic arm, 35 scalar; no quantum advantage or runtime comparison.",
+      "evidence_refs": [
+        "semantic_reader_repair_20261008T145652Z_audit.json"
+      ]
+    }
+  },
+  "trace_completeness": "partial",
+  "trace_observability": {
+    "status": "partial",
+    "schema_version": "sample-trace.v2",
+    "artifact_refs": [
+      "five_ideas/semantic_reader_training_repair_100/20261008T145652Z/selector_trace.json",
+      "five_ideas/semantic_reader_training_repair_100/20261008T145652Z/semantic_values.npz"
+    ],
+    "selection_rule": "all eval cases/candidates, first two usable train inputs, first candidate hidden of first two train/eval cases",
+    "coverage": {
+      "data": "observed",
+      "preprocess": "observed",
+      "training": "observed",
+      "scoring": "observed",
+      "selection": "observed",
+      "diagnosis": "observed",
+      "generation": "not_applicable"
+    },
+    "missing_stages": [
+      "generation"
+    ],
+    "notes": "All declared tensor/selection and selected optimizer witnesses replay. Other 432 train inputs, support audit, full optimizer history and skipped-question identities absent."
+  },
+  "mechanism_recovery": {
+    "dossier_path": ".ai-progress/workstreams/rag-selector/refs/semantic_reader_repair_20261009_recovery.json",
+    "dossier_sha256": "566e5866ce64478e5108b324b46554d10a25fc9ad77486d4e2390ac8a5f787a8",
+    "outcome": "stop"
+  },
+  "next_upgrade": {
+    "action": "Before new implementation, audit train-only supervision and boundary discrimination; keep provisional boundary-focused quantum training exploratory.",
+    "success_gate": "Reliable support targets plus selective correction versus compression on train-only validation; separately preregister utility/attribution study.",
+    "kill_criteria": "Contract/leakage/numerical failure stops execution; a normal short null remains inconclusive for the broad family.",
+    "estimated_cost": "Saved-vector analysis first; deterministic missing train text requires a bounded collaborator-local export, not a full experiment.",
+    "authorized": false
+  },
+  "failed_gates": [
+    "selection_diagnostic",
+    "quantum_attribution_diagnostic"
+  ],
+  "limitations": [
+    "Exposed 100-case Silver and one short seed: L0 only.",
+    "Candidate-direction counts are dependent descriptive units, not significance evidence.",
+    "Only two training inputs are saved; others lack raw support certification.",
+    "Prior incomplete Q-ARCG provenance remains independent."
+  ],
+  "provenance": {
+    "code_revision": "b2ca094aed4eccf266d90fff4adedb826081af22",
+    "records": [
+      {
+        "path": "five_ideas/semantic_reader_training_repair_100/20261008T145652Z/summary.json",
+        "role": "verified uploaded artifact",
+        "sha256": "b0423f31195f8628a34286b5e0f7fbff579cd7c8678e13a5decaa7e64831d24e"
+      },
+      {
+        "path": "five_ideas/semantic_reader_training_repair_100/20261008T145652Z/report.md",
+        "role": "verified uploaded artifact",
+        "sha256": "ed18dd9baf139d6adccd749858ee8867706533c49eebc3772284a0d22e37a291"
+      },
+      {
+        "path": "five_ideas/semantic_reader_training_repair_100/20261008T145652Z/selector_trace.json",
+        "role": "verified uploaded artifact",
+        "sha256": "7e69b3efe0f733f15c68e2ea62bdd7c633e7f8122718bf0d6af90cb7b0fff258"
+      },
+      {
+        "path": "five_ideas/semantic_reader_training_repair_100/20261008T145652Z/semantic_values.npz",
+        "role": "verified uploaded artifact",
+        "sha256": "573209aa882b4d8122ffae26b2dc37bff214fb7882744e5dae4d3d3e22d76843"
+      },
+      {
+        "path": "five_ideas/semantic_reader_training_repair_100/20261008T145652Z/run_metadata.json",
+        "role": "verified uploaded artifact",
+        "sha256": "47531fe27e7106174dee13ff2442a8ca926590bb68ff05a1cde39ba05de8a7f8"
+      },
+      {
+        "path": "five_ideas/semantic_reader_training_repair_100/20261008T145652Z/upload_manifest.json",
+        "role": "verified uploaded artifact",
+        "sha256": "49ddb301f9af637fed684686c341cb6163e3694eab259b47e482058070dde997"
+      },
+      {
+        "path": ".ai-progress/workstreams/rag-selector/refs/semantic_reader_repair_20261008T145652Z_audit.json",
+        "role": "independent result audit",
+        "sha256": "072ceaaf8b83b8158ced1207788578c5b1071ae62119184100b83f0748a9c04c"
+      }
+    ]
+  }
+}

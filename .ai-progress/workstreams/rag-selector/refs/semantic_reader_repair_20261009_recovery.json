@@ -1,0 +1,156 @@
+{
+  "schema_version": "experiment-grounded-ideation.mechanism-recovery.v2",
+  "evidence_packet": {
+    "path": ".ai-progress/workstreams/rag-selector/refs/semantic_reader_repair_20261008T145652Z_audit.json",
+    "sha256": "072ceaaf8b83b8158ced1207788578c5b1071ae62119184100b83f0748a9c04c",
+    "code_revision": "b2ca094aed4eccf266d90fff4adedb826081af22",
+    "validity_status": "mixed"
+  },
+  "trace_adequacy": {
+    "status": "partial",
+    "schema_version": "sample-trace.v2",
+    "artifact_refs": [
+      "five_ideas/semantic_reader_training_repair_100/20261008T145652Z/selector_trace.json",
+      "five_ideas/semantic_reader_training_repair_100/20261008T145652Z/semantic_values.npz",
+      "semantic_reader_repair_20261008T145652Z_audit.json"
+    ],
+    "selection_rule": "All 100 evaluation cases, all changed cases; first two usable train inputs and all per-step gradient norms.",
+    "covered_stages": [
+      "data",
+      "preprocess",
+      "training",
+      "scoring",
+      "selection",
+      "diagnosis"
+    ],
+    "missing_stages": [
+      "complete training inputs and support-label validation for remaining 432 cases"
+    ],
+    "target_boundary": "Weak train-only containment during fitting; Silver accessed only after every online selection.",
+    "causal_links_observed": {
+      "training_to_nonconstant_correction": true,
+      "correction_to_selection": true,
+      "supervision_quality_to_selective_rescue": false,
+      "selection_to_answer_utility": false
+    },
+    "notes": "Declared producer trace and 18 optimizer-update witnesses replay; full supervision adequacy and all-step optimizer reconstruction are absent."
+  },
+  "causal_trace": {
+    "intervention_execution": {
+      "status": "observed",
+      "evidence_refs": [
+        "semantic_reader_repair_20261008T145652Z_audit.json"
+      ],
+      "claim": "Correct repair policy and source; all 5000 score corrections nonzero."
+    },
+    "intended_intermediate": {
+      "status": "computed",
+      "evidence_refs": [
+        "semantic_reader_repair_20261008T145652Z_audit.json"
+      ],
+      "claim": "Projection norm and gradients preserved; candidate correction and original score strongly anticorrelated."
+    },
+    "observable_output": {
+      "status": "computed",
+      "evidence_refs": [
+        "semantic_reader_repair_20261008T145652Z_audit.json"
+      ],
+      "claim": "Quantum changes 2 Top-5 sets; one irrelevant swap and one direct rescue. Positive/direct totals 204/139 vs 203/138."
+    },
+    "task_utility": {
+      "status": "computed",
+      "evidence_refs": [
+        "semantic_reader_repair_20261008T145652Z_audit.json"
+      ],
+      "claim": "Exposed Silver primary CI [0,0.03] fails strict-positive gate; downstream generation not run."
+    }
+  },
+  "failure_analysis": {
+    "primary_explanation": {
+      "statement": "The trained correction is mostly score compression with little demonstrated support discrimination; bounded anchored score differences limit deep-rank rescue.",
+      "confidence": "Descriptive compression and reachability verified; training cause unproven.",
+      "evidence_refs": [
+        "semantic_reader_repair_20261008T145652Z_audit.json"
+      ]
+    },
+    "alternative_explanations": [
+      {
+        "statement": "Weak answer-string targets may teach topic/answer occurrence rather than sufficient support; full training text/support labels are absent.",
+        "confidence": "unresolved hypothesis",
+        "evidence_refs": [
+          "semantic_reader_repair_20261008T145652Z_audit.json"
+        ]
+      },
+      {
+        "statement": "Quantum 76.285 percent coordinate saturation may blunt distinctions, while nonzero gradients and encodings rule out complete collapse.",
+        "confidence": "saturation observed, causal contribution unproven",
+        "evidence_refs": [
+          "semantic_reader_repair_20261008T145652Z_audit.json"
+        ]
+      },
+      {
+        "statement": "A small single exposed panel and three-epoch budget may conceal a real effect; one rescue is insufficient and classical larger corrections do not prove quantum incapacity.",
+        "confidence": "inconclusive",
+        "evidence_refs": [
+          "semantic_reader_repair_20261008T145652Z_audit.json"
+        ]
+      }
+    ],
+    "discriminating_measurement": {
+      "uncertainty": "Selective support discrimination versus generic flattening, label noise and local residual reachability.",
+      "measurement": "First acquire deterministic train-only case traces/support audits with collaborator-local exporter; match high-score weak negatives to lower-score positives, compare correction direction and simple compression control without eval Silver.",
+      "primary_outcome": "Reliable support targets and selective correction on independent training-validation cases justify designing boundary-discriminative quantum/classical learning controls.",
+      "alternative_outcome": "Targets are noisy or corrections indiscriminate: repair supervision/representation before any further same-budget or larger task screen."
+    },
+    "closed_family": {
+      "id": "blind_amplification_or_escalation_of_current_weak_allpairs_local_residual",
+      "rejected_variant_refs": [
+        "configs/experiments/semantic_reader_training_repair_100.json"
+      ],
+      "closure_evidence_refs": [
+        "semantic_reader_repair_20261008T145652Z_audit.json"
+      ],
+      "forbidden_rescue_variants": [
+        "Automatically deepen circuit or enlarge budget without supervision diagnosis.",
+        "Tune residual amplitude or learning coefficients on exposed evaluation Silver.",
+        "Claim one-question gain proves quantum advantage or kill the trained quantum family from this short screen."
+      ]
+    }
+  },
+  "positive_carryovers": [
+    {
+      "id": "qualified_learning_path",
+      "mechanism": "Projection-only decoupled decay and fan-in LR restore finite live data gradients and input-dependent correction.",
+      "evidence_refs": [
+        "semantic_reader_repair_20261008T145652Z_audit.json"
+      ],
+      "transport_constraint": "Keep optimizer health, null initialization and matched classical controls; numerical health is not utility."
+    },
+    {
+      "id": "stable_relevance_anchor",
+      "mechanism": "The Reader baseline remains exactly matched; one narrow direct evidence rescue occurs with the residual intervention.",
+      "evidence_refs": [
+        "semantic_reader_repair_20261008T145652Z_audit.json"
+      ],
+      "transport_constraint": "No removal of anchor or generalization of outcome-selected case 82; expand range only in a separately justified design."
+    },
+    {
+      "id": "complete_changed_case_accounting",
+      "mechanism": "14 method/case swaps reveal neutral filler changes and cancelling scalar effects.",
+      "evidence_refs": [
+        "semantic_reader_repair_20261008T145652Z_audit.json"
+      ],
+      "transport_constraint": "Compare positive/direct/membership separately and retain harmful/neutral examples."
+    }
+  ],
+  "recovery_outcome": {
+    "disposition": "stop",
+    "stop_reason": "Stop automatic next-study selection/escalation of the unchanged configuration pending train-only supervision and boundary diagnosis. Provisional boundary-discriminative quantum training is exploratory only; no implementation or new task run authorized by result review. RAG/quantum exploration remains active."
+  },
+  "limitations": [
+    "Exposed 100-case Silver and one short seed: L0 only.",
+    "Candidate-direction counts are dependent descriptive units, not significance evidence.",
+    "Only two training inputs are saved; others lack raw support certification.",
+    "Prior incomplete Q-ARCG provenance remains independent."
+  ]
+}

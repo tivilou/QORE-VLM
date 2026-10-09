@@ -1,0 +1,153 @@
+{
+  "target_directory": "five_ideas/semantic_reader_training_repair_100/20261008T145652Z",
+  "exchange_files": [
+    {
+      "name": "summary.json",
+      "bytes": 28577,
+      "sha256": "b0423f31195f8628a34286b5e0f7fbff579cd7c8678e13a5decaa7e64831d24e"
+    },
+    {
+      "name": "report.md",
+      "bytes": 588,
+      "sha256": "ed18dd9baf139d6adccd749858ee8867706533c49eebc3772284a0d22e37a291"
+    },
+    {
+      "name": "selector_trace.json",
+      "bytes": 11607670,
+      "sha256": "7e69b3efe0f733f15c68e2ea62bdd7c633e7f8122718bf0d6af90cb7b0fff258"
+    },
+    {
+      "name": "semantic_values.npz",
+      "bytes": 81799848,
+      "sha256": "573209aa882b4d8122ffae26b2dc37bff214fb7882744e5dae4d3d3e22d76843"
+    },
+    {
+      "name": "run_metadata.json",
+      "bytes": 5990,
+      "sha256": "47531fe27e7106174dee13ff2442a8ca926590bb68ff05a1cde39ba05de8a7f8"
+    }
+  ],
+  "github_files": [
+    "summary.json",
+    "report.md",
+    "run_metadata.json",
+    "upload_manifest.json"
+  ],
+  "exchange_only": [
+    "selector_trace.json",
+    "semantic_values.npz"
+  ],
+  "provenance": {
+    "code_revision": "b2ca094aed4eccf266d90fff4adedb826081af22",
+    "config_sha256": "983e6d1ed09ce3c242a95c45793745f535876f4a73c1d300410838eab7405541",
+    "plugin_plan_sha256": "528205adbf8fd59f4df36cacba8d4c6e07b9ead84e45fe7bd3a5000787d24617",
+    "effective_config": {
+      "schema_version": "rag.quantum_semantic_reader_screen.v1",
+      "stage": "exploratory_screen",
+      "authorization": "collaborator_screen",
+      "reader": {
+        "model_id": "facebook/dpr-reader-single-nq-base",
+        "revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+        "max_length": 350,
+        "batch_size": 8
+      },
+      "representation": {
+        "roles": [
+          "cls",
+          "question_mean",
+          "question_conditioned_passage",
+          "question_passage_product",
+          "absolute_difference"
+        ],
+        "bottleneck": 4,
+        "reader_frozen": true
+      },
+      "head": {
+        "n_qubits": 4,
+        "depth": 2,
+        "residual_bound": 0.25,
+        "gate_temperature": 1.0
+      },
+      "training": {
+        "max_questions": 512,
+        "epochs": 3,
+        "seed": 20261008,
+        "learning_rate": 0.003,
+        "weight_decay": 0.0001,
+        "anchor_penalty": 0.01,
+        "gradient_clip_norm": 5.0,
+        "minimum_coverage": 0.25,
+        "target": "answer_string_containment_weak_not_official_gold",
+        "reader_frozen": true,
+        "optimizer_policy": "adamw_projection_fanin_v1",
+        "health_contract": {
+          "probe_cases": "first two usable training cases only",
+          "checks_at": "update 64 and each epoch end",
+          "projection_norm_ratio_min": 1e-06,
+          "encoding_std_min": 1e-06,
+          "normalized_within_case_correction_std_min": 1e-06,
+          "data_gradients": "finite nonzero projection/readout/scale after null; current check window",
+          "fail_before_evaluation": true,
+          "preserve_failure_values": true
+        }
+      },
+      "evaluation": {
+        "cases": 100,
+        "top50": 50,
+        "top5": 5,
+        "input_sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
+        "silver_posthoc_only": true,
+        "primary": "positive_consensus_count",
+        "protection": "direct_consensus_count",
+        "secondary": [
+          "all_models_positive_count",
+          "fixed_silver_set_overlap"
+        ],
+        "bootstrap_replicates": 2000,
+        "bootstrap_seed": 20261009
+      },
+      "methods": [
+        "frozen_reader_topk",
+        "quantum_semantic",
+        "classical_semantic",
+        "quantum_scalar_control"
+      ],
+      "trace": {
+        "schema": "sample-trace.v2",
+        "full_hidden_samples": "first retrieved candidate of first two usable training cases and first two evaluation cases",
+        "training_values": "complete base/pooled/scalar/weak-mask arrays for first two usable training cases",
+        "evaluation_values": "all 100x50 pooled/scalar/base scores plus per-method encoding/observables/gates/residuals",
+        "checkpoints": "initial and each epoch for all three trainable arms",
+        "replay_required": true
+      },
+      "output_namespace": "five_ideas/semantic_reader_training_repair_100",
+      "claim_ceiling": "L0_diagnostic",
+      "formal_run_authorized": false,
+      "limitations": [
+        "Weak labels remain a confounder; no causal claim that prior failure came from scalar compression.",
+        "The exposed 100-case Silver panel is a development diagnostic, not an untouched generalization test.",
+        "Classical projection and exactly simulated quantum head do not establish quantum resource or utility advantage.",
+        "Optimizer repair, not a new quantum mechanism; two-case qualification is not utility."
+      ]
+    },
+    "input_sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
+    "reader": {
+      "model_id": "facebook/dpr-reader-single-nq-base",
+      "requested_revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+      "resolved_revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+      "config_sha256": "383c5dbe735db108976bcaef70048348151def480bfe24ed8ff5243cd1ce4751",
+      "device": "cuda",
+      "reader_frozen": true
+    },
+    "source_hashes": {
+      "scripts/collab/five_ideas/run_quantum_semantic_reader_screen_100.py": "7655f7d150c37ef81a6a8741de8daf7806fa05a7f62d9feb4b73ae9ab52d1269",
+      "applications/rag/quantum_semantic_reader.py": "b089470c7c0b15f7c1ea75206223d59e465072c496e6e95add5d72310ca4315a",
+      "applications/rag/qarcg_reader.py": "b5fce815ba8cdb1f9223e3bdcc2018ef25d6005dc9059d0602095a70cc43d20b",
+      "applications/rag/semantic_reader_training.py": "8e1ea8ad2327d4a304259f28d253d655977b627e2bb056e6aad75fdaadbcec6e",
+      "scripts/collab/five_ideas/run_semantic_reader_training_repair_100.py": "d88fd1668509cd70e1fcdc1b9e1bad053afa4535d7cbe5709c3e53f3e9836dc5"
+    },
+    "python": "3.10.20",
+    "torch": "2.5.1+cu121",
+    "numpy": "1.26.4"
+  }
+}

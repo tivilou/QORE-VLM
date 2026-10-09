@@ -9,6 +9,7 @@
 - Plugins are isolated, allowlisted, deterministic where declared, and compared with disabled/original behavior.
 - Finite gradients, exact-null and artifact replay do not prove training health. Before a head-based task rerun, check data-gradient flow after null initialization, parameter/feature variation and effective score corrections; diagnose decay-driven collapse before attributing a null result to representation capacity.
 - A nonzero uniform score shift is not candidate-dependent learning. Check within-case correction spread and wide-projection saturation; isolate optimizer/learning-path repair from claims of task utility. See [repair gate](decisions/2026-10-08-semantic-reader-optimizer-repair.md).
+- Favorable correction of low-ranked positives is not support discrimination if wrong passages receive the same effect. Compare matched nonpositive controls and bounded-score reachability; healthy gradients/one rescue do not justify blind residual amplification. See [result](decisions/2026-10-09-semantic-reader-repair-result.md).
 - Gold, evaluator/generation output, and panel labels are post-hoc diagnostics only; three-model labels are Silver L0.
 - Distinguish exact Silver-set overlap from positive/direct evidence retention: fixed-size references can contain fillers or omit valid alternatives. New metrics must be declared prospectively; supplementary diagnostics do not rewrite old gates. See [detail](decisions/2026-10-08-silver-membership-vs-evidence-retention.md).
 - Generator-native work uses one transport, exact mapping and zero-anchor fallback without retry/feedback.
@@ -153,6 +154,7 @@
 - [BLOCKED / TRAINING REPAIR] Quantum semantic Reader head design -> [detail](decisions/2026-10-08-quantum-semantic-reader-screen.md)
 - [ACTIVE / EVIDENCE REPAIR] Semantic training collapse and next gate -> [detail](decisions/2026-10-08-semantic-reader-training-collapse.md)
 - [IMPLEMENTED / TRAIN-ONLY QUALIFIED] Semantic optimizer repair and controlled rerun -> [detail](decisions/2026-10-08-semantic-reader-optimizer-repair.md)
+- [ACTIVE / SCREEN INCONCLUSIVE] Repaired semantic head: compression, one rescue, supervision gate -> [detail](decisions/2026-10-09-semantic-reader-repair-result.md)
 
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.

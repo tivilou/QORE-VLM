@@ -1,0 +1,841 @@
+{
+  "schema_version": "rag.quantum_semantic_reader_screen.summary.v1",
+  "stage": "exploratory_screen",
+  "claim_ceiling": "L0_diagnostic",
+  "evaluation": {
+    "methods": {
+      "frozen_reader_topk": {
+        "positive_consensus_count": {
+          "total": 203,
+          "mean": 2.03
+        },
+        "direct_consensus_count": {
+          "total": 138,
+          "mean": 1.38
+        },
+        "all_models_positive_count": {
+          "total": 171,
+          "mean": 1.71
+        },
+        "fixed_silver_set_overlap": {
+          "total": 355,
+          "mean": 3.55
+        }
+      },
+      "quantum_semantic": {
+        "positive_consensus_count": {
+          "total": 204,
+          "mean": 2.04
+        },
+        "direct_consensus_count": {
+          "total": 139,
+          "mean": 1.39
+        },
+        "all_models_positive_count": {
+          "total": 172,
+          "mean": 1.72
+        },
+        "fixed_silver_set_overlap": {
+          "total": 356,
+          "mean": 3.56
+        }
+      },
+      "classical_semantic": {
+        "positive_consensus_count": {
+          "total": 203,
+          "mean": 2.03
+        },
+        "direct_consensus_count": {
+          "total": 138,
+          "mean": 1.38
+        },
+        "all_models_positive_count": {
+          "total": 171,
+          "mean": 1.71
+        },
+        "fixed_silver_set_overlap": {
+          "total": 354,
+          "mean": 3.54
+        }
+      },
+      "quantum_scalar_control": {
+        "positive_consensus_count": {
+          "total": 203,
+          "mean": 2.03
+        },
+        "direct_consensus_count": {
+          "total": 139,
+          "mean": 1.39
+        },
+        "all_models_positive_count": {
+          "total": 171,
+          "mean": 1.71
+        },
+        "fixed_silver_set_overlap": {
+          "total": 353,
+          "mean": 3.53
+        }
+      }
+    },
+    "paired_quantum_semantic_minus": {
+      "frozen_reader_topk": {
+        "positive_consensus_count": {
+          "mean": 0.01,
+          "ci95": [
+            0.0,
+            0.03
+          ],
+          "wins": 1,
+          "ties": 99,
+          "losses": 0
+        },
+        "direct_consensus_count": {
+          "mean": 0.01,
+          "ci95": [
+            0.0,
+            0.03
+          ],
+          "wins": 1,
+          "ties": 99,
+          "losses": 0
+        },
+        "all_models_positive_count": {
+          "mean": 0.01,
+          "ci95": [
+            0.0,
+            0.03
+          ],
+          "wins": 1,
+          "ties": 99,
+          "losses": 0
+        },
+        "fixed_silver_set_overlap": {
+          "mean": 0.01,
+          "ci95": [
+            0.0,
+            0.03
+          ],
+          "wins": 1,
+          "ties": 99,
+          "losses": 0
+        }
+      },
+      "classical_semantic": {
+        "positive_consensus_count": {
+          "mean": 0.01,
+          "ci95": [
+            0.0,
+            0.03
+          ],
+          "wins": 1,
+          "ties": 99,
+          "losses": 0
+        },
+        "direct_consensus_count": {
+          "mean": 0.01,
+          "ci95": [
+            0.0,
+            0.03
+          ],
+          "wins": 1,
+          "ties": 99,
+          "losses": 0
+        },
+        "all_models_positive_count": {
+          "mean": 0.01,
+          "ci95": [
+            0.0,
+            0.03
+          ],
+          "wins": 1,
+          "ties": 99,
+          "losses": 0
+        },
+        "fixed_silver_set_overlap": {
+          "mean": 0.02,
+          "ci95": [
+            0.0,
+            0.05
+          ],
+          "wins": 2,
+          "ties": 98,
+          "losses": 0
+        }
+      },
+      "quantum_scalar_control": {
+        "positive_consensus_count": {
+          "mean": 0.01,
+          "ci95": [
+            -0.02,
+            0.05
+          ],
+          "wins": 2,
+          "ties": 97,
+          "losses": 1
+        },
+        "direct_consensus_count": {
+          "mean": 0.0,
+          "ci95": [
+            -0.03,
+            0.03
+          ],
+          "wins": 1,
+          "ties": 98,
+          "losses": 1
+        },
+        "all_models_positive_count": {
+          "mean": 0.01,
+          "ci95": [
+            0.0,
+            0.03
+          ],
+          "wins": 1,
+          "ties": 99,
+          "losses": 0
+        },
+        "fixed_silver_set_overlap": {
+          "mean": 0.03,
+          "ci95": [
+            -0.02,
+            0.08
+          ],
+          "wins": 5,
+          "ties": 93,
+          "losses": 2
+        }
+      }
+    },
+    "gates": {
+      "selection_diagnostic": false,
+      "quantum_attribution_diagnostic": false
+    },
+    "metric_population": "all 100 cases; per-case count; no zero-positive cases discarded"
+  },
+  "training": {
+    "requested": 512,
+    "usable": 434,
+    "coverage": 0.84765625,
+    "skipped": {
+      "no_containment_hit": 76,
+      "all_candidates_positive": 2
+    },
+    "arms": {
+      "quantum_semantic": {
+        "case_count": 434,
+        "mean_loss_by_epoch": [
+          0.21870484727269143,
+          0.21874131461730914,
+          0.21473387819391848
+        ],
+        "witnesses": [
+          {
+            "sample": 1,
+            "epoch": 1,
+            "loss": 0.0313120074570179,
+            "gradient_norm": 0.0027002678252756596,
+            "value_prefix": "train_001__quantum_semantic__epoch1_preupdate"
+          },
+          {
+            "sample": 2,
+            "epoch": 1,
+            "loss": 0.0003901275049429387,
+            "gradient_norm": 0.001111542689613998,
+            "value_prefix": "train_002__quantum_semantic__epoch1_preupdate"
+          },
+          {
+            "sample": 2,
+            "epoch": 2,
+            "loss": 0.0002932281931862235,
+            "gradient_norm": 0.00011539943079696968,
+            "value_prefix": "train_002__quantum_semantic__epoch2_preupdate"
+          },
+          {
+            "sample": 1,
+            "epoch": 2,
+            "loss": 0.03156925365328789,
+            "gradient_norm": 0.028291059657931328,
+            "value_prefix": "train_001__quantum_semantic__epoch2_preupdate"
+          },
+          {
+            "sample": 2,
+            "epoch": 3,
+            "loss": 0.0014741008635610342,
+            "gradient_norm": 0.04330679774284363,
+            "value_prefix": "train_002__quantum_semantic__epoch3_preupdate"
+          },
+          {
+            "sample": 1,
+            "epoch": 3,
+            "loss": 0.034972965717315674,
+            "gradient_norm": 0.31782522797584534,
+            "value_prefix": "train_001__quantum_semantic__epoch3_preupdate"
+          }
+        ],
+        "training_health": {
+          "status": "passed",
+          "policy": "adamw_projection_fanin_v1",
+          "checks": [
+            {
+              "step": 64,
+              "epoch": 1,
+              "projection_norm": 1.1620723713290682,
+              "projection_norm_ratio": 1.0027741721887027,
+              "mean_encoding_std": 0.18121030098084276,
+              "encoding_saturation_fraction": 0.0800000005401671,
+              "effective_correction_count": 100,
+              "max_within_case_correction_std": 0.0003206698413792124,
+              "max_normalized_correction_std": 9.533778063927998e-05,
+              "max_abs_effective_correction": 0.0013341903686523438,
+              "data_gradient_norm_totals": {
+                "projection": 0.012575824999140178,
+                "readout": 0.0012289283565677395,
+                "circuit": 0.00016033403697520538,
+                "scale": 0.0025075380773704747
+              }
+            },
+            {
+              "step": 434,
+              "epoch": 1,
+              "projection_norm": 1.176772620602199,
+              "projection_norm_ratio": 1.0154592946126804,
+              "mean_encoding_std": 0.3717963173419087,
+              "encoding_saturation_fraction": 0.3474999964237213,
+              "effective_correction_count": 100,
+              "max_within_case_correction_std": 0.011400163615100507,
+              "max_normalized_correction_std": 0.003389362383795441,
+              "max_abs_effective_correction": 0.04623699188232422,
+              "data_gradient_norm_totals": {
+                "projection": 14.106222516530991,
+                "readout": 0.4551159079254335,
+                "circuit": 0.25003817005445467,
+                "scale": 0.5069107285267656
+              }
+            },
+            {
+              "step": 868,
+              "epoch": 2,
+              "projection_norm": 1.192511516970278,
+              "projection_norm_ratio": 1.0290406852093896,
+              "mean_encoding_std": 0.15664476904215646,
+              "encoding_saturation_fraction": 0.5649999678134918,
+              "effective_correction_count": 100,
+              "max_within_case_correction_std": 0.01010590682567615,
+              "max_normalized_correction_std": 0.0028287022325173966,
+              "max_abs_effective_correction": 0.03747272491455078,
+              "data_gradient_norm_totals": {
+                "projection": 18.32889715021966,
+                "readout": 0.49796631263894425,
+                "circuit": 0.3895509117926526,
+                "scale": 0.4224860464987614
+              }
+            },
+            {
+              "step": 1302,
+              "epoch": 3,
+              "projection_norm": 1.2202473997682153,
+              "projection_norm_ratio": 1.0529745017244616,
+              "mean_encoding_std": 0.1735204600166243,
+              "encoding_saturation_fraction": 0.7299999594688416,
+              "effective_correction_count": 100,
+              "max_within_case_correction_std": 0.12749507400591117,
+              "max_normalized_correction_std": 0.037905333865775534,
+              "max_abs_effective_correction": 0.4803466796875,
+              "data_gradient_norm_totals": {
+                "projection": 96.2480006628632,
+                "readout": 2.7912496625753147,
+                "circuit": 1.877415571743991,
+                "scale": 2.064159560643816
+              }
+            }
+          ],
+          "gradient_columns": [
+            "projection",
+            "readout",
+            "circuit",
+            "scale"
+          ],
+          "optimizer_groups": [
+            {
+              "parameter_names": [
+                "project.weight"
+              ],
+              "lr": 4.8412291827592714e-05,
+              "weight_decay": 0.0001
+            },
+            {
+              "parameter_names": [
+                "project.bias",
+                "interaction.circuit",
+                "interaction.gate_weights",
+                "interaction.gate_bias",
+                "interaction.residual_weights",
+                "interaction.residual_bias",
+                "interaction.residual_scale"
+              ],
+              "lr": 0.003,
+              "weight_decay": 0.0
+            }
+          ]
+        }
+      },
+      "classical_semantic": {
+        "case_count": 434,
+        "mean_loss_by_epoch": [
+          0.21853296411232362,
+          0.21444125412921922,
+          0.21371984928944265
+        ],
+        "witnesses": [
+          {
+            "sample": 1,
+            "epoch": 1,
+            "loss": 0.03129781037569046,
+            "gradient_norm": 0.001427531591616571,
+            "value_prefix": "train_001__classical_semantic__epoch1_preupdate"
+          },
+          {
+            "sample": 2,
+            "epoch": 1,
+            "loss": 0.0002978952252306044,
+            "gradient_norm": 0.0003020958974957466,
+            "value_prefix": "train_002__classical_semantic__epoch1_preupdate"
+          },
+          {
+            "sample": 2,
+            "epoch": 2,
+            "loss": 0.0006686230772174895,
+            "gradient_norm": 0.013299966230988503,
+            "value_prefix": "train_002__classical_semantic__epoch2_preupdate"
+          },
+          {
+            "sample": 1,
+            "epoch": 2,
+            "loss": 0.03952598199248314,
+            "gradient_norm": 0.23224566876888275,
+            "value_prefix": "train_001__classical_semantic__epoch2_preupdate"
+          },
+          {
+            "sample": 2,
+            "epoch": 3,
+            "loss": 0.001336962333880365,
+            "gradient_norm": 0.014261575415730476,
+            "value_prefix": "train_002__classical_semantic__epoch3_preupdate"
+          },
+          {
+            "sample": 1,
+            "epoch": 3,
+            "loss": 0.04394356906414032,
+            "gradient_norm": 0.36390459537506104,
+            "value_prefix": "train_001__classical_semantic__epoch3_preupdate"
+          }
+        ],
+        "training_health": {
+          "status": "passed",
+          "policy": "adamw_projection_fanin_v1",
+          "checks": [
+            {
+              "step": 64,
+              "epoch": 1,
+              "projection_norm": 1.1604247526190377,
+              "projection_norm_ratio": 1.001352410920819,
+              "mean_encoding_std": 0.2603678347223044,
+              "encoding_saturation_fraction": 0.0,
+              "effective_correction_count": 100,
+              "max_within_case_correction_std": 9.666969525910903e-05,
+              "max_normalized_correction_std": 2.8740695294073987e-05,
+              "max_abs_effective_correction": 0.0003693103790283203,
+              "data_gradient_norm_totals": {
+                "projection": 0.0028244503954993113,
+                "readout": 0.0004605784196181675,
+                "circuit": 4.672287827690973e-05,
+                "scale": 0.0008703378362190373
+              }
+            },
+            {
+              "step": 434,
+              "epoch": 1,
+              "projection_norm": 1.187509282771122,
+              "projection_norm_ratio": 1.0247241629497514,
+              "mean_encoding_std": 0.3871655138129526,
+              "encoding_saturation_fraction": 0.4675000011920929,
+              "effective_correction_count": 100,
+              "max_within_case_correction_std": 0.06865988047773107,
+              "max_normalized_correction_std": 0.02041314704105332,
+              "max_abs_effective_correction": 0.31528329849243164,
+              "data_gradient_norm_totals": {
+                "projection": 24.000481588821657,
+                "readout": 0.6073882478354339,
+                "circuit": 0.3829995407455516,
+                "scale": 0.6041345930276769
+              }
+            },
+            {
+              "step": 868,
+              "epoch": 2,
+              "projection_norm": 1.2042178034992381,
+              "projection_norm_ratio": 1.0391422606990952,
+              "mean_encoding_std": 0.23172899842793626,
+              "encoding_saturation_fraction": 0.7299999892711639,
+              "effective_correction_count": 100,
+              "max_within_case_correction_std": 0.17714556505957518,
+              "max_normalized_correction_std": 0.05266683312104541,
+              "max_abs_effective_correction": 0.580775260925293,
+              "data_gradient_norm_totals": {
+                "projection": 158.07371516723134,
+                "readout": 2.8959752876667606,
+                "circuit": 2.5640427493649947,
+                "scale": 3.6079764345413423
+              }
+            },
+            {
+              "step": 1302,
+              "epoch": 3,
+              "projection_norm": 1.2109643391777014,
+              "projection_norm_ratio": 1.044963973612186,
+              "mean_encoding_std": 0.3283721824144921,
+              "encoding_saturation_fraction": 0.5724999904632568,
+              "effective_correction_count": 100,
+              "max_within_case_correction_std": 0.3574389012757615,
+              "max_normalized_correction_std": 0.1062695244903779,
+              "max_abs_effective_correction": 0.5873720645904541,
+              "data_gradient_norm_totals": {
+                "projection": 217.51126662257363,
+                "readout": 4.52804278614863,
+                "circuit": 3.602435861367658,
+                "scale": 3.831832607189426
+              }
+            }
+          ],
+          "gradient_columns": [
+            "projection",
+            "readout",
+            "circuit",
+            "scale"
+          ],
+          "optimizer_groups": [
+            {
+              "parameter_names": [
+                "project.weight"
+              ],
+              "lr": 4.8412291827592714e-05,
+              "weight_decay": 0.0001
+            },
+            {
+              "parameter_names": [
+                "project.bias",
+                "interaction.circuit",
+                "interaction.gate_weights",
+                "interaction.gate_bias",
+                "interaction.residual_weights",
+                "interaction.residual_bias",
+                "interaction.residual_scale"
+              ],
+              "lr": 0.003,
+              "weight_decay": 0.0
+            }
+          ]
+        }
+      },
+      "quantum_scalar_control": {
+        "case_count": 434,
+        "mean_loss_by_epoch": [
+          0.21885004870464025,
+          0.21315938597806686,
+          0.2089561542112773
+        ],
+        "witnesses": [
+          {
+            "sample": 1,
+            "epoch": 1,
+            "loss": 0.0312860831618309,
+            "gradient_norm": 2.180586125177797e-05,
+            "value_prefix": "train_001__quantum_scalar_control__epoch1_preupdate"
+          },
+          {
+            "sample": 2,
+            "epoch": 1,
+            "loss": 0.0002923460560850799,
+            "gradient_norm": 9.042124474945012e-06,
+            "value_prefix": "train_002__quantum_scalar_control__epoch1_preupdate"
+          },
+          {
+            "sample": 2,
+            "epoch": 2,
+            "loss": 0.000360777456080541,
+            "gradient_norm": 0.000426348065957427,
+            "value_prefix": "train_002__quantum_scalar_control__epoch2_preupdate"
+          },
+          {
+            "sample": 1,
+            "epoch": 2,
+            "loss": 0.03650131821632385,
+            "gradient_norm": 0.012369109317660332,
+            "value_prefix": "train_001__quantum_scalar_control__epoch2_preupdate"
+          },
+          {
+            "sample": 2,
+            "epoch": 3,
+            "loss": 0.0014875333290547132,
+            "gradient_norm": 0.00506275100633502,
+            "value_prefix": "train_002__quantum_scalar_control__epoch3_preupdate"
+          },
+          {
+            "sample": 1,
+            "epoch": 3,
+            "loss": 0.038758840411901474,
+            "gradient_norm": 0.017652885988354683,
+            "value_prefix": "train_001__quantum_scalar_control__epoch3_preupdate"
+          }
+        ],
+        "training_health": {
+          "status": "passed",
+          "policy": "adamw_projection_fanin_v1",
+          "checks": [
+            {
+              "step": 64,
+              "epoch": 1,
+              "projection_norm": null,
+              "projection_norm_ratio": null,
+              "mean_encoding_std": 0.322440268729843,
+              "encoding_saturation_fraction": 0.019999999087303877,
+              "effective_correction_count": 100,
+              "max_within_case_correction_std": 3.87762440754877e-05,
+              "max_normalized_correction_std": 1.0853696761411889e-05,
+              "max_abs_effective_correction": 0.000194549560546875,
+              "data_gradient_norm_totals": {
+                "projection": 0.0,
+                "readout": 0.00037075742987457516,
+                "circuit": 6.607427855825081e-05,
+                "scale": 0.0005802603732329437
+              }
+            },
+            {
+              "step": 434,
+              "epoch": 1,
+              "projection_norm": null,
+              "projection_norm_ratio": null,
+              "mean_encoding_std": 0.322440268729843,
+              "encoding_saturation_fraction": 0.019999999087303877,
+              "effective_correction_count": 100,
+              "max_within_case_correction_std": 0.03544816085010562,
+              "max_normalized_correction_std": 0.010539029703129305,
+              "max_abs_effective_correction": 0.07904052734375,
+              "data_gradient_norm_totals": {
+                "projection": 0.0,
+                "readout": 0.220776816749766,
+                "circuit": 0.2547144854285085,
+                "scale": 0.13155519299076301
+              }
+            },
+            {
+              "step": 868,
+              "epoch": 2,
+              "projection_norm": null,
+              "projection_norm_ratio": null,
+              "mean_encoding_std": 0.322440268729843,
+              "encoding_saturation_fraction": 0.019999999087303877,
+              "effective_correction_count": 100,
+              "max_within_case_correction_std": 0.2803407526203244,
+              "max_normalized_correction_std": 0.08334761093407814,
+              "max_abs_effective_correction": 0.5756969451904297,
+              "data_gradient_norm_totals": {
+                "projection": 0.0,
+                "readout": 6.523236970062275,
+                "circuit": 9.605372505868546,
+                "scale": 1.2952088515598916
+              }
+            },
+            {
+              "step": 1302,
+              "epoch": 3,
+              "projection_norm": null,
+              "projection_norm_ratio": null,
+              "mean_encoding_std": 0.322440268729843,
+              "encoding_saturation_fraction": 0.019999999087303877,
+              "effective_correction_count": 100,
+              "max_within_case_correction_std": 0.34103757331732937,
+              "max_normalized_correction_std": 0.10139327482384079,
+              "max_abs_effective_correction": 0.6924474239349365,
+              "data_gradient_norm_totals": {
+                "projection": 0.0,
+                "readout": 9.253660041046805,
+                "circuit": 16.773606069577966,
+                "scale": 1.3011600874165197
+              }
+            }
+          ],
+          "gradient_columns": [
+            "projection",
+            "readout",
+            "circuit",
+            "scale"
+          ],
+          "optimizer_groups": [
+            {
+              "parameter_names": [
+                "circuit",
+                "gate_weights",
+                "gate_bias",
+                "residual_weights",
+                "residual_bias",
+                "residual_scale"
+              ],
+              "lr": 0.003,
+              "weight_decay": 0.0
+            }
+          ]
+        }
+      }
+    }
+  },
+  "parameter_counts": {
+    "quantum_semantic": 15399,
+    "classical_semantic": 15399,
+    "quantum_scalar_control": 35
+  },
+  "validation": {
+    "detached_values": "pass",
+    "pooling_slices": "pass",
+    "training_witness_replay": "pass",
+    "all_evaluation_replay": "pass",
+    "initial_null": "pass",
+    "optimizer_witness_replay": "pass",
+    "project_trace_structure": "pass",
+    "project_trace_selection": "pass",
+    "json_archive_agreement": "pass"
+  },
+  "provenance": {
+    "code_revision": "b2ca094aed4eccf266d90fff4adedb826081af22",
+    "config_sha256": "983e6d1ed09ce3c242a95c45793745f535876f4a73c1d300410838eab7405541",
+    "plugin_plan_sha256": "528205adbf8fd59f4df36cacba8d4c6e07b9ead84e45fe7bd3a5000787d24617",
+    "effective_config": {
+      "schema_version": "rag.quantum_semantic_reader_screen.v1",
+      "stage": "exploratory_screen",
+      "authorization": "collaborator_screen",
+      "reader": {
+        "model_id": "facebook/dpr-reader-single-nq-base",
+        "revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+        "max_length": 350,
+        "batch_size": 8
+      },
+      "representation": {
+        "roles": [
+          "cls",
+          "question_mean",
+          "question_conditioned_passage",
+          "question_passage_product",
+          "absolute_difference"
+        ],
+        "bottleneck": 4,
+        "reader_frozen": true
+      },
+      "head": {
+        "n_qubits": 4,
+        "depth": 2,
+        "residual_bound": 0.25,
+        "gate_temperature": 1.0
+      },
+      "training": {
+        "max_questions": 512,
+        "epochs": 3,
+        "seed": 20261008,
+        "learning_rate": 0.003,
+        "weight_decay": 0.0001,
+        "anchor_penalty": 0.01,
+        "gradient_clip_norm": 5.0,
+        "minimum_coverage": 0.25,
+        "target": "answer_string_containment_weak_not_official_gold",
+        "reader_frozen": true,
+        "optimizer_policy": "adamw_projection_fanin_v1",
+        "health_contract": {
+          "probe_cases": "first two usable training cases only",
+          "checks_at": "update 64 and each epoch end",
+          "projection_norm_ratio_min": 1e-06,
+          "encoding_std_min": 1e-06,
+          "normalized_within_case_correction_std_min": 1e-06,
+          "data_gradients": "finite nonzero projection/readout/scale after null; current check window",
+          "fail_before_evaluation": true,
+          "preserve_failure_values": true
+        }
+      },
+      "evaluation": {
+        "cases": 100,
+        "top50": 50,
+        "top5": 5,
+        "input_sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
+        "silver_posthoc_only": true,
+        "primary": "positive_consensus_count",
+        "protection": "direct_consensus_count",
+        "secondary": [
+          "all_models_positive_count",
+          "fixed_silver_set_overlap"
+        ],
+        "bootstrap_replicates": 2000,
+        "bootstrap_seed": 20261009
+      },
+      "methods": [
+        "frozen_reader_topk",
+        "quantum_semantic",
+        "classical_semantic",
+        "quantum_scalar_control"
+      ],
+      "trace": {
+        "schema": "sample-trace.v2",
+        "full_hidden_samples": "first retrieved candidate of first two usable training cases and first two evaluation cases",
+        "training_values": "complete base/pooled/scalar/weak-mask arrays for first two usable training cases",
+        "evaluation_values": "all 100x50 pooled/scalar/base scores plus per-method encoding/observables/gates/residuals",
+        "checkpoints": "initial and each epoch for all three trainable arms",
+        "replay_required": true
+      },
+      "output_namespace": "five_ideas/semantic_reader_training_repair_100",
+      "claim_ceiling": "L0_diagnostic",
+      "formal_run_authorized": false,
+      "limitations": [
+        "Weak labels remain a confounder; no causal claim that prior failure came from scalar compression.",
+        "The exposed 100-case Silver panel is a development diagnostic, not an untouched generalization test.",
+        "Classical projection and exactly simulated quantum head do not establish quantum resource or utility advantage.",
+        "Optimizer repair, not a new quantum mechanism; two-case qualification is not utility."
+      ]
+    },
+    "input_sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
+    "reader": {
+      "model_id": "facebook/dpr-reader-single-nq-base",
+      "requested_revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+      "resolved_revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+      "config_sha256": "383c5dbe735db108976bcaef70048348151def480bfe24ed8ff5243cd1ce4751",
+      "device": "cuda",
+      "reader_frozen": true
+    },
+    "source_hashes": {
+      "scripts/collab/five_ideas/run_quantum_semantic_reader_screen_100.py": "7655f7d150c37ef81a6a8741de8daf7806fa05a7f62d9feb4b73ae9ab52d1269",
+      "applications/rag/quantum_semantic_reader.py": "b089470c7c0b15f7c1ea75206223d59e465072c496e6e95add5d72310ca4315a",
+      "applications/rag/qarcg_reader.py": "b5fce815ba8cdb1f9223e3bdcc2018ef25d6005dc9059d0602095a70cc43d20b",
+      "applications/rag/semantic_reader_training.py": "8e1ea8ad2327d4a304259f28d253d655977b627e2bb056e6aad75fdaadbcec6e",
+      "scripts/collab/five_ideas/run_semantic_reader_training_repair_100.py": "d88fd1668509cd70e1fcdc1b9e1bad053afa4535d7cbe5709c3e53f3e9836dc5"
+    },
+    "python": "3.10.20",
+    "torch": "2.5.1+cu121",
+    "numpy": "1.26.4"
+  },
+  "circuit": {
+    "qubits": 4,
+    "depth_blocks": 2,
+    "trainable_circuit_parameters": 16,
+    "cnot_gates": 8,
+    "input_ry_gates": 4,
+    "observables": 8,
+    "simulation": "exact Torch statevector",
+    "finite_shot": "not_run",
+    "quantum_advantage": "not_established",
+    "projection_is_classical": true
+  },
+  "generator_called": false,
+  "evaluator_called": false,
+  "silver_used_online": false,
+  "limitations": [
+    "Weak labels remain a confounder; no causal claim that prior failure came from scalar compression.",
+    "The exposed 100-case Silver panel is a development diagnostic, not an untouched generalization test.",
+    "Classical projection and exactly simulated quantum head do not establish quantum resource or utility advantage.",
+    "Optimizer repair, not a new quantum mechanism; two-case qualification is not utility."
+  ]
+}
