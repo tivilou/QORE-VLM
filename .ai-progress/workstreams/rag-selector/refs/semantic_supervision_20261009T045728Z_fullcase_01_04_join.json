@@ -1,0 +1,465 @@
+{
+  "schema_version": "rag.semantic_support_fullcase_join.v1",
+  "claim_ceiling": "L0_diagnostic",
+  "source_case_sha256": "a729ea30b63b88acd3525058d574b78f4b552c06583fc586eb8e270431e18faf",
+  "source_support_review_sha256": "517d33cf521f09aebda169fcb7b0ebaa8f6c47b0a208888d5b5e49d22a6d143c",
+  "coverage": {
+    "reviewed_population": 449,
+    "all_population": 1600,
+    "remaining": 1151,
+    "new_judgments": 167,
+    "prior_preserved": 282,
+    "fully_reviewed_cases": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "by_case": {
+      "1": 50,
+      "2": 50,
+      "3": 50,
+      "4": 50,
+      "5": 10,
+      "6": 7,
+      "7": 7,
+      "8": 7,
+      "9": 6,
+      "10": 13,
+      "11": 9,
+      "12": 7,
+      "13": 7,
+      "14": 7,
+      "15": 7,
+      "16": 12,
+      "17": 7,
+      "18": 7,
+      "19": 7,
+      "20": 7,
+      "21": 13,
+      "22": 11,
+      "23": 9,
+      "24": 10,
+      "25": 12,
+      "26": 9,
+      "27": 7,
+      "28": 11,
+      "29": 7,
+      "30": 7,
+      "31": 14,
+      "32": 12
+    }
+  },
+  "new_label_counts": {
+    "irrelevant": 160,
+    "partial": 6,
+    "direct": 1
+  },
+  "method_totals_existing_selected_union": {
+    "frozen_reader_topk": {
+      "selected_slots": 160,
+      "label_counts": {
+        "direct": 50,
+        "partial": 54,
+        "irrelevant": 48,
+        "contradictory": 2,
+        "uncertain": 6
+      },
+      "not_confirmed_answer_accuracy": true
+    },
+    "quantum_semantic": {
+      "selected_slots": 160,
+      "label_counts": {
+        "direct": 50,
+        "partial": 54,
+        "irrelevant": 48,
+        "contradictory": 2,
+        "uncertain": 6
+      },
+      "not_confirmed_answer_accuracy": true
+    },
+    "classical_semantic": {
+      "selected_slots": 160,
+      "label_counts": {
+        "direct": 50,
+        "partial": 54,
+        "irrelevant": 48,
+        "contradictory": 2,
+        "uncertain": 6
+      },
+      "not_confirmed_answer_accuracy": true
+    },
+    "quantum_scalar_control": {
+      "selected_slots": 160,
+      "label_counts": {
+        "direct": 50,
+        "partial": 53,
+        "irrelevant": 48,
+        "contradictory": 2,
+        "uncertain": 7
+      },
+      "not_confirmed_answer_accuracy": true
+    },
+    "monotonic_compression_control": {
+      "selected_slots": 160,
+      "label_counts": {
+        "direct": 50,
+        "partial": 54,
+        "irrelevant": 48,
+        "contradictory": 2,
+        "uncertain": 6
+      },
+      "not_confirmed_answer_accuracy": true
+    }
+  },
+  "fully_reviewed_cases": [
+    {
+      "audit_case_number": 1,
+      "review_case_id": "072cf5ed9a8e9c4094297a20488c79140859ed1fcc1129cfdf041a19f4898273",
+      "population_label_counts": {
+        "direct": 1,
+        "partial": 2,
+        "irrelevant": 47,
+        "contradictory": 0,
+        "uncertain": 0
+      },
+      "question_target_flag": null,
+      "formal_training_qualified": false,
+      "provisional_direct_slot_ceiling": 1,
+      "methods": {
+        "frozen_reader_topk": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 2,
+            "irrelevant": 2,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "quantum_semantic": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 2,
+            "irrelevant": 2,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "classical_semantic": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 2,
+            "irrelevant": 2,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "quantum_scalar_control": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 2,
+            "irrelevant": 2,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "monotonic_compression_control": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 2,
+            "irrelevant": 2,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        }
+      }
+    },
+    {
+      "audit_case_number": 2,
+      "review_case_id": "1440a91de72510bc0ea23cf9baac6d4829324427cbc8c17b74cb3461099901a3",
+      "population_label_counts": {
+        "direct": 0,
+        "partial": 5,
+        "irrelevant": 45,
+        "contradictory": 0,
+        "uncertain": 0
+      },
+      "question_target_flag": {
+        "audit_case_number": 2,
+        "review_case_id": "1440a91de72510bc0ea23cf9baac6d4829324427cbc8c17b74cb3461099901a3",
+        "flag": "conditional_scenario_missing",
+        "rationale": "Neither-vessel原文限于特定迎面相遇或绝对权利；问题未给场景。",
+        "use_in_new_training": "blocked_pending_target_qualification",
+        "reference_rewritten": false,
+        "official_gold_correction": false
+      },
+      "formal_training_qualified": false,
+      "provisional_direct_slot_ceiling": 0,
+      "methods": {
+        "frozen_reader_topk": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 2,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "quantum_semantic": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 2,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "classical_semantic": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 2,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "quantum_scalar_control": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 2,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "monotonic_compression_control": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 2,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        }
+      }
+    },
+    {
+      "audit_case_number": 3,
+      "review_case_id": "5c2b42563c1d60b4c3ef9b0da7a256991e201cc4d28f81f2b3e6830fc56f95e7",
+      "population_label_counts": {
+        "direct": 2,
+        "partial": 7,
+        "irrelevant": 41,
+        "contradictory": 0,
+        "uncertain": 0
+      },
+      "question_target_flag": null,
+      "formal_training_qualified": false,
+      "provisional_direct_slot_ceiling": 2,
+      "methods": {
+        "frozen_reader_topk": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 4,
+            "irrelevant": 0,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 4,
+              "review_item_id": "30609a8808ace007688e9e5118601ce57c1ef3653e76318ed3024755bc5ff7a5",
+              "reader_rank": 9,
+              "weak_positive": false,
+              "support_quote": "carpus (knee) bones and joint, large metacarpal (cannon)"
+            }
+          ],
+          "provisional_direct_slot_gap": 1
+        },
+        "quantum_semantic": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 4,
+            "irrelevant": 0,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 4,
+              "review_item_id": "30609a8808ace007688e9e5118601ce57c1ef3653e76318ed3024755bc5ff7a5",
+              "reader_rank": 9,
+              "weak_positive": false,
+              "support_quote": "carpus (knee) bones and joint, large metacarpal (cannon)"
+            }
+          ],
+          "provisional_direct_slot_gap": 1
+        },
+        "classical_semantic": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 4,
+            "irrelevant": 0,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 4,
+              "review_item_id": "30609a8808ace007688e9e5118601ce57c1ef3653e76318ed3024755bc5ff7a5",
+              "reader_rank": 9,
+              "weak_positive": false,
+              "support_quote": "carpus (knee) bones and joint, large metacarpal (cannon)"
+            }
+          ],
+          "provisional_direct_slot_gap": 1
+        },
+        "quantum_scalar_control": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 4,
+            "irrelevant": 0,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 4,
+              "review_item_id": "30609a8808ace007688e9e5118601ce57c1ef3653e76318ed3024755bc5ff7a5",
+              "reader_rank": 9,
+              "weak_positive": false,
+              "support_quote": "carpus (knee) bones and joint, large metacarpal (cannon)"
+            }
+          ],
+          "provisional_direct_slot_gap": 1
+        },
+        "monotonic_compression_control": {
+          "selected_label_counts": {
+            "direct": 1,
+            "partial": 4,
+            "irrelevant": 0,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [
+            {
+              "candidate_index": 4,
+              "review_item_id": "30609a8808ace007688e9e5118601ce57c1ef3653e76318ed3024755bc5ff7a5",
+              "reader_rank": 9,
+              "weak_positive": false,
+              "support_quote": "carpus (knee) bones and joint, large metacarpal (cannon)"
+            }
+          ],
+          "provisional_direct_slot_gap": 1
+        }
+      }
+    },
+    {
+      "audit_case_number": 4,
+      "review_case_id": "4a8f2398ebbb4b0847b85c53c8855fdcb1d61e4b3d0464a4e88c7bbdcc57bd65",
+      "population_label_counts": {
+        "direct": 0,
+        "partial": 3,
+        "irrelevant": 47,
+        "contradictory": 0,
+        "uncertain": 0
+      },
+      "question_target_flag": {
+        "audit_case_number": 4,
+        "review_case_id": "4a8f2398ebbb4b0847b85c53c8855fdcb1d61e4b3d0464a4e88c7bbdcc57bd65",
+        "flag": "serialized_formula_subscript_missing",
+        "rationale": "公式氧下标4在导出文本中丢失，严格分辨CaSO4/CaSO3需保留原始公式。",
+        "use_in_new_training": "blocked_pending_target_qualification",
+        "reference_rewritten": false,
+        "official_gold_correction": false
+      },
+      "formal_training_qualified": false,
+      "provisional_direct_slot_ceiling": 0,
+      "methods": {
+        "frozen_reader_topk": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 2,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "quantum_semantic": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 2,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "classical_semantic": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 2,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "quantum_scalar_control": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 2,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        },
+        "monotonic_compression_control": {
+          "selected_label_counts": {
+            "direct": 0,
+            "partial": 2,
+            "irrelevant": 3,
+            "contradictory": 0,
+            "uncertain": 0
+          },
+          "missed_direct": [],
+          "provisional_direct_slot_gap": 0
+        }
+      }
+    }
+  ],
+  "limits": [
+    "Single primary-model provisional labels, not official gold or three-model consensus.",
+    "Not independently blind; previous scores/results were seen, withheld in this reading.",
+    "Four full cases only; 1151 passages and all434 training targets remain uncertified.",
+    "Existing trained heads saw these questions; no heldout utility or training authorization.",
+    "Missing, uncertain, partial and question-target-flagged data are not automatic negatives.",
+    "Do not infer population rates or use exposed100 Silver labels to fit a model."
+  ]
+}

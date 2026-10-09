@@ -1,0 +1,1351 @@
+{
+  "schema_version": "rag.explicit_primary_model_annotations.v1",
+  "reviewer": "primary_agent_single_model",
+  "source_support_review_sha256": "517d33cf521f09aebda169fcb7b0ebaa8f6c47b0a208888d5b5e49d22a6d143c",
+  "prior_review_sha256": "12bb2592c891c587d54d8921e1112c1a2428a9fbed8079f3dc14c2e21927e6cb",
+  "fully_reviewed_case_numbers": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "declared_new_judgments": 167,
+  "judgments": [
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 3,
+      "review_item_id": "66dc595f4d8b1774fd8773d7e2467da14b6ae0dab1d55156fe27733cbdc4cd0d",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 4,
+      "review_item_id": "fba7c4146f5d9a5d76ca35c9af28ebc40b15d7f07923e1ee532cf8e620d0356e",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 6,
+      "review_item_id": "16a7f1918bede99921a33fe346022762efb97c27cf164a2cdc329759b4ea26f3",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 7,
+      "review_item_id": "7b21a756fa5205b4ab0adccf93c48c46ac510d35d02b4105b3cc4d948c55684f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 8,
+      "review_item_id": "2dd029450af11fdaca79b4d59332bdb0d001ffcfc64c4559f298c2d2f9cb95be",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 9,
+      "review_item_id": "003bb9b57084c35abc796dfd9299522108a5bfd9b43aa1a598d2cfb416c6d999",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 10,
+      "review_item_id": "a55cf704c23bb1ad16a43cc4f658b13be2f859fd08a4a49ed21a9e37017e206d",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 13,
+      "review_item_id": "d248846f972bee467b566799eea2f3467e3900f72239f9c0cf706ab8a90c6934",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 15,
+      "review_item_id": "8f4d356131e7a8a16d7cf7cac773e5db1d83a5dbecbe019906ea9c816821ee69",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 16,
+      "review_item_id": "ddcf5e203db36c3a210108692544628aa80545c248c8dc408986ecb1312e474a",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 17,
+      "review_item_id": "8378358902c356ccee1f23c1a3b1ac5308b6fd7fdbf269d5b5175381aa09ff21",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 18,
+      "review_item_id": "7c4b6251139cd187eb5df67a92e510e3a768d4ee8b4af00c5d9cb4182ee26d42",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 19,
+      "review_item_id": "4fa8304ea6bfe29619a049686f5ff5d32ff45ae7289d1c13111aaf2c5bd8e070",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 20,
+      "review_item_id": "177e1598f93de07496d97fa3c8450867ec13a1a5beb81a86ae19e930f45ded99",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 26,
+      "review_item_id": "581264e97f8c76c4d18e99003387511da105e07510d215c53689c92bc2d583bc",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 27,
+      "review_item_id": "2e2680dc609eec1efd54e244f92fde5f820496ce8fdfdab2137cbfe7e5a52965",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 30,
+      "review_item_id": "5dec9a019c1f74771a7613fb80041481fec85b4ff13725d7e508186488ee674e",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 31,
+      "review_item_id": "cfc9c44fb7e75a22754534e2e376448863a187dc99fd7806d36bac2bd6ff216c",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 32,
+      "review_item_id": "bffc890e7f447e99dc8c181cfc0f8c903105a9f7b607cc5df9196f73b922cdfa",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 33,
+      "review_item_id": "39b55329aa5bfa3cd932aa4df1e119d0cc79c8624ef1d146e43d2b46f8794c96",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 34,
+      "review_item_id": "5d439760b2c624f1a7c92ba43700fc5acce800e384eb483f34323b60398e3d1a",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 36,
+      "review_item_id": "668391bb68c20c8d11a0c39d9c1bc1f042740fa1f11e74dbad004dca7924406e",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 39,
+      "review_item_id": "8b67e28481be93dcbab5990e3733c8116af63b3e87a64035648658bebb65b3c7",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 40,
+      "review_item_id": "f428ae0b92e53fbaac35603a6fa18cbc6dd35071a9f71bd24e32c0d3c1fb820d",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 42,
+      "review_item_id": "c7afa5662f9a14acfbbf85658fc2c1c5c3fa4e49d63e01bede2c744e95738c6c",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 43,
+      "review_item_id": "bf287faf76b437cc0de6a1c3c981a025491c8c19ce0f794cc3b684aa559ab953",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 44,
+      "review_item_id": "c9f08ffa9555f1922a147999c34496ac1ec28b6f94df8adb2152ab2cf8d231eb",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 45,
+      "review_item_id": "d058c32f528a7d2471e5fb69646579adfae96f09d341dc66b89d67cbbc9bbfdb",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 46,
+      "review_item_id": "c620b3c29913dade717e3aac10880ab4e4b90cce1231e32b5569cf201f1f4c49",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 47,
+      "review_item_id": "51169d07ba0824a80ca627c832fe56e8d10e23d1dec096c0a51f231d246eefd9",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段介绍其他温泉、旅馆、景区或地理历史，没有把Hot Tub Time Machine与其拍摄地点关联；不能仅由温泉或度假地词汇支持答案。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 5,
+      "review_item_id": "3e588eb849bb251c8b1086ea5f355951c192a4a1ec80cf6f14686163fe159df6",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段提到的是其他影片、节目或音乐视频的取景，未陈述Hot Tub Time Machine的取景地点；其他作品的地点不是本题证据。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 11,
+      "review_item_id": "90b4bdd22fe50b5adfb54c20a02669ad7325cfbad2a1ec1c3456eeb95fe6a34f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段提到的是其他影片、节目或音乐视频的取景，未陈述Hot Tub Time Machine的取景地点；其他作品的地点不是本题证据。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 12,
+      "review_item_id": "0e69abfbae9f84ff1ba2d94f3c81bc54b25d1dbf08013302314e36c108a6ccd1",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段提到的是其他影片、节目或音乐视频的取景，未陈述Hot Tub Time Machine的取景地点；其他作品的地点不是本题证据。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 14,
+      "review_item_id": "14df6ccc0a01130c1af72471ae770f010a13a9a11df7eb1cafa49a18cbdaf863",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段提到的是其他影片、节目或音乐视频的取景，未陈述Hot Tub Time Machine的取景地点；其他作品的地点不是本题证据。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 23,
+      "review_item_id": "33b08b1f5e3fbb90bd40a9b0c9221d622e92bdd476f5c5b944eaee5eea4258cc",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段提到的是其他影片、节目或音乐视频的取景，未陈述Hot Tub Time Machine的取景地点；其他作品的地点不是本题证据。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 24,
+      "review_item_id": "5b664a81c62ffbda673f10adf48a017306598329c958cea446298a4f642dc4ba",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段提到的是其他影片、节目或音乐视频的取景，未陈述Hot Tub Time Machine的取景地点；其他作品的地点不是本题证据。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 28,
+      "review_item_id": "dcd10587981e62d7588fc47536213ab2a13d8d4cedfd83742bc6b463405699dc",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段提到的是其他影片、节目或音乐视频的取景，未陈述Hot Tub Time Machine的取景地点；其他作品的地点不是本题证据。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 29,
+      "review_item_id": "1726dd9fce86b8b879268bb28fa994e3e8228ec8e935d58a38649f1bcd132df1",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段提到的是其他影片、节目或音乐视频的取景，未陈述Hot Tub Time Machine的取景地点；其他作品的地点不是本题证据。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 35,
+      "review_item_id": "0d131fb3b6ef29cd59810fb133c54259c1b113223ce8c2707097d94e6ed2514d",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段提到的是其他影片、节目或音乐视频的取景，未陈述Hot Tub Time Machine的取景地点；其他作品的地点不是本题证据。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 37,
+      "review_item_id": "c25d2317c6a1b0e2aefed05f8d4f618dea97d0fceacb2e77da7c6f1fd4be4649",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段提到的是其他影片、节目或音乐视频的取景，未陈述Hot Tub Time Machine的取景地点；其他作品的地点不是本题证据。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 41,
+      "review_item_id": "43a6c8e62cc2f81e5abf54af92494e1dc21ca069f52c22492f5f4f0103786f05",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段提到的是其他影片、节目或音乐视频的取景，未陈述Hot Tub Time Machine的取景地点；其他作品的地点不是本题证据。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 48,
+      "review_item_id": "fc2eff4324a48e2b2a693a1ced405df6807c99d435fafac4edc70cfe734ff1be",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段提到的是其他影片、节目或音乐视频的取景，未陈述Hot Tub Time Machine的取景地点；其他作品的地点不是本题证据。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 49,
+      "review_item_id": "a4552fa3c98f15bc7a9fe3f326524cfd2c9feea132aaf739554361b1a6a767f5",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段提到的是其他影片、节目或音乐视频的取景，未陈述Hot Tub Time Machine的取景地点；其他作品的地点不是本题证据。"
+    },
+    {
+      "audit_case_number": 1,
+      "blind_ordinal": 50,
+      "review_item_id": "8f03ab51a7dcd8d3ca82f2e5f797ed8a79ec4003377b1a33de81659715b7969b",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段提到的是其他影片、节目或音乐视频的取景，未陈述Hot Tub Time Machine的取景地点；其他作品的地点不是本题证据。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 3,
+      "review_item_id": "4aca57481c246f01df080ac5ec285dc8b3b54c285f9a365ceebcca111ca6dde3",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 4,
+      "review_item_id": "ca4c671359f56174e6b313391992d0cb40b8f9635088b52eb5215f24b35752b4",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 5,
+      "review_item_id": "4ce60b786483572961b96bb43747f7224d560a0269931ccdd8d39aa1f6b1c8ef",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 6,
+      "review_item_id": "00ea495f4c77b021e3a99c6eee90424baef6a6ec231dfc7b1624f5e62fdc1e00",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 7,
+      "review_item_id": "2797b3f1c7053211190fca06693a6047ad590b94efad8f218b1f92e67c0fa0c5",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 8,
+      "review_item_id": "16a5f00918f3782655bce15ebd8c612376eaa7ffbdbb2a3cef5264a5b4a80667",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 9,
+      "review_item_id": "c1463cfde967c2dc41f2221fd6756b8b5cbd6a1f62757879e116653bc66a44bd",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 10,
+      "review_item_id": "5ee97731ebde6745ce9713e8458a1a6e43148b3a22eed11647f3befbbda0672e",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 11,
+      "review_item_id": "63f4e4538f519393c641c947006e2087995cffcda4f885949da1fba55b02d63e",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 12,
+      "review_item_id": "c11843751f8fb3c3b86007ae7632e225110b97cf587efa3cecb07f855bb89a15",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 13,
+      "review_item_id": "71c6be9da27f8421aa5a72a3bf25ac30f946bc3d1626c21f73251f6599d76c65",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 14,
+      "review_item_id": "c5bc0462f0b8d3d454e39d5f3081131045403291ce164a62abb47e5c613d8507",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 15,
+      "review_item_id": "f948f960b62660b8626085bbadc2fd9dd5d3d97a5f03e359678dff1e56479806",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 16,
+      "review_item_id": "e46785de0128ef9d2b72247fffc9af4821e9493d9f1968765ca9e8bcc99c966d",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 17,
+      "review_item_id": "abe9a028d5feefc64dc1e21e5729b95bf54f63495e887e6fb76d95c5b69af2c1",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 19,
+      "review_item_id": "89fc0e11fac7699a1c73d6c316c0e59f2bf7a439e7b8efc0709e37bbd66457bc",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 20,
+      "review_item_id": "f689ff574c0d8d48bd33322ef61feca3d25d5f7182353a2b44f72b158b256208",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 22,
+      "review_item_id": "965fe7910cd68e8ef0d13901b3b3b684e6d8f5a1512937e8ac3af2cad29b4472",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 23,
+      "review_item_id": "e8f5beff66bb15a3bfef558502c094e77252a07922979f30af320b5342df59c3",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 24,
+      "review_item_id": "d8cc2a9e746e67ed63ce09203be62710656be63563024007133328abc1a1cc13",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 25,
+      "review_item_id": "b7312513922fac1e6606b891bf4a4e8ece2b001242a71021a41cfc697771a3e4",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 29,
+      "review_item_id": "1ab06aad5eb8a61fab10a0ab5d11d7cddb20d35f010ff2c5d1a14f8b0108fae6",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 30,
+      "review_item_id": "4ae79322f00b2695cc8e075001039ea7b68d9769c5d5a3e20973baa5e130fdc2",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 31,
+      "review_item_id": "a0a7028966715d9bfe47e38dcd1b0323b326bb9f9e2ebfef4500c579909b99db",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 34,
+      "review_item_id": "82d45688802b411a3869068b1dcab87498c4492c0996b1b0350c1c0637ea2f1e",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 35,
+      "review_item_id": "e8056e19d894243343940412ccf4f7ad04c3420272665b59227e8ca597463086",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 36,
+      "review_item_id": "f5b161eca009ef2d4574356552d037de9f6d287092f25a2bdc6bbd122e98eb31",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 37,
+      "review_item_id": "9a1d6c1d8294677bb19ae15512bf416adb2ddd67ad61260cbfb28fbd54d1d672",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 39,
+      "review_item_id": "0524875fdcdd79a7d6f32391da4d2e004971905da0386485cc99cc280dbaed7f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 40,
+      "review_item_id": "8ed24f019ca6e2dd55952d16a8515df55504397ec9da2476158909031623f7f9",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 41,
+      "review_item_id": "bec1457c37601dc3aff3d703f843504c45bd36714421df78b0abbab4c8876ca7",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 42,
+      "review_item_id": "62910b7a83aa07b78b8154908dfb45b816c2bfc34afb4bc763cdcb1144840bd5",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 43,
+      "review_item_id": "6e571c658acf27fa624c5e61b37377cb6fa19816208003c417c4992487b20f8f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 44,
+      "review_item_id": "3c00ec1e837841231988bb3b8571fddc2f0de33d6f7cb0b836c0570aeab9bbe9",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 45,
+      "review_item_id": "63eb73d240e24cb4651d9b7125ff5a29a1cd7ea6b5d31c8a0240ba0a990d95f9",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 46,
+      "review_item_id": "1c3c7dc35d75f7354150e54c294dd3053caa8ef0ad7da0525e64d0ad7350939a",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 47,
+      "review_item_id": "917301701791f13444994b545b615fad691fc8901a688610f186c176e91b969b",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 48,
+      "review_item_id": "de9d5407e90ad19b39e99d5be5178314099d22e9c1fda9e35ac23b48f9edd2ad",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 49,
+      "review_item_id": "f0ad535640fd0cc6f72523561023a3c53c9218df1eb51b5de844a468262a79cd",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 50,
+      "review_item_id": "04a911f5ad7b5f9ad05c41d3465768391ab931ae4a3860ad825ea6ee55316006",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及航行、海域管辖、航运或规则背景，但没有给出两船相遇时谁应让路的可用判定；主题相关不等于回答优先权问题。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 21,
+      "review_item_id": "d5f506046447ceb8ba4066ae792e46534f8a5250b9652d32061ffead1b023e91",
+      "support_label": "partial",
+      "support_quote": "other vessels are obliged to keep clear",
+      "rationale": "说明潜水支援船操纵受限时其他船应避让，仅支持一种特定场景；题目未给船型和相遇条件，不能推出普遍Neither Vessel。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 32,
+      "review_item_id": "4bddb712a7df7366a492f5502befbfdd3ab9c609d5706ec9029005a7c10aa6b9",
+      "support_label": "partial",
+      "support_quote": "what is paramount is to avoid or minimise the damaging effects of a collision",
+      "rationale": "说明避碰优先于机械遵守规则，能支持优先权并非绝对的解释，但没有给出具体两船谁让谁的完整答案。"
+    },
+    {
+      "audit_case_number": 2,
+      "blind_ordinal": 38,
+      "review_item_id": "2ad2a0707e1c2f7f7164174aaaba1a67cd989a5b754c529166ce5c742845f83d",
+      "support_label": "partial",
+      "support_quote": "differ in some important matters such as overtaking and right of way close to turning marks in competitive sailing",
+      "rationale": "指出竞技帆船优先权规则与COLREG存在差别，支持规则依场景而变；没有提供本题缺失的相遇情形或统一答案。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 4,
+      "review_item_id": "c8afeedb18bc26724adb57f4e3a8232efa1752719fcd1f2de3cf78ed19b610a0",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 5,
+      "review_item_id": "b74fb5322f241cd0b849ceab169419b373c50f1fd4380a5862c0be93ec105551",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 8,
+      "review_item_id": "cc472cda3a870d0a4140a4699ccff773bed2856f0bc38ba2557cba0fbb05e87f",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 9,
+      "review_item_id": "08513daf9ba4fb1f915871070526e4066a0af644cb59b06da4e87b1a402842a8",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 11,
+      "review_item_id": "caa3fb72a0b102dfd7c0451287041f3966a5de20382b76b0fe1f41b11b6cff8b",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 12,
+      "review_item_id": "5944122a9e0425e00024b75e90d1b164895db53194d11515270b2a1f56833aa9",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 13,
+      "review_item_id": "ac123f7c40778eb5890bd16f7196d91cf8e1f891cc1f12a38868b3df4baf8738",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 14,
+      "review_item_id": "e6e4db0243a9fc19534a8ec549bce1b6ce2ff4cee084d634d0ad42287c7f84fc",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 15,
+      "review_item_id": "54c0fe198f56648e63a35dbafd306d1cb8923609736bb28986bdff51bfca740c",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 16,
+      "review_item_id": "7b76acbf72c04aab2f4828221f6770c8c4881fb339f7f2498df829fc9cd27ab0",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 17,
+      "review_item_id": "6ca30746b6ba96f9f0728e70f95cadb6c9e5c4c05506aa46f43d9328605e89c7",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 18,
+      "review_item_id": "a6f25876584596fe0fd903c96d1eaed9ff27b046fa364903fd2f231a122e99e0",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 19,
+      "review_item_id": "21f3d7d26b711cbf6c59fe6a760f10e1be6795874fe7cfce6ad98ff1f7e306a4",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 20,
+      "review_item_id": "69deab4b0abfbc8a3b5c419f0af90b942b43660a49ca354d585a93291f5603d0",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 21,
+      "review_item_id": "bbcf52d89c69b3a6ed660f3146470b7ea4580c9daa8d2497f8cb7a5070636649",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 22,
+      "review_item_id": "fb67e0cc141dc0e4d09c9f9608e175edf0ecbb4a4e2ae1d2d022c00e21c19ad0",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 23,
+      "review_item_id": "bda8e6c8b78c95dd2a657f832d4644a5aa9b0f79e05b7e80709d6678e51d2fcd",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 24,
+      "review_item_id": "29642010666186652783867f3dfb42e8a633e88aadc6ed1f6b07ac87eed64db8",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 26,
+      "review_item_id": "24fb5f1a0e6ddb34e2e34ec6d333d72f040841864d951c99a386610a000aa551",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 27,
+      "review_item_id": "06a58b6017030dad69b608d04f66da2211bed8f02d34026036c17e07745eda02",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 28,
+      "review_item_id": "a503739dc7e3c79c133191208c044a2b8be96b381f68a905251e77d1e3bb902e",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 29,
+      "review_item_id": "a2b83c466e17eef06fcea888a5daca13467a9dd88ced7863e994ce54e8e41d2e",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 30,
+      "review_item_id": "22adc52da0eb4d35256d201291e81e5d702ab3f330ebc66997b5b75485494a99",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 32,
+      "review_item_id": "1422a05dc8d9479d4633d0174f8f4189bfafc8efd0309fe0f14bf93d5d674b71",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 34,
+      "review_item_id": "2039f8b00da026f0a5687f601d3d187a30606f369990d98f86f07bd81155b45b",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 36,
+      "review_item_id": "ca898143fa6c41811daeefd4785ea8d885b2cbdc0fbcfac69ce9825acda5b036",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 37,
+      "review_item_id": "bb9ab24369c9a87451dc18b65522ef2b25013eebb802e4d4a6860b2a67c2b126",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 38,
+      "review_item_id": "719a60142ad21eb26a38a5b310be45a87b797222ea5a8fb4c85ec5fc3b2106d2",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 39,
+      "review_item_id": "1b9e82afefdf283cccca5d0c07709eccf703a03cce699ebf5e1a607e3174ac28",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 40,
+      "review_item_id": "5198a84570f12dfc1ac862adcd3d5420215722c93868f464c95c8e9e93af32ae",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 42,
+      "review_item_id": "037ea0d70e4584e568ce7753f96911c736e55168dec9de86dc2a5c7038c52400",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 43,
+      "review_item_id": "d30766870ba27332492027d33f1f33353e3056e4556c635bc93684cd8bffdce3",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 44,
+      "review_item_id": "5814fabaa4fbafe7666bc3523ec5871127da51bdf20ece4eac51b18a51e18e60",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 45,
+      "review_item_id": "4a7b37ef8ec4c8251559b88cf3f02f670956d84472219a3777c20cdca6c1cc48",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 48,
+      "review_item_id": "e658f18f6e6292102ddaff9748b8aa03771d8cdba45d9d8f1a775d50a4c1a2fe",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 49,
+      "review_item_id": "911193d25d184c46b1f39e0c49819cdeed8bfd9f880bf5a0a7fa07ccd2ceb931",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 50,
+      "review_item_id": "a9b86b88c261133d0fbd23dd34c6dff261838b8a1533a21c0b06b736579c9943",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段涉及其他骨骼、蹄部、肌肉、动物或非解剖的cannon词义，没有定位马的cannon bone；其他骨的膝上下关系不能当作目标骨的位置证据。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 31,
+      "review_item_id": "30609a8808ace007688e9e5118601ce57c1ef3653e76318ed3024755bc5ff7a5",
+      "support_label": "direct",
+      "support_quote": "carpus (knee) bones and joint, large metacarpal (cannon)",
+      "rationale": "按肩胛至蹄部方向依次列出前肢骨骼，膝部之后紧接cannon骨，能支持位于膝以下；不要求逐字出现Below Knee。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 33,
+      "review_item_id": "0b668bb2ec7e0901a14e3e3748c79a36072e71758ddbc848a2e6ebb41edb28a4",
+      "support_label": "partial",
+      "support_quote": "tarsal (hock) bone and joint, large metatarsal (cannon)",
+      "rationale": "按后肢方向把cannon列在hock之后，提供相关定位；参考答案用knee且未明确前后肢，不能把后肢hock直接等同膝来作完整答案。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 46,
+      "review_item_id": "f5927ff5ed799307def80e21bf7c9611aeed4307c1bfc15e5cfc44cda51cee17",
+      "support_label": "partial",
+      "support_quote": "common name: the cannon bones",
+      "rationale": "说明cannon骨位于球节近端并连接趾骨，提供真实解剖关系，但没有明确其与膝的相对位置，单段回答参考位置仍不完整。"
+    },
+    {
+      "audit_case_number": 3,
+      "blind_ordinal": 47,
+      "review_item_id": "7cc58fb92fce57f838a94eca7a44a8d4330d7cf88daf2048a3f8b1a44569c979",
+      "support_label": "partial",
+      "support_quote": "common name: the cannon bones",
+      "rationale": "说明cannon骨位于球节近端并连接趾骨，提供真实解剖关系，但没有明确其与膝的相对位置，单段回答参考位置仍不完整。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 3,
+      "review_item_id": "4cbdc33f5dfefe4197c635a2efb86e2159d1ebd14da01323182ad17ce6157af5",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 5,
+      "review_item_id": "4107793da6b2087ba078f19a1f2342ca3aa8ee6dc5aac6d6271252188474589e",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 6,
+      "review_item_id": "487b8cb77f78425aa0db7826a548ac96c2386aaa96f823a0f38ec07a3884a1d9",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 7,
+      "review_item_id": "ce190fc1b5df791e75ce3a8a95a511792d57cf33b5d1c5c06b5faec828168395",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 8,
+      "review_item_id": "9e0deaa6a33b507423a84c39a21b8f955090f61e1c4fcbdcbe97c8cde3c3580a",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 9,
+      "review_item_id": "8f9b4d2a34e691d3b2c51aa5f48fd3ca262ff641df462c7c30432a13af173ef1",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 10,
+      "review_item_id": "e464318202eb064ce0568a92d35b64548b3230042ca63e016f6e43eae490151c",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 12,
+      "review_item_id": "eed3e2e7f575a04d8f74a51618876574cb3d08c65f539f4e006e30a5cc61c2ae",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 13,
+      "review_item_id": "bdf8b7f8079508ee1bf494a7cc7497d637d35ad02fbd58fa68797eb9632d5181",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 14,
+      "review_item_id": "3146ef2cbcb8ec9d9371af9bf3fda4270cc8c902eece403426b75649d28874c0",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 15,
+      "review_item_id": "04cd33b94aff8d43dc38fe43ad378093876f2074d9d620717c38e6f6a5156d5c",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 16,
+      "review_item_id": "f797de4594d764beb82ccc9e83b964c39ba7146b393c24ea29f98e1b18faf3c1",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 17,
+      "review_item_id": "35dd08d687b486f68b899b8c99139ed873825d4f128bad23f35d5679abbe39fb",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 18,
+      "review_item_id": "04a8567c4291113f63bf166bab07033aac322bf11b3f99af126a26f88c8de4bd",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 20,
+      "review_item_id": "3c2f10379adb9288e91873e250278a1dacb868ae56387314a7caa1e275e631aa",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 21,
+      "review_item_id": "3593057557203870a3058b20a988b836e9ed0c913ed1e4c6f1fc918e0ae18470",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 22,
+      "review_item_id": "07549d808af8a9e07331f855ab0194ae2ffc3c7fa12e51c0c251457398ff1ce0",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 23,
+      "review_item_id": "9aecc166fea8b02dfd1b2efcf7b4ecd84560028fd002c0d5eb77c2a0943ad085",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 25,
+      "review_item_id": "3a374afc473fc49efb547790f1449338302e9a3ccd4a6203d24a88a7aa5e0918",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 26,
+      "review_item_id": "8716eaadeb733be7cd670cd87978455dbb51b6d6ce8342692ffe5fa418edfbc3",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 27,
+      "review_item_id": "ad5c892619cb7e6d43d41c4cfbc7108e44a1a5eb08a6f6800b9e925a057c52b8",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 28,
+      "review_item_id": "e5f33f3374f89eb89233b09310a9ce67e20ed78a81f6d22c21392255d0a5df75",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 29,
+      "review_item_id": "7f79b120e4c4aa3036dc1054375ae516f3415598a43540fd2f545d11ff70eda9",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 30,
+      "review_item_id": "86402057fe85d38f6d802731e63b49797c8383db77f02c72b27318595fa0dd8b",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 31,
+      "review_item_id": "886bd767e15f2cd940ca64baaa9dba5350cc5fd07b4e0b70d47f8466d11fff66",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 33,
+      "review_item_id": "63bac0d8641467c622f8d22f2bcf2c5a96321fb2382747d7c57a866819f8e5f8",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 34,
+      "review_item_id": "e6673a16dd09b7f4b05a9e2fc3b47fa90cc3e940fad9b509c77a7ce4de6cee06",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 36,
+      "review_item_id": "f038de0d1d8f98aec9a047502f281a8b2c2b55b1d85de4c7341e55c940a49e53",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 37,
+      "review_item_id": "9cdab1bc15fbdb4e6d527da1434e8453790e17596d9c2ed560fab3346c6f4a48",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 38,
+      "review_item_id": "c3ef61264cdbd0a42aea9f1a9f4c12b073dcfb29a0ddae4ec7f86f924b608cb3",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 41,
+      "review_item_id": "b54ea02d0d0a83d8b4de76e82227c25f33f23a2baf32d47a82fd47af6fcf648a",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 42,
+      "review_item_id": "7ffa56f9fe859f55ab58f429834bb07a1d939c3f4215a5e863d8155e1338d43d",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 44,
+      "review_item_id": "2b3f531c345ecd76e8c8206c62eb4a6f71942bb52266f34ee97575c6930fb538",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 45,
+      "review_item_id": "e13da08f4e57de2f28c3aa51f9c0e9b050bdfc74e502072d38d5916a6649c532",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 46,
+      "review_item_id": "5f2364c9523235085246090fe6380e19afa477204cb246b736e713ecef411331",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 48,
+      "review_item_id": "4d2c6859105d92ba84b60c9db64fc81ff8ee6710a4efa7a6c9ff9915ec8c4a0d",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 49,
+      "review_item_id": "04fd4e232a69e1380d85bc9015c11a5e1cabf2c429f0a8798592e7ff03fef2dd",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 50,
+      "review_item_id": "400d4e0878e9330963f66a9ac931320830dfc9166bc7171b282daf50cf1ba655",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "本段对象是其他化合物、元素、蛋白或名称相似的项目，没有把题目CaSO4识别为calcium sulfate；字符串相似不能提供目标化合物命名证据。"
+    },
+    {
+      "audit_case_number": 4,
+      "blind_ordinal": 11,
+      "review_item_id": "6a97d65fe3e91ec1a129fb0ef311321a945f5f046780b6ff67d5cac2268f5274",
+      "support_label": "irrelevant",
+      "support_quote": null,
+      "rationale": "明确介绍calcium sulfite而非calcium sulfate，导出公式还丢失氧下标；不能因都显示CaSO便把亚硫酸钙误认成硫酸钙。"
+    }
+  ]
+}

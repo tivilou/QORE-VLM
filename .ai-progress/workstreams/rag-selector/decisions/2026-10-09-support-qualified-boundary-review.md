@@ -28,3 +28,11 @@ Stop if qualifying support remains inadequate or corrected signals only compress
 - [Labels](../refs/semantic_supervision_20261009T045728Z_boundary_review.json)
 - [All pairs and selected counts](../refs/semantic_supervision_20261009T045728Z_boundary_join.json)
 - [Chinese owner log](../../../../docs/rag-research-log/20261009T-boundary-support-review.md)
+
+## Incremental checkpoint: original cases1-4 full Top50
+
+449/1600 reviewed: prior282 unchanged+167 explicit judgments;1151 remain. First4 each50/50. New direct case3 Reader rank9 (review ID30609a8808ace007688e9e5118601ce57c1ef3653e76318ed3024755bc5ff7a5) supports cannon-after-knee via ordered anatomy despite weak false; all5 methods miss it. Case1 retains its only direct; case2 conditional scenario and case4 formula flags remain. No all434 qualification, new training, formal accuracy or independent blind claim. Current gates unchanged; continue original cases5-32.
+
+- [Incremental review](../refs/semantic_supervision_20261009T045728Z_fullcase_01_04_review.json)
+- [Fullcase join](../refs/semantic_supervision_20261009T045728Z_fullcase_01_04_join.json)
+- [Owner-readable addendum](../../../../docs/rag-research-log/20261009T-date-only-fullcase-support-01-04.md)
