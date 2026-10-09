@@ -102,3 +102,11 @@ scripts/**/*_tmp.*
 # 临时运行脚本
 scripts/**/run_temp*.sh
 scripts/**/run_debug*.sh
+
+# Train-only supervision case studies: raw/private values are exchange-only.
+/exchange/five_ideas/semantic_reader_supervision_audit/**/case_study.json
+/exchange/five_ideas/semantic_reader_supervision_audit/**/case_study.md
+/exchange/five_ideas/semantic_reader_supervision_audit/**/support_review.json
+/exchange/five_ideas/semantic_reader_supervision_audit/**/audit_values.npz
+/exchange/five_ideas/semantic_reader_supervision_audit/**/future_split.json
+/exchange/five_ideas/semantic_reader_supervision_audit/**/upload_receipts.json

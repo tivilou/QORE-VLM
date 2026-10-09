@@ -156,6 +156,8 @@
 - [IMPLEMENTED / TRAIN-ONLY QUALIFIED] Semantic optimizer repair and controlled rerun -> [detail](decisions/2026-10-08-semantic-reader-optimizer-repair.md)
 - [ACTIVE / SCREEN INCONCLUSIVE] Repaired semantic head: compression, one rescue, supervision gate -> [detail](decisions/2026-10-09-semantic-reader-repair-result.md)
 
+- [IMPLEMENTED / AWAIT COLLABORATOR EXPORT] Train-only support/blinded boundary audit -> [detail](decisions/2026-10-09-train-only-supervision-audit.md)
+
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.
 - Rationale: `decisions/`; outcomes: `sessions/`; evidence: `refs/`; owner logs: `docs/rag-research-log/`.

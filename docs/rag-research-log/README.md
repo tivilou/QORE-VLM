@@ -2,6 +2,8 @@
 
 ## 当前研究总览
 
+- 最新实现：[训练监督与选段边界审计](20261009T-date-only-semantic-reader-supervision-audit.md)。固定原训练32题×50段，不训练、重放旧头，保存全文/数值与独立盲审材料；36项合成回归和上传预检通过，等待合作者导出与支持审阅。
+
 - 最新结果：[语义头修复后的 100 题实验](20261009T-date-only-semantic-reader-repair-result.md)。训练通路已生效；量子语义有用/直接证据 `204/139`，Reader `203/138`，仅一题改善、区间触零，仍未过门。下一步先审查训练监督和选段边界判别，不直接放大残差或加深线路。
 
 - 最新修复：[语义评分头训练通路修复与预检](20261008T-date-only-semantic-reader-training-repair.md)。解耦衰减与按维度缩小投影学习率后，两条保存的训练样本上量子/经典头均保留候选差异；本地、服务器 44 项测试通过。已准备相同 100 题的一键重跑脚本，真实筛选收益尚未验证，仍为 L0。
@@ -20,6 +22,8 @@
 - 当前研究边界：只优化固定 Top-50 -> Top-5 selector；Generator、检索、evaluator 和答案实现不属于本轮候选。下一候选必须提供独立、可追溯且 gold-free 的证据关系信号；若只能继续依赖 token overlap、Answer Scorer 融合或 generic diversity，应停止该 selector 家族并先处理 provenance/calibration 阻塞。
 
 ## 时间线
+
+- [2026-10-09 | 先验证训练标签是否真能支持答案，再设计量子边界目标](20261009T-date-only-semantic-reader-supervision-audit.md)
 
 - [2026-10-09 | 修复后只多救回一个证据，定位分数压缩与边界限制](20261009T-date-only-semantic-reader-repair-result.md)
 

@@ -1,0 +1,21 @@
+{
+  "schema_version": "rag.semantic_reader_supervision_audit.v1",
+  "stage": "train_only_observation_export",
+  "training_allowed": false,
+  "generator_allowed": false,
+  "evaluation_allowed": false,
+  "claim_ceiling": "L0_diagnostic",
+  "sample_count": 32,
+  "sample_seed": 20261009,
+  "sample_rule": "first two source training witnesses plus 15 hash-selected prospective training and 15 prospective validation cases, excluding the witnesses",
+  "source_manifest_sha256": "0464da7792e0fd2a0615c2e5a9058b641ef0d3b3300af6d0b39450b44fd39a81",
+  "source_namespace": "five_ideas/semantic_reader_supervision_audit_input/repair_20261008T145652Z",
+  "methods": ["frozen_reader_topk", "quantum_semantic", "classical_semantic", "quantum_scalar_control", "monotonic_compression_control"],
+  "future_split": "hash-based 80/20 of previous 434 usable cases; only for future fresh training; previous checkpoints saw both roles",
+  "target_boundary": "NQ train reference answers are diagnosis-only; 100 eval question hashes are exclusion-only; no eval passage/answer/Silver fields are loaded",
+  "cache_policy": "local-files-only models, datasets and existing compressed index; fail on missing cache; no index building",
+  "review_policy": "all 32x50 raw texts, separate blinded support-review view, labels initially null; support judgments must cite original text",
+  "boundary_pair_rule": "strongest and weakest weak-negative Top-5 members versus nearest two and deepest missed weak-positive; same Reader rank-band nearest-score nonpositive control; dependent descriptive pairs",
+  "gate": "exact cohort/candidate/weak-mask identity, prior two witness parity, complete trace replay; support-quality conclusion awaits independent review",
+  "kill_condition": "stop export on identity/cache/trace/upload failure; no next training objective is automatically approved"
+}

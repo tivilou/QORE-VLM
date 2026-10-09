@@ -1,0 +1,81 @@
+{
+  "schema_version": "rag.semantic_reader_supervision_audit.preflight.v1",
+  "status": "passed",
+  "real_data_experiment_run": false,
+  "local_environment": "lambeq; Python3.11; Torch2.3.1+cpu; NumPy1.23.5; no installs",
+  "server_environment": "existing py310; no installs",
+  "regression_tests": {
+    "local": 36,
+    "server": 36,
+    "exit_status": 0
+  },
+  "trace_validation": {
+    "project_v2_structure": "pass",
+    "sample_split_identity": "pass",
+    "complete_detached_values": "pass",
+    "all_head_replay": "pass",
+    "initial_null": "pass",
+    "compression_null": "pass",
+    "weak_metric_replay": "pass",
+    "prior_two_witness_parity": "pass",
+    "hidden_pooling_slices": "pass",
+    "raw_input_hashes": "pass",
+    "blinded_target_boundary": "pass"
+  },
+  "local_fixture": {
+    "path": "C:\\Users\\14630\\AppData\\Local\\Temp\\qore-supervision-audit-final-preflight-20261009",
+    "files": {
+      "case_study.json": {
+        "sha256": "6b2d9fd5a16572b94c599a00ebb73345382b620756f48feafd8ac4e28ed91372",
+        "bytes": 2324548
+      },
+      "audit_values.npz": {
+        "sha256": "fd59eea8649eade05e792184cc001d614bc907962729deee62a9959901f7c117",
+        "bytes": 724158
+      },
+      "summary.json": {
+        "sha256": "60938d849d92d78fa1b499294d72831d475d410b514c10b02e436c3dfe6f39ff",
+        "bytes": 2289
+      }
+    }
+  },
+  "server_fixture": {
+    "path": "/tmp/supervision-audit-server-final-preflight-20261009",
+    "files": {
+      "case_study.json": {
+        "sha256": "09c2649c2ff192812f46f3a3dffc41e37ae5a70412cea7b0fa2077c682db119c",
+        "bytes": 2324033
+      },
+      "audit_values.npz": {
+        "sha256": "600483f9d99007a8d3db7955f0ad47364bc6385b78561ec5b5904641c0a19fc2",
+        "bytes": 724118
+      },
+      "summary.json": {
+        "sha256": "60938d849d92d78fa1b499294d72831d475d410b514c10b02e436c3dfe6f39ff",
+        "bytes": 2289
+      }
+    }
+  },
+  "exchange_transport": {
+    "health": "ok",
+    "input_download_files": 3,
+    "input_manifest_sha256": "0464da7792e0fd2a0615c2e5a9058b641ef0d3b3300af6d0b39450b44fd39a81",
+    "directory_creation": "pass",
+    "upload_hash_receipts": 9,
+    "synthetic_only": true,
+    "fixture_namespace": "five_ideas/development_gate_smoke/semantic-supervision-audit-20261009T005814Z",
+    "record": "/tmp/supervision-audit-transport-verification-20261009.json"
+  },
+  "source_input": {
+    "namespace": "five_ideas/semantic_reader_supervision_audit_input/repair_20261008T145652Z",
+    "source_run": "five_ideas/semantic_reader_training_repair_100/20261008T145652Z",
+    "cohort_bytes": 2060491,
+    "checkpoint_bytes": 1673233,
+    "contains_full_model_or_corpus": false
+  },
+  "limitations": [
+    "Preflight and transport are engineering evidence, not support-label validity or utility.",
+    "No formal dataset/model inference on development server.",
+    "Blinded review remains pending; prospective split is not a holdout for old trained heads."
+  ]
+}

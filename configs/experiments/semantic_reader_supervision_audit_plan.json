@@ -1,0 +1,598 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v2",
+  "project": "Q-DUET-VLM/rag-selector",
+  "authorization": "implemented",
+  "baseline": {
+    "entry_point": "Existing frozen DPR relevance Top-5",
+    "code_revision": "repair source b2ca094aed4eccf266d90fff4adedb826081af22; audit source hashes recorded at run time",
+    "equivalence_test": "Initial old heads equal Reader exactly on all sampled inputs; positive monotonic compression has identical Top-5."
+  },
+  "core_invariants": [
+    "Observation only; no fitting/backward/optimizer, Generator or evaluation passes.",
+    "All online heads use target-free base/semantic/scalar states; train answer strings are diagnosis-only.",
+    "Evaluation hashes are exclusion-only; no 100-case question/passages/answers/Silver inputs are loaded.",
+    "Previous heads saw all these cases; prospective split is not an independent evaluation of those heads.",
+    "Missing cache/index stops; no model/data download or index construction.",
+    "Full raw text and detached values use exchange only; compact GitHub files remain <=1 MiB.",
+    "No support-quality conclusion before independent blinded review."
+  ],
+  "interfaces": [
+    {
+      "id": "train_observation",
+      "type": "transformer",
+      "input_schema": "source cohort and old immutable checkpoint, local train-only texts",
+      "output_schema": "producer-owned sample-trace.v2 and blinded review input"
+    }
+  ],
+  "plugins": [
+    {
+      "id": "train_cohort_export",
+      "version": "1.0.0",
+      "role": "adapter",
+      "interface": "train_observation",
+      "insertion_point": "Train-only export after frozen Reader; no update or production insertion",
+      "hypothesis": "Observe support versus containment and semantic discrimination versus monotonic compression, without learning from the exposed panel.",
+      "input_schema": "32 train-only questions x 50 exact previous candidates; source initial/final heads",
+      "output_schema": "Detached values, same-candidate scores/Top-5 and diagnostic records",
+      "requires": [],
+      "conflicts": [
+        "training",
+        "online_eval_labels",
+        "generator",
+        "new_index"
+      ],
+      "deterministic": true,
+      "resource_estimate": "32 retrievals and 1600 frozen Reader candidate passes shared by all heads; no optimizer; about 4 MiB pinned input, tens of MiB output",
+      "failure_signatures": [
+        "source/candidate/weak-mask mismatch",
+        "missing local cache/index",
+        "trace replay failure",
+        "required upload failure"
+      ],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2",
+        "stages": [
+          "data",
+          "retrieval",
+          "scoring",
+          "selection",
+          "diagnosis"
+        ],
+        "input_fields": [
+          "exact previous train question/candidate identities",
+          "cached question and passage texts",
+          "frozen Reader outputs",
+          "previous initial and epoch-3 checkpoints"
+        ],
+        "output_fields": [
+          "full candidate scores and Top-5",
+          "complete detached representations",
+          "weak-boundary diagnostic",
+          "blinded pending support review"
+        ],
+        "input_refs": [
+          "hash-locked cohort.json and head_checkpoints.npz"
+        ],
+        "output_refs": [
+          "case_study.json",
+          "audit_values.npz",
+          "support_review.json"
+        ],
+        "emitted_fields": [
+          "producer-owned raw input hashes",
+          "base and pooled/scalar states",
+          "encoded/observable/gate/residual states",
+          "selected indices/ranks",
+          "source/config/model fingerprints"
+        ],
+        "shape_dtype_normalization": [
+          "32 cases x 50 candidates; finite float32 base, 50x5H pooled, 50x4 scalar",
+          "first two witnesses complete hidden/tokens/masks/pooling weights",
+          "all methods same candidates; source checkpoint weights are immutable"
+        ],
+        "checks": [
+          "complete coordinate and hash readback",
+          "prior two-witness parity",
+          "all-head CPU replay",
+          "exact initial and monotonic selection null",
+          "independent support review remains pending"
+        ],
+        "deterministic_replay": true
+      }
+    },
+    {
+      "id": "frozen_reader_topk",
+      "version": "1.0.0",
+      "role": "baseline",
+      "interface": "train_observation",
+      "insertion_point": "Train-only export after frozen Reader; no update or production insertion",
+      "hypothesis": "Observe support versus containment and semantic discrimination versus monotonic compression, without learning from the exposed panel.",
+      "input_schema": "32 train-only questions x 50 exact previous candidates; source initial/final heads",
+      "output_schema": "Detached values, same-candidate scores/Top-5 and diagnostic records",
+      "requires": [
+        "train_cohort_export"
+      ],
+      "conflicts": [
+        "training",
+        "online_eval_labels",
+        "generator",
+        "new_index"
+      ],
+      "deterministic": true,
+      "resource_estimate": "32 retrievals and 1600 frozen Reader candidate passes shared by all heads; no optimizer; about 4 MiB pinned input, tens of MiB output",
+      "failure_signatures": [
+        "source/candidate/weak-mask mismatch",
+        "missing local cache/index",
+        "trace replay failure",
+        "required upload failure"
+      ],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2",
+        "stages": [
+          "data",
+          "retrieval",
+          "scoring",
+          "selection",
+          "diagnosis"
+        ],
+        "input_fields": [
+          "exact previous train question/candidate identities",
+          "cached question and passage texts",
+          "frozen Reader outputs",
+          "previous initial and epoch-3 checkpoints"
+        ],
+        "output_fields": [
+          "full candidate scores and Top-5",
+          "complete detached representations",
+          "weak-boundary diagnostic",
+          "blinded pending support review"
+        ],
+        "input_refs": [
+          "hash-locked cohort.json and head_checkpoints.npz"
+        ],
+        "output_refs": [
+          "case_study.json",
+          "audit_values.npz",
+          "support_review.json"
+        ],
+        "emitted_fields": [
+          "producer-owned raw input hashes",
+          "base and pooled/scalar states",
+          "encoded/observable/gate/residual states",
+          "selected indices/ranks",
+          "source/config/model fingerprints"
+        ],
+        "shape_dtype_normalization": [
+          "32 cases x 50 candidates; finite float32 base, 50x5H pooled, 50x4 scalar",
+          "first two witnesses complete hidden/tokens/masks/pooling weights",
+          "all methods same candidates; source checkpoint weights are immutable"
+        ],
+        "checks": [
+          "complete coordinate and hash readback",
+          "prior two-witness parity",
+          "all-head CPU replay",
+          "exact initial and monotonic selection null",
+          "independent support review remains pending"
+        ],
+        "deterministic_replay": true
+      }
+    },
+    {
+      "id": "quantum_semantic",
+      "version": "1.0.0",
+      "role": "adapter",
+      "interface": "train_observation",
+      "insertion_point": "Train-only export after frozen Reader; no update or production insertion",
+      "hypothesis": "Observe support versus containment and semantic discrimination versus monotonic compression, without learning from the exposed panel.",
+      "input_schema": "32 train-only questions x 50 exact previous candidates; source initial/final heads",
+      "output_schema": "Detached values, same-candidate scores/Top-5 and diagnostic records",
+      "requires": [
+        "train_cohort_export"
+      ],
+      "conflicts": [
+        "training",
+        "online_eval_labels",
+        "generator",
+        "new_index"
+      ],
+      "deterministic": true,
+      "resource_estimate": "32 retrievals and 1600 frozen Reader candidate passes shared by all heads; no optimizer; about 4 MiB pinned input, tens of MiB output",
+      "failure_signatures": [
+        "source/candidate/weak-mask mismatch",
+        "missing local cache/index",
+        "trace replay failure",
+        "required upload failure"
+      ],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2",
+        "stages": [
+          "data",
+          "retrieval",
+          "scoring",
+          "selection",
+          "diagnosis"
+        ],
+        "input_fields": [
+          "exact previous train question/candidate identities",
+          "cached question and passage texts",
+          "frozen Reader outputs",
+          "previous initial and epoch-3 checkpoints"
+        ],
+        "output_fields": [
+          "full candidate scores and Top-5",
+          "complete detached representations",
+          "weak-boundary diagnostic",
+          "blinded pending support review"
+        ],
+        "input_refs": [
+          "hash-locked cohort.json and head_checkpoints.npz"
+        ],
+        "output_refs": [
+          "case_study.json",
+          "audit_values.npz",
+          "support_review.json"
+        ],
+        "emitted_fields": [
+          "producer-owned raw input hashes",
+          "base and pooled/scalar states",
+          "encoded/observable/gate/residual states",
+          "selected indices/ranks",
+          "source/config/model fingerprints"
+        ],
+        "shape_dtype_normalization": [
+          "32 cases x 50 candidates; finite float32 base, 50x5H pooled, 50x4 scalar",
+          "first two witnesses complete hidden/tokens/masks/pooling weights",
+          "all methods same candidates; source checkpoint weights are immutable"
+        ],
+        "checks": [
+          "complete coordinate and hash readback",
+          "prior two-witness parity",
+          "all-head CPU replay",
+          "exact initial and monotonic selection null",
+          "independent support review remains pending"
+        ],
+        "deterministic_replay": true
+      }
+    },
+    {
+      "id": "classical_semantic",
+      "version": "1.0.0",
+      "role": "adapter",
+      "interface": "train_observation",
+      "insertion_point": "Train-only export after frozen Reader; no update or production insertion",
+      "hypothesis": "Observe support versus containment and semantic discrimination versus monotonic compression, without learning from the exposed panel.",
+      "input_schema": "32 train-only questions x 50 exact previous candidates; source initial/final heads",
+      "output_schema": "Detached values, same-candidate scores/Top-5 and diagnostic records",
+      "requires": [
+        "train_cohort_export"
+      ],
+      "conflicts": [
+        "training",
+        "online_eval_labels",
+        "generator",
+        "new_index"
+      ],
+      "deterministic": true,
+      "resource_estimate": "32 retrievals and 1600 frozen Reader candidate passes shared by all heads; no optimizer; about 4 MiB pinned input, tens of MiB output",
+      "failure_signatures": [
+        "source/candidate/weak-mask mismatch",
+        "missing local cache/index",
+        "trace replay failure",
+        "required upload failure"
+      ],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2",
+        "stages": [
+          "data",
+          "retrieval",
+          "scoring",
+          "selection",
+          "diagnosis"
+        ],
+        "input_fields": [
+          "exact previous train question/candidate identities",
+          "cached question and passage texts",
+          "frozen Reader outputs",
+          "previous initial and epoch-3 checkpoints"
+        ],
+        "output_fields": [
+          "full candidate scores and Top-5",
+          "complete detached representations",
+          "weak-boundary diagnostic",
+          "blinded pending support review"
+        ],
+        "input_refs": [
+          "hash-locked cohort.json and head_checkpoints.npz"
+        ],
+        "output_refs": [
+          "case_study.json",
+          "audit_values.npz",
+          "support_review.json"
+        ],
+        "emitted_fields": [
+          "producer-owned raw input hashes",
+          "base and pooled/scalar states",
+          "encoded/observable/gate/residual states",
+          "selected indices/ranks",
+          "source/config/model fingerprints"
+        ],
+        "shape_dtype_normalization": [
+          "32 cases x 50 candidates; finite float32 base, 50x5H pooled, 50x4 scalar",
+          "first two witnesses complete hidden/tokens/masks/pooling weights",
+          "all methods same candidates; source checkpoint weights are immutable"
+        ],
+        "checks": [
+          "complete coordinate and hash readback",
+          "prior two-witness parity",
+          "all-head CPU replay",
+          "exact initial and monotonic selection null",
+          "independent support review remains pending"
+        ],
+        "deterministic_replay": true
+      }
+    },
+    {
+      "id": "quantum_scalar_control",
+      "version": "1.0.0",
+      "role": "adapter",
+      "interface": "train_observation",
+      "insertion_point": "Train-only export after frozen Reader; no update or production insertion",
+      "hypothesis": "Observe support versus containment and semantic discrimination versus monotonic compression, without learning from the exposed panel.",
+      "input_schema": "32 train-only questions x 50 exact previous candidates; source initial/final heads",
+      "output_schema": "Detached values, same-candidate scores/Top-5 and diagnostic records",
+      "requires": [
+        "train_cohort_export"
+      ],
+      "conflicts": [
+        "training",
+        "online_eval_labels",
+        "generator",
+        "new_index"
+      ],
+      "deterministic": true,
+      "resource_estimate": "32 retrievals and 1600 frozen Reader candidate passes shared by all heads; no optimizer; about 4 MiB pinned input, tens of MiB output",
+      "failure_signatures": [
+        "source/candidate/weak-mask mismatch",
+        "missing local cache/index",
+        "trace replay failure",
+        "required upload failure"
+      ],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2",
+        "stages": [
+          "data",
+          "retrieval",
+          "scoring",
+          "selection",
+          "diagnosis"
+        ],
+        "input_fields": [
+          "exact previous train question/candidate identities",
+          "cached question and passage texts",
+          "frozen Reader outputs",
+          "previous initial and epoch-3 checkpoints"
+        ],
+        "output_fields": [
+          "full candidate scores and Top-5",
+          "complete detached representations",
+          "weak-boundary diagnostic",
+          "blinded pending support review"
+        ],
+        "input_refs": [
+          "hash-locked cohort.json and head_checkpoints.npz"
+        ],
+        "output_refs": [
+          "case_study.json",
+          "audit_values.npz",
+          "support_review.json"
+        ],
+        "emitted_fields": [
+          "producer-owned raw input hashes",
+          "base and pooled/scalar states",
+          "encoded/observable/gate/residual states",
+          "selected indices/ranks",
+          "source/config/model fingerprints"
+        ],
+        "shape_dtype_normalization": [
+          "32 cases x 50 candidates; finite float32 base, 50x5H pooled, 50x4 scalar",
+          "first two witnesses complete hidden/tokens/masks/pooling weights",
+          "all methods same candidates; source checkpoint weights are immutable"
+        ],
+        "checks": [
+          "complete coordinate and hash readback",
+          "prior two-witness parity",
+          "all-head CPU replay",
+          "exact initial and monotonic selection null",
+          "independent support review remains pending"
+        ],
+        "deterministic_replay": true
+      }
+    },
+    {
+      "id": "monotonic_compression_control",
+      "version": "1.0.0",
+      "role": "adapter",
+      "interface": "train_observation",
+      "insertion_point": "Train-only export after frozen Reader; no update or production insertion",
+      "hypothesis": "Observe support versus containment and semantic discrimination versus monotonic compression, without learning from the exposed panel.",
+      "input_schema": "32 train-only questions x 50 exact previous candidates; source initial/final heads",
+      "output_schema": "Detached values, same-candidate scores/Top-5 and diagnostic records",
+      "requires": [
+        "train_cohort_export"
+      ],
+      "conflicts": [
+        "training",
+        "online_eval_labels",
+        "generator",
+        "new_index"
+      ],
+      "deterministic": true,
+      "resource_estimate": "32 retrievals and 1600 frozen Reader candidate passes shared by all heads; no optimizer; about 4 MiB pinned input, tens of MiB output",
+      "failure_signatures": [
+        "source/candidate/weak-mask mismatch",
+        "missing local cache/index",
+        "trace replay failure",
+        "required upload failure"
+      ],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2",
+        "stages": [
+          "data",
+          "retrieval",
+          "scoring",
+          "selection",
+          "diagnosis"
+        ],
+        "input_fields": [
+          "exact previous train question/candidate identities",
+          "cached question and passage texts",
+          "frozen Reader outputs",
+          "previous initial and epoch-3 checkpoints"
+        ],
+        "output_fields": [
+          "full candidate scores and Top-5",
+          "complete detached representations",
+          "weak-boundary diagnostic",
+          "blinded pending support review"
+        ],
+        "input_refs": [
+          "hash-locked cohort.json and head_checkpoints.npz"
+        ],
+        "output_refs": [
+          "case_study.json",
+          "audit_values.npz",
+          "support_review.json"
+        ],
+        "emitted_fields": [
+          "producer-owned raw input hashes",
+          "base and pooled/scalar states",
+          "encoded/observable/gate/residual states",
+          "selected indices/ranks",
+          "source/config/model fingerprints"
+        ],
+        "shape_dtype_normalization": [
+          "32 cases x 50 candidates; finite float32 base, 50x5H pooled, 50x4 scalar",
+          "first two witnesses complete hidden/tokens/masks/pooling weights",
+          "all methods same candidates; source checkpoint weights are immutable"
+        ],
+        "checks": [
+          "complete coordinate and hash readback",
+          "prior two-witness parity",
+          "all-head CPU replay",
+          "exact initial and monotonic selection null",
+          "independent support review remains pending"
+        ],
+        "deterministic_replay": true
+      }
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": [
+      "train_cohort_export",
+      "frozen_reader_topk",
+      "quantum_semantic",
+      "classical_semantic",
+      "quantum_scalar_control",
+      "monotonic_compression_control"
+    ]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": [
+      "train_cohort_export",
+      "frozen_reader_topk",
+      "quantum_semantic",
+      "classical_semantic",
+      "quantum_scalar_control",
+      "monotonic_compression_control"
+    ],
+    "merge_rule": "One shared extraction, independent frozen-head replays; never feed diagnosis to ranking or training.",
+    "interaction_ablations": [
+      "source initial exact-null",
+      "matched semantic classical",
+      "scalar quantum",
+      "positive monotonic compression null"
+    ]
+  },
+  "validation": {
+    "baseline_equivalence": "all same-input initial scores and compressed Top-5 match Reader",
+    "tests": [
+      "baseline_equivalence",
+      "plugin_isolation",
+      "deterministic_replay",
+      "interaction_ablation",
+      "trace_structural_validation",
+      "trace_semantic_validation",
+      "trace_replay",
+      "target_boundary",
+      "receipt_hash"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/semantic_reader_supervision_audit.json",
+    "dataset_identity": "existing nq_open/train first512; same434 mixed weak cohort, fixed32 sample, exact Wiki-DPR Top50 identities",
+    "environment": "reuse active collaborator Python/Torch/Transformers/datasets/FAISS; all HF operations offline",
+    "seeds": [
+      20261009
+    ],
+    "output_manifest": "exchange/five_ideas/semantic_reader_supervision_audit/<UTC-run-id>/upload_manifest.json"
+  },
+  "limitations": [
+    "Observation exporter, not a new quantum architecture or trained candidate.",
+    "Weak substring counts are not support accuracy.",
+    "Blinded model/human review will remain diagnostic Silver unless independently validated.",
+    "No full-data utility or quantum-advantage claim."
+  ],
+  "recovery_contract": {
+    "dossier_path": ".ai-progress/workstreams/rag-selector/refs/semantic_reader_repair_20261009_recovery.json",
+    "dossier_sha256": "566e5866ce64478e5108b324b46554d10a25fc9ad77486d4e2390ac8a5f787a8",
+    "candidate_id": "quantum_semantic_reader",
+    "discriminating_intermediate_measurement": "Independent blinded support of train-only high-score weak negatives and low-score weak positives, plus matched nonpositive correction controls; no utility escalation before this evidence."
+  },
+  "trace_contract": {
+    "enabled": true,
+    "schema": "sample-trace.v2",
+    "artifact_path": "exchange/five_ideas/semantic_reader_supervision_audit/<UTC-run-id>/case_study.json",
+    "sample_selection_rule": "two original witnesses +15 hashed prospective-training +15 prospective-validation cases; fixed seed20261009; no score/outcome selection",
+    "target_boundary": "Train answers for weak diagnosis only; eval question hashes exclusion only; no labels in head input; blinded review omits weak labels/scores/methods.",
+    "required_stages": [
+      "data",
+      "retrieval",
+      "scoring",
+      "selection",
+      "diagnosis"
+    ],
+    "semantic_roles": [
+      "previous_training_diagnostic_not_heldout",
+      "prospective_training",
+      "prospective_validation_not_current_holdout"
+    ],
+    "required_representations": [
+      "base",
+      "pooled",
+      "scalar",
+      "weak_mask",
+      "per-head scores/gate/residual/observables/encoded",
+      "first two hidden/input_ids/question_mask/passage_mask/pooling_weights"
+    ],
+    "producer_owned_lineage": [
+      "cached source question/candidate text hash -> Reader -> frozen checkpoint head -> deterministic selection -> diagnosis",
+      "source NPZ checkpoint tensor keys -> detached reopened output tensors"
+    ],
+    "readiness_checks": [
+      "complete coordinate and hash readback",
+      "prior two-witness parity",
+      "all-head CPU replay",
+      "exact initial and monotonic selection null",
+      "independent support review remains pending"
+    ]
+  },
+  "trace_readiness": {
+    "status": "passed",
+    "fixture_path": ".ai-progress/workstreams/rag-selector/refs/semantic_reader_supervision_audit_preflight_20261009.json",
+    "structural_validation": "Project-owned v2 validator reopens 32-case fixture and enforces source identity, canonical stage order and method/field coverage; 24 new tests pass.",
+    "semantic_validation": "Full detached NPZ opens and hashes; complete 32x50 base/pooling/scalar/head values replay; two hidden-token masks/pooling slices and producer raw input hashes pass. See pinned local/server fixture paths and hashes.",
+    "replay_test": "Initial null and positive monotonic compression match baseline on all 32 cases; existing final head replays pass on same inputs; 36 combined tests on local/server."
+  }
+}
