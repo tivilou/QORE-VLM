@@ -1,0 +1,55 @@
+{
+  "commands": [
+    {
+      "label": "baseline_complete_review_24",
+      "command": [
+        "D:/Software/Dev/Language/Anaconda3/envs/lambeq/python.exe",
+        "E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs\\semantic_supervision_20261009T045728Z_complete_tests.py",
+        "--records-dir",
+        "E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs",
+        "--source-dir",
+        "C:\\Users\\14630\\AppData\\Local\\Temp\\qore-supervision-result-20261009T045728Z"
+      ],
+      "exit_status": 0,
+      "stdout": "{\"checks_passed\": 24, \"checks\": [\"exact_delta_manifest_join_replay\", \"full32_by50_unique_complete\", \"prior783_metadata_and9_flags_unchanged\", \"explicit817_only_no_default_classification\", \"coverage_not_training_or_gold_qualification\", \"all160_selected_slots_per_method_unchanged\", \"sub1MiB_shards_hash_reconstruction\", \"audit_only_support_ceiling_not_answer_accuracy\", \"partial_not_hard_negative_retention_cases_separated\", \"more_than5_direct_not_forced_into5\", \"duplicate_explicit_id\", \"missing_passage_not_negative\", \"false_partial_completion\", \"wrong_source_hash\", \"wrong_prior_review_hash\", \"wrong_blind_id\", \"wrong_case_ordinal\", \"wrong_reviewer\", \"fabricated_support_quote\", \"direct_missing_quote\", \"partial_missing_quote\", \"unread_null_not_negative\", \"unknown_label\", \"missing_rationale\"], \"source_rewritten\": false, \"training_or_inference\": false, \"reviewed\": 1600, \"remaining\": 0}\n",
+      "stderr": ""
+    },
+    {
+      "label": "modified_targets_40",
+      "command": [
+        "D:/Software/Dev/Language/Anaconda3/envs/lambeq/python.exe",
+        "-m",
+        "unittest",
+        "applications.rag.tests.test_support_qualified_boundary_targets",
+        "-v"
+      ],
+      "exit_status": 0,
+      "stdout": "",
+      "stderr": "test_cli_does_not_overwrite (applications.rag.tests.test_support_qualified_boundary_targets.CompilerCliTest.test_cli_does_not_overwrite) ... ok\ntest_cli_pending_and_readback (applications.rag.tests.test_support_qualified_boundary_targets.CompilerCliTest.test_cli_pending_and_readback) ... ok\ntest_cli_source_hash_reject (applications.rag.tests.test_support_qualified_boundary_targets.CompilerCliTest.test_cli_source_hash_reject) ... ok\ntest_cli_verified_witnesses_still_not_training (applications.rag.tests.test_support_qualified_boundary_targets.CompilerCliTest.test_cli_verified_witnesses_still_not_training) ... ok\ntest_cli_witness_bytes_required (applications.rag.tests.test_support_qualified_boundary_targets.CompilerCliTest.test_cli_witness_bytes_required) ... ok\ntest_cli_witness_path_escape_rejected (applications.rag.tests.test_support_qualified_boundary_targets.CompilerCliTest.test_cli_witness_path_escape_rejected) ... ok\ntest_adjudication_contract_not_proof (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_adjudication_contract_not_proof) ... ok\ntest_all_direct_no_forced_preferences (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_all_direct_no_forced_preferences) ... ok\ntest_bad_quote (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_bad_quote) ... ok\ntest_boundary_unqualified_does_not_manufacture_pair (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_boundary_unqualified_does_not_manufacture_pair) ... ok\ntest_deterministic_and_json_replay (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_deterministic_and_json_replay) ... ok\ntest_distinct_reviewers_required (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_distinct_reviewers_required) ... ok\ntest_duplicate_overlay (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_duplicate_overlay) ... ok\ntest_duplicate_review (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_duplicate_review) ... ok\ntest_flag_is_never_overridden (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_flag_is_never_overridden) ... ok\ntest_inputs_unchanged (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_inputs_unchanged) ... ok\ntest_missing_review_cannot_be_qualified (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_missing_review_cannot_be_qualified) ... ok\ntest_missing_review_not_negative (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_missing_review_not_negative) ... ok\ntest_missing_scope_blocks (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_missing_scope_blocks) ... ok\ntest_nan_score (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_nan_score) ... ok\ntest_no_weak_label_inference (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_no_weak_label_inference) ... ok\ntest_overlay_cannot_relabel (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_overlay_cannot_relabel) ... ok\ntest_overlay_schema (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_overlay_schema) ... ok\ntest_partial_only_not_negative (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_partial_only_not_negative) ... ok\ntest_pending_is_not_training (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_pending_is_not_training) ... ok\ntest_protected_selection_accepts_valid_replacement (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_protected_selection_accepts_valid_replacement) ... ok\ntest_protected_selection_rejects_drop (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_protected_selection_rejects_drop) ... ok\ntest_provisional_confidence_rejected (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_provisional_confidence_rejected) ... ok\ntest_qualified_binary_pairs_only (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_qualified_binary_pairs_only) ... ok\ntest_qualified_scope_complete (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_qualified_scope_complete) ... ok\ntest_reader_order_frozen (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_reader_order_frozen) ... ok\ntest_retention_unqualified_blocks_question (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_retention_unqualified_blocks_question) ... ok\ntest_selection_shape (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_selection_shape) ... ok\ntest_silver_lane_rejected (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_silver_lane_rejected) ... ok\ntest_single_review_never_qualified (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_single_review_never_qualified) ... ok\ntest_source_hash (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_source_hash) ... ok\ntest_stale_overlay (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_stale_overlay) ... ok\ntest_unknown_overlay_identity (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_unknown_overlay_identity) ... ok\ntest_weight_not_pair_count_strength (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_weight_not_pair_count_strength) ... ok\ntest_zero_direct_no_target (applications.rag.tests.test_support_qualified_boundary_targets.TargetsTest.test_zero_direct_no_target) ... ok\n\n----------------------------------------------------------------------\nRan 40 tests in 0.879s\n\nOK\n"
+    },
+    {
+      "label": "modified_source_readonly_compile",
+      "command": [
+        "D:/Software/Dev/Language/Anaconda3/envs/lambeq/python.exe",
+        "scripts/collab/five_ideas/compile_support_qualified_boundary_targets.py",
+        "--source-dir",
+        "C:\\Users\\14630\\AppData\\Local\\Temp\\qore-supervision-result-20261009T045728Z",
+        "--review-manifest",
+        "E:\\Claude.Code\\Paper.Writing\\Q-DUET-VLM\\.ai-progress\\workstreams\\rag-selector\\refs\\semantic_supervision_20261009T045728Z_complete_review_manifest.json",
+        "--output-dir",
+        "C:\\Users\\14630\\AppData\\Local\\Temp\\qore-qualified-targets-20261009-final-local"
+      ],
+      "exit_status": 0,
+      "stdout": "{\"cases\": 32, \"draft_pair_cases\": 0, \"draft_pairs\": 0, \"flagged_cases\": 9, \"proposal_cases\": 9, \"proposal_pairs\": 28}\ntraining_consumable=false; no models, fitting or source changes\n",
+      "stderr": ""
+    }
+  ],
+  "environment": "lambeq existing Python3.11; stdlib only; no installations",
+  "server_preflight": "40 tests passed in isolated /tmp/qore-qualified-target-preflight-20261009; canonical verification recorded separately",
+  "artifact_hashes": {
+    "qualification_overlay.json": "55f4af9317b031703a5f9ed82f1a0e422a3bca8e7890ae8fbd84f14992ebcf6c",
+    "boundary_target_draft.json": "ed4dd90a72d1347070e1397f4d9df59f3a6b159a9456afc53440410c10a4de50"
+  },
+  "training_called": false,
+  "model_or_corpus_downloaded": false
+}

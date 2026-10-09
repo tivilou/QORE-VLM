@@ -2,6 +2,8 @@
 
 ## 当前研究总览
 
+- 最新实现：[支持资格感知目标编译器](20261009T-date-only-support-boundary-target-compiler.md)。32题只读回放生成9题28个候选对、最多10个无关替换槽位；真实资格对0，本地/服务器40测试通过，不启动训练，L0。
+
 - 最新完整审计：[32题1600段全部审完](20261009T-date-only-complete-support-audit.md)。剩余817已完成，未读0；23题未flag中13题有25个direct槽位差，但9个目标风险与整434监督仍待资格。优先资格化干净边界，保护已有支持，不立即重训，仍L0。
 
 - 最新检查点：[题9—12全段审阅](20261009T-date-only-fullcase-support-09-12.md)。累计783/1600；题9有direct可救但已选partial也有用，题11固定50段无direct，题10目标顺序冲突。先补817段，不训练，L0。
@@ -78,3 +80,5 @@
 - [2026-09-05 | selector-only QORE-QES 改进方向](20260905T-selector-only-qore-qes.md)
 - [2026-09-08 | Anchor--Residual 固定 50 题预检失败](20260908T-044401Z-anchor-residual-preflight.md)
 - [2026-09-15 | Silver-oracle 100题冻结 Generator ceiling：证据命中增加未传递为稳定回答收益](20260915T-date-only-silver-oracle-top5-ceiling.md)
+
+- [2026-10-09（仅日期） | 支持资格感知边界目标编译与合成验证](20261009T-date-only-support-boundary-target-compiler.md)

@@ -162,6 +162,8 @@
 
 - [ACTIVE / 1600 AUDIT ITEMS REVIEWED; FULL434 QUALIFICATION PENDING] Confidence-qualified support and protected quantum boundary target -> [detail](decisions/2026-10-09-support-qualified-boundary-review.md)
 
+- [IMPLEMENTED / OFFLINE ONLY; REAL QUALIFICATION PENDING] Protected support boundary compiler -> [detail](decisions/2026-10-09-boundary-target-compiler.md)
+
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.
 - Rationale: `decisions/`; outcomes: `sessions/`; evidence: `refs/`; owner logs: `docs/rag-research-log/`.

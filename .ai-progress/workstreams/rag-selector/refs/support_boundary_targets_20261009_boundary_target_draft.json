@@ -1,0 +1,1212 @@
+{
+  "schema_version": "rag.support_boundary_target_draft.v1",
+  "input_binding_sha256": "89642c0bc56876269177230ba781df45bbce11bdde48d3cfd900c2d948535796",
+  "qualification_overlay_sha256": "c6bde0c8a8329e78097d9fe74fd7e62e571649688b1baefd932980d520cd1e3c",
+  "claim_ceiling": "L0_engineering_diagnostic",
+  "training_consumable": false,
+  "training_authorized": false,
+  "full434_qualified": false,
+  "witness_integrity_and_independence_verified": false,
+  "summary": {
+    "cases": 32,
+    "proposal_cases": 9,
+    "proposal_pairs": 28,
+    "draft_pair_cases": 0,
+    "draft_pairs": 0,
+    "flagged_cases": 9
+  },
+  "cases": [
+    {
+      "audit_case_number": 1,
+      "review_case_id": "072cf5ed9a8e9c4094297a20488c79140859ed1fcc1129cfdf041a19f4898273",
+      "frozen_selected_indices": [
+        0,
+        4,
+        13,
+        5,
+        32
+      ],
+      "reviewed_label_counts": {
+        "direct": 1,
+        "irrelevant": 47,
+        "partial": 2
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        0
+      ],
+      "provisional_direct_slot_gap": 0,
+      "proposal_pairs": [],
+      "blockers": [
+        "question_scope_not_qualified",
+        "selected_direct_retention_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 2,
+      "review_case_id": "1440a91de72510bc0ea23cf9baac6d4829324427cbc8c17b74cb3461099901a3",
+      "frozen_selected_indices": [
+        0,
+        13,
+        1,
+        35,
+        44
+      ],
+      "reviewed_label_counts": {
+        "partial": 5,
+        "irrelevant": 45
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [],
+      "provisional_direct_slot_gap": 0,
+      "proposal_pairs": [],
+      "blockers": [
+        "existing_question_target_flag",
+        "question_scope_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 3,
+      "review_case_id": "5c2b42563c1d60b4c3ef9b0da7a256991e201cc4d28f81f2b3e6830fc56f95e7",
+      "frozen_selected_indices": [
+        2,
+        25,
+        43,
+        7,
+        13
+      ],
+      "reviewed_label_counts": {
+        "irrelevant": 41,
+        "direct": 2,
+        "partial": 7
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        2,
+        4
+      ],
+      "provisional_direct_slot_gap": 1,
+      "proposal_pairs": [],
+      "blockers": [
+        "question_scope_not_qualified",
+        "selected_direct_retention_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 4,
+      "review_case_id": "4a8f2398ebbb4b0847b85c53c8855fdcb1d61e4b3d0464a4e88c7bbdcc57bd65",
+      "frozen_selected_indices": [
+        0,
+        19,
+        37,
+        4,
+        38
+      ],
+      "reviewed_label_counts": {
+        "partial": 3,
+        "irrelevant": 47
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [],
+      "provisional_direct_slot_gap": 0,
+      "proposal_pairs": [],
+      "blockers": [
+        "existing_question_target_flag",
+        "question_scope_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 5,
+      "review_case_id": "9fa259bec3e31ee388e3c94de30fed8b137bc1dee2837f2bf6b859b6a64e5448",
+      "frozen_selected_indices": [
+        3,
+        9,
+        4,
+        2,
+        28
+      ],
+      "reviewed_label_counts": {
+        "irrelevant": 45,
+        "direct": 3,
+        "partial": 2
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        1,
+        4,
+        9
+      ],
+      "provisional_direct_slot_gap": 1,
+      "proposal_pairs": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          28
+        ]
+      ],
+      "blockers": [
+        "question_scope_not_qualified",
+        "selected_direct_retention_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 1,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 6,
+      "review_case_id": "e10267bb67b70742cb509fe2cbc01732e466f30b02146d55acd22e2b7a439a35",
+      "frozen_selected_indices": [
+        0,
+        16,
+        11,
+        18,
+        49
+      ],
+      "reviewed_label_counts": {
+        "partial": 21,
+        "irrelevant": 27,
+        "direct": 2
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        5,
+        48
+      ],
+      "provisional_direct_slot_gap": 2,
+      "proposal_pairs": [
+        [
+          5,
+          49
+        ],
+        [
+          48,
+          49
+        ]
+      ],
+      "blockers": [
+        "question_scope_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 1,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 7,
+      "review_case_id": "0031cb571a22179e59daa2d2cb1c544e73bb238ec7e5418a180e0c8a03c3dcbd",
+      "frozen_selected_indices": [
+        0,
+        10,
+        5,
+        2,
+        6
+      ],
+      "reviewed_label_counts": {
+        "direct": 3,
+        "irrelevant": 47
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        0,
+        5,
+        10
+      ],
+      "provisional_direct_slot_gap": 0,
+      "proposal_pairs": [],
+      "blockers": [
+        "question_scope_not_qualified",
+        "selected_direct_retention_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 8,
+      "review_case_id": "fa9814edb9e26544f2437346fef3a1ad2971212a9a0d6b0e03f06bc4a7695cea",
+      "frozen_selected_indices": [
+        0,
+        1,
+        19,
+        43,
+        33
+      ],
+      "reviewed_label_counts": {
+        "direct": 5,
+        "irrelevant": 45
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        0,
+        1,
+        19,
+        25,
+        33
+      ],
+      "provisional_direct_slot_gap": 1,
+      "proposal_pairs": [
+        [
+          25,
+          43
+        ]
+      ],
+      "blockers": [
+        "question_scope_not_qualified",
+        "selected_direct_retention_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 1,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 9,
+      "review_case_id": "88e18b6f333f478f54a0168f1721687b6fc80a5205c7d671e2b21dd0880bcf8e",
+      "frozen_selected_indices": [
+        0,
+        5,
+        35,
+        8,
+        18
+      ],
+      "reviewed_label_counts": {
+        "direct": 6,
+        "partial": 13,
+        "irrelevant": 31
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        0,
+        2,
+        5,
+        34,
+        35,
+        37
+      ],
+      "provisional_direct_slot_gap": 2,
+      "proposal_pairs": [],
+      "blockers": [
+        "question_scope_not_qualified",
+        "selected_direct_retention_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 10,
+      "review_case_id": "33f9a297bf7d65baa2ec4e9fc88c845592aecced4ff7718f82fab9909c3e34f1",
+      "frozen_selected_indices": [
+        2,
+        41,
+        23,
+        20,
+        19
+      ],
+      "reviewed_label_counts": {
+        "irrelevant": 38,
+        "partial": 8,
+        "contradictory": 3,
+        "uncertain": 1
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [],
+      "provisional_direct_slot_gap": 0,
+      "proposal_pairs": [],
+      "blockers": [
+        "existing_question_target_flag",
+        "question_scope_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 11,
+      "review_case_id": "07ebe9609889cec53f9c94d43db7ba02929b45b3eaefae01805912c9ad4b2947",
+      "frozen_selected_indices": [
+        24,
+        39,
+        32,
+        20,
+        7
+      ],
+      "reviewed_label_counts": {
+        "irrelevant": 49,
+        "partial": 1
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [],
+      "provisional_direct_slot_gap": 0,
+      "proposal_pairs": [],
+      "blockers": [
+        "question_scope_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 12,
+      "review_case_id": "a8fb5d71aad5cb759e24aa2fa43a166eddd74708eaf81f10f6c82df05963a600",
+      "frozen_selected_indices": [
+        19,
+        1,
+        17,
+        35,
+        39
+      ],
+      "reviewed_label_counts": {
+        "irrelevant": 47,
+        "direct": 1,
+        "partial": 2
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        1
+      ],
+      "provisional_direct_slot_gap": 0,
+      "proposal_pairs": [],
+      "blockers": [
+        "question_scope_not_qualified",
+        "selected_direct_retention_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 13,
+      "review_case_id": "7d5f0e48c01ffed77bd09f2eecc4a037a5be4310b396e4a868d7c0954f8f0dca",
+      "frozen_selected_indices": [
+        1,
+        26,
+        3,
+        2,
+        49
+      ],
+      "reviewed_label_counts": {
+        "partial": 5,
+        "direct": 3,
+        "irrelevant": 42
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        1,
+        3,
+        9
+      ],
+      "provisional_direct_slot_gap": 1,
+      "proposal_pairs": [
+        [
+          9,
+          49
+        ]
+      ],
+      "blockers": [
+        "question_scope_not_qualified",
+        "selected_direct_retention_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 1,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 14,
+      "review_case_id": "6ae8caea498b969fdb7d560c3d72736a7da6ef902207cd7068766e2cb1c3e60e",
+      "frozen_selected_indices": [
+        17,
+        0,
+        8,
+        47,
+        6
+      ],
+      "reviewed_label_counts": {
+        "partial": 1,
+        "irrelevant": 46,
+        "direct": 3
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        8,
+        17,
+        47
+      ],
+      "provisional_direct_slot_gap": 0,
+      "proposal_pairs": [],
+      "blockers": [
+        "question_scope_not_qualified",
+        "selected_direct_retention_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 15,
+      "review_case_id": "09737f68352a06d3f476d81fa4bf3f75619033b506098973ff0f89bc8593842b",
+      "frozen_selected_indices": [
+        10,
+        0,
+        19,
+        39,
+        3
+      ],
+      "reviewed_label_counts": {
+        "partial": 17,
+        "direct": 4,
+        "irrelevant": 28,
+        "uncertain": 1
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        1,
+        2,
+        4,
+        42
+      ],
+      "provisional_direct_slot_gap": 4,
+      "proposal_pairs": [],
+      "blockers": [
+        "existing_question_target_flag",
+        "question_scope_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 2,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 16,
+      "review_case_id": "c91f67edc0e22fa85516122db9a14e16c0957f54ed7307fdfc7caa2c37e3c3fd",
+      "frozen_selected_indices": [
+        4,
+        1,
+        41,
+        0,
+        20
+      ],
+      "reviewed_label_counts": {
+        "irrelevant": 41,
+        "direct": 6,
+        "partial": 3
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        1,
+        4,
+        34,
+        39,
+        43,
+        46
+      ],
+      "provisional_direct_slot_gap": 3,
+      "proposal_pairs": [
+        [
+          34,
+          41
+        ],
+        [
+          34,
+          0
+        ],
+        [
+          39,
+          41
+        ],
+        [
+          39,
+          0
+        ],
+        [
+          43,
+          41
+        ],
+        [
+          43,
+          0
+        ],
+        [
+          46,
+          41
+        ],
+        [
+          46,
+          0
+        ]
+      ],
+      "blockers": [
+        "question_scope_not_qualified",
+        "selected_direct_retention_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 2,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 17,
+      "review_case_id": "5260c411b6da3d11f9dcd3a2a64d69ebf2fa61624d75decf35e4d633c6c68b5d",
+      "frozen_selected_indices": [
+        2,
+        1,
+        5,
+        47,
+        10
+      ],
+      "reviewed_label_counts": {
+        "partial": 15,
+        "direct": 3,
+        "irrelevant": 32
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        2,
+        5,
+        11
+      ],
+      "provisional_direct_slot_gap": 1,
+      "proposal_pairs": [
+        [
+          11,
+          47
+        ],
+        [
+          11,
+          10
+        ]
+      ],
+      "blockers": [
+        "question_scope_not_qualified",
+        "selected_direct_retention_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 1,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 18,
+      "review_case_id": "38833dee89fef2d48c3cc54ff004fa02cb4e6d130b9f1838254ba594cd17caf8",
+      "frozen_selected_indices": [
+        1,
+        2,
+        4,
+        0,
+        3
+      ],
+      "reviewed_label_counts": {
+        "direct": 7,
+        "irrelevant": 41,
+        "partial": 1,
+        "uncertain": 1
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        34
+      ],
+      "provisional_direct_slot_gap": 0,
+      "proposal_pairs": [],
+      "blockers": [
+        "question_scope_not_qualified",
+        "selected_direct_retention_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 19,
+      "review_case_id": "a037e76f7c51215349df5d16e0aaa68229138e8643559e92064b689574b2f816",
+      "frozen_selected_indices": [
+        5,
+        8,
+        44,
+        24,
+        23
+      ],
+      "reviewed_label_counts": {
+        "irrelevant": 39,
+        "direct": 4,
+        "partial": 7
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        2,
+        5,
+        8,
+        24
+      ],
+      "provisional_direct_slot_gap": 1,
+      "proposal_pairs": [],
+      "blockers": [
+        "question_scope_not_qualified",
+        "selected_direct_retention_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 20,
+      "review_case_id": "e9b0bf7d10f332c39007c1a0a4e637103c0d9ae6e4df6120d5fcf8f4daefce75",
+      "frozen_selected_indices": [
+        9,
+        3,
+        7,
+        0,
+        29
+      ],
+      "reviewed_label_counts": {
+        "partial": 1,
+        "irrelevant": 46,
+        "direct": 3
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        3,
+        7,
+        9
+      ],
+      "provisional_direct_slot_gap": 0,
+      "proposal_pairs": [],
+      "blockers": [
+        "question_scope_not_qualified",
+        "selected_direct_retention_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 21,
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "frozen_selected_indices": [
+        0,
+        39,
+        3,
+        42,
+        34
+      ],
+      "reviewed_label_counts": {
+        "direct": 9,
+        "irrelevant": 33,
+        "partial": 7,
+        "uncertain": 1
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        0,
+        2,
+        7,
+        28,
+        30,
+        33,
+        34,
+        39,
+        49
+      ],
+      "provisional_direct_slot_gap": 2,
+      "proposal_pairs": [
+        [
+          2,
+          42
+        ],
+        [
+          7,
+          42
+        ],
+        [
+          28,
+          42
+        ],
+        [
+          30,
+          42
+        ],
+        [
+          33,
+          42
+        ],
+        [
+          49,
+          42
+        ]
+      ],
+      "blockers": [
+        "question_scope_not_qualified",
+        "selected_direct_retention_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 1,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 22,
+      "review_case_id": "47e2cf478fd8bd0fd624ba7c7f84dc98cab64bde4b5f504b529583b390bc3d3e",
+      "frozen_selected_indices": [
+        21,
+        42,
+        11,
+        3,
+        22
+      ],
+      "reviewed_label_counts": {
+        "irrelevant": 44,
+        "partial": 6
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [],
+      "provisional_direct_slot_gap": 0,
+      "proposal_pairs": [],
+      "blockers": [
+        "question_scope_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 23,
+      "review_case_id": "36c3f3a92ee5bc6c13106357512abb2487a084b3cc44798d609fb162cf853a98",
+      "frozen_selected_indices": [
+        9,
+        4,
+        8,
+        1,
+        0
+      ],
+      "reviewed_label_counts": {
+        "direct": 6,
+        "irrelevant": 44
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        0,
+        1,
+        4,
+        5,
+        8,
+        9
+      ],
+      "provisional_direct_slot_gap": 0,
+      "proposal_pairs": [],
+      "blockers": [
+        "question_scope_not_qualified",
+        "selected_direct_retention_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 24,
+      "review_case_id": "c833d72cbc94fd38dc877669d2011849a4dce47769397b3948d2677fbe51a484",
+      "frozen_selected_indices": [
+        7,
+        6,
+        2,
+        0,
+        27
+      ],
+      "reviewed_label_counts": {
+        "uncertain": 4,
+        "partial": 20,
+        "irrelevant": 26
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [],
+      "provisional_direct_slot_gap": 0,
+      "proposal_pairs": [],
+      "blockers": [
+        "existing_question_target_flag",
+        "question_scope_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 25,
+      "review_case_id": "f577dc5800c7d7c8b059f3bdd8817c66c8fbcf160990bfa9f526a1dc516022a2",
+      "frozen_selected_indices": [
+        0,
+        30,
+        7,
+        12,
+        18
+      ],
+      "reviewed_label_counts": {
+        "partial": 1,
+        "irrelevant": 49
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [],
+      "provisional_direct_slot_gap": 0,
+      "proposal_pairs": [],
+      "blockers": [
+        "question_scope_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 26,
+      "review_case_id": "578380c2469a4631d2746178f3dd2375291b385e53a3f58e50243cdf227bc764",
+      "frozen_selected_indices": [
+        0,
+        22,
+        15,
+        9,
+        4
+      ],
+      "reviewed_label_counts": {
+        "direct": 6,
+        "irrelevant": 38,
+        "partial": 6
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        0,
+        9,
+        20,
+        29,
+        37,
+        42
+      ],
+      "provisional_direct_slot_gap": 3,
+      "proposal_pairs": [
+        [
+          20,
+          15
+        ],
+        [
+          29,
+          15
+        ],
+        [
+          37,
+          15
+        ],
+        [
+          42,
+          15
+        ]
+      ],
+      "blockers": [
+        "question_scope_not_qualified",
+        "selected_direct_retention_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 1,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 27,
+      "review_case_id": "b524e507ea034bbbe17bf7cfaf9d0af93d0bec644272f1c2fe88dd6580be3972",
+      "frozen_selected_indices": [
+        0,
+        5,
+        3,
+        21,
+        6
+      ],
+      "reviewed_label_counts": {
+        "direct": 5,
+        "irrelevant": 42,
+        "partial": 3
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        0,
+        2,
+        3,
+        6,
+        32
+      ],
+      "provisional_direct_slot_gap": 2,
+      "proposal_pairs": [
+        [
+          2,
+          21
+        ],
+        [
+          32,
+          21
+        ]
+      ],
+      "blockers": [
+        "question_scope_not_qualified",
+        "selected_direct_retention_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 1,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 28,
+      "review_case_id": "da09815bd0fa28b674b4ff8d5abbf207e9923a4b65fdeca3991745955d6a8717",
+      "frozen_selected_indices": [
+        0,
+        8,
+        5,
+        34,
+        16
+      ],
+      "reviewed_label_counts": {
+        "uncertain": 8,
+        "irrelevant": 41,
+        "partial": 1
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [],
+      "provisional_direct_slot_gap": 0,
+      "proposal_pairs": [],
+      "blockers": [
+        "existing_question_target_flag",
+        "question_scope_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 29,
+      "review_case_id": "d648fedaadece085e2bac26346fdb4de1ce04ebe0627a4b1554b698a61af1bee",
+      "frozen_selected_indices": [
+        47,
+        15,
+        37,
+        2,
+        10
+      ],
+      "reviewed_label_counts": {
+        "irrelevant": 30,
+        "direct": 8,
+        "partial": 12
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        1,
+        4,
+        5,
+        27,
+        31,
+        33,
+        40,
+        46
+      ],
+      "provisional_direct_slot_gap": 5,
+      "proposal_pairs": [],
+      "blockers": [
+        "question_scope_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 30,
+      "review_case_id": "f983612fd41e08fce8d2c670c0d93d2cee52b788b35d716c16e6e13a83fc2882",
+      "frozen_selected_indices": [
+        0,
+        8,
+        6,
+        5,
+        30
+      ],
+      "reviewed_label_counts": {
+        "partial": 3,
+        "irrelevant": 46,
+        "uncertain": 1
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [],
+      "provisional_direct_slot_gap": 0,
+      "proposal_pairs": [],
+      "blockers": [
+        "existing_question_target_flag",
+        "question_scope_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 31,
+      "review_case_id": "1724cbdfcb0127d2deb731b1f94d450c942ba729b6c39365565b48a5fd88ff5a",
+      "frozen_selected_indices": [
+        6,
+        21,
+        0,
+        23,
+        5
+      ],
+      "reviewed_label_counts": {
+        "partial": 25,
+        "direct": 7,
+        "irrelevant": 17,
+        "uncertain": 1
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [
+        3,
+        6,
+        23,
+        33,
+        42,
+        43,
+        45
+      ],
+      "provisional_direct_slot_gap": 3,
+      "proposal_pairs": [],
+      "blockers": [
+        "existing_question_target_flag",
+        "question_scope_not_qualified",
+        "selected_direct_retention_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    },
+    {
+      "audit_case_number": 32,
+      "review_case_id": "6ca38d903d408ac94a36b0cb89110220d59733bf9e12294e54293b7680d95f12",
+      "frozen_selected_indices": [
+        6,
+        44,
+        14,
+        5,
+        29
+      ],
+      "reviewed_label_counts": {
+        "partial": 25,
+        "irrelevant": 25
+      },
+      "missing_review_count": 0,
+      "provisional_direct_indices": [],
+      "provisional_direct_slot_gap": 0,
+      "proposal_pairs": [],
+      "blockers": [
+        "existing_question_target_flag",
+        "question_scope_not_qualified"
+      ],
+      "draft_pairs": [],
+      "protected_direct_indices": [],
+      "max_irrelevant_replacements": 0,
+      "qualified_replacement_budget": 0,
+      "partial_policy": "abstain_not_negative",
+      "direct_vs_direct_policy": "no_forced_preference"
+    }
+  ]
+}
