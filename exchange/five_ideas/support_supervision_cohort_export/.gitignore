@@ -1,0 +1,8 @@
+# Full raw training traces/annotations never enter GitHub, regardless of size.
+*.partial.jsonl
+*/case_study.json
+*/case_study.md
+*/support_axes_review.json
+*/target_draft.json
+*/future_split.json
+*/upload_receipts.json

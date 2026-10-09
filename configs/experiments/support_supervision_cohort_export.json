@@ -1,0 +1,14 @@
+{
+  "schema_version": "rag.support_cohort_export_config.v1",
+  "case_count": 434,
+  "candidate_count": 50,
+  "source_manifest_sha256": "0464da7792e0fd2a0615c2e5a9058b641ef0d3b3300af6d0b39450b44fd39a81",
+  "allowlist": ["frozen_reader_export", "pending_axes_template", "offline_target_draft"],
+  "training_allowed": false,
+  "generator_allowed": false,
+  "evaluation_panel_allowed": false,
+  "annotation_contract": "rag.support_supervision_axes.v1",
+  "corpus_and_model_download_allowed": false,
+  "previous_head_replay": false,
+  "review_qualification_is_not_truth_certification": true
+}

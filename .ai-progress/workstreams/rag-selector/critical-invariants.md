@@ -164,7 +164,11 @@
 
 - [IMPLEMENTED / OFFLINE ONLY; REAL QUALIFICATION PENDING] Protected support boundary compiler -> [detail](decisions/2026-10-09-boundary-target-compiler.md)
 
-- [PRIMARY RECHECK DONE / INDEPENDENT REVIEW PENDING] Priority9 scope and support challenge -> [detail](decisions/2026-10-09-priority9-scope-recheck.md)
+- [PRIMARY RECHECK HISTORY / FOLLOW-UP RECEIVED] Priority9 scope and support challenge; opinions provisional -> [detail](decisions/2026-10-09-priority9-scope-recheck.md)
+- [ROUND1 HISTORY / SUPERSEDED BY ROUND2 RECEIPT] Independent review and primary adjudication; original26:37 missing-name rationale withdrawn -> [detail](decisions/2026-10-09-independent-scope-review-receipt.md)
+- [BOUNDED REVIEW CLOSED / QUALIFICATION PENDING] Round2 complete9/54,47 label matches/7 disagreements; support/reference/inference/scope separation before training -> [detail](decisions/2026-10-09-round2-scope-adjudication-close.md)
+
+- [IMPLEMENTED / REAL434 EXPORT PENDING; TRAINING OFF] Separate support axes and complete cohort exporter -> [detail](decisions/2026-10-09-support-supervision-axes-export.md)
 
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.

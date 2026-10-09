@@ -2,6 +2,12 @@
 
 ## 当前研究总览
 
+- 最新工程：[分层支持监督与完整434题导出](20261009T130633Z-support-supervision-axes-export.md)。本地/服务器各34项合成测试通过，21700段fixture逐项回读；真实导出交师弟，训练未开启，真实合格对仍0。
+
+- 最新验收：[第二轮完整复核](20261009T-date-only-round2-scope-adjudication.md)。54/54机械验收通过，补1项、改9个已有标签；主审47同/7异，不是正确率。36非目标标签继承，理由及4处引用有改动。结束局部复核，下一步分开问题支持/参考覆盖/推断/范围，设计量子语义头的资格感知监督；不训练，仍L0，本地记录。
+
+- 最新接收分析：[Claude独立范围复核](20261009T-date-only-independent-scope-review-receipt.md)。收到53/54段，38一致/15分歧；漏1条、3处非连续引用及格式缺陷。发现参考词偏见，也撤回主审26:37缺人名理由。原标签保留，资格对0，下一步局部修正，不训练；本地记录。
+
 - 最新审查：[9题54段范围主审复核](20261009T-date-only-priority9-scope-recheck.md)。提出3条direct→partial异议；暂定保留3题4对，资格通过0。独立审阅紧凑包已备，未启动worker，不训练，仍L0。
 
 - 最新实现：[支持资格感知目标编译器](20261009T-date-only-support-boundary-target-compiler.md)。32题只读回放生成9题28个候选对、最多10个无关替换槽位；真实资格对0，本地/服务器40测试通过，不启动训练，L0。
@@ -38,6 +44,12 @@
 - 当前研究边界：只优化固定 Top-50 -> Top-5 selector；Generator、检索、evaluator 和答案实现不属于本轮候选。下一候选必须提供独立、可追溯且 gold-free 的证据关系信号；若只能继续依赖 token overlap、Answer Scorer 融合或 generic diversity，应停止该 selector 家族并先处理 provenance/calibration 阻塞。
 
 ## 时间线
+
+- [2026-10-09 13:06:33 UTC | 分层支持监督和完整434题导出实现；真实实验待跑](20261009T130633Z-support-supervision-axes-export.md)
+
+- [2026-10-09 | 第二轮54/54通过：结束局部复核，分层支持监督替代参考词捷径](20261009T-date-only-round2-scope-adjudication.md)
+
+- [2026-10-09 | 独立复核收到53/54：支持关系不等于参考原词，双方错误均纠正](20261009T-date-only-independent-scope-review-receipt.md)
 
 - [2026-10-09 | 1600/1600完整支持审阅：监督噪声与真正边界分开](20261009T-date-only-complete-support-audit.md)
 

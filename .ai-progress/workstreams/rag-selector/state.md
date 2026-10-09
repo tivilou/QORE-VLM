@@ -1,36 +1,36 @@
 # RAG Passage Selection with QORE
 
 ## Goal
-- Improve fixedTop50->Top5 on quantum mainline, frozen Reader anchor; independent full-data utility beforeL1/L2.
+- Improve fixed Top50 -> Top5 on quantum mainline, retaining the frozen Reader anchor; independently verified full-data utility before L1/L2.
 
 ## Current State
-- Existing1600 provisional judgments/9 flags/source preserved; independent/full434 qualification incomplete.
-- Primary scope recheck completed9 questions/54 boundary and retention witnesses, with explicit exact quotes. Same reviewer, not an independent second review.
-- Primary proposes scope/evidence holds6/8/16/17/21/26 and direct->partial opinions17:11,26:37,27:32. Original labels are NOT rewritten.
-- Only primary-pending5/13/27 remain:4 provisional pairs/3 replacement slots vs original28/10. This is conservative screening, not confirmed clean training data or measured utility. Real qualified draft pairs0.
-- Manual independent9/54 packet ready,51,195-byte raw input ignored byGit; second worker not started. No scores/ranks/prior judgments in packet input.
-- Offline validators/tests only; production Reader/head/loss/selector,100Silver, Generator and dataset unchanged. No fitting or model/corpus download.
+- Versioned support supervision axes and full434 export implemented. Question support, reference coverage, inference type, source grounding and six scope dimensions are separate. Old1600 opinions/flags/overlays remain unchanged.
+- Full434 synthetic fixture emits21700 passage records, Reader scores/ranks/Top5, human Markdown, blind pending review, prospective347/87 split and non-consumable target draft. Local34 and canonical-server34 tests pass; server fixture/CLI readback pass. Real434 export has not run.
+- Every review field starts pending; qualified real pairs remain0, training_authorized=false and training_consumable=false. Partial/disputed/external-context/uncertain items stay held_not_negative. Qualified selected direct evidence is protected; only qualified missed-direct versus selected-irrelevant pairs can enter a draft.
+- Export wrapper uses collaborator-local cached retrieval/Reader, optionally downloads only pinned manifest/cohort from18083, and automatically creates timestamp upload directory. No model/corpus/checkpoint download, index construction, learned-head replay, Generator or evaluator.
+- Prior round2 review closed at9/54 with47 label matches/7 disputes, all scopes conditional and challenge exposure; not new independent truth. Receipt files remain local history; full434 supervision and historical432 text parity remain unresolved.
 
 ## Current Decision
-- `decisions/2026-10-09-priority9-scope-recheck.md`: primary opinions, immutable overlay, manual challenge.
-- `decisions/2026-10-09-boundary-target-compiler.md`: qualification/protection contract, training disabled.
-- Durable constraints and topology: `critical-invariants.md`.
+- `decisions/2026-10-09-support-supervision-axes-export.md`: implementation/export only; no fitting permission or relaxation of independent qualification.
+- `decisions/2026-10-09-round2-scope-adjudication-close.md`: separate support/reference/inference/scope; do not reopen review merely for agreement.
+- Constraints/topology and full history index: `critical-invariants.md`.
 
 ## Next Actions
-1. User starts a fresh Claude Code/second-reviewer session inside the bounded packet; read only packet context and return9/54 records. Review held/disputed cases too; no API/worker automatically launched.
-2. Primary verifies returned IDs, hashes, quotes and exposure, then adjudicates scope/label disagreements. Validation success alone is not independent semantic qualification.
-3. Only after real qualification, address whole434 supervision and fresh347/87/protected-loss/control/reachability preregistration. No training now; old heads saw old partitions,100Silver evaluation-only.
+1. Collaborator runs `bash scripts/collab/five_ideas/run_support_supervision_cohort_export.sh` with existing QORE_EXCHANGE_TOKEN; pushes compact outputs toGitHub. Raw outputs auto-upload to18083 under five_ideas/support_supervision_cohort_export/<UTC timestamp>/.
+2. Check exact434/21700 coverage, source/order/hash, Reader identity, split and upload receipts. Then qualify a defensible subset with actual independent witnesses and explicit scope, not automatic weak/Silver label conversion.
+3. Only after target/split qualification, design separately authorized protected quantum semantic-head pilot with matched classical controls, bounded reachability and candidate-specific correction checks.100Silver remains evaluation-only; initialize fresh heads for future347/87 protocol.
 
 ## Blockers
-- No second-reviewer result; unresolved dates/geography/metric/identity and partial-support distinctions.
-- Full434 supervision/fresh protocol and historical432 source parity/baseline qualification incomplete.
+- Real434 evidence export pending; source cache/index/model mismatch stops rather than substitutes.
+- Real qualified training pairs0; conditional scope, reference alternatives and single-passage grounding not certified. Witness schema passing is not truth/independence proof.
+- Newly captured full text cannot establish historical432 text parity. Old heads saw both prospective roles, so no old-head independent-validation claim.
 
 ## Validation
-- Local old compiler40 + new scope checks19 =59 passing; actual primary9/54 IDs/quotes/overlay replay passes. Existing complete1600 suite24 unchanged.
-- Packet schema and private inputhash checks pass; zero training targets. Canonical publication records server tests/source-hash preservation separately.
+- Local34 and server34 synthetic tests pass, including identity leakage, stale witness/binding, reference mismatch, partial protection, exact Reader tokenizer batch API, blind fields and compact privacy.
+- Server full434 preflight and pure-stdlib axes compiler reopen outputs:21700 records, zero draft pairs, training false; Bash syntax passes. No actual dataset/model run on our servers.
 
 ## Pointers
-- `refs/support_scope_priority9_20261009_{primary_recheck.json,qualification_hold_overlay.json,summary.json,manifest.json,local_verification.json,validate.py}`.
-- `scripts/collab/five_ideas/support_scope_review_packets/20261009-priority9-independent/adapter/INITIAL_PROMPT.md`.
-- Ownerlog: `docs/rag-research-log/20261009T-date-only-priority9-scope-recheck.md`.
-- Session: `sessions/2026-10/20261009T085821Z-a427ae.md`.
+- Code: `applications/rag/support_supervision_axes.py`; runner/config: `run_support_supervision_cohort_export.py` / `support_supervision_cohort_export.json`.
+- Handoff: `docs/support-supervision-cohort-export.md`.
+- Owner log: `docs/rag-research-log/20261009T130633Z-support-supervision-axes-export.md`.
+- Exact engineering verification: local Temp/qore-support-cohort-export-20261009/verification.json; server /tmp/qore-support-cohort-export-20261009/verification.json. Synthetic engineering evidence, not experiment results.
