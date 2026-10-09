@@ -1,0 +1,87 @@
+{
+  "files": [
+    {
+      "name": "case_study.json",
+      "bytes": 2731833,
+      "sha256": "a729ea30b63b88acd3525058d574b78f4b552c06583fc586eb8e270431e18faf"
+    },
+    {
+      "name": "case_study.md",
+      "bytes": 1205646,
+      "sha256": "e4f8d7c6993bbaa706411af08d8fa7979810a62ad1f80c3483f688a9193166ca"
+    },
+    {
+      "name": "support_review.json",
+      "bytes": 1435829,
+      "sha256": "517d33cf521f09aebda169fcb7b0ebaa8f6c47b0a208888d5b5e49d22a6d143c"
+    },
+    {
+      "name": "audit_values.npz",
+      "bytes": 24143941,
+      "sha256": "2ffff2b94b3b99e319ee0de386d2914f88f92881de4b6727d25b5f783537c93e"
+    },
+    {
+      "name": "future_split.json",
+      "bytes": 74087,
+      "sha256": "195fd8dbab32232abc08548adea27facbc31e9b393d4ef0a0f87b214733017dc"
+    },
+    {
+      "name": "summary.json",
+      "bytes": 4189,
+      "sha256": "d700290b2a7d17c4c51e4484d0f8718f98270c356b32deb7ed54af0a7a8ad9b5"
+    },
+    {
+      "name": "report.md",
+      "bytes": 561,
+      "sha256": "5b9724a4024cae514ef1a534f01807c92d0b1a375230fe706b2a2640e67eb319"
+    }
+  ],
+  "provenance": {
+    "reader": {
+      "model_id": "facebook/dpr-reader-single-nq-base",
+      "requested_revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+      "resolved_revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+      "config_sha256": "383c5dbe735db108976bcaef70048348151def480bfe24ed8ff5243cd1ce4751",
+      "device": "cuda",
+      "reader_frozen": true
+    },
+    "question_encoder": {
+      "model_id": "facebook/dpr-question_encoder-single-nq-base",
+      "resolved_revision": "d04a52f6d2f96c60117a925e8c24c4043a75f265"
+    },
+    "nq_fingerprint": "5507698f979c66f6",
+    "wiki_dpr_fingerprint": "5a47348d57f76ff3",
+    "wiki_dpr_config": "psgs_w100.nq.compressed",
+    "nprobe": 64,
+    "offline": true,
+    "index_built": false,
+    "source_run": "five_ideas/semantic_reader_training_repair_100/20261008T145652Z",
+    "source_manifest_sha256": "0464da7792e0fd2a0615c2e5a9058b641ef0d3b3300af6d0b39450b44fd39a81",
+    "source_checkpoint_sha256": "bbf4f864d75461b88ecc031a4cb6fd8c86d4a239e0099303c49bffa544d9ee22",
+    "code_revision": "31a5c932de9b525cdf34eed688e9890226402cb9",
+    "config_sha256": "3c2c633d99b61216464c84d2614969e75f94fb69f4f25397876451e97db272cb",
+    "source_hashes": {
+      "scripts/collab/five_ideas/run_semantic_reader_supervision_audit.py": "d2dbc906a030e892e50102a11eab8e96d290f91f4f898d667119976caa2a4e9c",
+      "applications/rag/semantic_supervision_audit.py": "0eba02ce5896488dff673126311e7b5894c3108a760370ef206364c22599287d",
+      "applications/rag/quantum_semantic_reader.py": "b089470c7c0b15f7c1ea75206223d59e465072c496e6e95add5d72310ca4315a",
+      "applications/rag/qarcg_reader.py": "b5fce815ba8cdb1f9223e3bdcc2018ef25d6005dc9059d0602095a70cc43d20b",
+      "scripts/collab/five_ideas/run_quantum_semantic_reader_screen_100.py": "7655f7d150c37ef81a6a8741de8daf7806fa05a7f62d9feb4b73ae9ab52d1269"
+    },
+    "python": "3.10.20",
+    "numpy": "1.26.4",
+    "torch": "2.5.1+cu121"
+  },
+  "validation": {
+    "project_v2_structure": "pass",
+    "sample_split_identity": "pass",
+    "complete_detached_values": "pass",
+    "all_head_replay": "pass",
+    "initial_null": "pass",
+    "compression_null": "pass",
+    "weak_metric_replay": "pass",
+    "prior_two_witness_parity": "pass",
+    "hidden_pooling_slices": "pass",
+    "raw_input_hashes": "pass",
+    "blinded_target_boundary": "pass"
+  }
+}

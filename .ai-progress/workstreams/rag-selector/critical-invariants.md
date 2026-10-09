@@ -156,7 +156,9 @@
 - [IMPLEMENTED / TRAIN-ONLY QUALIFIED] Semantic optimizer repair and controlled rerun -> [detail](decisions/2026-10-08-semantic-reader-optimizer-repair.md)
 - [ACTIVE / SCREEN INCONCLUSIVE] Repaired semantic head: compression, one rescue, supervision gate -> [detail](decisions/2026-10-09-semantic-reader-repair-result.md)
 
-- [IMPLEMENTED / AWAIT COLLABORATOR EXPORT] Train-only support/blinded boundary audit -> [detail](decisions/2026-10-09-train-only-supervision-audit.md)
+- [IMPLEMENTED / EXPORT AUDITED; SUPPORT REVIEW PARTIAL] Train-only support/blinded boundary audit -> [detail](decisions/2026-10-09-train-only-supervision-audit.md)
+
+- [ACTIVE / L0; 73/1600 PARTIAL REVIEW] Training containment/support conflicts and gated quantum boundary candidate -> [detail](decisions/2026-10-09-semantic-supervision-result.md)
 
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.

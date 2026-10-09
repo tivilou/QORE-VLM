@@ -1,0 +1,808 @@
+{
+  "schema_version": "rag.semantic_supervision_result_audit.v1",
+  "source_run": "five_ideas/semantic_reader_supervision_audit/20261009T045728Z",
+  "source_revision": "31a5c932de9b525cdf34eed688e9890226402cb9",
+  "artifact_receipts": [
+    {
+      "name": "case_study.json",
+      "sha256": "a729ea30b63b88acd3525058d574b78f4b552c06583fc586eb8e270431e18faf",
+      "bytes": 2731833
+    },
+    {
+      "name": "case_study.md",
+      "sha256": "e4f8d7c6993bbaa706411af08d8fa7979810a62ad1f80c3483f688a9193166ca",
+      "bytes": 1205646
+    },
+    {
+      "name": "support_review.json",
+      "sha256": "517d33cf521f09aebda169fcb7b0ebaa8f6c47b0a208888d5b5e49d22a6d143c",
+      "bytes": 1435829
+    },
+    {
+      "name": "audit_values.npz",
+      "sha256": "2ffff2b94b3b99e319ee0de386d2914f88f92881de4b6727d25b5f783537c93e",
+      "bytes": 24143941
+    },
+    {
+      "name": "future_split.json",
+      "sha256": "195fd8dbab32232abc08548adea27facbc31e9b393d4ef0a0f87b214733017dc",
+      "bytes": 74087
+    },
+    {
+      "name": "summary.json",
+      "sha256": "d700290b2a7d17c4c51e4484d0f8718f98270c356b32deb7ed54af0a7a8ad9b5",
+      "bytes": 4189
+    },
+    {
+      "name": "report.md",
+      "sha256": "5b9724a4024cae514ef1a534f01807c92d0b1a375230fe706b2a2640e67eb319",
+      "bytes": 561
+    },
+    {
+      "name": "run_metadata.json",
+      "sha256": "4a3cd1f5b66ec119545a9d11f3c1e15c4e994bd78912adc7523d9812f82646dc",
+      "bytes": 3434
+    },
+    {
+      "name": "upload_manifest.json",
+      "sha256": "e2e5e405342a31048e92c8b342476ad5291daf504909c2986ec0268b0e7eefff",
+      "bytes": 3533
+    }
+  ],
+  "source_identity": "pass",
+  "independent_replay": {
+    "project_v2_structure": "pass",
+    "sample_split_identity": "pass",
+    "complete_detached_values": "pass",
+    "all_head_replay": "pass",
+    "initial_null": "pass",
+    "compression_null": "pass",
+    "weak_metric_replay": "pass",
+    "prior_two_witness_parity": "pass",
+    "hidden_pooling_slices": "pass",
+    "raw_input_hashes": "pass",
+    "blinded_target_boundary": "pass",
+    "scalar_arithmetic_cross_environment_tolerance": "pass_at_1e-9"
+  },
+  "strict_historical_validator": "failed_exact_scalar_dict_equality",
+  "scalar_tolerance": {
+    "rtol": 1e-09,
+    "atol": 1e-09,
+    "differing_scalars": 140,
+    "max_absolute_difference": 3.552713678800501e-15,
+    "examples": [
+      {
+        "field": "compression.score_on_base_slope",
+        "saved": 0.9717212422938422,
+        "recomputed": 0.9717212422938424,
+        "absolute_difference": 2.220446049250313e-16
+      },
+      {
+        "field": "compression.intercept",
+        "saved": -0.3012131593761591,
+        "recomputed": -0.30121315937615734,
+        "absolute_difference": 1.7763568394002505e-15
+      },
+      {
+        "field": "compression.non_affine_rmse",
+        "saved": 0.051310901632487575,
+        "recomputed": 0.05131090163248753,
+        "absolute_difference": 4.85722573273506e-17
+      },
+      {
+        "field": "compression.score_on_base_slope",
+        "saved": 0.9203979152071371,
+        "recomputed": 0.9203979152071369,
+        "absolute_difference": 2.220446049250313e-16
+      },
+      {
+        "field": "compression.intercept",
+        "saved": -0.6750631634168496,
+        "recomputed": -0.6750631634168514,
+        "absolute_difference": 1.7763568394002505e-15
+      }
+    ]
+  },
+  "sample_case_count": 32,
+  "candidate_count": 1600,
+  "support_review_labels_filled": 0,
+  "training_run": false,
+  "generator_run": false,
+  "evaluation_run": false,
+  "heldout_validation": false,
+  "claim_ceiling": "L0_diagnostic",
+  "methods": {
+    "frozen_reader_topk": {
+      "weak_positive_selected_total": 87,
+      "changed_top5_cases": 0,
+      "boundary_pairs": 60,
+      "strict_crossings": 0,
+      "median_score_on_base_slope": 1.0,
+      "median_delta_base_correlation": null,
+      "favorable_weak_positive_relative_correction_pairs": 0,
+      "matched_control_pairs": 60,
+      "favorable_wrong_relative_correction_pairs": 0,
+      "positive_more_favored_than_wrong_pairs": 0,
+      "bound_unreachable_weak_positive_pairs": 34
+    },
+    "quantum_semantic": {
+      "weak_positive_selected_total": 87,
+      "changed_top5_cases": 0,
+      "boundary_pairs": 60,
+      "strict_crossings": 0,
+      "median_score_on_base_slope": 0.9562503339201371,
+      "median_delta_base_correlation": -0.840976379826682,
+      "favorable_weak_positive_relative_correction_pairs": 51,
+      "matched_control_pairs": 60,
+      "favorable_wrong_relative_correction_pairs": 60,
+      "positive_more_favored_than_wrong_pairs": 21,
+      "bound_unreachable_weak_positive_pairs": 34
+    },
+    "classical_semantic": {
+      "weak_positive_selected_total": 87,
+      "changed_top5_cases": 0,
+      "boundary_pairs": 60,
+      "strict_crossings": 0,
+      "median_score_on_base_slope": 0.9156427885619625,
+      "median_delta_base_correlation": -0.7508768302722599,
+      "favorable_weak_positive_relative_correction_pairs": 52,
+      "matched_control_pairs": 60,
+      "favorable_wrong_relative_correction_pairs": 54,
+      "positive_more_favored_than_wrong_pairs": 18,
+      "bound_unreachable_weak_positive_pairs": 34
+    },
+    "quantum_scalar_control": {
+      "weak_positive_selected_total": 89,
+      "changed_top5_cases": 4,
+      "boundary_pairs": 60,
+      "strict_crossings": 2,
+      "median_score_on_base_slope": 0.9068137482064053,
+      "median_delta_base_correlation": -0.8566960436320172,
+      "favorable_weak_positive_relative_correction_pairs": 50,
+      "matched_control_pairs": 60,
+      "favorable_wrong_relative_correction_pairs": 47,
+      "positive_more_favored_than_wrong_pairs": 34,
+      "bound_unreachable_weak_positive_pairs": 34
+    },
+    "monotonic_compression_control": {
+      "weak_positive_selected_total": 87,
+      "changed_top5_cases": 0,
+      "boundary_pairs": 60,
+      "strict_crossings": 0,
+      "median_score_on_base_slope": 0.5,
+      "median_delta_base_correlation": -1.0,
+      "favorable_weak_positive_relative_correction_pairs": 60,
+      "matched_control_pairs": 60,
+      "favorable_wrong_relative_correction_pairs": 60,
+      "positive_more_favored_than_wrong_pairs": 23,
+      "bound_unreachable_weak_positive_pairs": 34
+    }
+  },
+  "encoding_abs_gt_099_fraction": {
+    "quantum_semantic": 0.7846875,
+    "classical_semantic": 0.6334375,
+    "quantum_scalar_control": 0.01796875
+  },
+  "all_changed_cases": [
+    {
+      "audit_case_number": 7,
+      "usable_case_index": 201,
+      "method": "quantum_scalar_control",
+      "question_sha256": "0031cb571a22179e59daa2d2cb1c544e73bb238ec7e5418a180e0c8a03c3dcbd",
+      "weak_delta": 0,
+      "added": [
+        {
+          "candidate_index": 1,
+          "reader_rank": 6,
+          "retrieved_rank": 2,
+          "weak_positive": false,
+          "review_item_id": "57255fd209dcc71e04f34e190da4f33cae1f1bcb366cc43859cb46f92edf233a"
+        }
+      ],
+      "removed": [
+        {
+          "candidate_index": 6,
+          "reader_rank": 5,
+          "retrieved_rank": 7,
+          "weak_positive": false,
+          "review_item_id": "4aeb4971d1d7ae6a88e08be6f64f06a1d1e550fcc22cbd141e6059e2e59d1548"
+        }
+      ]
+    },
+    {
+      "audit_case_number": 16,
+      "usable_case_index": 395,
+      "method": "quantum_scalar_control",
+      "question_sha256": "c91f67edc0e22fa85516122db9a14e16c0957f54ed7307fdfc7caa2c37e3c3fd",
+      "weak_delta": 0,
+      "added": [
+        {
+          "candidate_index": 2,
+          "reader_rank": 7,
+          "retrieved_rank": 3,
+          "weak_positive": false,
+          "review_item_id": "08449c7d410a5c475ce90ded1dbb641475a90ba56242b5954336d4d25b6362a2"
+        }
+      ],
+      "removed": [
+        {
+          "candidate_index": 0,
+          "reader_rank": 4,
+          "retrieved_rank": 1,
+          "weak_positive": false,
+          "review_item_id": "5ae577d4ebd02136ba5f020dbf689088a0663a2608de7d4f4ab0151162feb981"
+        }
+      ]
+    },
+    {
+      "audit_case_number": 31,
+      "usable_case_index": 4,
+      "method": "quantum_scalar_control",
+      "question_sha256": "1724cbdfcb0127d2deb731b1f94d450c942ba729b6c39365565b48a5fd88ff5a",
+      "weak_delta": 1,
+      "added": [
+        {
+          "candidate_index": 13,
+          "reader_rank": 6,
+          "retrieved_rank": 14,
+          "weak_positive": true,
+          "review_item_id": "9b8ba51d49f0329285d00aa795ac54d6f552d9e216613e05e2c7d54e94c999bd"
+        }
+      ],
+      "removed": [
+        {
+          "candidate_index": 5,
+          "reader_rank": 5,
+          "retrieved_rank": 6,
+          "weak_positive": false,
+          "review_item_id": "b3748c7cb56bf7cb56edbd699a93af305f52d8df91b123fd275bbdfedecf5c54"
+        }
+      ]
+    },
+    {
+      "audit_case_number": 32,
+      "usable_case_index": 249,
+      "method": "quantum_scalar_control",
+      "question_sha256": "6ca38d903d408ac94a36b0cb89110220d59733bf9e12294e54293b7680d95f12",
+      "weak_delta": 1,
+      "added": [
+        {
+          "candidate_index": 4,
+          "reader_rank": 6,
+          "retrieved_rank": 5,
+          "weak_positive": true,
+          "review_item_id": "41a9c71ece8accd21bb8ebfad0b7363337708742d31ab67412f0b01f787630a9"
+        }
+      ],
+      "removed": [
+        {
+          "candidate_index": 29,
+          "reader_rank": 5,
+          "retrieved_rank": 30,
+          "weak_positive": false,
+          "review_item_id": "5c04ac46359c7bc2e804d317d6fd4297ee6dd425d0a3bf51ab24c9b034560caa"
+        }
+      ]
+    }
+  ],
+  "case_table": [
+    {
+      "audit_case_number": 1,
+      "usable_case_index": 1,
+      "question_sha256": "072cf5ed9a8e9c4094297a20488c79140859ed1fcc1129cfdf041a19f4898273",
+      "sample_role": "prior_replay_witness",
+      "future_role": "training",
+      "total_weak_positive": 3,
+      "base_weak_top5": 3,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 2,
+      "usable_case_index": 2,
+      "question_sha256": "1440a91de72510bc0ea23cf9baac6d4829324427cbc8c17b74cb3461099901a3",
+      "sample_role": "prior_replay_witness",
+      "future_role": "validation",
+      "total_weak_positive": 1,
+      "base_weak_top5": 1,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 3,
+      "usable_case_index": 391,
+      "question_sha256": "5c2b42563c1d60b4c3ef9b0da7a256991e201cc4d28f81f2b3e6830fc56f95e7",
+      "sample_role": "hash_sample",
+      "future_role": "training",
+      "total_weak_positive": 2,
+      "base_weak_top5": 1,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 4,
+      "usable_case_index": 283,
+      "question_sha256": "4a8f2398ebbb4b0847b85c53c8855fdcb1d61e4b3d0464a4e88c7bbdcc57bd65",
+      "sample_role": "hash_sample",
+      "future_role": "training",
+      "total_weak_positive": 4,
+      "base_weak_top5": 2,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 5,
+      "usable_case_index": 158,
+      "question_sha256": "9fa259bec3e31ee388e3c94de30fed8b137bc1dee2837f2bf6b859b6a64e5448",
+      "sample_role": "hash_sample",
+      "future_role": "training",
+      "total_weak_positive": 5,
+      "base_weak_top5": 3,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 6,
+      "usable_case_index": 51,
+      "question_sha256": "e10267bb67b70742cb509fe2cbc01732e466f30b02146d55acd22e2b7a439a35",
+      "sample_role": "hash_sample",
+      "future_role": "training",
+      "total_weak_positive": 2,
+      "base_weak_top5": 2,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 7,
+      "usable_case_index": 201,
+      "question_sha256": "0031cb571a22179e59daa2d2cb1c544e73bb238ec7e5418a180e0c8a03c3dcbd",
+      "sample_role": "hash_sample",
+      "future_role": "training",
+      "total_weak_positive": 3,
+      "base_weak_top5": 3,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 8,
+      "usable_case_index": 323,
+      "question_sha256": "fa9814edb9e26544f2437346fef3a1ad2971212a9a0d6b0e03f06bc4a7695cea",
+      "sample_role": "hash_sample",
+      "future_role": "training",
+      "total_weak_positive": 3,
+      "base_weak_top5": 3,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 9,
+      "usable_case_index": 373,
+      "question_sha256": "88e18b6f333f478f54a0168f1721687b6fc80a5205c7d671e2b21dd0880bcf8e",
+      "sample_role": "hash_sample",
+      "future_role": "training",
+      "total_weak_positive": 12,
+      "base_weak_top5": 5,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 10,
+      "usable_case_index": 24,
+      "question_sha256": "33f9a297bf7d65baa2ec4e9fc88c845592aecced4ff7718f82fab9909c3e34f1",
+      "sample_role": "hash_sample",
+      "future_role": "training",
+      "total_weak_positive": 6,
+      "base_weak_top5": 2,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 11,
+      "usable_case_index": 254,
+      "question_sha256": "07ebe9609889cec53f9c94d43db7ba02929b45b3eaefae01805912c9ad4b2947",
+      "sample_role": "hash_sample",
+      "future_role": "training",
+      "total_weak_positive": 2,
+      "base_weak_top5": 1,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 12,
+      "usable_case_index": 227,
+      "question_sha256": "a8fb5d71aad5cb759e24aa2fa43a166eddd74708eaf81f10f6c82df05963a600",
+      "sample_role": "hash_sample",
+      "future_role": "training",
+      "total_weak_positive": 3,
+      "base_weak_top5": 3,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 13,
+      "usable_case_index": 75,
+      "question_sha256": "7d5f0e48c01ffed77bd09f2eecc4a037a5be4310b396e4a868d7c0954f8f0dca",
+      "sample_role": "hash_sample",
+      "future_role": "training",
+      "total_weak_positive": 3,
+      "base_weak_top5": 3,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 14,
+      "usable_case_index": 107,
+      "question_sha256": "6ae8caea498b969fdb7d560c3d72736a7da6ef902207cd7068766e2cb1c3e60e",
+      "sample_role": "hash_sample",
+      "future_role": "training",
+      "total_weak_positive": 4,
+      "base_weak_top5": 4,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 15,
+      "usable_case_index": 342,
+      "question_sha256": "09737f68352a06d3f476d81fa4bf3f75619033b506098973ff0f89bc8593842b",
+      "sample_role": "hash_sample",
+      "future_role": "training",
+      "total_weak_positive": 39,
+      "base_weak_top5": 5,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 16,
+      "usable_case_index": 395,
+      "question_sha256": "c91f67edc0e22fa85516122db9a14e16c0957f54ed7307fdfc7caa2c37e3c3fd",
+      "sample_role": "hash_sample",
+      "future_role": "training",
+      "total_weak_positive": 4,
+      "base_weak_top5": 2,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 17,
+      "usable_case_index": 194,
+      "question_sha256": "5260c411b6da3d11f9dcd3a2a64d69ebf2fa61624d75decf35e4d633c6c68b5d",
+      "sample_role": "hash_sample",
+      "future_role": "training",
+      "total_weak_positive": 1,
+      "base_weak_top5": 1,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 18,
+      "usable_case_index": 142,
+      "question_sha256": "38833dee89fef2d48c3cc54ff004fa02cb4e6d130b9f1838254ba594cd17caf8",
+      "sample_role": "hash_sample",
+      "future_role": "validation",
+      "total_weak_positive": 7,
+      "base_weak_top5": 5,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 19,
+      "usable_case_index": 339,
+      "question_sha256": "a037e76f7c51215349df5d16e0aaa68229138e8643559e92064b689574b2f816",
+      "sample_role": "hash_sample",
+      "future_role": "validation",
+      "total_weak_positive": 4,
+      "base_weak_top5": 4,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 20,
+      "usable_case_index": 331,
+      "question_sha256": "e9b0bf7d10f332c39007c1a0a4e637103c0d9ae6e4df6120d5fcf8f4daefce75",
+      "sample_role": "hash_sample",
+      "future_role": "validation",
+      "total_weak_positive": 4,
+      "base_weak_top5": 4,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 21,
+      "usable_case_index": 313,
+      "question_sha256": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "sample_role": "hash_sample",
+      "future_role": "validation",
+      "total_weak_positive": 15,
+      "base_weak_top5": 4,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 22,
+      "usable_case_index": 18,
+      "question_sha256": "47e2cf478fd8bd0fd624ba7c7f84dc98cab64bde4b5f504b529583b390bc3d3e",
+      "sample_role": "hash_sample",
+      "future_role": "validation",
+      "total_weak_positive": 6,
+      "base_weak_top5": 3,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 23,
+      "usable_case_index": 79,
+      "question_sha256": "36c3f3a92ee5bc6c13106357512abb2487a084b3cc44798d609fb162cf853a98",
+      "sample_role": "hash_sample",
+      "future_role": "validation",
+      "total_weak_positive": 5,
+      "base_weak_top5": 4,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 24,
+      "usable_case_index": 145,
+      "question_sha256": "c833d72cbc94fd38dc877669d2011849a4dce47769397b3948d2677fbe51a484",
+      "sample_role": "hash_sample",
+      "future_role": "validation",
+      "total_weak_positive": 4,
+      "base_weak_top5": 2,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 25,
+      "usable_case_index": 8,
+      "question_sha256": "f577dc5800c7d7c8b059f3bdd8817c66c8fbcf160990bfa9f526a1dc516022a2",
+      "sample_role": "hash_sample",
+      "future_role": "validation",
+      "total_weak_positive": 8,
+      "base_weak_top5": 2,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 26,
+      "usable_case_index": 136,
+      "question_sha256": "578380c2469a4631d2746178f3dd2375291b385e53a3f58e50243cdf227bc764",
+      "sample_role": "hash_sample",
+      "future_role": "validation",
+      "total_weak_positive": 3,
+      "base_weak_top5": 2,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 27,
+      "usable_case_index": 47,
+      "question_sha256": "b524e507ea034bbbe17bf7cfaf9d0af93d0bec644272f1c2fe88dd6580be3972",
+      "sample_role": "hash_sample",
+      "future_role": "validation",
+      "total_weak_positive": 3,
+      "base_weak_top5": 3,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 28,
+      "usable_case_index": 16,
+      "question_sha256": "da09815bd0fa28b674b4ff8d5abbf207e9923a4b65fdeca3991745955d6a8717",
+      "sample_role": "hash_sample",
+      "future_role": "validation",
+      "total_weak_positive": 4,
+      "base_weak_top5": 2,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 29,
+      "usable_case_index": 210,
+      "question_sha256": "d648fedaadece085e2bac26346fdb4de1ce04ebe0627a4b1554b698a61af1bee",
+      "sample_role": "hash_sample",
+      "future_role": "validation",
+      "total_weak_positive": 30,
+      "base_weak_top5": 5,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 30,
+      "usable_case_index": 259,
+      "question_sha256": "f983612fd41e08fce8d2c670c0d93d2cee52b788b35d716c16e6e13a83fc2882",
+      "sample_role": "hash_sample",
+      "future_role": "validation",
+      "total_weak_positive": 1,
+      "base_weak_top5": 1,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 31,
+      "usable_case_index": 4,
+      "question_sha256": "1724cbdfcb0127d2deb731b1f94d450c942ba729b6c39365565b48a5fd88ff5a",
+      "sample_role": "hash_sample",
+      "future_role": "validation",
+      "total_weak_positive": 4,
+      "base_weak_top5": 0,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    {
+      "audit_case_number": 32,
+      "usable_case_index": 249,
+      "question_sha256": "6ca38d903d408ac94a36b0cb89110220d59733bf9e12294e54293b7680d95f12",
+      "sample_role": "hash_sample",
+      "future_role": "validation",
+      "total_weak_positive": 18,
+      "base_weak_top5": 2,
+      "base_top5_reader_ranks": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    }
+  ],
+  "limits": [
+    "weak labels not support accuracy",
+    "old training cases not unseen validation",
+    "60 pairs are dependent, repeated candidates",
+    "no full1600 support adjudication"
+  ]
+}

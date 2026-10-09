@@ -1,0 +1,100 @@
+{
+  "schema_version": "rag.semantic_reader_supervision_audit.summary.v1",
+  "claim_ceiling": "L0_diagnostic",
+  "sample_cases": 32,
+  "candidate_count": 1600,
+  "weak_target_not_support_gold": true,
+  "support_review_status": "pending_review",
+  "training_called": false,
+  "generator_called": false,
+  "evaluation_called": false,
+  "existing_heads_trained_on_all_cases": true,
+  "fixture": false,
+  "methods": {
+    "frozen_reader_topk": {
+      "weak_positive_selected_total": 87,
+      "changed_top5_cases": 0,
+      "boundary_pairs": 60,
+      "strict_crossings": 0
+    },
+    "quantum_semantic": {
+      "weak_positive_selected_total": 87,
+      "changed_top5_cases": 0,
+      "boundary_pairs": 60,
+      "strict_crossings": 0
+    },
+    "classical_semantic": {
+      "weak_positive_selected_total": 87,
+      "changed_top5_cases": 0,
+      "boundary_pairs": 60,
+      "strict_crossings": 0
+    },
+    "quantum_scalar_control": {
+      "weak_positive_selected_total": 89,
+      "changed_top5_cases": 4,
+      "boundary_pairs": 60,
+      "strict_crossings": 2
+    },
+    "monotonic_compression_control": {
+      "weak_positive_selected_total": 87,
+      "changed_top5_cases": 0,
+      "boundary_pairs": 60,
+      "strict_crossings": 0
+    }
+  },
+  "validation": {
+    "project_v2_structure": "pass",
+    "sample_split_identity": "pass",
+    "complete_detached_values": "pass",
+    "all_head_replay": "pass",
+    "initial_null": "pass",
+    "compression_null": "pass",
+    "weak_metric_replay": "pass",
+    "prior_two_witness_parity": "pass",
+    "hidden_pooling_slices": "pass",
+    "raw_input_hashes": "pass",
+    "blinded_target_boundary": "pass"
+  },
+  "provenance": {
+    "reader": {
+      "model_id": "facebook/dpr-reader-single-nq-base",
+      "requested_revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+      "resolved_revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+      "config_sha256": "383c5dbe735db108976bcaef70048348151def480bfe24ed8ff5243cd1ce4751",
+      "device": "cuda",
+      "reader_frozen": true
+    },
+    "question_encoder": {
+      "model_id": "facebook/dpr-question_encoder-single-nq-base",
+      "resolved_revision": "d04a52f6d2f96c60117a925e8c24c4043a75f265"
+    },
+    "nq_fingerprint": "5507698f979c66f6",
+    "wiki_dpr_fingerprint": "5a47348d57f76ff3",
+    "wiki_dpr_config": "psgs_w100.nq.compressed",
+    "nprobe": 64,
+    "offline": true,
+    "index_built": false,
+    "source_run": "five_ideas/semantic_reader_training_repair_100/20261008T145652Z",
+    "source_manifest_sha256": "0464da7792e0fd2a0615c2e5a9058b641ef0d3b3300af6d0b39450b44fd39a81",
+    "source_checkpoint_sha256": "bbf4f864d75461b88ecc031a4cb6fd8c86d4a239e0099303c49bffa544d9ee22",
+    "code_revision": "31a5c932de9b525cdf34eed688e9890226402cb9",
+    "config_sha256": "3c2c633d99b61216464c84d2614969e75f94fb69f4f25397876451e97db272cb",
+    "source_hashes": {
+      "scripts/collab/five_ideas/run_semantic_reader_supervision_audit.py": "d2dbc906a030e892e50102a11eab8e96d290f91f4f898d667119976caa2a4e9c",
+      "applications/rag/semantic_supervision_audit.py": "0eba02ce5896488dff673126311e7b5894c3108a760370ef206364c22599287d",
+      "applications/rag/quantum_semantic_reader.py": "b089470c7c0b15f7c1ea75206223d59e465072c496e6e95add5d72310ca4315a",
+      "applications/rag/qarcg_reader.py": "b5fce815ba8cdb1f9223e3bdcc2018ef25d6005dc9059d0602095a70cc43d20b",
+      "scripts/collab/five_ideas/run_quantum_semantic_reader_screen_100.py": "7655f7d150c37ef81a6a8741de8daf7806fa05a7f62d9feb4b73ae9ab52d1269"
+    },
+    "python": "3.10.20",
+    "numpy": "1.26.4",
+    "torch": "2.5.1+cu121"
+  },
+  "limitations": [
+    "Containment is not certified support; pending blinded review blocks a support-quality conclusion.",
+    "This is a deterministic diagnostic sample of the previous training cohort, not independent validation.",
+    "Prospective validation split applies only to future newly initialized training; old heads saw all these cases.",
+    "Original raw text hashes for 432 training inputs were absent; exact IDs/order/weak masks are checked, but full historical text parity is unproven.",
+    "No task utility, generalization or quantum advantage is inferred."
+  ]
+}
