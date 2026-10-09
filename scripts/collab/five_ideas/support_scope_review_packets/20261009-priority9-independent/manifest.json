@@ -1,0 +1,109 @@
+{
+  "schema_version": "agent-task-packet.v1",
+  "task_id": "20261009-priority9-independent",
+  "status": "ready",
+  "worker": {
+    "kind": "claude-code",
+    "model_id": null
+  },
+  "collaboration": {
+    "type": "idea_dialogue",
+    "persistent": true,
+    "round_policy": "append"
+  },
+  "task": {
+    "kind": "audit",
+    "objective": "Independently inspect nine question scopes and54 boundary/retention witnesses; record semantic judgments without seeing scores or prior reviews.",
+    "questions": [
+      "Which question scopes are identifiable from provided text, which only conditional or unresolved?",
+      "Which54 witness labels are justified by each original paragraph, without reference-string shortcuts?"
+    ],
+    "acceptance_checks": [
+      "All9 scopes and54 item judgments explicit; exact quotes; preserved IDs/source/reference",
+      "Scores and prior labels withheld; actual reviewer/model and prior exposure disclosed; no automatic promotion"
+    ],
+    "stop_conditions": [
+      "Finish bounded review without project writes/training/network; record uncertainties instead of filling assumptions"
+    ],
+    "output_statuses": [
+      "complete",
+      "blocked",
+      "inconclusive"
+    ]
+  },
+  "boundary": {
+    "mode": "bounded_packet",
+    "side_effects": "read_only",
+    "read_paths": [
+      "TASK.md",
+      "manifest.json",
+      "state.json",
+      "context/**",
+      "rounds/**",
+      "adapter/**",
+      "CLAUDE.md"
+    ],
+    "write_paths": [
+      "rounds/**",
+      "output/**",
+      "state.json"
+    ],
+    "forbidden_paths": [
+      ".git/**",
+      ".ai-progress/**",
+      "secrets/**",
+      "**/.env",
+      ".."
+    ],
+    "network": "none",
+    "working_directory": ".",
+    "allowed_paths": []
+  },
+  "execution": null,
+  "lifecycle": {
+    "state_file": "state.json",
+    "rounds_directory": "rounds",
+    "current_round": 0,
+    "packet_status": "active"
+  },
+  "inputs": [
+    {
+      "path": "context/evidence.json",
+      "source_scope": "packet",
+      "visibility": "private",
+      "sha256": "5cd3c9d4e4ec82ce6875ae5d30d857c74c26926c3a99cb8c569b0340b314a4f6"
+    },
+    {
+      "path": "context/BRIEF.md",
+      "source_scope": "packet",
+      "visibility": "project",
+      "sha256": "63487330b8116a6ad0b6949a12a86c709ccdb78db539190ffa06800d88f5278c"
+    },
+    {
+      "path": "context/review_template.json",
+      "source_scope": "packet",
+      "visibility": "project",
+      "sha256": "dbaf1a938767cd2372996ecf7a94c87e74e5cf9402aae667660329ec36325f04"
+    }
+  ],
+  "outputs": {
+    "directory": "output",
+    "required_files": [
+      "output/review.json",
+      "output/result.md",
+      "rounds/0001/result.md"
+    ],
+    "optional_files": []
+  },
+  "handoff": {
+    "mode": "manual",
+    "initial_prompt_path": "adapter/INITIAL_PROMPT.md",
+    "launcher": "user"
+  },
+  "provenance": {
+    "source_revision": "3bd1735d8ecdf754cbde635038352c8f5e6b0fc3",
+    "created_by": "primary-agent",
+    "parent_task_id": null,
+    "created_at": "2026-10-09T08:47:45Z"
+  }
+}

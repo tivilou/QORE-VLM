@@ -1,36 +1,36 @@
 # RAG Passage Selection with QORE
 
 ## Goal
-- Improve fixed Top50->Top5 on the quantum main line, anchored to frozen Reader; independent full-data utility before L1/L2.
+- Improve fixedTop50->Top5 on quantum mainline, frozen Reader anchor; independent full-data utility beforeL1/L2.
 
 ## Current State
-- Complete32x50 provisional support audit1600/1600; original783 metadata/source/null fields/9 flags preserved. Single-primary-model review, not official gold or independently blind consensus.
-- Qualification-aware offline compiler and CLI implemented; pending overlay binds immutable inputs. Local and server preflight40/40; no production trainer/head/selector modification.
-- Real32 replay:9 candidate cases,28 direct-vs-selected-irrelevant proposals,at most10 irrelevant replacement slots;0 qualified real draft pairs. Entire434 qualification incomplete, training disabled.
-- Partial/missing/uncertain abstain; no forced direct-vs-direct ranking. Qualified existing selected direct must be retained. Witness identity/hash checks do not prove independent semantic correctness.
-- Existing head selections/support unchanged; this is L0 engineering/diagnostic, not task gain.
+- Existing1600 provisional judgments/9 flags/source preserved; independent/full434 qualification incomplete.
+- Primary scope recheck completed9 questions/54 boundary and retention witnesses, with explicit exact quotes. Same reviewer, not an independent second review.
+- Primary proposes scope/evidence holds6/8/16/17/21/26 and direct->partial opinions17:11,26:37,27:32. Original labels are NOT rewritten.
+- Only primary-pending5/13/27 remain:4 provisional pairs/3 replacement slots vs original28/10. This is conservative screening, not confirmed clean training data or measured utility. Real qualified draft pairs0.
+- Manual independent9/54 packet ready,51,195-byte raw input ignored byGit; second worker not started. No scores/ranks/prior judgments in packet input.
+- Offline validators/tests only; production Reader/head/loss/selector,100Silver, Generator and dataset unchanged. No fitting or model/corpus download.
 
 ## Current Decision
-- `decisions/2026-10-09-boundary-target-compiler.md`: offline contracts and next qualification gate.
-- `decisions/2026-10-09-support-qualified-boundary-review.md`: complete audit and scope/retention constraints.
-- Durable principles/topology/history: `critical-invariants.md`.
+- `decisions/2026-10-09-priority9-scope-recheck.md`: primary opinions, immutable overlay, manual challenge.
+- `decisions/2026-10-09-boundary-target-compiler.md`: qualification/protection contract, training disabled.
+- Durable constraints and topology: `critical-invariants.md`.
 
 ## Next Actions
-1. Independently adjudicate scopes and direct/irrelevant/retention witnesses for priority cases5/6/8/13/16/17/21/26/27. Explicitly resolve temporal/geographic/entity/metric/version/reference differences; pending is not qualified.
-2. Qualify whole434 supervision, specify fresh347/87 and protected boundary loss/control/reachability protocol before wiring a new quantum/classical head run. Old heads saw old splits;100Silver evaluation-only.
-3. Preserve4 direct-vs-partial-only gap cases3/9/19/29 separately;0-direct cases and capped-ceiling cases do not manufacture rescue targets. No immediate fitting or blind amplitude/depth escalation.
+1. User starts a fresh Claude Code/second-reviewer session inside the bounded packet; read only packet context and return9/54 records. Review held/disputed cases too; no API/worker automatically launched.
+2. Primary verifies returned IDs, hashes, quotes and exposure, then adjudicates scope/label disagreements. Validation success alone is not independent semantic qualification.
+3. Only after real qualification, address whole434 supervision and fresh347/87/protected-loss/control/reachability preregistration. No training now; old heads saw old partitions,100Silver evaluation-only.
 
 ## Blockers
-- Independent scope/item adjudication absent;9 known flags stay excluded. No complete434 training qualification or independently valid split.
-- Historical432 raw-text parity/baseline qualification incomplete; disclosed scalar replay accommodation remains separate.
+- No second-reviewer result; unresolved dates/geography/metric/identity and partial-support distinctions.
+- Full434 supervision/fresh protocol and historical432 source parity/baseline qualification incomplete.
 
 ## Validation
-- Local and server preflight40/40 synthetic unit/CLI tests; real source compilation reproduces9/28/0. Existing full1600 review tamper/replay24/24 local.
-- Pending and draft JSON reopened; source/ref hashes checked, exclusive output directories, originals preserved. No model/corpus downloads, Reader/Generator inference or training.
+- Local old compiler40 + new scope checks19 =59 passing; actual primary9/54 IDs/quotes/overlay replay passes. Existing complete1600 suite24 unchanged.
+- Packet schema and private inputhash checks pass; zero training targets. Canonical publication records server tests/source-hash preservation separately.
 
 ## Pointers
-- `configs/experiments/support_qualified_boundary_target_contract.md`.
-- `refs/support_boundary_targets_20261009_{qualification_overlay.json,boundary_target_draft.json,local_verification.json}`.
-- `refs/semantic_supervision_20261009T045728Z_complete_review_manifest.json`.
-- Ownerlog: `docs/rag-research-log/20261009T-date-only-support-boundary-target-compiler.md`.
-- Session: `sessions/2026-10/20261009T082911Z-c4de19.md`.
+- `refs/support_scope_priority9_20261009_{primary_recheck.json,qualification_hold_overlay.json,summary.json,manifest.json,local_verification.json,validate.py}`.
+- `scripts/collab/five_ideas/support_scope_review_packets/20261009-priority9-independent/adapter/INITIAL_PROMPT.md`.
+- Ownerlog: `docs/rag-research-log/20261009T-date-only-priority9-scope-recheck.md`.
+- Session: `sessions/2026-10/20261009T085821Z-a427ae.md`.

@@ -2,6 +2,8 @@
 
 ## 当前研究总览
 
+- 最新审查：[9题54段范围主审复核](20261009T-date-only-priority9-scope-recheck.md)。提出3条direct→partial异议；暂定保留3题4对，资格通过0。独立审阅紧凑包已备，未启动worker，不训练，仍L0。
+
 - 最新实现：[支持资格感知目标编译器](20261009T-date-only-support-boundary-target-compiler.md)。32题只读回放生成9题28个候选对、最多10个无关替换槽位；真实资格对0，本地/服务器40测试通过，不启动训练，L0。
 
 - 最新完整审计：[32题1600段全部审完](20261009T-date-only-complete-support-audit.md)。剩余817已完成，未读0；23题未flag中13题有25个direct槽位差，但9个目标风险与整434监督仍待资格。优先资格化干净边界，保护已有支持，不立即重训，仍L0。
@@ -82,3 +84,5 @@
 - [2026-09-15 | Silver-oracle 100题冻结 Generator ceiling：证据命中增加未传递为稳定回答收益](20260915T-date-only-silver-oracle-top5-ceiling.md)
 
 - [2026-10-09（仅日期） | 支持资格感知边界目标编译与合成验证](20261009T-date-only-support-boundary-target-compiler.md)
+
+- [2026-10-09（仅日期） | 9题54段范围主审复核与独立挑战包](20261009T-date-only-priority9-scope-recheck.md)

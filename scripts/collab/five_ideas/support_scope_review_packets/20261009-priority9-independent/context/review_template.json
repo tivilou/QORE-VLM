@@ -1,0 +1,561 @@
+{
+  "schema_version": "rag.independent_scope_review.v1",
+  "input_sha256": "5cd3c9d4e4ec82ce6875ae5d30d857c74c26926c3a99cb8c569b0340b314a4f6",
+  "reviewer_id": null,
+  "model_id": null,
+  "prior_review_exposure": null,
+  "training_authorized": false,
+  "question_reviews": [
+    {
+      "review_case_id": "9fa259bec3e31ee388e3c94de30fed8b137bc1dee2837f2bf6b859b6a64e5448",
+      "scope_status": null,
+      "scope": {
+        "time": null,
+        "location": null,
+        "version": null,
+        "entity": null,
+        "metric": null,
+        "reference_relation": null
+      },
+      "rationale": null
+    },
+    {
+      "review_case_id": "e10267bb67b70742cb509fe2cbc01732e466f30b02146d55acd22e2b7a439a35",
+      "scope_status": null,
+      "scope": {
+        "time": null,
+        "location": null,
+        "version": null,
+        "entity": null,
+        "metric": null,
+        "reference_relation": null
+      },
+      "rationale": null
+    },
+    {
+      "review_case_id": "fa9814edb9e26544f2437346fef3a1ad2971212a9a0d6b0e03f06bc4a7695cea",
+      "scope_status": null,
+      "scope": {
+        "time": null,
+        "location": null,
+        "version": null,
+        "entity": null,
+        "metric": null,
+        "reference_relation": null
+      },
+      "rationale": null
+    },
+    {
+      "review_case_id": "7d5f0e48c01ffed77bd09f2eecc4a037a5be4310b396e4a868d7c0954f8f0dca",
+      "scope_status": null,
+      "scope": {
+        "time": null,
+        "location": null,
+        "version": null,
+        "entity": null,
+        "metric": null,
+        "reference_relation": null
+      },
+      "rationale": null
+    },
+    {
+      "review_case_id": "c91f67edc0e22fa85516122db9a14e16c0957f54ed7307fdfc7caa2c37e3c3fd",
+      "scope_status": null,
+      "scope": {
+        "time": null,
+        "location": null,
+        "version": null,
+        "entity": null,
+        "metric": null,
+        "reference_relation": null
+      },
+      "rationale": null
+    },
+    {
+      "review_case_id": "5260c411b6da3d11f9dcd3a2a64d69ebf2fa61624d75decf35e4d633c6c68b5d",
+      "scope_status": null,
+      "scope": {
+        "time": null,
+        "location": null,
+        "version": null,
+        "entity": null,
+        "metric": null,
+        "reference_relation": null
+      },
+      "rationale": null
+    },
+    {
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "scope_status": null,
+      "scope": {
+        "time": null,
+        "location": null,
+        "version": null,
+        "entity": null,
+        "metric": null,
+        "reference_relation": null
+      },
+      "rationale": null
+    },
+    {
+      "review_case_id": "578380c2469a4631d2746178f3dd2375291b385e53a3f58e50243cdf227bc764",
+      "scope_status": null,
+      "scope": {
+        "time": null,
+        "location": null,
+        "version": null,
+        "entity": null,
+        "metric": null,
+        "reference_relation": null
+      },
+      "rationale": null
+    },
+    {
+      "review_case_id": "b524e507ea034bbbe17bf7cfaf9d0af93d0bec644272f1c2fe88dd6580be3972",
+      "scope_status": null,
+      "scope": {
+        "time": null,
+        "location": null,
+        "version": null,
+        "entity": null,
+        "metric": null,
+        "reference_relation": null
+      },
+      "rationale": null
+    }
+  ],
+  "item_reviews": [
+    {
+      "review_case_id": "9fa259bec3e31ee388e3c94de30fed8b137bc1dee2837f2bf6b859b6a64e5448",
+      "review_item_id": "30ea53a287c970c48801c7588ed817f76dbe4cc0c32a0e2d6cb77d395705d297",
+      "source_text_sha256": "6b781721947fb302f406472165b18eb25ac505049fe642ff330a06c6dc4f581a",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "9fa259bec3e31ee388e3c94de30fed8b137bc1dee2837f2bf6b859b6a64e5448",
+      "review_item_id": "83a7b3382985e5506523b3d09028f36f49bef220e6705c8df596eb587a074e28",
+      "source_text_sha256": "2df2dc29222454bd38d12b55422d0716ac1722f41735102b89a38970debde7d4",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "9fa259bec3e31ee388e3c94de30fed8b137bc1dee2837f2bf6b859b6a64e5448",
+      "review_item_id": "9e73eb453347656ff7f4db9417137e1bbe0f24c0a0ece2177b8c2c6104634d5b",
+      "source_text_sha256": "8cdb267a1caf962724b7c4dbd1a2b7e2211587d365427f05f48e7ec0cfaa1da2",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "9fa259bec3e31ee388e3c94de30fed8b137bc1dee2837f2bf6b859b6a64e5448",
+      "review_item_id": "ac0951793bd7a89ab0dbca7d974d0cc3cd7156e2e8d3f7394d7f14bcfce02413",
+      "source_text_sha256": "8f94a741b240cec2a1259373d5d4eca0a680a689b3b4c578a32cf5b5b8f2c0da",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "9fa259bec3e31ee388e3c94de30fed8b137bc1dee2837f2bf6b859b6a64e5448",
+      "review_item_id": "c033f73a3a904db63e44e664361054190819ca4094058c19f98d141d3fdcb370",
+      "source_text_sha256": "c8bc5b0b01f5b6709bd3ec25e1ff295713fee9873c46bf6fd60ed1304a53b24e",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "e10267bb67b70742cb509fe2cbc01732e466f30b02146d55acd22e2b7a439a35",
+      "review_item_id": "4ee42738082cf3554fb9c7fb9b7aa2295692d839e4318429dd38b49beda2c0c7",
+      "source_text_sha256": "c5df50e107be85495ba90249f83b37304bf5891ffafbee60c0c6b3e6e83d9847",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "e10267bb67b70742cb509fe2cbc01732e466f30b02146d55acd22e2b7a439a35",
+      "review_item_id": "8649b1baa65748014b13d6e39197abdff9f3dc69c2af028d9b5bd80b0c1173fb",
+      "source_text_sha256": "4205719ee789c554cc866bdc81af301c577280cbc04b1d718c9a18531b1d88ba",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "e10267bb67b70742cb509fe2cbc01732e466f30b02146d55acd22e2b7a439a35",
+      "review_item_id": "9d3bf899a207be811dfad1ff692d70338029b8c8d8faa52d2f09406bdb90fe93",
+      "source_text_sha256": "1b813fe3f6bb5a3ae3f8d55ef1964db7c0bca55f009cbe77d759cb8a80b4cc7d",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "fa9814edb9e26544f2437346fef3a1ad2971212a9a0d6b0e03f06bc4a7695cea",
+      "review_item_id": "2035bf65c534610ce7475ebc0b097c6b61315195e72dfade6237dcf8a144ca82",
+      "source_text_sha256": "7e1b194bbc44de678d3e51f6c34571fccb98c5efe80d85d3f28ad69e1e49cb8c",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "fa9814edb9e26544f2437346fef3a1ad2971212a9a0d6b0e03f06bc4a7695cea",
+      "review_item_id": "2d3d96b584765210d367ebaed8350b16d6af731aef49a2d6ccc84086e1429a7b",
+      "source_text_sha256": "06c07123d751d4dfb851467e6800fb67e1a07b55bd090cc9fda9129c833f4fe6",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "fa9814edb9e26544f2437346fef3a1ad2971212a9a0d6b0e03f06bc4a7695cea",
+      "review_item_id": "2e0241f1882587fb56b09ec860b69295ab7216b2caae098238c198207bbe28f7",
+      "source_text_sha256": "4b73a173879a18f5f3354db89db755ecbc3fd11856a7635ea4e09569d1a0a22a",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "fa9814edb9e26544f2437346fef3a1ad2971212a9a0d6b0e03f06bc4a7695cea",
+      "review_item_id": "a1e7912bd2b635ced5085e125985d9121407e6e9410e50104d2aaf1a17300715",
+      "source_text_sha256": "afce6cc3a3d8d987380248205699b419f00bd4cb02fa51f9f9b6260ec3a521c4",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "fa9814edb9e26544f2437346fef3a1ad2971212a9a0d6b0e03f06bc4a7695cea",
+      "review_item_id": "b0409167b9a33ac2dd20c7507d25d50d3db752de5f38539ada2b681708ce7e50",
+      "source_text_sha256": "264f303c504161dab0b8e31422a41ab5b8b3a697777ed4d7dc1b20eddcd4b995",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "fa9814edb9e26544f2437346fef3a1ad2971212a9a0d6b0e03f06bc4a7695cea",
+      "review_item_id": "d9ef4065c77de0ad7090526165977bbb42c946fd98ec81806573d8c919d8299e",
+      "source_text_sha256": "49749c88bd2a00749ca919e63dc5f76cf3b49cfa54e1138622ed4b0737845b38",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "7d5f0e48c01ffed77bd09f2eecc4a037a5be4310b396e4a868d7c0954f8f0dca",
+      "review_item_id": "1f11686fc408339a2972f40a3cedbd8d8ad46f7213bd744be4199f5d860bdea5",
+      "source_text_sha256": "4d375575c52252f598cecdba2c5719687b35892775fd07c0962789d100cbb11f",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "7d5f0e48c01ffed77bd09f2eecc4a037a5be4310b396e4a868d7c0954f8f0dca",
+      "review_item_id": "4135f1b4c14be7434a189eaf1310f819409f13095167ce4650decb4f8c13dd07",
+      "source_text_sha256": "4055c57c0a954c3da152eefe785de6fb652b6686d3211fd4b395505cfdc654ad",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "7d5f0e48c01ffed77bd09f2eecc4a037a5be4310b396e4a868d7c0954f8f0dca",
+      "review_item_id": "761ad3c6d1538aa80ad405ad78eb87176bfd19e7d4544ffbc69c1d1a2fd6a775",
+      "source_text_sha256": "9c2fec1ffe4dbf8875c0fe40d24a7268ef1ff6ea2767c9fbbcea3e5afaa6a783",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "7d5f0e48c01ffed77bd09f2eecc4a037a5be4310b396e4a868d7c0954f8f0dca",
+      "review_item_id": "dedb0ca3b872c7343181c67df4f69df93b172fd1948e673c907a1b003f4cd7ba",
+      "source_text_sha256": "0afc7d4bab0b6c6931322a0f4dc2b8a70fbbf5430e8db4cd50e3fc69e9296beb",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "c91f67edc0e22fa85516122db9a14e16c0957f54ed7307fdfc7caa2c37e3c3fd",
+      "review_item_id": "3f68cb8a2a750e881ae30051ea7cbec8046e54ac871a8dcf3e0a10b4d3f44a05",
+      "source_text_sha256": "4726d478863c810670659e3b2e66b88ea264c00a5cbbf24fc1f48a24ec5f55c7",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "c91f67edc0e22fa85516122db9a14e16c0957f54ed7307fdfc7caa2c37e3c3fd",
+      "review_item_id": "459c1aa350748d2687a8615eca79541355774c373a1e15deff91cd6fd9a6ee24",
+      "source_text_sha256": "df37373e3d08f348fc97ebd1ab1511e572baedddd3e7c8d63d034983c68fa4d9",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "c91f67edc0e22fa85516122db9a14e16c0957f54ed7307fdfc7caa2c37e3c3fd",
+      "review_item_id": "4ba53c7c4ad23c113bf528cf92375f207042096b5c51e3e9a60ffc5025aa1d8d",
+      "source_text_sha256": "66e375e3f258d6807f03caea7813e7b59a128301af03d95151e7a3178c5d0707",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "c91f67edc0e22fa85516122db9a14e16c0957f54ed7307fdfc7caa2c37e3c3fd",
+      "review_item_id": "5ae577d4ebd02136ba5f020dbf689088a0663a2608de7d4f4ab0151162feb981",
+      "source_text_sha256": "8c7ebca501da5a81604d95ec6a0982dd346fb46978d0cdee1fede8f5ca46cd22",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "c91f67edc0e22fa85516122db9a14e16c0957f54ed7307fdfc7caa2c37e3c3fd",
+      "review_item_id": "be04d02a8e984c943b7c41d5fe7f752c4ec693e1733b43b786d77e770a0231ed",
+      "source_text_sha256": "f76736c7a65a87adcc000554cf668d0748539b40b1029bea33dccdca56ff3895",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "c91f67edc0e22fa85516122db9a14e16c0957f54ed7307fdfc7caa2c37e3c3fd",
+      "review_item_id": "c034dbc07438677deac0297339ccc0b40add1a731b788d9c09e0d72cf5b530a5",
+      "source_text_sha256": "0b796cfbeae661424a7470f7dd75c878318c7969a37aa5fa8b4d2fe02d96f764",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "c91f67edc0e22fa85516122db9a14e16c0957f54ed7307fdfc7caa2c37e3c3fd",
+      "review_item_id": "c56402039ea02409cf81db71a3b0ac82f16cedb8638239efbf21ad1aeb090d32",
+      "source_text_sha256": "dd1a6847274aee439d1085dd9bb5512dfec5d5145b5410ba191bf1dd67552a0f",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "c91f67edc0e22fa85516122db9a14e16c0957f54ed7307fdfc7caa2c37e3c3fd",
+      "review_item_id": "d4a9d2495e7edc5e81dcdcf124330b9d565906c981c74861e09f661a492919ca",
+      "source_text_sha256": "71636b4c4e43c0fe84686849c931071a0441d30a7a5f6723eb432d36bfcf2d89",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "5260c411b6da3d11f9dcd3a2a64d69ebf2fa61624d75decf35e4d633c6c68b5d",
+      "review_item_id": "720022ddf7cf98618023b1335d6e818f0088c0b976418293d5242f1de018d5fe",
+      "source_text_sha256": "d259820f7a533a2704da31fb670ecf8e2461f028e7f4c5c2eca7f1a3ae259348",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "5260c411b6da3d11f9dcd3a2a64d69ebf2fa61624d75decf35e4d633c6c68b5d",
+      "review_item_id": "ce84f1d3444a998e831643a882a0392449b807c6c076d254e336e5604a6fa0e4",
+      "source_text_sha256": "c02a0ed1f19309ba4514423f1d746e99dea3397166e9498a784275223d754492",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "5260c411b6da3d11f9dcd3a2a64d69ebf2fa61624d75decf35e4d633c6c68b5d",
+      "review_item_id": "cf2ade0e281c39be4f716b532bb4b832ca9cdb20fd9edebf2cc887bdd11254c3",
+      "source_text_sha256": "21afba5e1fd1224cd876826fc7b9a9e8c518097e2eaac829516da97438d8af4d",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "5260c411b6da3d11f9dcd3a2a64d69ebf2fa61624d75decf35e4d633c6c68b5d",
+      "review_item_id": "d9d859bbd8c8834ca357bd4c5cd886f6dcfca0b3b03f21b652f18de3815f66e7",
+      "source_text_sha256": "de61747eb442c628a8705a98a2f8bbea43dbd0d6144edc842e5581ee40a9a130",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "5260c411b6da3d11f9dcd3a2a64d69ebf2fa61624d75decf35e4d633c6c68b5d",
+      "review_item_id": "ea023802a5b0ac68fcd63cd3d2290a48ec876544b59fb6fb24e22d611acbee4e",
+      "source_text_sha256": "174e8cf66640961c6d6f05e310fbc516b2a4f9f36a25871d165a05ef6d672dc2",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "review_item_id": "05e142716aeb9a447253809e11aa203b79b9f0239f123b06af8222828c1eb499",
+      "source_text_sha256": "c366c4b6cf744ce6534234dbe8a020d611d2af22f95318795f0ff4fa6755fd51",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "review_item_id": "3cf175fa7b71b9ff27ced3db86cbf4dd11357b72c0fc76810fab40b1e6f0730a",
+      "source_text_sha256": "8035801fc35b563245dcf476a6b78ff5d285cb5298b33b828da78ca33f5dc579",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "review_item_id": "6ea773596d00f9c503a4d70783cd2d89e44d4819049a7545da2adfa5e81e594a",
+      "source_text_sha256": "a18d46b47f801c4393fcbc82ef2bf91903061dba63d61a950467120228c070b1",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "review_item_id": "7f704c4b37bb55aad1cd5cc1f1aa0c95148153b528e81623eb6326e88cd1bf5d",
+      "source_text_sha256": "a1a3c2747aa8a4e4c0f163359fb287eac646803a9673f4089524567b402042c0",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "review_item_id": "8c542ebb6a078a15babe2b0d6a93622b563de96c417103cbb2704a3f399bef2a",
+      "source_text_sha256": "688f89ad25fc34a31625dd36512cad5543c95339b96952c4a56b44485baad942",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "review_item_id": "953ca41945437ecfda0de4ca3ae50aacc386b393d398e69e98452b37fce8471e",
+      "source_text_sha256": "7c936bf9fc993e8ffb8d93ad00089b42f4284f28cf09e363e687ca9c2ec5f5c4",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "review_item_id": "b44de3b6fd44fdc7d01b3779e0457d58d23662d1d5f02b3adee963075a87ee35",
+      "source_text_sha256": "64a877205aa90e0d0348e9fb7b50b95402f9f685b55f840054df86fe075b6fa2",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "review_item_id": "bccfb0586b0f60bc9c16f4bd2f877db4b2aec4fa7aabe7cde14a7b3b478eef1b",
+      "source_text_sha256": "8c2929ba3be54c40b553b6f15f99a4ade6ba1fa00fd84bc6a45cb572afdc24cd",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "review_item_id": "dbe8676b39edf9d01a56b3c23bdc596bcc24e83306cc380fdc502629f3d051ff",
+      "source_text_sha256": "266e9edc19667a9995d7055245774c8988632daa5681db982cf522da5319dca7",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "review_item_id": "fe91d0c7bf46a4d181f4a54880cd32dc2d1c50b3f91e6c6179950ef7e7a0b433",
+      "source_text_sha256": "cc1c5581ff67c17e573f9a7aa19e4470884df6370f4a6bc7a235a809f66dc3dd",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "578380c2469a4631d2746178f3dd2375291b385e53a3f58e50243cdf227bc764",
+      "review_item_id": "3d52b64d2afdc0b1cfbf5016347f6e06b87a93526aa5c61fdd3c8a4f9f42ea89",
+      "source_text_sha256": "26d77545d81571469008fe7d52c92f2a76202f7e8b15865de977fe779c781760",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "578380c2469a4631d2746178f3dd2375291b385e53a3f58e50243cdf227bc764",
+      "review_item_id": "4e1a8d2d44dac170ace1ab8142ea90bc36279c5f1df3bd51580c44a395381d8c",
+      "source_text_sha256": "12988af03587713af3b4fb3f0b7475417d28ecbf208e39be3ad1f7e329f557f2",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "578380c2469a4631d2746178f3dd2375291b385e53a3f58e50243cdf227bc764",
+      "review_item_id": "7013490c68efc066747e694493494d65d47476f0cbf9ef99682b6c496a52e975",
+      "source_text_sha256": "a113461e212a746b1e0e141887792eb230ef5a553210e2a3478937455342ffa7",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "578380c2469a4631d2746178f3dd2375291b385e53a3f58e50243cdf227bc764",
+      "review_item_id": "c55153c3e86bbd43f874251c9a88a31873efeed9f9d5a74198b8ca38a0a08295",
+      "source_text_sha256": "f07d972594958c14174f8dc3e0857c60dc800e40c90995ff0a7c94c19d2fd02d",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "578380c2469a4631d2746178f3dd2375291b385e53a3f58e50243cdf227bc764",
+      "review_item_id": "c8e71f37f40a9349db13d4a644806dae5eba0820bbce25167649f9e77b4cffd1",
+      "source_text_sha256": "1e1381afa04a56a068466a201d5f36ea0037d84f2173973b8d92da8eca6f8333",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "578380c2469a4631d2746178f3dd2375291b385e53a3f58e50243cdf227bc764",
+      "review_item_id": "ded42d3dec2f262d4b3351cc6242b9dee0102a458598a1c1de6e35c6b7f6937d",
+      "source_text_sha256": "c31e83bff7d5ccdab9bbdea5befb9a263700d3f8311a76279fa1b599bd41f396",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "578380c2469a4631d2746178f3dd2375291b385e53a3f58e50243cdf227bc764",
+      "review_item_id": "e514fd4af98b9b958eb0cf6b398fadd624df26d40ee5bef1a828fb41206828d5",
+      "source_text_sha256": "2f7a005260414204bf849efa9df9dafe43bcd09cbfe94815c042cbed59c454a7",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "b524e507ea034bbbe17bf7cfaf9d0af93d0bec644272f1c2fe88dd6580be3972",
+      "review_item_id": "7ba3899f29c66fc436c598423013df1073253eb2fce7d85d16b3ac5dcfe86613",
+      "source_text_sha256": "0e423db8d39414d2665f145d98820a6cc047e7ee0d5605f12ec5e7c89606396d",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "b524e507ea034bbbe17bf7cfaf9d0af93d0bec644272f1c2fe88dd6580be3972",
+      "review_item_id": "8020b73de89bebc421b11bd3f82753f521e6c942863d813b4d6472daede5d482",
+      "source_text_sha256": "3337f4fc667a7bfda8ddf96150da8557197e56602bbc9ac199c4fcf7eba1c92b",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "b524e507ea034bbbe17bf7cfaf9d0af93d0bec644272f1c2fe88dd6580be3972",
+      "review_item_id": "830f1ce5bf83d72d8bba566cdaab815ca94fca85bdaf93f069522297fd36e20b",
+      "source_text_sha256": "ae09fba29bc293b61d9d23ea127532b6d204b18226a051e144ed525e020af701",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "b524e507ea034bbbe17bf7cfaf9d0af93d0bec644272f1c2fe88dd6580be3972",
+      "review_item_id": "b32f63705c8b20bec84c1388580f744a0dfbc0d5d81ff7293d42d57ac75ba218",
+      "source_text_sha256": "873861c4c2e782cacf82b49cab107099ac926418dc2307dfd710f68d27b3ed87",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "b524e507ea034bbbe17bf7cfaf9d0af93d0bec644272f1c2fe88dd6580be3972",
+      "review_item_id": "d31c2c4b144b8f9f63ff424f9d50f7d8f289ab9c3c2878b51c39c8e972b4151c",
+      "source_text_sha256": "a0e2b2d825aea9a536d00d0ab9f433483c0bb436bdacc302a949c3a86aad0e36",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    },
+    {
+      "review_case_id": "b524e507ea034bbbe17bf7cfaf9d0af93d0bec644272f1c2fe88dd6580be3972",
+      "review_item_id": "ea7aa71eec3736bc890c3d4b5739ae9ab0621d4ffee2d31c3081f25be9e3593a",
+      "source_text_sha256": "0874beb3b3112e153d43d4703fc1dd78586338cf30b23554456045c3135bb358",
+      "support_label": null,
+      "support_quote": null,
+      "rationale": null
+    }
+  ]
+}

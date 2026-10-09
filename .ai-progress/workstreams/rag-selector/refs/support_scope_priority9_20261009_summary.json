@@ -1,0 +1,241 @@
+{
+  "schema_version": "rag.primary_scope_recheck_summary.v1",
+  "questions_rechecked": 9,
+  "items_rechecked": 54,
+  "primary_pending_cases": [
+    5,
+    13,
+    27
+  ],
+  "primary_scope_hold_cases": [
+    6,
+    8,
+    16,
+    17,
+    21,
+    26
+  ],
+  "proposed_label_changes": [
+    {
+      "case": 17,
+      "index": 11,
+      "from": "direct",
+      "to": "partial"
+    },
+    {
+      "case": 26,
+      "index": 37,
+      "from": "direct",
+      "to": "partial"
+    },
+    {
+      "case": 27,
+      "index": 32,
+      "from": "direct",
+      "to": "partial"
+    }
+  ],
+  "original_proposal_pairs": 28,
+  "primary_proposed_retained_pairs": 4,
+  "primary_proposed_replacement_slots": 3,
+  "compiler_draft_pairs": 0,
+  "independent_reviews_received": 0,
+  "formal_training_ready": false,
+  "original_review_labels_and_flags_modified": false,
+  "cases": [
+    {
+      "audit_case_number": 5,
+      "original_proposal_pairs": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          28
+        ]
+      ],
+      "primary_proposed_retained_pairs": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          28
+        ]
+      ],
+      "independently_certified": false
+    },
+    {
+      "audit_case_number": 6,
+      "original_proposal_pairs": [
+        [
+          5,
+          49
+        ],
+        [
+          48,
+          49
+        ]
+      ],
+      "primary_proposed_retained_pairs": [],
+      "independently_certified": false
+    },
+    {
+      "audit_case_number": 8,
+      "original_proposal_pairs": [
+        [
+          25,
+          43
+        ]
+      ],
+      "primary_proposed_retained_pairs": [],
+      "independently_certified": false
+    },
+    {
+      "audit_case_number": 13,
+      "original_proposal_pairs": [
+        [
+          9,
+          49
+        ]
+      ],
+      "primary_proposed_retained_pairs": [
+        [
+          9,
+          49
+        ]
+      ],
+      "independently_certified": false
+    },
+    {
+      "audit_case_number": 16,
+      "original_proposal_pairs": [
+        [
+          34,
+          41
+        ],
+        [
+          34,
+          0
+        ],
+        [
+          39,
+          41
+        ],
+        [
+          39,
+          0
+        ],
+        [
+          43,
+          41
+        ],
+        [
+          43,
+          0
+        ],
+        [
+          46,
+          41
+        ],
+        [
+          46,
+          0
+        ]
+      ],
+      "primary_proposed_retained_pairs": [],
+      "independently_certified": false
+    },
+    {
+      "audit_case_number": 17,
+      "original_proposal_pairs": [
+        [
+          11,
+          47
+        ],
+        [
+          11,
+          10
+        ]
+      ],
+      "primary_proposed_retained_pairs": [],
+      "independently_certified": false
+    },
+    {
+      "audit_case_number": 21,
+      "original_proposal_pairs": [
+        [
+          2,
+          42
+        ],
+        [
+          7,
+          42
+        ],
+        [
+          28,
+          42
+        ],
+        [
+          30,
+          42
+        ],
+        [
+          33,
+          42
+        ],
+        [
+          49,
+          42
+        ]
+      ],
+      "primary_proposed_retained_pairs": [],
+      "independently_certified": false
+    },
+    {
+      "audit_case_number": 26,
+      "original_proposal_pairs": [
+        [
+          20,
+          15
+        ],
+        [
+          29,
+          15
+        ],
+        [
+          37,
+          15
+        ],
+        [
+          42,
+          15
+        ]
+      ],
+      "primary_proposed_retained_pairs": [],
+      "independently_certified": false
+    },
+    {
+      "audit_case_number": 27,
+      "original_proposal_pairs": [
+        [
+          2,
+          21
+        ],
+        [
+          32,
+          21
+        ]
+      ],
+      "primary_proposed_retained_pairs": [
+        [
+          2,
+          21
+        ]
+      ],
+      "independently_certified": false
+    }
+  ]
+}

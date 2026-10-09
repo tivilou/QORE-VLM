@@ -1,0 +1,2233 @@
+{
+  "schema_version": "rag.support_qualification_overlay.v1",
+  "input_binding_sha256": "89642c0bc56876269177230ba781df45bbce11bdde48d3cfd900c2d948535796",
+  "questions": [
+    {
+      "review_case_id": "072cf5ed9a8e9c4094297a20488c79140859ed1fcc1129cfdf041a19f4898273",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "1440a91de72510bc0ea23cf9baac6d4829324427cbc8c17b74cb3461099901a3",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "5c2b42563c1d60b4c3ef9b0da7a256991e201cc4d28f81f2b3e6830fc56f95e7",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "4a8f2398ebbb4b0847b85c53c8855fdcb1d61e4b3d0464a4e88c7bbdcc57bd65",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "9fa259bec3e31ee388e3c94de30fed8b137bc1dee2837f2bf6b859b6a64e5448",
+      "status": "pending",
+      "scope": {
+        "time": "固定作品已发行版本，非现在时人物任职；由候选idx4明确1960。",
+        "location": "非地点问题，不适用。",
+        "version": "1960电影Mughal-e-Azam，参考演员及idx4用于区分同名音乐剧。",
+        "entity": "Anarkali角色；问扮演者，不是史实人物或其他角色。",
+        "metric": "角色最终演员身份，不适用数值比较。",
+        "reference_relation": "Madhubala对应最终电影；早期Nargis选角史实不等于最终演员。"
+      },
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_case_id": "e10267bb67b70742cb509fe2cbc01732e466f30b02146d55acd22e2b7a439a35",
+      "status": "abstained",
+      "scope": {
+        "time": "正在建设的新球场对应文中2012计划/2015开工及2018-19完成预期；问句日期缺失。",
+        "location": "Tottenham/旧White Hart Lane及相邻地 vs参考Haringey行政区；需确认可接受粒度和包含关系。",
+        "version": "Northumberland Development Project新球场；不是其他体育场或住宅区。",
+        "entity": "Tottenham新球场项目，位置不是球队名所在主题。",
+        "metric": "地理位置，不适用大小/排名。",
+        "reference_relation": "可回答where，但原文没有直接给行政区等价证明；不改参考。"
+      },
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_case_id": "0031cb571a22179e59daa2d2cb1c544e73bb238ec7e5418a180e0c8a03c3dcbd",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "fa9814edb9e26544f2437346fef3a1ad2971212a9a0d6b0e03f06bc4a7695cea",
+      "status": "abstained",
+      "scope": {
+        "time": "1996-98/2011/2014/2017/2018多个角色演员时段；问句现在时无观测日期。",
+        "location": "非地点问题，不适用。",
+        "version": "Days of Our Lives的Susan Banks，非Susan Mayer。",
+        "entity": "角色扮演者，Eileen/Brynn/Stacy不应跨时点强排序。",
+        "metric": "指定时点演员身份，非数值指标。",
+        "reference_relation": "参考只有Eileen/Brynn，2018Stacy证据并非虚假；缺失日期阻止目标资格。"
+      },
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_case_id": "88e18b6f333f478f54a0168f1721687b6fc80a5205c7d671e2b21dd0880bcf8e",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "33f9a297bf7d65baa2ec4e9fc88c845592aecced4ff7718f82fab9909c3e34f1",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "07ebe9609889cec53f9c94d43db7ba02929b45b3eaefae01805912c9ad4b2947",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "a8fb5d71aad5cb759e24aa2fa43a166eddd74708eaf81f10f6c82df05963a600",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "7d5f0e48c01ffed77bd09f2eecc4a037a5be4310b396e4a868d7c0954f8f0dca",
+      "status": "pending",
+      "scope": {
+        "time": "1992同年安排后，1994开始冬夏相隔两年；不是IOC决策年份。",
+        "location": "全球冬夏奥运赛事安排，非举办城市问题。",
+        "version": "冬夏合并时间轴；每一类仍四年一届。",
+        "entity": "Winter vsSummer Olympics轮换，不是单项体育运动纳入。",
+        "metric": "跨冬夏赛事两年间隔，不是每种奥运变两年一届。",
+        "reference_relation": "1994显式/1992加2隐式推断都须记录依据，不修改原参考。"
+      },
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_case_id": "6ae8caea498b969fdb7d560c3d72736a7da6ef902207cd7068766e2cb1c3e60e",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "09737f68352a06d3f476d81fa4bf3f75619033b506098973ff0f89bc8593842b",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "c91f67edc0e22fa85516122db9a14e16c0957f54ed7307fdfc7caa2c37e3c3fd",
+      "status": "abstained",
+      "scope": {
+        "time": "段落提供2015/2017/2018及2019退出计划；问句现在时未指定日期。",
+        "location": "参考及段落指美国，但原house of reps本身没有国家。",
+        "version": "美国House Speaker主持官，不是党团领袖、党鞭或Chaplain。",
+        "entity": "Paul Ryan与Speaker职位须绑定相同时点。",
+        "metric": "在任者身份，不适用排名。",
+        "reference_relation": "Paul Ryan是原参考，不用其名字反推未记录的问句时间。"
+      },
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_case_id": "5260c411b6da3d11f9dcd3a2a64d69ebf2fa61624d75decf35e4d633c6c68b5d",
+      "status": "abstained",
+      "scope": {
+        "time": "Vedic末期与其后Mahajanapada时期边界；不能把后继阶段回填。",
+        "location": "印度/恒河谷发展；无具体地点回答要求。",
+        "version": "社会政治发展，不是仅宗教文化或考古分层。",
+        "entity": "大型城市化国家的形成，国家形成/城市化分别提及并不自动具备large。",
+        "metric": "large及urbanised是参考实质限定，不用主题关联代替。",
+        "reference_relation": "idx11仅有state formations和beginning urbanization且有后继时期边界；提出partial异议待独立判。"
+      },
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_case_id": "38833dee89fef2d48c3cc54ff004fa02cb4e6d130b9f1838254ba594cd17caf8",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "a037e76f7c51215349df5d16e0aaa68229138e8643559e92064b689574b2f816",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "e9b0bf7d10f332c39007c1a0a4e637103c0d9ae6e4df6120d5fcf8f4daefce75",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "status": "abstained",
+      "scope": {
+        "time": "living树与已砍伐的历史更大树不同；1931比较不是任意现在。",
+        "location": "美国；主证据idx0明确California，其他段地理关系须对应。",
+        "version": "活体单干树，不把clonal colony直接混为同一比较对象。",
+        "entity": "General Sherman个体或giant sequoia种类按原参考区分，非Washington/Monroe本身。",
+        "metric": "体积/质量vs高度/年龄；问句largest没有显式指标，参考语境才提示体积。",
+        "reference_relation": "只能提议volume/living/single-stem条件范围，不能静默改问句或把条件范围视作正式gold。"
+      },
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_case_id": "47e2cf478fd8bd0fd624ba7c7f84dc98cab64bde4b5f504b529583b390bc3d3e",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "36c3f3a92ee5bc6c13106357512abb2487a084b3cc44798d609fb162cf853a98",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "c833d72cbc94fd38dc877669d2011849a4dce47769397b3948d2677fbe51a484",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "f577dc5800c7d7c8b059f3bdd8817c66c8fbcf160990bfa9f526a1dc516022a2",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "578380c2469a4631d2746178f3dd2375291b385e53a3f58e50243cdf227bc764",
+      "status": "abstained",
+      "scope": {
+        "time": "Elizabeth II在位时的Charles/Prince of Wales状态；问句无日期，文中的current是文中时点。",
+        "location": "British throne与Saxon等王位不同；原England措辞不自动精确制度同义。",
+        "version": "在位者的heir apparent，不是历史所有同名Prince of Wales。",
+        "entity": "Charles本人vsPrince of Wales职位；idx37只证明角色，不借邻段补姓名。",
+        "metric": "继承次序首位，不是最长任职纪录本身。",
+        "reference_relation": "Charles参考绑定历史女王，不倒推没有记录的采题日期，也不替换参考。"
+      },
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_case_id": "b524e507ea034bbbe17bf7cfaf9d0af93d0bec644272f1c2fe88dd6580be3972",
+      "status": "pending",
+      "scope": {
+        "time": "was married to可包括不同历史配偶；不强制某个未指定剧情时点。",
+        "location": "非地点问题，不适用。",
+        "version": "Home and Away剧情，不是演员真人生活或其他Alf角色。",
+        "entity": "Alf Stewart与Ailsa/Martha的角色婚姻；演员Judy Nunn/Bruce Venables不是答案。",
+        "metric": "婚姻关系证据，不是演员名字列表或交往/计划。",
+        "reference_relation": "原参考Ailsa保留，Martha有显式角色婚姻也可支持字面问句；不强制direct-vs-direct。"
+      },
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_case_id": "da09815bd0fa28b674b4ff8d5abbf207e9923a4b65fdeca3991745955d6a8717",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "d648fedaadece085e2bac26346fdb4de1ce04ebe0627a4b1554b698a61af1bee",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "f983612fd41e08fce8d2c670c0d93d2cee52b788b35d716c16e6e13a83fc2882",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "1724cbdfcb0127d2deb731b1f94d450c942ba729b6c39365565b48a5fd88ff5a",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    },
+    {
+      "review_case_id": "6ca38d903d408ac94a36b0cb89110220d59733bf9e12294e54293b7680d95f12",
+      "status": "pending",
+      "scope": {
+        "entity": "",
+        "location": "",
+        "metric": "",
+        "reference_relation": "",
+        "time": "",
+        "version": ""
+      },
+      "evidence": []
+    }
+  ],
+  "items": [
+    {
+      "review_item_id": "a11af2f677628e364dca498ede1b41943266b1e04e29dc4ce70888977e355998",
+      "review_case_id": "072cf5ed9a8e9c4094297a20488c79140859ed1fcc1129cfdf041a19f4898273",
+      "source_text_sha256": "824b9bd6e25d93c750eddbe415777f6e2d8cdec6fe795ec243256ab0fb35b756",
+      "review_judgment_sha256": "f679ec19416fdb1c114788cc925c2ed3980e06a8197201f5f7f6f4f9eaa1cfd8",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "0b6b036511ea05d7fa82a2848318b037ebd6543a804daa05bfe3e8ada7634d61",
+      "review_case_id": "072cf5ed9a8e9c4094297a20488c79140859ed1fcc1129cfdf041a19f4898273",
+      "source_text_sha256": "5971df393fb3dc629754dd966a0a33c9cbd4a1313e5d73ca0138a34eca90a78d",
+      "review_judgment_sha256": "72b280155dc6dae7c1a6fd7ef5d261b3c443186f44dc5da6e98f2b79948d9d6c",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "c02e78d3cac70c87daebda3c399e500b0d65b003903ad38d98f9d0490e02a74a",
+      "review_case_id": "072cf5ed9a8e9c4094297a20488c79140859ed1fcc1129cfdf041a19f4898273",
+      "source_text_sha256": "4fd8887edcb56cf283373a4ee47b0d23da400d3abb1acd063ab49a16ee0e1064",
+      "review_judgment_sha256": "e15fc63d58435f5f656feba51f616a9df3d2d6b11a1742c5a94a3b88fd53ada4",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "d770714f483b421b4510941644efd16e0ebd3caa3993a223a15e8fddaaf99f81",
+      "review_case_id": "1440a91de72510bc0ea23cf9baac6d4829324427cbc8c17b74cb3461099901a3",
+      "source_text_sha256": "e8f351d73064cf416138767bf5e38c05f8c741118b996be620630f316c5533e6",
+      "review_judgment_sha256": "30b4edd7f760a2b6b6251c648d3833b28d77decf2c7ec1763fe774418068b221",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "77790881a57d5a967c0042dcda01e559172f321c738f9ba398ab44969f78cb0f",
+      "review_case_id": "1440a91de72510bc0ea23cf9baac6d4829324427cbc8c17b74cb3461099901a3",
+      "source_text_sha256": "efa19fb397988d493d595172d5aedb4a691f6a7133290c1ffb82b723738d5b0c",
+      "review_judgment_sha256": "79c87c46feeb96d7cf2296395707f4b09eac2ee0e0f718f03dba4eff03867be1",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "3a286c0197a14200adcdc1b6349f163aebda24d8a0e24c3b78d68b4edbca4562",
+      "review_case_id": "1440a91de72510bc0ea23cf9baac6d4829324427cbc8c17b74cb3461099901a3",
+      "source_text_sha256": "23f7c9292650c07d95a6e1e9580e554f4fd4d3b23e8552f4c51f3423d2e20e64",
+      "review_judgment_sha256": "bd6a1a51d8038e28947e31e2d058b1ddf694e7110be82216a8158879b6160b27",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "a62d95f63ccfb029762ea645ad649c4fd3abbae89a6e71e5cb70f56ba0f78428",
+      "review_case_id": "5c2b42563c1d60b4c3ef9b0da7a256991e201cc4d28f81f2b3e6830fc56f95e7",
+      "source_text_sha256": "1282452f0e5d18bfbd17b1d4d80a4a465dd979de75a643a9a1d3283e7cf01dc2",
+      "review_judgment_sha256": "926f1b388ba041a76792f7099c7a8b6b75ce35edd3b851593d39e184a8a9c000",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "30609a8808ace007688e9e5118601ce57c1ef3653e76318ed3024755bc5ff7a5",
+      "review_case_id": "5c2b42563c1d60b4c3ef9b0da7a256991e201cc4d28f81f2b3e6830fc56f95e7",
+      "source_text_sha256": "277d9faba302d89c32dab4bba0ae797ca06ffd5da6b4f00eccc5af36b7b0bc73",
+      "review_judgment_sha256": "5f8609742b2f45cea558473e3adad06b4adf41efe2af7003ec7a9033b690c402",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "099962e0bd4c787ecdcb38757a1d9b808bd98bca5af008f94e1393acc91cb0b0",
+      "review_case_id": "4a8f2398ebbb4b0847b85c53c8855fdcb1d61e4b3d0464a4e88c7bbdcc57bd65",
+      "source_text_sha256": "5313fa3c5902f6f5e6b3b6733f85b4757cf446591de2dbbb53458b77247bc856",
+      "review_judgment_sha256": "9eeeb41f3d5a37a7c8b1cc60ecc8a2949bf7043b8eafe340cc5c17e8a16fbe4f",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "3aee6271122653a58f6cd5b85ee20e1e050b0fc8e43d5c34317f237facfc2a3d",
+      "review_case_id": "4a8f2398ebbb4b0847b85c53c8855fdcb1d61e4b3d0464a4e88c7bbdcc57bd65",
+      "source_text_sha256": "37b612e531d23ff66423b34da492a061081d68fb2b8034c2c389b68da576c37b",
+      "review_judgment_sha256": "be968849a26564ff6af1d23e87a12fb4132e66e83e3ec446807d4b05650ccde6",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "7392e89eefec957d2320233134552f8080a552426cdb64ba93fa4ec96ac90de1",
+      "review_case_id": "4a8f2398ebbb4b0847b85c53c8855fdcb1d61e4b3d0464a4e88c7bbdcc57bd65",
+      "source_text_sha256": "34c13d51a06f3ca6cc4d34bb658ddff1a7b042f0e9a78d3eb47a47094e8c5df5",
+      "review_judgment_sha256": "f528320a95b106ebcfb243a9ea63327c77f1597a6d0d18b348edc62c78b79b10",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "c033f73a3a904db63e44e664361054190819ca4094058c19f98d141d3fdcb370",
+      "review_case_id": "9fa259bec3e31ee388e3c94de30fed8b137bc1dee2837f2bf6b859b6a64e5448",
+      "source_text_sha256": "c8bc5b0b01f5b6709bd3ec25e1ff295713fee9873c46bf6fd60ed1304a53b24e",
+      "review_judgment_sha256": "af26db805879cf5b337d64b11dc372a57e5f0aaec1f5130a2853485668dd5ad0",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "83a7b3382985e5506523b3d09028f36f49bef220e6705c8df596eb587a074e28",
+      "review_case_id": "9fa259bec3e31ee388e3c94de30fed8b137bc1dee2837f2bf6b859b6a64e5448",
+      "source_text_sha256": "2df2dc29222454bd38d12b55422d0716ac1722f41735102b89a38970debde7d4",
+      "review_judgment_sha256": "c61fdad6778cbd15249aa9707120ef59d67ecac5a417aecf6851b3d4ada468df",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "30ea53a287c970c48801c7588ed817f76dbe4cc0c32a0e2d6cb77d395705d297",
+      "review_case_id": "9fa259bec3e31ee388e3c94de30fed8b137bc1dee2837f2bf6b859b6a64e5448",
+      "source_text_sha256": "6b781721947fb302f406472165b18eb25ac505049fe642ff330a06c6dc4f581a",
+      "review_judgment_sha256": "30a97f4f30261cfc05f1889590b8d64006b18b4eaf9a13b849bd8ee7e20314ef",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "9e73eb453347656ff7f4db9417137e1bbe0f24c0a0ece2177b8c2c6104634d5b",
+      "review_case_id": "9fa259bec3e31ee388e3c94de30fed8b137bc1dee2837f2bf6b859b6a64e5448",
+      "source_text_sha256": "8cdb267a1caf962724b7c4dbd1a2b7e2211587d365427f05f48e7ec0cfaa1da2",
+      "review_judgment_sha256": "349725b44d7905972c1b0f85e44e4ee769f0af6ded5ee1a9353a9275bacdf58b",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "ac0951793bd7a89ab0dbca7d974d0cc3cd7156e2e8d3f7394d7f14bcfce02413",
+      "review_case_id": "9fa259bec3e31ee388e3c94de30fed8b137bc1dee2837f2bf6b859b6a64e5448",
+      "source_text_sha256": "8f94a741b240cec2a1259373d5d4eca0a680a689b3b4c578a32cf5b5b8f2c0da",
+      "review_judgment_sha256": "ff49987f4b249fc7d7f4d00d611a80973ed54177f2a03219650e91bfe09f32b7",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "8649b1baa65748014b13d6e39197abdff9f3dc69c2af028d9b5bd80b0c1173fb",
+      "review_case_id": "e10267bb67b70742cb509fe2cbc01732e466f30b02146d55acd22e2b7a439a35",
+      "source_text_sha256": "4205719ee789c554cc866bdc81af301c577280cbc04b1d718c9a18531b1d88ba",
+      "review_judgment_sha256": "0df7531a8974d16d1339b9776abfc127ac8d58f6d9fc57087136b020c3b24da8",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "9d3bf899a207be811dfad1ff692d70338029b8c8d8faa52d2f09406bdb90fe93",
+      "review_case_id": "e10267bb67b70742cb509fe2cbc01732e466f30b02146d55acd22e2b7a439a35",
+      "source_text_sha256": "1b813fe3f6bb5a3ae3f8d55ef1964db7c0bca55f009cbe77d759cb8a80b4cc7d",
+      "review_judgment_sha256": "5269ea258c74b278295094fabc17c75051b1683c0866403c86e5a836351f7752",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "4ee42738082cf3554fb9c7fb9b7aa2295692d839e4318429dd38b49beda2c0c7",
+      "review_case_id": "e10267bb67b70742cb509fe2cbc01732e466f30b02146d55acd22e2b7a439a35",
+      "source_text_sha256": "c5df50e107be85495ba90249f83b37304bf5891ffafbee60c0c6b3e6e83d9847",
+      "review_judgment_sha256": "143b747a661a6121697fa56402dc110732c5e04e90f33170ddaa2eea8b7e1785",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "4f791ccd95a0f68cf4d8193be7b87c7588aab32701e7f9eb1370160ead87869d",
+      "review_case_id": "0031cb571a22179e59daa2d2cb1c544e73bb238ec7e5418a180e0c8a03c3dcbd",
+      "source_text_sha256": "2e96890a452eee6bd5fc7dd7e9ad205d6f04ac9a72bcf5461504f3d81ba7b8fa",
+      "review_judgment_sha256": "b906b90bbcfcdf5edfc70284da5fe40ba3531badc07e8ae84cf35e45c1b22f1b",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "9eb3fcb77b58f5bd30045cc81f0d5591a0251670e82ee5acf73975cfff5fd0b1",
+      "review_case_id": "0031cb571a22179e59daa2d2cb1c544e73bb238ec7e5418a180e0c8a03c3dcbd",
+      "source_text_sha256": "4752643d2389d383e75eacbffad6dee04518c29f752aaa1b10a88aef8c4f274b",
+      "review_judgment_sha256": "bf089dd6707392c6f28ff505a5936cd9c4fa15e863dd11d1c99288809377a241",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "95c34103545b38e9e50c0cabcfbac81955f3fd5fedf7baef0beb50747e6caf2c",
+      "review_case_id": "0031cb571a22179e59daa2d2cb1c544e73bb238ec7e5418a180e0c8a03c3dcbd",
+      "source_text_sha256": "042b6728852ea925d4daf6c80da5d4f779405eefa6ab41a2d4e9aa9d9f3cb39b",
+      "review_judgment_sha256": "631b6803d9c847b5e0abbfd22413a94f17a89352168443ba5b837a1240fa8bd0",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "4aeb4971d1d7ae6a88e08be6f64f06a1d1e550fcc22cbd141e6059e2e59d1548",
+      "review_case_id": "0031cb571a22179e59daa2d2cb1c544e73bb238ec7e5418a180e0c8a03c3dcbd",
+      "source_text_sha256": "5f08d924e9bf5504cfda7adc92a58f62dab682d87293c6bdd3ddb95bf2ade6b8",
+      "review_judgment_sha256": "cbe41cb4ceed159169ea9035a5360323782896d60133bb23351a1411dd6c0f99",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "3cd48477621001bb12b76cef68b99c3cfeca22db5a6a02145b060c151291d8ca",
+      "review_case_id": "0031cb571a22179e59daa2d2cb1c544e73bb238ec7e5418a180e0c8a03c3dcbd",
+      "source_text_sha256": "3c7c1fab9c8053b1a6a90346b4a260d2f6a3e32afc278407b414b6cad48d5aef",
+      "review_judgment_sha256": "3b950115dafa4ab763c39aeef22b42ed01bc749b68120d4602425b075345e4b3",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "2035bf65c534610ce7475ebc0b097c6b61315195e72dfade6237dcf8a144ca82",
+      "review_case_id": "fa9814edb9e26544f2437346fef3a1ad2971212a9a0d6b0e03f06bc4a7695cea",
+      "source_text_sha256": "7e1b194bbc44de678d3e51f6c34571fccb98c5efe80d85d3f28ad69e1e49cb8c",
+      "review_judgment_sha256": "12640fd91bbf5289a81c3f0183c5b14130c157cf9378e07ac5d5e04b69066ec5",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "a1e7912bd2b635ced5085e125985d9121407e6e9410e50104d2aaf1a17300715",
+      "review_case_id": "fa9814edb9e26544f2437346fef3a1ad2971212a9a0d6b0e03f06bc4a7695cea",
+      "source_text_sha256": "afce6cc3a3d8d987380248205699b419f00bd4cb02fa51f9f9b6260ec3a521c4",
+      "review_judgment_sha256": "25109cd26d38a87b039f5fbb90a4513abb09eafbf8deffaeaa45725157e610ff",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "2e0241f1882587fb56b09ec860b69295ab7216b2caae098238c198207bbe28f7",
+      "review_case_id": "fa9814edb9e26544f2437346fef3a1ad2971212a9a0d6b0e03f06bc4a7695cea",
+      "source_text_sha256": "4b73a173879a18f5f3354db89db755ecbc3fd11856a7635ea4e09569d1a0a22a",
+      "review_judgment_sha256": "f3e0f4ff7464aaeae0e9efe95e56b8be23ae76b945a306b6cf3e1613d405d340",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "d9ef4065c77de0ad7090526165977bbb42c946fd98ec81806573d8c919d8299e",
+      "review_case_id": "fa9814edb9e26544f2437346fef3a1ad2971212a9a0d6b0e03f06bc4a7695cea",
+      "source_text_sha256": "49749c88bd2a00749ca919e63dc5f76cf3b49cfa54e1138622ed4b0737845b38",
+      "review_judgment_sha256": "f6251dbb525a964e678fc33f5a7600d89daaa99e94072f61c98bcffeae10737d",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "2d3d96b584765210d367ebaed8350b16d6af731aef49a2d6ccc84086e1429a7b",
+      "review_case_id": "fa9814edb9e26544f2437346fef3a1ad2971212a9a0d6b0e03f06bc4a7695cea",
+      "source_text_sha256": "06c07123d751d4dfb851467e6800fb67e1a07b55bd090cc9fda9129c833f4fe6",
+      "review_judgment_sha256": "2af42a00bc993f891c4ef0fc5c926fd6d56462e96e9d7d2aa9b73a7f6225977d",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "b0409167b9a33ac2dd20c7507d25d50d3db752de5f38539ada2b681708ce7e50",
+      "review_case_id": "fa9814edb9e26544f2437346fef3a1ad2971212a9a0d6b0e03f06bc4a7695cea",
+      "source_text_sha256": "264f303c504161dab0b8e31422a41ab5b8b3a697777ed4d7dc1b20eddcd4b995",
+      "review_judgment_sha256": "7d27eee4c7ec6a160d6f6efc249663b0e8508372f21ed354a9523ec477f26def",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "b3fe0e51e211c022f550c6a24d2d5cc630cb823ee741a5866cd827ddcd3a6d77",
+      "review_case_id": "88e18b6f333f478f54a0168f1721687b6fc80a5205c7d671e2b21dd0880bcf8e",
+      "source_text_sha256": "86393dc93b2d4f20c9303cda2d14c223642ff8b27fb551a934f983137e2d19fe",
+      "review_judgment_sha256": "6d96de0fe029698c7f85bc296393b7c6325a073838e1e5ff1e60a587736cc5d9",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "008edc3f8e52405e5b05a87db9245c466a9bd46f18d70667130f7827112effa0",
+      "review_case_id": "88e18b6f333f478f54a0168f1721687b6fc80a5205c7d671e2b21dd0880bcf8e",
+      "source_text_sha256": "3445ab004b5fa6ce327951798f5cecc028aa3bb8ea002317d7a4790d7d724538",
+      "review_judgment_sha256": "625c70d83e37d2afaedd6d8c52a50ecc6dc319e17b06a61161fc4d617517fc9f",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "806610b878055242549e19c6d36b34d80886bd131b161857de57a31a7b251650",
+      "review_case_id": "88e18b6f333f478f54a0168f1721687b6fc80a5205c7d671e2b21dd0880bcf8e",
+      "source_text_sha256": "54252d61995418a180c078e125b400a10d4089cd785a33c70d459b7640eb7854",
+      "review_judgment_sha256": "dfe2e39f0da7a1fabdb51bba4f02bfca693d0b6b5e139bf03d04c87c2526332c",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "158d4183092a9a8a2cb52f8965acd134d17a0e0fec262f1d18ff9085f573afb5",
+      "review_case_id": "88e18b6f333f478f54a0168f1721687b6fc80a5205c7d671e2b21dd0880bcf8e",
+      "source_text_sha256": "bf0bb60438680a1eed6a1ab972ffe22a93070aa5d89ab3904e0c85b162a2ef17",
+      "review_judgment_sha256": "b3368f20ba89733e7ad1af5a8352d095fd548a2cd11aff1e04b6893c2e820056",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "0f470ca2d990c97eb0740e111f426449edd7f5f96cd57e84fd95188c1436be5b",
+      "review_case_id": "88e18b6f333f478f54a0168f1721687b6fc80a5205c7d671e2b21dd0880bcf8e",
+      "source_text_sha256": "9394ba2c5405b28d67535fc74d322e5eabd85872ffef079e7a67db5e46aae07d",
+      "review_judgment_sha256": "d902ad5f096ed96611daca47226748df13eb3ad32cec64671e384849dce6caaa",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "958683df9a1bc09d58c72b4053e156e85b7c149230d89f7562071eace6af53fb",
+      "review_case_id": "88e18b6f333f478f54a0168f1721687b6fc80a5205c7d671e2b21dd0880bcf8e",
+      "source_text_sha256": "2b1bf0dc8621c7b95479c9d5b6a77f4bffca23429f96ab0dab24709f8704623d",
+      "review_judgment_sha256": "667e6c2e8a962aa14dfdc47401ca11e58c2a575ed4019b4513d2947f5d53a6f5",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "f2f37293b5fc90165622f510bc036de777e4668d2b97413e80aeebe757aa8966",
+      "review_case_id": "33f9a297bf7d65baa2ec4e9fc88c845592aecced4ff7718f82fab9909c3e34f1",
+      "source_text_sha256": "0bcd29efe41c5e036f7d1644e2be719a22a17dfff143a9617877cf488bb1d13c",
+      "review_judgment_sha256": "3bf0da704013800014095c5f850a09da3c67f119e5a03e9d7454259eedd79af9",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "fbce99ef736ba64141c5d2dd2045c6419f223cb36c9af883270e4a3db5153db3",
+      "review_case_id": "33f9a297bf7d65baa2ec4e9fc88c845592aecced4ff7718f82fab9909c3e34f1",
+      "source_text_sha256": "ace43f920a4b8568d642f34caa96264a692bf0a999475a43ad9a62aeba184264",
+      "review_judgment_sha256": "61e4e4cb8d744b8b2e0a0b749e151e98d477d21c8878ea5fdbd082cb7555887f",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "ad198e22ed46c0b1cd1df052f195fae7153859802cb60d049583cf2600fed593",
+      "review_case_id": "07ebe9609889cec53f9c94d43db7ba02929b45b3eaefae01805912c9ad4b2947",
+      "source_text_sha256": "e4922d19c20c056fd7f4e716b0e1c2103bffe1fcecb21a81d37df4b304bc2d6b",
+      "review_judgment_sha256": "487a976e3cf408ea7abba5e70b7bcc75b3ad5903a6326f5f1a6220e8fe13cd3b",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "1f10c8d8bcec13aa9009b71f170ae41608932990db1a08686c61f1a46bff1cd7",
+      "review_case_id": "07ebe9609889cec53f9c94d43db7ba02929b45b3eaefae01805912c9ad4b2947",
+      "source_text_sha256": "2fa666d9f5ef8c1d86c84a12a66d60d6470f6b0ce4d11c97da1db45dbb074478",
+      "review_judgment_sha256": "a820ec49882c05517eb4b558800f82fdac4648ce41b7050521b1c0717fd70512",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "0d8d255e1962d9e863c22c6aeb87e20123afba4828861324bf8907c983544ec7",
+      "review_case_id": "07ebe9609889cec53f9c94d43db7ba02929b45b3eaefae01805912c9ad4b2947",
+      "source_text_sha256": "1f1c29ed310598861bdd6ed810fc177cced81e04663e1216ad00fcea8489c9ec",
+      "review_judgment_sha256": "c96c4707a0abcc48ba3e81c384268472d0bdfe030c4dced006519c5a25cad1b6",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "ad0dd2d984cee5b5baf2109b1e04d86d267f75de2b3898ca8a6cb7354162be10",
+      "review_case_id": "07ebe9609889cec53f9c94d43db7ba02929b45b3eaefae01805912c9ad4b2947",
+      "source_text_sha256": "35c1d60240b558e3590cfb95c3ad735ac05df15a3231f0f02f1c198ccec5224d",
+      "review_judgment_sha256": "09c5430541f816ad968e1e422d6892d5cdfe434c175d1809d160fd7dc0e4c059",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "8588357aefebbe05b83a935645c35a8f87c8be667aa5a226bf06951e6deb497d",
+      "review_case_id": "a8fb5d71aad5cb759e24aa2fa43a166eddd74708eaf81f10f6c82df05963a600",
+      "source_text_sha256": "2f73bbbe3e5bf36cb2391f594705d618208a2f969cc3af95d7978dd82de794ca",
+      "review_judgment_sha256": "b9df15bb9a295f91e9a0386afc286a4694e872ae4718fd2814ac75839f62b760",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "9ec83549e744880d6dda93f56484b1062cc4d0d2dda067fe9ef852bcd6faf101",
+      "review_case_id": "a8fb5d71aad5cb759e24aa2fa43a166eddd74708eaf81f10f6c82df05963a600",
+      "source_text_sha256": "3963c6d0a3d17c80a91734239060512b252bcd6c2a63876b5abb3b00fcd559db",
+      "review_judgment_sha256": "32b88cd440f5d1673a408838afd40db6e94d2c5988d0f35d0196f3d7fef40a4f",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "39b335997de38f9ebf5b8aae7e81f02b580000c56446e61bca535b5669a14391",
+      "review_case_id": "a8fb5d71aad5cb759e24aa2fa43a166eddd74708eaf81f10f6c82df05963a600",
+      "source_text_sha256": "7b951c1893dfe56dc9ef8edbdb5a0ce72cc11420fbc32c05241c0233a2cacd5b",
+      "review_judgment_sha256": "b0ed811d2735b88652e97a3533babaf28cdf2c0fbbf00a95861460cd812ea17d",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "c035f9b8ce68ff6bb883f06c37f2851a81aa9aa86c023bc7903e3b8101f340c7",
+      "review_case_id": "a8fb5d71aad5cb759e24aa2fa43a166eddd74708eaf81f10f6c82df05963a600",
+      "source_text_sha256": "aac069cc8a1f207794cfb988be4954f3f9ff9e0bb22b487095519653c136f4f9",
+      "review_judgment_sha256": "34ca71b0952130eaeccb062020cc937233fae4b25a1b73c7285360d1e1c2b9fd",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "dedb0ca3b872c7343181c67df4f69df93b172fd1948e673c907a1b003f4cd7ba",
+      "review_case_id": "7d5f0e48c01ffed77bd09f2eecc4a037a5be4310b396e4a868d7c0954f8f0dca",
+      "source_text_sha256": "0afc7d4bab0b6c6931322a0f4dc2b8a70fbbf5430e8db4cd50e3fc69e9296beb",
+      "review_judgment_sha256": "3bde5f8b49f3684aba6f2f4470d0a78d23d459e2504220d2b2fc30f41e6faf4f",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "4135f1b4c14be7434a189eaf1310f819409f13095167ce4650decb4f8c13dd07",
+      "review_case_id": "7d5f0e48c01ffed77bd09f2eecc4a037a5be4310b396e4a868d7c0954f8f0dca",
+      "source_text_sha256": "4055c57c0a954c3da152eefe785de6fb652b6686d3211fd4b395505cfdc654ad",
+      "review_judgment_sha256": "32171f677e3de3fecaf1a0cc482eface4ce8acaee21bef6e73ad41770791d94c",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "761ad3c6d1538aa80ad405ad78eb87176bfd19e7d4544ffbc69c1d1a2fd6a775",
+      "review_case_id": "7d5f0e48c01ffed77bd09f2eecc4a037a5be4310b396e4a868d7c0954f8f0dca",
+      "source_text_sha256": "9c2fec1ffe4dbf8875c0fe40d24a7268ef1ff6ea2767c9fbbcea3e5afaa6a783",
+      "review_judgment_sha256": "cebd18c3c9573a9b00e42d095ba62b813f7a37beb4ebb827755410ef512f86cf",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "1f11686fc408339a2972f40a3cedbd8d8ad46f7213bd744be4199f5d860bdea5",
+      "review_case_id": "7d5f0e48c01ffed77bd09f2eecc4a037a5be4310b396e4a868d7c0954f8f0dca",
+      "source_text_sha256": "4d375575c52252f598cecdba2c5719687b35892775fd07c0962789d100cbb11f",
+      "review_judgment_sha256": "2101e82e5bf284a41667b03a4aa6aea869406e62d695f2175089315333fa10d7",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "84bcc8ad8d483c930f321f7fc57e0aac83ed68d42ab73598dcd3d0e89c0ccafe",
+      "review_case_id": "6ae8caea498b969fdb7d560c3d72736a7da6ef902207cd7068766e2cb1c3e60e",
+      "source_text_sha256": "9e4974ff17e1624ccb108d175f2872cde7f3c222f03d16fb40f589c0393d998d",
+      "review_judgment_sha256": "d3a6fbcc0cf009158fd4a63d8c652b207fcd1a6cf98f7fd74b9557d815ad1f74",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "9d1101e2b313d9455658504e011fb868c15ae1b2106dc6a2fec82b32e060a2a1",
+      "review_case_id": "6ae8caea498b969fdb7d560c3d72736a7da6ef902207cd7068766e2cb1c3e60e",
+      "source_text_sha256": "39dcd9ce299fb62813fe9a0c1442399b1827bb29bdb225445137a28f6acedf48",
+      "review_judgment_sha256": "c566618469dd728b98382be71f00deefb73abadda9cb30b66eb0c62b68a2bab9",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "1e424df025c44e470b7f278925c3f5402d53d0da03f64f1621748e6ef13a7326",
+      "review_case_id": "6ae8caea498b969fdb7d560c3d72736a7da6ef902207cd7068766e2cb1c3e60e",
+      "source_text_sha256": "f2f0573698958f1fcda4d5c0b8852573de6b3648372b49739ec200c7b30cbdf0",
+      "review_judgment_sha256": "08a1ea192f2bb7c1bcfb1da2641e6aa4521767e3a7d6672335307d03cd6b2d70",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "424c5a255557b95aa73fbba10e6bf16edfd7beaf22a87ff70dde2269ab569ab0",
+      "review_case_id": "6ae8caea498b969fdb7d560c3d72736a7da6ef902207cd7068766e2cb1c3e60e",
+      "source_text_sha256": "fc04e1520e63974fb8634479277ca62f7b14bc64e2dfdcf661d8e2f89955fe95",
+      "review_judgment_sha256": "64e3f8763aa5ce8524a5690c07c9f8f5715bf908c67f155faa28d506d3b1a11f",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "01fa731d0187b5e063a08bdaee507a94dbfc04bd871294725c7c3a00799cbd4e",
+      "review_case_id": "09737f68352a06d3f476d81fa4bf3f75619033b506098973ff0f89bc8593842b",
+      "source_text_sha256": "d74b7d5129af39a7a4654a190e2b849eecda9fa8c3633490932e2470abeb6886",
+      "review_judgment_sha256": "725f50fe2fcb5840d1b0bd4cb94ea2bcf62db6a551f90a697925be1398c6459f",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "b1ae5d16aa21ca96ee06115258bdbf80554793caf5f380f56791da15f668a134",
+      "review_case_id": "09737f68352a06d3f476d81fa4bf3f75619033b506098973ff0f89bc8593842b",
+      "source_text_sha256": "7107f2551ec287a8774a8ff3566c58a967174cffd04dbeb136383bc96689e366",
+      "review_judgment_sha256": "5203a3327882251ef6a2f95dcaafd8887f7f3c9667f5b31a3e82964061497228",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "5ae30fc909959a12fd80fa8b4b085ec264e75aaf6341901c92adfeaff1bb8a10",
+      "review_case_id": "09737f68352a06d3f476d81fa4bf3f75619033b506098973ff0f89bc8593842b",
+      "source_text_sha256": "0fb80711080e3950bc18fa5a99794350fe09096e384fc9039f99c8b084813fd0",
+      "review_judgment_sha256": "29d78f5bd647079e9b18de335eba38cd0aafe6052fef3d2ecc5269fc04fd6a08",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "c615c8113d655f83452f3570e9d9e157d08c454e1f1ebea4286460bc6ff18098",
+      "review_case_id": "09737f68352a06d3f476d81fa4bf3f75619033b506098973ff0f89bc8593842b",
+      "source_text_sha256": "b4504c5b9c51dd48063797d9491c65754fc38c57d95326d7c7934abf5c9baf32",
+      "review_judgment_sha256": "7b5f66933f3e61fa53864a73838f7603f07c6401638e6e51ed73aae7b68fb6b1",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "a357f5262779211ee72e8328231685a17eff876763bfd414d156f515425f0904",
+      "review_case_id": "09737f68352a06d3f476d81fa4bf3f75619033b506098973ff0f89bc8593842b",
+      "source_text_sha256": "78544292165cd08d76c0a7e38aed1ae941867acec3b6d214906accfc0aca0140",
+      "review_judgment_sha256": "2789f819dfc9a4d30f08a3a67059fe7118b7db59ef07ef7dd01d9f5f9d3701c8",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "0d2c4bdd728fb0c6864d4fe02d21be86ee2f3948ee82f7e9b32118e83a21212f",
+      "review_case_id": "09737f68352a06d3f476d81fa4bf3f75619033b506098973ff0f89bc8593842b",
+      "source_text_sha256": "281631cc30687b170ed735311a51cb3d4ef4c557c488c9fae22627d0cbf0eef5",
+      "review_judgment_sha256": "a92fdf1b8b6f4c0ddb94a381132ff1f8e44e8035e0c199fc33895f9d6cb51b9c",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "5ae577d4ebd02136ba5f020dbf689088a0663a2608de7d4f4ab0151162feb981",
+      "review_case_id": "c91f67edc0e22fa85516122db9a14e16c0957f54ed7307fdfc7caa2c37e3c3fd",
+      "source_text_sha256": "8c7ebca501da5a81604d95ec6a0982dd346fb46978d0cdee1fede8f5ca46cd22",
+      "review_judgment_sha256": "da7c1a56996f1d696b9abe835362c3127af68233ae88820a5e7a845b4ffeb553",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "c034dbc07438677deac0297339ccc0b40add1a731b788d9c09e0d72cf5b530a5",
+      "review_case_id": "c91f67edc0e22fa85516122db9a14e16c0957f54ed7307fdfc7caa2c37e3c3fd",
+      "source_text_sha256": "0b796cfbeae661424a7470f7dd75c878318c7969a37aa5fa8b4d2fe02d96f764",
+      "review_judgment_sha256": "a3edd4c14cf47fcbf8d5dbeea2b6e8a60e285307f8803131f35956bd6d842b51",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "be04d02a8e984c943b7c41d5fe7f752c4ec693e1733b43b786d77e770a0231ed",
+      "review_case_id": "c91f67edc0e22fa85516122db9a14e16c0957f54ed7307fdfc7caa2c37e3c3fd",
+      "source_text_sha256": "f76736c7a65a87adcc000554cf668d0748539b40b1029bea33dccdca56ff3895",
+      "review_judgment_sha256": "afce8900e447012e4a4efe54d6a0471c6d69ffcbd83a5d43288f056e9246e107",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "c56402039ea02409cf81db71a3b0ac82f16cedb8638239efbf21ad1aeb090d32",
+      "review_case_id": "c91f67edc0e22fa85516122db9a14e16c0957f54ed7307fdfc7caa2c37e3c3fd",
+      "source_text_sha256": "dd1a6847274aee439d1085dd9bb5512dfec5d5145b5410ba191bf1dd67552a0f",
+      "review_judgment_sha256": "1d6ac884654dcb3a89891c8ba65149be51294edd8fc4dd61d57b3d1b842b0ea6",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "4ba53c7c4ad23c113bf528cf92375f207042096b5c51e3e9a60ffc5025aa1d8d",
+      "review_case_id": "c91f67edc0e22fa85516122db9a14e16c0957f54ed7307fdfc7caa2c37e3c3fd",
+      "source_text_sha256": "66e375e3f258d6807f03caea7813e7b59a128301af03d95151e7a3178c5d0707",
+      "review_judgment_sha256": "f64b0299be534c6b982fcd43ac7944cb61cfb45f35315993946793eb6d340c91",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "d4a9d2495e7edc5e81dcdcf124330b9d565906c981c74861e09f661a492919ca",
+      "review_case_id": "c91f67edc0e22fa85516122db9a14e16c0957f54ed7307fdfc7caa2c37e3c3fd",
+      "source_text_sha256": "71636b4c4e43c0fe84686849c931071a0441d30a7a5f6723eb432d36bfcf2d89",
+      "review_judgment_sha256": "4f0e766a38059b907370d7698881e8e3290c859c055e2e3b5941202136352db5",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "459c1aa350748d2687a8615eca79541355774c373a1e15deff91cd6fd9a6ee24",
+      "review_case_id": "c91f67edc0e22fa85516122db9a14e16c0957f54ed7307fdfc7caa2c37e3c3fd",
+      "source_text_sha256": "df37373e3d08f348fc97ebd1ab1511e572baedddd3e7c8d63d034983c68fa4d9",
+      "review_judgment_sha256": "f76ec2fbc6585d78993023ae46463f5de68decfcb1b61ec657609d0ff6a68153",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "3f68cb8a2a750e881ae30051ea7cbec8046e54ac871a8dcf3e0a10b4d3f44a05",
+      "review_case_id": "c91f67edc0e22fa85516122db9a14e16c0957f54ed7307fdfc7caa2c37e3c3fd",
+      "source_text_sha256": "4726d478863c810670659e3b2e66b88ea264c00a5cbbf24fc1f48a24ec5f55c7",
+      "review_judgment_sha256": "326890511f1c66526754fc21da2d06ef15aa6ad7578ac47a065af458b4c5c669",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "720022ddf7cf98618023b1335d6e818f0088c0b976418293d5242f1de018d5fe",
+      "review_case_id": "5260c411b6da3d11f9dcd3a2a64d69ebf2fa61624d75decf35e4d633c6c68b5d",
+      "source_text_sha256": "d259820f7a533a2704da31fb670ecf8e2461f028e7f4c5c2eca7f1a3ae259348",
+      "review_judgment_sha256": "24a927a8d0f006a6a3c0e8ae44cdddd7f78c551b84bcceb857a0b80604770e45",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "cf2ade0e281c39be4f716b532bb4b832ca9cdb20fd9edebf2cc887bdd11254c3",
+      "review_case_id": "5260c411b6da3d11f9dcd3a2a64d69ebf2fa61624d75decf35e4d633c6c68b5d",
+      "source_text_sha256": "21afba5e1fd1224cd876826fc7b9a9e8c518097e2eaac829516da97438d8af4d",
+      "review_judgment_sha256": "6169e4f301521e455ccff3e43f6beb3082edd91e0c3a1e28b0c16306f62fa806",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "d9d859bbd8c8834ca357bd4c5cd886f6dcfca0b3b03f21b652f18de3815f66e7",
+      "review_case_id": "5260c411b6da3d11f9dcd3a2a64d69ebf2fa61624d75decf35e4d633c6c68b5d",
+      "source_text_sha256": "de61747eb442c628a8705a98a2f8bbea43dbd0d6144edc842e5581ee40a9a130",
+      "review_judgment_sha256": "0cab7f87bc83ed639ea6fb54e1a4a2adf6777e1cbe955bfbaf82b9726de4229a",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "ea023802a5b0ac68fcd63cd3d2290a48ec876544b59fb6fb24e22d611acbee4e",
+      "review_case_id": "5260c411b6da3d11f9dcd3a2a64d69ebf2fa61624d75decf35e4d633c6c68b5d",
+      "source_text_sha256": "174e8cf66640961c6d6f05e310fbc516b2a4f9f36a25871d165a05ef6d672dc2",
+      "review_judgment_sha256": "1af7e794c120ec2f695d6bbe9c48e46f5659e4ee4e175c285932d31988fa3dd6",
+      "support_label": "direct",
+      "status": "abstained",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "ce84f1d3444a998e831643a882a0392449b807c6c076d254e336e5604a6fa0e4",
+      "review_case_id": "5260c411b6da3d11f9dcd3a2a64d69ebf2fa61624d75decf35e4d633c6c68b5d",
+      "source_text_sha256": "c02a0ed1f19309ba4514423f1d746e99dea3397166e9498a784275223d754492",
+      "review_judgment_sha256": "7947a7aa032d813547f4fd8a53e111e220d12472f11b171e5f21769d54469501",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "bd04d0bbf64f673badbad9f77711372d9d936599e839857b074539fde428451a",
+      "review_case_id": "38833dee89fef2d48c3cc54ff004fa02cb4e6d130b9f1838254ba594cd17caf8",
+      "source_text_sha256": "05c6b0bcc9266638212ad4f8eb28011b4ed7488738f9602f2cbf970dffc0100a",
+      "review_judgment_sha256": "93e4b351108e50576b6aa047114b4c697971bb60d5d7dce4c6b78bdf83c612ea",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "c2ea2402d8540df9604c2f789195c1fdb9090618269de20bca570e23b4727640",
+      "review_case_id": "38833dee89fef2d48c3cc54ff004fa02cb4e6d130b9f1838254ba594cd17caf8",
+      "source_text_sha256": "8d9715e1bfab558eb344a894beab4b680b9360c35067e4c23365a6a33bfe56d2",
+      "review_judgment_sha256": "c4b36e4cabb6e66223626a82b539a0f5550c924f91ddcc67423426a1e5bdade1",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "21e78e72466fa151098c4f359942dd50bde5e156e94f5391153f9a35e145f03c",
+      "review_case_id": "38833dee89fef2d48c3cc54ff004fa02cb4e6d130b9f1838254ba594cd17caf8",
+      "source_text_sha256": "a50ad96bf2adfab25c6d7ef0a669630a89c4c809764597ea3e4e0cfc50e4dc88",
+      "review_judgment_sha256": "a624996cde4b73b115959160963dde1583dad33f9f5c96bc3b19605190faf312",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "31bfa536f0dee21de38899cf7846a776ca393cc3ac1508d939a0e0c81b95218b",
+      "review_case_id": "38833dee89fef2d48c3cc54ff004fa02cb4e6d130b9f1838254ba594cd17caf8",
+      "source_text_sha256": "9021c2853ecb2b061d51efee7271616b0aab86e6e863ef03b26e45b2f673c002",
+      "review_judgment_sha256": "82a16409c7f689814e232d72ade5c9f66988f2256b52fc864fa6ca489174e980",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "78205939b1dcdaac12941655dc5a01fb35db802e90e24ff4bbd4b4aa710bb838",
+      "review_case_id": "38833dee89fef2d48c3cc54ff004fa02cb4e6d130b9f1838254ba594cd17caf8",
+      "source_text_sha256": "30c4a01d1f642c1e76562fe79d08ebd48075ac0219a290c1663dd9bf1232c1db",
+      "review_judgment_sha256": "2a98ba38014ae2206d61827588e30b8f611a064fdfa0077aa37096a90895ea2d",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "0f1e49ec307d19fed1a5ec3cd7b780fab2ed9bfd285d9b58dec0023290951b6c",
+      "review_case_id": "38833dee89fef2d48c3cc54ff004fa02cb4e6d130b9f1838254ba594cd17caf8",
+      "source_text_sha256": "173a8dfa6e4eae85f8064251084ba8fdc4b3ccf759743669404b54ac7dd35444",
+      "review_judgment_sha256": "cb40851637c45659ce1b96200cfb2ef72f640a2b77b50d02a3b9f0caaaeaacc2",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "4967026a10a0570d7f166f116becb294f9d39e777120b713496744893f5af1f8",
+      "review_case_id": "38833dee89fef2d48c3cc54ff004fa02cb4e6d130b9f1838254ba594cd17caf8",
+      "source_text_sha256": "ddc513d59475febae4a7eb51fe07eb65234a45a570e420d51a89b4106f7e64b4",
+      "review_judgment_sha256": "48b8b7c8d714d8bd4394e06a066360edf7ab59d68439edeadd633310fbe88dac",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "ba9ac84a6e336f82587d1eadd910c4f9eba7d65eb7c6afd4c15d54e1a0af7a8e",
+      "review_case_id": "a037e76f7c51215349df5d16e0aaa68229138e8643559e92064b689574b2f816",
+      "source_text_sha256": "4a911031e38da3af87618880b4c0dba23cd6dbdf7cfee78cd26d05b378866f34",
+      "review_judgment_sha256": "03661080d0f438015ad2a2be676cdd37d5a3ead74c3f65b716af1b1cf961458d",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "a0d5739f8bf423dd691344f572e74418e0651a838ee4090cdc6afeb61fa7e91c",
+      "review_case_id": "a037e76f7c51215349df5d16e0aaa68229138e8643559e92064b689574b2f816",
+      "source_text_sha256": "f22b8caa8d97f5e0916b3eec7b3c66aebb65d9765e7fe42ffa6394b519b2cc27",
+      "review_judgment_sha256": "20c04c9aa406776d01a23b04792d73bfb7d1bf1fe7c48d309f3af474e82e1209",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "84a238d30f7806dd20794d9c3bd5f2e3cb0bf768d287ee01c7a88bbd7df2caa4",
+      "review_case_id": "a037e76f7c51215349df5d16e0aaa68229138e8643559e92064b689574b2f816",
+      "source_text_sha256": "82e4c06e94e1c240e87d268d23f5987ddb263c0214bbced81f5525f18baf507f",
+      "review_judgment_sha256": "f55b6bb5bf13fbc1c965e7de24e3a928c335c07aedd93411ca343fed33f04eec",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "ded44090195b9ac58b01cae3f90187345aa0b84f6f9865843ed1fda93d0e8c49",
+      "review_case_id": "a037e76f7c51215349df5d16e0aaa68229138e8643559e92064b689574b2f816",
+      "source_text_sha256": "5e9f14caf235f25b10cb9d026878d0251bc2982048e3b2e3dae14298e13b2876",
+      "review_judgment_sha256": "1dcee45002bfc055418216ad6a2e57035433c13d3cb49c476ba77eefcd85f502",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "2d6885c314a8f4c32649aca34654ca2e33c2cd23c333ca861fae9205a6bb9122",
+      "review_case_id": "e9b0bf7d10f332c39007c1a0a4e637103c0d9ae6e4df6120d5fcf8f4daefce75",
+      "source_text_sha256": "4b7ef950fd2ee1698cd2c7afd4830424b880e4ef200d7379b915b9051f75836c",
+      "review_judgment_sha256": "a58a46f0661bd3c3e696b79492c6aeb41fd0bca1e57d861df6c0fb08a234821b",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "0c1f0b0dbac173e255abacb0a4ccf3b3d8696d986461cb9e0730efd6a958545b",
+      "review_case_id": "e9b0bf7d10f332c39007c1a0a4e637103c0d9ae6e4df6120d5fcf8f4daefce75",
+      "source_text_sha256": "ff28ce1cc6811de95f4735fe8c28ef60f9093e46c21cf8b9aba79a84a7536c7d",
+      "review_judgment_sha256": "a87c6b4d17631f649e36728b01a95674fb2b22c3e409e1f382ac39340856b397",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "c5564974ace85963a376f1acbf1e57c9dcb82ed99497eb601d6bd9f1fbd89afa",
+      "review_case_id": "e9b0bf7d10f332c39007c1a0a4e637103c0d9ae6e4df6120d5fcf8f4daefce75",
+      "source_text_sha256": "d98d50875f6963b3cd3c9eb1f5b02926c918c656f6f900041023c4d16026e9ae",
+      "review_judgment_sha256": "d74d82c2e7e9cd27b1e5fdff7b9d8ed9ed23df6ecaae11b929994f2a76c8b49b",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "eff41193409a9c67a144307bfd6aeba53b691c250a535cee7910cb01fdd3b478",
+      "review_case_id": "e9b0bf7d10f332c39007c1a0a4e637103c0d9ae6e4df6120d5fcf8f4daefce75",
+      "source_text_sha256": "ad038044b64b34ab983efb4e7327e2068c5b96c135ef5044b4a14a59d4fc0b4f",
+      "review_judgment_sha256": "8e2273a5d831e8d9e8c6da9cebfa6cefc0151d376da6b67b8aac40664db60726",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "dbe8676b39edf9d01a56b3c23bdc596bcc24e83306cc380fdc502629f3d051ff",
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "source_text_sha256": "266e9edc19667a9995d7055245774c8988632daa5681db982cf522da5319dca7",
+      "review_judgment_sha256": "879826371e7d6d30e0f54fc831880bac9a96d6fed6f2531a7608c9ed15607fe1",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "7f704c4b37bb55aad1cd5cc1f1aa0c95148153b528e81623eb6326e88cd1bf5d",
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "source_text_sha256": "a1a3c2747aa8a4e4c0f163359fb287eac646803a9673f4089524567b402042c0",
+      "review_judgment_sha256": "6a8b09b7b91b7af0063f6be5fcffe034dd4c619c0bf78b7163b0068a43d09cff",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "b44de3b6fd44fdc7d01b3779e0457d58d23662d1d5f02b3adee963075a87ee35",
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "source_text_sha256": "64a877205aa90e0d0348e9fb7b50b95402f9f685b55f840054df86fe075b6fa2",
+      "review_judgment_sha256": "0f710b98f094e57a6299a0b133de7eebcd1f564c92cdb6667a554ac7f1b15fc7",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "fe91d0c7bf46a4d181f4a54880cd32dc2d1c50b3f91e6c6179950ef7e7a0b433",
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "source_text_sha256": "cc1c5581ff67c17e573f9a7aa19e4470884df6370f4a6bc7a235a809f66dc3dd",
+      "review_judgment_sha256": "a8d0d85901c932af46be1453cc13188f2cccb3cd12c5b712fcfe1ff7d9f75989",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "05e142716aeb9a447253809e11aa203b79b9f0239f123b06af8222828c1eb499",
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "source_text_sha256": "c366c4b6cf744ce6534234dbe8a020d611d2af22f95318795f0ff4fa6755fd51",
+      "review_judgment_sha256": "a9e17eeab4db9841fcbb6bb448942ba3835a61bc33f7dd717aeb3abbaf59399e",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "3cf175fa7b71b9ff27ced3db86cbf4dd11357b72c0fc76810fab40b1e6f0730a",
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "source_text_sha256": "8035801fc35b563245dcf476a6b78ff5d285cb5298b33b828da78ca33f5dc579",
+      "review_judgment_sha256": "5a5764c479620d95a5fef32a40444d1c78099469277026cf39d7002c824153f8",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "6ea773596d00f9c503a4d70783cd2d89e44d4819049a7545da2adfa5e81e594a",
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "source_text_sha256": "a18d46b47f801c4393fcbc82ef2bf91903061dba63d61a950467120228c070b1",
+      "review_judgment_sha256": "0ff18f181e7d9ea05ee33ffab1b703dc852a472ca47dd941a63bbd1c9e7fef36",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "bccfb0586b0f60bc9c16f4bd2f877db4b2aec4fa7aabe7cde14a7b3b478eef1b",
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "source_text_sha256": "8c2929ba3be54c40b553b6f15f99a4ade6ba1fa00fd84bc6a45cb572afdc24cd",
+      "review_judgment_sha256": "544013dea0df7e1cced3d3ab466d220617661e04574342fd4799b030d2a2f160",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "953ca41945437ecfda0de4ca3ae50aacc386b393d398e69e98452b37fce8471e",
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "source_text_sha256": "7c936bf9fc993e8ffb8d93ad00089b42f4284f28cf09e363e687ca9c2ec5f5c4",
+      "review_judgment_sha256": "1b0d8454502d1dac95eb1d8c2da089b68aa286f2147aac0a036b8ce7fd40b993",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "8c542ebb6a078a15babe2b0d6a93622b563de96c417103cbb2704a3f399bef2a",
+      "review_case_id": "641993cf586b2273eb7a2ed475200e9765818e34a1a5a6807c54cd39a07e3eb2",
+      "source_text_sha256": "688f89ad25fc34a31625dd36512cad5543c95339b96952c4a56b44485baad942",
+      "review_judgment_sha256": "647ce6d88dda4c86731d7094ff36349c79a7d67bb859d6b6afe3d2e1266aae37",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "6c4e54921538950b348ab0901f796e23102a372d445eeca8c941dfa3747fff2f",
+      "review_case_id": "47e2cf478fd8bd0fd624ba7c7f84dc98cab64bde4b5f504b529583b390bc3d3e",
+      "source_text_sha256": "412d1ee79cdbbaea37cdf9d6221322e618bedbdaf3fd0830f845e4663f09dc02",
+      "review_judgment_sha256": "ec8f31b478bb4160eb08023f7613f61e0492af2046f4274be7df67ce93cdf13b",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "8ce0cf3a39772efeef8e1de4606546a31ebf06ee0909cd65ce62987f05f97312",
+      "review_case_id": "47e2cf478fd8bd0fd624ba7c7f84dc98cab64bde4b5f504b529583b390bc3d3e",
+      "source_text_sha256": "61821f01c51bd77e3afa6bd1e61bd84c488d0a5e21b3b11a4d5cca6b74067370",
+      "review_judgment_sha256": "a006f345dd08e5ac833d4901158f48ad8b02d7678b7037217c8615689d393636",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "bfec7849aa91afd96dc567c45ff8d74b6f431dd29e1a166f935ed200195d6ac6",
+      "review_case_id": "36c3f3a92ee5bc6c13106357512abb2487a084b3cc44798d609fb162cf853a98",
+      "source_text_sha256": "986811577938463580940b6d03787e68392c8cd0c62a218434ddaad929ad0195",
+      "review_judgment_sha256": "53533cf732661ece5faf9a3d0b08b976c16054459d780683d7ea1c158c1242c3",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "d8001654fd0fbbe8b6064d1daa3ddfdd01e53f5b0850ca132f090fa93a9c439b",
+      "review_case_id": "36c3f3a92ee5bc6c13106357512abb2487a084b3cc44798d609fb162cf853a98",
+      "source_text_sha256": "190255cc21275c0d995c7ba186e7cab62d8d5323ea8ff5723acf5388cc032d86",
+      "review_judgment_sha256": "677f6b951e5d550138b58c0417e22971bbeb0badcea13665875a6b55bd5f082e",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "71836636c7d91d9bfddb043a01033723e0d2da3b1dccc6a4ae7b7f761c554cb7",
+      "review_case_id": "36c3f3a92ee5bc6c13106357512abb2487a084b3cc44798d609fb162cf853a98",
+      "source_text_sha256": "3f80865f73f0de522048087f28012441a270a2ebd2b4bae24a63c4963aa17308",
+      "review_judgment_sha256": "38213ee78303463e2c6a42de334d7365c39cd0d75f16da80584ea0cdaf51929c",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "9debd5a0bf46b6488495f1cac420072724c3ca2489968519644b5ce5eedab331",
+      "review_case_id": "36c3f3a92ee5bc6c13106357512abb2487a084b3cc44798d609fb162cf853a98",
+      "source_text_sha256": "f4ef22bf6ab80a4bf9f680ef0a996ed0f5a8f5f8fbb118516af924b0d4e82634",
+      "review_judgment_sha256": "7f57bbf187c8429568681c0cdf9cdc62116c0b908450ced57d946bda7e884f60",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "8e1ade0fa296583f3dc3c91226c5bad56100e404ad8972c0bed4260909680a48",
+      "review_case_id": "36c3f3a92ee5bc6c13106357512abb2487a084b3cc44798d609fb162cf853a98",
+      "source_text_sha256": "1f935654e56741f444f1914152f532e06e887bb1c7cfca70f1334c6b4aac07ec",
+      "review_judgment_sha256": "7ca12e9d911a3dcc05b943ac6b06e43069b5963a06a94c4b34d3ac28abc1171c",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "123856de153da702c486a350e83900c18e2b277a0d64ce42fd20db6466cad599",
+      "review_case_id": "36c3f3a92ee5bc6c13106357512abb2487a084b3cc44798d609fb162cf853a98",
+      "source_text_sha256": "0e841decf1ed06336db23eee7fba3b443ca2535e5496c203c979b0c4ba7995f8",
+      "review_judgment_sha256": "16e0247df78243783b5eb1553eadb7ff3c2ed48c05e743d2ef59591b390188e8",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "6b54a8c792d2fd83c246b079983b9a33c41c6ec5e7c8d53d8a511b363538ba4b",
+      "review_case_id": "c833d72cbc94fd38dc877669d2011849a4dce47769397b3948d2677fbe51a484",
+      "source_text_sha256": "50f85be5ed714fda8a05a27f63568b95946abdde3e643e1bb3b1294bab08589d",
+      "review_judgment_sha256": "f8c7a6902a5fcde80b43d965034678ab282610eaed5c8998d1014ffb9e3c1536",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "f1caea2bc39d67a2e474389b6f53109ca3d6365aca41abef7001a5cda4ccedbf",
+      "review_case_id": "f577dc5800c7d7c8b059f3bdd8817c66c8fbcf160990bfa9f526a1dc516022a2",
+      "source_text_sha256": "6ced4d3ad750c78eabb85af4b7988307a0b400d0b2cff358a595d4b12f57c553",
+      "review_judgment_sha256": "106896edc8686eb2a73497ae95fe0e0df9f72e2d53717172b79dbcafd6112fb2",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "27c10aa9110e2e56d75374af7c067242dd0be9c1190746cd5699ab2b1146befa",
+      "review_case_id": "f577dc5800c7d7c8b059f3bdd8817c66c8fbcf160990bfa9f526a1dc516022a2",
+      "source_text_sha256": "1f057d74fa2d068227b616b684668028680891ba7453a89d21d46d8972280415",
+      "review_judgment_sha256": "01a0697362a55a5f6582e17225b7e0cdd6a2de3001b339dd4de17d1fd1258024",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "aaf80ad21486ebb16ab9034ab91c690017d7d8ba6e171b084ce23078bfd61819",
+      "review_case_id": "f577dc5800c7d7c8b059f3bdd8817c66c8fbcf160990bfa9f526a1dc516022a2",
+      "source_text_sha256": "270f98ad2e6ae29695c68e54e1e6d04ef3e922012fc89fc8009f71a59e1bf285",
+      "review_judgment_sha256": "f6f66cee32c9a830feb71f48a07e19f783b9d3af691f3d5ffc562e3aadd6b395",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "ae48e3c36f78f7f463669c903f242de38049a7a2e96bdfba3dab25878679df4a",
+      "review_case_id": "f577dc5800c7d7c8b059f3bdd8817c66c8fbcf160990bfa9f526a1dc516022a2",
+      "source_text_sha256": "fa6e0567ab2e0580ed3f3006e41aa160b2bb14af7aba0aca6375d99241b71f3e",
+      "review_judgment_sha256": "d4da0e18380bb8ac2484667c119f85e587fc872614aeb69a164f41ecd62b578d",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "7013490c68efc066747e694493494d65d47476f0cbf9ef99682b6c496a52e975",
+      "review_case_id": "578380c2469a4631d2746178f3dd2375291b385e53a3f58e50243cdf227bc764",
+      "source_text_sha256": "a113461e212a746b1e0e141887792eb230ef5a553210e2a3478937455342ffa7",
+      "review_judgment_sha256": "0521ab23622da73dd7dee0c2b5d00163b48e8bb608357a4e9db5936113f111c1",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "ded42d3dec2f262d4b3351cc6242b9dee0102a458598a1c1de6e35c6b7f6937d",
+      "review_case_id": "578380c2469a4631d2746178f3dd2375291b385e53a3f58e50243cdf227bc764",
+      "source_text_sha256": "c31e83bff7d5ccdab9bbdea5befb9a263700d3f8311a76279fa1b599bd41f396",
+      "review_judgment_sha256": "629abe8b909eb659f15b77b7f8b8acdfec9920b72c3a152c06f3acb696f1aaa6",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "3d52b64d2afdc0b1cfbf5016347f6e06b87a93526aa5c61fdd3c8a4f9f42ea89",
+      "review_case_id": "578380c2469a4631d2746178f3dd2375291b385e53a3f58e50243cdf227bc764",
+      "source_text_sha256": "26d77545d81571469008fe7d52c92f2a76202f7e8b15865de977fe779c781760",
+      "review_judgment_sha256": "908520fb8cb51761a14fa78498fb3ec0a484ef46d5d6fa4413dc87021f04faeb",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "e514fd4af98b9b958eb0cf6b398fadd624df26d40ee5bef1a828fb41206828d5",
+      "review_case_id": "578380c2469a4631d2746178f3dd2375291b385e53a3f58e50243cdf227bc764",
+      "source_text_sha256": "2f7a005260414204bf849efa9df9dafe43bcd09cbfe94815c042cbed59c454a7",
+      "review_judgment_sha256": "93f897f1302cf6610a2c6bb3b6b096a1779345ae3472b9714e4ef1c50b021c07",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "c55153c3e86bbd43f874251c9a88a31873efeed9f9d5a74198b8ca38a0a08295",
+      "review_case_id": "578380c2469a4631d2746178f3dd2375291b385e53a3f58e50243cdf227bc764",
+      "source_text_sha256": "f07d972594958c14174f8dc3e0857c60dc800e40c90995ff0a7c94c19d2fd02d",
+      "review_judgment_sha256": "1eb548716e0cddde66206f54dfd2829818cd617331300c604768df5ac6c8db88",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "4e1a8d2d44dac170ace1ab8142ea90bc36279c5f1df3bd51580c44a395381d8c",
+      "review_case_id": "578380c2469a4631d2746178f3dd2375291b385e53a3f58e50243cdf227bc764",
+      "source_text_sha256": "12988af03587713af3b4fb3f0b7475417d28ecbf208e39be3ad1f7e329f557f2",
+      "review_judgment_sha256": "201cd65ac955d84f72fc8b0cc06a9482650df4acd9d25666b59d61af80a030ef",
+      "support_label": "direct",
+      "status": "abstained",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "c8e71f37f40a9349db13d4a644806dae5eba0820bbce25167649f9e77b4cffd1",
+      "review_case_id": "578380c2469a4631d2746178f3dd2375291b385e53a3f58e50243cdf227bc764",
+      "source_text_sha256": "1e1381afa04a56a068466a201d5f36ea0037d84f2173973b8d92da8eca6f8333",
+      "review_judgment_sha256": "ebbe1826c8dd4ba3a50c5d02ee537a27793deec5a80b9fd7beadba6a100ca035",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "830f1ce5bf83d72d8bba566cdaab815ca94fca85bdaf93f069522297fd36e20b",
+      "review_case_id": "b524e507ea034bbbe17bf7cfaf9d0af93d0bec644272f1c2fe88dd6580be3972",
+      "source_text_sha256": "ae09fba29bc293b61d9d23ea127532b6d204b18226a051e144ed525e020af701",
+      "review_judgment_sha256": "c221f2efe926149aef0e45c2c0414a7de051e15207d12947a433ea9f721f512d",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "7ba3899f29c66fc436c598423013df1073253eb2fce7d85d16b3ac5dcfe86613",
+      "review_case_id": "b524e507ea034bbbe17bf7cfaf9d0af93d0bec644272f1c2fe88dd6580be3972",
+      "source_text_sha256": "0e423db8d39414d2665f145d98820a6cc047e7ee0d5605f12ec5e7c89606396d",
+      "review_judgment_sha256": "2d3c251f7e35a8e8e22cb4738ee41185723f0713cab4959cb7b43929976d9696",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "b32f63705c8b20bec84c1388580f744a0dfbc0d5d81ff7293d42d57ac75ba218",
+      "review_case_id": "b524e507ea034bbbe17bf7cfaf9d0af93d0bec644272f1c2fe88dd6580be3972",
+      "source_text_sha256": "873861c4c2e782cacf82b49cab107099ac926418dc2307dfd710f68d27b3ed87",
+      "review_judgment_sha256": "8a36f2dac471a6863f40d1272ec1c044b5eea3c0a013602bfffb8f980eb92157",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "ea7aa71eec3736bc890c3d4b5739ae9ab0621d4ffee2d31c3081f25be9e3593a",
+      "review_case_id": "b524e507ea034bbbe17bf7cfaf9d0af93d0bec644272f1c2fe88dd6580be3972",
+      "source_text_sha256": "0874beb3b3112e153d43d4703fc1dd78586338cf30b23554456045c3135bb358",
+      "review_judgment_sha256": "72e2b3b4189394ae67effee97c306290a9573186b9a745e0e1aa5e8f160838e5",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "8020b73de89bebc421b11bd3f82753f521e6c942863d813b4d6472daede5d482",
+      "review_case_id": "b524e507ea034bbbe17bf7cfaf9d0af93d0bec644272f1c2fe88dd6580be3972",
+      "source_text_sha256": "3337f4fc667a7bfda8ddf96150da8557197e56602bbc9ac199c4fcf7eba1c92b",
+      "review_judgment_sha256": "8f043ba9ced3a72bde556d4fb31f352b33a747e5e4b581028feb75e4ef7a57c7",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "d31c2c4b144b8f9f63ff424f9d50f7d8f289ab9c3c2878b51c39c8e972b4151c",
+      "review_case_id": "b524e507ea034bbbe17bf7cfaf9d0af93d0bec644272f1c2fe88dd6580be3972",
+      "source_text_sha256": "a0e2b2d825aea9a536d00d0ab9f433483c0bb436bdacc302a949c3a86aad0e36",
+      "review_judgment_sha256": "38939cda2a148622611473bb222adc3703dc311c7fb44db173516493a09c38fe",
+      "support_label": "direct",
+      "status": "abstained",
+      "evidence": [
+        {
+          "role": "primary_review",
+          "reviewer": "primary_agent_single_model",
+          "artifact_ref": "support_scope_priority9_20261009_primary_recheck.json",
+          "sha256": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9"
+        }
+      ],
+      "confidence": "provisional_primary_recheck_not_independent"
+    },
+    {
+      "review_item_id": "7c4b35ad9a2f7060521e8264bab0495cadc1ea0852a198e686fef4dca4f420e5",
+      "review_case_id": "da09815bd0fa28b674b4ff8d5abbf207e9923a4b65fdeca3991745955d6a8717",
+      "source_text_sha256": "b06631092bca9abd8119fab777f4adaee7ad92e136518045bd028efdf3a47feb",
+      "review_judgment_sha256": "015a71503ce9878ea95dc1284f09dcedb63e9075a5212deb06404bc319f9b4eb",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "60974e841c67d9d9b75b23c89588954b40c44ce96e3536c7edc0765137742664",
+      "review_case_id": "da09815bd0fa28b674b4ff8d5abbf207e9923a4b65fdeca3991745955d6a8717",
+      "source_text_sha256": "11d7098dd415a2df482cdba28c984e3c82f8aa443e454ce57326a3d9c93c6635",
+      "review_judgment_sha256": "21341ca2b5aa607bb9346ea0eae73c117e3ab043e8e8290434d2611e269a6213",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "065cfc07c74a64dea928e6d7dacea0ce1bb00e2522868afa2abb276bbeb8949d",
+      "review_case_id": "d648fedaadece085e2bac26346fdb4de1ce04ebe0627a4b1554b698a61af1bee",
+      "source_text_sha256": "827291cd52f626d00c034195b6dc314f4df6b73d5577f547657abb707035477d",
+      "review_judgment_sha256": "32e9cf040f3a0275fb0078a4a204d81b29b43a9f383daaaa2af39656a4734163",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "b52d10f933dc879e352894870cc38e24adb40596e8f1d6a7cb4f7c4e4864bd82",
+      "review_case_id": "d648fedaadece085e2bac26346fdb4de1ce04ebe0627a4b1554b698a61af1bee",
+      "source_text_sha256": "a7582272a56af4bb773344dec505205fd8d55f1e81bd775073e11154124cb73b",
+      "review_judgment_sha256": "3c73f7bcb355105929b0c4c181bc9a3edce14a8939e672184e313c4ad619b879",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "a4e0346007a778209c47ae0ed60649f61975dcffb9100911939dc9200645fd08",
+      "review_case_id": "d648fedaadece085e2bac26346fdb4de1ce04ebe0627a4b1554b698a61af1bee",
+      "source_text_sha256": "b0b5ae31e7c1d6c5f296661907cf6ef67a0d9a685e53c3ed3208460f67ba9d7f",
+      "review_judgment_sha256": "d37e5b2252dbe6ad09737b3bfb839e87cb4a53a6023e85e9d97acc7d2c6b497b",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "a1e254c7cf6bd3b5b9a50ffa73d239531b8e12f800a8fc46c1ea7904732dcd06",
+      "review_case_id": "d648fedaadece085e2bac26346fdb4de1ce04ebe0627a4b1554b698a61af1bee",
+      "source_text_sha256": "6daf85cee4f0cd9142bc6985edd5c791aa09f9a0ca7b57dd44a03b63482c7947",
+      "review_judgment_sha256": "ff8e3d026144d59666050249a092d3425c4d92302089564b071beeba8ea95d4d",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "c1b3b91d8ccccef9ea654fea2eb1f657dd8d5700e225f162dceae0b4cef0b9e1",
+      "review_case_id": "d648fedaadece085e2bac26346fdb4de1ce04ebe0627a4b1554b698a61af1bee",
+      "source_text_sha256": "8705f91bde83188462d0912e9c42a9417d840d23a3a436e48da651c44e3347e9",
+      "review_judgment_sha256": "d90e95a8f0b00674f9b533251a4fd4fd52355e3e9b188cfd5b01a10f2a13f58c",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "acc69ccc1eee72498d6e2e0ff56542a6fc0093bc5dc03f9052a39db1ac541aaf",
+      "review_case_id": "d648fedaadece085e2bac26346fdb4de1ce04ebe0627a4b1554b698a61af1bee",
+      "source_text_sha256": "ea5b5a103de34c3ba3cc92bf74759ab92aa6328b9aee2dc93a5cd572a1543cc8",
+      "review_judgment_sha256": "0687be5a6b36b9f4ae0d234f8c134fde00ed911b5b831939187eb7aa4c4eb62b",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "2fddcef3620536772cafec97ae44e2517970948e6d1cab85a3b20fed9048f36a",
+      "review_case_id": "d648fedaadece085e2bac26346fdb4de1ce04ebe0627a4b1554b698a61af1bee",
+      "source_text_sha256": "850ad6e087c1c9f609564f43d7f119f70cd49e9b1f9cc0edf6c4d3178f66d3ee",
+      "review_judgment_sha256": "996fd3374654430b7fbd750a1161bec31a1b5ada9d2dfee0d5c3f7271144d93d",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "920777064ca6b20ea3c0af81adbe7e8111ab79804faec1faed17e70216312686",
+      "review_case_id": "d648fedaadece085e2bac26346fdb4de1ce04ebe0627a4b1554b698a61af1bee",
+      "source_text_sha256": "779e1ebfb4e3ccf08878b69fbbe9e32f9fb8fc93048d0bb1db2f73cbc2ff0315",
+      "review_judgment_sha256": "94c504c2ead8b5fd821b461e01557a8c00571c74154316aa7402d321fc3cd954",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "07b884bf378d8fa73ccee294e3cd8a7244365e1bfea98c01cb1e26061c6d81d5",
+      "review_case_id": "f983612fd41e08fce8d2c670c0d93d2cee52b788b35d716c16e6e13a83fc2882",
+      "source_text_sha256": "2f3e79fb7905c640eefa7de096c64e58fa1fa93386ddea39c2045ca3dd963581",
+      "review_judgment_sha256": "00b0b73037cd9e2f475865dc1dfd179ec830569ac762e35f62421377a2c2db20",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "a290a535cc6aedf8debee688188af438de60a1ebfb7338e1596a9f4a9f93e270",
+      "review_case_id": "f983612fd41e08fce8d2c670c0d93d2cee52b788b35d716c16e6e13a83fc2882",
+      "source_text_sha256": "37f2d2a8ac91ca6a388cb8fc695039c7031a835ea598862ab6f75c65379a022e",
+      "review_judgment_sha256": "0768c76359b2d887c141e4591993d16d1775807f75778fe236b6f4930b13aa87",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "4f04106c0b01909a23630773b05db0e053fa0aed469e86e927d5fcdb0b00ac6b",
+      "review_case_id": "f983612fd41e08fce8d2c670c0d93d2cee52b788b35d716c16e6e13a83fc2882",
+      "source_text_sha256": "eda1f5d3e277fa5279b9c4981c793874204c748a34ca20e56f1202b0e5484077",
+      "review_judgment_sha256": "8b4e49c479dc23ea697f521f31d9d0ce2610c57e6e6c9912de69eabd1d9e2d07",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "dee7952244047b9c410ce6bc34d94da0c0ef2b48baece0aae345e7105f2f5a4b",
+      "review_case_id": "1724cbdfcb0127d2deb731b1f94d450c942ba729b6c39365565b48a5fd88ff5a",
+      "source_text_sha256": "5ec45912f6df86d9af3eaeb4eae37997cf7ce8494ca41227bb7c579588a29464",
+      "review_judgment_sha256": "6b6f1fb6c3d922c73e7c5423e6f0d2b5413617e45309ab93afd17d8427854f11",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "625e86f9fdc16d94aef04993efc9ba20a13ab64956b1a7c6cc38c97654ebfd43",
+      "review_case_id": "1724cbdfcb0127d2deb731b1f94d450c942ba729b6c39365565b48a5fd88ff5a",
+      "source_text_sha256": "8690c22b4032e23d5946933434c6c4624d8a4e56fd9970d099f1bbbc9b1b688c",
+      "review_judgment_sha256": "f5d8b41383894c269f9ba2e5464c48ead668226754a5c0c7f974f307e3c6f19f",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "bff5f3e4d5678e2cc6cce15d9e461c67ab7bbb346fbfd9363d58202d6c216e78",
+      "review_case_id": "1724cbdfcb0127d2deb731b1f94d450c942ba729b6c39365565b48a5fd88ff5a",
+      "source_text_sha256": "382609066972a9fb26f70189855556fa3f4f055aa2a83aeb2c0be6790c5e487c",
+      "review_judgment_sha256": "d625e4f0fce9a671220fa783cfb64489361ecc838dea0a0aed64673358513b7e",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "675b35f701de75d35c08595ba81c4d5d1e4cf9191844c74347db5919b92998f4",
+      "review_case_id": "1724cbdfcb0127d2deb731b1f94d450c942ba729b6c39365565b48a5fd88ff5a",
+      "source_text_sha256": "75e31b8fea5c24d827e792869d8c995cfb0c7758c961799e3752332aa189d79e",
+      "review_judgment_sha256": "08455f8621fa829c8ae736786716b8b62db6b365ee25e87e297820ecbccabab8",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "be2ae6eb7e53f0e67f3bccf671043a147f30bcf40f2a53a1fa4622c7e0f548ce",
+      "review_case_id": "1724cbdfcb0127d2deb731b1f94d450c942ba729b6c39365565b48a5fd88ff5a",
+      "source_text_sha256": "e3afbf6ccc557ed661503cafa274245f9587be9679cfc741bbbefe1e5ef8bebf",
+      "review_judgment_sha256": "1e3fb731316c245ac556ad77694fd0c05b98f531b315e67d1f59191ee719dc4f",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "eb60d3b411840403a692a0ff3626431562f4a15483fee269628dd6fe83a29860",
+      "review_case_id": "1724cbdfcb0127d2deb731b1f94d450c942ba729b6c39365565b48a5fd88ff5a",
+      "source_text_sha256": "28fbe93ccc5738de2e036199594c592a087893be7e63defa82da0b2c69979557",
+      "review_judgment_sha256": "7804f111e0cdbcf2ecae8b6e8ec7975e529d692106b43a4edbf7ffe599cf531f",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "1836013f7274da00e9fb3dd6ff7c349f42c114f9df4f6cb2c0c3986648e85426",
+      "review_case_id": "1724cbdfcb0127d2deb731b1f94d450c942ba729b6c39365565b48a5fd88ff5a",
+      "source_text_sha256": "4dce96991cad42a9d26e9d252e59de37a521714a132ca864a6d81aacb0f9f3cb",
+      "review_judgment_sha256": "b63030385b86fd094fcb6ec8ef578d6523d0fb6df55aa0e15f7565985c5842ad",
+      "support_label": "direct",
+      "status": "pending",
+      "evidence": []
+    },
+    {
+      "review_item_id": "919e790a2fbb83399860487ce9b12a4f9614e0e93210abc561dc9fe1e9197b81",
+      "review_case_id": "6ca38d903d408ac94a36b0cb89110220d59733bf9e12294e54293b7680d95f12",
+      "source_text_sha256": "6ea4c4cadc9c9a4500c5f91d3a5d65261a7962c46882ff2a222bf458c82758a2",
+      "review_judgment_sha256": "d5598b163273008926daa90ea233823216e584a39b960658831d0a64c5f95729",
+      "support_label": "irrelevant",
+      "status": "pending",
+      "evidence": []
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "schema_version": "rag.primary_scope_recheck_manifest.v1",
+  "artifacts": {
+    "support_scope_priority9_20261009_primary_recheck.json": "f53e212e002219add95dcc2c78702605f23028abe497b04269e38198ff4064e9",
+    "support_scope_priority9_20261009_qualification_hold_overlay.json": "d2a450ab024f52d7d268f61820939e296a90a2cfc3ded3bcb8c3491d72ee3721",
+    "support_scope_priority9_20261009_compiler_readback.json": "27e4fffb4dd18c4e12e657a36d9abaf7b739570c163a77157dd91e802d945f9c",
+    "support_scope_priority9_20261009_summary.json": "93cb32af23f4d8b83dbff9188166eaa2a75c0a6aab0883a534cfa3a7f7dcb966",
+    "support_scope_priority9_20261009_local_verification.json": "38f8f1cc9931d20c59f6c3e4e17c62ab3aa16e02983ab174dfb57123c4149ede"
+  },
+  "raw_packet_input_sha256": "5cd3c9d4e4ec82ce6875ae5d30d857c74c26926c3a99cb8c569b0340b314a4f6",
+  "raw_packet_bytes": 51195,
+  "independent_worker_started": false,
+  "raw_input_publication": "ignored locally, regenerated from existing raw source on canonical server, excluded from GitHub",
+  "prior1600_review_modified": false,
+  "training_authorized": false
+}

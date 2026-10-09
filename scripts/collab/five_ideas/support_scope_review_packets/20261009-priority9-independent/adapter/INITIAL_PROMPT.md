@@ -1,0 +1,1 @@
+仅在本任务包内独立复核9题范围与54段支持关系。先读TASK.md和context/BRIEF.md，再逐条阅读context/evidence.json；不要看父项目、分数、旧标签或主审结果。按context/review_template.json的结构写output/review.json，并把简明结论写output/result.md及rounds/0001/result.md。记录实际审阅者/模型和已有信息暴露情况；不要改原文、参考或任何项目文件，不跑模型训练、不联网。

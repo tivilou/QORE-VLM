@@ -164,6 +164,8 @@
 
 - [IMPLEMENTED / OFFLINE ONLY; REAL QUALIFICATION PENDING] Protected support boundary compiler -> [detail](decisions/2026-10-09-boundary-target-compiler.md)
 
+- [PRIMARY RECHECK DONE / INDEPENDENT REVIEW PENDING] Priority9 scope and support challenge -> [detail](decisions/2026-10-09-priority9-scope-recheck.md)
+
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.
 - Rationale: `decisions/`; outcomes: `sessions/`; evidence: `refs/`; owner logs: `docs/rag-research-log/`.

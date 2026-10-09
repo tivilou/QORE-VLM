@@ -3,3 +3,4 @@ semantic_supervision_20261009T045728Z_*_review.json -text
 semantic_supervision_20261009T045728Z_complete_review_delta.json -text
 semantic_supervision_20261009T045728Z_complete_review_manifest.json -text
 support_boundary_targets_20261009_*.json -text
+support_scope_priority9_20261009_*.json -text
