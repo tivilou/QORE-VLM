@@ -66,6 +66,33 @@ class Helpers(unittest.TestCase):
         self.candidates[0]["id"] = self.candidates[1]["id"]
         with self.assertRaises(ValueError): a.rank_order(self.base, self.candidates)
 
+    def test_identity_tolerates_float_tie_reorder_only(self):
+        prior_mask = [i % 7 == 0 for i in range(50)]
+        cands = [{"id": str(i), "retrieved_rank": i + 1, "retrieval_score": float(50 - i)} for i in range(50)]
+        identity = {"question_sha256": a.digest_text("q"),
+                    "candidate_id_sha256": [a.digest_text(p["id"]) for p in cands],
+                    "positive_mask": prior_mask}
+        a.check_identity("q", cands, prior_mask, identity)
+        # Float32 tie: positions 6/7 swap order with scores equal within tolerance, and the
+        # two have different weak labels, so positional comparison alone would false-fail.
+        tied = list(cands)
+        tied[6] = {**cands[7], "retrieved_rank": 7, "retrieval_score": 43.5}
+        tied[7] = {**cands[6], "retrieved_rank": 8, "retrieval_score": 43.5}
+        tied_mask = list(prior_mask)
+        tied_mask[6], tied_mask[7] = prior_mask[7], prior_mask[6]
+        a.check_identity("q", tied, tied_mask, identity)
+        # A genuine reorder (distinct scores) is still rejected.
+        real = list(cands)
+        real[6] = {**cands[7], "retrieved_rank": 7, "retrieval_score": 44.0}
+        real[7] = {**cands[6], "retrieved_rank": 8, "retrieval_score": 43.0}
+        with self.assertRaises(ValueError):
+            a.check_identity("q", real, prior_mask, identity)
+        # A dropped/replaced candidate is rejected.
+        missing = copy.deepcopy(cands)
+        missing[0]["id"] = "absent"
+        with self.assertRaises(ValueError):
+            a.check_identity("q", missing, prior_mask, identity)
+
     def test_constant_correction_does_not_discriminate(self):
         mask = [i == 6 for i in range(50)]
         d = a.boundary_diagnostic(self.base, self.base + 1, mask, self.candidates)
