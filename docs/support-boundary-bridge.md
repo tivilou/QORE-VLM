@@ -34,4 +34,14 @@ bash scripts/collab/five_ideas/run_support_boundary_bridge_audit.sh
 
 fixture schema为 `rag.protected_boundary_engineering_fixture.v1`，不是正式 `sample-trace.v2`。真实Reader hidden states未运行，故formal实验架构状态仅approved；正式训练/验证runner和trace readiness仍待设计。当前不能把87题验证补标、100Silver调参或保护mask oracle回放悄悄纳入训练。
 
-下一步只需针对候选边界及原Top5保护项完成显式资格记录，优先核实范围干净且现有残差可达的候选。若没有安全且可达的足量对，报告瓶颈；不降标签门槛、不强制每题五个正例、不自动加大残差。
+上述90/464/0是初次映射检查点，已由独立的最终审阅版本接续，不覆盖原文件。
+
+## 最终审阅版本（2026-10-11）
+
+用户要求一次性处理所有分歧及不确定项后，主审逐段重读52题104项：5项直接支持候选、15项部分支持保护、67项范围歧义排除、16项正文不足排除、1项来源冲突排除。连同此前全文裁决的401项，共505个最终处置；没有待定审计项。21题按题目范围/来源冲突整体排除，排除不是无关标签。
+
+最终434题映射保留347训练/87验证；训练题闭环为59题纳入、22题排除、266题无安全纠错机会。59题228个纠错对、75个最大替换槽位已重新打开真实主审/独立意见匹配，原Top5直接支持保护通过。22排除题包含21范围排除及1题现有独立意见无法共同建立全部保护绑定，本轮明确排除而非等待。228对中仅60满足现有残差的宽松可达必要条件，不等于能实际翻转。
+
+最终入口为私有 `.cache/support_final_resolution/20261011-v1/final/`：`annotations.final.json`、`targets.final.json`、`dispositions.final.json`、`case_closure.final.json` 与 `manifest.json`；手工决定在同级 `manual_resolution.json`。`finalize_support_boundary_review.py` 只应用显式决定、回读已有见证并登记纳入/排除，不推断标签、不运行模型、不训练。原主审、Claudev001、两位worker及旧裁决字节保持不变，87验证行未修改。
+
+这些是最终研究监督处置，不是官方gold或独立性认证。主审已暴露旧意见，A/B同父模型，Claude精确模型ID仍隐藏；这些限制保留在回执中。下一步使用冻结228对接新的量子语义头与同预算经典训练runner，并在标签不进入在线选择的条件下评估，不能把标签保护回放当在线提升。
