@@ -2,6 +2,9 @@
 
 ## 当前研究总览
 
+- 最新工程检查点：[冻结59题训练器与完整轨迹](20261012T-date-only-protected-boundary-runner-checkpoint.md)。59/228输入包与832实际见证复核通过；完整训练器/一键脚本已写好；实际Reader预检与18083输入登记因服务器断连未完成，未运行真实实验，L0。
+- 最新结案：[全部分歧与不确定项最终处置](20261011T-date-only-final-support-boundary-resolution.md)。505项明确处置，冻结59题228纠错对，87验证题不改；原始意见保留，监督不是官方gold。
+
 - 最新工程：[分层支持监督与完整434题导出](20261009T130633Z-support-supervision-axes-export.md)。本地/服务器各34项合成测试通过，21700段fixture逐项回读；真实导出交师弟，训练未开启，真实合格对仍0。
 
 - 最新验收：[第二轮完整复核](20261009T-date-only-round2-scope-adjudication.md)。54/54机械验收通过，补1项、改9个已有标签；主审47同/7异，不是正确率。36非目标标签继承，理由及4处引用有改动。结束局部复核，下一步分开问题支持/参考覆盖/推断/范围，设计量子语义头的资格感知监督；不训练，仍L0，本地记录。
@@ -44,6 +47,9 @@
 - 当前研究边界：只优化固定 Top-50 -> Top-5 selector；Generator、检索、evaluator 和答案实现不属于本轮候选。下一候选必须提供独立、可追溯且 gold-free 的证据关系信号；若只能继续依赖 token overlap、Answer Scorer 融合或 generic diversity，应停止该 selector 家族并先处理 provenance/calibration 阻塞。
 
 ## 时间线
+
+- [2026-10-12 仅日期 | 冻结59题228纠错对训练器工程检查点，真实Reader/上传交付未完成](20261012T-date-only-protected-boundary-runner-checkpoint.md)
+- [2026-10-11 仅日期 | 全部505项分歧及不确定处置结案，冻结59题228保护性纠错对](20261011T-date-only-final-support-boundary-resolution.md)
 
 - [2026-10-09 13:06:33 UTC | 分层支持监督和完整434题导出实现；真实实验待跑](20261009T130633Z-support-supervision-axes-export.md)
 

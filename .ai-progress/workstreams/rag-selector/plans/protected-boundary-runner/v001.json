@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "plan_id": "protected-boundary-runner",
+  "plan_version": 1,
+  "workstream": "rag-selector",
+  "status": "blocked",
+  "objective": "Ship a collaborator-only fixed59/228 quantum/classical training and100-case label-free screen with complete real Reader trace readiness and registered private inputs.",
+  "focus_step_id": "PR-03",
+  "next_action": "Reconnect same server, recover/complete actual pinned Reader fixture and register18083 bundle; no real cohort fitting.",
+  "blocker": "Same-server SSH and18083 unavailable; real Reader fixture unverified and private input registration incomplete.",
+  "steps": [
+    {
+      "id": "PR-01",
+      "title": "Freeze portable private inputs",
+      "status": "done",
+      "objective": "Preserve immutable audit and validate exact59/228 targets.",
+      "inputs": [
+        "final frozen audit",
+        "source434"
+      ],
+      "outputs": [
+        "private bundle and hashes"
+      ],
+      "depends_on": [],
+      "acceptance_checks": [
+        "every source/witness hash reopened",
+        "59/228 exact",
+        "87 unused"
+      ],
+      "evidence_paths": [
+        ".cache/protected_boundary_reader_inputs/20261011-v1/frozen_support_bundle.zip"
+      ],
+      "owner": "primary",
+      "blocker": null,
+      "notes": "26,121,092 bytes;832 actual witness checks.",
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "PR-02",
+      "title": "Implement isolated runner and trace",
+      "status": "done",
+      "objective": "Fresh matched heads, protected loss, unmasked selection and portable wrapper.",
+      "inputs": [
+        "existing semantic heads/loss",
+        "frozen bundle"
+      ],
+      "outputs": [
+        "runner",
+        "trace exporter",
+        "config",
+        "wrapper"
+      ],
+      "depends_on": [
+        "PR-01"
+      ],
+      "acceptance_checks": [
+        "no retrieval/dataset/Generator",
+        "fixed config and epoch",
+        "record declared states"
+      ],
+      "evidence_paths": [
+        "scripts/collab/five_ideas/run_protected_boundary_reader_screen_100.py"
+      ],
+      "owner": "primary",
+      "blocker": null,
+      "notes": "Implementation written; verification is PR-03.",
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "PR-03",
+      "title": "Qualify real Reader trace readiness",
+      "status": "blocked",
+      "objective": "Offline actual Reader preflight, structural and semantic replays plus focused tests.",
+      "inputs": [
+        "pinned cached DPR Reader",
+        "new modules"
+      ],
+      "outputs": [
+        "actual Reader fixture",
+        "validation receipt",
+        "passing tests"
+      ],
+      "depends_on": [
+        "PR-02"
+      ],
+      "acceptance_checks": [
+        "sample-trace.v2 complete",
+        "numeric reader coordinates match",
+        "gradient/optimizer replay",
+        "local/server tests"
+      ],
+      "evidence_paths": [
+        ".cache/protected_boundary_reader_synthetic_preflight_20261012-v2/validation.json"
+      ],
+      "owner": "primary",
+      "blocker": "Same-server SSH banner timeout and18083 HTTP timeout; actual Reader result unverified.",
+      "notes": "No real cohort fitting or data download.\nLatest23 local tests pass; initial23 server tests passed;3-plugin and v2 complete validators passed.396 synthetic arrays are not an actual pinned Reader fixture.",
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "PR-04",
+      "title": "Register exchange inputs and publish handoff",
+      "status": "todo",
+      "objective": "GitHub code and immutable18083 input accessible from fresh clone; one command.",
+      "inputs": [
+        "verified modules",
+        "private bundle"
+      ],
+      "outputs": [
+        "exchange hash receipts",
+        "GitHub commit",
+        "progress and owner log"
+      ],
+      "depends_on": [
+        "PR-03"
+      ],
+      "acceptance_checks": [
+        "input GET hash roundtrip",
+        "required output uploads fail closed",
+        "raw excluded from git",
+        "remote branch synced"
+      ],
+      "evidence_paths": [],
+      "owner": "primary",
+      "blocker": null,
+      "notes": "Actual experiment is a collaborator next action.",
+      "supersedes": [],
+      "superseded_by": []
+    }
+  ],
+  "change_log": [],
+  "updated_at": "2026-10-12"
+}
