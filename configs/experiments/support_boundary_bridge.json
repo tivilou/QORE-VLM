@@ -1,0 +1,17 @@
+{
+ "schema_version":"rag.support_boundary_bridge_config.v1",
+ "allowlist":["identity_adjudication_bridge_v1","actual_witness_audit_v1","protected_pair_objective_v1"],
+ "training_allowed":false,"generator_allowed":false,"validation_label_edit_allowed":false,
+ "source_sha256":{
+  "trace":"1804608795c99a71fc607ce7216b0e390301ba6c85876e0986a55e304019ff12",
+  "primary":"a2fe22105fd6969ea3288da66621a3468518d99be1735664a8e014a2b44f8ce6",
+  "root_review":"40bfa5d0e3006f7f45911707fbed3b17cd00209369ece2760780c9f8b2973658",
+  "dispositions":"34ba4b8c7a897edfbb6a2f8f12b651f2e565696a2d8ee1a8ac3eaee67f31c481"
+ },
+ "residual_bound":0.25,
+ "loss":{"pair_margin":0.0,"anchor_weight":0.01,"protection_weight":1.0},
+ "policy":{"pairs":"qualified_missed_direct_vs_selected_irrelevant","selected_direct_requires_qualification":true,
+  "immutable_selected":"all original selected except explicitly qualified replaceable irrelevant",
+  "weights":"sum1 within question","replacement_budget":"min distinct positives and negatives",
+  "held_policy":"no automatic promotion","validation_policy":"remain producer-null"}
+}

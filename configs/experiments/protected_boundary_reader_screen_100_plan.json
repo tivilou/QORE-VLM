@@ -1,0 +1,349 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v2",
+  "project": "Q-DUET-VLM/rag-selector",
+  "authorization": "approved",
+  "baseline": {
+    "entry_point": "applications.rag.quantum_semantic_reader.reader_semantic_forward",
+    "code_revision": "371d043",
+    "equivalence_test": "fresh exact-null scores and frozen training Reader/order parity"
+  },
+  "core_invariants": [
+    "fixedTop50->Top5",
+    "frozenReader/Generator/evaluator",
+    "59 training questions228 normalized pairs",
+    "87 validation unused",
+    "panel labels posthoc only",
+    "no label-aware online protection",
+    "same-budget classical control",
+    "final epoch fixed, no residual amplification"
+  ],
+  "interfaces": [
+    {
+      "id": "frozen_reader_semantic_v1",
+      "type": "transformer",
+      "input_schema": "50 candidates -> frozen Reader pooled states",
+      "output_schema": "50 residual-adjusted scores"
+    }
+  ],
+  "plugins": [
+    {
+      "id": "frozen_reader_topk",
+      "version": "1",
+      "role": "baseline",
+      "interface": "frozen_reader_semantic_v1",
+      "insertion_point": "frozen DPR relevance anchor",
+      "hypothesis": "Preserve original Reader Top5 and exact null",
+      "input_schema": "fixed Top50 texts and frozen Reader pooled representations",
+      "output_schema": "50 finite scores and sample-trace.v2",
+      "requires": [],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "shared frozen Reader features;4-qubit depth2 exact Torch statevector or matched classical;59 training cases x3 epochs",
+      "failure_signatures": [
+        "input/score parity drift",
+        "collapsed data gradients/correction spread",
+        "evidence damage",
+        "numeric or upload integrity failure"
+      ],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2",
+        "stages": [
+          "data",
+          "preprocess",
+          "training",
+          "scoring",
+          "selection",
+          "diagnosis"
+        ],
+        "input_fields": [
+          "question",
+          "fixed candidates",
+          "base",
+          "pooled"
+        ],
+        "output_fields": [
+          "scores",
+          "selectedTop5"
+        ],
+        "input_refs": [
+          "source:frozen_input"
+        ],
+        "output_refs": [
+          "selection:result"
+        ],
+        "emitted_fields": [
+          "hidden",
+          "pooling weights",
+          "base/pooled/scalar",
+          "encoded/observables/gate/residual/scores",
+          "parameters/gradients/AdamW moments",
+          "label-free Top5"
+        ],
+        "shape_dtype_normalization": [
+          "full50 candidate vectors",
+          "complete NPZ dimensions/dtypes/hash",
+          "float32 finite",
+          "zero residual init",
+          "residual<=0.25*base population std"
+        ],
+        "checks": [
+          "full coordinate readback",
+          "initial null",
+          "same-sample replay",
+          "all optimizer witnesses",
+          "unmasked Top5"
+        ],
+        "deterministic_replay": true
+      }
+    },
+    {
+      "id": "quantum_semantic",
+      "version": "1",
+      "role": "idea",
+      "interface": "frozen_reader_semantic_v1",
+      "insertion_point": "frozen DPR final hidden -> semantic pooling -> residual head",
+      "hypothesis": "Qualified support pairs teach a quantum head candidate-specific discrimination",
+      "input_schema": "fixed Top50 texts and frozen Reader pooled representations",
+      "output_schema": "50 finite scores and sample-trace.v2",
+      "requires": [
+        "frozen_reader_topk"
+      ],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "shared frozen Reader features;4-qubit depth2 exact Torch statevector or matched classical;59 training cases x3 epochs",
+      "failure_signatures": [
+        "input/score parity drift",
+        "collapsed data gradients/correction spread",
+        "evidence damage",
+        "numeric or upload integrity failure"
+      ],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2",
+        "stages": [
+          "data",
+          "preprocess",
+          "training",
+          "scoring",
+          "selection",
+          "diagnosis"
+        ],
+        "input_fields": [
+          "question",
+          "fixed candidates",
+          "base",
+          "pooled"
+        ],
+        "output_fields": [
+          "scores",
+          "selectedTop5"
+        ],
+        "input_refs": [
+          "source:frozen_input"
+        ],
+        "output_refs": [
+          "selection:result"
+        ],
+        "emitted_fields": [
+          "hidden",
+          "pooling weights",
+          "base/pooled/scalar",
+          "encoded/observables/gate/residual/scores",
+          "parameters/gradients/AdamW moments",
+          "label-free Top5"
+        ],
+        "shape_dtype_normalization": [
+          "full50 candidate vectors",
+          "complete NPZ dimensions/dtypes/hash",
+          "float32 finite",
+          "zero residual init",
+          "residual<=0.25*base population std"
+        ],
+        "checks": [
+          "full coordinate readback",
+          "initial null",
+          "same-sample replay",
+          "all optimizer witnesses",
+          "unmasked Top5"
+        ],
+        "deterministic_replay": true
+      }
+    },
+    {
+      "id": "classical_semantic",
+      "version": "1",
+      "role": "adapter",
+      "interface": "frozen_reader_semantic_v1",
+      "insertion_point": "frozen DPR final hidden -> semantic pooling -> residual head",
+      "hypothesis": "Same targets and trainable parameter budget distinguish interaction family",
+      "input_schema": "fixed Top50 texts and frozen Reader pooled representations",
+      "output_schema": "50 finite scores and sample-trace.v2",
+      "requires": [
+        "frozen_reader_topk"
+      ],
+      "conflicts": [],
+      "deterministic": true,
+      "resource_estimate": "shared frozen Reader features;4-qubit depth2 exact Torch statevector or matched classical;59 training cases x3 epochs",
+      "failure_signatures": [
+        "input/score parity drift",
+        "collapsed data gradients/correction spread",
+        "evidence damage",
+        "numeric or upload integrity failure"
+      ],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2",
+        "stages": [
+          "data",
+          "preprocess",
+          "training",
+          "scoring",
+          "selection",
+          "diagnosis"
+        ],
+        "input_fields": [
+          "question",
+          "fixed candidates",
+          "base",
+          "pooled"
+        ],
+        "output_fields": [
+          "scores",
+          "selectedTop5"
+        ],
+        "input_refs": [
+          "source:frozen_input"
+        ],
+        "output_refs": [
+          "selection:result"
+        ],
+        "emitted_fields": [
+          "hidden",
+          "pooling weights",
+          "base/pooled/scalar",
+          "encoded/observables/gate/residual/scores",
+          "parameters/gradients/AdamW moments",
+          "label-free Top5"
+        ],
+        "shape_dtype_normalization": [
+          "full50 candidate vectors",
+          "complete NPZ dimensions/dtypes/hash",
+          "float32 finite",
+          "zero residual init",
+          "residual<=0.25*base population std"
+        ],
+        "checks": [
+          "full coordinate readback",
+          "initial null",
+          "same-sample replay",
+          "all optimizer witnesses",
+          "unmasked Top5"
+        ],
+        "deterministic_replay": true
+      }
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": [
+      "frozen_reader_topk",
+      "quantum_semantic",
+      "classical_semantic"
+    ]
+  },
+  "composition": {
+    "mode": "parallel",
+    "order": [
+      "frozen_reader_topk",
+      "quantum_semantic",
+      "classical_semantic"
+    ],
+    "merge_rule": "shared frozenReader inputs, separate identical-budget training; compare independent score Top5",
+    "interaction_ablations": [
+      "exact null",
+      "matched classical interaction",
+      "frozen Reader",
+      "no-pair skip optimizer regression"
+    ]
+  },
+  "validation": {
+    "baseline_equivalence": "fresh head output exactly equals frozenReader and no-pair skips all optimizer state",
+    "tests": [
+      "baseline_equivalence",
+      "plugin_isolation",
+      "deterministic_replay",
+      "interaction_ablation",
+      "target_isolation",
+      "full_numeric_update_replay",
+      "sample_trace_v2_readiness",
+      "required_upload_failure",
+      "trace_structural_validation",
+      "trace_semantic_validation",
+      "trace_replay"
+    ]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/protected_boundary_reader_screen_100.json",
+    "dataset_identity": "frozen434 support source SHA180460..;59 training/228 pairs; fixed100 exposed panel SHA669ce1..",
+    "environment": "existing collaborator Torch/Transformers; pinned DPRReader; Python>=3.10",
+    "seeds": [
+      20261008,
+      20261009
+    ],
+    "output_manifest": "exchange/five_ideas/protected_boundary_reader_screen_100/<timestamp>/upload_manifest.json"
+  },
+  "trace_contract": {
+    "enabled": true,
+    "schema": "sample-trace.v2",
+    "artifact_path": "exchange/five_ideas/protected_boundary_reader_screen_100/<timestamp>/sample_trace.json",
+    "sample_selection_rule": "first two training/evaluation questions, first candidate fullhidden; all159 base/pooled/head values; first two updates per epoch",
+    "target_boundary": "frozen support targets only training loss; panel labels posthoc after all100 rankings frozen",
+    "required_stages": [
+      "data",
+      "preprocess",
+      "training",
+      "scoring",
+      "selection",
+      "diagnosis"
+    ],
+    "semantic_roles": [
+      "input",
+      "reference",
+      "result"
+    ],
+    "required_representations": [
+      "base",
+      "hidden",
+      "pooling_weights",
+      "pooled",
+      "encoded",
+      "observables",
+      "gate",
+      "residual",
+      "scores",
+      "parameters/gradients/moments"
+    ],
+    "producer_owned_lineage": [
+      "data -> frozenReader -> pooling -> head -> optimization -> selection -> posthoc"
+    ],
+    "readiness_checks": [
+      "actual pinned Reader fixture",
+      "full coordinates match detached values",
+      "v2 structural validation",
+      "same-sample null/head/update replay",
+      "source hashes",
+      "no target masks online"
+    ]
+  },
+  "recovery_contract": {
+    "dossier_path": "configs/experiments/protected_boundary_reader_recovery.md",
+    "dossier_sha256": "9ee203cf24820360d57ebe05380982672c820fb60bb19373fe8e3e8441deb557",
+    "candidate_id": "protected-boundary-reader-v1",
+    "discriminating_intermediate_measurement": "pair-specific correction vs matched primary-opinion irrelevant controls; actual unmasked support damage; gradient flow and bounded reachability"
+  },
+  "limitations": [
+    "Architecture approved pending actual Reader fixture and trace checks; not yet implemented readiness.",
+    "59 selected training questions and exposed100 panel are L0 only.",
+    "Same-parent opinions and inherited primary exposure are not certified truth.",
+    "Exactly simulated circuit does not establish quantum utility/resource advantage.",
+    "This changes supervision, not the existing quantum ansatz."
+  ]
+}

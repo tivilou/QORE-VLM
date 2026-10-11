@@ -110,3 +110,13 @@ scripts/**/run_debug*.sh
 /exchange/five_ideas/semantic_reader_supervision_audit/**/audit_values.npz
 /exchange/five_ideas/semantic_reader_supervision_audit/**/future_split.json
 /exchange/five_ideas/semantic_reader_supervision_audit/**/upload_receipts.json
+
+# Protected-boundary screen: full texts, labels, tensor/update traces are exchange-only.
+/exchange/five_ideas/protected_boundary_reader_screen_100/**/semantic_values.npz
+/exchange/five_ideas/protected_boundary_reader_screen_100/**/failure_values.npz
+/exchange/five_ideas/protected_boundary_reader_screen_100/**/value_capture.json
+/exchange/five_ideas/protected_boundary_reader_screen_100/**/sample_trace.json
+/exchange/five_ideas/protected_boundary_reader_screen_100/**/validation.json
+/exchange/five_ideas/protected_boundary_reader_screen_100/**/case_study.*
+/exchange/five_ideas/protected_boundary_reader_screen_100/**/training_targets.private.json
+/exchange/five_ideas/protected_boundary_reader_screen_100/**/preflight/
