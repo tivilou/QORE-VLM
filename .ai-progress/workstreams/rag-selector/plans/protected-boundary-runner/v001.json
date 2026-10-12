@@ -3,11 +3,11 @@
   "plan_id": "protected-boundary-runner",
   "plan_version": 1,
   "workstream": "rag-selector",
-  "status": "blocked",
+  "status": "completed",
   "objective": "Ship a collaborator-only fixed59/228 quantum/classical training and100-case label-free screen with complete real Reader trace readiness and registered private inputs.",
-  "focus_step_id": "PR-03",
-  "next_action": "Reconnect same server, recover/complete actual pinned Reader fixture and register18083 bundle; no real cohort fitting.",
-  "blocker": "Same-server SSH and18083 unavailable; real Reader fixture unverified and private input registration incomplete.",
+  "focus_step_id": "PR-04",
+  "next_action": "Collaborator runs bash scripts/collab/five_ideas/run_protected_boundary_reader_screen_100.sh, then syncs manifest-declared compact results through GitHub.",
+  "blocker": null,
   "steps": [
     {
       "id": "PR-01",
@@ -71,7 +71,7 @@
     {
       "id": "PR-03",
       "title": "Qualify real Reader trace readiness",
-      "status": "blocked",
+      "status": "done",
       "objective": "Offline actual Reader preflight, structural and semantic replays plus focused tests.",
       "inputs": [
         "pinned cached DPR Reader",
@@ -92,18 +92,19 @@
         "local/server tests"
       ],
       "evidence_paths": [
-        ".cache/protected_boundary_reader_synthetic_preflight_20261012-v2/validation.json"
+        ".cache/protected_boundary_reader_synthetic_preflight_20261012-v2/validation.json",
+        ".cache/protected_boundary_reader_real_preflight_20261012/20261012T033359251121Z/validation.json"
       ],
       "owner": "primary",
-      "blocker": "Same-server SSH banner timeout and18083 HTTP timeout; actual Reader result unverified.",
-      "notes": "No real cohort fitting or data download.\nLatest23 local tests pass; initial23 server tests passed;3-plugin and v2 complete validators passed.396 synthetic arrays are not an actual pinned Reader fixture.",
+      "blocker": null,
+      "notes": "No real cohort fitting or data download.\nLatest23 local tests pass; initial23 server tests passed;3-plugin and v2 complete validators passed.396 synthetic arrays are not an actual pinned Reader fixture.\nPinned DPR actual Reader synthetic fixture passed offline on 2026-10-12; 396 arrays, 8 head replays, 4 optimizer updates; canonical server 23 tests passed.",
       "supersedes": [],
       "superseded_by": []
     },
     {
       "id": "PR-04",
       "title": "Register exchange inputs and publish handoff",
-      "status": "todo",
+      "status": "done",
       "objective": "GitHub code and immutable18083 input accessible from fresh clone; one command.",
       "inputs": [
         "verified modules",
@@ -123,10 +124,12 @@
         "raw excluded from git",
         "remote branch synced"
       ],
-      "evidence_paths": [],
+      "evidence_paths": [
+        ".ai-progress/workstreams/rag-selector/refs/protected_boundary_runner_20261012_receipt.json"
+      ],
       "owner": "primary",
       "blocker": null,
-      "notes": "Actual experiment is a collaborator next action.",
+      "notes": "Actual experiment is a collaborator next action.\nFrozen ZIP and fixed100 detail passed public18083 GET size/SHA roundtrip; actual Reader preflight archived with receipt; canonical server and GitHub source reconciled at dd2b0c2, 23 tests passed.",
       "supersedes": [],
       "superseded_by": []
     }

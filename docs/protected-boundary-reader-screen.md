@@ -1,9 +1,11 @@
 # Protected boundary Reader screen
 
-Delivery checkpoint2026-10-12: source implementation and synthetic replay are
-ready. The actual pinned-Reader preflight was interrupted by loss of SSH/18083
-connectivity; its result is unverified. The new input bundle has not yet been
-registered on18083. Do not hand off a fresh-clone run until both are closed.
+Delivery checkpoint2026-10-12: ready for collaborator execution. The pinned
+Reader preflight passed offline on the verified3080Ti;396 arrays,8 head output
+replays and4 optimizer updates were checked. Both private inputs passed public
+18083 GET byte/hash verification, and the canonical server's23 tests passed.
+Only synthetic fixture targets were fitted during development; the real
+59-question training and100-question evaluation remain unrun.
 
 This is a fixed Top50 -> Top5 selector experiment. It trains a fresh four-qubit
 semantic residual head and a matched classical head on **59 training

@@ -67,3 +67,29 @@ Code/config: `run_protected_boundary_reader_screen_100.py`,
 `protected_boundary_reader_screen_100.json`,
 `protected_boundary_reader_screen_100_plan.json`.
 Receipt: [engineering checkpoint](../refs/protected_boundary_runner_20261012_receipt.json).
+
+## Readiness closure — 2026-10-12
+
+The earlier outage is resolved. Actual pinned-Reader fixture
+`20261012T033359251121Z` passed offline, with396 complete arrays,8 head
+replays,4 optimizer updates, hidden/pooling/CLS checks and unmasked selection
+replay. Its valuesSHA is
+`5af8c044d5897b5c14a8da4011ff15b8e74fb5ecd9393c146e5b429a641d1d51`.
+The fixture used synthetic targets only; no real cohort was fitted.
+
+The frozen ZIP is registered at the configured18083 input path, with exact
+26,121,092 bytes and the predeclared SHA. Public-host authenticated GET verified
+both it and the existing100-case detail. The actual-Reader fixture ZIP is also
+registered and GET-verified,4,451,141 bytes, SHA
+`329af54d3b714b1ce9d7e4c6094aa83382a573ce4a06a3096c6e244664cc879f`.
+
+Ten initial draft files and their exact owned ignore patch were hash-checked
+and archived in a scoped server stash
+`50ae345a22d7d049d42f1552298f07f1b5240acd`. The canonical checkout merged
+existing server history with GitHub source without conflicts at
+`dd2b0c22b2b282e16de55c9ca745b26985a74868`;23 tests passed there, and this
+merge was pushed through the local proxy. Unrelated untracked files remain.
+
+The engineering gate is closed and the collaborator one-command handoff is
+ready. Real training/evaluation utility, quantum attribution and L1/L2 remain
+unmeasured; this closure changes readiness only.

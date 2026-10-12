@@ -2,6 +2,8 @@
 
 ## 当前研究总览
 
+- 最新交付：[真实Reader预检与输入下载完成](20261012T-delivery-verified-protected-boundary-reader.md)。396数组、8次head及4次优化器重放通过；两份输入和预检包公网GET哈希核验通过，服务器23测试通过、代码已同步GitHub。交师弟跑59/228训练及100题筛选；真实效果尚未测量，L0。
+
 - 最新工程检查点：[冻结59题训练器与完整轨迹](20261012T-date-only-protected-boundary-runner-checkpoint.md)。59/228输入包与832实际见证复核通过；完整训练器/一键脚本已写好；实际Reader预检与18083输入登记因服务器断连未完成，未运行真实实验，L0。
 - 最新结案：[全部分歧与不确定项最终处置](20261011T-date-only-final-support-boundary-resolution.md)。505项明确处置，冻结59题228纠错对，87验证题不改；原始意见保留，监督不是官方gold。
 

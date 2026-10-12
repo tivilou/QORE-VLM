@@ -1,22 +1,25 @@
 {
   "schema_version": "rag.protected_boundary_runner_receipt.v1",
   "checkpoint_date_local": "2026-10-12",
-  "implementation": "source_ready_delivery_incomplete",
-  "architecture_authorization": "approved_not_implemented_readiness",
+  "implementation": "delivery_verified_collaborator_screen_ready",
+  "architecture_authorization": "approved_actual_reader_readiness_passed",
   "code_source_commit": "dae8a9380073f289522f9d28afdd0d0ad155d332",
   "github_branch": "five-ideas-development",
   "github_initial_source_commit": "3abf29e",
   "local_parent": "b922182",
   "server_parent": "371d043",
-  "server_status": "initial10_source_files_installed_and23_tests_passed; final_revision_not_synced_after_connectivity_loss",
-  "actual_reader_preflight": "started_offline_from_pinned_cache; SSH_closed_by_remote_host; result_unverified",
+  "server_status": "canonical_checkout_reconciled_at_dd2b0c2;23_focused_tests_passed;tracked_worktree_clean",
+  "server_source_merge_commit": "dd2b0c22b2b282e16de55c9ca745b26985a74868",
+  "server_owned_draft_archive": "50ae345a22d7d049d42f1552298f07f1b5240acd",
+  "actual_reader_preflight": "passed_offline_on_four_synthetic_questions;no_real_cohort_fit",
   "real_cohort_fitting": false,
   "dataset_download": false,
   "generator_called": false,
   "private_input": {
     "local_path": ".cache/protected_boundary_reader_inputs/20261011-v1/frozen_support_bundle.zip",
     "planned_exchange_path": "five_ideas/protected_boundary_reader_inputs/20261011-v1/frozen_support_bundle.zip",
-    "exchange_registration": "not_done",
+    "exchange_registration": "uploaded_and_public_host_authenticated_GET_size_SHA_verified",
+    "uploaded_at": "2026-10-12T03:31:30.494727+00:00",
     "bytes": 26121092,
     "sha256": "f723bbb6f9075c3e04fd3d8a7b2d3f8127b6e354422ee2a2f6e167bfe32248ce",
     "source_sha256": "1804608795c99a71fc607ce7216b0e390301ba6c85876e0986a55e304019ff12",
@@ -29,12 +32,14 @@
   },
   "checks": {
     "latest_local_focused_tests": {"passed": 23, "environment": "lambeq", "installed_packages": []},
-    "initial_server_focused_tests": {"passed": 23, "environment": "py310", "latest_revision_verified": false},
+    "initial_server_focused_tests": {"passed": 23, "environment": "py310", "latest_revision_verified": true},
     "isolated_github_branch_tests": {"passed": 19, "base": "1d70ca2"},
     "plugin_plan": "passed_3_plugins",
     "bash_syntax": "passed",
     "complete_shared_v2_validator": "passed_with2_evaluation_training_not_applicable_warnings",
-    "actual_pinned_reader_trace": "unverified"
+    "actual_pinned_reader_trace": "passed",
+    "actual_reader_shared_v2_validator": "passed_with2_evaluation_training_not_applicable_warnings",
+    "registered_eval_input_GET": {"bytes": 8046318, "sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731", "passed": true}
   },
   "synthetic_hidden_fixture": {
     "path": ".cache/protected_boundary_reader_synthetic_preflight_20261012-v2",
@@ -45,6 +50,19 @@
     "optimizer_update_replays": 4,
     "actual_reader": false
   },
-  "last_connectivity": {"ssh": "banner_timeout", "http18083": "timeout_direct_and_existing_proxy", "service_restarted": false, "server_failover": false},
-  "next_action": "Recover same bound server; inspect owned preflight process/artifact before rerun; sync final owned source; verify actual Reader fixture; register ZIP and GET hash roundtrip; hand collaborator one command."
+  "actual_reader_fixture": {
+    "local_path": ".cache/protected_boundary_reader_real_preflight_20261012/20261012T033359251121Z",
+    "code_revision": "8efe0f4a1a431941d894a931191a280846f699cc",
+    "reader_revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+    "values_sha256": "5af8c044d5897b5c14a8da4011ff15b8e74fb5ecd9393c146e5b429a641d1d51",
+    "arrays": 396, "head_replays": 8, "optimizer_update_replays": 4,
+    "synthetic_targets_only": true,
+    "exchange_path": "five_ideas/protected_boundary_reader_inputs/20261011-v1/reader_preflight_20261012T033359Z.zip",
+    "bytes": 4451141,
+    "sha256": "329af54d3b714b1ce9d7e4c6094aa83382a573ce4a06a3096c6e244664cc879f",
+    "uploaded_at": "2026-10-12T03:43:52.834647+00:00",
+    "public_host_GET_verified": true
+  },
+  "last_connectivity": {"ssh": "reachable", "http18083": "healthy_and_authenticated_GET_verified", "service_restarted": false, "server_failover": false},
+  "next_action": "Collaborator runs bash scripts/collab/five_ideas/run_protected_boundary_reader_screen_100.sh; sync compact manifest-declared results via GitHub."
 }
