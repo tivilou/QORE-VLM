@@ -105,6 +105,13 @@
   Reader-integrated mechanism, run a deterministic pair-feasibility audit for
   minimum boundary-crossing corrections and classify unreachable targets versus
   near-tie harm. See [result](../../docs/rag-research-log/20261012T-protected-boundary-reader-screen-result.md).
+- The protected-boundary feasibility audit closed that follow-up: 168/228 pairs
+  are structurally unreachable under the current two-sided residual capacity,
+  the remaining 60 are reachable-but-not-learned, and both heads invert 0/228.
+  Quantum has 46 harmful pair corrections versus 3 classical; set-valued Top-5
+  changes are 4/100 and 5/100. Do not answer this by blind residual/epoch
+  increases; a future candidate must change Reader score formation or
+  calibration and retain the same paired boundary gate. See [audit](../../docs/rag-research-log/20261013T-protected-boundary-feasibility-audit.md).
 ## Decision index
 ### Binding and current
 - [BINDING] Cumulative-evidence next-step rule -> [detail](../../shared/decisions/cumulative-evidence-next-step-selection.md)
@@ -179,7 +186,7 @@
 - [IMPLEMENTED / REAL434 EXPORT PENDING; TRAINING OFF] Separate support axes and complete cohort exporter -> [detail](decisions/2026-10-09-support-supervision-axes-export.md)
 
 - [ACTIVE / FINAL AUDIT CLOSED; NO FIT RUN] Final505 dispositions and59-case228 protected pairs -> [detail](decisions/2026-10-11-final-support-boundary-resolution.md)
-- [CLOSED / UTILITY GATE FAILED; FEASIBILITY AUDIT NEXT] Frozen59 protected-pair quantum/classical runner -> [detail](decisions/2026-10-12-protected-boundary-reader-runner.md)
+- [CLOSED / FEASIBILITY AUDIT COMPLETE; SCORE-CALIBRATION DESIGN NEXT] Frozen59 protected-pair quantum/classical runner -> [detail](decisions/2026-10-12-protected-boundary-reader-runner.md)
 
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.

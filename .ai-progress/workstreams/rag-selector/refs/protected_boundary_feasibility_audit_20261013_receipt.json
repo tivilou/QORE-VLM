@@ -1,0 +1,34 @@
+{
+  "schema_version": "rag.protected_boundary_feasibility_audit.receipt.v1",
+  "recorded": "2026-10-13",
+  "input_run": "20261012T151854474980Z",
+  "input_case_study_sha256": "b24a60bcafdba45fdfa2575214376b7851750e840b19011511ce5c4bfdbd6e72",
+  "audit_script_sha256": "883a06ad1041ff3b70c3f32cf3d293460a3283c8ec899a1932b8fadf62624691",
+  "training": {
+    "cases": 59,
+    "pairs": 228,
+    "residual_bound": 0.25,
+    "quantum_semantic": {
+      "structurally_unreachable": 168,
+      "reachable_but_not_learned": 60,
+      "observed_pair_rescue": 0,
+      "harmful": 46,
+      "near_tie": 5
+    },
+    "classical_semantic": {
+      "structurally_unreachable": 168,
+      "reachable_but_not_learned": 60,
+      "observed_pair_rescue": 0,
+      "harmful": 3,
+      "near_tie": 5
+    }
+  },
+  "evaluation": {
+    "cases": 100,
+    "quantum_semantic_selection_changes": 4,
+    "classical_semantic_selection_changes": 5
+  },
+  "claim_ceiling": "L0_diagnostic",
+  "raw_output": ".cache/protected_boundary_feasibility_audit/20261013T000000Z/",
+  "no_text_or_answers_exported": true
+}

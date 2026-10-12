@@ -94,6 +94,24 @@ The engineering gate is closed and the collaborator one-command handoff is
 ready. Real training/evaluation utility, quantum attribution and L1/L2 remain
 unmeasured; this closure changes readiness only.
 
+## Feasibility audit closure — 2026-10-13
+
+The deterministic post-hoc audit over the completed run is now authoritative for
+the next design decision. Under the configured two-sided residual capacity,
+168/228 protected pairs are structurally unreachable and the remaining60 are
+reachable by the loose bound but not learned. Both trained heads invert0/228
+pairs; the quantum head has46 harmful pair corrections versus3 for the matched
+classical head. Set-valued Top-5 changes are4/100 quantum and5/100 classical.
+
+This closes the current bounded additive-residual candidate. Do not respond by
+blindly increasing residual amplitude, epochs, or exposed-panel tuning. The next
+candidate must alter Reader score formation/calibration so large Reader
+underestimates can be corrected while preserving a matched classical control and
+the same protected-pair/boundary rescue gate. The audit implementation and
+compact report are recorded in
+`scripts/collab/five_ideas/audit_protected_boundary_feasibility.py` and
+`docs/rag-research-log/20261013T-protected-boundary-feasibility-audit.md`.
+
 ## Result and closure — 2026-10-12
 
 The collaborator completed the authorized 59/228 training and 100-case
