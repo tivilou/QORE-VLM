@@ -2,7 +2,7 @@
 
 - Date: 2026-10-12
 - Scope: rag-selector
-- Status: active
+- Status: closed
 - Supersedes: None
 - Superseded By: None
 - Gate: actual pinned-Reader preflight and full numeric/update replay pass; immutable input GET/upload receipts verify; then collaborator runs59/228 training and100-case label-free screen.
@@ -93,3 +93,21 @@ merge was pushed through the local proxy. Unrelated untracked files remain.
 The engineering gate is closed and the collaborator one-command handoff is
 ready. Real training/evaluation utility, quantum attribution and L1/L2 remain
 unmeasured; this closure changes readiness only.
+
+## Result and closure — 2026-10-12
+
+The collaborator completed the authorized 59/228 training and 100-case
+selection screen. The trace is valid and all upload receipts match, but both
+trained heads fail the utility gate. Reader/quantum/classical useful-passage
+totals are `203/203/203`; direct evidence is `138/137/138`; fixed Silver
+overlap is `355/352/353`. Quantum versus Reader has zero useful-passage wins,
+99 direct ties and one loss, and zero Silver wins with three losses. The
+candidate is therefore closed in this form; this is a measured L0 null, not a
+claim that every Reader-integrated quantum design is impossible.
+
+The training trace explains the null: pair gaps improve but remain negative and
+there are no inversions among228 pairs. The next cumulative-evidence action is
+a deterministic pair-feasibility audit before any new mechanism or parameter
+change. It must quantify the minimum score correction needed to cross each
+Top-5 boundary and separate unreachable targets from learnable-but-missed and
+harmful near-tie exchanges.

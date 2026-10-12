@@ -2,6 +2,8 @@
 
 ## 当前研究总览
 
+- 最新实验：[冻结支持边界 Reader screen 结果](20261012T-protected-boundary-reader-screen-result.md)。量子/经典头都未提升100题有用段命中；量子直接证据 `1.37` 低于 Reader `1.38`，Silver `3.52` 低于 `3.55`。训练有梯度和 pair-gap 改善但 `0/228` pair inversion；先做可达性审计，不继续盲目增大残差或重跑同面板，L0。
+
 - 最新交付：[真实Reader预检与输入下载完成](20261012T-delivery-verified-protected-boundary-reader.md)。396数组、8次head及4次优化器重放通过；两份输入和预检包公网GET哈希核验通过，服务器23测试通过、代码已同步GitHub。交师弟跑59/228训练及100题筛选；真实效果尚未测量，L0。
 
 - 最新工程检查点：[冻结59题训练器与完整轨迹](20261012T-date-only-protected-boundary-runner-checkpoint.md)。59/228输入包与832实际见证复核通过；完整训练器/一键脚本已写好；实际Reader预检与18083输入登记因服务器断连未完成，未运行真实实验，L0。

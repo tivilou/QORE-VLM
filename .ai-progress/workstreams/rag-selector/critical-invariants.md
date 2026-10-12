@@ -97,6 +97,14 @@
   Generator/evaluator are not called, and `selector_trace.json` is exchange-
   only. The compact result cannot carry raw question/text/answer/selected-ID
   fields. See [detail](decisions/2026-10-05-qarcg-reader-screen-implementation.md).
+- The frozen support-boundary Reader screen (`20261012T151854474980Z`) passed
+  full trace validation but failed both utility and quantum-attribution gates:
+  Reader/quantum/classical useful totals `203/203/203`, direct `138/137/138`,
+  Silver `355/352/353`. Training improved many pair gaps but produced `0/228`
+  inversions; the candidate is closed in this form. Before a new
+  Reader-integrated mechanism, run a deterministic pair-feasibility audit for
+  minimum boundary-crossing corrections and classify unreachable targets versus
+  near-tie harm. See [result](../../docs/rag-research-log/20261012T-protected-boundary-reader-screen-result.md).
 ## Decision index
 ### Binding and current
 - [BINDING] Cumulative-evidence next-step rule -> [detail](../../shared/decisions/cumulative-evidence-next-step-selection.md)
@@ -171,7 +179,7 @@
 - [IMPLEMENTED / REAL434 EXPORT PENDING; TRAINING OFF] Separate support axes and complete cohort exporter -> [detail](decisions/2026-10-09-support-supervision-axes-export.md)
 
 - [ACTIVE / FINAL AUDIT CLOSED; NO FIT RUN] Final505 dispositions and59-case228 protected pairs -> [detail](decisions/2026-10-11-final-support-boundary-resolution.md)
-- [ACTIVE / DELIVERY VERIFIED; COLLABORATOR SCREEN NEXT] Frozen59 protected-pair quantum/classical runner -> [detail](decisions/2026-10-12-protected-boundary-reader-runner.md)
+- [CLOSED / UTILITY GATE FAILED; FEASIBILITY AUDIT NEXT] Frozen59 protected-pair quantum/classical runner -> [detail](decisions/2026-10-12-protected-boundary-reader-runner.md)
 
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.

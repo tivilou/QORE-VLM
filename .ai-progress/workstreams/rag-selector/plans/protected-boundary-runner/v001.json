@@ -6,7 +6,7 @@
   "status": "completed",
   "objective": "Ship a collaborator-only fixed59/228 quantum/classical training and100-case label-free screen with complete real Reader trace readiness and registered private inputs.",
   "focus_step_id": "PR-04",
-  "next_action": "Collaborator runs bash scripts/collab/five_ideas/run_protected_boundary_reader_screen_100.sh, then syncs manifest-declared compact results through GitHub.",
+  "next_action": "Run a deterministic pair-feasibility audit before any new mechanism or parameter change.",
   "blocker": null,
   "steps": [
     {

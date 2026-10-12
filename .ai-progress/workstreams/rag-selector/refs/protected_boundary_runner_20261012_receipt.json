@@ -65,4 +65,20 @@
   },
   "last_connectivity": {"ssh": "reachable", "http18083": "healthy_and_authenticated_GET_verified", "service_restarted": false, "server_failover": false},
   "next_action": "Collaborator runs bash scripts/collab/five_ideas/run_protected_boundary_reader_screen_100.sh; sync compact manifest-declared results via GitHub."
+  ,"screen_result": {
+    "run_id": "20261012T151854474980Z",
+    "status": "validated",
+    "exchange_path": "five_ideas/protected_boundary_reader_screen_100/20261012T151854474980Z",
+    "validation": {"arrays": 3254, "head_replays": 318, "optimizer_update_replays": 12, "values_sha256": "e1f7be90084113a37842e7ca425e71608a357147a47f7e673944496c6be988c1"},
+    "utility_gate": false,
+    "quantum_attribution_gate": false,
+    "metrics": {
+      "frozen_reader_topk": {"positive_total": 203, "direct_total": 138, "all_models_positive_total": 171, "silver_total": 355},
+      "quantum_semantic": {"positive_total": 203, "direct_total": 137, "all_models_positive_total": 170, "silver_total": 352},
+      "classical_semantic": {"positive_total": 203, "direct_total": 138, "all_models_positive_total": 171, "silver_total": 353}
+    },
+    "pair_training": {"quantum_gap_improvements": 182, "classical_gap_improvements": 226, "quantum_inversions": 0, "classical_inversions": 0},
+    "all_upload_receipts_match": true,
+    "next_action": "pair-feasibility audit before a new mechanism or parameter change"
+  }
 }
