@@ -170,6 +170,9 @@
 
 - [IMPLEMENTED / REAL434 EXPORT PENDING; TRAINING OFF] Separate support axes and complete cohort exporter -> [detail](decisions/2026-10-09-support-supervision-axes-export.md)
 
+- [ACTIVE / FINAL AUDIT CLOSED; NO FIT RUN] Final505 dispositions and59-case228 protected pairs -> [detail](decisions/2026-10-11-final-support-boundary-resolution.md)
+- [ACTIVE / CODE READY; READER/EXCHANGE DELIVERY PENDING] Frozen59 protected-pair quantum/classical runner -> [detail](decisions/2026-10-12-protected-boundary-reader-runner.md)
+
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.
 - Rationale: `decisions/`; outcomes: `sessions/`; evidence: `refs/`; owner logs: `docs/rag-research-log/`.

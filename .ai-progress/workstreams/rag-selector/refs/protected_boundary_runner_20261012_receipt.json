@@ -1,0 +1,50 @@
+{
+  "schema_version": "rag.protected_boundary_runner_receipt.v1",
+  "checkpoint_date_local": "2026-10-12",
+  "implementation": "source_ready_delivery_incomplete",
+  "architecture_authorization": "approved_not_implemented_readiness",
+  "code_source_commit": "dae8a9380073f289522f9d28afdd0d0ad155d332",
+  "github_branch": "five-ideas-development",
+  "github_initial_source_commit": "3abf29e",
+  "local_parent": "b922182",
+  "server_parent": "371d043",
+  "server_status": "initial10_source_files_installed_and23_tests_passed; final_revision_not_synced_after_connectivity_loss",
+  "actual_reader_preflight": "started_offline_from_pinned_cache; SSH_closed_by_remote_host; result_unverified",
+  "real_cohort_fitting": false,
+  "dataset_download": false,
+  "generator_called": false,
+  "private_input": {
+    "local_path": ".cache/protected_boundary_reader_inputs/20261011-v1/frozen_support_bundle.zip",
+    "planned_exchange_path": "five_ideas/protected_boundary_reader_inputs/20261011-v1/frozen_support_bundle.zip",
+    "exchange_registration": "not_done",
+    "bytes": 26121092,
+    "sha256": "f723bbb6f9075c3e04fd3d8a7b2d3f8127b6e354422ee2a2f6e167bfe32248ce",
+    "source_sha256": "1804608795c99a71fc607ce7216b0e390301ba6c85876e0986a55e304019ff12",
+    "final_manifest_sha256": "d8c86b3d3ae0261c4f2533f67cc31e17e4dc091d7ddee6dbe6aec8a0ebd731c8",
+    "questions": 59,
+    "pairs": 228,
+    "actual_witness_checks": 832,
+    "validation_used": false,
+    "semantic_truth_certified": false
+  },
+  "checks": {
+    "latest_local_focused_tests": {"passed": 23, "environment": "lambeq", "installed_packages": []},
+    "initial_server_focused_tests": {"passed": 23, "environment": "py310", "latest_revision_verified": false},
+    "isolated_github_branch_tests": {"passed": 19, "base": "1d70ca2"},
+    "plugin_plan": "passed_3_plugins",
+    "bash_syntax": "passed",
+    "complete_shared_v2_validator": "passed_with2_evaluation_training_not_applicable_warnings",
+    "actual_pinned_reader_trace": "unverified"
+  },
+  "synthetic_hidden_fixture": {
+    "path": ".cache/protected_boundary_reader_synthetic_preflight_20261012-v2",
+    "schema": "sample-trace.v2",
+    "values_sha256": "183307e3c3a68f04286643560b6308c94728f27323744ab4434de0e483a196be",
+    "arrays": 396,
+    "head_replays": 8,
+    "optimizer_update_replays": 4,
+    "actual_reader": false
+  },
+  "last_connectivity": {"ssh": "banner_timeout", "http18083": "timeout_direct_and_existing_proxy", "service_restarted": false, "server_failover": false},
+  "next_action": "Recover same bound server; inspect owned preflight process/artifact before rerun; sync final owned source; verify actual Reader fixture; register ZIP and GET hash roundtrip; hand collaborator one command."
+}

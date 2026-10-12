@@ -1,0 +1,64 @@
+{
+  "schema_version": "rag.support_final_resolution_receipt.v1",
+  "summary": {
+    "proposed_questions": 68,
+    "proposed_pairs": 273,
+    "proposed_replacement_slots": 89,
+    "qualified_questions": 59,
+    "qualified_pairs": 228,
+    "qualified_replacement_slots": 75,
+    "questions_with_unqualified_selected_direct": 219,
+    "proposed_pairs_within_loose_residual_bound": 69,
+    "training_cases": 347,
+    "validation_cases": 87,
+    "held_items": 287,
+    "training_authorized": false,
+    "training_consumable": false,
+    "semantic_truth_certified": false,
+    "resolved_uncertainty_items": 104,
+    "resolved_uncertainty_cases": 52,
+    "final_dispute_and_uncertainty_items": 505,
+    "excluded_scope_questions": 21,
+    "unresolved_audit_dispositions": 0,
+    "primary_review_exposed": true,
+    "independent_review_limitation": "same-parent A/B; Claude exact model redacted; independence is declared, not certified"
+  },
+  "final_dispositions": {
+    "accepted_final": 401,
+    "accepted_protected": 15,
+    "excluded_scope_ambiguity": 67,
+    "excluded_insufficient_passage": 16,
+    "accepted_supervision_candidate": 5,
+    "excluded_conflicting_source": 1
+  },
+  "case_closures": {
+    "no_safe_opportunity": 266,
+    "included": 59,
+    "excluded": 22
+  },
+  "qualified_pairs_within_loose_bound": 60,
+  "actual_witness_targets_reopened": 576,
+  "source_versions_unchanged": true,
+  "validation87_rows_unchanged": true,
+  "training_authorized": false,
+  "training_consumable": false,
+  "semantic_truth_certified": false,
+  "final_manifest_sha256": "d8c86b3d3ae0261c4f2533f67cc31e17e4dc091d7ddee6dbe6aec8a0ebd731c8",
+  "manual_resolution_sha256": "9b383f8355be7ef58808d3411254b562007ec09a546ac6364d840b3aa3796d07",
+  "local_tests": {
+    "bridge_passed": 13,
+    "final_resolution_passed": 4
+  },
+  "server_tests": {
+    "bridge_passed": 13,
+    "final_resolution_passed": 4
+  },
+  "engineering_fixture": {
+    "synthetic_only": true,
+    "replayed_updates": 4,
+    "array_count": 266
+  },
+  "server_bridge_commit": "95fcff3",
+  "server_finalization_commit": "371d043",
+  "raw_location": ".cache/support_final_resolution/20261011-v1/final/"
+}

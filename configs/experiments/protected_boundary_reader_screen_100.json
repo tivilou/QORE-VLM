@@ -1,0 +1,37 @@
+{
+  "schema_version": "rag.protected_boundary_reader_screen.v1",
+  "authorization": "collaborator_screen",
+  "claim_ceiling": "L0_diagnostic",
+  "reader": {"model_id": "facebook/dpr-reader-single-nq-base", "revision": "38f47a4986084c53447ba92ab0a83076b58d86a8", "max_length": 350, "batch_size": 8},
+  "head": {"n_qubits": 4, "depth": 2, "residual_bound": 0.25, "gate_temperature": 1.0},
+  "methods": ["frozen_reader_topk", "quantum_semantic", "classical_semantic"],
+  "training": {
+    "cases": 59, "pairs": 228, "epochs": 3, "seed": 20261008,
+    "learning_rate": 0.003, "weight_decay": 0.0001,
+    "optimizer_policy": "adamw_projection_fanin_v1", "gradient_clip_norm": 1.0,
+    "loss": {"margin": 0.0, "anchor_weight": 0.01, "protection_weight": 1.0},
+    "target": "frozen_qualified_direct_vs_selected_irrelevant_with_immutable_slot_penalty",
+    "order": "source order, identical for both arms; no Silver checkpoint choice",
+    "checkpoint": "final epoch only",
+    "input": {"exchange_path": "five_ideas/protected_boundary_reader_inputs/20261011-v1/frozen_support_bundle.zip", "bytes": 26121092, "sha256": "f723bbb6f9075c3e04fd3d8a7b2d3f8127b6e354422ee2a2f6e167bfe32248ce"}
+  },
+  "evaluation": {
+    "cases": 100, "top50": 50, "top5": 5,
+    "input_sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
+    "primary": "positive_consensus_count", "protection": "direct_consensus_count",
+    "secondary": ["all_models_positive_count", "fixed_silver_set_overlap"],
+    "bootstrap_replicates": 2000, "bootstrap_seed": 20261009,
+    "gate": "positive paired mean and CI95 lower>0 vs Reader; direct paired mean>=0; attribution separately vs classical",
+    "silver_posthoc_only": true
+  },
+  "trace": {
+    "schema": "sample-trace.v2",
+    "stages": ["data", "frozen_reader", "semantic_pooling", "residual_head", "optimization", "selection", "posthoc"],
+    "full_hidden_samples": "first candidate of first two training and first two evaluation questions",
+    "detached_values": "all59 training and100 evaluation base/pooled/scalar, both heads' init/epoch checkpoints; first two training steps each epoch with gradients/optimizer",
+    "preflight": "two synthetic texts through actual frozen DPR Reader, both heads, two updates; archived/reopened before fitting",
+    "projection": "complete NPZ coordinates; no graphs or summary-only projection"
+  },
+  "output_namespace": "five_ideas/protected_boundary_reader_screen_100",
+  "constraints": {"reader_frozen": true, "retrieval_called": false, "dataset_download": false, "generator_called": false, "online_target_masks": false, "validation87_used": false, "residual_amplification": false}
+}
