@@ -17,8 +17,9 @@ Transformers4.44.0，和之前 GPU 工作环境不同。没有安装包或切换
 当前 DPRReader 架构中不使用，现仅允许这两个明确的多余键；其他缺失、
 多余或形状不符的活动参数仍阻断运行。
 
-随后普通低内存加载再次遭遇 SSH 超时，没有看到合成题计算完成。仅凭
-这些现象无法判断超时原因，更不能声称已发生 OOM。远程进程状态待核查。
+随后普通低内存加载再次遭遇 SSH 超时。恢复连接后，cgroup 事件确认该
+容器发生了 `oom=1, oom_kill=1`，输出目录未形成完整 trace；这次环境失败
+与模型或量子头效果无关。
 
 ## 已完成的代码与验证
 
@@ -41,8 +42,25 @@ Top-5、span 保持、禁用恢复、冻结参数和完整坐标回读通过。
 Python 编译、Bash 语法和3插件计划校验通过。所有下载和真实数据拟合均未执行。
 
 随机权重和显式合成 token 只证明工程流程，不能替代固定预训练模型。
-计划仍为 approved，固定 Reader readiness 未认证。最终按模块加载实现
-尚未同步到重新失联的服务器。
+## 固定 Reader 工程门
+
+将代码和已经校验过的 checkpoint 复制到绑定的 `gpushare-i1-57535` 后，
+用 RTX3060 完成同一预检。远程输出：
+`.cache/quantum_reader_rotation_preflight/20261013T142917498766Z/`。
+`validation.json` 报告448个完整数组、8次头回放、4次优化器更新，
+完整数值/Top-5 回放、span parity、禁用恢复和 Reader 冻结全部通过；
+值归档 SHA256 为 `85557961ce169217ba92bfb4b99be569bf6dd84656dff352f3cba14585f9ee91`。
+远程 manifest、validation、trace 哈希分别为：
+`246f30b05657d919a243a69b1d56dff7b2842c35050ae0cc5a9ea82a5211024d`、
+`577b8474818fbcc30eb33c3f2f8840917f396be9d7156352ed2d1878a2cdc315`、
+`a01061e1ee023149a438329e16bb4e3fed6d02cb224e311a5c94c20abc8c1cd3`。
+下载后的 trace 通过共享 `sample-trace.v2` 和 JSON Schema 校验（评估 lane
+不训练是一项预期提示），生产者的完整回放已通过。固定 Reader 工程门
+因此通过，但真实题目 utility、独立数据和量子归因仍未测试。
+
+代码版本兼容 Git checkout 和源码包：显式 `QORE_CODE_REVISION`、Git HEAD
+或源文件哈希三者之一会写入 manifest。该修复已发布到 GitHub
+`five-ideas-development`，commit `f9747fb01672d238a91f4faa491a93db65d13ad5`。
 
 ## 下一步与累积经验
 

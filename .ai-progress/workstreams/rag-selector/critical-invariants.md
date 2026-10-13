@@ -193,7 +193,7 @@
 
 - [ACTIVE / FINAL AUDIT CLOSED; NO FIT RUN] Final505 dispositions and59-case228 protected pairs -> [detail](decisions/2026-10-11-final-support-boundary-resolution.md)
 - [CLOSED / FEASIBILITY AUDIT COMPLETE; SCORE-CALIBRATION DESIGN NEXT] Frozen59 protected-pair quantum/classical runner -> [detail](decisions/2026-10-12-protected-boundary-reader-runner.md)
-- [CANDIDATE / CODE READY; PINNED READER GATE PENDING] Question-conditioned quantum Reader feature rotation -> [design](decisions/2026-10-13-quantum-reader-feature-rotation.md), [engineering/loading boundary](decisions/2026-10-13-reader-rotation-engineering.md). Random-weight fixtures do not certify pinned-model readiness; classifier-input hook and future crossed head/loss controls are required. Loading changes must preserve checkpoint bytes, cover active parameters and respect actual container limits.
+- [ACTIVE ENGINEERING / PINNED READER GATE PASSED] Question-conditioned quantum Reader feature rotation -> [design](decisions/2026-10-13-quantum-reader-feature-rotation.md), [engineering/loading boundary](decisions/2026-10-13-reader-rotation-engineering.md). Fixed synthetic fixture passed full trace/replay on verified gpushare RTX3060; real utility is untested. Classifier-input hook and crossed head/loss controls remain required. Loading changes must preserve checkpoint bytes, cover active parameters and respect actual container limits.
 
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.
