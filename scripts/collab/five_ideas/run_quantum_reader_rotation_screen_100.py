@@ -208,6 +208,8 @@ def train_arm(torch, method, head, features, rows, cfg, device, arrays):
     optimizer = make_optimizer(torch, head, method, cfg)
     reports, witnesses = [], []
     init = {name: p.detach().cpu().numpy().copy() for name, p in head.state_dict().items()}
+    for name, value in init.items():
+        arrays[method + "__initial__" + name] = value
     for epoch in range(1, cfg["training"]["epochs"] + 1):
         losses = {"total": 0.0, "pair": 0.0, "anchor": 0.0, "protection": 0.0}
         grad_norm = 0.0
@@ -238,7 +240,9 @@ def train_arm(torch, method, head, features, rows, cfg, device, arrays):
         reports.append({"epoch": epoch, "updates": len(features), "mean_loss": {k: v / len(features) for k, v in losses.items()}, "gradient_norm_sum": grad_norm})
         print(f"{method}: epoch {epoch}/{cfg['training']['epochs']} complete", flush=True)
     final = {name: p.detach().cpu().numpy().copy() for name, p in head.state_dict().items()}
-    return {"parameter_count": sum(p.numel() for p in head.parameters()), "initial": init, "final": final, "epochs": reports}, witnesses
+    for name, value in final.items():
+        arrays[method + "__final__" + name] = value
+    return {"parameter_count": sum(p.numel() for p in head.parameters()), "epochs": reports}, witnesses
 
 
 def rank_cases(torch, heads, features, cases, device, arrays, lane):
