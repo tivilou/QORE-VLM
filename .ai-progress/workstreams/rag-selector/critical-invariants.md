@@ -112,6 +112,12 @@
   changes are 4/100 and 5/100. Do not answer this by blind residual/epoch
   increases; a future candidate must change Reader score formation or
   calibration and retain the same paired boundary gate. See [audit](../../docs/rag-research-log/20261013T-protected-boundary-feasibility-audit.md).
+- Pair-level failure and Top5-slot failure must be counted separately. Multiple
+  acceptable positives may fill limited slots without all-pair inversions;
+  independent score-box/rotation envelopes are optimistic bounds, not shared
+  model reachability. Preserve support by Top5 membership, not by forcing every
+  rescued positive below every retained item. Isolate objective and head changes.
+  See [design/audit](decisions/2026-10-13-quantum-reader-feature-rotation.md).
 ## Decision index
 ### Binding and current
 - [BINDING] Cumulative-evidence next-step rule -> [detail](../../shared/decisions/cumulative-evidence-next-step-selection.md)
@@ -187,6 +193,7 @@
 
 - [ACTIVE / FINAL AUDIT CLOSED; NO FIT RUN] Final505 dispositions and59-case228 protected pairs -> [detail](decisions/2026-10-11-final-support-boundary-resolution.md)
 - [CLOSED / FEASIBILITY AUDIT COMPLETE; SCORE-CALIBRATION DESIGN NEXT] Frozen59 protected-pair quantum/classical runner -> [detail](decisions/2026-10-12-protected-boundary-reader-runner.md)
+- [CANDIDATE / EXPLORATORY DESIGN ONLY] Question-conditioned quantum Reader feature rotation -> [detail](decisions/2026-10-13-quantum-reader-feature-rotation.md)
 
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.

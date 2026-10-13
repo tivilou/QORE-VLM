@@ -1,0 +1,124 @@
+{
+  "schema_version": "experiment-grounded-ideation.idea-portfolio.v2",
+  "semantic_mode": "llm_assisted",
+  "evidence_status": "mixed",
+  "mechanism_recovery": {
+    "dossier_path": "reader_feature_rotation_recovery_20261013.json",
+    "dossier_sha256": "2c79d17cb8acf237807bff981aa16ecc6a1cceb919e191a3047ad18b9658fb12",
+    "schema_version": "experiment-grounded-ideation.mechanism-recovery.v2",
+    "disposition": "candidate",
+    "selected_candidate_id": "reader_feature_rotation"
+  },
+  "ranking_policy": {
+    "weights": {
+      "feasibility": 0.3,
+      "innovation": 0.35,
+      "theoretical_elegance": 0.35
+    },
+    "ordering": [
+      "eligible",
+      "speculative",
+      "blocked",
+      "rejected"
+    ]
+  },
+  "ideas": [
+    {
+      "id": "reader_feature_rotation",
+      "rank": 1,
+      "status": "speculative",
+      "title": "Exploratory_only question-conditioned quantum CLS rotation",
+      "observed_problem": {
+        "statement": "Old capped residual misses protected pairs; classifier projection may underweight retained semantic information.",
+        "evidence_refs": [
+          "protected_boundary_rotation_evidence_20261013.json"
+        ]
+      },
+      "hypothesis": "Conditioned real-unitary reorientation of CLS before the fixed classifier may rescue direct support while preserving norm and null.",
+      "mechanism": "768coordinates padded1024; ten-qubit2layerRY/CRY,40affine angles/200parameters; frozen w signed-overlap readout.",
+      "theoretical_formulation": "s=||h|| ||w|| Re<w|U_theta(x)|h>+c; U_0=I; norm fixed. Capacity envelope is not learnability.",
+      "novelty": {
+        "nearest_work": [
+          "OFT2306.07280",
+          "BOFT2311.06243",
+          "Q-LoRA/H-LoRA2603.02281",
+          "MQAdapter2607.12418"
+        ],
+        "difference": "Reader-original relevance axis conditional rotation with Top5-safe loss; provisional difference only.",
+        "collision_risk": "high",
+        "evidence_refs": [
+          "https://arxiv.org/abs/2306.07280",
+          "https://arxiv.org/abs/2311.06243",
+          "https://arxiv.org/abs/2603.02281",
+          "https://arxiv.org/abs/2607.12418"
+        ]
+      },
+      "predictions": [
+        {
+          "statement": "Former box-unreachable positive candidates enter Top5 without loss of keptsupport.",
+          "discriminator": "Actual rescue slots vs old head/new loss control; matched classical gains separately."
+        }
+      ],
+      "minimum_experiment": {
+        "change": "Cross old/new head and old/new protectionloss; quantum/classical matched.",
+        "baselines": [
+          "Frozen Reader",
+          "ClassicalGivens200parameters",
+          "Oldquantum/classicalnewloss",
+          "Newquantum/classicaloldloss"
+        ],
+        "metrics": [
+          "Positiveconsensuscount",
+          "Directconsensuscount",
+          "Actualslotsrescued",
+          "Immutableloss",
+          "Pairinversions",
+          "SecondarySilver"
+        ],
+        "seeds_or_statistics": "Tentative seed20261008/3epochs; questionpairedbootstrap2000seed20261009; trainonly, finalcheckpoint.",
+        "success_criteria": "Usefulmean>0/CI95lower>0 vsReader,directnondecrease; attribution separately versusclassicalloss-only.",
+        "kill_criteria": "Null/norm/signedreadout/leakage defects stop; healthyshortnull no escalation.",
+        "screen_budget": "Exploratory59train/100exposedeval,3epochs; not run or fully authorized protocol.",
+        "formal_single_seed_budget": "FullNQtestpopulation and fullqualifiedtrain budget must be frozen later; no formalrun authorized.",
+        "replication_plan": "Independenttrainingseeds/unexposedsplit then anotherdataset; deterministicrerun not replication.",
+        "screen_null_policy": "inconclusive",
+        "resource_estimate": "Ten dataqubits,200trainableparameters; stateprep/shots/controlcost required; measuredGPUhours unavailable."
+      },
+      "implementation": {
+        "insertion_points": [
+          "FinalDPRCLS before frozenqa_classifier"
+        ],
+        "dependencies": [
+          "PinnedReader",
+          "Frozen59targets",
+          "Signed-overlap trace"
+        ],
+        "conflicts": [
+          "Old bounded residual path",
+          "Old positive-below-everykept protectionloss"
+        ],
+        "failure_signatures": [
+          "False topic rescue",
+          "Sharedcircuitcannot reach norm envelope",
+          "Onlylosscontrolgain",
+          "ShoterrorschangeTop5"
+        ]
+      },
+      "recovery_candidate_id": "reader_feature_rotation",
+      "scores": {
+        "feasibility": 65,
+        "innovation": 40,
+        "theoretical_elegance": 75,
+        "evidence_fit": 70,
+        "confidence": 35,
+        "priority": 59.75
+      }
+    }
+  ],
+  "consultations": [],
+  "resolution": "One exploratorydesign, no moduleimplementation; loss-only requiredcontrol, old amplitude/epoch variants rejected.",
+  "limitations": [
+    "Formalqualificationandfullbudgetpending; not an eligible formalstudy.",
+    "Noveltycollisionshigh; no advantage claims."
+  ]
+}

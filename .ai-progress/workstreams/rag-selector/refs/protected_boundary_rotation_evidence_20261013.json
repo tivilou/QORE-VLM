@@ -1,0 +1,84 @@
+{
+  "schema_version": "experiment-grounded-ideation.experiment-evidence.v1",
+  "project": "Q-DUET-VLM rag-selector",
+  "code_revision": "1d4831d387826af1c9ce9eba4e37c96d5190264b",
+  "dataset_identity": "fixed NQ59 qualified train /228 pairs; exposed NQ100 fixed Top50 evaluation, input669ce101; 87validation unused",
+  "study_readiness": {
+    "mode": "exploratory",
+    "dataset_qualification_status": "insufficient",
+    "baseline_comparison_status": "partial"
+  },
+  "validity": {
+    "status": "mixed",
+    "defects": [
+      "Exposed100 Silver opinions, not official passage gold.",
+      "Single training seed/3 epochs; no independent population qualification.",
+      "Prior87/source434 exposure/dirty-order exceptions unchanged.",
+      "Rotation norm envelope is not shallow shared-circuit reachability."
+    ],
+    "baseline_parity": "Pinned DPR single NQ38f47; exact null and159 cached classifier replays; no retrieval/generator.",
+    "statistical_treatment": "Question-cluster paired bootstrap2000 seed20261009; diagnostic dependent-pair counts not significance."
+  },
+  "observations": [
+    {
+      "id": "null",
+      "claim": "Reader/quantum/classical useful203/203/203; direct138/137/138; no228 pair inversions.",
+      "seeds": [
+        20261008
+      ],
+      "scope": "aggregate",
+      "sample_count": 100,
+      "evidence_refs": [
+        "protected_boundary_feasibility_audit_20261013_receipt.json",
+        "../../../../docs/rag-research-log/20261013T-quantum-reader-feature-rotation-design.md"
+      ],
+      "interpretation_status": "observed"
+    },
+    {
+      "id": "bounds",
+      "claim": "168pair gaps exceed old box;54/135 unique positive boundary boxes reachable across35train questions.99initial protection-order tensions, no additional pair-box exclusions.",
+      "scope": "aggregate",
+      "sample_count": 59,
+      "evidence_refs": [
+        ".cache/protected_boundary_feasibility_audit/20261013-objective-geometry.json"
+      ],
+      "interpretation_status": "computed"
+    },
+    {
+      "id": "representation",
+      "claim": "159CLS classifier replays max error1.873e-6; norm score radius median13.007. Capacity only, no task gain.",
+      "scope": "aggregate",
+      "sample_count": 159,
+      "evidence_refs": [
+        ".cache/protected_boundary_feasibility_audit/20261013-rotation-envelope.json"
+      ],
+      "interpretation_status": "computed"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": ".cache/protected_boundary_result/20261012T151854474980Z/case_study.json",
+      "role": "matched cases",
+      "sha256": "b24a60bcafdba45fdfa2575214376b7851750e840b19011511ce5c4bfdbd6e72"
+    },
+    {
+      "path": "five_ideas/protected_boundary_reader_screen_100/20261012T151854474980Z/semantic_values.npz",
+      "role": "complete cached Reader/head trace",
+      "sha256": "e1f7be90084113a37842e7ca425e71608a357147a47f7e673944496c6be988c1"
+    },
+    {
+      "path": ".cache/protected_boundary_feasibility_audit/20261013-objective-geometry.json",
+      "role": "optimistic box audit",
+      "sha256": "4d3a49cedd27642a5a014df523c264afa437c4ff405c3391268760ec36b8d9bc"
+    },
+    {
+      "path": ".cache/protected_boundary_feasibility_audit/20261013-rotation-envelope.json",
+      "role": "norm envelope",
+      "sha256": "7ab7c9926b38222f10975ec06ca76c9df4293f0dc4ebaeba359d3f5e1df0048e"
+    }
+  ],
+  "resource_budget": "Existing3epochs/59questions per arm, four-qubit2layer; cached audits only. No measured GPU-hour accounting; formal budget unresolved.",
+  "limitations": [
+    "Exploratory_only design; full-data qualification and novelty/strong controls not certified."
+  ]
+}

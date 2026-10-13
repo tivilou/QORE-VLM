@@ -2,6 +2,8 @@
 
 ## 当前研究总览
 
+- 最新设计：[问题条件化量子Reader特征旋转](20261013T-quantum-reader-feature-rotation-design.md)。保留768维CLS，在原分类头前旋转；身份null、200参数经典控制及loss-only对照。补充审计纠正“pair不可达=槽位不可救”：54/135漏选直接候选在乐观边界内，35/59题；99保护排序张力不是99数学矛盾。缓存159题原分数重放通过；仅探索设计，尚未实现/训练。
+
 - 最新实验：[冻结支持边界 Reader screen 结果](20261012T-protected-boundary-reader-screen-result.md)。量子/经典头都未提升100题有用段命中；量子直接证据 `1.37` 低于 Reader `1.38`，Silver `3.52` 低于 `3.55`。训练有梯度和 pair-gap 改善但 `0/228` pair inversion；先做可达性审计，不继续盲目增大残差或重跑同面板，L0。
 
 - 最新交付：[真实Reader预检与输入下载完成](20261012T-delivery-verified-protected-boundary-reader.md)。396数组、8次head及4次优化器重放通过；两份输入和预检包公网GET哈希核验通过，服务器23测试通过、代码已同步GitHub。交师弟跑59/228训练及100题筛选；真实效果尚未测量，L0。

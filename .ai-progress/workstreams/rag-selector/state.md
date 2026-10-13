@@ -6,15 +6,16 @@
 ## Current State
 - [DONE / FINAL AUDIT CLOSED] All current disagreements/uncertainties have final dispositions:401 prior body-adjudicated outcomes +104 newly reread items =505. New104 cover52 training questions:5 direct candidates,15 protected partial,67 scope exclusions,16 insufficient-body exclusions,1 source-conflict exclusion. No pending audit disposition.
 - Freeze59 questions228 actual witness-bound replacement pairs,75 maximum slots. Training347 closes as59 included/22 excluded/266 without safe opportunity.21 exclusions are scope/source questions;1 further case is closed without joint protection evidence. Exclusions are not irrelevant negatives or another pending-review queue.
-- Deterministic feasibility audit over the validated run finds168/228 protected pairs structurally unreachable under the current two-sided residual bound and60 reachable-but-not-learned; neither head inverts any of228 pairs. Quantum has46 harmful relative corrections versus3 classical. Set-valued Top-5 changes are4/100 quantum and5/100 classical.576 scope/item witness targets reopened.87 validation rows and all original opinion/source hashes unchanged;100Silver not read or tuned. No real fitting; L0 only.
+- Deterministic audit:168/228 matched pair gaps exceed old residual capacity;60 potentially reachable but0inversions. This is not168unreachable Top5 slots:54/135 unique missed-direct candidates are within optimistic boundary boxes across35/59 questions.99initial protection-order tensions cause no extra score-box exclusions. Quantum/classical harmful corrections46/3; Top5 setchanges4/5. No new fitting; L0 only.
+- [DESIGN / EXPLORATORY ONLY] Next candidate: question-conditioned real-unitary CLS rotation before frozen Reader classifier, tentative10qubits/200parameters, identity null and signed-overlap readout. Same-budget classical Givens and crossed head/loss controls required. No scoring module/training implemented; high novelty collision, no utility/quantum claim.
 - [DONE / DELIVERY VERIFIED] Isolated formal runner, matched fresh quantum/classical heads, unmasked Top5, full159-case study and auto18083 wrapper ready. Fixed3 epochs/final checkpoint; actual pinned-Reader synthetic preflight passed offline. Reader/old trainer/Generator/evaluator/residual unchanged. No real cohort fitting, dataset download or portal changes.
 - [DONE / SCREEN GATE FAILED] Collaborator completed the real59/228 training and100-case screen at `20261012T151854474980Z`. Reader/quantum/classical useful totals are203/203/203; direct138/137/138; Silver355/352/353. Trace and upload receipts pass; no utility or quantum-attribution gain.
 - Private immutable ZIP26,121,092 bytes, SHA f723bbb6f9075c3e04fd3d8a7b2d3f8127b6e354422ee2a2f6e167bfe32248ce registered at five_ideas/protected_boundary_reader_inputs/20261011-v1/. Frozen ZIP and existing100-case detail passed public18083 GET size/SHA checks;832 witness checks reopened. Actual Reader fixture ZIP also registered and GET-verified.
 - Canonical3080Ti checkout reconciled with GitHub at source merge dd2b0c2;23 tests passed. Ten initial draft files/owned ignore patch hash-matched original source.zip and remain recoverable in server stash50ae345a. Unrelated local/server changes preserved; no failover/restart. GitHub five-ideas-development contains all source/history.
 
 ## Next Actions
-1. Use the completed feasibility audit to design one Reader-integrated quantum score-calibration candidate that can address large underestimation without simply increasing the residual bound.
-2. Before any collaborator run, pre-register a falsifiable screen with the same frozen Reader, 100-question panel, classical matched control, pair inversion/boundary rescue metrics, and a kill gate. Do not increase residual, epochs or tune Silver before that design is frozen.
+1. Complete frozen engineering contract for quantum CLS rotation, signed readout, same-budget classical and separate loss-only controls; implement only an isolated engineering fixture next.
+2. Before any real collaborator run, freeze input/protocol/resource budget and complete engineering trace gate. Evaluate actual rescued Top5 slots and retained support, not just all-pair inversions. Formal full-data qualification remains separate; no Silver tuning or blind residual/epoch escalation.
 
 ## Blockers
 - No engineering blocker; this candidate is closed after a valid null screen and completed feasibility audit. All semantic audit items closed; no new label qualification queue. Any score-calibration idea remains exploratory until its pre-registered screen passes.
@@ -28,6 +29,7 @@
 - Final505 unique dispositions,104 body-bound manual decisions/exact quotes,347 closures,228 training-only pairs,576 actual witness targets and every manifest/source hash reopened.87 validation rows exactly unchanged; training axes contain no uncertain/unresolved.
 - Receipts: refs/protected_boundary_runner_20261012_receipt.json and refs/support_final_resolution_20261011_receipt.json. Original source/final manifest and prior fixture preserved.
 - Feasibility audit: `docs/rag-research-log/20261013T-protected-boundary-feasibility-audit.md`, compact output `.cache/protected_boundary_feasibility_audit/20261013T000000Z/` (local only), implementation `scripts/collab/five_ideas/audit_protected_boundary_feasibility.py`.
+- New audits: local lambeq4 geometrytests pass, no installs; canonical-server py310 cached159CLS/7950scores replay maxabs1.87e-6. ValuesSHA verified; norm-only radiusmedian13.007 is not circuit/task evidence. Recovery/portfolio validators pass.
 
 ## Plan Control
 - Plan: plans/protected-boundary-runner/v001.json
@@ -36,12 +38,12 @@
 - Focus Step: PR-04
 - Focus Status: done
 - Completed Steps: PR-01, PR-02, PR-03, PR-04
-- Next Action: Run a deterministic pair-feasibility audit before any new mechanism or parameter change.
+- Next Action: Completed old runner and feasibility audit; current exploratory design is owned by2026-10-13-quantum-reader-feature-rotation.md, engineering implementation next.
 - Blocker: None for delivery; real cohort fitting stays with collaborator.
-- Last Checkpoint: 2026-10-12 local date
+- Last Checkpoint: 2026-10-13 local date
 
 ## Relevant Decisions And Evidence
-- Current: [runner](decisions/2026-10-12-protected-boundary-reader-runner.md); [final resolution](decisions/2026-10-11-final-support-boundary-resolution.md); durable rules/index: critical-invariants.md.
+- Current: [rotation design](decisions/2026-10-13-quantum-reader-feature-rotation.md), [owner explanation](../../../../docs/rag-research-log/20261013T-quantum-reader-feature-rotation-design.md); [closed runner](decisions/2026-10-12-protected-boundary-reader-runner.md). Refs: reader_feature_rotation_{recovery,portfolio}_20261013.json; durable rules/index: critical-invariants.md.
 - Delivery session: sessions/2026-10/20261012T034803Z-f5246a.md; screen analysis: docs/rag-research-log/20261012T-protected-boundary-reader-screen-result.md; prior implementation: sessions/2026-10/20261011T163821Z-5c6acb.md.
 - Owner delivery log: docs/rag-research-log/20261012T-delivery-verified-protected-boundary-reader.md. Private bundle: .cache/protected_boundary_reader_inputs/20261011-v1/frozen_support_bundle.zip. Local actual preflight: .cache/protected_boundary_reader_real_preflight_20261012/20261012T033359251121Z/. Owned server draft archived in scoped stash; do not reapply obsolete draft over current source.
 - Private final entry: .cache/support_final_resolution/20261011-v1/final/{annotations.final.json,targets.final.json,dispositions.final.json,case_closure.final.json,manifest.json}; explicit104 decisions: sibling manual_resolution.json.

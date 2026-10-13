@@ -1,0 +1,195 @@
+{
+  "schema_version": "experiment-grounded-ideation.mechanism-recovery.v2",
+  "evidence_packet": {
+    "path": "protected_boundary_rotation_evidence_20261013.json",
+    "sha256": "1b03f7a261998d00ce7f29506caf74e5ef731d8194bbf373cfa2987469826d78",
+    "code_revision": "1d4831d387826af1c9ce9eba4e37c96d5190264b",
+    "validity_status": "mixed"
+  },
+  "trace_adequacy": {
+    "status": "complete",
+    "schema_version": "sample-trace.v2",
+    "artifact_refs": [
+      "protected_boundary_rotation_evidence_20261013.json"
+    ],
+    "selection_rule": "Every59 training row/228 pairs, every100 evaluation row; cached159classifier replay",
+    "covered_stages": [
+      "frozen_reader",
+      "semantic_pooling",
+      "residual_head",
+      "optimization",
+      "selection",
+      "posthoc"
+    ],
+    "missing_stages": [],
+    "target_boundary": "Training labels only;100 Silver posthoc. Proposed rotation is unexecuted.",
+    "causal_links_observed": {
+      "old_head_to_pair_gap": true,
+      "old_scores_to_top5": true,
+      "proposed_rotation_to_support": false
+    }
+  },
+  "causal_trace": {
+    "intervention_execution": {
+      "claim": "Validated old training trace: finite updates and nonconstant scores.",
+      "evidence_refs": [
+        "protected_boundary_rotation_evidence_20261013.json"
+      ]
+    },
+    "intended_intermediate": {
+      "claim": "No pair inversion;168pair boxes unreachable,60potentially reachable not learned.",
+      "evidence_refs": [
+        "protected_boundary_rotation_evidence_20261013.json"
+      ]
+    },
+    "observable_output": {
+      "claim": "4quantum/5classical Top5 sets changed, no useful aggregate gain.",
+      "evidence_refs": [
+        "protected_boundary_rotation_evidence_20261013.json"
+      ]
+    },
+    "task_utility": {
+      "claim": "100case useful203for each, direct quantum137vs138; no generation/population result.",
+      "evidence_refs": [
+        "protected_boundary_rotation_evidence_20261013.json"
+      ]
+    }
+  },
+  "failure_analysis": {
+    "primary_explanation": {
+      "statement": "Old bounded score intervention cannot invert most protected pairs; this is not a proof most Top5 slots cannot be rescued.",
+      "confidence": "high",
+      "evidence_refs": [
+        "protected_boundary_rotation_evidence_20261013.json"
+      ]
+    },
+    "alternative_explanations": [
+      {
+        "statement": "Shared features/conditioning may fail support discrimination even among reachable pairs.",
+        "confidence": "medium",
+        "evidence_refs": [
+          "protected_boundary_rotation_evidence_20261013.json"
+        ]
+      },
+      {
+        "statement": "Old protection loss introduces initial order tension in99pairs; no additional independent score-box impossibility.",
+        "confidence": "medium",
+        "evidence_refs": [
+          "protected_boundary_rotation_evidence_20261013.json"
+        ]
+      }
+    ],
+    "discriminating_measurement": {
+      "uncertainty": "Scale capacity versus representation versus loss geometry.",
+      "measurement": "Pre-classifier rotation, classical same-budget control, crossed old/new heads and old/new protection loss; count actual slots separately.",
+      "primary_outcome": "New representation rescues formerly unreachable candidates without losing retained support beyond loss-only control.",
+      "alternative_outcome": "Only loss-only control gains or all heads stay null: no quantum attribution or escalation."
+    },
+    "closed_family": {
+      "id": "unchanged_bounded_semantic_logit_residual",
+      "rejected_variant_refs": [
+        "configs/experiments/protected_boundary_reader_screen_100.json"
+      ],
+      "closure_evidence_refs": [
+        "protected_boundary_rotation_evidence_20261013.json"
+      ],
+      "forbidden_rescue_variants": [
+        "Blind bound/epoch/depth increases",
+        "100Silver-driven parameter/checkpoint tuning",
+        "Treat228dependent pairs as228independent questions"
+      ]
+    }
+  },
+  "positive_carryovers": [
+    {
+      "id": "reader_anchor",
+      "mechanism": "Original768CLS linear classifier precisely replays159cases; strongest existing100panel comparator.",
+      "evidence_refs": [
+        "protected_boundary_rotation_evidence_20261013.json"
+      ],
+      "transport_constraint": "Frozen encoder/classifier; identity null and plain Top5."
+    },
+    {
+      "id": "qualified_pairs",
+      "mechanism": "Frozen59question135missed candidates/228qualified pairs define safe training opportunities.",
+      "evidence_refs": [
+        "protected_boundary_rotation_evidence_20261013.json"
+      ],
+      "transport_constraint": "No test-label fitting; exclusion/held not negatives."
+    }
+  ],
+  "recovery_outcome": {
+    "disposition": "candidate",
+    "selected_candidate": {
+      "id": "reader_feature_rotation",
+      "title": "Exploratory question-conditioned quantum Reader feature rotation",
+      "positive_carryover_ids": [
+        "reader_anchor",
+        "qualified_pairs"
+      ],
+      "recovery_mode": "new_causal_path",
+      "causal_difference": "Transform full CLS before frozen classifier rather than add bounded residual to its completed logit; isolate protection-loss change.",
+      "changed_causal_links": [
+        "intervention_execution",
+        "intended_intermediate",
+        "observable_output"
+      ],
+      "discriminating_measurement": "Shared real-unitary vs matched Givens plus loss-only controls and norm/signed-readout traces.",
+      "success_gate": "Question-level useful gain CI95lower>0, directnondecrease; actual slot rescue and separate quantum/classical attribution.",
+      "kill_condition": "Contract/numerical breach stops; healthy short-null remains inconclusive, no automatic escalation.",
+      "authorization_boundary": "This turn design/saved-tensor audits only. No scoring module, fitting, real screen, or download."
+    }
+  },
+  "case_evidence": {
+    "selection_rule": "All159cases and228pairs; explanatory changed eval cases from prior complete analysis.",
+    "pairing_rule": "Identical candidate IDs/Reader scores and question across quantum/classical/Reader.",
+    "selection_timing": "post_hoc",
+    "claim_scope": "exploratory",
+    "comparisons": [
+      {
+        "case_id": "all59training",
+        "unit_type": "matched question cohort",
+        "reference_condition": {
+          "artifact_refs": [
+            "protected_boundary_rotation_evidence_20261013.json"
+          ],
+          "observation": "Reader gap requirement median3.636; old two-sided boundmedian1.848.",
+          "interpretation_status": "computed"
+        },
+        "candidate_condition": {
+          "artifact_refs": [
+            "protected_boundary_rotation_evidence_20261013.json"
+          ],
+          "observation": "Both heads invert0/228; quantum46harmful/classical3;54unique positive boundary boxes feasible.",
+          "interpretation_status": "computed"
+        },
+        "stage_trace": [
+          {
+            "stage": "selection",
+            "reference_state": "Frozen baseline retained.",
+            "candidate_state": "Sparse setchanges4/5; useful203each.",
+            "artifact_refs": [
+              "protected_boundary_rotation_evidence_20261013.json"
+            ],
+            "interpretation_status": "computed"
+          }
+        ],
+        "outcome": {
+          "polarity": "unchanged",
+          "criterion": "positive consensus selected count",
+          "observation": "No useful aggregate gain; quantum directdrops1.",
+          "artifact_refs": [
+            "protected_boundary_rotation_evidence_20261013.json"
+          ],
+          "interpretation_status": "observed"
+        }
+      }
+    ],
+    "interpretation_boundary": "Posthoc descriptive cohort; not causal attribution, novel mechanism effect, or population gain."
+  },
+  "limitations": [
+    "Exploratory_only: formal qualification incomplete.",
+    "Norm envelope is unrestricted independent rotation, not shallow ansatz reachability.",
+    "High collision risk withOFT/BOFT/Q-LoRA/MQAdapter; no novelty/quantum advantage claim."
+  ]
+}
