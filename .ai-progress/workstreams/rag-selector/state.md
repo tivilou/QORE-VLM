@@ -24,7 +24,7 @@
 
 ## Validation
 - New rotation: local14 focused tests, Python compile and6-plugin plan pass. Fixed pretrained Reader gpushare fixture `20261013T142917498766Z` passes448arrays/8heads/4updates/full-v2+JSONschema and values SHA `85557961ce169217ba92bfb4b99be569bf6dd84656dff352f3cba14585f9ee91`. Receipt: refs/reader_rotation_low_memory_20261013_receipt.json; pinned output kept in local cache and remote worktree, raw values not committed. Formal screen script is validate-only locally; no real cohort fitting was run here.
-- Current Session: sessions/2026-10/20261013T162425Z-9ff9f6.md.
+- Current Session: sessions/2026-10/20261013T163143Z-544f17.md.
 - Local23 and canonical-server23 focused tests pass; no installs.3-plugin plan and Bash syntax pass. Actual Reader fixture20261012T033359251121Z:396 arrays,8 head replays/4 optimizer updates, hidden/pooling/CLS/null/lineage/selection pass; valuesSHA5af8c044d5897b5c14a8da4011ff15b8e74fb5ecd9393c146e5b429a641d1d51. Synthetic targets only.
 - Shared complete v2 validator passes on actual Reader fixture, with2 expected evaluation-training not-applicable warnings. Preflight exchange ZIP4,451,141 bytes/SHA329af54d3b714b1ce9d7e4c6094aa83382a573ce4a06a3096c6e244664cc879f verified.
 - Real screen upload directory has11 files; every file size/SHA and sidecar upload receipt matches. Full validation:3254 arrays,318 head replays,12 optimizer updates. Utility gate false; quantum-attribution gate false. Pair gaps improved in182/228 quantum and226/228 classical pairs, but pair inversions are0/228 for both.
