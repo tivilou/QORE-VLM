@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 import hashlib
 import importlib.util
 import json
+import os
 from pathlib import Path
 import platform
 import subprocess
@@ -35,6 +36,18 @@ def sha(path):
     with Path(path).open("rb") as stream:
         for block in iter(lambda: stream.read(1024 * 1024), b""): digest.update(block)
     return digest.hexdigest()
+
+
+def code_revision():
+    """Return an explicit checkout revision, or a deterministic source bundle id."""
+    explicit = os.environ.get("QORE_CODE_REVISION")
+    if explicit:
+        return explicit, "explicit_environment"
+    try:
+        return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(), "git"
+    except (OSError, subprocess.CalledProcessError):
+        source_hash = hashlib.sha256("".join(sha(ROOT / path) for path in SOURCES).encode()).hexdigest()
+        return "source-bundle-" + source_hash, "source_hash"
 
 
 def write_json(path, value):
@@ -451,8 +464,9 @@ def run(args):
     if any(p.grad is not None for p in reader.parameters()): raise ValueError("frozen Reader received gradients")
     archive = directory/"rotation_values.npz"
     np.savez_compressed(archive, **arrays)
+    revision, revision_source = code_revision()
     manifest = {"schema_version": "rag.reader_rotation_fixture.v1", "run_id": run_id, "config": cfg, "config_sha256": sha(CONFIG),
-        "code_revision": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
+        "code_revision": revision, "code_revision_source": revision_source,
         "source_sha256": {p: sha(ROOT/p) for p in SOURCES}, "model_identity": identity,
         "environment": {"python": platform.python_version(), "torch": torch.__version__, "numpy": np.__version__, "transformers": transformers.__version__, "device": str(device)},
         "inventory": {k: {"shape": list(v.shape), "dtype": str(v.dtype), "elements": int(v.size), "sha256": hashlib.sha256(np.ascontiguousarray(v).tobytes()).hexdigest()} for k,v in arrays.items()},
