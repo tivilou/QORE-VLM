@@ -24,7 +24,7 @@ class FakeTokenizer:
         return {"input_ids": torch.tensor(rows), "attention_mask": torch.ones(len(rows), 8, dtype=torch.long)}
 
 
-def architecture_fixture(root):
+def architecture_fixture(root, *, streaming=False):
     """Persist a clearly marked random-weight architecture fixture for auditing."""
     cfg = json.loads(runner.CONFIG.read_text(encoding="utf-8"))
     root = Path(root)
@@ -35,18 +35,22 @@ def architecture_fixture(root):
         reader = DPRReader(DPRConfig(vocab_size=64, hidden_size=768, num_hidden_layers=1,
             num_attention_heads=12, intermediate_size=768, max_position_embeddings=64,
             hidden_dropout_prob=0., attention_probs_dropout_prob=0.))
+    if streaming:
+        reader.save_pretrained(snapshot, safe_serialization=True)
     original_sha = runner.sha
     def mocked_sha(path):
         return cfg["reader"]["config_file_sha256"] if Path(path) == snapshot/"config.json" else original_sha(path)
     with patch("huggingface_hub.snapshot_download", return_value=str(snapshot)), \
-         patch("transformers.DPRReader.from_pretrained", return_value=reader), \
+         patch("transformers.DPRReader.from_pretrained", return_value=(reader, {})), \
          patch("transformers.DPRReaderTokenizer.from_pretrained", return_value=FakeTokenizer()), \
+         patch.object(runner, "constrained_cpu_runtime", return_value=streaming), \
          patch.object(runner, "sha", side_effect=mocked_sha), contextlib.redirect_stdout(io.StringIO()):
         runner.run(SimpleNamespace(verify_only=None, device="cpu", output_root=root/"outputs"))
     directory = sorted((root/"outputs").iterdir())[-1]
     manifest = json.loads((directory/"manifest.json").read_text(encoding="utf-8"))
     manifest["model_identity"] = {"model_id": "random-one-layer-DPRReader-architecture-fixture", "checkpoint_pinned": False,
-        "seed": 42, "tokenizer": "explicit fixed synthetic token IDs", "formal_readiness": "not_certified"}
+        "seed": 42, "tokenizer": "explicit fixed synthetic token IDs", "formal_readiness": "not_certified",
+        "loading": "per-module mapped CPU" if streaming else "mocked resident Reader"}
     runner.write_json(directory/"manifest.json", manifest)
     trace = json.loads((directory/"sample_trace.json").read_text(encoding="utf-8"))
     trace["experiment"]["model_identity"] = manifest["model_identity"]
@@ -59,6 +63,25 @@ def architecture_fixture(root):
 
 
 class PreflightTests(unittest.TestCase):
+    def test_constrained_loader_full_runner_readback(self):
+        with tempfile.TemporaryDirectory() as task_tmp:
+            directory = architecture_fixture(task_tmp, streaming=True)
+            result = runner.verify(directory)
+            self.assertEqual(result["optimizer_update_replays"], 4)
+            self.assertEqual(result["head_replays"], 8)
+            manifest = json.loads((directory/"manifest.json").read_text(encoding="utf-8"))
+            self.assertEqual(manifest["model_identity"]["loading"], "per-module mapped CPU")
+            self.assertFalse(manifest["model_identity"]["checkpoint_pinned"])
+
+    def test_checkpoint_mismatch_fails_before_training(self):
+        reader = SimpleNamespace(span_predictor=SimpleNamespace(encoder=SimpleNamespace(bert_model=SimpleNamespace(pooler=None))))
+        unused = ["span_predictor.encoder.bert_model.pooler.dense.weight", "span_predictor.encoder.bert_model.pooler.dense.bias"]
+        self.assertEqual(runner.validate_loading_info(reader, {"unexpected_keys": unused}), sorted(unused))
+        for info in ({"missing_keys": ["active_weight"]}, {"unexpected_keys": ["unregistered_weight"]}, {"mismatched_keys": ["active_weight"]}):
+            with self.assertRaises(ValueError): runner.validate_loading_info(reader, info)
+        reader.span_predictor.encoder.bert_model.pooler = object()
+        with self.assertRaises(ValueError): runner.validate_loading_info(reader, {"unexpected_keys": unused})
+
     def test_full_fixture_reopen_and_tampering_rejected(self):
         with tempfile.TemporaryDirectory() as task_tmp:
             directory = architecture_fixture(task_tmp)

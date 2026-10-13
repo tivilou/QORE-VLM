@@ -1,0 +1,48 @@
+{
+  "schema_version": "rag.reader_rotation_low_memory_receipt.v1",
+  "authorization": "engineering_only",
+  "local_tests": {"passed": 13, "environment": "existing lambeq", "packages_installed": false},
+  "fixture": {
+    "path": ".cache/quantum_reader_rotation_streaming_architecture_20261013_v1/outputs/20261013T055251674685Z/",
+    "identity": "random-one-layer-DPRReader-architecture-fixture; explicit synthetic token IDs",
+    "loading": "per-module mapped CPU",
+    "values_sha256": "651afaf6c8bd7ee3a1268a2821f960a8feb007849abf73547969dc6537c92b2c",
+    "complete_arrays": 448,
+    "head_replays": 8,
+    "optimizer_update_replays": 4,
+    "shared_complete_v2_validation": "passed; evaluation training is not applicable",
+    "json_schema": "passed",
+    "semantic_readiness": "passed_for_random_architecture_only",
+    "pinned_checkpoint_readiness": "not_certified"
+  },
+  "checkpoint_cache": {
+    "conversion": "streamed legacy FP32 bytes; per-tensor reopen hashes",
+    "local_conversion_reuse_corruption_tests": "passed",
+    "local_resident_vs_streamed_actual_DPR_modules": "passed at rtol=1e-6, atol=1e-7; FP32 arithmetic tolerance, not bitwise output claim",
+    "full_runner_streaming": "passed with random one-layer 768-dimensional architecture",
+    "source_checkpoint_immutable": true
+  },
+  "server": {
+    "canonical_checkout": "/home/Q-DUET-VLM/QORE-VLM-phase1-gate",
+    "observed_head": "1d4831d387826af1c9ce9eba4e37c96d5190264b",
+    "current_cgroup_memory_limit_bytes": 1073741824,
+    "cuda_visible": false,
+    "environment": {"torch": "2.7.1+cu126", "transformers": "4.44.0", "accelerate": "1.14.0", "safetensors": "0.7.0"},
+    "converter_tests_passed": 2,
+    "legacy_conversion": "completed with all FP32 tensor byte hashes verified",
+    "pinned_reader_fixture": "unverified after SSH banner timeout during ordinary mapped load",
+    "timeout_cause": "unknown",
+    "remote_process_state": "unknown; inspect before any rerun",
+    "final_native_streaming_code_synced": false,
+    "restart_or_failover": false
+  },
+  "python_compile": "passed",
+  "bash_syntax": "passed",
+  "plugin_plan": {"plugins": 3, "validation": "passed", "authorization": "approved", "trace_readiness": "partial"},
+  "real_cohort_fitting": false,
+  "model_downloaded": false,
+  "dataset_downloaded": false,
+  "generator_called": false,
+  "task_utility_tested": false,
+  "quantum_advantage": "unestablished"
+}

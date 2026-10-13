@@ -68,7 +68,7 @@
   "composition": {"mode": "parallel", "order": ["frozen_reader", "quantum", "classical"], "merge_rule": "Shared frozen inputs, separate heads and identical synthetic update budget; no output fusion", "interaction_ablations": ["identity null", "adapter disabled", "matched classical", "one-layer100-param unit fixture"]},
   "validation": {"baseline_equivalence": "zero-angle identity and disabled restoration with unchanged spans",
     "tests": ["baseline_equivalence", "plugin_isolation", "deterministic_replay", "interaction_ablation", "independent_gate_oracle", "target_boundary", "actual_reader_fixture", "full_value_readback", "optimizer_replay", "trace_structural_validation", "trace_semantic_validation", "trace_replay"]},
-  "reproducibility": {"config_path": "configs/experiments/quantum_reader_rotation_preflight.json", "dataset_identity": "two explicit synthetic questions,50 fixed synthetic passages each; no real cohort", "environment": "existing Torch/Transformers with locally cached pinned DPRReader; no installation/download", "seeds": [20261013], "output_manifest": ".cache/quantum_reader_rotation_preflight/<timestamp>/manifest.json"},
+  "reproducibility": {"config_path": "configs/experiments/quantum_reader_rotation_preflight.json", "dataset_identity": "two explicit synthetic questions,50 fixed synthetic passages each; no real cohort", "environment": "existing Torch>=2.3/Transformers/safetensors with locally cached pinned DPRReader; constrained CPU uses per-module mapped FP32 cache; optional accelerate for resident low-memory loading; no installation/download", "seeds": [20261013], "output_manifest": ".cache/quantum_reader_rotation_preflight/<timestamp>/manifest.json"},
   "trace_contract": {"enabled": true, "schema": "sample-trace.v2", "artifact_path": ".cache/quantum_reader_rotation_preflight/<timestamp>/sample_trace.json",
     "sample_selection_rule": "all2 predeclared synthetic questions,all50 candidates, every rotation gate and both fixed updates",
     "target_boundary": "explicit synthetic row enters training loss only; reference never enters forward/Top5; no Silver",
@@ -79,10 +79,10 @@
   "recovery_contract": {"dossier_path": ".ai-progress/workstreams/rag-selector/refs/reader_feature_rotation_recovery_20261013.json", "dossier_sha256": "2c79d17cb8acf237807bff981aa16ecc6a1cceb919e191a3047ad18b9658fb12", "candidate_id": "question-conditioned-reader-feature-rotation", "discriminating_intermediate_measurement": "signed readout through rotated features; effective nonuniform gradient updates; immutable Top5 retention without ordering constraint"},
   "trace_readiness": {
     "status": "partial",
-    "fixture_path": ".cache/quantum_reader_rotation_architecture_20261013_v1/outputs/20261013T050308917137Z/sample_trace.json",
+    "fixture_path": ".cache/quantum_reader_rotation_streaming_architecture_20261013_v1/outputs/20261013T055251674685Z/sample_trace.json",
     "structural_validation": "random one-layer DPR architecture fixture: complete shared v2 validator and JSON schema pass; pinned checkpoint pending",
     "semantic_validation": "448 arrays reopened; independent pooling/readout/lineage/coordinate/target-boundary checks pass on architecture fixture",
-    "replay_test": "8 head and4 optimizer updates plus Top5 replay pass; actual cached pretrained Reader fixture remains unverified after SSH banner timeout"
+    "replay_test": "13 local tests pass, including complete per-module streaming runner with 8 head and4 optimizer updates plus Top5 replay; byte-identical legacy conversion and resident/streamed module parity pass; actual cached pretrained Reader fixture remains unverified after SSH banner timeout"
   },
   "limitations": ["Engineering-only synthetic updates do not test utility", "Pinned pretrained Reader readiness pending; architecture fixture cannot substitute for checkpoint certification", "Exactly classically simulable; no quantum advantage claim", "No full-data L1/L2", "Novelty overlaps orthogonal adapter literature", "Real screen requires separate crossed head/loss controls and frozen budget"]
 }

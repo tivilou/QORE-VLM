@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 from datetime import datetime, timezone
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 import platform
@@ -24,7 +25,8 @@ COMMON = ("hidden", "input_ids", "attention_mask", "question_mask", "passage_mas
 STAGES = ("data", "tokenization", "frozen_encoder", "pooling", "optimization", "feature_rotation", "readout", "selection", "diagnosis")
 CANONICAL = ("data", "preprocess", "training", "retrieval", "scoring", "selection", "context", "generation", "evaluation", "diagnosis")
 SOURCES = ("applications/rag/quantum_reader_rotation.py", "applications/rag/quantum_semantic_reader.py",
-           "applications/rag/protected_boundary_learning.py", "scripts/collab/five_ideas/run_quantum_reader_rotation_preflight.py",
+           "applications/rag/protected_boundary_learning.py", "applications/rag/reader_checkpoint_cache.py",
+           "scripts/collab/five_ideas/run_quantum_reader_rotation_preflight.py",
            "configs/experiments/quantum_reader_rotation_preflight.json")
 
 
@@ -54,6 +56,26 @@ def archive_coordinate(archive, key, coordinates):
 
 def put(arrays, key, value):
     arrays[key] = value.detach().cpu().numpy().copy() if hasattr(value, "detach") else np.array(value, copy=True)
+
+
+def validate_loading_info(reader, info):
+    unused_pooler = {"span_predictor.encoder.bert_model.pooler.dense.weight",
+                     "span_predictor.encoder.bert_model.pooler.dense.bias"}
+    unexpected = set(info.get("unexpected_keys", []))
+    pooler = reader.span_predictor.encoder.bert_model.pooler
+    if any(info.get(k) for k in ("missing_keys", "mismatched_keys", "error_msgs")) or unexpected-unused_pooler or (unexpected and pooler is not None):
+        raise ValueError("Reader weights do not exactly cover active checkpoint architecture")
+    return sorted(unexpected)
+
+
+def constrained_cpu_runtime():
+    """Read runtime limits, not host-level free RAM which hides container quotas."""
+    limit = Path("/sys/fs/cgroup/memory.max")
+    try:
+        value = limit.read_text().strip()
+        return value != "max" and int(value) < 2*1024**3
+    except (OSError, ValueError):
+        return False
 
 
 def checkpoint(head, arrays, prefix):
@@ -304,7 +326,7 @@ def trace_document(manifest, arrays, archive):
 def run(args):
     import torch
     import transformers
-    from transformers import DPRReader, DPRReaderTokenizer
+    from transformers import DPRConfig, DPRReader, DPRReaderTokenizer
     from huggingface_hub import snapshot_download
     cfg = json.loads(CONFIG.read_text(encoding="utf-8"))
     if cfg["authorization"] != "engineering_fixture_only" or cfg["methods"] != ["frozen_reader", *ARMS] or cfg["training"]["steps"] != 2 or not cfg["reader"]["offline_only"]:
@@ -322,11 +344,42 @@ def run(args):
     if snapshot.name != spec["revision"] or sha(snapshot/"config.json") != spec["config_file_sha256"]:
         raise ValueError("cached model revision/config mismatch")
     tokenizer = DPRReaderTokenizer.from_pretrained(snapshot, local_files_only=True)
-    reader = DPRReader.from_pretrained(snapshot, local_files_only=True).to(device).eval().requires_grad_(False)
+    # Legacy non-ZIP Torch files cannot be memory-mapped. Convert bytes before
+    # constructing the model, then use meta initialization + mapped safetensors.
+    # Keep the original snapshot immutable and preserve every FP32 tensor byte.
+    import zipfile
+    source_weights = snapshot/"pytorch_model.bin"
+    serialization_cache = None
+    model_path, loading = snapshot, {}
+    if source_weights.exists() and not zipfile.is_zipfile(source_weights):
+        from applications.rag.reader_checkpoint_cache import convert_legacy
+        original_sha = sha(source_weights)
+        model_path = ROOT/".cache/reader_checkpoint_cache"/original_sha
+        serialization_cache = convert_legacy(source_weights, model_path)
+        loading = {"config": DPRConfig.from_pretrained(snapshot, local_files_only=True), "use_safetensors": True}
+        print("Legacy Reader mapped cache ready; all FP32 tensor bytes verified", flush=True)
+    disk_offload = device.type == "cpu" and constrained_cpu_runtime()
+    if disk_offload:
+        from applications.rag.reader_checkpoint_cache import load_streaming_reader
+        mapped_archive = model_path/"model.safetensors"
+        if not mapped_archive.exists(): raise ValueError("constrained CPU requires mapped safetensors cache")
+        print("Limited-memory CPU: per-module mapped frozen encoder; FP32 retained", flush=True)
+        reader, unused_checkpoint_keys = load_streaming_reader(DPRConfig.from_pretrained(snapshot, local_files_only=True), mapped_archive)
+    else:
+        use_low_memory = importlib.util.find_spec("accelerate") is not None
+        reader, loading_info = DPRReader.from_pretrained(model_path, local_files_only=True,
+            low_cpu_mem_usage=use_low_memory, output_loading_info=True, **loading)
+        unused_checkpoint_keys = validate_loading_info(reader, loading_info)
+        reader = reader.to(device)
+    reader = reader.eval().requires_grad_(False)
+    print("Frozen Reader loaded", flush=True)
     identity = {"model_id": spec["model_id"], "revision": snapshot.name, "resolved_path": str(snapshot.resolve()),
         "config_file_sha256": sha(snapshot/"config.json"),
         "runtime_config_sha256": hashlib.sha256(json.dumps(reader.config.to_dict(), sort_keys=True, default=str).encode()).hexdigest(),
-        "files_sha256": {p.name: sha(p) for p in snapshot.iterdir() if p.is_file() and p.suffix in (".bin", ".safetensors", ".json", ".txt")}}
+        "files_sha256": {p.name: sha(p) for p in snapshot.iterdir() if p.is_file() and p.suffix in (".bin", ".safetensors", ".json", ".txt")},
+        "loading": "per-module mapped CPU" if disk_offload else "low_cpu_mem_usage" if use_low_memory else "ordinary resident Reader",
+        "serialization_cache": serialization_cache, "unused_checkpoint_keys": unused_checkpoint_keys,
+        "disk_offload": disk_offload, "device_map": getattr(reader, "hf_device_map", None)}
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
     directory = args.output_root / run_id
     directory.mkdir(parents=True, exist_ok=False)
