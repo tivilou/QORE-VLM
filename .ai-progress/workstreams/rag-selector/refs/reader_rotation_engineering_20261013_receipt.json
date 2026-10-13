@@ -1,0 +1,25 @@
+{
+  "schema_version": "rag.reader_rotation_engineering_receipt.v1",
+  "authorization": "engineering_only",
+  "local_tests": {"passed": 8, "environment": "existing lambeq", "packages_installed": false},
+  "server_initial_tests": {"passed": 7, "environment": "existing py310", "source_head": "1d4831d387826af1c9ce9eba4e37c96d5190264b"},
+  "fixture": {
+    "path": ".cache/quantum_reader_rotation_architecture_20261013_v1/outputs/20261013T050308917137Z/",
+    "identity": "random-one-layer-DPRReader-architecture-fixture; explicit synthetic token IDs",
+    "values_sha256": "4e41fcd389b2e02248b4bd5f208c425fc1520495b472344d51f1ee9b29c1cca7",
+    "complete_arrays": 448,
+    "head_replays": 8,
+    "optimizer_update_replays": 4,
+    "shared_complete_v2_validation": "passed",
+    "json_schema": "passed",
+    "semantic_readiness": "passed_for_random_architecture_only",
+    "pinned_checkpoint_readiness": "not_certified"
+  },
+  "plugin_plan": {"plugins": 3, "validation": "passed", "authorization": "approved", "trace_readiness": "partial"},
+  "server_cached_reader_attempt": {"status": "unverified_after_ssh_banner_timeout", "cause": "unknown", "latest_batch4_code_synced": false},
+  "real_cohort_fitting": false,
+  "dataset_downloaded": false,
+  "generator_called": false,
+  "task_utility_tested": false,
+  "quantum_advantage": "unestablished"
+}

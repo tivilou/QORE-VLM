@@ -1,0 +1,26 @@
+{
+  "schema_version": "rag.reader_rotation_preflight.v1",
+  "authorization": "engineering_fixture_only",
+  "reader": {
+    "model_id": "facebook/dpr-reader-single-nq-base",
+    "revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+    "config_file_sha256": "b70134672b020275e816b41fbe3cecf597019c7639ae4518fa5c493d15eb0c74",
+    "max_length": 64,
+    "batch_size": 4,
+    "offline_only": true
+  },
+  "head": {
+    "layers": 2,
+    "conditioning": 4,
+    "seed": 20261013,
+    "projection": "fixed row-unit Gaussian; pooled RMS-normalization; x=z/sqrt(1+z^2)",
+    "quantum": "little-endian RY then ring CRY per layer; half-angle convention",
+    "classical": "seed+1 random disjoint coordinate matchings per gate, matched active-pair counts",
+    "parameter_count": 200
+  },
+  "methods": ["frozen_reader", "quantum", "classical"],
+  "training": {"steps": 2, "learning_rate": 0.003, "weight_decay": 0.0, "gradient_clip": 1.0},
+  "loss": {"margin": 0.0, "anchor_weight": 0.01, "protection_weight": 1.0},
+  "fixture": {"questions": 2, "candidates_per_question": 50, "targets": "explicit synthetic engineering targets; no semantic truth claims"},
+  "claim_ceiling": "engineering_only_no_task_utility"
+}

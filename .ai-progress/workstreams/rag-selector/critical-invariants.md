@@ -193,7 +193,7 @@
 
 - [ACTIVE / FINAL AUDIT CLOSED; NO FIT RUN] Final505 dispositions and59-case228 protected pairs -> [detail](decisions/2026-10-11-final-support-boundary-resolution.md)
 - [CLOSED / FEASIBILITY AUDIT COMPLETE; SCORE-CALIBRATION DESIGN NEXT] Frozen59 protected-pair quantum/classical runner -> [detail](decisions/2026-10-12-protected-boundary-reader-runner.md)
-- [CANDIDATE / EXPLORATORY DESIGN ONLY] Question-conditioned quantum Reader feature rotation -> [detail](decisions/2026-10-13-quantum-reader-feature-rotation.md)
+- [CANDIDATE / ENGINEERING IMPLEMENTED; PINNED READER GATE PENDING] Question-conditioned quantum Reader feature rotation -> [design](decisions/2026-10-13-quantum-reader-feature-rotation.md), [engineering boundary](decisions/2026-10-13-reader-rotation-engineering.md). Random-weight architecture fixtures do not certify pinned-model readiness; classifier-input hook and future crossed head/loss controls are required.
 
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.

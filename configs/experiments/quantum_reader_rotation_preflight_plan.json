@@ -1,0 +1,88 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v2",
+  "project": "Q-DUET-VLM/rag-selector/reader-feature-rotation",
+  "authorization": "approved",
+  "baseline": {
+    "entry_point": "DPRReader.span_predictor.qa_classifier",
+    "code_revision": "3af8d58b1170ebfaa7aacc3653bb54a6466a7c99",
+    "equivalence_test": "zero-angle scoped hook yields exact Reader logits/spans; removing hook restores output"
+  },
+  "core_invariants": ["Freeze encoder/classifier, candidate order, labels and production selector", "Only synthetic engineering targets this step; no real cohort fitting/download", "No target fields in scoring, conditions or Top5 selection", "Signed readout, identity initialization and full numeric replay", "Separate loss/head attribution in any later real screen"],
+  "interfaces": [{
+    "id": "reader_cls_rotation_v1", "type": "transformer",
+    "input_schema": "frozen final CLS Nx768, evidence-free pooled Nx3840, original classifier",
+    "output_schema": "rotated Nx1024 and signed original-classifier scores N",
+    "invariants": ["finite matching dtype/device", "norm preserved", "same model identity", "all50 candidates label-free Top5"]
+  }],
+  "plugins": [
+    {
+      "id": "frozen_reader", "version": "1", "role": "baseline", "interface": "reader_cls_rotation_v1",
+      "insertion_point": "unchanged DPR Reader qa_classifier", "hypothesis": "Original scores define exact null anchor",
+      "input_schema": "synthetic question and fixed50 passages", "output_schema": "50 frozen scores, original spans and hidden states",
+      "requires": [], "conflicts": [], "deterministic": true, "resource_estimate": "cached pinned Reader, offline CPU/GPU, no dataset",
+      "failure_signatures": ["model revision/hash drift", "nonfinite values", "span/null mismatch"],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2", "stages": ["data", "preprocess", "training", "scoring", "selection", "diagnosis"],
+        "input_fields": ["question", "texts", "input_ids"], "output_fields": ["hidden", "base", "selected"],
+        "input_refs": ["source:synthetic_texts"], "output_refs": ["readout:result"],
+        "emitted_fields": ["token masks", "hidden", "CLS", "pooling weights", "classifier weight/bias", "base scores", "Top5"],
+        "shape_dtype_normalization": ["NxLx768 finite hidden", "all50 candidates", "explicit dtype and ordered axes"],
+        "checks": ["archive/coordinate integrity", "classifier/pooling replay", "same-sample baseline parity"], "deterministic_replay": true
+      }
+    },
+    {
+      "id": "quantum", "version": "1", "role": "idea", "interface": "reader_cls_rotation_v1",
+      "insertion_point": "qa_classifier forward-pre-hook on CLS, after frozen encoder",
+      "hypothesis": "Conditioned real-unitary feature rotation changes score formation without a bounded additive logit correction",
+      "input_schema": "CLS and evidence-free semantic pooling", "output_schema": "full gate states, angles, signed scores and unmasked Top5",
+      "requires": ["frozen_reader"], "conflicts": [], "deterministic": true,
+      "resource_estimate": "10 data qubits,2 layers,40 conditional angles,200 trainable parameters; exact1024-amplitude simulation;2 synthetic updates",
+      "failure_signatures": ["norm/null drift", "zero or nonfinite gradients", "uniform correction", "head/update replay mismatch"],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2", "stages": ["data", "preprocess", "training", "scoring", "selection", "diagnosis"],
+        "input_fields": ["CLS", "pooled", "frozen weight/bias"], "output_fields": ["conditioning", "angles", "states", "rotated", "scores", "Top5"],
+        "input_refs": ["pooling:result"], "output_refs": ["readout:result", "selection:result"],
+        "emitted_fields": ["all41 state checkpoints", "zero/final parameters", "fixed projection", "gradients", "loss", "AdamW moments", "scores"],
+        "shape_dtype_normalization": ["normalized1024 real amplitudes", "signed readout", "200 parameters", "bounded4-dimensional conditions"],
+        "checks": ["independent dense gate oracle", "actual cached Reader insertion", "full coordinates", "optimizer and Top5 replay"], "deterministic_replay": true
+      }
+    },
+    {
+      "id": "classical", "version": "1", "role": "adapter", "interface": "reader_cls_rotation_v1",
+      "insertion_point": "same qa_classifier pre-hook", "hypothesis": "Matched coordinate-Givens control isolates rotation family",
+      "input_schema": "same CLS/pooled/classifier as quantum", "output_schema": "same complete rotation and training inventory",
+      "requires": ["frozen_reader"], "conflicts": [], "deterministic": true,
+      "resource_estimate": "same200 parameters and40angles, same active-pair counts, seeded coordinate matchings",
+      "failure_signatures": ["budget/input drift", "nonfinite or zero gradient", "replay failure"],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2", "stages": ["data", "preprocess", "training", "scoring", "selection", "diagnosis"],
+        "input_fields": ["CLS", "pooled", "frozen weight/bias"], "output_fields": ["conditions", "angles", "states", "scores", "Top5"],
+        "input_refs": ["pooling:result"], "output_refs": ["readout:result", "selection:result"],
+        "emitted_fields": ["matchings", "fixed projection", "full state checkpoints", "parameters/gradients/moments", "scores"],
+        "shape_dtype_normalization": ["norm preserving", "same200 trainable parameters", "same condition projection"],
+        "checks": ["parameter/active-pair parity", "exact null", "actual Reader parity", "head/update/selection replay"], "deterministic_replay": true
+      }
+    }
+  ],
+  "discovery": {"mode": "explicit_allowlist", "allowlist": ["frozen_reader", "quantum", "classical"]},
+  "composition": {"mode": "parallel", "order": ["frozen_reader", "quantum", "classical"], "merge_rule": "Shared frozen inputs, separate heads and identical synthetic update budget; no output fusion", "interaction_ablations": ["identity null", "adapter disabled", "matched classical", "one-layer100-param unit fixture"]},
+  "validation": {"baseline_equivalence": "zero-angle identity and disabled restoration with unchanged spans",
+    "tests": ["baseline_equivalence", "plugin_isolation", "deterministic_replay", "interaction_ablation", "independent_gate_oracle", "target_boundary", "actual_reader_fixture", "full_value_readback", "optimizer_replay", "trace_structural_validation", "trace_semantic_validation", "trace_replay"]},
+  "reproducibility": {"config_path": "configs/experiments/quantum_reader_rotation_preflight.json", "dataset_identity": "two explicit synthetic questions,50 fixed synthetic passages each; no real cohort", "environment": "existing Torch/Transformers with locally cached pinned DPRReader; no installation/download", "seeds": [20261013], "output_manifest": ".cache/quantum_reader_rotation_preflight/<timestamp>/manifest.json"},
+  "trace_contract": {"enabled": true, "schema": "sample-trace.v2", "artifact_path": ".cache/quantum_reader_rotation_preflight/<timestamp>/sample_trace.json",
+    "sample_selection_rule": "all2 predeclared synthetic questions,all50 candidates, every rotation gate and both fixed updates",
+    "target_boundary": "explicit synthetic row enters training loss only; reference never enters forward/Top5; no Silver",
+    "required_stages": ["data", "preprocess", "training", "scoring", "selection", "diagnosis"], "semantic_roles": ["input", "reference", "result"],
+    "required_representations": ["input_ids/masks", "hidden/CLS", "pooling weights/pooled", "frozen classifier/base", "conditions/angles/states/norm/rotated/scores", "parameters/gradients/loss/AdamW", "Top5"],
+    "producer_owned_lineage": ["data -> tokenization -> frozen_encoder -> pooling -> optimization -> feature_rotation -> readout -> selection -> diagnosis"],
+    "readiness_checks": ["actual cached Reader synthetic fixture", "shared complete v2 structure", "project-owned artifact/shape/value semantic validation", "full parameter/gradient/update/score/selection replay"]},
+  "recovery_contract": {"dossier_path": ".ai-progress/workstreams/rag-selector/refs/reader_feature_rotation_recovery_20261013.json", "dossier_sha256": "2c79d17cb8acf237807bff981aa16ecc6a1cceb919e191a3047ad18b9658fb12", "candidate_id": "question-conditioned-reader-feature-rotation", "discriminating_intermediate_measurement": "signed readout through rotated features; effective nonuniform gradient updates; immutable Top5 retention without ordering constraint"},
+  "trace_readiness": {
+    "status": "partial",
+    "fixture_path": ".cache/quantum_reader_rotation_architecture_20261013_v1/outputs/20261013T050308917137Z/sample_trace.json",
+    "structural_validation": "random one-layer DPR architecture fixture: complete shared v2 validator and JSON schema pass; pinned checkpoint pending",
+    "semantic_validation": "448 arrays reopened; independent pooling/readout/lineage/coordinate/target-boundary checks pass on architecture fixture",
+    "replay_test": "8 head and4 optimizer updates plus Top5 replay pass; actual cached pretrained Reader fixture remains unverified after SSH banner timeout"
+  },
+  "limitations": ["Engineering-only synthetic updates do not test utility", "Pinned pretrained Reader readiness pending; architecture fixture cannot substitute for checkpoint certification", "Exactly classically simulable; no quantum advantage claim", "No full-data L1/L2", "Novelty overlaps orthogonal adapter literature", "Real screen requires separate crossed head/loss controls and frozen budget"]
+}
