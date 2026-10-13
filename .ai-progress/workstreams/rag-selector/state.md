@@ -7,23 +7,23 @@
 - [DONE / FINAL AUDIT CLOSED] All current disagreements/uncertainties have final dispositions:401 prior body-adjudicated outcomes +104 newly reread items =505. New104 cover52 training questions:5 direct candidates,15 protected partial,67 scope exclusions,16 insufficient-body exclusions,1 source-conflict exclusion. No pending audit disposition.
 - Freeze59 questions228 actual witness-bound replacement pairs,75 maximum slots. Training347 closes as59 included/22 excluded/266 without safe opportunity.21 exclusions are scope/source questions;1 further case is closed without joint protection evidence. Exclusions are not irrelevant negatives or another pending-review queue.
 - Deterministic audit:168/228 matched pair gaps exceed old residual capacity;60 potentially reachable but0inversions. This is not168unreachable Top5 slots:54/135 unique missed-direct candidates are within optimistic boundary boxes across35/59 questions.99initial protection-order tensions cause no extra score-box exclusions. Quantum/classical harmful corrections46/3; Top5 setchanges4/5. No new fitting; L0 only.
-- [ENGINEERING GATE PASSED / REAL UTILITY PENDING] Opt-in classifier-input rotation,10dataqubits/2layers/200parameters, identity null and signed readout; matched classical coordinate-Givens and Top5-membership retention loss implemented. Local13 tests plus fixed pretrained Reader fixture on verified gpushare RTX3060 pass full replay. No real fitting or utility/quantum claim. Plan remains engineering-only.
+- [FORMAL SCREEN READY / REAL UTILITY PENDING] Opt-in classifier-input rotation,10dataqubits/2layers/200parameters, identity null and signed readout; matched classical coordinate-Givens and Top5-membership retention loss implemented. Local14 focused tests plus fixed pretrained Reader fixture on verified gpushare RTX3060 pass full replay. The collaborator screen crosses old/new head with old/new loss and includes a matched classical rotation arm. No real fitting or utility/quantum claim.
 - [DONE / PRIOR PROTECTED-BOUNDARY DELIVERY VERIFIED] Old isolated formal runner, matched fresh heads, unmasked Top5, full159-case study and auto18083 wrapper shipped. Fixed3 epochs/final checkpoint; its pinned-Reader synthetic preflight passed offline. This certifies the old bounded-residual runner, not the new rotation. Production Reader/Generator/evaluator unchanged.
 - [DONE / SCREEN GATE FAILED] Collaborator completed the real59/228 training and100-case screen at `20261012T151854474980Z`. Reader/quantum/classical useful totals are203/203/203; direct138/137/138; Silver355/352/353. Trace and upload receipts pass; no utility or quantum-attribution gain.
 - Private immutable ZIP26,121,092 bytes, SHA f723bbb6f9075c3e04fd3d8a7b2d3f8127b6e354422ee2a2f6e167bfe32248ce registered at five_ideas/protected_boundary_reader_inputs/20261011-v1/. Frozen ZIP and existing100-case detail passed public18083 GET size/SHA checks;832 witness checks reopened. Actual Reader fixture ZIP also registered and GET-verified.
 - Original server HEAD1d4831d has1GiB quota/no visible CUDA; bounded run was cgroup OOM-killed before trace completion. Verified gpushare `gpushare-i1-57535` (RTX3060, ~16GiB) completed the fixed Reader fixture with code revision f9747fb. No failover/restart; model/package transfer was limited to engineering preflight. Prior owned stash50ae345a recoverable.
 
 ## Next Actions
-1. Freeze the real-run contract: crossed old/new head × old/new loss controls, fixed data/provenance/resource budget and collaborator handoff. Run real fitting only after separate authorization; evaluate rescued Top-5 slots and retained support against frozen Reader and matched classical control.
-2. Before any real collaborator run, freeze input/protocol/resource budget and complete engineering trace gate. Evaluate actual rescued Top5 slots and retained support, not just all-pair inversions. Formal full-data qualification remains separate; no Silver tuning or blind residual/epoch escalation.
+1. Hand the pinned contract to the collaborator with `bash scripts/collab/five_ideas/run_quantum_reader_rotation_screen_100.sh`; the wrapper discovers local Python/model cache and uploads compact/raw artifacts through 18083 when `QORE_EXCHANGE_TOKEN` is configured.
+2. After the collaborator result arrives, reopen hashes/trace and evaluate rescued Top5 slots, retained direct support, and quantum-versus-classical attribution. Formal full-data qualification remains separate; no Silver tuning or blind residual/epoch escalation.
 
 ## Blockers
-- Engineering delivery exists; pinned pretrained Reader gate is blocked by SSH banner timeout. Architecture fixture is random weights/synthetic tokens and cannot certify the checkpoint. Old bounded-residual candidate remains closed; all semantic audit items remain closed, no new label queue.
+- The original 1GiB/no-CUDA development container is unsuitable for the pinned Reader run, but verified gpushare RTX3060 completed the fixed pretrained Reader engineering gate. Real 59/228 fitting and 100-case utility remain collaborator-only and unrun. Old bounded-residual candidate remains closed; all semantic audit items remain closed, no new label queue.
 - Research judgments are not official gold. Primary exposed prior opinions; A/B same parent model; Claude exact model redacted. Matching independent artifacts do not certify truth.
 - Prior87-role exposure, Q-ARCG provenance and historical432 parity limitations remain; fresh heads do not erase historical exposure. Source434 dirty/order exceptions remain explicit.
 
 ## Validation
-- New rotation: local13 tests, compile/Bash and3plugin plan pass. Random streamed fixture passes; fixed pretrained Reader gpushare fixture `20261013T142917498766Z` passes448arrays/8heads/4updates/full-v2+JSONschema and values SHA `85557961ce169217ba92bfb4b99be569bf6dd84656dff352f3cba14585f9ee91`. Receipt: refs/reader_rotation_low_memory_20261013_receipt.json; pinned output kept in local cache and remote worktree, raw values not committed.
+- New rotation: local14 focused tests, Python compile and6-plugin plan pass. Fixed pretrained Reader gpushare fixture `20261013T142917498766Z` passes448arrays/8heads/4updates/full-v2+JSONschema and values SHA `85557961ce169217ba92bfb4b99be569bf6dd84656dff352f3cba14585f9ee91`. Receipt: refs/reader_rotation_low_memory_20261013_receipt.json; pinned output kept in local cache and remote worktree, raw values not committed. Formal screen script is validate-only locally; no real cohort fitting was run here.
 - Current Session: sessions/2026-10/20261013T144611Z-5c1d7a.md.
 - Local23 and canonical-server23 focused tests pass; no installs.3-plugin plan and Bash syntax pass. Actual Reader fixture20261012T033359251121Z:396 arrays,8 head replays/4 optimizer updates, hidden/pooling/CLS/null/lineage/selection pass; valuesSHA5af8c044d5897b5c14a8da4011ff15b8e74fb5ecd9393c146e5b429a641d1d51. Synthetic targets only.
 - Shared complete v2 validator passes on actual Reader fixture, with2 expected evaluation-training not-applicable warnings. Preflight exchange ZIP4,451,141 bytes/SHA329af54d3b714b1ce9d7e4c6094aa83382a573ce4a06a3096c6e244664cc879f verified.
@@ -40,8 +40,8 @@
 - Focus Step: PR-04
 - Focus Status: done
 - Completed Steps: PR-01, PR-02, PR-03, PR-04
-- Next Action: Old plan stays completed; rotation implementation follows2026-10-13-reader-rotation-engineering.md, cached pretrained Reader gate next, then separate formal-run contract.
-- Blocker: Verified server SSH banner timeout; real cohort fitting stays with collaborator.
+- Next Action: Old plan stays completed; execute the collaborator-only rotation screen after its environment/token preflight, then reopen and adjudicate the uploaded artifacts.
+- Blocker: Real cohort fitting stays with collaborator by design; no local Wiki-DPR download or full-data execution is authorized in this workstream.
 - Last Checkpoint: 2026-10-13 local date
 
 ## Relevant Decisions And Evidence

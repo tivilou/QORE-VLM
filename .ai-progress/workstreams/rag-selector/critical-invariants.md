@@ -118,6 +118,14 @@
   model reachability. Preserve support by Top5 membership, not by forcing every
   rescued positive below every retained item. Isolate objective and head changes.
   See [design/audit](decisions/2026-10-13-quantum-reader-feature-rotation.md).
+- The formal quantum Reader rotation screen is a crossed six-arm diagnostic:
+  frozen Reader Top-k; old semantic head with old/new loss; new
+  question-conditioned unitary rotation with old/new loss; and a matched
+  classical rotation with the new loss. The primary gate is positive-consensus
+  retention versus frozen Reader with direct-support protection; quantum
+  attribution is separately versus the matched classical arm. The screen is
+  collaborator-only and L0 until uploaded trace, hashes, utility and attribution
+  gates are reopened.
 ## Decision index
 ### Binding and current
 - [BINDING] Cumulative-evidence next-step rule -> [detail](../../shared/decisions/cumulative-evidence-next-step-selection.md)
@@ -194,6 +202,7 @@
 - [ACTIVE / FINAL AUDIT CLOSED; NO FIT RUN] Final505 dispositions and59-case228 protected pairs -> [detail](decisions/2026-10-11-final-support-boundary-resolution.md)
 - [CLOSED / FEASIBILITY AUDIT COMPLETE; SCORE-CALIBRATION DESIGN NEXT] Frozen59 protected-pair quantum/classical runner -> [detail](decisions/2026-10-12-protected-boundary-reader-runner.md)
 - [ACTIVE ENGINEERING / PINNED READER GATE PASSED] Question-conditioned quantum Reader feature rotation -> [design](decisions/2026-10-13-quantum-reader-feature-rotation.md), [engineering/loading boundary](decisions/2026-10-13-reader-rotation-engineering.md). Fixed synthetic fixture passed full trace/replay on verified gpushare RTX3060; real utility is untested. Classifier-input hook and crossed head/loss controls remain required. Loading changes must preserve checkpoint bytes, cover active parameters and respect actual container limits.
+- [IMPLEMENTED / COLLABORATOR SCREEN READY] Crossed quantum Reader rotation 100-case contract -> [detail](decisions/2026-10-13-quantum-reader-rotation-screen.md). Six explicit arms, fixed59/228 training bundle, fixed100 evaluation panel, full Top50 label-free ranking, exchange manifest and matched classical attribution. No real cohort fitting has run in this workstream.
 
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.

@@ -1,0 +1,75 @@
+{
+  "schema_version": "rag.quantum_reader_rotation_screen.v1",
+  "authorization": "collaborator_screen",
+  "claim_ceiling": "L0_diagnostic",
+  "reader": {
+    "model_id": "facebook/dpr-reader-single-nq-base",
+    "revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+    "max_length": 350,
+    "batch_size": 8
+  },
+  "old_head": {
+    "n_qubits": 4,
+    "depth": 2,
+    "residual_bound": 0.25,
+    "gate_temperature": 1.0
+  },
+  "rotation_head": {
+    "layers": 2,
+    "conditioning": 4,
+    "seed": 20261013,
+    "parameter_budget": "200 trainable angles at hidden size 768; quantum/classical rotation arms are matched; old semantic head is a crossed historical control"
+  },
+  "methods": [
+    "frozen_reader_topk",
+    "old_head_old_loss",
+    "old_head_new_loss",
+    "new_quantum_old_loss",
+    "new_quantum_new_loss",
+    "new_classical_new_loss"
+  ],
+  "training": {
+    "cases": 59,
+    "pairs": 228,
+    "epochs": 3,
+    "seed": 20261013,
+    "learning_rate": 0.003,
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 1.0,
+    "input": {
+      "exchange_path": "five_ideas/protected_boundary_reader_inputs/20261011-v1/frozen_support_bundle.zip",
+      "bytes": 26121092,
+      "sha256": "f723bbb6f9075c3e04fd3d8a7b2d3f8127b6e354422ee2a2f6e167bfe32248"
+    }
+  },
+  "losses": {
+    "old": {"margin": 0.0, "anchor_weight": 0.01, "protection_weight": 1.0},
+    "new": {"margin": 0.0, "anchor_weight": 0.01, "protection_weight": 1.0}
+  },
+  "evaluation": {
+    "cases": 100,
+    "top50": 50,
+    "top5": 5,
+    "input_sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
+    "primary": "positive_consensus_count",
+    "protection": "direct_consensus_count",
+    "secondary": ["all_models_positive_count", "fixed_silver_set_overlap"],
+    "bootstrap_replicates": 2000,
+    "bootstrap_seed": 20261014,
+    "gate": "primary new_quantum_new_loss minus frozen_reader paired mean and CI95 lower>0; direct paired mean>=0; attribution against new_classical_new_loss",
+    "silver_posthoc_only": true
+  },
+  "output_namespace": "five_ideas/quantum_reader_rotation_screen_100",
+  "constraints": {
+    "reader_frozen": true,
+    "generator_called": false,
+    "evaluator_called": false,
+    "retrieval_called": false,
+    "dataset_download": false,
+    "online_target_masks": false,
+    "validation87_used": false,
+    "silver_used_online": false,
+    "full_top50_unmasked": true,
+    "checkpoint": "final_epoch_only"
+  }
+}
