@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "plan_id": "reader-membership-screen",
+  "plan_version": 1,
+  "workstream": "rag-selector",
+  "status": "blocked",
+  "objective": "Ship an independently named cached-feature quantum/classical Top5 membership screen with optimizer replay and one-command collaborator exchange",
+  "focus_step_id": "MS-04",
+  "next_action": "Recover primary and complete zero-update real-cache/HTTP readiness",
+  "blocker": "Primary SSH/18083 timed out during memory-limited preflight; final source/readiness/upload receipts pending",
+  "steps": [
+    {
+      "id": "MS-01",
+      "title": "Freeze contract and cache input",
+      "status": "done",
+      "objective": "Freeze unchanged populations, capacities, losses and task gates; verify derived input",
+      "inputs": [
+        "configs/experiments/reader_top5_objective_audit.json",
+        "exchange/five_ideas/quantum_reader_rotation_screen_100/20261015T022004545902Z/upload_manifest.json"
+      ],
+      "outputs": [
+        "configs/experiments/quantum_reader_membership_screen_100.json",
+        "configs/experiments/quantum_reader_membership_screen_100_plan.json"
+      ],
+      "depends_on": [],
+      "acceptance_checks": [
+        "Exact source hash and159 identities; all cached baseline score/Top5 replays",
+        "Explicit five-arm allowlist and unchanged59/228/75 supervision"
+      ],
+      "evidence_paths": [
+        "configs/experiments/quantum_reader_membership_screen_100_plan.json"
+      ],
+      "owner": "rag-selector",
+      "blocker": null,
+      "notes": [
+        "Five plugins validated; derived cache159 original Reader replays pass and inputs uploaded with size/SHA receipts"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "MS-02",
+      "title": "Implement paired training and trace",
+      "status": "done",
+      "objective": "Train only rotation parameters with independent objective dispatch and native optimizer-state witnesses",
+      "inputs": [
+        "MS-01"
+      ],
+      "outputs": [
+        "applications/rag/reader_membership_training.py",
+        "scripts/collab/five_ideas/run_quantum_reader_membership_screen_100.py"
+      ],
+      "depends_on": [
+        "MS-01"
+      ],
+      "acceptance_checks": [
+        "No label access in forward/selection",
+        "Full sample-trace.v2 values and AdamW before/after states",
+        "Actual rescue/protection counters each epoch"
+      ],
+      "evidence_paths": [
+        "applications/rag/reader_membership_training.py",
+        "scripts/collab/five_ideas/validate_reader_membership_trace.py"
+      ],
+      "owner": "rag-selector",
+      "blocker": null,
+      "notes": [
+        "Five-arm runner emits native AdamW witnesses;31 local tests pass including tampering and target-isolation checks"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "MS-03",
+      "title": "Verify synthetic and frozen-input readiness",
+      "status": "done",
+      "objective": "Reject corrupted trace, optimizer and input identities; replay synthetic updates and cached Reader null",
+      "inputs": [
+        "MS-02"
+      ],
+      "outputs": [
+        "applications/rag/tests/test_reader_membership_screen.py"
+      ],
+      "depends_on": [
+        "MS-02"
+      ],
+      "acceptance_checks": [
+        "Local CPU tests pass",
+        "Real emitted synthetic fixture passes structural/semantic validation",
+        "Frozen feature input parity; no real fitting"
+      ],
+      "evidence_paths": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261016_readiness.json"
+      ],
+      "owner": "rag-selector",
+      "blocker": null,
+      "notes": [
+        "33 local tests;928 arrays and24 native AdamW synthetic updates replayed; real cache identity and initial null observed; complete exchange preflight remains MS-04"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "MS-04",
+      "title": "Verify primary server and exchange",
+      "status": "blocked",
+      "objective": "Verify exact source on authorized primary and authenticated derived-input download/upload receipts",
+      "inputs": [
+        "MS-03"
+      ],
+      "outputs": [
+        "scripts/collab/five_ideas/run_quantum_reader_membership_screen_100.sh"
+      ],
+      "depends_on": [
+        "MS-03"
+      ],
+      "acceptance_checks": [
+        "Primary CPU tests and readiness pass",
+        "Hash-locked inputs downloadable; automatic run directory/upload verified"
+      ],
+      "evidence_paths": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261016_readiness.json"
+      ],
+      "owner": "rag-selector",
+      "blocker": "Primary SSH/18083 timed out during memory-limited preflight; final source/readiness/upload receipts pending",
+      "notes": [
+        "Input feature pack already published and hash-locked; source checkpoint will be published without claiming final handoff"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "MS-05",
+      "title": "Publish one-command handoff",
+      "status": "todo",
+      "objective": "Publish reviewed source and concise owner record without running real training",
+      "inputs": [
+        "MS-04"
+      ],
+      "outputs": [
+        "docs/rag-research-log/20261016T-reader-membership-screen-handoff.md"
+      ],
+      "depends_on": [
+        "MS-04"
+      ],
+      "acceptance_checks": [
+        "Plugin/plan validation and source integrity pass",
+        "GitHub development branch contains agent-owned changes",
+        "State/log/decision contain exact boundaries and one-command handoff"
+      ],
+      "evidence_paths": [],
+      "owner": "rag-selector",
+      "blocker": null,
+      "notes": [],
+      "supersedes": [],
+      "superseded_by": []
+    }
+  ],
+  "change_log": [],
+  "updated_at": "2026-10-16"
+}

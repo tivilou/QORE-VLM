@@ -210,6 +210,7 @@
 - [EXECUTED / GATES FAILED; LOSS ABLATION INVALID] Crossed quantum Reader rotation contract -> [detail](decisions/2026-10-13-quantum-reader-rotation-screen.md). Preserve the original prospective contract; actual arms and source exceptions are recorded separately.
 - [ACTIVE / CURRENT CONFIGURATION CLOSED; OBJECTIVE AUDIT RECOMMENDED] Rotation result, compression shortcut, protected-member harm and invalid crossed loss -> [detail](decisions/2026-10-16-quantum-reader-rotation-screen-result.md). Metrics and checkpoint replay verified; exact executed source/optimizer replay incomplete. New experiment not started.
 - [CANDIDATE / IMPLEMENTED; CPU AUDIT PASSED, NO REAL FIT] Robust scale-invariant Top5 membership objective -> [detail](decisions/2026-10-16-reader-top5-objective-engineering.md). Loss dispatch, wrapped targets, full bundle hash and prospective exact source capture repaired. New loss remains separate from the closed100 runner; task utility is untested.
+- [CANDIDATE] Independent cached Reader membership screen; trace and native AdamW gates -> [detail](decisions/2026-10-16-reader-membership-screen-handoff.md)
 
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.

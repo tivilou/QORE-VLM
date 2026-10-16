@@ -1,0 +1,136 @@
+{
+  "schema_version": "rag.reader_membership_engineering_receipt.v1",
+  "date": "2026-10-16",
+  "status": "synthetic_passed_real_cache_exchange_pending",
+  "formal_training_ready": false,
+  "plan_authorization": "approved",
+  "real_training_updates": 0,
+  "local": {
+    "environment": {
+      "python": "3.11",
+      "torch": "2.3.1+cpu",
+      "numpy": "1.23.5",
+      "device": "cpu"
+    },
+    "tests_passed": 33,
+    "test_modules": [
+      "test_reader_membership_screen",
+      "test_scale_invariant_top5_objective",
+      "test_protected_objective_geometry",
+      "test_quantum_reader_rotation_preflight",
+      "test_quantum_reader_rotation_screen_100"
+    ],
+    "fixture": ".cache/reader_membership_preflight/local-v3",
+    "readiness": {
+      "status": "passed",
+      "structural_validation": "sample-trace.v2 project-owned profile passed",
+      "semantic_validation": "complete detached arrays, original cached slices, unmasked scores, checkpoint/native AdamW replay passed",
+      "checks": {
+        "complete_arrays": 928,
+        "selected_input_slices": 12,
+        "head_score_replays": 20,
+        "full_output_replays": 16,
+        "optimizer_update_replays": 24
+      },
+      "synthetic_only": true,
+      "preflight_only": false,
+      "real_training_updates": 0,
+      "claim_ceiling": "engineering evidence only; utility judged separately"
+    },
+    "files": [
+      {
+        "name": "case_study.json",
+        "bytes": 59841,
+        "sha256": "5f6b2f0fd3cf579a21a895fd3087897ce2dd2e9bf6b58fdcec5eb5f1ad939f2d"
+      },
+      {
+        "name": "fixture_input_values.npz",
+        "bytes": 39311,
+        "sha256": "861d37acad1d0ad8c9ec4c3406038682512364ca7a09a11e59179919d2fb44dc"
+      },
+      {
+        "name": "fixture_inputs.private.json",
+        "bytes": 29230,
+        "sha256": "e2b5dab3addaa2e7714dc49756f5be6d61edfe4061f41be321087f88d07c54ab"
+      },
+      {
+        "name": "membership_values.npz",
+        "bytes": 1559251,
+        "sha256": "2ccf80483ceec884c5350eccea0b9da16b94bb372f2b203a89731a23a510e4aa"
+      },
+      {
+        "name": "readiness.json",
+        "bytes": 583,
+        "sha256": "1229f83215ba95f595af5c483640f91c9b63afe48f39b5c7204ac02a3dd159f0"
+      },
+      {
+        "name": "report.md",
+        "bytes": 468,
+        "sha256": "2df281ecd45fdfe833a8d83624fc2640087de7216065f1e257bd92813dab080a"
+      },
+      {
+        "name": "selector_trace.json",
+        "bytes": 523127,
+        "sha256": "3d2dd28995d03036037afb4e65e15d25ebdf7d72a971baab50a4b3561e0bbffa"
+      },
+      {
+        "name": "source_snapshot.json",
+        "bytes": 4374,
+        "sha256": "9608d596066ac5b6f4c716c2a8e273b6a762479b65d20be3292ac8520ce1e325"
+      },
+      {
+        "name": "summary.json",
+        "bytes": 16339,
+        "sha256": "dbdc57a32d93f261cfd8ee4688688bcbc2eb00faa3c37a7a0df2c8bc17455465"
+      },
+      {
+        "name": "training_targets.private.json",
+        "bytes": 4523,
+        "sha256": "168b363b5dacf3e767e78a9a0298bac690b6577de2844b140abd8177a17a5072"
+      }
+    ],
+    "source_transport": {
+      "path": ".cache/reader_membership_preflight/implementation-v3.zip",
+      "sha256": "b1b81f7d01d954aa0e38e0261912068815bc3101960da4e2224a8a3cab881a3c"
+    }
+  },
+  "server": {
+    "id": "3080Ti-117-50-198-37",
+    "implementation_root": "/home/Q-DUET-VLM/reader-membership-screen-20261016",
+    "canonical_checkout_modified": false,
+    "first_version_tests_passed": 31,
+    "final_source_retest": "pending",
+    "memory_limit_bytes": 1073741824,
+    "first_preflight": "SIGKILL9; cgroup OOM counters observed",
+    "retry_last_observed": "59/228 qualification,159 identities and four head initial null loops completed; final score/value capture started",
+    "complete_real_cache_readiness": "not_received",
+    "run_upload_receipts": "not_received",
+    "ssh_and_18083": "timeouts; remote process state unknown; task SSH clients closed"
+  },
+  "published_inputs": {
+    "namespace": "five_ideas/reader_membership_inputs/20261016-v1",
+    "source_run": "20261015T022004545902Z",
+    "files": {
+      "reader_features.npz": {
+        "bytes": 136155958,
+        "sha256": "ca08606573cc35b78855c58a80ba5aa75e756acde45e3c4b4ebae6d5c6c68099"
+      },
+      "cache_index.json": {
+        "bytes": 757610,
+        "sha256": "e4f6edc20b76d28e94711bdb918d1caa1c634e54d4cceef86f91792ebbdd1e59"
+      }
+    }
+  },
+  "input_publication_checks": {
+    "http_mkdir_upload_size_sha_receipts": "passed",
+    "index_download_hash": "passed",
+    "all159_original_reader_scores_and_top5": "passed"
+  },
+  "commands": {
+    "tests": "python -m unittest applications.rag.tests.test_reader_membership_screen applications.rag.tests.test_scale_invariant_top5_objective applications.rag.tests.test_protected_objective_geometry applications.rag.tests.test_quantum_reader_rotation_preflight applications.rag.tests.test_quantum_reader_rotation_screen_100",
+    "zero_update_preflight": "bash scripts/collab/five_ideas/run_quantum_reader_membership_screen_100.sh --preflight-only",
+    "formal_after_readiness": "bash scripts/collab/five_ideas/run_quantum_reader_membership_screen_100.sh"
+  },
+  "next": "Recover verified primary; inspect exact outstanding processes/memory and18083 health; one bounded preflight, final source/tests and complete HTTP receipts; then implemented plan and collaborator handoff",
+  "claim_ceiling": "engineering only; no new real-data utility or L1/L2"
+}

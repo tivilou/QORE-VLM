@@ -1,0 +1,20 @@
+{
+  "schema_version": "rag.mechanism_recovery.v1",
+  "candidate_id": "quantum-reader-membership-v1",
+  "status": "verified_failure_mechanism_and_objective_preflight",
+  "evidence": [
+    ".ai-progress/workstreams/rag-selector/refs/quantum_reader_rotation_screen_20261015_receipt.json",
+    ".ai-progress/workstreams/rag-selector/refs/reader_top5_objective_audit_20261016_receipt.json",
+    "docs/rag-research-log/20261015T-022004Z-quantum-reader-rotation-screen-result.md"
+  ],
+  "positive_carryover": "Original Reader is strongest; question-conditioned rotation does cross119 training pairs and rescues22 eligible candidates. Keep frozen Reader anchor, identity null and candidate-dependent information.",
+  "failure": "Order-preserving10% score compression reduces previous objective3.979 to1.065; trained quantum loses104 protected candidates despite22 rescues. Historical crossed losses duplicated and exact executed runner missing.",
+  "intervention": "Replace training objective only, using differentiable robust median/IQR normalization, feasible-capacity positive-margin membership and protected Top5 membership. Keep200-parameter rotation, seeds, inputs and3 epochs fixed.",
+  "discriminating_intermediate_measurement": "Per epoch actual rescued eligible and lost protected counts, correction spread, score IQR, reopened raw/clipped gradients and native AdamW update. Separate loss improvement from discrete safe rescue.",
+  "controls": ["Frozen Reader", "same-budget classical rotation and same objective", "fresh quantum/classical heads using historical retention objective", "zero initialization exact null"],
+  "falsifier": "At final fixed epoch no safe rescue or exposed100 utility gate fails; no capacity/epoch scale-up. Quantum attribution also requires positive paired gain over matched classical membership.",
+  "alternative_explanations": ["Limited/biased qualified training set", "Representation does not distinguish support", "Shared rotation harms existing evidence", "Robust smooth surrogate still not equivalent to discrete Top5", "Exposed panel is not independent population evidence"],
+  "exposure": "59 train/100 evaluation question hashes disjoint, but panel previously inspected. All results remain L0; no Silver tuning or new full-data claim.",
+  "classical_simulation": "Permitted implementation; performance and matched-control evidence determine mechanism merit. No hardware or resource advantage inferred from this screen.",
+  "authorization": "Implement/test and publish collaborator runner; real training is for collaborator, not our server"
+}

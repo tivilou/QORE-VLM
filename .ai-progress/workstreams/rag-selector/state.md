@@ -1,45 +1,46 @@
 # RAG Passage Selection with QORE
 
 ## Goal
-- Improve fixed Top50 -> Top5 on the quantum mainline. Establish independently verified full-data utility before L1/L2; current100-case panel remains L0.
+- Improve fixed Top50 -> Top5 on the quantum mainline. Full-data independently verified utility is required before L1/L2; current exposed100 panel is L0.
 
 ## Current State
-- [IMPLEMENTED / CPU AUDIT PASSED; NO REAL FIT] New train-only `robust_standardized_top5_membership.v1`: differentiable median/IQR scaling, fifth-of-other49 positive-margin membership, feasible rescue capacity and all-immutable protection. New loss is separate from the closed100 runner; selection utility is untested.
-- Both local and verified primary CPU audits pass on59 frozen training cases:708 affine checks,177 collapse rejections,59 outlier checks,24 saved arrays and6 reopened score-gradient replays.21 tests pass in each environment. No real head training, Reader loading, dataset download, Silver/evaluation-metric access or GPU use.
-- [DELIVERY REPAIRED] Independent loss-suffix dispatch, wrapped `row["target"]`, full64-character bundle hash, prospective exact-source archive/hash check and arm-objective provenance implemented. Historical runner retains historical loss definitions; do not run it expecting the new objective.
-- Server isolated implementation: `/home/Q-DUET-VLM/reader-top5-objective-audit-20261016`; output `.cache/audit/20261016T082513220974Z/` under that path. Canonical checkout and old artifacts untouched. Local audit `.cache/reader_top5_objective_audit/20261016T082015507042Z/`.
-- [RESULT AUDITED / CURRENT CONFIGURATION CLOSED] Collaborator rotation run `20261015T022004545902Z` completed59-question/228-pair training and100-case evaluation. Reader/quantum/classical useful totals203/147/170; direct138/90/112; fixedSilver355/175/200. Utility and quantum-attribution gates fail.
-- Quantum-minus-Reader useful mean−0.56,95%CI[−0.80,−0.32],14/44/42 wins/ties/losses; quantum-minus-classical−0.23,[−0.40,−0.07]. This is a negative fixed-panel screen, not a full-data result or rejection of the entire quantum Reader family.
-- Training actually changes scores: quantum119/228 pair inversions and22 eligible positives rescued, but104/183 protected candidates lost. Classical116/228,28 rescues,78 protected losses. Quantum changes97 evaluation sets, adding57/removing113 useful passages.
-- Objective shortcut diagnosed: positive affine compression to10% preserves all Reader rankings yet lowers training objective3.979→1.065. Actual quantum final objective1.177 and training score std4.159→0.456. Pair loss and zero-margin squared protection can reward compression without reliable Top5 retention.
-- [HISTORICAL ABLATION INVALID / SOURCE EXCEPTION] Previous old/new named loss arms are exact duplicates within each head family. Quantum old-loss late gradients match new loss, not old. Executed runner SHA differs from reportedGit revision; exact executed file absent. Repository delivery defects are now repaired prospectively. Metrics/checkpoint replay remain valid; historical full source/optimizer replay and loss causal attribution do not.
-- Final support audit remains closed:505 dispositions; immutable59/228/75-slot training bundle;135 distinct eligible missed-direct candidates;183 conservative protected candidates, not all direct. No pending annotation queue. Training/evaluation question hashes do not overlap.
-- Fixed10-data-qubit/2-layer/200-parameter rotation, frozenReader and matched classical control were used. No Generator/evaluator, retrieval change, local model fitting or Wiki-DPR download occurred during this audit.
+- [CODE IMPLEMENTED / LOCAL READY; SERVER PREFLIGHT INCOMPLETE] Independent five-arm cached Reader membership screen added: Reader, quantum/classical new objective, quantum/classical historical retention. Same59/228 supervision,200 parameters,3epochs and optimizer budget; old wrapper stays historical.
+- New target directly supervises robustly normalized Top5 membership and all-immutable protection. Actual discrete rescue/loss counts are audited each epoch; final rescue>0/zero protected loss is an engineering gate. Task utility/direct protection and separate quantum attribution gates are unchanged.
+- Local33tests and actual synthetic928-array fixture pass:12 source slices,20 score replays,16 full outputs,24 recomputed native AdamW updates. Real-data fitting remains zero; no Reader loading, dataset download, Generator, evaluator or GPU.
+- First server version passed31CPU tests. Derived136,155,958-byte feature pack and757,610-byte identity index published with verified authenticated HTTP size/SHA receipts at `five_ideas/reader_membership_inputs/20261016-v1`; all159 original Reader scores/Top5 replayed.
+- Real-cache wrapper initially hit SIGKILL/OOM in the1GiB container. Feature access is now lazy by question/slice; witness storage is released before independent reopening. Retry completed qualified59/228 input,159 identities and four initial head null loops, then entered final score/value capture. No complete readiness/run upload receipt returned; SSH and18083 now time out. Remote process/service state unknown; task SSH clients closed.
+- Architecture remains `approved`; formal runner refuses real training before input work until full readiness passes. `--preflight-only` makes zero optimizer updates. Final lazy source has not completed server retest; do not hand off a real run yet.
+- Isolated server root `/home/Q-DUET-VLM/reader-membership-screen-20261016`; canonical checkout untouched. Final local source transport `.cache/reader_membership_preflight/implementation-v3.zip`, actual fixture `local-v3/` beside it. Receipt preserves hashes; raw fixture stays cache-only.
+- Previous real rotation configuration is closed: Reader/quantum/classical useful203/147/170, direct138/90/112, Silver355/175/200. Loss compression shortcut and104protected losses motivated this new experiment; no new utility result exists. Historical exact source/optimizer provenance remains incomplete.
+
+## Plan Control
+- Plan: plans/reader-membership-screen/v001.json
+- Plan Version: 1
+- Plan Status: blocked
+- Focus Step: MS-04
+- Focus Status: blocked
+- Completed Steps: MS-01, MS-02, MS-03
+- Next Action: Recover primary and complete zero-update real-cache/HTTP readiness
+- Blocker: Primary SSH/18083 timed out during memory-limited preflight; final source/readiness/upload receipts pending
+- Last Checkpoint: 2026-10-16
 
 ## Next Actions
-1. Create an independently named, preregistered paired quantum/classical training contract and runner for the candidate objective. Preserve qualified targets, Reader/rotation capacity/budget and task gates. Do not use the closed historical wrapper as a new-objective experiment.
-2. Add optimizer-state/update replay and discrete Top5 health checks before collaborator delivery. `formal_training_ready` remains false; this checkpoint has train-cache objective/score-gradient evidence only. Loss repair alone is not quantum novelty.
-3. Then hand off one-command real training to the collaborator, with unchanged utility/direct-protection/attribution gates. No blind capacity/epoch increase, Silver tuning or scale-up of the failed configuration. Cached-feature checks can use CPU; fresh Reader extraction benefits from GPU.
-4. Documentation closeout pending: versioned idea explanation and portal result association; do not claim the portal was refreshed.
+1. On primary recovery, inspect exact outstanding task processes/cgroup memory and18083 health. Do not run simultaneous memory-heavy probes in the1GiB container or silently switch servers.
+2. Transfer final source snapshot; rerun33tests and persisted synthetic fixture, then one public-wrapper `--preflight-only` at a time. Verify full selected real-cache slices, all159x5 score/selection replays and actual HTTP mkdir/upload receipts.
+3. Only after full readiness, mark plugin plan implemented with artifact references, publish final handoff and give collaborator the project-relative wrapper. They do real fitting on their own computer, CPU default, existing token; no fixedPython/project path or Wiki-DPR download.
+4. Analyze returned actual rescue/protection/task/attribution using cumulative history before deciding any scale-up. Documentation closeout (idea explanation/portal) remains separate and is not claimed complete.
 
 ## Blockers
-- No result-upload blocker: six primary source artifacts and receipts verified. Exact executionrunner source and optimizer-state history were not supplied; full training reproduction and intended cross-loss comparison remain incomplete.
-- Fixed100 panel and historical research opinions are exposed. Research labels are not officialgold; prior87/Q-ARCG/source434 provenance limitations persist. Fresh heads do not erase exposure.
+- Primary unreachable after preflight; remote status and complete exchange readiness unknown. Inputs were successfully published earlier; availability now requires recovery.
+- Fixed100 is exposed and Silver is research opinion; train/eval hashes disjoint do not establish independent full-data utility. Prior87/Q-ARCG/source434 provenance limits remain.
 
 ## Validation
-- Current objective receipt: [CPU audit](refs/reader_top5_objective_audit_20261016_receipt.json). Local Torch2.3.1CPU/NumPy1.23.5; server Torch2.7.1/NumPy1.26.4 with CPU tensors. Python compile, Bash syntax and unchanged6-plugin historical plan pass.
-- Synthetic tests distinguish head/loss dispatch, exercise the actual wrapped-row interface, and check quantum/classical gradient flow, membership counterexamples and exact source readback. No new model fitting or selection output is implied.
-- Six actual source sizes/SHA agree with uploadmanifest and service sidecars; full3.27GB NPZ SHA checked remotely. Selected4651/9318 arrays are finite and subsetSHA matches receipt; no claim that every raw array received numerical checks.
-- All159×6=954 trace rankings,600 posthoc metric rows, and reported paired bootstrap intervals recomputed.795 trained-head output replays pass with maxabs9.06e-6,0Top5 order differences; initialnull maxabs1.91e-6.30 gradient witnesses examined; no full AdamW-state replay.
-- Compact summary/runmetadata/uploadmanifest archived locally under `exchange/five_ideas/quantum_reader_rotation_screen_100/20261015T022004545902Z/`; private targets, fulltrace and NPZ remain exchange/cache only.
-- Audit environment: existinglambeq,NumPy1.23.5,Torch2.3.1CPU; no packages installed. Collaborator environment and pinnedReader identity are in original runmetadata.
-- Current session: [20261016T083400Z-e91426](sessions/2026-10/20261016T083400Z-e91426.md).
+- [Engineering receipt](refs/reader_membership_screen_20261016_readiness.json): exact fixture/source hashes, tests and explicit incomplete server gates. Locallambeq Torch2.3.1CPU/NumPy1.23.5; initial server Torch2.7.1/NumPy1.26.4. No installs.
+- Tests detect forced Top5/label leakage, identity swaps, corrupted data gradients and internally rehashed AdamW state, input integrity failures, incomplete upload and formal-run attempts before readiness. Lazy slices preserve full coordinates.
+- Prior objective-only59-case CPU audit:708 affine checks,177 collapse rejections,59outliers,24arrays/6gradient replays,21tests. This is not real head fitting or new selection utility.
 
-## Relevant Decisions And Evidence
-- Active implementation: [objective engineering](decisions/2026-10-16-reader-top5-objective-engineering.md); [owner report](../../../../docs/rag-research-log/20261016T-082015Z-reader-top5-objective-cpu-audit.md).
-- Active result disposition: [2026-10-16 rotation result](decisions/2026-10-16-quantum-reader-rotation-screen-result.md).
-- Owner report: [rotation result and compression diagnosis](../../../../docs/rag-research-log/20261015T-022004Z-quantum-reader-rotation-screen-result.md).
-- Receipt: [rotation screen audit](refs/quantum_reader_rotation_screen_20261015_receipt.json); private working audit `.cache/quantum_reader_rotation_result_audit/20261015T022004545902Z/`.
-- Historical contract: [crossed screen](decisions/2026-10-13-quantum-reader-rotation-screen.md); [engineering](decisions/2026-10-13-reader-rotation-engineering.md); [previous closed runner](decisions/2026-10-12-protected-boundary-reader-runner.md).
-- Support-source finalization: [505 dispositions](decisions/2026-10-11-final-support-boundary-resolution.md); feasibility audit `docs/rag-research-log/20261013T-protected-boundary-feasibility-audit.md`. Durable rules and complete decision navigation: `critical-invariants.md`.
-- Previous implementation plan `plans/protected-boundary-runner/v001.json` stays completed; it is not an authorization to launch a new experiment.
+## Relevant Decisions
+- [Current screen contract and gate](decisions/2026-10-16-reader-membership-screen-handoff.md); [owner log](../../../../docs/rag-research-log/20261016T-reader-membership-screen-handoff.md).
+- [Objective engineering](decisions/2026-10-16-reader-top5-objective-engineering.md); [previous real result](decisions/2026-10-16-quantum-reader-rotation-screen-result.md); [final support targets](decisions/2026-10-11-final-support-boundary-resolution.md).
+- All durable rules/history navigation remain in `critical-invariants.md`; previous protected-boundary plan is completed and does not authorize new experiments.
+- Session: [20261016T095255Z-683411](sessions/2026-10/20261016T095255Z-683411.md).
