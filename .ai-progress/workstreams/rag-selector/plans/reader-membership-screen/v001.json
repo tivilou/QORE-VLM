@@ -3,10 +3,10 @@
   "plan_id": "reader-membership-screen",
   "plan_version": 1,
   "workstream": "rag-selector",
-  "status": "active",
+  "status": "completed",
   "objective": "Ship an independently named cached-feature quantum/classical Top5 membership screen with optimizer replay and one-command collaborator exchange",
   "focus_step_id": "MS-05",
-  "next_action": "Publish verified one-command CPU handoff and focused source changes",
+  "next_action": "Run the fixed screen on a provisioned CPU environment; analyze real training and100-case utility separately",
   "blocker": null,
   "steps": [
     {
@@ -135,7 +135,7 @@
     {
       "id": "MS-05",
       "title": "Publish one-command handoff",
-      "status": "active",
+      "status": "done",
       "objective": "Publish reviewed source and concise owner record without running real training",
       "inputs": [
         "MS-04"
@@ -151,10 +151,14 @@
         "GitHub development branch contains agent-owned changes",
         "State/log/decision contain exact boundaries and one-command handoff"
       ],
-      "evidence_paths": [],
+      "evidence_paths": [
+        "docs/rag-research-log/20261016T-reader-membership-screen-handoff.md"
+      ],
       "owner": "rag-selector",
       "blocker": null,
-      "notes": [],
+      "notes": [
+        "Published403163bd9082605960b9fb045e08c63018bb49c4 on GitHub five-ideas-development; fresh publication checkout34 CPU tests and five-plugin plan pass. Root project.md remains local-only per existing remote branch policy."
+      ],
       "supersedes": [],
       "superseded_by": []
     }

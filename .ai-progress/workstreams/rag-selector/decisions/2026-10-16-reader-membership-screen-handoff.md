@@ -39,11 +39,11 @@ Preserve frozen59/228 supervision, rotation capacity, fixed budget and task gate
 - Earlier in-memory preflights did not complete in the 1 GiB container; those incomplete checkpoints remain historical. The final version lazily opens feature slices and writes detached coordinates to disk, streaming complete NPY files into NPZ without a resident cohort dictionary. Numeric values are retained in full. After recovery the sequential pipeline completed with zero new OOM kills.
 - Public-wrapper real-cache `--preflight-only` run `20261016T151138166713Z` passed: 59/228 qualified training bundle, all 159 identities/nulls, 1,239 complete arrays, 12 source slices, 795 score replays and 16 full-output replays. All nine declared exchange receipts match size/SHA. No real optimizer update occurred.
 - Exact executed source archives are exchange-only: preflight SHA `0f871edbea14f1e18fd4123bc8820c768a91e3be332bcdcf32dfdf5acbb809ee`; synthetic fixture SHA `2b42c928c0ff2070878b16730e8996a1325a25554f2e286f49035924e656a3b7`. Readiness preceded the metadata-only authorization/plan promotion; formal runs archive their own exact promoted bytes.
-- Architecture is now `implemented`, with immutable readiness references. The experiment, optimizer, gates and populations are unchanged. Publication remains the final delivery step; do not describe engineering acceptance as task improvement.
+- Architecture is now `implemented`, with immutable readiness references. The experiment, optimizer, gates and populations are unchanged. Published GitHub `five-ideas-development` commit `403163bd9082605960b9fb045e08c63018bb49c4`; fresh publication checkout passes the same 34 CPU tests and five-plugin validation. Proxy push and remote SHA are verified. Do not describe engineering acceptance as task improvement.
 - The user confirmed the registered V100s is CPU-only. Its occupied 1 GiB cgroup and absent Torch/NumPy in default Python prevent a safe real run there currently; no unrelated processes were stopped and no packages or datasets were downloaded. See [CPU exception](2026-10-16-v100s-experiment-authorization.md).
 
 ## References
 
 - [Owner log](../../../../docs/rag-research-log/20261016T-reader-membership-screen-handoff.md)
 - [Verified engineering receipt](../refs/reader_membership_screen_20261016_verified.json); [earlier incomplete checkpoint](../refs/reader_membership_screen_20261016_readiness.json).
-- Plan: `plans/reader-membership-screen/v001.json`; engineering passed, publication/handoff focus, not a completed real experiment.
+- Plan: `plans/reader-membership-screen/v001.json`; all five engineering/handoff steps complete. The real experiment remains unrun.

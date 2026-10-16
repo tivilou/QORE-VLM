@@ -4,7 +4,7 @@
 - Improve fixed Top50 -> Top5 on the quantum mainline. Full-data independently verified utility is required before L1/L2; current exposed100 panel is L0.
 
 ## Current State
-- [ENGINEERING PASSED / PUBLISHING] Independent five-arm cached Reader membership screen: Reader, quantum/classical membership, quantum/classical historical retention. Same59/228 supervision,200 parameters,3epochs and optimizer budget; architecture now `implemented`.
+- [READY / PUBLISHED] Independent five-arm cached Reader membership screen published to GitHub `five-ideas-development` at `403163bd9082605960b9fb045e08c63018bb49c4`. Reader, quantum/classical membership and quantum/classical retention use unchanged59/228 supervision,200 parameters,3epochs and optimizer budget; architecture `implemented`.
 - Same34 CPU tests pass locally and on primary. Actual synthetic fixture replays928 arrays,12 input slices,20 scores,16 full outputs and24 native AdamW updates;11 upload receipts match.
 - Public-wrapper real-cache preflight `20261016T151138166713Z` passes all159 identities/nulls,1239 complete arrays,12 original input slices,795 scores and16 full outputs;9 upload receipts match. Real training updates remain zero; no utility conclusion.
 - Memory repair uses lazy feature slices plus disk-backed detached coordinates and streaming NPZ. Full values retained; sequential recovered-primary verification completed without new OOM kills. SSH and18083 are available.
@@ -15,18 +15,17 @@
 ## Plan Control
 - Plan: plans/reader-membership-screen/v001.json
 - Plan Version: 1
-- Plan Status: active
+- Plan Status: completed
 - Focus Step: MS-05
-- Focus Status: active
-- Completed Steps: MS-01, MS-02, MS-03, MS-04
-- Next Action: Publish verified one-command CPU handoff and focused source changes
-- Blocker: None for publication
+- Focus Status: done
+- Completed Steps: MS-01, MS-02, MS-03, MS-04, MS-05
+- Next Action: Run the fixed screen on a provisioned CPU environment; analyze real training and100-case utility separately
+- Blocker: None for collaborator handoff; optional CPU server lacks capacity/dependencies
 - Last Checkpoint: 2026-10-16
 
 ## Next Actions
-1. Publish only agent-owned fixes/verified readiness to `five-ideas-development`, verify clean-checkout config/hash/tests, then give the project-relative wrapper.
-2. Run the fixed real screen on a resource-sufficient CPU environment using existing exchange token: `bash scripts/collab/five_ideas/run_quantum_reader_membership_screen_100.sh`. No fixed Python/project path, Wiki-DPR or model download. CPU-server authorization does not justify risking unrelated workloads.
-3. Analyze returned rescue/protection/task/attribution against cumulative history before any scale-up. Portal/idea-explanation closeout is separate and not claimed done.
+1. Run the fixed real screen on a resource-sufficient CPU environment using existing exchange token: `bash scripts/collab/five_ideas/run_quantum_reader_membership_screen_100.sh`. No fixed Python/project path, Wiki-DPR or model download. CPU-server authorization does not justify risking unrelated workloads.
+2. Analyze returned rescue/protection/task/attribution against cumulative history before any scale-up. Portal/idea-explanation closeout is separate and not claimed done.
 
 ## Blockers
 - No engineering/handoff blocker remains. The optional CPU server currently lacks verified memory headroom and default Torch/NumPy; this does not block collaborator execution.
@@ -35,6 +34,7 @@
 ## Validation
 - [Verified engineering receipt](refs/reader_membership_screen_20261016_verified.json): actual run namespaces, source hashes, counts, receipts, CPU resource probe and zero new OOM kills. Local Torch2.3.1CPU/NumPy1.23.5; primary Torch2.7.1/NumPy1.26.4. No installs.
 - Tests detect forced Top5/label leakage, identity swaps, corrupted data gradients and internally rehashed AdamW state, input integrity failures, incomplete upload and formal-run attempts before readiness. Lazy slices preserve full coordinates.
+- Fresh publication checkout passed the same34 CPU tests and five-plugin plan/config/hash validation; proxy push and remote branch SHA verified. Root `project.md` stays local-only per existing branch policy; the CPU decision is published.
 - Prior incomplete checkpoint remains historical in `refs/reader_membership_screen_20261016_readiness.json`; current verified receipt supersedes its readiness status. No new selection utility is measured here.
 
 ## Relevant Decisions
@@ -42,4 +42,4 @@
 - [Objective engineering](decisions/2026-10-16-reader-top5-objective-engineering.md); [previous real result](decisions/2026-10-16-quantum-reader-rotation-screen-result.md); [final support targets](decisions/2026-10-11-final-support-boundary-resolution.md).
 - [CPU experiment authorization](decisions/2026-10-16-v100s-experiment-authorization.md); execution topology is in `../../project.md`.
 - All durable rules/history navigation remain in `critical-invariants.md`; previous protected-boundary plan is completed and does not authorize new experiments.
-- Session: [20261016T154818Z-c598bb](sessions/2026-10/20261016T154818Z-c598bb.md).
+- Session: [publication](sessions/2026-10/20261016T155211Z-c514b6.md); [engineering and CPU clarification](sessions/2026-10/20261016T154818Z-c598bb.md).
