@@ -38,6 +38,7 @@ from scripts.collab.five_ideas import run_quantum_semantic_reader_screen_100 as 
 from scripts.collab.lib.exchange_upload import (
     _upload_one, download_exchange_file, upload_manifest,
 )
+from scripts.collab.lib.source_snapshot import archive_sources, verify_sources
 
 CONFIG = ROOT / "configs/experiments/quantum_reader_rotation_screen_100.json"
 PLAN = ROOT / "configs/experiments/quantum_reader_rotation_screen_100_plan.json"
@@ -46,6 +47,28 @@ METHODS = (
     "new_quantum_old_loss", "new_quantum_new_loss", "new_classical_new_loss",
 )
 STAGES = ("data", "frozen_reader", "head", "optimization", "selection", "posthoc")
+SOURCES = (
+    "scripts/collab/five_ideas/run_quantum_reader_rotation_screen_100.py",
+    "scripts/collab/five_ideas/run_quantum_reader_rotation_screen_100.sh",
+    "configs/experiments/quantum_reader_rotation_screen_100.json",
+    "configs/experiments/quantum_reader_rotation_screen_100_plan.json",
+    "applications/rag/quantum_reader_rotation.py", "applications/rag/quantum_semantic_reader.py",
+    "applications/rag/protected_boundary_learning.py", "applications/rag/protected_boundary_training.py",
+    "applications/rag/semantic_reader_training.py", "applications/rag/protected_boundary_inputs.py",
+    "applications/rag/qarcg_reader.py", "applications/rag/support_supervision_axes.py",
+    "applications/rag/support_boundary_bridge.py",
+    "scripts/collab/five_ideas/run_protected_boundary_reader_screen_100.py",
+    "scripts/collab/five_ideas/run_quantum_semantic_reader_screen_100.py",
+    "scripts/collab/five_ideas/run_qarcg_reader_screen_100.py",
+    "scripts/collab/lib/exchange_upload.py", "scripts/collab/lib/source_snapshot.py",
+)
+
+
+def runtime_sources(config_path):
+    path = Path(config_path).resolve()
+    if not path.is_relative_to(ROOT.resolve()):
+        raise ValueError("archived runtime config must be inside project")
+    return tuple(dict.fromkeys((*SOURCES, path.relative_to(ROOT.resolve()).as_posix())))
 
 
 def _sha256(path: Path) -> str:
@@ -78,6 +101,9 @@ def validate_config(path: Path):
         raise ValueError("method allowlist drift")
     if cfg["training"]["cases"] != 59 or cfg["training"]["pairs"] != 228 or cfg["evaluation"]["cases"] != 100:
         raise ValueError("frozen population changed")
+    digest = cfg["training"]["input"]["sha256"]
+    if len(digest) != 64 or any(c not in "0123456789abcdef" for c in digest):
+        raise ValueError("training bundle requires a full64-character SHA256")
     plan = _load_json(PLAN)
     if plan.get("authorization") != "approved" or tuple(plan["discovery"]["allowlist"]) != METHODS:
         raise ValueError("plugin plan or allowlist is not approved")
@@ -168,7 +194,9 @@ def make_all_heads(torch, reader, cfg, device):
 
 
 def arm_kind(method):
-    return "old" if method.startswith("old_head") else "new"
+    if method not in METHODS or method == "frozen_reader_topk":
+        raise ValueError("method has no fitted objective: " + str(method))
+    return "old" if method.endswith("_old_loss") else "new"
 
 
 def head_output(head, method, feature, device, arrays=None, prefix=None):
@@ -189,7 +217,7 @@ def head_output(head, method, feature, device, arrays=None, prefix=None):
 
 def objective(method, scores, base, row, cfg):
     settings = cfg["losses"][arm_kind(method)]
-    if method.startswith("old_head"):
+    if arm_kind(method) == "old":
         return old_learning.boundary_objective(scores, base, row, **settings)
     return top5_retention_objective(scores, base, row, **settings)
 
@@ -221,7 +249,7 @@ def train_arm(torch, method, head, features, rows, cfg, device, arrays):
                 for name, value in head.state_dict().items(): arrays[prefix + "__before__" + name] = value.detach().cpu().numpy().copy()
                 with torch.no_grad(): head_output(head, method, feature, device, arrays, prefix + "__pre")
             values = head_output(head, method, feature, device)
-            parts = objective(method, values["scores"], feature["base"].to(device), row, cfg)
+            parts = objective(method, values["scores"], feature["base"].to(device), row["target"], cfg)
             parts["total"].backward()
             for name, parameter in head.named_parameters():
                 if parameter.grad is None or not bool(parameter.grad.isfinite().all()):
@@ -305,13 +333,13 @@ def provenance(cfg, identity, args):
                ROOT / "applications/rag/quantum_semantic_reader.py", ROOT / "applications/rag/protected_boundary_learning.py",
                ROOT / "applications/rag/protected_boundary_inputs.py", ROOT / "applications/rag/qarcg_reader.py",
                ROOT / "scripts/collab/lib/exchange_upload.py"]
-    return {"code_revision": prior.old._git_revision() or "unavailable", "config_sha256": _sha256(CONFIG), "plan_sha256": _sha256(PLAN),
+    return {"code_revision": prior.old._git_revision() or "unavailable", "config_sha256": _sha256(args.config), "plan_sha256": _sha256(PLAN),
             "reader": identity, "python": platform.python_version(), "torch": torch.__version__, "transformers": transformers.__version__,
             "numpy": np.__version__, "source_hashes": {str(p.relative_to(ROOT)).replace("\\", "/"): _sha256(p) for p in sources}}
 
 
 def publish(run_dir, cfg, args):
-    declared = ["summary.json", "report.md", "run_metadata.json", "selector_trace.json", "rotation_values.npz", "training_targets.private.json"]
+    declared = ["summary.json", "report.md", "run_metadata.json", "selector_trace.json", "rotation_values.npz", "training_targets.private.json", "executed_sources.zip"]
     files = [name for name in declared if (run_dir / name).is_file()]
     unexpected = {p.name for p in run_dir.iterdir() if p.is_file()} - set(files) - {"upload_manifest.json", "upload_receipts.json"}
     if unexpected: raise ValueError("undeclared output files: " + ",".join(sorted(unexpected)))
@@ -334,6 +362,7 @@ def publish(run_dir, cfg, args):
 
 def run(args):
     cfg = validate_config(args.config)
+    config_hash = _sha256(args.config)
     if args.validate_only:
         print(json.dumps({"status": "valid", "methods": METHODS, "config": str(args.config)})); return
     if args.upload and not os.environ.get(args.token_env): raise ValueError("configure " + args.token_env + " before --upload")
@@ -343,6 +372,10 @@ def run(args):
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
     run_dir = args.output_root / run_id
     run_dir.mkdir(parents=True, exist_ok=False)
+    source_snapshot = archive_sources(ROOT, runtime_sources(args.config), run_dir / "executed_sources.zip")
+    config_relative = Path(args.config).resolve().relative_to(ROOT.resolve()).as_posix()
+    if source_snapshot["source_hashes"][config_relative] != config_hash or _load_json(args.config) != cfg:
+        raise ValueError("runtime config changed after validation")
     arrays, metadata = {}, []
     try:
         cases = prior.old._load_eval_cases(input_path)
@@ -373,6 +406,10 @@ def run(args):
         evaluation = diagnose(cases, eval_trace, cfg)
         np.savez_compressed(run_dir / "rotation_values.npz", **arrays)
         provenance_data = provenance(cfg, identity, args)
+        verify_sources(ROOT, source_snapshot)
+        provenance_data["source_hashes"] = source_snapshot["source_hashes"]
+        provenance_data["executed_sources"] = {k: v for k, v in source_snapshot.items() if k != "source_hashes"}
+        provenance_data["arm_objectives"] = {m: {"loss_config": arm_kind(m), "function": "boundary_objective" if arm_kind(m) == "old" else "top5_retention_objective"} for m in METHODS if m != "frozen_reader_topk"}
         compact_summary = {"schema_version": "rag.quantum_reader_rotation_screen.summary.v1", "claim_ceiling": "L0_diagnostic",
             "methods": list(METHODS), "training": {"cases": len(rows), "pairs": audit["pairs"], "arms": reports},
             "evaluation": evaluation, "parameter_counts": {m: sum(p.numel() for p in heads[m].parameters()) for m in METHODS if m != "frozen_reader_topk"},
@@ -391,7 +428,7 @@ def run(args):
             lines.append(f"- {method}: positive {values['positive_consensus_count']['mean']:.4f}/5; direct {values['direct_consensus_count']['mean']:.4f}/5; Silver overlap {values['fixed_silver_set_overlap']['mean']:.4f}/5")
         lines += ["", "Gates: " + json.dumps(evaluation["gates"], ensure_ascii=False), "", "Raw selector trace, targets and complete coordinates are exchange-only."]
         (run_dir / "report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
-        records = [{"name": name, "bytes": (run_dir / name).stat().st_size, "sha256": _sha256(run_dir / name)} for name in ("summary.json", "report.md", "selector_trace.json", "rotation_values.npz", "training_targets.private.json")]
+        records = [{"name": name, "bytes": (run_dir / name).stat().st_size, "sha256": _sha256(run_dir / name)} for name in ("summary.json", "report.md", "selector_trace.json", "rotation_values.npz", "training_targets.private.json", "executed_sources.zip")]
         _write_json(run_dir / "run_metadata.json", {"run_id": run_id, "files": records, "provenance": provenance_data, "evaluation": evaluation})
         publish(run_dir, cfg, args)
         print(json.dumps({"output_dir": str(run_dir), "uploaded": args.upload, "gates": evaluation["gates"]}, ensure_ascii=False))

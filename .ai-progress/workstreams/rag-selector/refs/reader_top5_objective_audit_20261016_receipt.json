@@ -1,0 +1,45 @@
+{
+  "schema_version": "rag.reader_top5_objective_audit.receipt.v1",
+  "status": "passed_engineering_only",
+  "objective_id": "robust_standardized_top5_membership.v1",
+  "source_run": "20261015T022004545902Z",
+  "population": {"training_questions": 59, "pairs": 228, "eligible_candidates": 135, "protected_candidates": 183, "maximum_slots": 75},
+  "inputs": {
+    "selector_trace.json": "89130f8b349b24a44861c802c13be30aa08fbbc5dc661a18f969ca2c68be4aa6",
+    "training_targets.private.json": "93f38bd29f31cac90897bd4d115b99247a3e6b20b9555680d745c91d611a85b8"
+  },
+  "local": {
+    "run_id": "20261016T082015507042Z",
+    "summary_sha256": "111d8cb410c461cf0ad1721fb9824a429a3406e22654f1f88fdac3a12ad1e1d4",
+    "source_archive_sha256": "e2d4e96612cf41779f12f663212e5f1bbcafe49334f46333f0f0989830c1dcb4",
+    "environment": {"python": "3.11.0", "torch": "2.3.1+cpu", "numpy": "1.23.5", "device": "cpu"},
+    "unit_tests_passed": 21
+  },
+  "server": {
+    "role": "development",
+    "server_id": "3080Ti-117-50-198-37",
+    "workspace": "/home/Q-DUET-VLM/reader-top5-objective-audit-20261016",
+    "run_id": "20261016T082513220974Z",
+    "summary_sha256": "d0c53a4c1ea7a659a40394346930332410f74116f32dbcd0d49e234b5a4cd29a",
+    "source_archive_sha256": "27044044f55a90cabead71cb04e7c6700f679f93d62bba62c6759384cd11a48c",
+    "implementation_archive_sha256": "fbd34e33f5eb47c8bc33c280bde3e447609c138a8762e4cf6ac16e24f412884b",
+    "environment": {"python": "3.10.12", "torch": "2.7.1+cu126", "numpy": "1.26.4", "device": "cpu"},
+    "unit_tests_passed": 21,
+    "python_compile": "passed",
+    "bash_syntax": "passed"
+  },
+  "checks_each_environment": {"affine_checks": 708, "max_affine_error": 9.71134284100117e-12, "constant_rejections": 177, "outlier_checks": 59, "saved_value_arrays": 24, "score_gradient_replays": 6},
+  "checks_environment_equal": true,
+  "source_hashes_environment_equal": true,
+  "plugin_plan_validation": "6 plugins passed; historical plan unchanged",
+  "historical_checkpoints_only": {
+    "frozen_reader_topk": {"candidate_loss": 1.5667277766265624, "historical_loss": 3.9793972188950013, "rescued": 0, "lost_protected": 0},
+    "new_quantum_new_loss": {"candidate_loss": 2.085251790162981, "historical_loss": 1.1770912375012579, "rescued": 22, "lost_protected": 104},
+    "new_classical_new_loss": {"candidate_loss": 1.7203769773287063, "historical_loss": 1.179057248894653, "rescued": 28, "lost_protected": 78}
+  },
+  "real_training_updates": 0,
+  "gpu_required": false,
+  "formal_training_ready": false,
+  "claim_ceiling": "L0_objective_engineering_only",
+  "limitations": ["No new fitted head or selection utility", "Only training record fields accessed", "Smooth protection is not guaranteed discrete retention", "Not wired into closed100 runner", "Historical missing executed source and optimizer state remain missing", "Archive bytes may differ by ZIP metadata while declared source hashes match"]
+}

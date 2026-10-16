@@ -1,0 +1,19 @@
+{
+  "schema_version": "rag.reader_top5_objective_audit.v1",
+  "authorization": "train_cache_diagnostic_only",
+  "objective_id": "robust_standardized_top5_membership.v1",
+  "objective": {"margin": 0.1, "anchor_weight": 0.01, "protection_weight": 1.0, "min_std": 1e-8},
+  "source_run": "20261015T022004545902Z",
+  "inputs": {
+    "selector_trace.json": "89130f8b349b24a44861c802c13be30aa08fbbc5dc661a18f969ca2c68be4aa6",
+    "training_targets.private.json": "93f38bd29f31cac90897bd4d115b99247a3e6b20b9555680d745c91d611a85b8"
+  },
+  "population": {"training_questions": 59, "pairs": 228, "eligible_candidates": 135, "protected_candidates": 183, "maximum_slots": 75},
+  "methods": ["frozen_reader_topk", "new_quantum_new_loss", "new_classical_new_loss"],
+  "affine_checks": [{"scale": 0.5, "shift": 0.0}, {"scale": 0.1, "shift": 0.0}, {"scale": 0.01, "shift": 7.0}, {"scale": 2.0, "shift": -3.0}],
+  "selected_value_capture": "original training order first2; every allowlisted method; scores, base, normalized_scores, total_loss_gradient",
+  "gates": ["all59 identities and frozen target schema match", "all affine total/component loss differences <=1e-8 in float64", "all constant vectors rejected", "making the lowest baseline score100 standard deviations lower cannot improve total loss", "all saved gradients finite and independently replayed", "actual rescues and protected losses reported separately"],
+  "constraints": {"training_updates": 0, "model_loading": false, "gpu_required": false, "dataset_download": false, "network": false, "evaluation_metrics_accessed": false, "silver_accessed": false, "selector_output_changed": false},
+  "claim_ceiling": "L0_objective_engineering_only",
+  "limitations": ["Passing is not training or selection utility", "Normalized smooth loss does not guarantee discrete Top5 retention", "No new objective wired into the closed100-case runner", "No independent heldout or quantum attribution claim"]
+}
