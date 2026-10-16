@@ -166,6 +166,22 @@ class MembershipScreenTests(unittest.TestCase):
                     for key in expected: torch.testing.assert_close(actual[key], expected[key], rtol=0, atol=0)
                 self.assertEqual(load.call_count, len(source))
 
+    def test_disk_values_archive_full_coordinates_without_resident_dict(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            store = learning.DetachedValueStore(tmp)
+            source = np.arange(1000, dtype=np.float32).reshape(20, 50)
+            learning.save_value(store, "sample__full", source)
+            source[:] = -1.
+            self.assertTrue(all(isinstance(p, Path) for p in store._paths.values()))
+            self.assertIsInstance(store["sample__full"], np.memmap)
+            specs = learning.describe_values(store)
+            path = Path(tmp) / "values.npz"
+            store.archive(path)
+            store.clear()
+            with np.load(path, allow_pickle=False) as reopened:
+                np.testing.assert_array_equal(reopened["sample__full"], np.arange(1000, dtype=np.float32).reshape(20, 50))
+                self.assertEqual(learning.array_hash(reopened["sample__full"]), specs["sample__full"]["sha256"])
+
     def test_upload_failure_keeps_pending_manifest_and_raises(self):
         with tempfile.TemporaryDirectory() as tmp:
             p = Path(tmp)

@@ -17,6 +17,7 @@
 - Record dataset/model/revision/config hash/seed/split/code revision and compact provenance per artifact.
 - GitHub accepts compact `result.json` only when <=`1,048,576` bytes; larger/raw results use authenticated exchange with manifest/hash/path.
 - Collaborator commands are project-relative; wrappers discover local dependencies. Develop on the verified server; collaborators run locally.
+- User-authorized V100s is CPU-only (`cpu-experiments` role); verify available memory/environment before running. 18083 stays on 3080Ti. See [execution exception](decisions/2026-10-16-v100s-experiment-authorization.md).
 ## Durable cumulative knowledge
 - Answer Scorer over QORE-DPR is the only stable positive carryover; its calibration is unsafe as the sole evidence criterion.
 - Retrieval-depth/reranking, context routing, reader energy/transport, topology, ASAC, answer expansion, and parameter-only QORE/MMR/DPP rescues are closed.
@@ -211,6 +212,7 @@
 - [ACTIVE / CURRENT CONFIGURATION CLOSED; OBJECTIVE AUDIT RECOMMENDED] Rotation result, compression shortcut, protected-member harm and invalid crossed loss -> [detail](decisions/2026-10-16-quantum-reader-rotation-screen-result.md). Metrics and checkpoint replay verified; exact executed source/optimizer replay incomplete. New experiment not started.
 - [CANDIDATE / IMPLEMENTED; CPU AUDIT PASSED, NO REAL FIT] Robust scale-invariant Top5 membership objective -> [detail](decisions/2026-10-16-reader-top5-objective-engineering.md). Loss dispatch, wrapped targets, full bundle hash and prospective exact source capture repaired. New loss remains separate from the closed100 runner; task utility is untested.
 - [CANDIDATE] Independent cached Reader membership screen; trace and native AdamW gates -> [detail](decisions/2026-10-16-reader-membership-screen-handoff.md)
+- [ACTIVE] V100s CPU experiments; 3080Ti artifact exchange -> [detail](decisions/2026-10-16-v100s-experiment-authorization.md)
 
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.

@@ -3,11 +3,11 @@
   "plan_id": "reader-membership-screen",
   "plan_version": 1,
   "workstream": "rag-selector",
-  "status": "blocked",
+  "status": "active",
   "objective": "Ship an independently named cached-feature quantum/classical Top5 membership screen with optimizer replay and one-command collaborator exchange",
-  "focus_step_id": "MS-04",
-  "next_action": "Recover primary and complete zero-update real-cache/HTTP readiness",
-  "blocker": "Primary SSH/18083 timed out during memory-limited preflight; final source/readiness/upload receipts pending",
+  "focus_step_id": "MS-05",
+  "next_action": "Publish verified one-command CPU handoff and focused source changes",
+  "blocker": null,
   "steps": [
     {
       "id": "MS-01",
@@ -103,7 +103,7 @@
     {
       "id": "MS-04",
       "title": "Verify primary server and exchange",
-      "status": "blocked",
+      "status": "done",
       "objective": "Verify exact source on authorized primary and authenticated derived-input download/upload receipts",
       "inputs": [
         "MS-03"
@@ -119,12 +119,15 @@
         "Hash-locked inputs downloadable; automatic run directory/upload verified"
       ],
       "evidence_paths": [
-        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261016_readiness.json"
+        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261016_readiness.json",
+        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261016_verified.json"
       ],
       "owner": "rag-selector",
-      "blocker": "Primary SSH/18083 timed out during memory-limited preflight; final source/readiness/upload receipts pending",
+      "blocker": null,
       "notes": [
-        "Input feature pack already published and hash-locked; source checkpoint will be published without claiming final handoff"
+        "Input feature pack already published and hash-locked; source checkpoint will be published without claiming final handoff",
+        "3080Ti SSH/18083 recovered; V100s explicitly authorized but current session has no GPU device and1GiB occupied memory; no heavy work started there",
+        "34 CPU tests pass locally and on primary; real-cache1239 arrays/795scores and synthetic24AdamW updates passed;9+11 checked upload receipts. User confirms V100s CPU-only; its occupied1GiB/default dependencies prevent a safe real run there."
       ],
       "supersedes": [],
       "superseded_by": []
@@ -132,7 +135,7 @@
     {
       "id": "MS-05",
       "title": "Publish one-command handoff",
-      "status": "todo",
+      "status": "active",
       "objective": "Publish reviewed source and concise owner record without running real training",
       "inputs": [
         "MS-04"

@@ -221,7 +221,7 @@ def execute(cfg, index, features, weight, bias, targets, evaluation_cases, outpu
     from scripts.collab.five_ideas.validate_reader_membership_trace import validate
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)
-    arrays, reports, witnesses = {}, {}, []
+    arrays, reports, witnesses = learning.DetachedValueStore(output.parent), {}, []
     heads = learning.make_heads(weight, bias, cfg, device)
     ntrain = len(targets)
     records = index["records"]
@@ -252,7 +252,7 @@ def execute(cfg, index, features, weight, bias, targets, evaluation_cases, outpu
     if evaluation is not None:
         h = reports["quantum_membership"]["epochs"][-1]["membership_health"]
         evaluation["gates"]["training_safe_rescue"] = h["rescued_eligible"] > 0 and h["lost_protected"] == 0
-    np.savez_compressed(output / "membership_values.npz", **arrays)
+    arrays.archive(output / "membership_values.npz")
     trace = {"schema_version": "sample-trace.v2", "artifact_type": "reader_membership_selector_trace", "run_id": output.name,
         "synthetic_only": synthetic, "preflight_only": preflight, "methods": list(learning.METHODS),
         "stages": list(learning.STAGES), "population": [{k: r[k] for k in ("lane", "number", "prefix", "question_sha256")} for r in records],

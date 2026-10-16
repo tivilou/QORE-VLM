@@ -16,5 +16,5 @@
   "alternative_explanations": ["Limited/biased qualified training set", "Representation does not distinguish support", "Shared rotation harms existing evidence", "Robust smooth surrogate still not equivalent to discrete Top5", "Exposed panel is not independent population evidence"],
   "exposure": "59 train/100 evaluation question hashes disjoint, but panel previously inspected. All results remain L0; no Silver tuning or new full-data claim.",
   "classical_simulation": "Permitted implementation; performance and matched-control evidence determine mechanism merit. No hardware or resource advantage inferred from this screen.",
-  "authorization": "Implement/test and publish collaborator runner; real training is for collaborator, not our server"
+  "authorization": "Implement/test and publish collaborator runner; after trace readiness, real training may run on collaborator computer or user-authorized CPU experiment server when sufficient resources are verified.18083 remains on3080Ti."
 }

@@ -1,0 +1,63 @@
+{
+  "schema_version": "rag.reader_membership_engineering_receipt.v1",
+  "date": "2026-10-16",
+  "status": "passed",
+  "formal_training_ready": true,
+  "plan_authorization_after_readiness": "implemented",
+  "real_training_updates": 0,
+  "claim_ceiling": "L0 engineering evidence only; real utility has not been measured",
+  "supersedes_checkpoint": "reader_membership_screen_20261016_readiness.json",
+  "tests": {
+    "local_passed": 34,
+    "primary_passed": 34,
+    "modules": ["test_reader_membership_screen", "test_scale_invariant_top5_objective", "test_quantum_reader_rotation", "test_quantum_reader_rotation_screen_100"],
+    "local_environment": {"python": "3.11", "torch": "2.3.1+cpu", "numpy": "1.23.5", "device": "cpu"},
+    "primary_environment": {"python": "3.10.12", "torch": "2.7.1+cu126", "numpy": "1.26.4", "device": "cpu"},
+    "bash_syntax": "passed"
+  },
+  "memory_fix": "Lazy feature slices plus disk-backed detached coordinates and streaming NPZ; full values retained; no whole-cohort array dictionary",
+  "primary": {
+    "implementation_root": "/home/Q-DUET-VLM/reader-membership-screen-20261016",
+    "canonical_checkout_modified": false,
+    "memory_limit_bytes": 1073741824,
+    "memory_events_before": {"max": 160475, "oom": 0, "oom_kill": 0},
+    "memory_events_after": {"max": 162767, "oom": 0, "oom_kill": 0},
+    "new_oom_kills": 0,
+    "source_transport_sha256": "4b7028fa19f98636da2d094ac5f47fc23142c91850c1e9398470b94a6dfd6da6"
+  },
+  "real_cache_preflight": {
+    "namespace": "five_ideas/quantum_reader_membership_screen_100/preflight/20261016T151138166713Z",
+    "readiness_file": "readiness.json",
+    "readiness_sha256": "4948d8c7b94bb340b0754e09db224f62508171d1c3897eb9fea2a4c284f44baa",
+    "complete_arrays": 1239,
+    "selected_input_slices": 12,
+    "head_score_replays": 795,
+    "full_output_replays": 16,
+    "optimizer_update_replays": 0,
+    "upload_receipts_checked": 9,
+    "executed_sources_sha256": "0f871edbea14f1e18fd4123bc8820c768a91e3be332bcdcf32dfdf5acbb809ee",
+    "membership_values_sha256": "976377583f6db0e683bbea0eeb4d866b6ce20690feb19b15a3dce25460842b7c"
+  },
+  "synthetic_optimizer_fixture": {
+    "namespace": "five_ideas/quantum_reader_membership_screen_100/engineering_fixture/20261016-disk-v1",
+    "complete_arrays": 928,
+    "selected_input_slices": 12,
+    "head_score_replays": 20,
+    "full_output_replays": 16,
+    "optimizer_update_replays": 24,
+    "upload_receipts_checked": 11,
+    "executed_sources_sha256": "2b42c928c0ff2070878b16730e8996a1325a25554f2e286f49035924e656a3b7"
+  },
+  "cpu_experiment_option": {
+    "role": "cpu-experiments",
+    "user_confirmed_cpu_only": true,
+    "formal_run_started": false,
+    "python": "3.10.12",
+    "default_python_torch_numpy_available": false,
+    "memory_limit_bytes": 1073741824,
+    "observed_memory_current_bytes": 1062998016,
+    "observed_anonymous_memory_bytes": 681873408,
+    "blocker": "Insufficient verified memory headroom and default Python dependencies; existing workloads preserved"
+  },
+  "promotion_boundary": "Readiness was measured before metadata-only plan/authorization promotion. Formal runs archive the exact promoted source bytes independently. No numerical mechanism, optimizer, population or gate changed."
+}

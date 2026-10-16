@@ -5,7 +5,11 @@ selection receive fixed numeric features and ranks, never reference labels.
 """
 from __future__ import annotations
 import copy
+from collections.abc import MutableMapping
 import hashlib
+from pathlib import Path
+import tempfile
+import zipfile
 import numpy as np
 import torch
 from applications.rag.quantum_reader_rotation import RotationConfig, make_rotation_head, top5_retention_objective
@@ -20,6 +24,34 @@ ARMS = {
 }
 METHODS = ("frozen_reader_topk", *ARMS)
 STAGES = ("data", "preprocess", "training", "scoring", "selection", "diagnosis")
+
+
+class DetachedValueStore(MutableMapping):
+    """Disk-backed coordinates; retain complete witnesses without cohort RAM growth."""
+    def __init__(self, parent):
+        self._temporary = tempfile.TemporaryDirectory(prefix="membership-values-", dir=parent)
+        self._paths = {}
+
+    def __len__(self): return len(self._paths)
+    def __iter__(self): return iter(self._paths)
+    def __getitem__(self, key): return np.load(self._paths[key], mmap_mode="r", allow_pickle=False)
+    def __setitem__(self, key, value):
+        if key in self._paths: raise ValueError("duplicate numeric producer: " + key)
+        path = Path(self._temporary.name) / f"{len(self._paths):06d}.npy"
+        np.save(path, value, allow_pickle=False)
+        self._paths[key] = path
+
+    def __delitem__(self, key): self._paths.pop(key).unlink()
+
+    def archive(self, destination):
+        # Streaming existing .npy files is NPZ-compatible and avoids gathering
+        # all training witnesses into one in-memory kwargs dictionary.
+        with zipfile.ZipFile(destination, "x", compression=zipfile.ZIP_DEFLATED, allowZip64=True) as z:
+            for key, path in self._paths.items(): z.write(path, key + ".npy")
+
+    def clear(self):
+        self._temporary.cleanup()
+        self._paths.clear()
 
 
 def array_hash(value):
