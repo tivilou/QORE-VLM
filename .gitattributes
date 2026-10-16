@@ -1,3 +1,5 @@
 # Keep the collaborator entry point and hash-locked recovery dossier portable.
 scripts/collab/five_ideas/run_protected_boundary_reader_screen_100.sh text eol=lf
 configs/experiments/protected_boundary_reader_recovery.md text eol=lf
+scripts/collab/five_ideas/run_quantum_reader_membership_screen_100.sh text eol=lf
+configs/experiments/reader_membership_recovery.json text eol=lf

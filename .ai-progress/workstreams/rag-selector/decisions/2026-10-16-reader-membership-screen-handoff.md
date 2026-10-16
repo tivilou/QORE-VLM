@@ -29,6 +29,7 @@ Preserve frozen59/228 supervision, rotation capacity, fixed budget and task gate
 - Task gates preserved: positive quantum-minus-Reader useful mean and95%CI lower>0, direct mean>=0. Quantum attribution separately compares same-loss classical. Prospective final-epoch training-safe-rescue gate requires rescues>0 and zero protected losses; no checkpoint selection or adaptive stopping.
 - CPU default; cached original CLS/pooled/classifier replaces repeated frozen encoding. No model loading, Wiki-DPR, retrieval, Generator or evaluator. Quantum simulation is allowed; no proven quantum resource advantage.
 - Every run archives exact source/config bytes before execution and verifies unchanged bytes afterward. First2 cases/lane retain complete coordinates; first2 updates/epoch/arm retain raw/clipped gradients, native AdamW before/after and complete outputs. All159x5 score/selection rows are retained.100-case raw study includes question, gold, full candidates and per-method results; new generation is explicitly not applicable.
+- Explicit `.gitattributes` LF rules preserve the executable wrapper and byte-hashed recovery dossier on Windows/Linux checkouts. Publication-worktree validation exposed CRLF hash drift; do not relax input/source hashes to hide line-ending changes.
 
 ## Engineering evidence and current delivery gate
 
