@@ -1,0 +1,559 @@
+{
+  "run_id": "20261015T022004545902Z",
+  "files": [
+    {
+      "name": "summary.json",
+      "bytes": 20111,
+      "sha256": "b7cc932b95fa373eb9856ea27778c05e967db5bd08bb14a00d6151d8751c17ea"
+    },
+    {
+      "name": "report.md",
+      "bytes": 751,
+      "sha256": "dcd910403b6fae817fb07f4ad38033747af7579638f77df57f55422ef2cdae86"
+    },
+    {
+      "name": "selector_trace.json",
+      "bytes": 3191606,
+      "sha256": "89130f8b349b24a44861c802c13be30aa08fbbc5dc661a18f969ca2c68be4aa6"
+    },
+    {
+      "name": "rotation_values.npz",
+      "bytes": 3270786030,
+      "sha256": "7308b59233f428162633393e2ac5cca12421c362b3639d64317eaefe6808e8cf"
+    },
+    {
+      "name": "training_targets.private.json",
+      "bytes": 8752966,
+      "sha256": "93f38bd29f31cac90897bd4d115b99247a3e6b20b9555680d745c91d611a85b8"
+    }
+  ],
+  "provenance": {
+    "code_revision": "3a4291cefc894998755c3163f95565fe290e5285",
+    "config_sha256": "f564a07b7725571dcc6b728ff674ee5d996960849c3d899289f8c941fad61708",
+    "plan_sha256": "1c8b8673870a83b2e8455b03fd6e0e142b587614a1be0c41973691aff0c36465",
+    "reader": {
+      "model_id": "facebook/dpr-reader-single-nq-base",
+      "requested_revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+      "resolved_revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+      "config_sha256": "383c5dbe735db108976bcaef70048348151def480bfe24ed8ff5243cd1ce4751",
+      "device": "cuda",
+      "reader_frozen": true
+    },
+    "python": "3.10.20",
+    "torch": "2.5.1+cu121",
+    "transformers": "4.44.2",
+    "numpy": "1.26.4",
+    "source_hashes": {
+      "scripts/collab/five_ideas/run_quantum_reader_rotation_screen_100.py": "c3bc520858549abc9334d91fe8cb9ebc2ee5e47c0c63218e3663e63fce24c168",
+      "configs/experiments/quantum_reader_rotation_screen_100.json": "f564a07b7725571dcc6b728ff674ee5d996960849c3d899289f8c941fad61708",
+      "configs/experiments/quantum_reader_rotation_screen_100_plan.json": "1c8b8673870a83b2e8455b03fd6e0e142b587614a1be0c41973691aff0c36465",
+      "applications/rag/quantum_reader_rotation.py": "505b278b4b3123d8f0b598ad09e313d30ab56a0af33fa070846a57d306487610",
+      "applications/rag/quantum_semantic_reader.py": "b089470c7c0b15f7c1ea75206223d59e465072c496e6e95add5d72310ca4315a",
+      "applications/rag/protected_boundary_learning.py": "77d475d768a7f1fceb1ecb7981a54d5cb7124e4b32b54c7991d9d724655e5390",
+      "applications/rag/protected_boundary_inputs.py": "e49d6d8387d4acfd1bba0baf4ba33d6b1a725a8ac1e14b0ef0fb5b4bf016a36c",
+      "applications/rag/qarcg_reader.py": "b5fce815ba8cdb1f9223e3bdcc2018ef25d6005dc9059d0602095a70cc43d20b",
+      "scripts/collab/lib/exchange_upload.py": "03c897773c38c1cd79ed1e96c795f2a3bbe92156f8fb3aadc976ffab05316da2"
+    }
+  },
+  "evaluation": {
+    "methods": {
+      "frozen_reader_topk": {
+        "positive_consensus_count": {
+          "total": 203,
+          "mean": 2.03
+        },
+        "direct_consensus_count": {
+          "total": 138,
+          "mean": 1.38
+        },
+        "all_models_positive_count": {
+          "total": 171,
+          "mean": 1.71
+        },
+        "fixed_silver_set_overlap": {
+          "total": 355,
+          "mean": 3.55
+        }
+      },
+      "old_head_old_loss": {
+        "positive_consensus_count": {
+          "total": 203,
+          "mean": 2.03
+        },
+        "direct_consensus_count": {
+          "total": 139,
+          "mean": 1.39
+        },
+        "all_models_positive_count": {
+          "total": 170,
+          "mean": 1.7
+        },
+        "fixed_silver_set_overlap": {
+          "total": 355,
+          "mean": 3.55
+        }
+      },
+      "old_head_new_loss": {
+        "positive_consensus_count": {
+          "total": 203,
+          "mean": 2.03
+        },
+        "direct_consensus_count": {
+          "total": 139,
+          "mean": 1.39
+        },
+        "all_models_positive_count": {
+          "total": 170,
+          "mean": 1.7
+        },
+        "fixed_silver_set_overlap": {
+          "total": 355,
+          "mean": 3.55
+        }
+      },
+      "new_quantum_old_loss": {
+        "positive_consensus_count": {
+          "total": 147,
+          "mean": 1.47
+        },
+        "direct_consensus_count": {
+          "total": 90,
+          "mean": 0.9
+        },
+        "all_models_positive_count": {
+          "total": 115,
+          "mean": 1.15
+        },
+        "fixed_silver_set_overlap": {
+          "total": 175,
+          "mean": 1.75
+        }
+      },
+      "new_quantum_new_loss": {
+        "positive_consensus_count": {
+          "total": 147,
+          "mean": 1.47
+        },
+        "direct_consensus_count": {
+          "total": 90,
+          "mean": 0.9
+        },
+        "all_models_positive_count": {
+          "total": 115,
+          "mean": 1.15
+        },
+        "fixed_silver_set_overlap": {
+          "total": 175,
+          "mean": 1.75
+        }
+      },
+      "new_classical_new_loss": {
+        "positive_consensus_count": {
+          "total": 170,
+          "mean": 1.7
+        },
+        "direct_consensus_count": {
+          "total": 112,
+          "mean": 1.12
+        },
+        "all_models_positive_count": {
+          "total": 137,
+          "mean": 1.37
+        },
+        "fixed_silver_set_overlap": {
+          "total": 200,
+          "mean": 2.0
+        }
+      }
+    },
+    "paired_deltas": {
+      "frozen_reader_topk": {
+        "old_head_old_loss": {
+          "positive_consensus_count": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "wins": 0,
+            "ties": 100,
+            "losses": 0
+          },
+          "direct_consensus_count": {
+            "mean": 0.01,
+            "ci95": [
+              0.0,
+              0.03
+            ],
+            "wins": 1,
+            "ties": 99,
+            "losses": 0
+          },
+          "all_models_positive_count": {
+            "mean": -0.01,
+            "ci95": [
+              -0.03,
+              0.0
+            ],
+            "wins": 0,
+            "ties": 99,
+            "losses": 1
+          },
+          "fixed_silver_set_overlap": {
+            "mean": 0.0,
+            "ci95": [
+              -0.03,
+              0.03
+            ],
+            "wins": 1,
+            "ties": 98,
+            "losses": 1
+          }
+        },
+        "old_head_new_loss": {
+          "positive_consensus_count": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "wins": 0,
+            "ties": 100,
+            "losses": 0
+          },
+          "direct_consensus_count": {
+            "mean": 0.01,
+            "ci95": [
+              0.0,
+              0.03
+            ],
+            "wins": 1,
+            "ties": 99,
+            "losses": 0
+          },
+          "all_models_positive_count": {
+            "mean": -0.01,
+            "ci95": [
+              -0.03,
+              0.0
+            ],
+            "wins": 0,
+            "ties": 99,
+            "losses": 1
+          },
+          "fixed_silver_set_overlap": {
+            "mean": 0.0,
+            "ci95": [
+              -0.03,
+              0.03
+            ],
+            "wins": 1,
+            "ties": 98,
+            "losses": 1
+          }
+        },
+        "new_quantum_old_loss": {
+          "positive_consensus_count": {
+            "mean": -0.56,
+            "ci95": [
+              -0.8,
+              -0.32
+            ],
+            "wins": 14,
+            "ties": 44,
+            "losses": 42
+          },
+          "direct_consensus_count": {
+            "mean": -0.48,
+            "ci95": [
+              -0.67025,
+              -0.3
+            ],
+            "wins": 7,
+            "ties": 60,
+            "losses": 33
+          },
+          "all_models_positive_count": {
+            "mean": -0.56,
+            "ci95": [
+              -0.77025,
+              -0.35
+            ],
+            "wins": 9,
+            "ties": 53,
+            "losses": 38
+          },
+          "fixed_silver_set_overlap": {
+            "mean": -1.8,
+            "ci95": [
+              -2.09,
+              -1.52
+            ],
+            "wins": 4,
+            "ties": 15,
+            "losses": 81
+          }
+        },
+        "new_quantum_new_loss": {
+          "positive_consensus_count": {
+            "mean": -0.56,
+            "ci95": [
+              -0.8,
+              -0.32
+            ],
+            "wins": 14,
+            "ties": 44,
+            "losses": 42
+          },
+          "direct_consensus_count": {
+            "mean": -0.48,
+            "ci95": [
+              -0.67025,
+              -0.3
+            ],
+            "wins": 7,
+            "ties": 60,
+            "losses": 33
+          },
+          "all_models_positive_count": {
+            "mean": -0.56,
+            "ci95": [
+              -0.77025,
+              -0.35
+            ],
+            "wins": 9,
+            "ties": 53,
+            "losses": 38
+          },
+          "fixed_silver_set_overlap": {
+            "mean": -1.8,
+            "ci95": [
+              -2.09,
+              -1.52
+            ],
+            "wins": 4,
+            "ties": 15,
+            "losses": 81
+          }
+        },
+        "new_classical_new_loss": {
+          "positive_consensus_count": {
+            "mean": -0.33,
+            "ci95": [
+              -0.57,
+              -0.11
+            ],
+            "wins": 15,
+            "ties": 58,
+            "losses": 27
+          },
+          "direct_consensus_count": {
+            "mean": -0.26,
+            "ci95": [
+              -0.44,
+              -0.09
+            ],
+            "wins": 9,
+            "ties": 71,
+            "losses": 20
+          },
+          "all_models_positive_count": {
+            "mean": -0.34,
+            "ci95": [
+              -0.54,
+              -0.15
+            ],
+            "wins": 12,
+            "ties": 62,
+            "losses": 26
+          },
+          "fixed_silver_set_overlap": {
+            "mean": -1.55,
+            "ci95": [
+              -1.88,
+              -1.23
+            ],
+            "wins": 8,
+            "ties": 25,
+            "losses": 67
+          }
+        }
+      },
+      "new_classical_new_loss": {
+        "old_head_old_loss": {
+          "positive_consensus_count": {
+            "mean": 0.33,
+            "ci95": [
+              0.11,
+              0.57
+            ],
+            "wins": 27,
+            "ties": 58,
+            "losses": 15
+          },
+          "direct_consensus_count": {
+            "mean": 0.27,
+            "ci95": [
+              0.1,
+              0.44
+            ],
+            "wins": 21,
+            "ties": 70,
+            "losses": 9
+          },
+          "all_models_positive_count": {
+            "mean": 0.33,
+            "ci95": [
+              0.14975000000000002,
+              0.53
+            ],
+            "wins": 25,
+            "ties": 63,
+            "losses": 12
+          },
+          "fixed_silver_set_overlap": {
+            "mean": 1.55,
+            "ci95": [
+              1.22975,
+              1.88
+            ],
+            "wins": 67,
+            "ties": 25,
+            "losses": 8
+          }
+        },
+        "old_head_new_loss": {
+          "positive_consensus_count": {
+            "mean": 0.33,
+            "ci95": [
+              0.11,
+              0.57
+            ],
+            "wins": 27,
+            "ties": 58,
+            "losses": 15
+          },
+          "direct_consensus_count": {
+            "mean": 0.27,
+            "ci95": [
+              0.1,
+              0.44
+            ],
+            "wins": 21,
+            "ties": 70,
+            "losses": 9
+          },
+          "all_models_positive_count": {
+            "mean": 0.33,
+            "ci95": [
+              0.14975000000000002,
+              0.53
+            ],
+            "wins": 25,
+            "ties": 63,
+            "losses": 12
+          },
+          "fixed_silver_set_overlap": {
+            "mean": 1.55,
+            "ci95": [
+              1.22975,
+              1.88
+            ],
+            "wins": 67,
+            "ties": 25,
+            "losses": 8
+          }
+        },
+        "new_quantum_old_loss": {
+          "positive_consensus_count": {
+            "mean": -0.23,
+            "ci95": [
+              -0.4,
+              -0.07
+            ],
+            "wins": 11,
+            "ties": 62,
+            "losses": 27
+          },
+          "direct_consensus_count": {
+            "mean": -0.22,
+            "ci95": [
+              -0.38,
+              -0.06
+            ],
+            "wins": 8,
+            "ties": 70,
+            "losses": 22
+          },
+          "all_models_positive_count": {
+            "mean": -0.22,
+            "ci95": [
+              -0.38,
+              -0.06
+            ],
+            "wins": 8,
+            "ties": 70,
+            "losses": 22
+          },
+          "fixed_silver_set_overlap": {
+            "mean": -0.25,
+            "ci95": [
+              -0.46,
+              -0.03
+            ],
+            "wins": 22,
+            "ties": 39,
+            "losses": 39
+          }
+        },
+        "new_quantum_new_loss": {
+          "positive_consensus_count": {
+            "mean": -0.23,
+            "ci95": [
+              -0.4,
+              -0.07
+            ],
+            "wins": 11,
+            "ties": 62,
+            "losses": 27
+          },
+          "direct_consensus_count": {
+            "mean": -0.22,
+            "ci95": [
+              -0.38,
+              -0.06
+            ],
+            "wins": 8,
+            "ties": 70,
+            "losses": 22
+          },
+          "all_models_positive_count": {
+            "mean": -0.22,
+            "ci95": [
+              -0.38,
+              -0.06
+            ],
+            "wins": 8,
+            "ties": 70,
+            "losses": 22
+          },
+          "fixed_silver_set_overlap": {
+            "mean": -0.25,
+            "ci95": [
+              -0.46,
+              -0.03
+            ],
+            "wins": 22,
+            "ties": 39,
+            "losses": 39
+          }
+        }
+      }
+    },
+    "gates": {
+      "utility": false,
+      "quantum_attribution": false
+    },
+    "population": "all100 questions including zero-positive; panel/Silver labels opened posthoc only"
+  }
+}

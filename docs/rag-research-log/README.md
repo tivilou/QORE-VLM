@@ -2,6 +2,8 @@
 
 ## 当前研究总览
 
+- 最新结果：[量子Reader旋转与分数压缩诊断](20261015T-022004Z-quantum-reader-rotation-screen-result.md)，2026-10-16完成分析。100题Reader/量子/经典有用段203/147/170，当前配置关闭、仍L0。训练119对翻序却只救22正例、丢104保护候选；无排序变化的10%分差压缩也能降loss3.979→1.065。先核验尺度不变/真实Top5保护目标及执行源码，不直接扩大实验；旧/新loss消融无效，门户/版本化解释尚未发布。
+
 - 最新设计：[问题条件化量子Reader特征旋转](20261013T-quantum-reader-feature-rotation-design.md)。保留768维CLS，在原分类头前旋转；身份null、200参数经典控制及loss-only对照。补充审计纠正“pair不可达=槽位不可救”：54/135漏选直接候选在乐观边界内，35/59题；99保护排序张力不是99数学矛盾。缓存159题原分数重放通过；仅探索设计，尚未实现/训练。
 
 - 最新实验：[冻结支持边界 Reader screen 结果](20261012T-protected-boundary-reader-screen-result.md)。量子/经典头都未提升100题有用段命中；量子直接证据 `1.37` 低于 Reader `1.38`，Silver `3.52` 低于 `3.55`。训练有梯度和 pair-gap 改善但 `0/228` pair inversion；先做可达性审计，不继续盲目增大残差或重跑同面板，L0。
@@ -53,6 +55,8 @@
 - 当前研究边界：只优化固定 Top-50 -> Top-5 selector；Generator、检索、evaluator 和答案实现不属于本轮候选。下一候选必须提供独立、可追溯且 gold-free 的证据关系信号；若只能继续依赖 token overlap、Answer Scorer 融合或 generic diversity，应停止该 selector 家族并先处理 provenance/calibration 阻塞。
 
 ## 时间线
+
+- [2026-10-15 02:20:04 UTC运行；2026-10-16分析 | 量子Reader旋转退步，揭示分差压缩捷径和无效损失消融](20261015T-022004Z-quantum-reader-rotation-screen-result.md)
 
 - [2026-10-12 仅日期 | 冻结59题228纠错对训练器工程检查点，真实Reader/上传交付未完成](20261012T-date-only-protected-boundary-runner-checkpoint.md)
 - [2026-10-11 仅日期 | 全部505项分歧及不确定处置结案，冻结59题228保护性纠错对](20261011T-date-only-final-support-boundary-resolution.md)

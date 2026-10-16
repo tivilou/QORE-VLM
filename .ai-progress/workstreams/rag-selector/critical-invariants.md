@@ -118,14 +118,19 @@
   model reachability. Preserve support by Top5 membership, not by forcing every
   rescued positive below every retained item. Isolate objective and head changes.
   See [design/audit](decisions/2026-10-13-quantum-reader-feature-rotation.md).
-- The formal quantum Reader rotation screen is a crossed six-arm diagnostic:
-  frozen Reader Top-k; old semantic head with old/new loss; new
-  question-conditioned unitary rotation with old/new loss; and a matched
-  classical rotation with the new loss. The primary gate is positive-consensus
-  retention versus frozen Reader with direct-support protection; quantum
-  attribution is separately versus the matched classical arm. The screen is
-  collaborator-only and L0 until uploaded trace, hashes, utility and attribution
-  gates are reopened.
+- The rotation screen `20261015T022004545902Z` failed: Reader/quantum/classical
+  useful totals203/147/170, direct138/90/112. Close this configuration, not the
+  entire quantum Reader family. Its intended crossed losses collapsed into
+  duplicated arms; executed runner bytes differ from the reportedGit commit.
+  Checkpoint/metric replay is valid, full source/optimizer and causal loss
+  comparison are incomplete. See [result](decisions/2026-10-16-quantum-reader-rotation-screen-result.md).
+- Loss decrease and pair inversions must be checked against score-scale collapse
+  and actual support membership. Here quantum119/228 inversions coexist with
+  22rescues/104protected losses; order-preserving10%compression alone lowers
+  objective3.979→1.065. Require scale/tie/protection counterexamples before a
+  new objective, and explicit arm-to-head/loss dispatch plus exact executed
+  source archives before another crossed experiment. Keep the quantum mainline
+  and matched classical controls; a loss repair alone is not quantum novelty.
 ## Decision index
 ### Binding and current
 - [BINDING] Cumulative-evidence next-step rule -> [detail](../../shared/decisions/cumulative-evidence-next-step-selection.md)
@@ -201,8 +206,9 @@
 
 - [ACTIVE / FINAL AUDIT CLOSED; NO FIT RUN] Final505 dispositions and59-case228 protected pairs -> [detail](decisions/2026-10-11-final-support-boundary-resolution.md)
 - [CLOSED / FEASIBILITY AUDIT COMPLETE; SCORE-CALIBRATION DESIGN NEXT] Frozen59 protected-pair quantum/classical runner -> [detail](decisions/2026-10-12-protected-boundary-reader-runner.md)
-- [ACTIVE ENGINEERING / PINNED READER GATE PASSED] Question-conditioned quantum Reader feature rotation -> [design](decisions/2026-10-13-quantum-reader-feature-rotation.md), [engineering/loading boundary](decisions/2026-10-13-reader-rotation-engineering.md). Fixed synthetic fixture passed full trace/replay on verified gpushare RTX3060; real utility is untested. Classifier-input hook and crossed head/loss controls remain required. Loading changes must preserve checkpoint bytes, cover active parameters and respect actual container limits.
-- [IMPLEMENTED / COLLABORATOR SCREEN READY] Crossed quantum Reader rotation 100-case contract -> [detail](decisions/2026-10-13-quantum-reader-rotation-screen.md). Six explicit arms, fixed59/228 training bundle, fixed100 evaluation panel, full Top50 label-free ranking, exchange manifest and matched classical attribution. No real cohort fitting has run in this workstream.
+- [ENGINEERING HISTORY / REAL CONFIGURATION FAILED] Question-conditioned quantum Reader feature rotation -> [design](decisions/2026-10-13-quantum-reader-feature-rotation.md), [engineering/loading boundary](decisions/2026-10-13-reader-rotation-engineering.md). Pinned synthetic fixture passed; actual outcome and provenance exceptions are in the2026-10-16 result decision. Loading changes still preserve checkpoint bytes and active parameter coverage.
+- [EXECUTED / GATES FAILED; LOSS ABLATION INVALID] Crossed quantum Reader rotation contract -> [detail](decisions/2026-10-13-quantum-reader-rotation-screen.md). Preserve the original prospective contract; actual arms and source exceptions are recorded separately.
+- [ACTIVE / CURRENT CONFIGURATION CLOSED; OBJECTIVE AUDIT RECOMMENDED] Rotation result, compression shortcut, protected-member harm and invalid crossed loss -> [detail](decisions/2026-10-16-quantum-reader-rotation-screen-result.md). Metrics and checkpoint replay verified; exact executed source/optimizer replay incomplete. New experiment not started.
 
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.

@@ -1,0 +1,49 @@
+{
+  "target_directory": "five_ideas/quantum_reader_rotation_screen_100/20261015T022004545902Z",
+  "status": "validated",
+  "upload_status": "pending_until_receipts",
+  "exchange_files": [
+    {
+      "name": "summary.json",
+      "bytes": 20111,
+      "sha256": "b7cc932b95fa373eb9856ea27778c05e967db5bd08bb14a00d6151d8751c17ea"
+    },
+    {
+      "name": "report.md",
+      "bytes": 751,
+      "sha256": "dcd910403b6fae817fb07f4ad38033747af7579638f77df57f55422ef2cdae86"
+    },
+    {
+      "name": "run_metadata.json",
+      "bytes": 14244,
+      "sha256": "78e84bfe0bb5ec6ad24d147587efa9c9ce23b058bf876b46c7f0912ec0e48128"
+    },
+    {
+      "name": "selector_trace.json",
+      "bytes": 3191606,
+      "sha256": "89130f8b349b24a44861c802c13be30aa08fbbc5dc661a18f969ca2c68be4aa6"
+    },
+    {
+      "name": "rotation_values.npz",
+      "bytes": 3270786030,
+      "sha256": "7308b59233f428162633393e2ac5cca12421c362b3639d64317eaefe6808e8cf"
+    },
+    {
+      "name": "training_targets.private.json",
+      "bytes": 8752966,
+      "sha256": "93f38bd29f31cac90897bd4d115b99247a3e6b20b9555680d745c91d611a85b8"
+    }
+  ],
+  "github_files": [
+    "summary.json",
+    "report.md",
+    "run_metadata.json",
+    "upload_manifest.json",
+    "upload_receipts.json"
+  ],
+  "exchange_only": [
+    "selector_trace.json",
+    "rotation_values.npz",
+    "training_targets.private.json"
+  ]
+}

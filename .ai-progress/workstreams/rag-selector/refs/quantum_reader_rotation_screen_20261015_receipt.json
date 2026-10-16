@@ -1,0 +1,928 @@
+{
+  "schema_version": "rag.rotation_result_receipt.v1",
+  "audited_on": "2026-10-16",
+  "run_id": "20261015T022004545902Z",
+  "source_integrity": {
+    "schema_version": "rag.rotation.audit_collection.v1",
+    "source_directory": "/srv/qore-collab-uploads/five_ideas/quantum_reader_rotation_screen_100/20261015T022004545902Z",
+    "files": [
+      {
+        "name": "summary.json",
+        "bytes": 20111,
+        "sha256": "b7cc932b95fa373eb9856ea27778c05e967db5bd08bb14a00d6151d8751c17ea",
+        "manifest_match": true,
+        "receipt_match": true
+      },
+      {
+        "name": "report.md",
+        "bytes": 751,
+        "sha256": "dcd910403b6fae817fb07f4ad38033747af7579638f77df57f55422ef2cdae86",
+        "manifest_match": true,
+        "receipt_match": true
+      },
+      {
+        "name": "run_metadata.json",
+        "bytes": 14244,
+        "sha256": "78e84bfe0bb5ec6ad24d147587efa9c9ce23b058bf876b46c7f0912ec0e48128",
+        "manifest_match": true,
+        "receipt_match": true
+      },
+      {
+        "name": "selector_trace.json",
+        "bytes": 3191606,
+        "sha256": "89130f8b349b24a44861c802c13be30aa08fbbc5dc661a18f969ca2c68be4aa6",
+        "manifest_match": true,
+        "receipt_match": true
+      },
+      {
+        "name": "rotation_values.npz",
+        "bytes": 3270786030,
+        "sha256": "7308b59233f428162633393e2ac5cca12421c362b3639d64317eaefe6808e8cf",
+        "manifest_match": true,
+        "receipt_match": true
+      },
+      {
+        "name": "training_targets.private.json",
+        "bytes": 8752966,
+        "sha256": "93f38bd29f31cac90897bd4d115b99247a3e6b20b9555680d745c91d611a85b8",
+        "manifest_match": true,
+        "receipt_match": true
+      }
+    ],
+    "npz_array_count": 9318,
+    "selected_array_count": 4651,
+    "selected_values_sha256": "8a3ced44589f97cd375bd2250c2635f16981a95c8ac93db58ee342a68be56d2b",
+    "selected_values_bytes": 128520205,
+    "limitations": [
+      "Only selected NPZ entries had CRC/finite numerical checks; full source file SHA was checked."
+    ]
+  },
+  "selected_array_count": 4651,
+  "selected_arrays_finite": true,
+  "detail_sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
+  "trace_checks": {
+    "cases": 159,
+    "rankings": 954,
+    "train_eval_overlap": 0,
+    "posthoc_metric_rows": 600
+  },
+  "head_replay": {
+    "outputs": 795,
+    "max_abs_score_error": 0.000009059906005859375,
+    "initial_null_max_abs": 0.0000019073486328125,
+    "selected_order_mismatches": []
+  },
+  "evaluation": {
+    "frozen_reader_topk": {
+      "fixed_silver_set_overlap": {
+        "total": 355,
+        "mean": 3.55
+      },
+      "positive_consensus_count": {
+        "total": 203,
+        "mean": 2.03
+      },
+      "direct_consensus_count": {
+        "total": 138,
+        "mean": 1.38
+      },
+      "all_models_positive_count": {
+        "total": 171,
+        "mean": 1.71
+      }
+    },
+    "old_head_old_loss": {
+      "fixed_silver_set_overlap": {
+        "total": 355,
+        "mean": 3.55
+      },
+      "positive_consensus_count": {
+        "total": 203,
+        "mean": 2.03
+      },
+      "direct_consensus_count": {
+        "total": 139,
+        "mean": 1.39
+      },
+      "all_models_positive_count": {
+        "total": 170,
+        "mean": 1.7
+      }
+    },
+    "old_head_new_loss": {
+      "fixed_silver_set_overlap": {
+        "total": 355,
+        "mean": 3.55
+      },
+      "positive_consensus_count": {
+        "total": 203,
+        "mean": 2.03
+      },
+      "direct_consensus_count": {
+        "total": 139,
+        "mean": 1.39
+      },
+      "all_models_positive_count": {
+        "total": 170,
+        "mean": 1.7
+      }
+    },
+    "new_quantum_old_loss": {
+      "fixed_silver_set_overlap": {
+        "total": 175,
+        "mean": 1.75
+      },
+      "positive_consensus_count": {
+        "total": 147,
+        "mean": 1.47
+      },
+      "direct_consensus_count": {
+        "total": 90,
+        "mean": 0.9
+      },
+      "all_models_positive_count": {
+        "total": 115,
+        "mean": 1.15
+      }
+    },
+    "new_quantum_new_loss": {
+      "fixed_silver_set_overlap": {
+        "total": 175,
+        "mean": 1.75
+      },
+      "positive_consensus_count": {
+        "total": 147,
+        "mean": 1.47
+      },
+      "direct_consensus_count": {
+        "total": 90,
+        "mean": 0.9
+      },
+      "all_models_positive_count": {
+        "total": 115,
+        "mean": 1.15
+      }
+    },
+    "new_classical_new_loss": {
+      "fixed_silver_set_overlap": {
+        "total": 200,
+        "mean": 2
+      },
+      "positive_consensus_count": {
+        "total": 170,
+        "mean": 1.7
+      },
+      "direct_consensus_count": {
+        "total": 112,
+        "mean": 1.12
+      },
+      "all_models_positive_count": {
+        "total": 137,
+        "mean": 1.37
+      }
+    }
+  },
+  "paired_deltas": {
+    "frozen_reader_topk": {
+      "old_head_old_loss": {
+        "positive_consensus_count": {
+          "mean": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "wins": 0,
+          "ties": 100,
+          "losses": 0
+        },
+        "direct_consensus_count": {
+          "mean": 0.01,
+          "ci95": [
+            0,
+            0.03
+          ],
+          "wins": 1,
+          "ties": 99,
+          "losses": 0
+        },
+        "all_models_positive_count": {
+          "mean": -0.01,
+          "ci95": [
+            -0.03,
+            0
+          ],
+          "wins": 0,
+          "ties": 99,
+          "losses": 1
+        },
+        "fixed_silver_set_overlap": {
+          "mean": 0,
+          "ci95": [
+            -0.03,
+            0.03
+          ],
+          "wins": 1,
+          "ties": 98,
+          "losses": 1
+        }
+      },
+      "old_head_new_loss": {
+        "positive_consensus_count": {
+          "mean": 0,
+          "ci95": [
+            0,
+            0
+          ],
+          "wins": 0,
+          "ties": 100,
+          "losses": 0
+        },
+        "direct_consensus_count": {
+          "mean": 0.01,
+          "ci95": [
+            0,
+            0.03
+          ],
+          "wins": 1,
+          "ties": 99,
+          "losses": 0
+        },
+        "all_models_positive_count": {
+          "mean": -0.01,
+          "ci95": [
+            -0.03,
+            0
+          ],
+          "wins": 0,
+          "ties": 99,
+          "losses": 1
+        },
+        "fixed_silver_set_overlap": {
+          "mean": 0,
+          "ci95": [
+            -0.03,
+            0.03
+          ],
+          "wins": 1,
+          "ties": 98,
+          "losses": 1
+        }
+      },
+      "new_quantum_old_loss": {
+        "positive_consensus_count": {
+          "mean": -0.56,
+          "ci95": [
+            -0.8,
+            -0.32
+          ],
+          "wins": 14,
+          "ties": 44,
+          "losses": 42
+        },
+        "direct_consensus_count": {
+          "mean": -0.48,
+          "ci95": [
+            -0.67025,
+            -0.3
+          ],
+          "wins": 7,
+          "ties": 60,
+          "losses": 33
+        },
+        "all_models_positive_count": {
+          "mean": -0.56,
+          "ci95": [
+            -0.77025,
+            -0.35
+          ],
+          "wins": 9,
+          "ties": 53,
+          "losses": 38
+        },
+        "fixed_silver_set_overlap": {
+          "mean": -1.8,
+          "ci95": [
+            -2.09,
+            -1.52
+          ],
+          "wins": 4,
+          "ties": 15,
+          "losses": 81
+        }
+      },
+      "new_quantum_new_loss": {
+        "positive_consensus_count": {
+          "mean": -0.56,
+          "ci95": [
+            -0.8,
+            -0.32
+          ],
+          "wins": 14,
+          "ties": 44,
+          "losses": 42
+        },
+        "direct_consensus_count": {
+          "mean": -0.48,
+          "ci95": [
+            -0.67025,
+            -0.3
+          ],
+          "wins": 7,
+          "ties": 60,
+          "losses": 33
+        },
+        "all_models_positive_count": {
+          "mean": -0.56,
+          "ci95": [
+            -0.77025,
+            -0.35
+          ],
+          "wins": 9,
+          "ties": 53,
+          "losses": 38
+        },
+        "fixed_silver_set_overlap": {
+          "mean": -1.8,
+          "ci95": [
+            -2.09,
+            -1.52
+          ],
+          "wins": 4,
+          "ties": 15,
+          "losses": 81
+        }
+      },
+      "new_classical_new_loss": {
+        "positive_consensus_count": {
+          "mean": -0.33,
+          "ci95": [
+            -0.57,
+            -0.11
+          ],
+          "wins": 15,
+          "ties": 58,
+          "losses": 27
+        },
+        "direct_consensus_count": {
+          "mean": -0.26,
+          "ci95": [
+            -0.44,
+            -0.09
+          ],
+          "wins": 9,
+          "ties": 71,
+          "losses": 20
+        },
+        "all_models_positive_count": {
+          "mean": -0.34,
+          "ci95": [
+            -0.54,
+            -0.15
+          ],
+          "wins": 12,
+          "ties": 62,
+          "losses": 26
+        },
+        "fixed_silver_set_overlap": {
+          "mean": -1.55,
+          "ci95": [
+            -1.88,
+            -1.23
+          ],
+          "wins": 8,
+          "ties": 25,
+          "losses": 67
+        }
+      }
+    },
+    "new_classical_new_loss": {
+      "old_head_old_loss": {
+        "positive_consensus_count": {
+          "mean": 0.33,
+          "ci95": [
+            0.11,
+            0.57
+          ],
+          "wins": 27,
+          "ties": 58,
+          "losses": 15
+        },
+        "direct_consensus_count": {
+          "mean": 0.27,
+          "ci95": [
+            0.1,
+            0.44
+          ],
+          "wins": 21,
+          "ties": 70,
+          "losses": 9
+        },
+        "all_models_positive_count": {
+          "mean": 0.33,
+          "ci95": [
+            0.14975000000000002,
+            0.53
+          ],
+          "wins": 25,
+          "ties": 63,
+          "losses": 12
+        },
+        "fixed_silver_set_overlap": {
+          "mean": 1.55,
+          "ci95": [
+            1.22975,
+            1.88
+          ],
+          "wins": 67,
+          "ties": 25,
+          "losses": 8
+        }
+      },
+      "old_head_new_loss": {
+        "positive_consensus_count": {
+          "mean": 0.33,
+          "ci95": [
+            0.11,
+            0.57
+          ],
+          "wins": 27,
+          "ties": 58,
+          "losses": 15
+        },
+        "direct_consensus_count": {
+          "mean": 0.27,
+          "ci95": [
+            0.1,
+            0.44
+          ],
+          "wins": 21,
+          "ties": 70,
+          "losses": 9
+        },
+        "all_models_positive_count": {
+          "mean": 0.33,
+          "ci95": [
+            0.14975000000000002,
+            0.53
+          ],
+          "wins": 25,
+          "ties": 63,
+          "losses": 12
+        },
+        "fixed_silver_set_overlap": {
+          "mean": 1.55,
+          "ci95": [
+            1.22975,
+            1.88
+          ],
+          "wins": 67,
+          "ties": 25,
+          "losses": 8
+        }
+      },
+      "new_quantum_old_loss": {
+        "positive_consensus_count": {
+          "mean": -0.23,
+          "ci95": [
+            -0.4,
+            -0.07
+          ],
+          "wins": 11,
+          "ties": 62,
+          "losses": 27
+        },
+        "direct_consensus_count": {
+          "mean": -0.22,
+          "ci95": [
+            -0.38,
+            -0.06
+          ],
+          "wins": 8,
+          "ties": 70,
+          "losses": 22
+        },
+        "all_models_positive_count": {
+          "mean": -0.22,
+          "ci95": [
+            -0.38,
+            -0.06
+          ],
+          "wins": 8,
+          "ties": 70,
+          "losses": 22
+        },
+        "fixed_silver_set_overlap": {
+          "mean": -0.25,
+          "ci95": [
+            -0.46,
+            -0.03
+          ],
+          "wins": 22,
+          "ties": 39,
+          "losses": 39
+        }
+      },
+      "new_quantum_new_loss": {
+        "positive_consensus_count": {
+          "mean": -0.23,
+          "ci95": [
+            -0.4,
+            -0.07
+          ],
+          "wins": 11,
+          "ties": 62,
+          "losses": 27
+        },
+        "direct_consensus_count": {
+          "mean": -0.22,
+          "ci95": [
+            -0.38,
+            -0.06
+          ],
+          "wins": 8,
+          "ties": 70,
+          "losses": 22
+        },
+        "all_models_positive_count": {
+          "mean": -0.22,
+          "ci95": [
+            -0.38,
+            -0.06
+          ],
+          "wins": 8,
+          "ties": 70,
+          "losses": 22
+        },
+        "fixed_silver_set_overlap": {
+          "mean": -0.25,
+          "ci95": [
+            -0.46,
+            -0.03
+          ],
+          "wins": 22,
+          "ties": 39,
+          "losses": 39
+        }
+      }
+    }
+  },
+  "duplicate_arms": [
+    {
+      "left": "old_head_old_loss",
+      "right": "old_head_new_loss",
+      "parameter_witness_arrays_identical": 220,
+      "all159_score_vectors_identical": true,
+      "training_reports_identical": true
+    },
+    {
+      "left": "new_quantum_old_loss",
+      "right": "new_quantum_new_loss",
+      "parameter_witness_arrays_identical": 1242,
+      "all159_score_vectors_identical": true,
+      "training_reports_identical": true
+    }
+  ],
+  "training_boundary": {
+    "frozen_reader_topk": {
+      "pairs": 228,
+      "improved_pairs": 0,
+      "worsened_pairs": 0,
+      "inverted_pairs": 0,
+      "eligible_positive_candidates": 135,
+      "rescued_candidates": 0,
+      "protected_candidates": 183,
+      "lost_protected_candidates": 0,
+      "set_changed_questions": 0
+    },
+    "old_head_old_loss": {
+      "pairs": 228,
+      "improved_pairs": 109,
+      "worsened_pairs": 62,
+      "inverted_pairs": 0,
+      "eligible_positive_candidates": 135,
+      "rescued_candidates": 0,
+      "protected_candidates": 183,
+      "lost_protected_candidates": 0,
+      "set_changed_questions": 0
+    },
+    "old_head_new_loss": {
+      "pairs": 228,
+      "improved_pairs": 109,
+      "worsened_pairs": 62,
+      "inverted_pairs": 0,
+      "eligible_positive_candidates": 135,
+      "rescued_candidates": 0,
+      "protected_candidates": 183,
+      "lost_protected_candidates": 0,
+      "set_changed_questions": 0
+    },
+    "new_quantum_old_loss": {
+      "pairs": 228,
+      "improved_pairs": 228,
+      "worsened_pairs": 0,
+      "inverted_pairs": 119,
+      "eligible_positive_candidates": 135,
+      "rescued_candidates": 22,
+      "protected_candidates": 183,
+      "lost_protected_candidates": 104,
+      "set_changed_questions": 58
+    },
+    "new_quantum_new_loss": {
+      "pairs": 228,
+      "improved_pairs": 228,
+      "worsened_pairs": 0,
+      "inverted_pairs": 119,
+      "eligible_positive_candidates": 135,
+      "rescued_candidates": 22,
+      "protected_candidates": 183,
+      "lost_protected_candidates": 104,
+      "set_changed_questions": 58
+    },
+    "new_classical_new_loss": {
+      "pairs": 228,
+      "improved_pairs": 228,
+      "worsened_pairs": 0,
+      "inverted_pairs": 116,
+      "eligible_positive_candidates": 135,
+      "rescued_candidates": 28,
+      "protected_candidates": 183,
+      "lost_protected_candidates": 78,
+      "set_changed_questions": 54
+    }
+  },
+  "selection_transitions": {
+    "old_head_old_loss": {
+      "set_changed_questions": 2,
+      "added_candidates": 2,
+      "removed_candidates": 2,
+      "added_useful": 2,
+      "removed_useful": 2,
+      "added_direct": 2,
+      "removed_direct": 1,
+      "correction_rms": {
+        "mean": 0.22047269351738943,
+        "median": 0.2142253078520363,
+        "max": 0.398720792257724
+      },
+      "introduced_baseline_ranks": {
+        "median": 7.5,
+        "from_6_10": 2,
+        "from_11_20": 0,
+        "from_21_50": 0
+      }
+    },
+    "old_head_new_loss": {
+      "set_changed_questions": 2,
+      "added_candidates": 2,
+      "removed_candidates": 2,
+      "added_useful": 2,
+      "removed_useful": 2,
+      "added_direct": 2,
+      "removed_direct": 1,
+      "correction_rms": {
+        "mean": 0.22047269351738943,
+        "median": 0.2142253078520363,
+        "max": 0.398720792257724
+      },
+      "introduced_baseline_ranks": {
+        "median": 7.5,
+        "from_6_10": 2,
+        "from_11_20": 0,
+        "from_21_50": 0
+      }
+    },
+    "new_quantum_old_loss": {
+      "set_changed_questions": 97,
+      "added_candidates": 306,
+      "removed_candidates": 306,
+      "added_useful": 57,
+      "removed_useful": 113,
+      "added_direct": 24,
+      "removed_direct": 72,
+      "correction_rms": {
+        "mean": 7.102130833724225,
+        "median": 7.359831498914661,
+        "max": 10.490301708724155
+      },
+      "introduced_baseline_ranks": {
+        "median": 15,
+        "from_6_10": 101,
+        "from_11_20": 90,
+        "from_21_50": 115
+      }
+    },
+    "new_quantum_new_loss": {
+      "set_changed_questions": 97,
+      "added_candidates": 306,
+      "removed_candidates": 306,
+      "added_useful": 57,
+      "removed_useful": 113,
+      "added_direct": 24,
+      "removed_direct": 72,
+      "correction_rms": {
+        "mean": 7.102130833724225,
+        "median": 7.359831498914661,
+        "max": 10.490301708724155
+      },
+      "introduced_baseline_ranks": {
+        "median": 15,
+        "from_6_10": 101,
+        "from_11_20": 90,
+        "from_21_50": 115
+      }
+    },
+    "new_classical_new_loss": {
+      "set_changed_questions": 94,
+      "added_candidates": 275,
+      "removed_candidates": 275,
+      "added_useful": 47,
+      "removed_useful": 80,
+      "added_direct": 20,
+      "removed_direct": 46,
+      "correction_rms": {
+        "mean": 6.534088640457557,
+        "median": 6.632136662203969,
+        "max": 9.280409401011402
+      },
+      "introduced_baseline_ranks": {
+        "median": 15,
+        "from_6_10": 88,
+        "from_11_20": 98,
+        "from_21_50": 89
+      }
+    }
+  },
+  "source_recovery": {
+    "runner_at_reported_commit_sha256": "f29a862f400565bc1cebe216c686b987f8b8cfd23bb23a73e7c3f18cf76a15a7",
+    "runner_recorded_execution_sha256": "c3bc520858549abc9334d91fe8cb9ebc2ee5e47c0c63218e3663e63fce24c168",
+    "executed_runner_exact_bytes_recovered": false,
+    "config_exact_bytes_recovered": true
+  },
+  "gradient_witnesses": {
+    "old_head_old_loss": {
+      "count": 6,
+      "old_loss_matches": 6,
+      "new_loss_matches": 6,
+      "max_gradient_error_old": 2.6921043172478676e-8,
+      "max_gradient_error_new": 2.6921043172478676e-8
+    },
+    "old_head_new_loss": {
+      "count": 6,
+      "old_loss_matches": 6,
+      "new_loss_matches": 6,
+      "max_gradient_error_old": 2.6921043172478676e-8,
+      "max_gradient_error_new": 2.6921043172478676e-8
+    },
+    "new_quantum_old_loss": {
+      "count": 6,
+      "old_loss_matches": 4,
+      "new_loss_matches": 6,
+      "max_gradient_error_old": 0.10608869045972824,
+      "max_gradient_error_new": 3.2782554626464844e-7
+    },
+    "new_quantum_new_loss": {
+      "count": 6,
+      "old_loss_matches": 4,
+      "new_loss_matches": 6,
+      "max_gradient_error_old": 0.10608869045972824,
+      "max_gradient_error_new": 3.2782554626464844e-7
+    },
+    "new_classical_new_loss": {
+      "count": 6,
+      "old_loss_matches": 6,
+      "new_loss_matches": 6,
+      "max_gradient_error_old": 2.980232238769531e-7,
+      "max_gradient_error_new": 2.980232238769531e-7
+    }
+  },
+  "compression": {
+    "score_spread": {
+      "training": {
+        "frozen_reader_topk": {
+          "mean_std": 4.158751470002727,
+          "median_std_ratio_to_reader": 1,
+          "mean_logit": -4.506487196807008,
+          "mean_range": 17.593003283112736,
+          "mean_correlation_to_reader": 1
+        },
+        "new_quantum_new_loss": {
+          "mean_std": 0.4555626595243631,
+          "median_std_ratio_to_reader": 0.09368878220783429,
+          "mean_logit": -0.09693231041306409,
+          "mean_range": 2.1790453107806584,
+          "mean_correlation_to_reader": 0.5489640817653739
+        },
+        "new_classical_new_loss": {
+          "mean_std": 0.7709177313693497,
+          "median_std_ratio_to_reader": 0.17052636537271246,
+          "mean_logit": -0.3655573177653349,
+          "mean_range": 3.6142985594727226,
+          "mean_correlation_to_reader": 0.6461283547280606
+        }
+      },
+      "evaluation": {
+        "frozen_reader_topk": {
+          "mean_std": 3.616288155792544,
+          "median_std_ratio_to_reader": 1,
+          "mean_logit": -6.484128640193679,
+          "mean_range": 15.236902189031243,
+          "mean_correlation_to_reader": 1
+        },
+        "new_quantum_new_loss": {
+          "mean_std": 0.6121049757529466,
+          "median_std_ratio_to_reader": 0.14858403747655113,
+          "mean_logit": -0.4107485394757241,
+          "mean_range": 2.6949124654382466,
+          "mean_correlation_to_reader": 0.6252003224032239
+        },
+        "new_classical_new_loss": {
+          "mean_std": 0.9622246307778103,
+          "median_std_ratio_to_reader": 0.2496391306313009,
+          "mean_logit": -0.9056418996348977,
+          "mean_range": 4.1243561932444575,
+          "mean_correlation_to_reader": 0.7045938511243776
+        }
+      }
+    },
+    "fixed_training_compression_diagnostic": [
+      {
+        "alpha": 1,
+        "positive_affine_order_preserved": true,
+        "loss": {
+          "total": 3.9793972605365817,
+          "pair": 3.9793972605365817,
+          "anchor": 1.1292826932181963e-14,
+          "protection": 0
+        }
+      },
+      {
+        "alpha": 0.5,
+        "positive_affine_order_preserved": true,
+        "loss": {
+          "total": 2.2001379980879316,
+          "pair": 2.153308423898988,
+          "anchor": 4.682958235174922,
+          "protection": 0
+        }
+      },
+      {
+        "alpha": 0.1,
+        "positive_affine_order_preserved": true,
+        "loss": {
+          "total": 1.0653175943988864,
+          "pair": 0.9135897391933506,
+          "anchor": 15.172784583043244,
+          "protection": 0
+        }
+      },
+      {
+        "alpha": 0,
+        "positive_affine_order_preserved": false,
+        "loss": {
+          "total": 0.8804655105380689,
+          "pair": 0.6931471824645996,
+          "anchor": 18.73183294069969,
+          "protection": 0
+        }
+      }
+    ],
+    "final_checkpoint_losses": {
+      "frozen_reader_topk": {
+        "total": 3.9793972645775746,
+        "pair": 3.9793972645775746,
+        "anchor": 0,
+        "protection": 0
+      },
+      "new_quantum_new_loss": {
+        "total": 1.1770912489648593,
+        "pair": 0.7222621552014755,
+        "anchor": 42.615029819941114,
+        "protection": 0.028678796755653914
+      },
+      "new_classical_new_loss": {
+        "total": 1.1790572515988753,
+        "pair": 0.7734611564773625,
+        "anchor": 37.65580840029959,
+        "protection": 0.02903802024895718
+      }
+    },
+    "limitations": [
+      "Posthoc train-only numerical diagnostic; not a new selector, tuning or utility experiment.",
+      "Positive affine score compression preserves exact ordering; uniform scores create ties."
+    ]
+  },
+  "limitations": [
+    "Read-only cached-feature replay; no training run or model/data download.",
+    "Full raw source NPZ hash was checked remotely; numerical finite checks cover selected4651/9318 arrays only.",
+    "No optimizer-state checkpoints were declared for this runner, so AdamW state/updates cannot be independently reconstructed.",
+    "Executed runner SHA differs from the reported Git commit; exact executed runner bytes have not been supplied.",
+    "Evaluation is the exposed fixed100 panel; L0 diagnostic only, not heldout L1/L2 or quantum advantage."
+  ],
+  "disposition": {
+    "utility_gate": false,
+    "quantum_attribution_gate": false,
+    "loss_ablation": "invalid; duplicated arms; rotation old-loss witnesses follow new loss",
+    "claim_ceiling": "L0_diagnostic",
+    "candidate": "close this configuration; quantum Reader family not ruled out"
+  }
+}
