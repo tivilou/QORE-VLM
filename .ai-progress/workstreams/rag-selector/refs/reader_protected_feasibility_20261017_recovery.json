@@ -1,0 +1,559 @@
+{
+  "schema_version": "experiment-grounded-ideation.mechanism-recovery.v2",
+  "evidence_packet": {
+    "path": ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json",
+    "sha256": "09d5b3dbd539d4e4e249dcfdcfa364d294fe8777849acfdf7c770e82dd02e65f",
+    "code_revision": "exact-source-archive:853e049e7cc0563dbffd1a2cc7c95c10c850915682dd413ae432761d3c64d6e8",
+    "validity_status": "clean"
+  },
+  "case_evidence": {
+    "selection_rule": "Predeclared first2 training cases at all4 checkpoints; same target order and first-safe stopping",
+    "pairing_rule": "Same question/candidate hashes, features and source checkpoint; one shared delta applied to all59",
+    "selection_timing": "predeclared",
+    "claim_scope": "exploratory",
+    "comparisons": [
+      {
+        "case_id": "quantum_initial/training_001",
+        "unit_type": "fixed training case, same head before/after one global update",
+        "reference_condition": {
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "observation": "Checkpoint Top5=[11,22,7,2,9]",
+          "interpretation_status": "computed"
+        },
+        "candidate_condition": {
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "observation": "Actual safe-guard Top5 set=[11,22,7,2,9]",
+          "interpretation_status": "computed"
+        },
+        "stage_trace": [
+          {
+            "stage": "fixed inputs -> classifier-input rotations -> frozen Reader scores -> all50 Top5 -> train-label diagnosis",
+            "reference_state": "[11,22,7,2,9]",
+            "candidate_state": "[11,22,7,2,9]",
+            "artifact_refs": [
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+            ],
+            "interpretation_status": "computed"
+          }
+        ],
+        "outcome": {
+          "polarity": "unchanged",
+          "criterion": "Retain all declared protected members and observe eligible rescue",
+          "observation": "Top5 set [2,7,9,11,22] -> [2,7,9,11,22]; protected=[2,7,9,22]",
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "interpretation_status": "computed"
+        }
+      },
+      {
+        "case_id": "quantum_initial/training_002",
+        "unit_type": "fixed training case, same head before/after one global update",
+        "reference_condition": {
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "observation": "Checkpoint Top5=[0,1,2,23,15]",
+          "interpretation_status": "computed"
+        },
+        "candidate_condition": {
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "observation": "Actual safe-guard Top5 set=[0,1,2,23,8]",
+          "interpretation_status": "computed"
+        },
+        "stage_trace": [
+          {
+            "stage": "fixed inputs -> classifier-input rotations -> frozen Reader scores -> all50 Top5 -> train-label diagnosis",
+            "reference_state": "[0,1,2,23,15]",
+            "candidate_state": "[0,1,2,23,8]",
+            "artifact_refs": [
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+            ],
+            "interpretation_status": "computed"
+          }
+        ],
+        "outcome": {
+          "polarity": "mixed",
+          "criterion": "Retain all declared protected members and observe eligible rescue",
+          "observation": "Top5 set [0,1,2,15,23] -> [0,1,2,8,23]; protected=[0,1,2]",
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "interpretation_status": "computed"
+        }
+      },
+      {
+        "case_id": "quantum_final/training_001",
+        "unit_type": "fixed training case, same head before/after one global update",
+        "reference_condition": {
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "observation": "Checkpoint Top5=[11,22,7,2,9]",
+          "interpretation_status": "computed"
+        },
+        "candidate_condition": {
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "observation": "Actual safe-guard Top5 set=[11,22,7,2,9]",
+          "interpretation_status": "computed"
+        },
+        "stage_trace": [
+          {
+            "stage": "fixed inputs -> classifier-input rotations -> frozen Reader scores -> all50 Top5 -> train-label diagnosis",
+            "reference_state": "[11,22,7,2,9]",
+            "candidate_state": "[11,22,7,2,9]",
+            "artifact_refs": [
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+            ],
+            "interpretation_status": "computed"
+          }
+        ],
+        "outcome": {
+          "polarity": "unchanged",
+          "criterion": "Retain all declared protected members and observe eligible rescue",
+          "observation": "Top5 set [2,7,9,11,22] -> [2,7,9,11,22]; protected=[2,7,9,22]",
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "interpretation_status": "computed"
+        }
+      },
+      {
+        "case_id": "quantum_final/training_002",
+        "unit_type": "fixed training case, same head before/after one global update",
+        "reference_condition": {
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "observation": "Checkpoint Top5=[0,1,2,23,8]",
+          "interpretation_status": "computed"
+        },
+        "candidate_condition": {
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "observation": "Actual safe-guard Top5 set=[0,1,2,23,15]",
+          "interpretation_status": "computed"
+        },
+        "stage_trace": [
+          {
+            "stage": "fixed inputs -> classifier-input rotations -> frozen Reader scores -> all50 Top5 -> train-label diagnosis",
+            "reference_state": "[0,1,2,23,8]",
+            "candidate_state": "[0,1,2,23,15]",
+            "artifact_refs": [
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+            ],
+            "interpretation_status": "computed"
+          }
+        ],
+        "outcome": {
+          "polarity": "mixed",
+          "criterion": "Retain all declared protected members and observe eligible rescue",
+          "observation": "Top5 set [0,1,2,8,23] -> [0,1,2,15,23]; protected=[0,1,2]",
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "interpretation_status": "computed"
+        }
+      },
+      {
+        "case_id": "classical_initial/training_001",
+        "unit_type": "fixed training case, same head before/after one global update",
+        "reference_condition": {
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "observation": "Checkpoint Top5=[11,22,7,2,9]",
+          "interpretation_status": "computed"
+        },
+        "candidate_condition": {
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "observation": "Actual safe-guard Top5 set=[11,22,7,2,9]",
+          "interpretation_status": "computed"
+        },
+        "stage_trace": [
+          {
+            "stage": "fixed inputs -> classifier-input rotations -> frozen Reader scores -> all50 Top5 -> train-label diagnosis",
+            "reference_state": "[11,22,7,2,9]",
+            "candidate_state": "[11,22,7,2,9]",
+            "artifact_refs": [
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+            ],
+            "interpretation_status": "computed"
+          }
+        ],
+        "outcome": {
+          "polarity": "unchanged",
+          "criterion": "Retain all declared protected members and observe eligible rescue",
+          "observation": "Top5 set [2,7,9,11,22] -> [2,7,9,11,22]; protected=[2,7,9,22]",
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "interpretation_status": "computed"
+        }
+      },
+      {
+        "case_id": "classical_initial/training_002",
+        "unit_type": "fixed training case, same head before/after one global update",
+        "reference_condition": {
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "observation": "Checkpoint Top5=[0,1,2,23,15]",
+          "interpretation_status": "computed"
+        },
+        "candidate_condition": {
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "observation": "Actual safe-guard Top5 set=[0,1,2,23,8]",
+          "interpretation_status": "computed"
+        },
+        "stage_trace": [
+          {
+            "stage": "fixed inputs -> classifier-input rotations -> frozen Reader scores -> all50 Top5 -> train-label diagnosis",
+            "reference_state": "[0,1,2,23,15]",
+            "candidate_state": "[0,1,2,23,8]",
+            "artifact_refs": [
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+            ],
+            "interpretation_status": "computed"
+          }
+        ],
+        "outcome": {
+          "polarity": "mixed",
+          "criterion": "Retain all declared protected members and observe eligible rescue",
+          "observation": "Top5 set [0,1,2,15,23] -> [0,1,2,8,23]; protected=[0,1,2]",
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "interpretation_status": "computed"
+        }
+      },
+      {
+        "case_id": "classical_final/training_001",
+        "unit_type": "fixed training case, same head before/after one global update",
+        "reference_condition": {
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "observation": "Checkpoint Top5=[11,22,7,2,9]",
+          "interpretation_status": "computed"
+        },
+        "candidate_condition": {
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "observation": "Actual safe-guard Top5 set=[11,22,7,2,9]",
+          "interpretation_status": "computed"
+        },
+        "stage_trace": [
+          {
+            "stage": "fixed inputs -> classifier-input rotations -> frozen Reader scores -> all50 Top5 -> train-label diagnosis",
+            "reference_state": "[11,22,7,2,9]",
+            "candidate_state": "[11,22,7,2,9]",
+            "artifact_refs": [
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+            ],
+            "interpretation_status": "computed"
+          }
+        ],
+        "outcome": {
+          "polarity": "unchanged",
+          "criterion": "Retain all declared protected members and observe eligible rescue",
+          "observation": "Top5 set [2,7,9,11,22] -> [2,7,9,11,22]; protected=[2,7,9,22]",
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "interpretation_status": "computed"
+        }
+      },
+      {
+        "case_id": "classical_final/training_002",
+        "unit_type": "fixed training case, same head before/after one global update",
+        "reference_condition": {
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "observation": "Checkpoint Top5=[0,1,2,23,8]",
+          "interpretation_status": "computed"
+        },
+        "candidate_condition": {
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "observation": "Actual safe-guard Top5 set=[0,1,2,23,8]",
+          "interpretation_status": "computed"
+        },
+        "stage_trace": [
+          {
+            "stage": "fixed inputs -> classifier-input rotations -> frozen Reader scores -> all50 Top5 -> train-label diagnosis",
+            "reference_state": "[0,1,2,23,8]",
+            "candidate_state": "[0,1,2,23,8]",
+            "artifact_refs": [
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+              "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+            ],
+            "interpretation_status": "computed"
+          }
+        ],
+        "outcome": {
+          "polarity": "unchanged",
+          "criterion": "Retain all declared protected members and observe eligible rescue",
+          "observation": "Top5 set [0,1,2,8,23] -> [0,1,2,8,23]; protected=[0,1,2]",
+          "artifact_refs": [
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+            "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+          ],
+          "interpretation_status": "computed"
+        }
+      }
+    ],
+    "lesson_batches": [
+      {
+        "batch_id": "first2_training_all4checkpoints",
+        "case_ids": [
+          "quantum_initial/training_001",
+          "quantum_initial/training_002",
+          "quantum_final/training_001",
+          "quantum_final/training_002",
+          "classical_initial/training_001",
+          "classical_initial/training_002",
+          "classical_final/training_001",
+          "classical_final/training_002"
+        ],
+        "sample_count": 8,
+        "selection_rule": "First2 immutable training cases at each of4 initial/final quantum/classical heads",
+        "artifact_refs": [
+          "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+          "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+          "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+        ],
+        "lesson_polarity": "mixed",
+        "observation": "All8 preserve their protected members after accepted global updates. training002 is rescued in3/4 resulting heads; quantum-final repair gives up this previous rescue. training001 has no rescue in any of4 heads.",
+        "dispersion": "Accepted global-update rescue counts per first2 batch:0,1;0,0;0,1;0,1. This is not the population result.",
+        "interpretation_status": "computed"
+      }
+    ],
+    "interpretation_boundary": "Training-conditioned one-step feasibility only. No unseen utility, optimality, or quantum advantage; failing candidate constraints and native guards are retained."
+  },
+  "trace_adequacy": {
+    "status": "complete",
+    "schema_version": "sample-trace.v2",
+    "artifact_refs": [
+      "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/summary.json",
+      "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+      "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+    ],
+    "selection_rule": "First2 complete tensor outputs for each head/checkpoint; full first-attempt constraints; all59 scores/Jacobians/proposals/residuals",
+    "covered_stages": [
+      "data",
+      "preprocess",
+      "scoring",
+      "selection",
+      "diagnosis"
+    ],
+    "missing_stages": [],
+    "target_boundary": "Only qualified training59 targets; no evaluation100 or validation87 features/judgments accessed",
+    "causal_links_observed": {
+      "intervention_execution": true,
+      "intended_intermediate": true,
+      "observable_output": true,
+      "task_utility": false
+    },
+    "notes": "No optimizer, retrieval, generation or heldout evaluation in this diagnostic. All59 baselines4 and all6 safe witnesses independently replayed; full sampled tensors onlyfirst2."
+  },
+  "causal_trace": {
+    "intervention_execution": {
+      "claim": "Bounded LP deltas genuinely change shared200 rotation coefficients before frozen Reader classifier",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+      ]
+    },
+    "intended_intermediate": {
+      "claim": "Exact Jacobians match autograd; sufficient linear constraints can be feasible while nonlinear membership fails",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+      ]
+    },
+    "observable_output": {
+      "claim": "All4 checkpoints have a native shared safe witness; quantum-initial1/0, quantum-final2/0, classical-initial1/0, classical-final4/0",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+      ]
+    },
+    "task_utility": {
+      "claim": "Not measured on independent data; these are fitted training outcomes",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+      ]
+    }
+  },
+  "failure_analysis": {
+    "primary_explanation": {
+      "statement": "Soft average penalties do not enforce retention; explicit feasible directions exist in both heads, so prior conflict is not a proof of structural impossibility",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json",
+        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+      ],
+      "confidence": "medium"
+    },
+    "alternative_explanations": [
+      {
+        "statement": "The observed witnesses may be limited to near-tie training cases; one-step first-safe stopping does not show scalable rescue",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+        ],
+        "confidence": "medium"
+      },
+      {
+        "statement": "Linearization curvature can invalidate a proposed safe step; quantum-initial target1 is linearly feasible but loses1 protected member in native forwarding",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+        ],
+        "confidence": "high"
+      }
+    ],
+    "discriminating_measurement": {
+      "uncertainty": "Can actual-safe shared updates accumulate gains without resorting to label-aware inference?",
+      "measurement": "A separately frozen training-only sequential re-linearization with per-update native all59 gate and matched classical control",
+      "primary_outcome": "Multiple accepted safe steps rescue more than the first near-tie while keeping all183 protected",
+      "alternative_outcome": "Only first near-tie rescue or no subsequent native-safe progress within fixed budget"
+    },
+    "closed_family": {
+      "id": "unconstrained_soft_penalty_or_linear_certificate_only",
+      "rejected_variant_refs": [
+        "configs/experiments/quantum_reader_membership_screen_100.json",
+        "configs/experiments/reader_protected_update_feasibility.json"
+      ],
+      "closure_evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+      ],
+      "forbidden_rescue_variants": [
+        "Treat linear feasibility as nonlinear membership guarantee",
+        "Retune loss weights/epochs/radius against exposed100",
+        "Mask evaluation candidates using support labels"
+      ]
+    }
+  },
+  "positive_carryovers": [
+    {
+      "id": "reader_rotation_shared_safe_witness",
+      "mechanism": "Keep frozen Reader and genuine classifier-input quantum rotations with exact identity null; a shared safe-rescue direction exists",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+      ],
+      "transport_constraint": "Quantum mainline retained; same features/parameter budgets and controls; no claim of superiority"
+    },
+    {
+      "id": "native_guard",
+      "mechanism": "Full training membership evaluation separates feasible candidates from actual acceptable parameter steps",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+      ],
+      "transport_constraint": "Apply one shared update and verify all183 protected memberships; no online target mask"
+    }
+  ],
+  "recovery_outcome": {
+    "disposition": "candidate",
+    "selected_candidate": {
+      "id": "guarded_sequential_quantum_membership_updates",
+      "title": "Exploratory sequential protected updates for quantum Reader rotations",
+      "positive_carryover_ids": [
+        "reader_rotation_shared_safe_witness",
+        "native_guard"
+      ],
+      "recovery_mode": "new_causal_path",
+      "causal_difference": "Replace one-off feasibility/average soft fitting with sequential re-linearization and actual discrete all-training membership acceptance; retain original protected members and every previously accepted rescue in updated set templates",
+      "changed_causal_links": [
+        "intervention_execution",
+        "intended_intermediate",
+        "observable_output"
+      ],
+      "discriminating_measurement": "More than first-step rescue within fixed sequential budget, zero protected loss, identical classical control",
+      "success_gate": "Accumulate more than first-step rescue while retaining all183 original protected members and previously accepted rescues; separately registered independent utility/direct-protection test later",
+      "kill_condition": "No added safe rescues beyond first near-tie within fixed budget; do not tune exposed100 or silently relax protection",
+      "authorization_boundary": "Exploratory proposal only; current authorization ends with bounded one-step feasibility and documentation"
+    }
+  },
+  "limitations": [
+    "Training-label-conditioned parameter search; no new heldout utility or quantum advantage evidence",
+    "Matched classical heads also pass; different start checkpoints and first-safe stopping do not rank capacity or optimization efficiency",
+    "Native nonlinear gate required: linear feasible steps can lose protection or fail rescue",
+    "A fixed sufficient set template and radius cannot establish global infeasibility",
+    "Only fixed first2 complete tensors; all59 scores/Jacobians saved and all59 baselines/witnesses independently replayed",
+    "No data/model downloads, retrieval/generator changes, new optimizer training or collaborator handoff"
+  ]
+}

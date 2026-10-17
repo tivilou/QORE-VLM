@@ -1,45 +1,45 @@
 # RAG Passage Selection with QORE
 
 ## Goal
-- Improve fixed Top50 -> Top5 on the quantum mainline, toward independently verified full-data L2. Current exposed100 panel remains L0.
+- Improve fixed Top50 -> Top5 on the quantum mainline toward independently verified full-data L2. The exposed100 panel and current training diagnostic remain L0.
 
 ## Current State
-- [ANALYZED / L0 SCREEN INCONCLUSIVE] Formal cached membership result `20261017T152312389403Z` received on18083. Executed source `0e7335c6251b1d2a923d55f5557a12ba25cc8a0c`;22 archived files match revision after LF normalization. GitHub had no new formal result commit when checked.
-- Reader / quantum new / classical new useful203/206/207, direct138/138/139; quantum useful delta+.03/question,95%CI[-.02,.08]. All-three-positive171/170/173, fixedSilver355/342/341. Quantum/classical old useful147/170. All utility/attribution/training-safe-rescue gates fail; no scale-up.
-- Final59-case training quantum new rescues3/lost-protected3, classical4/2; old quantum22/104. Objective repairs severe damage but establishes no reliable discrimination advantage.
-- Independent replay passes10 actual artifact/receipt hashes,2151 arrays,12 input slices,795 scores,16 full outputs and24 native AdamW witnesses. Four heads ran708 total updates, not all independently replayed. Torch2.5->2.7 implicit AdamW metadata normalized only in comparison copy; numeric values/tolerances unchanged.
-- Train-only final-gradient audit: rescue/protection negative dots48/59 quantum,46/59 classical; mean-gradient cosines-.780453/-.791752. Supports local conflict, not a causal remedy or shared-feasibility proof.
-- Fixed four-case batch, posthoc changed-case analysis, recovery dossier and L0 card recorded. Portal projection/versioned idea explanation remain documentation closeout pending.
+- [COMPLETE / TRAIN-ONLY FEASIBILITY] Run20261017T160953558137Z: all4 quantum/classical initial/final checkpoints have a shared native safe witness. Initial heads rescue1/loss0 each; quantum final3/3 ->2/0, classical4/2 ->4/0. This is training-conditioned existence, not optimal rescue or generalization.
+- Independent replay:488 arrays,13 exact executed sources, all59 native baselines4 and safe witnesses6,29500 bitwise scores. Eight artifacts/hash receipts are on18083;105192201-byte numeric archive stays server-only. All8 tests pass locally/primary; both238-array synthetic fixtures pass.
+- Linear feasibility does not guarantee nonlinear safety. Fixed first target at quantum initial loses1 protected member despite a feasible LP. Actual all-training membership acceptance is required.
+- Fixed first2 training cases: all retain original protected members; quantum-final repair abandons an earlier training002 rescue. Any accumulating rule must also preserve accepted rescues with current-set outsiders.
+- Previous membership screen remains inconclusive: Reader/quantum/classical useful203/206/207, direct138/138/139; quantum useful CI[-.02,.08]. Objective repair104 ->3 protected losses was real but no reliable task/attribution gate passed.
+- No evaluation100/validation87 fields, model/dataset download, new optimizer training, Generator or collaborator handoff in this diagnostic. Portal projection/versioned explanation documentation remains pending.
 
 ## Plan Control
-- Plan: plans/reader-membership-screen/v001.json
+- Plan: plans/reader-protected-feasibility/v001.json
 - Plan Version: 1
 - Plan Status: completed
-- Focus Step: MS-05
+- Focus Step: PF-04
 - Focus Status: done
-- Completed Steps: MS-01, MS-02, MS-03, MS-04, MS-05
-- Next Action: Design train-only protected-boundary shared-update feasibility; do not reopen completed engineering plan
-- Blocker: No technical blocker to result interpretation; new mechanism remains exploratory design only
+- Completed Steps: PF-01, PF-02, PF-03, PF-04
+- Next Action: Design bounded sequential protected updates as a separate task; no execution under the completed one-step contract
+- Blocker: None
 - Last Checkpoint: 2026-10-17
 
 ## Next Actions
-1. Recommended direction: explicit train-only membership constraints on quantum feature-rotation updates, with identical classical control. Establish a shared safe-rescue direction with actual nonlinear forward; design/budget/review precede new implementation/fitting. No100-panel coefficient/checkpoint tuning.
-2. Separately close portal/idea-explanation documentation from verified artifacts. Real experiment and result analysis are complete; those projections are not yet updated.
+1. Recommended exploratory next mechanism: identity-start quantum Reader rotations, matched classical control, re-linearized shared updates with native all59 guard. Freeze a small step/attempt/time budget; require rescue strictly increase while all183 original and previously accepted positives remain.
+2. If training-safe gains accumulate, separately preregister independent new-question utility/direct protection; no exposed100 tuning or immediate full-data scale-up.
+3. Close portal/explanation documentation separately; experiments and owner analyses are complete, projections are not.
 
 ## Blockers
-- No reliable independent utility or quantum attribution. Fixed100 is exposed, Silver is not gold; no new generation/final-answer result.
-- Training protection would not guarantee test retention; shared200-parameter safe-rescue reachability is unknown. Earlier missing executed-source provenance remains historical.
-- V100s is user-authorized CPU-only;18083 stays on3080Ti. Recheck capacity before future CPU experiments; no dependency/model/data installs or new fitting occurred in this audit.
+- Safe training updates do not guarantee new-question retention or quantum superiority; both classical checkpoints also pass.
+- First-safe stopping and distinct trained starts do not establish model capacity or best rescue count. Earlier source-provenance gaps remain historical.
+- V100s is CPU-only and capacity-limited;18083 stays on3080Ti. Use explicit serverctl placement and isolated paths.
 
 ## Validation
-- [Real-result receipt](refs/reader_membership_screen_20261017_receipt.json): artifact/source integrity, independent replay, all100 case arithmetic, replacement counts, fixed matched batch and train-only gradients.
-- [Validated recovery dossier](refs/reader_membership_screen_20261017_recovery.json); [validated L0 card](refs/reader_membership_screen_20261017_evidence.json). Short-screen uncertainty, exposure and unresolved attribution stay explicit.
-- Original implementation passed34 CPU tests locally/primary. No production code changed in this analysis. Full387,710,096-byte numeric archive stays on18083; no model/dataset download or new fitting.
+- [Current receipt](refs/reader_protected_feasibility_20261017_receipt.json), [validated recovery](refs/reader_protected_feasibility_20261017_recovery.json), [L0 card](refs/reader_protected_feasibility_20261017_evidence.json). Card standard validator valid with warnings for missing heldout utility/unresolved attribution.
+- [Previous result receipt](refs/reader_membership_screen_20261017_receipt.json):2151 arrays,24 saved AdamW witnesses, prior source/metric audit.
+- Owner analysis: [shared safe updates](../../../../docs/rag-research-log/20261017T-160953Z-reader-protected-update-feasibility.md).
 
 ## Relevant Decisions
-- [Current result/next direction](decisions/2026-10-17-reader-membership-screen-result.md); [owner log](../../../../docs/rag-research-log/20261017T-152312Z-reader-membership-screen-result.md).
-- [Frozen screen contract and gate](decisions/2026-10-16-reader-membership-screen-handoff.md).
-- [Objective engineering](decisions/2026-10-16-reader-top5-objective-engineering.md); [previous real result](decisions/2026-10-16-quantum-reader-rotation-screen-result.md); [final support targets](decisions/2026-10-11-final-support-boundary-resolution.md).
-- [CPU experiment authorization](decisions/2026-10-16-v100s-experiment-authorization.md); execution topology is in `../../project.md`.
-- All durable rules/history navigation remain in `critical-invariants.md`; previous protected-boundary plan is completed and does not authorize new experiments.
-- Session: [real-result audit](sessions/2026-10/20261017T155221Z-96810f.md).
+- [Completed current audit/next proposal](decisions/2026-10-17-reader-protected-update-feasibility.md); [previous result](decisions/2026-10-17-reader-membership-screen-result.md).
+- [Frozen membership contract](decisions/2026-10-16-reader-membership-screen-handoff.md); [final train targets](decisions/2026-10-11-final-support-boundary-resolution.md).
+- [CPU execution authorization](decisions/2026-10-16-v100s-experiment-authorization.md); topology in `../../project.md`.
+- Full long-term principles/navigation: `critical-invariants.md`.
+- Session: [completed feasibility audit](sessions/2026-10/20261017T162046Z-a85300.md).

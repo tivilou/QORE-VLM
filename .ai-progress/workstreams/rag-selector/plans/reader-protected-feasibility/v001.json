@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "plan_id": "reader-protected-feasibility",
+  "plan_version": 1,
+  "workstream": "rag-selector",
+  "status": "completed",
+  "objective": "Complete a bounded training-only shared quantum/classical protected-update feasibility audit and record its actual nonlinear witnesses",
+  "focus_step_id": "PF-04",
+  "next_action": "Design bounded sequential protected updates as a separate task; no execution under the completed one-step contract",
+  "blocker": null,
+  "steps": [
+    {
+      "id": "PF-01",
+      "title": "Freeze train-only contract",
+      "status": "done",
+      "objective": "Freeze59/183 inputs, head/checkpoint allowlist, target order, bounded LP and nonlinear gates",
+      "inputs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_recovery.json"
+      ],
+      "outputs": [
+        "configs/experiments/reader_protected_update_feasibility.json",
+        "configs/experiments/reader_protected_update_feasibility_plan.json"
+      ],
+      "depends_on": [],
+      "acceptance_checks": [
+        "No evaluation fields",
+        "Explicit user authorization and fixed stop budget"
+      ],
+      "evidence_paths": [
+        ".ai-progress/workstreams/rag-selector/decisions/2026-10-17-reader-protected-update-feasibility.md"
+      ],
+      "owner": "rag-selector",
+      "blocker": null,
+      "notes": [
+        "User start authorizes bounded diagnostic; previous completed screen plan remains unchanged"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "PF-02",
+      "title": "Validate independent diagnostic",
+      "status": "done",
+      "objective": "Implement exact adjoint, sufficient-template LP and native guard with full sampled trace",
+      "inputs": [
+        "PF-01"
+      ],
+      "outputs": [
+        "applications/rag/protected_update_feasibility.py",
+        "scripts/collab/five_ideas/run_reader_protected_update_feasibility.py"
+      ],
+      "depends_on": [
+        "PF-01"
+      ],
+      "acceptance_checks": [
+        "Adjoint matches autograd at null/nonzero quantum/classical heads",
+        "LP unit controls",
+        "Synthetic full-value/native trace replay",
+        "Primary source and environment verified"
+      ],
+      "evidence_paths": [
+        "applications/rag/tests/test_protected_update_feasibility.py",
+        ".cache/protected-feasibility-fixture-primary-summary.json"
+      ],
+      "owner": "rag-selector",
+      "blocker": null,
+      "notes": [
+        "8 local/primary tests and both238-array full synthetic fixtures passed",
+        "Local and primary 8 tests and 238-array synthetic full trace pass; plan implemented"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "PF-03",
+      "title": "Run fixed training-cache audit",
+      "status": "done",
+      "objective": "Find and verify shared safe-rescue witnesses or report bounded template failure",
+      "inputs": [
+        "PF-02"
+      ],
+      "outputs": [
+        "exchange/five_ideas/reader_protected_update_feasibility/<run>/summary.json"
+      ],
+      "depends_on": [
+        "PF-02"
+      ],
+      "acceptance_checks": [
+        "All source hashes and59 original identities/nulls pass",
+        "4checkpoint budgets respected",
+        "Actual native all59 rescue and protection verified",
+        "Numeric values and independent replay pass"
+      ],
+      "evidence_paths": [
+        ".cache/protected-feasibility-real-summary.json",
+        ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+      ],
+      "owner": "rag-selector",
+      "blocker": null,
+      "notes": [
+        "Real run completed in157.817s; four checkpoints have native safe witnesses; separate all59 replay running",
+        "All59 baselines4 and safe witnesses6 independently bitwise replayed;488 arrays and13 sources pass;8 artifacts uploaded18083"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "PF-04",
+      "title": "Analyze and record next direction",
+      "status": "done",
+      "objective": "Combine new feasibility evidence with cumulative cases and define the next mechanism boundary",
+      "inputs": [
+        "PF-03"
+      ],
+      "outputs": [
+        "docs/rag-research-log/20261017T-160953Z-reader-protected-update-feasibility.md"
+      ],
+      "depends_on": [
+        "PF-03"
+      ],
+      "acceptance_checks": [
+        "Witnesses distinguished from generalization",
+        "Quantum/classical and rescue-only comparison",
+        "Artifacts exchanged with hashes",
+        "State, decision, session and focused Git snapshot recorded"
+      ],
+      "evidence_paths": [
+        "docs/rag-research-log/20261017T-160953Z-reader-protected-update-feasibility.md"
+      ],
+      "owner": "rag-selector",
+      "blocker": null,
+      "notes": [
+        "Owner analysis, hash receipts, validated recovery/L0 card and session recorded; next proposal retains accepted rescues; scoped Git closeout follows"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    }
+  ],
+  "change_log": [],
+  "updated_at": "2026-10-18"
+}

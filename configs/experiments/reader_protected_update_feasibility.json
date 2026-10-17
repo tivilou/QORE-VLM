@@ -1,0 +1,18 @@
+{
+  "schema_version": "rag.reader_protected_update_feasibility.v1",
+  "authorization": "user_authorized_train_only_cpu_diagnostic",
+  "source_run": "20261017T152312389403Z",
+  "source_values_sha256": "603ccbe126bbf8e5cc4eabb1dc4f458b09e4fbd6b07313504b93c3ca4728791e",
+  "source_feature_sha256": "ca08606573cc35b78855c58a80ba5aa75e756acde45e3c4b4ebae6d5c6c68099",
+  "source_index_sha256": "e4f6edc20b76d28e94711bdb918d1caa1c634e54d4cceef86f91792ebbdd1e59",
+  "source_bundle_sha256": "f723bbb6f9075c3e04fd3d8a7b2d3f8127b6e354422ee2a2f6e167bfe32248ce",
+  "source_rotation": {"layers": 2, "conditioning": 4, "seed": 20261013},
+  "families": ["quantum", "classical"],
+  "checkpoints": ["initial", "final"],
+  "proposal_modes": ["rescue_only", "global_protection"],
+  "budget": {"training_cases": 59, "targets_per_checkpoint": 12, "radius": 0.1, "normalized_margin": 0.01, "step_fractions": [1.0, 0.5, 0.25], "lp_time_limit_seconds": 20, "total_seconds": 1800, "stop_per_checkpoint": "first native-float32 shared safe-rescue witness; otherwise exhaust the fixed12 targets"},
+  "target_rule": "smallest normalized baseline gap among eligible candidates; immutable source question/candidate tie break; replace lowest-score unprotected baseline member",
+  "capture": {"schema": "sample-trace.v2", "complete_cases": 2, "full_constraint_attempts_per_checkpoint": 1, "all_training_scores_jacobians_deltas_and_constraint_residuals": true},
+  "success_gate": "An actual native-float32 nonlinear forward on all59 preserves all183 protected memberships, rescues>=1, and includes the proposed eligible candidate",
+  "limits": ["Fixed sufficient witness templates and trust box, not global impossibility", "Linearized feasibility is not nonlinear success", "Training labels only; no evaluation100/Silver or87 validation fields accessed", "No Reader/model/dataset loading or Generator", "Bounded diagnostic parameter proposals only, not a new training screen or deployable selector", "No L1/L2/quantum advantage claim"]
+}

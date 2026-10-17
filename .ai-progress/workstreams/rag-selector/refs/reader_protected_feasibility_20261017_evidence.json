@@ -1,0 +1,308 @@
+{
+  "schema_version": "evidence-tiered-idea-validation.evidence-card.v2",
+  "idea_id": "reader_protected_update_feasibility",
+  "title": "Training-only shared protected updates for quantum Reader rotations",
+  "status": "candidate",
+  "current_tier": "L0_diagnostic",
+  "claim_ceiling": "diagnostic",
+  "rating_policy": {
+    "id": "canonical_l0_l4_with_training_conditioned_guard",
+    "version": "2026-10-17",
+    "notes": "Training fitted feasibility is L0; no heldout task result or quantum-specific advantage"
+  },
+  "hypothesis": "At least one shared rotation-parameter update can admit an eligible training passage while preserving all183 protected memberships",
+  "mechanism": "Exact adjoint -> bounded shared LP proposal -> native float32 all59 discrete membership guard; quantum and matched classical heads",
+  "experiment": {
+    "stage": "preflight",
+    "training_budget": {
+      "data_scope": "Frozen59 training cases;135 eligible/183 protected; no evaluation100/validation87 features or judgments",
+      "epochs_or_steps": "No optimizer epochs;14 bounded training-conditioned LP trials across4 source checkpoints",
+      "selection_rule": "Fixed first12 by baseline entry gap, stop at first native safe global witness per checkpoint",
+      "seed_policy": "Source rotation20261013; deterministic HiGHS on CPU"
+    },
+    "conclusion_scope": "diagnostic_only",
+    "continuation_status": "continue",
+    "formal_run_authorized": false,
+    "executor": "other"
+  },
+  "intervention": {
+    "changes_attention": true,
+    "target": "Fixed Top50->Top5 through classifier-input quantum/classical feature rotations",
+    "inference_mode": "task_supervised",
+    "heldout_positive": false,
+    "leakage_audit": "pass",
+    "attention_action_evidence": {
+      "status": "pass",
+      "refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+      ]
+    }
+  },
+  "evidence": {
+    "data_scope": {
+      "task_family": "QA passage selection training-feasibility diagnosis",
+      "natural_task": true,
+      "task_count": 1,
+      "split_count": 1,
+      "dataset_ids": [
+        "nq_open qualified training59"
+      ]
+    },
+    "runs": {
+      "seed_count": 1,
+      "seeds": [
+        20261013
+      ],
+      "independent_split_count": 1,
+      "statistics": {
+        "status": "not_run",
+        "method": "Deterministic feasibility; no generalization confidence interval applicable"
+      }
+    },
+    "metrics": [
+      {
+        "name": "eligible_rescued_count",
+        "split": "training59",
+        "variant": "quantum_initial_guarded",
+        "value": 1,
+        "baseline_value": 0,
+        "delta_vs_disabled": 1,
+        "primary": true,
+        "effect_direction": "higher",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+        ]
+      },
+      {
+        "name": "lost_protected_count",
+        "split": "training59",
+        "variant": "quantum_initial_guarded",
+        "value": 0,
+        "baseline_value": 0,
+        "delta_vs_disabled": 0,
+        "primary": false,
+        "effect_direction": "lower",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+        ]
+      },
+      {
+        "name": "eligible_rescued_count",
+        "split": "training59",
+        "variant": "quantum_final_guarded",
+        "value": 2,
+        "baseline_value": 0,
+        "delta_vs_disabled": 2,
+        "primary": true,
+        "effect_direction": "higher",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+        ]
+      },
+      {
+        "name": "lost_protected_count",
+        "split": "training59",
+        "variant": "quantum_final_guarded",
+        "value": 0,
+        "baseline_value": 0,
+        "delta_vs_disabled": 0,
+        "primary": false,
+        "effect_direction": "lower",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+        ]
+      },
+      {
+        "name": "eligible_rescued_count",
+        "split": "training59",
+        "variant": "classical_initial_guarded",
+        "value": 1,
+        "baseline_value": 0,
+        "delta_vs_disabled": 1,
+        "primary": true,
+        "effect_direction": "higher",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+        ]
+      },
+      {
+        "name": "lost_protected_count",
+        "split": "training59",
+        "variant": "classical_initial_guarded",
+        "value": 0,
+        "baseline_value": 0,
+        "delta_vs_disabled": 0,
+        "primary": false,
+        "effect_direction": "lower",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+        ]
+      },
+      {
+        "name": "eligible_rescued_count",
+        "split": "training59",
+        "variant": "classical_final_guarded",
+        "value": 4,
+        "baseline_value": 0,
+        "delta_vs_disabled": 4,
+        "primary": true,
+        "effect_direction": "higher",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+        ]
+      },
+      {
+        "name": "lost_protected_count",
+        "split": "training59",
+        "variant": "classical_final_guarded",
+        "value": 0,
+        "baseline_value": 0,
+        "delta_vs_disabled": 0,
+        "primary": false,
+        "effect_direction": "lower",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+        ]
+      }
+    ],
+    "controls": [
+      {
+        "id": "reader_null",
+        "kind": "disabled",
+        "status": "pass",
+        "notes": "Native initial null exactly preserves Reader membership",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+        ]
+      },
+      {
+        "id": "matched_classical",
+        "kind": "classical",
+        "status": "pass",
+        "notes": "Same200 parameters, fixed target order/trust box; both classical checkpoints have safe witnesses; no superiority inferred",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+        ]
+      },
+      {
+        "id": "rescue_only",
+        "kind": "other",
+        "status": "pass",
+        "notes": "Same target proposals without cross-question protection; can rescue while losing support",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+        ]
+      }
+    ]
+  },
+  "axes": {
+    "task_utility": {
+      "status": "not_run",
+      "notes": "No heldout features or labels accessed",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+      ]
+    },
+    "robustness": {
+      "status": "not_run",
+      "notes": "Single training cohort/source seed",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+      ]
+    },
+    "natural_transfer": {
+      "status": "not_run",
+      "notes": "No full-data or independent task evaluation",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+      ]
+    },
+    "attention_alignment": {
+      "status": "partial",
+      "notes": "Actual training support rescue with zero protected loss, fitted on same labels",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+      ]
+    },
+    "classical_attribution": {
+      "status": "not_run",
+      "notes": "Both controls pass feasibility; first-safe stopping/different starts do not rank their utility",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+      ]
+    },
+    "finite_shot": {
+      "status": "not_run",
+      "notes": "CPU exact real statevector only",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+      ]
+    },
+    "resource_audit": {
+      "status": "partial",
+      "notes": "10data qubits,200 shared parameters; no state-preparation/readout advantage certified",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json"
+      ]
+    }
+  },
+  "trace_completeness": "complete",
+  "trace_observability": {
+    "status": "complete",
+    "schema_version": "sample-trace.v2",
+    "legacy_compatibility": false,
+    "artifact_refs": [
+      "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/selector_trace.json",
+      "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z/feasibility_values.npz"
+    ],
+    "selection_rule": "Fixed first2 full outputs/checkpoint, firstattempt full constraints; all59 scores/Jacobians; all baselines and safe witnesses replayed",
+    "coverage": {
+      "data": "observed",
+      "preprocess": "observed",
+      "training": "not_applicable",
+      "retrieval": "not_applicable",
+      "scoring": "observed",
+      "selection": "observed",
+      "generation": "not_applicable",
+      "evaluation": "not_applicable",
+      "diagnosis": "observed"
+    },
+    "missing_stages": ["training", "retrieval", "generation", "evaluation"],
+    "notes": "No optimizer/generator or heldout evaluation stage in this diagnostic; full tensors onlyfirst2; all59 boundary matrices reconstructable"
+  },
+  "mechanism_recovery": {
+    "dossier_path": ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_recovery.json",
+    "dossier_sha256": "c7998747af48380e5ca79fdd88bc4aeebed935f56451ec6a4e3c3f7e2231a0df",
+    "outcome": "candidate",
+    "selected_candidate_id": "guarded_sequential_quantum_membership_updates"
+  },
+  "next_upgrade": {
+    "action": "Re-linearized shared updates plus actual all-training membership acceptance can accumulate safe rescues",
+    "success_gate": "More than first-step rescue while zero protected loss on training; independent utility and quantum attribution require a separately frozen experiment",
+    "kill_criteria": "Fixed budget yields only the first near-tie rescue or nonlinear guard rejects all progress; no tuning on exposed100",
+    "estimated_cost": "Separately frozen CPU-cache sequential diagnostic; no datasets/models; design budget before run",
+    "authorized": false
+  },
+  "limitations": [
+    "Training-label-conditioned parameter search; no new heldout utility or quantum advantage evidence",
+    "Matched classical heads also pass; different start checkpoints and first-safe stopping do not rank capacity or optimization efficiency",
+    "Native nonlinear gate required: linear feasible steps can lose protection or fail rescue",
+    "A fixed sufficient set template and radius cannot establish global infeasibility",
+    "Only fixed first2 complete tensors; all59 scores/Jacobians saved and all59 baselines/witnesses independently replayed",
+    "No data/model downloads, retrieval/generator changes, new optimizer training or collaborator handoff"
+  ],
+  "failed_gates": [
+    "heldout_utility_not_run",
+    "quantum_superiority_not_established"
+  ],
+  "provenance": {
+    "code_revision": "exact-source-archive:853e049e7cc0563dbffd1a2cc7c95c10c850915682dd413ae432761d3c64d6e8",
+    "records": [
+      {
+        "path": ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_receipt.json",
+        "role": "Independently replayed diagnostic and hash receipts",
+        "sha256": "09d5b3dbd539d4e4e249dcfdcfa364d294fe8777849acfdf7c770e82dd02e65f"
+      }
+    ]
+  }
+}

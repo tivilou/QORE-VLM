@@ -133,6 +133,7 @@
   source archives before another crossed experiment. Keep the quantum mainline
   and matched classical controls; a loss repair alone is not quantum novelty.
 - Membership screen `20261017T152312389403Z` remains L0/inconclusive: quantum useful/direct206/138 versus Reader203/138 and classical207/139; all gates fail. New objective reduces training protected losses104->3 but rescues only3. Opposing rescue/protection gradients on48/59 training cases support testing explicit train-only update constraints, not coefficient/epoch retuning or label-aware online masks. Local conflict is not proof of shared infeasibility. See [result/next gate](decisions/2026-10-17-reader-membership-screen-result.md).
+- Shared safe directions exist on training59: quantum initial1/0, final2/0; classical1/0,4/0 (rescues/lost protected). Linear feasibility still permits native mis-selection; require actual all-training membership checks. A future accumulating update must preserve both original protected members and previously accepted rescues, with current-set outsider templates. This L0 fitted existence result does not rank families or establish test utility. See [closed audit/next proposal](decisions/2026-10-17-reader-protected-update-feasibility.md).
 ## Decision index
 ### Binding and current
 - [BINDING] Cumulative-evidence next-step rule -> [detail](../../shared/decisions/cumulative-evidence-next-step-selection.md)
@@ -215,6 +216,7 @@
 - [CANDIDATE] Independent cached Reader membership screen; trace and native AdamW gates -> [detail](decisions/2026-10-16-reader-membership-screen-handoff.md)
 - [ACTIVE] V100s CPU experiments; 3080Ti artifact exchange -> [detail](decisions/2026-10-16-v100s-experiment-authorization.md)
 - [ACTIVE] Reader membership screen: weak gain, rescue-protection conflict -> [detail](decisions/2026-10-17-reader-membership-screen-result.md)
+- [CLOSED] Train-only protected quantum update feasibility audit -> [detail](decisions/2026-10-17-reader-protected-update-feasibility.md)
 
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.
