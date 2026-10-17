@@ -36,6 +36,7 @@
 - [Current receipt](refs/reader_protected_feasibility_20261017_receipt.json), [validated recovery](refs/reader_protected_feasibility_20261017_recovery.json), [L0 card](refs/reader_protected_feasibility_20261017_evidence.json). Card standard validator valid with warnings for missing heldout utility/unresolved attribution.
 - [Previous result receipt](refs/reader_membership_screen_20261017_receipt.json):2151 arrays,24 saved AdamW witnesses, prior source/metric audit.
 - Owner analysis: [shared safe updates](../../../../docs/rag-research-log/20261017T-160953Z-reader-protected-update-feasibility.md).
+- GitHub source/analysis published as c44bcd1 on five-ideas-development; [publication mapping](refs/reader_protected_feasibility_20261017_publication.json) verifies13 executed sources (5 exact,8 LF/CRLF only).
 
 ## Relevant Decisions
 - [Completed current audit/next proposal](decisions/2026-10-17-reader-protected-update-feasibility.md); [previous result](decisions/2026-10-17-reader-membership-screen-result.md).

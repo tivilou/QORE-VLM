@@ -1,0 +1,26 @@
+{
+  "schema_version": "rag.protected_feasibility_publication.v1",
+  "local_analysis_commit": "9b504b5",
+  "published_analysis_commit": "c44bcd1f2713736f614904f42eae6c10f2e29f6f",
+  "published_previous_audit_commit": "354baa1",
+  "repository": "https://github.com/tivilou/QORE-VLM",
+  "branch": "five-ideas-development",
+  "remote_ref_verified_after_push": true,
+  "source_comparison": {
+    "executed_archive_sha256": "853e049e7cc0563dbffd1a2cc7c95c10c850915682dd413ae432761d3c64d6e8",
+    "files": 13,
+    "raw_exact": 5,
+    "newline_only": 8,
+    "semantic_or_other_byte_mismatches": 0,
+    "notes": "Eight existing source files have LF/CRLF differences only; five new/config/recovery files match exact archived bytes. Executed ZIP remains numeric replay authority."
+  },
+  "placement": {
+    "role": "development",
+    "server": "3080Ti-117-50-198-37",
+    "source_mirror": "/home/Q-DUET-VLM/reader-membership-screen-20261016",
+    "exchange_directory": "five_ideas/reader_protected_update_feasibility/20261017T160953558137Z",
+    "exchange_files": 8,
+    "raw_npz_retained_on_server": true
+  },
+  "new_experiment_started_during_publication": false
+}
