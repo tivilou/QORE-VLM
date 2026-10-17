@@ -132,6 +132,7 @@
   new objective, and explicit arm-to-head/loss dispatch plus exact executed
   source archives before another crossed experiment. Keep the quantum mainline
   and matched classical controls; a loss repair alone is not quantum novelty.
+- Membership screen `20261017T152312389403Z` remains L0/inconclusive: quantum useful/direct206/138 versus Reader203/138 and classical207/139; all gates fail. New objective reduces training protected losses104->3 but rescues only3. Opposing rescue/protection gradients on48/59 training cases support testing explicit train-only update constraints, not coefficient/epoch retuning or label-aware online masks. Local conflict is not proof of shared infeasibility. See [result/next gate](decisions/2026-10-17-reader-membership-screen-result.md).
 ## Decision index
 ### Binding and current
 - [BINDING] Cumulative-evidence next-step rule -> [detail](../../shared/decisions/cumulative-evidence-next-step-selection.md)
@@ -213,6 +214,7 @@
 - [CANDIDATE / IMPLEMENTED; CPU AUDIT PASSED, NO REAL FIT] Robust scale-invariant Top5 membership objective -> [detail](decisions/2026-10-16-reader-top5-objective-engineering.md). Loss dispatch, wrapped targets, full bundle hash and prospective exact source capture repaired. New loss remains separate from the closed100 runner; task utility is untested.
 - [CANDIDATE] Independent cached Reader membership screen; trace and native AdamW gates -> [detail](decisions/2026-10-16-reader-membership-screen-handoff.md)
 - [ACTIVE] V100s CPU experiments; 3080Ti artifact exchange -> [detail](decisions/2026-10-16-v100s-experiment-authorization.md)
+- [ACTIVE] Reader membership screen: weak gain, rescue-protection conflict -> [detail](decisions/2026-10-17-reader-membership-screen-result.md)
 
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.

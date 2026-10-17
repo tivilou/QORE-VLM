@@ -1,0 +1,289 @@
+{
+  "schema_version": "evidence-tiered-idea-validation.evidence-card.v2",
+  "idea_id": "quantum_reader_membership_screen_100",
+  "title": "Scale-invariant Top5 membership training for quantum Reader rotation",
+  "status": "candidate",
+  "current_tier": "L0_diagnostic",
+  "claim_ceiling": "diagnostic",
+  "rating_policy": {
+    "id": "canonical_l0_l4_with_project_exposed_panel_guard",
+    "version": "2026-10-17",
+    "notes": "GenericL1 needs heldout utility. Current100 is exposed; project preregisteredCI gate is an additional local screen rule, not a universalL1 definition. Quantum attribution is assessed separately."
+  },
+  "hypothesis": "Scale-invariant membership training rescues useful passages without sacrificing selected support.",
+  "mechanism": "Question-conditioned real-unitary rotations before frozen DPR classifier; matched classical coordinate rotations; objective-only crossed controls.",
+  "experiment": {
+    "stage": "screen",
+    "training_budget": {
+      "data_scope": "59 qualified train questions,228 pairs,135 eligible/183 protected candidates,75 slots;100 exposed evaluation;87 unused",
+      "epochs_or_steps": "3epochs x59 updates x4 heads =708 total;200 parameters/head",
+      "selection_rule": "fixed last epoch, immutable source order, no checkpoint selection",
+      "seed_policy": "20261013; bootstrap2000 seed20261014"
+    },
+    "conclusion_scope": "screen_inconclusive",
+    "continuation_status": "inconclusive",
+    "formal_run_authorized": false,
+    "executor": "collaborator"
+  },
+  "intervention": {
+    "changes_attention": true,
+    "target": "FixedTop50->Top5 via classifier-input feature rotation",
+    "inference_mode": "label_free",
+    "heldout_positive": false,
+    "leakage_audit": "pass",
+    "attention_action_evidence": {
+      "status": "pass",
+      "refs": [
+        "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/selector_trace.json",
+        "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/membership_values.npz"
+      ]
+    }
+  },
+  "evidence": {
+    "data_scope": {
+      "task_family": "open-domain QA passage selection",
+      "natural_task": true,
+      "task_count": 1,
+      "split_count": 2,
+      "dataset_ids": [
+        "nq_open train frozen59",
+        "exposed100 two50case studies"
+      ]
+    },
+    "runs": {
+      "seed_count": 1,
+      "seeds": [
+        20261013
+      ],
+      "independent_split_count": 1,
+      "statistics": {
+        "status": "fail",
+        "method": "2000 paired question-level bootstrap; useful quantum minusReader perquestion",
+        "p_value": null,
+        "confidence_interval": [
+          -0.02,
+          0.08
+        ]
+      }
+    },
+    "metrics": [
+      {
+        "name": "positive_consensus_count",
+        "split": "exposed100",
+        "variant": "quantum_membership",
+        "value": 206,
+        "baseline_value": 203,
+        "delta_vs_disabled": 3,
+        "primary": true,
+        "effect_direction": "higher",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+        ]
+      },
+      {
+        "name": "direct_consensus_count",
+        "split": "exposed100",
+        "variant": "quantum_membership",
+        "value": 138,
+        "baseline_value": 138,
+        "delta_vs_disabled": 0,
+        "primary": false,
+        "effect_direction": "higher",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+        ]
+      },
+      {
+        "name": "all_models_positive_count",
+        "split": "exposed100",
+        "variant": "quantum_membership",
+        "value": 170,
+        "baseline_value": 171,
+        "delta_vs_disabled": -1,
+        "primary": false,
+        "effect_direction": "higher",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+        ]
+      },
+      {
+        "name": "fixed_silver_set_overlap",
+        "split": "exposed100",
+        "variant": "quantum_membership",
+        "value": 342,
+        "baseline_value": 355,
+        "delta_vs_disabled": -13,
+        "primary": false,
+        "effect_direction": "higher",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+        ]
+      }
+    ],
+    "comparisons": [
+      {
+        "id": "same_loss_quantum_classical_useful",
+        "kind": "matched_control",
+        "target_variant": "quantum_membership",
+        "reference_variant": "classical_membership",
+        "metric": "positive_consensus_count",
+        "target_value": 206,
+        "reference_value": 207,
+        "delta": -1,
+        "status": "fail",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+        ]
+      }
+    ],
+    "controls": [
+      {
+        "id": "reader",
+        "kind": "disabled",
+        "status": "pass",
+        "notes": "Original frozen Reader null and cached scores verified",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+        ]
+      },
+      {
+        "id": "matched_classical",
+        "kind": "classical",
+        "status": "pass",
+        "notes": "Control implementation and budget verified; quantum superiority did not pass",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+        ]
+      },
+      {
+        "id": "old_objective",
+        "kind": "other",
+        "status": "pass",
+        "notes": "Crossed objective dispatch/source now verified; old loss reproduces catastrophic harm",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+        ]
+      }
+    ]
+  },
+  "axes": {
+    "task_utility": {
+      "status": "fail",
+      "notes": "Predeclared local gate false; no independently heldout utility;206 vs203 is uncertain",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+      ]
+    },
+    "robustness": {
+      "status": "not_run",
+      "notes": "One seed and exposed panel",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+      ]
+    },
+    "natural_transfer": {
+      "status": "not_run",
+      "notes": "No full-data independent run",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+      ]
+    },
+    "attention_alignment": {
+      "status": "partial",
+      "notes": "Top5 genuinely changes; useful+3/direct0/all3-1, exploratory diagnosis only",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+      ]
+    },
+    "classical_attribution": {
+      "status": "fail",
+      "notes": "Quantum206/138 vsclassical207/139",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+      ]
+    },
+    "finite_shot": {
+      "status": "not_run",
+      "notes": "Exact real statevector simulation only",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+      ]
+    },
+    "resource_audit": {
+      "status": "partial",
+      "notes": "200parameters/head,10dataqubits,CPU simulation; no preparation/readout hardware advantage certified",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+      ]
+    }
+  },
+  "trace_completeness": "complete",
+  "trace_observability": {
+    "status": "complete",
+    "schema_version": "sample-trace.v2",
+    "legacy_compatibility": false,
+    "artifact_refs": [
+      "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/selector_trace.json",
+      "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/membership_values.npz"
+    ],
+    "selection_rule": "fixed first2/lane outputs; first2updates/epoch/head; all159x5 scores",
+    "coverage": {
+      "data": "observed",
+      "preprocess": "observed",
+      "training": "observed",
+      "retrieval": "not_applicable",
+      "scoring": "observed",
+      "selection": "observed",
+      "context": "not_applicable",
+      "generation": "not_applicable",
+      "evaluation": "observed",
+      "diagnosis": "observed"
+    },
+    "missing_stages": [
+      "retrieval",
+      "context",
+      "generation"
+    ],
+    "notes": "Those3 stages are not_applicable in this cached selector-only screen, not unavailable required traces. Declared sampled contract complete;24 saved optimizer updates independently replayed. PyTorch metadata normalization documented in receipt."
+  },
+  "mechanism_recovery": {
+    "dossier_path": ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_recovery.json",
+    "dossier_sha256": "58c2af969b5543ec439a0c2a2d84cd7f83b9a17750df4fbe049daa9a1553cf88",
+    "outcome": "candidate",
+    "selected_candidate_id": "protected_train_only_quantum_update_feasibility"
+  },
+  "next_upgrade": {
+    "action": "Exploratory train-only protected-boundary shared-update feasibility design, retaining quantum rotation and matched classical control",
+    "success_gate": "Verified rescue>0 withzero protected train loss, then independently preregistered utility/direct protection",
+    "kill_criteria": "No safe nonzero rescue in a fixed audit budget; do not amplify or tune on exposed100",
+    "estimated_cost": "Cached-feature CPU diagnostic, no Reader/data download; exact budget must be designed before execution",
+    "authorized": false
+  },
+  "limitations": [
+    "Exposed100 panel is L0, not independent generalization or new generation accuracy.",
+    "Complete trace means the prospectively sampled trace contract, not708 independently replayed updates.",
+    "Only24 saved native AdamW witnesses are independently replayed;708 is the run-reported total update count.",
+    "Final-head gradient alignment is posthoc training-only diagnosis, not proof of causal sufficiency or global reachability.",
+    "Old-run executed source provenance remains unresolved; new-run exact sources do not repair history."
+  ],
+  "failed_gates": [
+    "utility",
+    "quantum_attribution",
+    "training_safe_rescue"
+  ],
+  "provenance": {
+    "code_revision": "0e7335c6251b1d2a923d55f5557a12ba25cc8a0c",
+    "records": [
+      {
+        "path": ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json",
+        "role": "verified artifact and independent numeric replay receipt",
+        "sha256": "306b12139b13bf2db480c1ae2779f177dccc9c1bdbdad722856b76cdfc835381"
+      },
+      {
+        "path": "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/summary.json",
+        "role": "collaborator summary",
+        "sha256": "4ffb48fe46bdadd4420bb61f3a16ffaa07facf89c348be5f9c0010d9abb7f866"
+      }
+    ]
+  }
+}

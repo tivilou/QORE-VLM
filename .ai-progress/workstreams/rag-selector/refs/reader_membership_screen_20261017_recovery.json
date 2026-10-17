@@ -1,0 +1,354 @@
+{
+  "schema_version": "experiment-grounded-ideation.mechanism-recovery.v2",
+  "evidence_packet": {
+    "path": ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json",
+    "sha256": "306b12139b13bf2db480c1ae2779f177dccc9c1bdbdad722856b76cdfc835381",
+    "code_revision": "0e7335c6251b1d2a923d55f5557a12ba25cc8a0c",
+    "validity_status": "clean"
+  },
+  "case_evidence": {
+    "selection_rule": "Predeclared first2 training and first2 evaluation cases, in immutable source order.",
+    "pairing_rule": "Same question/candidate hashes, fixed features, matched parameter/optimizer budget, final epoch.",
+    "selection_timing": "predeclared",
+    "claim_scope": "exploratory",
+    "comparisons": [
+      {
+        "case_id": "training_001",
+        "unit_type": "training example",
+        "reference_condition": {
+          "artifact_refs": [
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/selector_trace.json",
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/membership_values.npz"
+          ],
+          "observation": "Reader rescues0/loss0; old quantum rescues1/loss1",
+          "interpretation_status": "computed"
+        },
+        "candidate_condition": {
+          "artifact_refs": [
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/selector_trace.json",
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/membership_values.npz"
+          ],
+          "observation": "New quantum rescues0/loss0; same protected/eligible IDs",
+          "interpretation_status": "computed"
+        },
+        "stage_trace": [
+          {
+            "stage": "frozen inputs -> complete sampled rotation outputs -> all50 scores -> stable Top5 -> posthoc diagnosis",
+            "reference_state": "Reader rescues0/loss0; old quantum rescues1/loss1",
+            "candidate_state": "New quantum rescues0/loss0; same protected/eligible IDs",
+            "artifact_refs": [
+              "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/selector_trace.json",
+              "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/membership_values.npz"
+            ],
+            "interpretation_status": "computed"
+          }
+        ],
+        "outcome": {
+          "polarity": "mixed",
+          "criterion": "Preservation succeeds but no rescue",
+          "observation": "New quantum rescues0/loss0; same protected/eligible IDs",
+          "artifact_refs": [
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/selector_trace.json",
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/membership_values.npz"
+          ],
+          "interpretation_status": "computed"
+        }
+      },
+      {
+        "case_id": "training_002",
+        "unit_type": "training example",
+        "reference_condition": {
+          "artifact_refs": [
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/selector_trace.json",
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/membership_values.npz"
+          ],
+          "observation": "Reader rescues0/loss0; old quantum rescues1/loss3",
+          "interpretation_status": "computed"
+        },
+        "candidate_condition": {
+          "artifact_refs": [
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/selector_trace.json",
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/membership_values.npz"
+          ],
+          "observation": "New quantum rescues1/loss0; classical new also1/0",
+          "interpretation_status": "computed"
+        },
+        "stage_trace": [
+          {
+            "stage": "frozen inputs -> complete sampled rotation outputs -> all50 scores -> stable Top5 -> posthoc diagnosis",
+            "reference_state": "Reader rescues0/loss0; old quantum rescues1/loss3",
+            "candidate_state": "New quantum rescues1/loss0; classical new also1/0",
+            "artifact_refs": [
+              "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/selector_trace.json",
+              "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/membership_values.npz"
+            ],
+            "interpretation_status": "computed"
+          }
+        ],
+        "outcome": {
+          "polarity": "improved",
+          "criterion": "Retain all3 protected candidates while admitting eligible index8",
+          "observation": "New quantum rescues1/loss0; classical new also1/0",
+          "artifact_refs": [
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/selector_trace.json",
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/membership_values.npz"
+          ],
+          "interpretation_status": "computed"
+        }
+      },
+      {
+        "case_id": "evaluation_001",
+        "unit_type": "selector evaluation",
+        "reference_condition": {
+          "artifact_refs": [
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/selector_trace.json",
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/membership_values.npz"
+          ],
+          "observation": "Reader useful5/direct4/all3=4/Silver3; old quantum5/3/3/1",
+          "interpretation_status": "computed"
+        },
+        "candidate_condition": {
+          "artifact_refs": [
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/selector_trace.json",
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/membership_values.npz"
+          ],
+          "observation": "New quantum5/4/4/2; new classical5/4/4/3",
+          "interpretation_status": "computed"
+        },
+        "stage_trace": [
+          {
+            "stage": "frozen inputs -> complete sampled rotation outputs -> all50 scores -> stable Top5 -> posthoc diagnosis",
+            "reference_state": "Reader useful5/direct4/all3=4/Silver3; old quantum5/3/3/1",
+            "candidate_state": "New quantum5/4/4/2; new classical5/4/4/3",
+            "artifact_refs": [
+              "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/selector_trace.json",
+              "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/membership_values.npz"
+            ],
+            "interpretation_status": "computed"
+          }
+        ],
+        "outcome": {
+          "polarity": "mixed",
+          "criterion": "Useful/direct and exact-reference membership differ",
+          "observation": "New quantum5/4/4/2; new classical5/4/4/3",
+          "artifact_refs": [
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/selector_trace.json",
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/membership_values.npz"
+          ],
+          "interpretation_status": "computed"
+        }
+      },
+      {
+        "case_id": "evaluation_002",
+        "unit_type": "selector evaluation",
+        "reference_condition": {
+          "artifact_refs": [
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/selector_trace.json",
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/membership_values.npz"
+          ],
+          "observation": "Reader3/2/2/2; old quantum2/1/1/1",
+          "interpretation_status": "computed"
+        },
+        "candidate_condition": {
+          "artifact_refs": [
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/selector_trace.json",
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/membership_values.npz"
+          ],
+          "observation": "New quantum and new classical3/2/2/2",
+          "interpretation_status": "computed"
+        },
+        "stage_trace": [
+          {
+            "stage": "frozen inputs -> complete sampled rotation outputs -> all50 scores -> stable Top5 -> posthoc diagnosis",
+            "reference_state": "Reader3/2/2/2; old quantum2/1/1/1",
+            "candidate_state": "New quantum and new classical3/2/2/2",
+            "artifact_refs": [
+              "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/selector_trace.json",
+              "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/membership_values.npz"
+            ],
+            "interpretation_status": "computed"
+          }
+        ],
+        "outcome": {
+          "polarity": "unchanged",
+          "criterion": "Original Reader evidence counts preserved",
+          "observation": "New quantum and new classical3/2/2/2",
+          "artifact_refs": [
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/selector_trace.json",
+            "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/membership_values.npz"
+          ],
+          "interpretation_status": "computed"
+        }
+      }
+    ],
+    "lesson_batches": [
+      {
+        "batch_id": "fixed_first2_per_lane",
+        "case_ids": [
+          "training_001",
+          "training_002",
+          "evaluation_001",
+          "evaluation_002"
+        ],
+        "sample_count": 4,
+        "selection_rule": "per_lane=2 fixed before fitting",
+        "artifact_refs": [
+          "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/selector_trace.json",
+          "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/membership_values.npz"
+        ],
+        "lesson_polarity": "mixed",
+        "observation": "New objective avoids the old losses on4 cases; rescues only training_002; no evaluation gain versus Reader.",
+        "dispersion": "Training new quantum rescues0/1 and losses0/0; evaluation useful5/3 and direct4/2.",
+        "interpretation_status": "computed"
+      }
+    ],
+    "interpretation_boundary": "Small fixed batch illustrates execution; full100 aggregate remains primary. All other outcome-selected case explanations and final-gradient diagnostics are posthoc exploratory."
+  },
+  "trace_adequacy": {
+    "status": "complete",
+    "schema_version": "sample-trace.v2",
+    "artifact_refs": [
+      "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/selector_trace.json",
+      "five_ideas/quantum_reader_membership_screen_100/20261017T152312389403Z/membership_values.npz"
+    ],
+    "selection_rule": "first2/lane complete output, first2 updates/epoch/arm optimizer witnesses; all159x5 scores",
+    "covered_stages": [
+      "frozen feature input",
+      "question conditioning",
+      "rotation state",
+      "signed overlap readout",
+      "training gradient",
+      "native AdamW witness",
+      "selection",
+      "posthoc diagnosis"
+    ],
+    "missing_stages": [],
+    "target_boundary": "Training support only in objective/health; all50 online scores are label-free; Silver/eval judgments only after selection.",
+    "causal_links_observed": {
+      "intervention_execution": true,
+      "intended_intermediate": true,
+      "observable_output": true,
+      "task_utility": false
+    },
+    "notes": "No encoder recomputation, retrieval or generation; cached-input screen. Complete refers only to declared sample-level contract."
+  },
+  "causal_trace": {
+    "intervention_execution": {
+      "claim": "Four200-parameter heads fit3epochs;22 exact executed sources; all scores and24 optimizer witnesses independently replay.",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+      ]
+    },
+    "intended_intermediate": {
+      "claim": "New objective reduces quantum protected losses104->3 but rescues22->3; mean final rescue/protection gradients oppose with cosine-.78045,48/59 negative per-case dots.",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+      ]
+    },
+    "observable_output": {
+      "claim": "Quantum changes32/100 Top5 sets;35 replacements admit8 and remove5 useful candidates, leaving206 vs203; direct138 unchanged.",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+      ]
+    },
+    "task_utility": {
+      "claim": "No independent heldout utility established; useful mean+.03 withCI[-.02,.08], classical207/139, all preregistered gates false.",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+      ]
+    }
+  },
+  "failure_analysis": {
+    "primary_explanation": {
+      "statement": "Averaged smooth rescue/protection terms permit shared-parameter tradeoffs; final training protected loss3 and opposing gradients support this local diagnosis, not global impossibility.",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+      ],
+      "confidence": "medium"
+    },
+    "alternative_explanations": [
+      {
+        "statement": "Three epochs may be insufficient or shared200-parameter representation may lack simultaneous safe directions; this screen does not distinguish those causes.",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+        ],
+        "confidence": "low"
+      },
+      {
+        "statement": "Exposed-panel partial-support consensus can change without direct-support gains; Georgia case contributes+2 useful and0 direct. Silver judgments are not gold.",
+        "evidence_refs": [
+          ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+        ],
+        "confidence": "medium"
+      }
+    ],
+    "discriminating_measurement": {
+      "uncertainty": "Is there a shared200-parameter update that crosses rescue boundaries while retaining all protected training members?",
+      "measurement": "Training-only active-boundary Jacobian/constraint feasibility plus actual nonlinear score verification, with matched classical comparison; not executed in this audit.",
+      "primary_outcome": "A verified common feasible update or trajectory supports testing constrained optimization.",
+      "alternative_outcome": "Only zero or harmful updates, despite bounded feasibility attempts, implicate feature/parameter geometry; do not scale epochs blindly."
+    },
+    "closed_family": {
+      "id": "unchanged_unconstrained_weighted_membership_screen",
+      "rejected_variant_refs": [
+        "configs/experiments/quantum_reader_membership_screen_100.json"
+      ],
+      "closure_evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+      ],
+      "forbidden_rescue_variants": [
+        "Retune weights/epochs/residual amplitude against exposed100",
+        "Reuse order-compressing historical retention loss",
+        "Use evaluation labels for an online protected mask"
+      ]
+    }
+  },
+  "positive_carryovers": [
+    {
+      "id": "reader_semantic_anchor",
+      "mechanism": "Preserve pretrained Reader feature/score path and exact identity null rather than broad reranking.",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/critical-invariants.md",
+        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+      ],
+      "transport_constraint": "Reader frozen; change classifier-input quantum adapter only; all50 compete without labels."
+    },
+    {
+      "id": "scale_invariant_member_target",
+      "mechanism": "Median/IQR normalization and actual Top5 boundary avoid the known pure-compression loss shortcut and reduce old protected losses.",
+      "evidence_refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_membership_screen_20261017_receipt.json"
+      ],
+      "transport_constraint": "A soft penalty is not a guarantee; keep discrete rescue/retention metrics and unchanged quantum/classical controls."
+    }
+  ],
+  "recovery_outcome": {
+    "disposition": "candidate",
+    "selected_candidate": {
+      "id": "protected_train_only_quantum_update_feasibility",
+      "title": "Exploratory train-only protected-boundary update feasibility for quantum Reader rotation",
+      "positive_carryover_ids": [
+        "reader_semantic_anchor",
+        "scale_invariant_member_target"
+      ],
+      "recovery_mode": "new_causal_path",
+      "causal_difference": "Treat protected training membership as explicit update feasibility constraints, not another averaged soft penalty; preserve quantum Reader score-formation path and compare identical constraints on classical head.",
+      "changed_causal_links": [
+        "intended_intermediate",
+        "observable_output"
+      ],
+      "discriminating_measurement": "At fixed training null/final heads, inspect active protected/rescue boundary Jacobians and verify any proposed shared delta by a real nonlinear forward; no evaluation labels.",
+      "success_gate": "Train-only evidence of positive rescue with zero protected loss; then a separately preregistered utility screen with direct protection and classical attribution assessed separately.",
+      "kill_condition": "If verified safe updates cannot make nonzero rescue in the declared audit budget, stop this update-rule variant and diagnose representation; never guarantee test retention from training constraints.",
+      "authorization_boundary": "exploratory_only recommendation; no new fitting, implementation or collaborator experiment launched. Formal-readiness/novelty/design review and user direction still required."
+    }
+  },
+  "limitations": [
+    "Exposed100 panel is L0, not independent generalization or new generation accuracy.",
+    "Complete trace means the prospectively sampled trace contract, not708 independently replayed updates.",
+    "Only24 saved native AdamW witnesses are independently replayed;708 is the run-reported total update count.",
+    "Final-head gradient alignment is posthoc training-only diagnosis, not proof of causal sufficiency or global reachability.",
+    "Old-run executed source provenance remains unresolved; new-run exact sources do not repair history.",
+    "No causal gradient projection intervention was performed. No innovation or hardware advantage claim."
+  ]
+}
