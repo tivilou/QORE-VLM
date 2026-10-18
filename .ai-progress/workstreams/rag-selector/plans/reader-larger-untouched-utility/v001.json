@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "plan_id": "reader-larger-untouched-utility",
+  "plan_version": 1,
+  "workstream": "rag-selector",
+  "status": "active",
+  "objective": "Test whether the frozen quantum Reader head retains a useful Top-5 advantage on a fresh identity-disjoint 256-question NQ/Wiki-DPR cohort, without using answers or semantic targets to choose the cohort.",
+  "focus_step_id": "LU-03",
+  "next_action": "On the collaborator data-bearing machine, run the project-relative one-command exporter, upload the 256 x 50 cohort and return the compact manifest; do not run Reader scoring yet.",
+  "blocker": "The real fresh cohort has not yet been materialized and hash-frozen.",
+  "steps": [
+    {
+      "id": "LU-01",
+      "title": "Freeze the larger untouched contract",
+      "status": "done",
+      "objective": "Fix the population, exact identity exclusions, sampling rule, Top-50 retrieval contract, transport checks and future blind utility gate before observing any new outcomes.",
+      "inputs": ["protected434 source-bundle identity set", "historical100 detail identity set", "validation87 blind-gate result"],
+      "outputs": ["configs/experiments/reader_larger_untouched_utility_256.json", "configs/experiments/reader_larger_untouched_utility_256_plan.json"],
+      "depends_on": [],
+      "acceptance_checks": [
+        "256 questions sampled from nq_open validation indices 512:3610 by frozen hash order",
+        "exact question-hash exclusion of protected434 and historical100",
+        "answers, gold, Silver, support labels, predictions and generations excluded from cohort export",
+        "future quantum-versus-Reader and quantum-versus-classical gates fixed before scoring"
+      ],
+      "evidence_paths": ["configs/experiments/reader_larger_untouched_utility_256.json", "configs/experiments/reader_larger_untouched_utility_256_plan.json"],
+      "owner": "experiment design",
+      "blocker": null,
+      "notes": "The overall plugin plan remains approved rather than implemented until a real frozen trace and parity replay exist.",
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "LU-02",
+      "title": "Implement and validate the cohort exporter",
+      "status": "done",
+      "objective": "Create a project-relative one-command exporter that reuses the collaborator's existing NQ/Wiki-DPR runtime and uploads hash-locked artifacts to 18083.",
+      "inputs": ["frozen contract", "existing RAG data/retrieval APIs", "authenticated exchange helper"],
+      "outputs": [
+        "applications/rag/reader_larger_untouched.py",
+        "scripts/collab/five_ideas/prepare_reader_larger_untouched_cohort_256.py",
+        "scripts/collab/five_ideas/prepare_reader_larger_untouched_cohort_256.sh",
+        "applications/rag/tests/test_reader_larger_untouched.py"
+      ],
+      "depends_on": ["LU-01"],
+      "acceptance_checks": [
+        "synthetic 256 x 50 export validates",
+        "validate-only path starts neither Wiki-DPR nor a model",
+        "plugin-plan validator passes",
+        "Python compilation and Bash syntax pass"
+      ],
+      "evidence_paths": ["applications/rag/tests/test_reader_larger_untouched.py"],
+      "owner": "implementation",
+      "blocker": null,
+      "notes": "Three tests passed; three plugins validated; validate-only reported model_loaded=false and wiki_dpr_started=false.",
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "LU-03",
+      "title": "Materialize and freeze the real cohort",
+      "status": "blocked",
+      "objective": "Export exactly 256 fresh questions with their fixed DPR Top-50 candidates on the collaborator machine that already has the complete corpus/runtime.",
+      "inputs": ["collaborator NQ/Wiki-DPR runtime", "QORE_EXCHANGE_TOKEN"],
+      "outputs": ["cohort.json", "cohort_lock.json", "summary.json", "upload_manifest.json", "executed_sources.zip"],
+      "depends_on": ["LU-02"],
+      "acceptance_checks": [
+        "256 unique question identities and 50 unique ranked candidates per question",
+        "zero overlap with both frozen exclusion sets",
+        "zero forbidden target or outcome fields",
+        "local and 18083 hashes agree"
+      ],
+      "evidence_paths": [],
+      "owner": "collaborator data-bearing execution",
+      "blocker": "Awaiting collaborator execution and upload.",
+      "notes": "Run only bash scripts/collab/five_ideas/prepare_reader_larger_untouched_cohort_256.sh from the project root.",
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "LU-04",
+      "title": "Verify the cohort and freeze transport inputs",
+      "status": "todo",
+      "objective": "Verify every hash and identity before Reader feature extraction, then bind the exact cohort and frozen checkpoints to the scoring manifest.",
+      "inputs": ["LU-03 artifacts", "frozen sequential quantum/classical checkpoints"],
+      "outputs": ["verified cohort receipt", "immutable scoring manifest"],
+      "depends_on": ["LU-03"],
+      "acceptance_checks": [
+        "independent hash and schema replay passes",
+        "cohort identity is frozen before any score or semantic outcome is inspected",
+        "checkpoint and source hashes are exact"
+      ],
+      "evidence_paths": [],
+      "owner": "3080Ti aggregation",
+      "blocker": null,
+      "notes": "No post-score resampling is permitted.",
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "LU-05",
+      "title": "Run frozen Reader and head transport",
+      "status": "todo",
+      "objective": "Use a live capacity-checked gpu-training host for Reader feature extraction and frozen Reader/quantum/classical Top-5 transport.",
+      "inputs": ["immutable scoring manifest"],
+      "outputs": ["label-blind sample-trace.v2", "changed-set transport summary"],
+      "depends_on": ["LU-04"],
+      "acceptance_checks": [
+        "independent-vector replay passes",
+        "quantum changes at least 25 cases and differs from classical on at least 15",
+        "no semantic labels opened"
+      ],
+      "evidence_paths": [],
+      "owner": "live gpu-training host",
+      "blocker": null,
+      "notes": "3080Ti remains orchestration and aggregation only.",
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "LU-06",
+      "title": "Run blinded semantic utility review",
+      "status": "todo",
+      "objective": "If the transport gate passes, review only the changed-set union using two isolated reviewers and blind adjudication before opening method identity.",
+      "inputs": ["sealed method key", "changed-set blind packet"],
+      "outputs": ["two complete reviews", "blind consensus", "unblinded utility score"],
+      "depends_on": ["LU-05"],
+      "acceptance_checks": [
+        "quantum useful evidence +5 versus Reader and +3 versus classical",
+        "direct evidence does not decline versus Reader",
+        "case-win margins are at least +3 versus Reader and +1 versus classical",
+        "question-cluster bootstrap point-delta lower bounds exceed zero",
+        "zero uncertain quantum-selected items"
+      ],
+      "evidence_paths": [],
+      "owner": "blind review and accountable adjudication",
+      "blocker": null,
+      "notes": "Failure of transport or any utility gate stops promotion; success remains evidence-tiered and does not by itself prove quantum advantage.",
+      "supersedes": [],
+      "superseded_by": []
+    }
+  ],
+  "change_log": [
+    {
+      "from_version": null,
+      "to_version": 1,
+      "date": "2026-10-18",
+      "reason": "The validation87 blind utility gate passed and the next authorized step is a larger untouched cohort.",
+      "trigger": ["prospective validation87 blind gate passed", "user instruction: 开始"],
+      "impact": "Freezes cohort selection before scoring and separates collaborator data export, GPU computation and 3080Ti aggregation.",
+      "cursor_migration": "new plan -> LU-03"
+    }
+  ],
+  "updated_at": "2026-10-18"
+}

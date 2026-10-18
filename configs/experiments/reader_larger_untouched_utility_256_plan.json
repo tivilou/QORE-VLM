@@ -1,0 +1,156 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v2",
+  "project": "Q-DUET-VLM rag-selector larger untouched utility replication",
+  "authorization": "approved",
+  "baseline": {
+    "entry_point": "frozen DPR Reader Top-5 over a newly hash-locked fixed Top-50 cohort",
+    "code_revision": "cc651a585f3d46d727e0b47816dd4373a2ccf11c plus executed-source archive",
+    "equivalence_test": "Every future Reader score vector must replay the pinned Reader classifier and stable Top-5 before either frozen head is applied"
+  },
+  "core_invariants": [
+    "Fresh questions are selected without answers, support labels, Reader scores or method outputs",
+    "All434 support-audit questions and the exposed100-case panel are excluded by exact question SHA-256",
+    "Wiki-DPR retrieval is frozen at Top-50 and never changed by the candidate",
+    "The cohort identity hash is frozen before Reader or head scoring",
+    "Only the already-frozen sequential quantum and matched-classical final parameters may be transported",
+    "Reviewers see no answer, score, rank, method identity or selection membership",
+    "A pass remains below L1/L2 until replicated utility and task-level evidence exist"
+  ],
+  "interfaces": [
+    {
+      "id": "larger_untouched_replication_boundary",
+      "type": "transformer",
+      "input_schema": "frozen NQ validation interval, exact exclusion artifacts and frozen Wiki-DPR retrieval",
+      "output_schema": "hash-locked256x50 cohort followed by three comparable Top-5 selections and blind semantic utility",
+      "invariants": ["256 unique questions", "50 unique passages per question", "no target fields online"]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "fresh_question_identity_filter",
+      "version": "1",
+      "role": "adapter",
+      "interface": "larger_untouched_replication_boundary",
+      "insertion_point": "NQ validation population -> eligible unseen question identities",
+      "hypothesis": "Exact exclusions plus a frozen hash ordering prevent exposed-question reuse and outcome-dependent sampling",
+      "input_schema": "NQ questions and two hash-locked historical identity sources",
+      "output_schema": "ordered256-question identity manifest",
+      "requires": [],
+      "conflicts": ["answer-aware sampling", "manual question selection", "post-score resampling"],
+      "deterministic": true,
+      "resource_estimate": "3610 question records and two small historical identity artifacts",
+      "failure_signatures": ["historical artifact hash mismatch", "identity overlap", "insufficient eligible pool", "duplicate question hash"],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2",
+        "stages": ["data", "preprocess", "retrieval", "scoring", "selection", "diagnosis"],
+        "input_fields": ["dataset index", "question text", "historical question identities"],
+        "output_fields": ["dataset index", "question SHA-256", "selection-order digest"],
+        "input_refs": ["nq_open:validation", "support_bundle:434", "historical_panel:100"],
+        "output_refs": ["cohort_lock:selected_questions"],
+        "emitted_fields": ["all selected and excluded identity counts"],
+        "shape_dtype_normalization": ["256 unique SHA-256 identities"],
+        "checks": ["artifact hashes", "exact exclusion", "deterministic hash ordering"],
+        "deterministic_replay": true
+      }
+    },
+    {
+      "id": "frozen_wiki_dpr_top50",
+      "version": "1",
+      "role": "baseline",
+      "interface": "larger_untouched_replication_boundary",
+      "insertion_point": "selected fresh questions -> fixed retrieval candidates",
+      "hypothesis": "A fixed provenance-locked Top-50 cohort can be exported without any selector or semantic target",
+      "input_schema": "256 questions, pinned DPR query encoder and Wiki-DPR index configuration",
+      "output_schema": "256 ordered lists of50 passage ids, titles, texts and retrieval scores",
+      "requires": ["fresh_question_identity_filter"],
+      "conflicts": ["retrieval expansion", "query rewriting", "label-conditioned retrieval"],
+      "deterministic": true,
+      "resource_estimate": "256 query encodings and Wiki-DPR Top-50 lookups",
+      "failure_signatures": ["corpus unavailable", "non50 retrieval", "duplicate passage id", "empty passage text"],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2",
+        "stages": ["data", "preprocess", "retrieval", "scoring", "selection", "diagnosis"],
+        "input_fields": ["question SHA-256", "query encoder identity", "Wiki-DPR config"],
+        "output_fields": ["passage identity", "rank", "retrieval score", "title", "text"],
+        "input_refs": ["cohort_lock:selected_questions", "wiki_dpr:psgs_w100.nq.compressed"],
+        "output_refs": ["fresh_cohort:cases"],
+        "emitted_fields": ["all256x50 ordered candidates", "cohort identity SHA-256"],
+        "shape_dtype_normalization": ["256x50", "finite float retrieval scores"],
+        "checks": ["candidate uniqueness", "rank coverage", "target-field ban", "identity replay"],
+        "deterministic_replay": true
+      }
+    },
+    {
+      "id": "frozen_reader_head_transport",
+      "version": "1",
+      "role": "idea",
+      "interface": "larger_untouched_replication_boundary",
+      "insertion_point": "hash-locked fresh Top-50 -> frozen Reader and already-fitted heads",
+      "hypothesis": "The validation87 positive direction repeats on a larger identity-disjoint cohort and remains better than the matched classical head",
+      "input_schema": "frozen cohort, pinned Reader and frozen sequential head parameters",
+      "output_schema": "three complete256x50 score matrices and Top-5 sets",
+      "requires": ["frozen_wiki_dpr_top50"],
+      "conflicts": ["fresh-cohort fitting", "validation87 retuning", "adaptive checkpoint choice"],
+      "deterministic": true,
+      "resource_estimate": "12800 frozen Reader passages plus small fixed-head forwards",
+      "failure_signatures": ["Reader parity failure", "head hash mismatch", "nonfinite scores", "transport below review threshold"],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2",
+        "stages": ["data", "preprocess", "retrieval", "scoring", "selection", "diagnosis"],
+        "input_fields": ["Reader CLS and pooled states", "frozen theta"],
+        "output_fields": ["identity, quantum and classical scores and Top-5"],
+        "input_refs": ["fresh_cohort:cases", "sequential_run:final_theta"],
+        "output_refs": ["transport:values", "transport:selector_trace"],
+        "emitted_fields": ["complete numeric states and all selections"],
+        "shape_dtype_normalization": ["256x50 float32 scores", "stable Top-5 tie break"],
+        "checks": ["source hashes", "complete coordinate coverage", "independent replay"],
+        "deterministic_replay": true
+      }
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": ["fresh_question_identity_filter", "frozen_wiki_dpr_top50", "frozen_reader_head_transport"]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": ["fresh_question_identity_filter", "frozen_wiki_dpr_top50", "frozen_reader_head_transport"],
+    "merge_rule": "Question identities and Top-50 are frozen before any method score exists; all scoring arms share exact inputs",
+    "interaction_ablations": ["identity Reader", "quantum final versus identity", "classical final versus identity", "quantum final versus classical final"]
+  },
+  "validation": {
+    "baseline_equivalence": "Pinned Reader scores and Top-5 replay on every fresh case before head comparison",
+    "tests": ["baseline_equivalence", "plugin_isolation", "deterministic_replay", "interaction_ablation", "identity_exclusion", "target_boundary_guard", "trace_structural_validation", "trace_semantic_validation", "trace_replay"]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/reader_larger_untouched_utility_256.json",
+    "dataset_identity": "nq_open validation pool[512:3610], deterministic unseen hash sample256, exact434+100 exclusions",
+    "environment": "collaborator data-bearing environment for cohort export; bound gpu-training host only after cohort hash freeze",
+    "seeds": [20261018, 20261019],
+    "output_manifest": "exchange/five_ideas/reader_larger_untouched_cohort_256/<timestamp>/upload_manifest.json"
+  },
+  "trace_contract": {
+    "enabled": true,
+    "schema": "sample-trace.v2",
+    "artifact_path": "exchange/five_ideas/reader_larger_untouched_cohort_256/<timestamp>/cohort_lock.json",
+    "sample_selection_rule": "first256 eligible identities after frozen SHA256 ordering of nq_open validation[512:3610]",
+    "target_boundary": "no answers, support/Silver labels, Reader scores or selector outputs during cohort export",
+    "required_stages": ["data", "preprocess", "retrieval", "scoring", "selection", "diagnosis"],
+    "semantic_roles": ["input", "reference"],
+    "required_representations": ["dataset index", "question SHA-256", "candidate id SHA-256", "retrieval rank", "retrieval score"],
+    "producer_owned_lineage": ["NQ identity -> exact exclusion -> frozen hash order -> Wiki-DPR Top-50 -> cohort identity lock"],
+    "readiness_checks": ["historical hashes", "zero identity overlap", "256x50 completeness", "target-field ban", "identity replay"]
+  },
+  "recovery_contract": {
+    "dossier_path": ".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_recovery.json",
+    "dossier_sha256": "5665bc2803f168f2131d571dc828708b967587184e3beb5957680c3eb108db8f",
+    "candidate_id": "frozen_sequential_reader_larger_untouched_replication",
+    "discriminating_intermediate_measurement": "Before semantic review, at least25/256 quantum Top-5 changes and15/256 quantum/classical differences on a cohort frozen before scoring"
+  },
+  "limitations": [
+    "The256-case cohort is a larger untouched replication, not the full dataset",
+    "Cohort export alone contains no utility evidence",
+    "A matched-classical difference is attribution viability, not quantum advantage",
+    "The plugin plan stays approved rather than implemented until a real trace fixture and later transport replay pass"
+  ]
+}

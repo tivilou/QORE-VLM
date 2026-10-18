@@ -4,40 +4,36 @@
 - Improve fixed Top50 -> Top5 on the quantum mainline toward independently verified full-data L2. Training-only and small blind diagnostics remain L0.
 
 ## Current State
-- [ACTIVE / L0 BLIND UTILITY GATE PASSED] Two isolated reviewers completed all91 passages from the15 changed validation87 cases. They agreed on85 items; six disagreements were resolved by a third blind adjudication before the method key was opened.
-- On changed cases, Reader / quantum / matched classical retained useful evidence `38 / 41 / 40` and direct evidence `25 / 25 / 25`. Quantum versus Reader was `4 wins / 1 loss / 10 ties`, point delta `+3`; versus classical it was `2 / 1 / 12`, delta `+1`.
-- All five prospective checks passed. This is the first independent evidence that the frozen quantum head's unseen selection changes are beneficial, but it is still a small L0 audit:72/87 cases were unchanged, no L1/L2 or quantum-advantage claim follows.
-- Review files, blind consensus and score are hash-verified on the3080Ti aggregation host. GPU work remains assigned only through the live-checked `gpu-training` role.
+- [ACTIVE / L0; REAL COHORT PENDING] The larger untouched utility contract and cohort exporter are implemented for 256 fresh NQ validation questions, each with a fixed DPR/Wiki-DPR Top-50.
+- The deterministic sample excludes exact question identities from the protected434 cohort and the historical100 panel before scoring. Answers, gold/Silver/support labels, generations, predictions and selector outcomes are forbidden from the cohort artifact.
+- No real cohort, Reader features or method outcomes have been produced. The plugin plan therefore remains `approved`, not `implemented`, and no new utility claim follows.
+- Execution is split deliberately: the collaborator's existing data-bearing runtime exports the cohort; a live `gpu-training` host later runs the pinned Reader and frozen heads; 3080Ti verifies hashes, hosts 18083 and aggregates results.
 
 ## Plan Control
-- Completed Plan: plans/reader-unseen-blind-review/v001.json
+- Active Plan: plans/reader-larger-untouched-utility/v001.json
 - Plan Version: 1
-- Plan Status: complete
-- Completed Steps: BR-01 through BR-06
-- Next Action: Freeze a new larger untouched question cohort and its utility gate before extracting features or inspecting outcomes.
-- Blocker: No larger untouched cohort or preregistered contract exists yet.
+- Plan Status: active
+- Focus Step: LU-03 — materialize and freeze the real cohort
+- Next Action: collaborator runs `bash scripts/collab/five_ideas/prepare_reader_larger_untouched_cohort_256.sh` from the project root and returns the compact GitHub manifest; large artifacts upload automatically to18083.
+- Blocker: the real 256 x 50 cohort has not yet been materialized and hash-frozen.
 - Last Checkpoint: 2026-10-18
 
-## Next Actions
-1. Design a fresh, non-overlapping >=200-question fixed-Top50 cohort; exclude all train59, validation87 and repeatedly inspected 100-case panel identities.
-2. Freeze the source/model/revision, trained quantum and matched-classical checkpoints, changed-case review rule, uncertainty analysis and stop gate before one-shot execution.
-3. Run feature extraction on the bound live GPU host or collaborator machine, aggregate on3080Ti, then repeat method-blind semantic review only for changed-set unions.
-
-## Blockers
-- A provenance-locked fresh cohort with sufficient question count is not yet materialized.
-- The present effect is too small and selected-case-conditioned to establish population utility or quantum attribution.
+## Frozen Gate
+1. Sample 256 from `nq_open/validation[512:3610]` by seed-locked SHA-256 order after exact protected434 and historical100 exclusions.
+2. Materialize exactly 50 unique DPR/Wiki-DPR candidates per question; freeze cohort identity before Reader scoring.
+3. Continue to blind review only if quantum changes at least25 cases and differs from matched classical on at least15.
+4. For promotion, require quantum useful totals +5 versus Reader and +3 versus classical, no direct-evidence decline versus Reader, case-win margins +3/+1, positive clustered-bootstrap lower bounds, and zero unresolved quantum-selected items.
 
 ## Validation
-- Review A/B:91/91 each; label uncertainty0;85 agreements and6 blind adjudications; final consensus SHA `6834692a...0b38`.
-- Score SHA `e5f88b14...d65e`; packet SHA `eb5aef15...e565`; sealed key SHA `bb26843f...b3b`.
-- Blind workflow tests:3 passed after adding exact-coverage adjudication; no key is loaded by merge/adjudicate.
-- Aggregated artifacts: `/home/Q-DUET-VLM/reader-membership-screen-20261016/exchange/five_ideas/reader_unseen_blind_review_87/20261018T073840422368Z` on3080Ti.
-- Research log: [validation87 blind utility result](../../../docs/rag-research-log/20261018T-blind-unseen-utility-gate.md).
-- Session: [two-reviewer blind utility audit](sessions/2026-10/20261018T081258Z-e3f3ff.md).
+- Synthetic cohort/export tests: 3 passed.
+- Plugin-plan validation: 3 plugins passed.
+- Validate-only: 256 cases; `model_loaded=false`; `wiki_dpr_started=false`.
+- Python compilation and Bash syntax validation passed.
+- No full corpus was downloaded and no formal experiment was run locally or on3080Ti.
+- Session: [larger untouched cohort export implementation](sessions/2026-10/20261018T164330Z-a4c7e1.md).
 
 ## Relevant Decisions
-- [Blind utility gate passed; larger untouched study next](decisions/2026-10-18-reader-unseen-blind-review.md).
+- [Larger untouched utility study contract](decisions/2026-10-18-reader-larger-untouched-utility.md).
+- [Blind validation87 utility result](decisions/2026-10-18-reader-unseen-blind-review.md).
 - [Completed untouched validation transport gate](decisions/2026-10-18-reader-unseen-transport-gate.md).
-- [Completed sequential contract/result](decisions/2026-10-18-reader-sequential-protected-updates.md).
-- [Frozen membership contract](decisions/2026-10-16-reader-membership-screen-handoff.md); [final train targets](decisions/2026-10-11-final-support-boundary-resolution.md).
 - [Role-separated server execution](../../shared/decisions/2026-10-18-role-separated-server-execution.md); full long-term principles/navigation: `critical-invariants.md`.

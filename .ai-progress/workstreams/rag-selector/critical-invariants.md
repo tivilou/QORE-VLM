@@ -17,6 +17,7 @@
 - Record dataset/model/revision/config hash/seed/split/code revision and compact provenance per artifact.
 - GitHub accepts compact `result.json` only when <=`1,048,576` bytes; larger/raw results use authenticated exchange with manifest/hash/path.
 - Collaborator commands are project-relative and wrappers discover local dependencies. 3080Ti is orchestration/18083/aggregation; live GPU work uses an explicitly bound and capacity-checked `gpu-training` host, while collaborator-local execution remains a separate handoff path.
+- For the larger untouched Reader utility study, freeze the 256-question identity set and DPR Top-50 hash before any Reader/head score is produced. The data-bearing collaborator exports only questions and retrieval candidates; a live GPU host scores the frozen cohort; 3080Ti verifies and aggregates. No post-score resampling or target-bearing cohort field is allowed. See [study contract](decisions/2026-10-18-reader-larger-untouched-utility.md).
 - User-authorized V100s is CPU-only (`cpu-experiments` role); verify available memory/environment before running. 18083 stays on 3080Ti. See [execution exception](decisions/2026-10-16-v100s-experiment-authorization.md).
 ## Durable cumulative knowledge
 - Answer Scorer over QORE-DPR is the only stable positive carryover; its calibration is unsafe as the sole evidence criterion.
@@ -136,6 +137,7 @@
 - Shared safe directions exist on training59: quantum initial1/0, final2/0; classical1/0,4/0 (rescues/lost protected). Linear feasibility still permits native mis-selection; require actual all-training membership checks. A future accumulating update must preserve both original protected members and previously accepted rescues, with current-set outsider templates. This L0 fitted existence result does not rank families or establish test utility. See [closed audit/next proposal](decisions/2026-10-17-reader-protected-update-feasibility.md).
 - The frozen unseen transport gate passed at L0: quantum changed13/87 Top5 sets, classical9/87, and quantum differed from classical on9/87; independent261-vector replay passed with labels unopened. This warrants blind semantic review, not a utility claim.
 - The validation87 blind review is closed: two isolated reviewers covered91/91 items,85 agreed and6 were blindly adjudicated before unblinding. Quantum retained41 useful/25 direct passages versus Reader38/25 and classical40/25 on15 changed cases; all prospective checks passed. This remains L0 and validation87 is now spent. See [decision](decisions/2026-10-18-reader-unseen-blind-review.md).
+- The next authorized test is a fresh deterministic 256-question NQ/Wiki-DPR cohort with exact exclusion of the protected434 and historical100 identities. Cohort export is implemented but no real question or Reader outcome has been produced; overall architecture stays approved. See [decision](decisions/2026-10-18-reader-larger-untouched-utility.md).
 ## Decision index
 ### Binding and current
 - [BINDING] Cumulative-evidence next-step rule -> [detail](../../shared/decisions/cumulative-evidence-next-step-selection.md)
@@ -223,6 +225,7 @@
 - [CLOSED / L0 ACCUMULATION PASSED; UNSEEN UTILITY NEXT] Sequential protected Reader updates as a bounded training-only diagnostic -> [detail](decisions/2026-10-18-reader-sequential-protected-updates.md)
 - [CLOSED / L0 TRANSPORT PASS] Untouched validation87 transport gate -> [detail](decisions/2026-10-18-reader-unseen-transport-gate.md)
 - [ACTIVE / L0 BLIND GATE PASSED; LARGER UNTOUCHED DESIGN NEXT] Two-reviewer blind audit for unseen Top5 transport -> [detail](decisions/2026-10-18-reader-unseen-blind-review.md)
+- [ACTIVE / COHORT EXPORT IMPLEMENTED; REAL COHORT PENDING] Larger identity-disjoint256-question Reader utility study -> [detail](decisions/2026-10-18-reader-larger-untouched-utility.md)
 
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.

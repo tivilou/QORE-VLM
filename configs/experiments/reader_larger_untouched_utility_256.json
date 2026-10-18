@@ -1,0 +1,61 @@
+{
+  "schema_version": "rag.reader_larger_untouched_utility.v1",
+  "authorization": "cohort_export_only_then_freeze_hash",
+  "claim_ceiling": "L0_larger_untouched_replication",
+  "dataset": {
+    "name": "nq_open",
+    "split": "validation",
+    "pool_start": 512,
+    "pool_end": 3610,
+    "cohort_cases": 256,
+    "selection_seed": 20261018,
+    "selection_rule": "sort eligible questions by SHA256(seed:dataset_index:question_sha256), then take first256"
+  },
+  "exclusions": {
+    "support_bundle": {
+      "exchange_path": "five_ideas/protected_boundary_reader_inputs/20261011-v1/frozen_support_bundle.zip",
+      "bytes": 26121092,
+      "sha256": "f723bbb6f9075c3e04fd3d8a7b2d3f8127b6e354422ee2a2f6e167bfe32248ce",
+      "expected_cases": 434
+    },
+    "historical_panel": {
+      "exchange_path": "five_ideas/selector_replay_100_historical_input/silver-oracle-top5-100-20260915T120525Z-detail.json",
+      "bytes": 8046318,
+      "sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
+      "expected_cases": 100
+    }
+  },
+  "retrieval": {
+    "encoder_backend": "dpr",
+    "corpus_mode": "wiki_dpr",
+    "wiki_dpr_config": "psgs_w100.nq.compressed",
+    "nprobe": 64,
+    "top_k": 50
+  },
+  "future_transport": {
+    "reader_model_id": "facebook/dpr-reader-single-nq-base",
+    "reader_revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+    "arms": ["identity_reader", "quantum_sequential_final", "classical_sequential_final"],
+    "min_quantum_changed_cases_for_review": 25,
+    "min_quantum_classical_different_cases_for_review": 15
+  },
+  "future_blind_utility_gate": {
+    "min_quantum_useful_gain_over_identity": 5,
+    "min_quantum_direct_gain_over_identity": 0,
+    "min_quantum_useful_gain_over_classical": 3,
+    "min_quantum_case_win_margin_over_identity": 3,
+    "min_quantum_case_win_margin_over_classical": 1,
+    "bootstrap_replicates": 5000,
+    "bootstrap_seed": 20261019,
+    "points_delta_ci95_lower_over_identity_must_exceed": 0.0,
+    "max_uncertain_quantum_selected_items": 0
+  },
+  "label_boundary": {
+    "answers_read": false,
+    "support_annotations_read": false,
+    "silver_oracle_read": false,
+    "generator_called": false,
+    "selection_result_available_during_cohort_export": false
+  },
+  "output_namespace": "five_ideas/reader_larger_untouched_cohort_256"
+}
