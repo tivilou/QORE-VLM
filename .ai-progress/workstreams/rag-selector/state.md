@@ -37,6 +37,7 @@
 ## Validation
 - [Sequential receipt](refs/reader_sequential_protected_updates_20261018_receipt.json), [validated recovery](refs/reader_sequential_protected_updates_20261018_recovery.json), [L0 card](refs/reader_sequential_protected_updates_20261018_evidence.json). Standard card validator passes with expected warnings for missing heldout utility and failed quantum attribution.
 - Owner analysis: [sequential protected updates](../../../../docs/rag-research-log/20261018T045707Z-reader-sequential-protected-updates.md).
+- GitHub `five-ideas-development` published as `0e66812246d2fb54e167fd7d036680942975ba5c`; [publication mapping](refs/reader_sequential_protected_updates_20261018_publication.json) records local/remote commits and artifact placement.
 - Session: [completed sequential implementation, run and audit](sessions/2026-10/20261018T051728Z-7f6b45.md).
 - [Current receipt](refs/reader_protected_feasibility_20261017_receipt.json), [validated recovery](refs/reader_protected_feasibility_20261017_recovery.json), [L0 card](refs/reader_protected_feasibility_20261017_evidence.json). Card standard validator valid with warnings for missing heldout utility/unresolved attribution.
 - [Previous result receipt](refs/reader_membership_screen_20261017_receipt.json):2151 arrays,24 saved AdamW witnesses, prior source/metric audit.

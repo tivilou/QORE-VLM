@@ -1,0 +1,18 @@
+{
+  "schema_version": "rag.reader_sequential_protected_publication.v1",
+  "local_analysis_commit": "ca37b4efb1cde3336c3a0bdb1e70b01a72d2c271",
+  "published_analysis_commit": "0e66812246d2fb54e167fd7d036680942975ba5c",
+  "repository": "https://github.com/tivilou/QORE-VLM",
+  "branch": "five-ideas-development",
+  "remote_ref_verified_after_push": true,
+  "executed_source_archive_sha256": "e6147e55f97d538c0535351c6dfa360a17802f1d534732811ce3ba8d7074a57d",
+  "placement": {
+    "server": "3080Ti-117-50-198-37",
+    "source_mirror": "/home/Q-DUET-VLM/reader-membership-screen-20261016",
+    "exchange_directory": "five_ideas/reader_sequential_protected_updates/20261018T045707538341Z",
+    "exchange_files": 8,
+    "raw_npz_retained_on_18083": true,
+    "compact_trace_committed": true
+  },
+  "new_experiment_started_during_publication": false
+}
