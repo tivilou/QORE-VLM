@@ -4,45 +4,42 @@
 - Improve fixed Top50 -> Top5 on the quantum mainline toward independently verified full-data L2. Training-only and label-blind diagnostics remain L0.
 
 ## Current State
-- [ACTIVE / L0 UNSEEN TRANSPORT] The validation87 cohort is genuinely outside the fitted training59 and exposed evaluation100, but it has no qualified support labels: all87 question scopes and4350 passage judgments remain pending. Utility cannot be claimed before blinded review.
-- A prospective label-blind gate is frozen: quantum must change at least5/87 Top5 sets and differ from the matched classical arm on at least3/87 before semantic review is worth opening. These thresholds are review-effort gates, not performance gates.
-- The isolated transport module, validation feature cache builder, fixed-head runner, independent audit,3-plugin plan and3 synthetic replay tests are implemented. Plugin-plan validation passes.
-- Backup `gpushare-i1-57535` completed 87/87 frozen DPR Reader feature extraction on its RTX3060. All stored Reader scores and Top5 sets reproduced; cache hashes: index `f0052eee`, features `1837d883`. It became connection-refused before the validation cache/final result could be recovered.
-- Primary3080Ti reconnected and the original sequential archive reverified at SHA `35d7f9c1...`, but the current allocation exposes no GPU and enforces a1GiB cgroup. DPR Reader forward makes SSH unresponsive even at microbatch1; this container cannot safely produce the missing cache.
-- Prior completed run `20261018T045707538341Z`: quantum/classical each accumulated0->1->2->3 fitted rescues with zero original/accepted loss; quantum8 attempts, classical5. It establishes training feasibility only and no quantum advantage.
+- [BLOCKED / L0 BLIND UTILITY AUDIT] The frozen validation87 transport run completed and passed both review-effort gates: quantum changed13/87 Top5 sets, classical9/87, and quantum differed from classical on9/87. Independent replay verified261 score vectors and87 Top5 sets with answers/support labels unopened.
+- This is transport evidence only. It does not show that any changed selection is better and does not support L1/L2 or quantum advantage.
+- The next-stage blind packet is frozen:15 changed-union cases,91 passages, no answers/scores/ranks/method identities. Packet construction, consensus merger, post-consensus scorer and3 synthetic tests pass.
+- Reviewer materials and sealed method key are separated on the3080Ti aggregation host. Two independent reviews are pending; the key must remain unopened until semantic-code consensus.
+- Server roles are corrected:3080Ti owns orchestration/18083/aggregation; `gpu-training` currently resolves the live-checked Titan host. The recovered3060 cache and original sequential archive passed exact hashes.
 
 ## Plan Control
-- Plan: plans/reader-unseen-transport-gate/v001.json
+- Plan: plans/reader-unseen-blind-review/v001.json
 - Plan Version: 1
 - Plan Status: blocked
-- Focus Step: UG-03
+- Focus Step: BR-04
 - Focus Status: blocked
-- Completed Steps: UG-01, UG-02
-- Next Action: Restore a bound server with a visible GPU, or recover the completed validation87 cache from the backup; then execute the fixed label-blind transport runner.
-- Blocker: Primary is currently a1GiB CPU-only allocation; backup completed feature parity but remains connection-refused.
+- Completed Steps: BR-01, BR-02, BR-03
+- Next Action: Give only the reviewer packet to two independent reviewers and collect complete review JSON files.
+- Blocker: Two independent semantic reviews are not yet available; opening the sealed method key before consensus is prohibited.
 - Last Checkpoint: 2026-10-18
 
 ## Next Actions
-1. Keep the verified original `sequential_values.npz`; recover the validation cache from the backup or regenerate it only on a visible-GPU bound server.
-2. Apply the already-frozen quantum/classical final theta once, save all261 score vectors and all87 Top5 sets, and independently replay the transport gate.
-3. If and only if both transport thresholds pass, create a score/rank/method-blind semantic review packet; qualified utility remains a separate experiment.
+1. Collect two independent reviews from `reviewer_packet` only.
+2. Merge semantic codes while blind; adjudicate every disagreement without opening the method key.
+3. After complete consensus only, open the key and apply the frozen utility gate. Pass advances to a larger untouched study; failure closes this fitted candidate without validation retuning.
 
 ## Blockers
-- No valid utility labels exist for validation87 yet; the current gate measures transport only.
-- Primary capacity and backup reachability prevent recovery/regeneration of the completed validation feature cache; original frozen parameters are verified and intact.
-- Tiny cross-environment Reader differences make approximate reconstruction unacceptable; the original hash-locked parameters must be used.
+- No qualified validation87 semantic judgments exist yet.
+- Independent reviewers must not receive `sealed_method_key.json`.
 
 ## Validation
-- `applications/rag/tests/test_reader_unseen_transport.py`:3 passed in the existing `lambeq` environment, including full synthetic87 trace/audit replay.
-- Research plugin architecture validator:3 plugins validated. Workflow plan validator passes.
-- Backup feature extraction:87/87 score and Top5 parity, local cached Reader revision `38f47a49`, no model/data download, answers/support labels unopened.
-- Primary retry: original archive hash passed; batch8 and resource-only microbatch1 both exceeded the usable1GiB CPU-only allocation. No transport scores were produced or inspected.
-- Current implementation/config: `applications/rag/reader_unseen_transport.py`, `scripts/collab/five_ideas/{prepare,run,audit}_reader_unseen_*`, `configs/experiments/reader_unseen_transport_gate_87*.json`.
-- Session: [transport implementation and server handoff](sessions/2026-10/20261018T061040Z-311464.md).
-- Session: [primary capacity retry](sessions/2026-10/20261018T064311Z-d28ab2.md).
+- Transport run `20261018T073840422368Z`; trace SHA `c0de703d...`, values SHA `b282090b...`; independent audit passed.
+- Validation cache hashes: index `f0052eee...`, features `1837d883...`; sequential archive `35d7f9c1...`.
+- Blind packet SHA `eb5aef15...`;15 cases/91 items; banned-field audit passed. Three blind-workflow tests pass in `lambeq`; both workflow plans validate.
+- Aggregated artifacts: `/home/Q-DUET-VLM/reader-membership-screen-20261016/exchange/five_ideas/{reader_unseen_transport_gate_87,reader_unseen_blind_review_87}/20261018T073840422368Z` on3080Ti.
+- Session: [unseen transport recovery and blind packet](sessions/2026-10/20261018T075005Z-095e98.md).
 
 ## Relevant Decisions
-- [Untouched validation transport gate](decisions/2026-10-18-reader-unseen-transport-gate.md).
+- [Two-reviewer blind utility audit](decisions/2026-10-18-reader-unseen-blind-review.md).
+- [Completed untouched validation transport gate](decisions/2026-10-18-reader-unseen-transport-gate.md).
 - [Completed sequential contract/result](decisions/2026-10-18-reader-sequential-protected-updates.md).
 - [Frozen membership contract](decisions/2026-10-16-reader-membership-screen-handoff.md); [final train targets](decisions/2026-10-11-final-support-boundary-resolution.md).
-- Server topology and collaboration boundaries: `../../project.md`; full long-term principles/navigation: `critical-invariants.md`.
+- [Role-separated server execution](../../shared/decisions/2026-10-18-role-separated-server-execution.md); full long-term principles/navigation: `critical-invariants.md`.

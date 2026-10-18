@@ -1,0 +1,35 @@
+{
+  "schema_version": "rag.reader_unseen_blind_review_config.v1",
+  "authorization": "packet_construction_only",
+  "claim_ceiling": "L0_blinded_semantic_diagnostic",
+  "source_bundle_sha256": "f723bbb6f9075c3e04fd3d8a7b2d3f8127b6e354422ee2a2f6e167bfe32248ce",
+  "transport_run": {
+    "run_id": "20261018T073840422368Z",
+    "trace_sha256": "c0de703de52e502af6e9efb2b0020e1eafceda76c1f5743dfae135f65afcb308",
+    "expected_validation_cases": 87,
+    "expected_changed_cases": 15
+  },
+  "review_population": "union of identity, quantum and matched-classical Top5 passages for every validation case where at least two Top5 sets differ",
+  "blind_seed": 20261018,
+  "semantic_codes": {
+    "answer_support": ["direct", "partial", "none", "uncertain"],
+    "scope_match": ["yes", "partial", "no", "uncertain"]
+  },
+  "derived_labels": {
+    "direct": "answer_support=direct and scope_match=yes",
+    "useful": "answer_support in {direct,partial} and scope_match in {yes,partial}"
+  },
+  "prospective_gate": {
+    "min_quantum_useful_gain_over_identity": 2,
+    "min_quantum_direct_gain_over_identity": 0,
+    "min_quantum_useful_gain_over_classical": 1,
+    "min_quantum_case_win_margin_over_identity": 1,
+    "max_uncertain_selected_items": 0,
+    "purpose": "Decide whether the fitted quantum head merits a larger untouched-data utility study; not an L1/L2 or quantum-advantage gate"
+  },
+  "blinding": {
+    "reviewer_can_see": ["opaque case id", "question", "opaque item id", "passage title", "passage text"],
+    "reviewer_cannot_see": ["answers", "candidate identity", "retrieved rank", "Reader rank", "any score", "method identity", "selection membership"],
+    "unblind_only_after": "two complete reviews agree on semantic codes or all disputes are adjudicated while the key remains sealed"
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "schema_version": 1,
+  "plan_id": "reader-unseen-blind-review",
+  "plan_version": 1,
+  "workstream": "rag-selector",
+  "status": "blocked",
+  "objective": "Qualify the validation87 transport changes with a score/rank/method-blind two-reviewer semantic audit before any utility or quantum-specific claim",
+  "focus_step_id": "BR-04",
+  "next_action": "Assign two independent reviewers the reviewer_packet directory only and collect complete review JSON files",
+  "blocker": null,
+  "steps": [
+    {
+      "id": "BR-01",
+      "title": "Freeze blind-review contract",
+      "status": "done",
+      "objective": "Define the review population and success/stop rule without inspecting semantic labels",
+      "inputs": [
+        "transport run 20261018T073840422368Z",
+        "validation87 frozen source bundle"
+      ],
+      "outputs": [
+        "configs/experiments/reader_unseen_blind_review_87.json"
+      ],
+      "depends_on": [],
+      "acceptance_checks": [
+        "Only cases with differing Top5 sets are reviewed",
+        "Packet excludes answers, scores, ranks and method identities",
+        "Utility gate is frozen before review"
+      ],
+      "evidence_paths": [
+        "configs/experiments/reader_unseen_blind_review_87.json"
+      ],
+      "owner": "rag-selector",
+      "blocker": null,
+      "notes": [
+        "Frozen changed-case union, two-axis rubric, two-reviewer consensus boundary and prospective quantum-vs-Reader/classical utility gate before semantic review"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "BR-02",
+      "title": "Implement packet, consensus and scoring tools",
+      "status": "done",
+      "objective": "Separate blind semantic judgment from later method unblinding",
+      "inputs": [
+        "BR-01 contract"
+      ],
+      "outputs": [
+        "blind packet producer",
+        "blind consensus merger",
+        "post-consensus scorer",
+        "tests"
+      ],
+      "depends_on": [
+        "BR-01"
+      ],
+      "acceptance_checks": [
+        "Deterministic packet",
+        "No banned fields in reviewer view",
+        "Disagreements block key loading",
+        "Synthetic scoring replay passes"
+      ],
+      "evidence_paths": [
+        "applications/rag/tests/test_reader_unseen_blind_review.py"
+      ],
+      "owner": "rag-selector",
+      "blocker": null,
+      "notes": [
+        "Three synthetic tests passed; semantic disagreements block method-key loading"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "BR-03",
+      "title": "Generate hash-locked validation packet",
+      "status": "done",
+      "objective": "Materialize the changed-case packet and sealed method key from the audited transport run",
+      "inputs": [
+        "frozen source bundle",
+        "audited selector trace"
+      ],
+      "outputs": [
+        "blind_packet.json",
+        "review_template.json",
+        "sealed_method_key.json",
+        "packet_manifest.json"
+      ],
+      "depends_on": [
+        "BR-02"
+      ],
+      "acceptance_checks": [
+        "Source and trace hashes match",
+        "Expected changed-case coverage matches",
+        "Packet/key hashes and no-leak audit pass"
+      ],
+      "evidence_paths": [
+        "remote:3080Ti-117-50-198-37:/home/Q-DUET-VLM/reader-membership-screen-20261016/exchange/five_ideas/reader_unseen_blind_review_87/20261018T073840422368Z"
+      ],
+      "owner": "rag-selector",
+      "blocker": null,
+      "notes": [
+        "Generated15 changed cases and91 blinded passage items; banned-key audit passed; reviewer and sealed artifacts stored separately on3080Ti"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "BR-04",
+      "title": "Collect two independent blind reviews",
+      "status": "blocked",
+      "objective": "Obtain complete semantic judgments without revealing method identity",
+      "inputs": [
+        "blind_packet.json",
+        "review_template.json"
+      ],
+      "outputs": [
+        "review_a.json",
+        "review_b.json"
+      ],
+      "depends_on": [
+        "BR-03"
+      ],
+      "acceptance_checks": [
+        "All items reviewed",
+        "Reviewers did not receive sealed key",
+        "No method/rank/score fields added"
+      ],
+      "evidence_paths": [],
+      "owner": "independent-reviewers",
+      "blocker": "Two independent semantic reviews have not yet been performed; method unblinding is prohibited until consensus",
+      "notes": [
+        "Do not expose the sealed subdirectory to either reviewer"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "BR-05",
+      "title": "Resolve disagreements while still blind",
+      "status": "todo",
+      "objective": "Produce a complete consensus file before method unblinding",
+      "inputs": [
+        "two reviews"
+      ],
+      "outputs": [
+        "consensus.json or blind dispute packet"
+      ],
+      "depends_on": [
+        "BR-04"
+      ],
+      "acceptance_checks": [
+        "Zero unresolved semantic-code disagreements",
+        "Sealed method key remains unopened"
+      ],
+      "evidence_paths": [],
+      "owner": "rag-selector",
+      "blocker": null,
+      "notes": [],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "BR-06",
+      "title": "Unblind and score prospective utility gate",
+      "status": "todo",
+      "objective": "Compare quantum, Reader and matched classical Top5 quality only after consensus",
+      "inputs": [
+        "consensus.json",
+        "sealed_method_key.json"
+      ],
+      "outputs": [
+        "blind_review_score.json",
+        "advance or stop decision"
+      ],
+      "depends_on": [
+        "BR-05"
+      ],
+      "acceptance_checks": [
+        "Method selections reconstruct exactly",
+        "Frozen gate applied without tuning",
+        "Claim ceiling remains L0"
+      ],
+      "evidence_paths": [],
+      "owner": "rag-selector",
+      "blocker": null,
+      "notes": [],
+      "supersedes": [],
+      "superseded_by": []
+    }
+  ],
+  "change_log": [],
+  "updated_at": "2026-10-18"
+}

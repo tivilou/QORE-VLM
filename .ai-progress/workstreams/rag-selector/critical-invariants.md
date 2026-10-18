@@ -16,7 +16,7 @@
 - Use exact source/question/passage identity; fuzzy/manual/answer-string substitutions cannot manufacture coverage.
 - Record dataset/model/revision/config hash/seed/split/code revision and compact provenance per artifact.
 - GitHub accepts compact `result.json` only when <=`1,048,576` bytes; larger/raw results use authenticated exchange with manifest/hash/path.
-- Collaborator commands are project-relative; wrappers discover local dependencies. Develop on the verified server; collaborators run locally.
+- Collaborator commands are project-relative and wrappers discover local dependencies. 3080Ti is orchestration/18083/aggregation; live GPU work uses an explicitly bound and capacity-checked `gpu-training` host, while collaborator-local execution remains a separate handoff path.
 - User-authorized V100s is CPU-only (`cpu-experiments` role); verify available memory/environment before running. 18083 stays on 3080Ti. See [execution exception](decisions/2026-10-16-v100s-experiment-authorization.md).
 ## Durable cumulative knowledge
 - Answer Scorer over QORE-DPR is the only stable positive carryover; its calibration is unsafe as the sole evidence criterion.
@@ -134,6 +134,8 @@
   and matched classical controls; a loss repair alone is not quantum novelty.
 - Membership screen `20261017T152312389403Z` remains L0/inconclusive: quantum useful/direct206/138 versus Reader203/138 and classical207/139; all gates fail. New objective reduces training protected losses104->3 but rescues only3. Opposing rescue/protection gradients on48/59 training cases support testing explicit train-only update constraints, not coefficient/epoch retuning or label-aware online masks. Local conflict is not proof of shared infeasibility. See [result/next gate](decisions/2026-10-17-reader-membership-screen-result.md).
 - Shared safe directions exist on training59: quantum initial1/0, final2/0; classical1/0,4/0 (rescues/lost protected). Linear feasibility still permits native mis-selection; require actual all-training membership checks. A future accumulating update must preserve both original protected members and previously accepted rescues, with current-set outsider templates. This L0 fitted existence result does not rank families or establish test utility. See [closed audit/next proposal](decisions/2026-10-17-reader-protected-update-feasibility.md).
+- The frozen unseen transport gate passed at L0: quantum changed13/87 Top5 sets, classical9/87, and quantum differed from classical on9/87; independent261-vector replay passed with labels unopened. This warrants blind semantic review, not a utility claim.
+- The blind review population is the15-case,91-item union where any arm differs. Two score/rank/method-blind reviews and zero unresolved disagreements are required before opening the method key; the prospective utility gate is frozen. See [decision](decisions/2026-10-18-reader-unseen-blind-review.md).
 ## Decision index
 ### Binding and current
 - [BINDING] Cumulative-evidence next-step rule -> [detail](../../shared/decisions/cumulative-evidence-next-step-selection.md)
@@ -164,7 +166,8 @@
 - [SUPERSEDED] Actual-model hook fixture -> [detail](decisions/2026-08-27-generator-native-hook-fixture-pass.md)
 - [SUPERSEDED] Generator-native screen authorization -> [detail](decisions/2026-08-27-generator-native-screen-authorization.md)
 - [CLOSED] Reader-localized Generator transport screen -> [detail](decisions/2026-08-28-generator-native-screen-kill.md)
-- [ACTIVE] Project execution topology and collaborator handoff -> [detail](../../shared/decisions/2026-09-05-project-execution-topology.md)
+- [SUPERSEDED] Development-server and collaborator-only experiment topology -> [detail](../../shared/decisions/2026-09-05-project-execution-topology.md)
+- [ACTIVE] Separate orchestration, aggregation and live compute roles -> [detail](../../shared/decisions/2026-10-18-role-separated-server-execution.md)
 - [SUPERSEDED] Portfolio priority -> [detail](decisions/2026-09-05-selector-portfolio-priority.md)
 - [SUPERSEDED] Q-DES P0/ECAD next gate -> [detail](decisions/2026-09-05-qdes-p0-preflight-failure.md)
 - [BLOCKED] ECAD conflict preflight -> [detail](decisions/2026-09-05-ecad-p0-preflight-failure.md)
@@ -218,6 +221,8 @@
 - [ACTIVE] Reader membership screen: weak gain, rescue-protection conflict -> [detail](decisions/2026-10-17-reader-membership-screen-result.md)
 - [CLOSED] Train-only protected quantum update feasibility audit -> [detail](decisions/2026-10-17-reader-protected-update-feasibility.md)
 - [CLOSED / L0 ACCUMULATION PASSED; UNSEEN UTILITY NEXT] Sequential protected Reader updates as a bounded training-only diagnostic -> [detail](decisions/2026-10-18-reader-sequential-protected-updates.md)
+- [CLOSED / L0 TRANSPORT PASS] Untouched validation87 transport gate -> [detail](decisions/2026-10-18-reader-unseen-transport-gate.md)
+- [ACTIVE / PACKET READY; TWO REVIEWS PENDING] Two-reviewer blind audit for unseen Top5 transport -> [detail](decisions/2026-10-18-reader-unseen-blind-review.md)
 
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.

@@ -2,7 +2,7 @@
 
 - Date: 2026-10-18
 - Scope: rag-selector
-- Status: active
+- Status: closed
 - Supersedes: None
 - Superseded By: None
 - Gate: Advance to blinded semantic review only if the frozen quantum arm changes Top5 membership on at least 5/87 questions and differs from the matched classical arm on at least 3/87 questions.
@@ -28,3 +28,7 @@ The cohort audit found 87 validation rows, but all 87 remain pending: there are 
 ## Consequences
 
 The feature cache may contain only numeric CLS/pooled/Reader-score arrays and question/candidate digests. The transport trace may contain only score vectors, Top5 indices, hashes and set-change metrics. If the gate passes, a separate score/rank/method-blind review packet is required; if it fails, this sequential update family closes without claiming unseen utility. Quantum-specific attribution still requires a matched classical comparison and cannot be inferred from set movement alone.
+
+## Outcome
+
+Run `20261018T073840422368Z` passed the two review-effort thresholds: the frozen quantum head changed `13/87` Top5 sets and differed from the matched classical head on `9/87`; the classical head changed `9/87`. Independent replay verified all261 score vectors, all87 Top5 sets and the unopened label boundary. This is L0 transport evidence only. The next stage is a separately frozen two-reviewer score/rank/method-blind semantic audit over the15-case union where any arm differs.

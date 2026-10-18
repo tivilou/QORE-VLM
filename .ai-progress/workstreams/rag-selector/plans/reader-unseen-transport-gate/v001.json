@@ -3,10 +3,10 @@
   "plan_id": "reader-unseen-transport-gate",
   "plan_version": 1,
   "workstream": "rag-selector",
-  "status": "blocked",
+  "status": "completed",
   "objective": "Preflight whether the frozen training59 sequential Reader-head updates transport to an untouched validation87 cohort before spending semantic review effort",
-  "focus_step_id": "UG-03",
-  "next_action": "Restore a bound server with a visible GPU, or recover the completed validation87 cache from gpushare-i1-57535; then run the fixed transport gate with the original frozen values",
+  "focus_step_id": "UG-04",
+  "next_action": "Create a separate score/rank/method-blind semantic review packet; no utility claim before review",
   "blocker": null,
   "steps": [
     {
@@ -75,7 +75,7 @@
     {
       "id": "UG-03",
       "title": "Run fixed transport gate",
-      "status": "blocked",
+      "status": "done",
       "objective": "Apply already-frozen quantum and matched classical final heads once on validation87 and quantify Top5 set transport without labels",
       "inputs": [
         "UG-02",
@@ -95,11 +95,14 @@
         "transport metrics replay",
         "prospective gate replay"
       ],
-      "evidence_paths": [],
+      "evidence_paths": [
+        "remote:3080Ti-117-50-198-37:/home/Q-DUET-VLM/reader-membership-screen-20261016/exchange/five_ideas/reader_unseen_transport_gate_87/20261018T073840422368Z"
+      ],
       "owner": "rag-selector",
       "blocker": "The reachable primary is a 1 GiB CPU-only cgroup (nvidia-smi returns no device); DPR Reader forward makes SSH unresponsive even at microbatch1. The backup GPU completed87/87 parity but its SSH endpoint is connection-refused.",
       "notes": [
-        "2026-10-18 retry: primary connected and original values hash verified; feature extraction cannot run within its current 1 GiB CPU-only allocation"
+        "2026-10-18 retry: primary connected and original values hash verified; feature extraction cannot run within its current 1 GiB CPU-only allocation",
+        "Recovered the completed validation87 cache by exact hash; quantum changed13/87 Top5 sets and differed from classical on9/87; independent261-vector replay passed"
       ],
       "supersedes": [],
       "superseded_by": []
@@ -107,7 +110,7 @@
     {
       "id": "UG-04",
       "title": "Decide whether to construct blinded semantic review",
-      "status": "todo",
+      "status": "done",
       "objective": "Advance only if fixed transport and quantum/classical separation thresholds pass; otherwise close this candidate without utility claims",
       "inputs": [
         "UG-03"
@@ -123,10 +126,14 @@
         "review packet score/rank/method blind",
         "paired qualified adjudication before any L1/L2 claim"
       ],
-      "evidence_paths": [],
+      "evidence_paths": [
+        "remote:3080Ti-117-50-198-37:/home/Q-DUET-VLM/reader-membership-screen-20261016/exchange/five_ideas/reader_unseen_transport_gate_87/20261018T073840422368Z/independent_audit.json"
+      ],
       "owner": "rag-selector",
       "blocker": null,
-      "notes": [],
+      "notes": [
+        "Both preregistered review-effort thresholds passed; packet construction is warranted"
+      ],
       "supersedes": [],
       "superseded_by": []
     }
