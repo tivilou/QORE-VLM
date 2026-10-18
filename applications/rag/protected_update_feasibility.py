@@ -107,3 +107,71 @@ def membership_counts(score_matrix, targets, ranks):
     return {'rescued':sum(len(set(s)&set(t['eligible_positive_indices'])) for s,t in zip(selected,targets)),
         'lost_protected':sum(len(set(t['immutable_selected_indices'])-set(s)) for s,t in zip(selected,targets)),
         'selected_indices':selected}
+
+
+def sequential_membership_counts(score_matrix, targets, ranks, accepted):
+    """Count original protection and accepted rescues for a current state."""
+    base=membership_counts(score_matrix,targets,ranks)
+    accepted_lost=0
+    for selected,target,previous in zip(base['selected_indices'],targets,accepted):
+        accepted_lost += len(set(previous)-set(selected))
+    return {**base,'accepted_lost':accepted_lost,
+            'eligible_rescued':base['rescued']}
+
+
+def next_sequential_proposal(score_matrix, targets, ranks, candidates, accepted, cursor):
+    """Choose the next fixed-order eligible candidate not already selected.
+
+    The removable member is recomputed from the current Top-5, excluding both
+    the immutable support and every rescue accepted by an earlier step.
+    """
+    selected=membership_counts(score_matrix,targets,ranks)['selected_indices']
+    for index in range(cursor,len(candidates)):
+        candidate=candidates[index]
+        case,added=int(candidate['case']),int(candidate['added'])
+        current=set(selected[case])
+        if added in current:
+            continue
+        protected=set(targets[case]['immutable_selected_indices'])|set(accepted[case])
+        disposable=sorted(current-protected,key=lambda i:(float(score_matrix[case,i]),-i))
+        if not disposable:
+            continue
+        removed=disposable[0]
+        return {**candidate,'removed':removed,'cursor':index+1,
+                'current_gap':float(score_matrix[case,removed]-score_matrix[case,added])},index+1
+    return None,len(candidates)
+
+
+def sequential_boundary_system(scores, jacobians, base, targets, ranks, proposal,
+                               accepted, margin):
+    """Sufficient membership constraints for one re-linearized update.
+
+    The proposal question requires the proposed five-member set to beat all
+    outsiders. Every other question requires its currently protected members
+    (immutable plus accepted rescues) to beat current outsiders. The IQR scale
+    stays fixed to the original Reader scores across steps.
+    """
+    current=membership_counts(scores,targets,ranks)['selected_indices']
+    matrices,rhs,lineage=[],[],[]
+    for case,target in enumerate(targets):
+        selected=set(current[case])
+        protected=set(target['immutable_selected_indices'])|set(accepted[case])
+        if not protected.issubset(selected):
+            raise ValueError('accepted/original protection is not currently selected')
+        is_rescue=case==int(proposal['case'])
+        if is_rescue:
+            if int(proposal['removed']) not in selected or int(proposal['removed']) in protected:
+                raise ValueError('proposal removal is not disposable')
+            members=sorted((selected-{int(proposal['removed'])})|{int(proposal['added'])})
+            outsiders=sorted(set(range(50))-set(members))
+        else:
+            members=sorted(protected)
+            outsiders=sorted(set(range(50))-selected)
+        scale=float(np.subtract(*np.percentile(base[case],[75,25]))/1.349)
+        if scale<=1e-8: raise ValueError('collapsed baseline scale')
+        for kept in members:
+            for outside in outsiders:
+                matrices.append((jacobians[case,kept]-jacobians[case,outside])/scale)
+                rhs.append(margin-(scores[case,kept]-scores[case,outside])/scale)
+                lineage.append((case,kept,outside))
+    return np.asarray(matrices,dtype=np.float64),np.asarray(rhs,dtype=np.float64),np.asarray(lineage,dtype=np.int64)

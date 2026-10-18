@@ -1,0 +1,215 @@
+{
+  "schema_version": "experiment-grounded-ideation.mechanism-recovery.v2",
+  "evidence_packet": {
+    "path": ".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json",
+    "sha256": "438462edf3e097c42331829903be556e19ca043861688ac450fca52a0b68ffae",
+    "code_revision": "exact-source-archive:e6147e55f97d538c0535351c6dfa360a17802f1d534732811ce3ba8d7074a57d",
+    "validity_status": "clean"
+  },
+  "case_evidence": {
+    "selection_rule": "Every accepted step from both matched initial heads; candidate order fixed before sequential fitting",
+    "pairing_rule": "Same59 questions, candidate order, radius, fractions, all50 competition and native acceptance gate",
+    "selection_timing": "predeclared",
+    "claim_scope": "exploratory",
+    "comparisons": [
+      {
+        "case_id": "quantum_initial/training_002/step1",
+        "unit_type": "same training question before/after the first accepted shared update",
+        "reference_condition": {
+          "artifact_refs": ["five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/selector_trace.json"],
+          "observation": "Eligible candidate index8 is outside the Reader Top5",
+          "interpretation_status": "computed"
+        },
+        "candidate_condition": {
+          "artifact_refs": ["five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/sequential_values.npz"],
+          "observation": "Index8 enters Top5 while all183 original protected memberships remain",
+          "interpretation_status": "computed"
+        },
+        "stage_trace": [{
+          "stage": "current Reader scores -> exact Jacobian -> protected LP -> all59 native replay",
+          "reference_state": "eligible_rescued=0",
+          "candidate_state": "eligible_rescued=1,lost_original=0,lost_accepted=0",
+          "artifact_refs": ["five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/independent_audit.json"],
+          "interpretation_status": "computed"
+        }],
+        "outcome": {
+          "polarity": "improved",
+          "criterion": "strict rescue increase with zero original/accepted loss",
+          "observation": "accepted at fixed candidate cursor2 after cursor1 was rejected by the native guard",
+          "artifact_refs": ["five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/independent_audit.json"],
+          "interpretation_status": "computed"
+        }
+      },
+      {
+        "case_id": "both_initial/training_048/step2",
+        "unit_type": "same second accepted training rescue in quantum and classical trajectories",
+        "reference_condition": {
+          "artifact_refs": ["five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/selector_trace.json"],
+          "observation": "Index48 is outside Top5 after step1",
+          "interpretation_status": "computed"
+        },
+        "candidate_condition": {
+          "artifact_refs": ["five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/sequential_values.npz"],
+          "observation": "Index48 enters Top5 and the step1 rescue remains protected",
+          "interpretation_status": "computed"
+        },
+        "stage_trace": [{
+          "stage": "relinearized current state -> original-plus-accepted protection -> native replay",
+          "reference_state": "eligible_rescued=1",
+          "candidate_state": "eligible_rescued=2,lost_original=0,lost_accepted=0",
+          "artifact_refs": ["five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/independent_audit.json"],
+          "interpretation_status": "computed"
+        }],
+        "outcome": {
+          "polarity": "improved",
+          "criterion": "accumulate rather than exchange rescues",
+          "observation": "both matched heads pass the second-step accumulation gate",
+          "artifact_refs": ["five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/summary.json"],
+          "interpretation_status": "computed"
+        }
+      },
+      {
+        "case_id": "quantum_vs_classical/step3",
+        "unit_type": "matched-budget third accepted update",
+        "reference_condition": {
+          "artifact_refs": ["five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/independent_audit.json"],
+          "observation": "Both trajectories begin step3 with two retained rescues",
+          "interpretation_status": "computed"
+        },
+        "candidate_condition": {
+          "artifact_refs": ["five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/selector_trace.json"],
+          "observation": "Quantum accepts cursor8/training_004 after four attempts; classical accepts cursor5/training_040 after one attempt",
+          "interpretation_status": "computed"
+        },
+        "stage_trace": [{
+          "stage": "matched candidate search under different rotation geometries",
+          "reference_state": "two rescues each",
+          "candidate_state": "three rescues each; quantum8 total attempts, classical5",
+          "artifact_refs": ["five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/independent_audit.json"],
+          "interpretation_status": "computed"
+        }],
+        "outcome": {
+          "polarity": "mixed",
+          "criterion": "quantum-specific accumulation advantage",
+          "observation": "No rescue-count advantage; trajectories diverge but matched classical reaches the same count sooner",
+          "artifact_refs": ["five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/summary.json"],
+          "interpretation_status": "computed"
+        }
+      }
+    ],
+    "lesson_batches": [{
+      "batch_id": "all_accepted_and_rejected_native_trials",
+      "case_ids": ["quantum_initial", "classical_initial"],
+      "sample_count": 27,
+      "selection_rule": "All native trials attempted by the frozen sequential run",
+      "artifact_refs": ["five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/independent_audit.json"],
+      "lesson_polarity": "mixed",
+      "observation": "Six native trials were accepted and21 rejected; both heads accumulated3 safe rescues, with no quantum count advantage",
+      "dispersion": "Quantum8 candidate attempts; classical5; first two rescues shared, third differs",
+      "interpretation_status": "computed"
+    }],
+    "interpretation_boundary": "Training-conditioned sequential feasibility only; no unseen utility, full-data benefit or quantum advantage."
+  },
+  "trace_adequacy": {
+    "status": "complete",
+    "schema_version": "sample-trace.v2",
+    "artifact_refs": [
+      "five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/selector_trace.json",
+      "five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/sequential_values.npz",
+      "five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/independent_audit.json"
+    ],
+    "selection_rule": "First2 complete outputs at every relinearized step; all59 scores, Jacobians, constraints and native trials",
+    "covered_stages": ["data", "preprocess", "scoring", "selection", "diagnosis"],
+    "missing_stages": [],
+    "target_boundary": "Qualified training59 only; evaluation100 and validation87 unopened",
+    "causal_links_observed": {
+      "intervention_execution": true,
+      "intended_intermediate": true,
+      "observable_output": true,
+      "task_utility": false
+    },
+    "notes": "All378 arrays hashed; all27 native all59 trials independently replayed."
+  },
+  "causal_trace": {
+    "intervention_execution": {
+      "claim": "Each accepted bounded shared delta is applied to the actual head and becomes the next relinearization state.",
+      "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"]
+    },
+    "intended_intermediate": {
+      "claim": "Original plus accepted memberships enter later constraints and are checked on every native trial.",
+      "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"]
+    },
+    "observable_output": {
+      "claim": "Both heads strictly accumulate0->1->2->3 rescues with zero original or accepted loss.",
+      "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"]
+    },
+    "task_utility": {
+      "claim": "Not measured on unseen questions.",
+      "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"]
+    }
+  },
+  "failure_analysis": {
+    "primary_explanation": {
+      "statement": "The earlier one-step effect is not an isolated near-tie: relinearization plus accepted-rescue protection permits cumulative fitted movement.",
+      "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"],
+      "confidence": "high"
+    },
+    "alternative_explanations": [{
+      "statement": "The gains may merely memorize the59 supervised boundaries and fail on unseen questions.",
+      "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"],
+      "confidence": "high"
+    }, {
+      "statement": "Quantum and classical geometries may differ beyond the fixed three-step cap, but this run provides no quantum advantage signal.",
+      "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"],
+      "confidence": "medium"
+    }],
+    "discriminating_measurement": {
+      "uncertainty": "Do training-fitted sequential updates improve Top5 membership on untouched questions?",
+      "measurement": "Freeze unseen questions before fitting, fit only on training59, and compare identity, quantum and matched classical final heads without tuning.",
+      "primary_outcome": "Quantum improves direct/useful untouched membership without protected regression and exceeds matched classical uncertainty.",
+      "alternative_outcome": "Training rescues do not transfer, or classical matches/exceeds quantum."
+    },
+    "closed_family": {
+      "id": "more_fitted_rescue_search_on_the_same59",
+      "rejected_variant_refs": ["configs/experiments/reader_sequential_protected_updates.json"],
+      "closure_evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"],
+      "forbidden_rescue_variants": [
+        "Raise the three-step cap and report extra fitted rescues as task progress",
+        "Tune candidate order/radius against evaluation100",
+        "Interpret equal quantum/classical rescue counts as quantum advantage"
+      ]
+    }
+  },
+  "positive_carryovers": [{
+    "id": "relinearized_accepted_rescue_protection",
+    "mechanism": "Update the actual shared head, recompute its exact local boundary, and promote every accepted rescue into later protection.",
+    "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"],
+    "transport_constraint": "Train labels may shape training updates but may never enter unseen inference or evaluation selection."
+  }, {
+    "id": "native_all_population_guard",
+    "mechanism": "Reject linear proposals unless actual all-question Top5 membership strictly improves with zero protected loss.",
+    "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"],
+    "transport_constraint": "Keep all50 candidates, identity null and matched classical control."
+  }],
+  "recovery_outcome": {
+    "disposition": "candidate",
+    "selected_candidate": {
+      "id": "frozen_unseen_membership_generalization_gate",
+      "title": "Preregistered unseen-question gate for sequential quantum Reader updates",
+      "positive_carryover_ids": ["relinearized_accepted_rescue_protection", "native_all_population_guard"],
+      "recovery_mode": "new_causal_path",
+      "causal_difference": "Move the judgment boundary from fitted training rescue to untouched question membership while keeping the fitted head and inference target-blind.",
+      "changed_causal_links": ["observable_output", "task_utility"],
+      "discriminating_measurement": "Direct/useful Top5 membership on a cohort frozen before any training update, with identity and matched classical controls.",
+      "success_gate": "Positive untouched effect with zero protected regression and uncertainty excluding no improvement; quantum-specific claim additionally requires matched-classical separation.",
+      "kill_condition": "No untouched benefit or any protected regression; stop this training objective rather than retune on exposed questions.",
+      "authorization_boundary": "Proposal only; requires a new preregistration and explicit execution authorization."
+    }
+  },
+  "limitations": [
+    "Only59 training questions and one source seed",
+    "No unseen membership or generation utility",
+    "Matched classical reaches the same rescue count with fewer candidate attempts",
+    "Exact CPU simulation; no finite-shot or resource advantage evidence"
+  ]
+}

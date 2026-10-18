@@ -1,0 +1,92 @@
+{
+  "schema_version": "rag.reader_sequential_protected_result.v1",
+  "run_id": "20261018T045707538341Z",
+  "synthetic_only": false,
+  "status": "completed",
+  "elapsed_seconds": 211.7349983380118,
+  "readiness": {
+    "status": "passed",
+    "complete_arrays": 378,
+    "sequential_membership_and_numeric_replay": true
+  },
+  "checkpoints": [
+    {
+      "id": "quantum_initial",
+      "accepted_steps": 3,
+      "final_membership": {
+        "rescued": 3,
+        "lost_protected": 0,
+        "accepted_lost": 0,
+        "eligible_rescued": 3
+      },
+      "accepted_final_total": 3,
+      "attempts": 8,
+      "stop_reason": "maximum_accepted_steps"
+    },
+    {
+      "id": "classical_initial",
+      "accepted_steps": 3,
+      "final_membership": {
+        "rescued": 3,
+        "lost_protected": 0,
+        "accepted_lost": 0,
+        "eligible_rescued": 3
+      },
+      "accepted_final_total": 3,
+      "attempts": 5,
+      "stop_reason": "maximum_accepted_steps"
+    }
+  ],
+  "provenance": {
+    "source_snapshot": {
+      "file": "executed_sources.zip",
+      "bytes": 47980,
+      "sha256": "e6147e55f97d538c0535351c6dfa360a17802f1d534732811ce3ba8d7074a57d",
+      "source_hashes": {
+        ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_recovery.json": "c7998747af48380e5ca79fdd88bc4aeebed935f56451ec6a4e3c3f7e2231a0df",
+        "applications/rag/protected_boundary_inputs.py": "e49d6d8387d4acfd1bba0baf4ba33d6b1a725a8ac1e14b0ef0fb5b4bf016a36c",
+        "applications/rag/protected_boundary_learning.py": "77d475d768a7f1fceb1ecb7981a54d5cb7124e4b32b54c7991d9d724655e5390",
+        "applications/rag/protected_update_feasibility.py": "015a2c505068658a66593acb536cb03e56be48e20af79dfa6ef231f388e02496",
+        "applications/rag/quantum_reader_rotation.py": "505b278b4b3123d8f0b598ad09e313d30ab56a0af33fa070846a57d306487610",
+        "applications/rag/reader_membership_training.py": "99b995e271c30d9908f7d90fb4686758ba224107a2bd898e3aff8fefff1f0194",
+        "applications/rag/scale_invariant_top5_objective.py": "7697697d5254d704173514a1b912d8c788f7d7781d81d46117d0530e29a8ba4c",
+        "applications/rag/support_boundary_bridge.py": "24ce7dd1b5a54cfcc8ba470bd58e36f512058c36d2adf3936f26cd276cce6129",
+        "applications/rag/support_supervision_axes.py": "5ca0b48bd7d48bce9580eeb46587015358584642a5c7f9af09756f117d35794a",
+        "configs/experiments/reader_sequential_protected_updates.json": "c9ddf1bc1c67f6bc842eb3fbd020f64ce2cb90be88b5804794c5d9f59c5ab571",
+        "configs/experiments/reader_sequential_protected_updates_plan.json": "07f2eaab8517da4c2b5008884d2b9ff31ae815566ad17a697121c1ea65eecee7",
+        "scripts/collab/five_ideas/run_reader_protected_update_feasibility.py": "a4f0f6925c8970169529b2dd9ad87b4a367229a48f3d86b05ca30cc695ba7c07",
+        "scripts/collab/five_ideas/run_reader_sequential_protected_updates.py": "d609b2ea385f1e77181651acb1aa16e0cdc031e522acd080e9055f3139492e09",
+        "scripts/collab/lib/source_snapshot.py": "2a3cd1cd61db85cfc9bc3c316a65bc2cb37455827763c15eace1e6f77888dca5"
+      }
+    },
+    "config_sha256": "c9ddf1bc1c67f6bc842eb3fbd020f64ce2cb90be88b5804794c5d9f59c5ab571",
+    "qualification": {
+      "source_sha256": "1804608795c99a71fc607ce7216b0e390301ba6c85876e0986a55e304019ff12",
+      "final_manifest_sha256": "d8c86b3d3ae0261c4f2533f67cc31e17e4dc091d7ddee6dbe6aec8a0ebd731c8",
+      "training_cases": 59,
+      "pairs": 228,
+      "actual_witness_checks": 832,
+      "semantic_truth_certified": false,
+      "validation_used": false
+    },
+    "environment": {
+      "python": "3.10.12",
+      "torch": "2.7.1+cu126",
+      "numpy": "1.26.4",
+      "scipy": "1.15.3",
+      "device": "cpu"
+    },
+    "evaluation_fields_accessed": false,
+    "new_optimizer_updates": 0,
+    "parameter_search": "sequential bounded LP on training59 only"
+  },
+  "claim_ceiling": "L0_train_only_sequential_feasibility",
+  "limitations": [
+    "Initial checkpoint only; no final-head fitting or optimizer training",
+    "Training labels only; no evaluation100/Silver or validation87 fields",
+    "No Reader/model/dataset loading, retrieval, Generator or evaluator",
+    "A safe training trajectory is not heldout utility or quantum advantage",
+    "Matched classical control is required; identical first-safe stopping does not rank capacity",
+    "Fixed radius/candidate template cannot establish global infeasibility"
+  ]
+}

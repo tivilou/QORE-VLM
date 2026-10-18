@@ -1,0 +1,61 @@
+{
+  "status": "uploaded",
+  "files": [
+    {
+      "path": "five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/audit_sources.zip",
+      "service": "qore-upload-v4",
+      "sha256": "b8243e88352a66a739678a66ccc45054593dec5527fc088769d35fc28bb35644",
+      "size_bytes": 23244,
+      "status": "stored",
+      "uploaded_at": "2026-10-18T05:10:55.348529+00:00"
+    },
+    {
+      "path": "five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/executed_sources.zip",
+      "service": "qore-upload-v4",
+      "sha256": "e6147e55f97d538c0535351c6dfa360a17802f1d534732811ce3ba8d7074a57d",
+      "size_bytes": 47980,
+      "status": "stored",
+      "uploaded_at": "2026-10-18T05:10:55.357962+00:00"
+    },
+    {
+      "path": "five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/independent_audit.json",
+      "service": "qore-upload-v4",
+      "sha256": "f8dd3661ea14caa64c0f524d629d0bc578d4b524e289c41b443a3e3a6b135d2c",
+      "size_bytes": 16274,
+      "status": "stored",
+      "uploaded_at": "2026-10-18T05:10:55.362770+00:00"
+    },
+    {
+      "path": "five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/selector_trace.json",
+      "service": "qore-upload-v4",
+      "sha256": "ef187b46e1f11511f21b0886a05a1233b7d3bd4ea435a2ea62753e687da60d58",
+      "size_bytes": 379261,
+      "status": "stored",
+      "uploaded_at": "2026-10-18T05:10:55.372295+00:00"
+    },
+    {
+      "path": "five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/sequential_values.npz",
+      "service": "qore-upload-v4",
+      "sha256": "35d7f9c165c581e7ce21ccaf57eca104db6e97a2b2af6c598af333caac8287bc",
+      "size_bytes": 286155829,
+      "status": "stored",
+      "uploaded_at": "2026-10-18T05:10:58.228317+00:00"
+    },
+    {
+      "path": "five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/summary.json",
+      "service": "qore-upload-v4",
+      "sha256": "3787066213e0646d9b9c2869c077abe206532ccbd48395f7bb99c9f7fd2ff63f",
+      "size_bytes": 4417,
+      "status": "stored",
+      "uploaded_at": "2026-10-18T05:10:58.240798+00:00"
+    },
+    {
+      "path": "five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/upload_manifest.json",
+      "service": "qore-upload-v4",
+      "sha256": "33e4ad4433198f93ce320062355fcb120534a2960fd542dc6378b0e7e7376a89",
+      "size_bytes": 1112,
+      "status": "stored",
+      "uploaded_at": "2026-10-18T05:10:58.244088+00:00"
+    }
+  ]
+}

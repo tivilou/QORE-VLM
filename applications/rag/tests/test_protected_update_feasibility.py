@@ -2,7 +2,9 @@ import numpy as np
 import pytest
 import torch
 from applications.rag.quantum_reader_rotation import make_rotation_head,RotationConfig
-from applications.rag.protected_update_feasibility import score_jacobian,bounded_proposal,boundary_system,membership_counts,rescue_targets
+from applications.rag.protected_update_feasibility import (score_jacobian,bounded_proposal,boundary_system,
+    membership_counts,rescue_targets,sequential_membership_counts,next_sequential_proposal,
+    sequential_boundary_system)
 
 
 @pytest.mark.parametrize('family',['quantum','classical'])
@@ -51,6 +53,25 @@ def test_global_constraints_include_other_questions():
     assert set(local[:,0])=={0} and set(global_[:,0])=={0,1}
 
 
+def test_sequential_proposal_protects_previous_rescue_and_recomputes_removal():
+    scores=np.tile(np.linspace(5,-5,50),(1,1)); ranks=[list(range(1,51))]
+    target={'baseline_top5_indices':[0,1,2,3,4],'immutable_selected_indices':[0,1,2],
+        'eligible_positive_indices':[5,6]}
+    accepted=[set()]
+    candidates=[{'case':0,'added':5},{'case':0,'added':6}]
+    first,cursor=next_sequential_proposal(scores,[target],ranks,candidates,accepted,0)
+    assert first['added']==5 and first['removed']==4 and cursor==1
+    accepted[0].add(5)
+    changed=scores.copy(); changed[0,5]=6
+    second,cursor=next_sequential_proposal(changed,[target],ranks,candidates,accepted,cursor)
+    assert second['added']==6 and second['removed']==3
+    counts=sequential_membership_counts(changed,[target],ranks,accepted)
+    assert counts['accepted_lost']==0
+    jac=np.eye(50)[None,:,:]
+    matrix, rhs, lineage=sequential_boundary_system(changed,jac,scores,[target],ranks,second,accepted,.01)
+    assert (0,5,3) in map(tuple,lineage)  # accepted rescue is protected against outsiders
+
+
 def test_complete_fixture_replays_native_rounding_and_rejects_false_witness(tmp_path):
     import argparse,json
     from scripts.collab.five_ideas.run_reader_protected_update_feasibility import run,validate_numeric_trace
@@ -62,3 +83,12 @@ def test_complete_fixture_replays_native_rounding_and_rejects_false_witness(tmp_
     trial['safe_witness']=not trial['safe_witness']
     path.write_text(json.dumps(trace))
     with pytest.raises(ValueError,match='false safe witness'):validate_numeric_trace(directory)
+
+
+def test_sequential_fixture_replays_every_native_trial(tmp_path):
+    import argparse
+    from scripts.collab.five_ideas.run_reader_sequential_protected_updates import run,validate_trace
+    directory=run(argparse.Namespace(synthetic=True,features=None,source=None,bundle=None,output=tmp_path))
+    report=validate_trace(directory)
+    assert report['status']=='passed'
+    assert report['complete_arrays']>200

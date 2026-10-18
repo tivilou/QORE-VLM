@@ -1,0 +1,107 @@
+{
+  "schema_version": "rag.reader_sequential_protected_updates_receipt.v1",
+  "run_id": "20261018T045707538341Z",
+  "validity_status": "clean_for_train_only_sequential_diagnosis",
+  "source_run": "20261017T152312389403Z",
+  "population": {
+    "training": 59,
+    "protected": 183,
+    "eligible": 135,
+    "evaluation_accessed": 0,
+    "validation_accessed": 0
+  },
+  "budget": {
+    "families": ["quantum", "classical"],
+    "checkpoint": "initial_identity",
+    "maximum_accepted_steps": 3,
+    "maximum_candidate_attempts_per_step": 12,
+    "candidate_order": "fixed once from the initial Reader boundary",
+    "radius": 0.1,
+    "normalized_margin": 0.01,
+    "fractions": [1.0, 0.5, 0.25],
+    "acceptance": "strict native all59 rescue increase with zero original and accepted protection loss",
+    "elapsed_seconds": 211.7349983380118
+  },
+  "results": [
+    {
+      "id": "quantum_initial",
+      "initial_rescued": 0,
+      "final_rescued": 3,
+      "lost_original_protected": 0,
+      "lost_accepted_rescues": 0,
+      "accepted_steps": 3,
+      "candidate_attempts": 8,
+      "rescues": [
+        {"step": 1, "candidate_cursor": 2, "case_id": "training_002", "added_index": 8},
+        {"step": 2, "candidate_cursor": 4, "case_id": "training_048", "added_index": 48},
+        {"step": 3, "candidate_cursor": 8, "case_id": "training_004", "added_index": 1}
+      ]
+    },
+    {
+      "id": "classical_initial",
+      "initial_rescued": 0,
+      "final_rescued": 3,
+      "lost_original_protected": 0,
+      "lost_accepted_rescues": 0,
+      "accepted_steps": 3,
+      "candidate_attempts": 5,
+      "rescues": [
+        {"step": 1, "candidate_cursor": 2, "case_id": "training_002", "added_index": 8},
+        {"step": 2, "candidate_cursor": 4, "case_id": "training_048", "added_index": 48},
+        {"step": 3, "candidate_cursor": 5, "case_id": "training_040", "added_index": 2}
+      ]
+    }
+  ],
+  "independent_replay": {
+    "status": "passed",
+    "complete_arrays": 378,
+    "all59_native_baselines": 2,
+    "all59_native_trials": 27,
+    "accepted_steps": 6,
+    "rejected_native_trials": 21,
+    "source_files_verified": 14,
+    "trace_sha256": "ef187b46e1f11511f21b0886a05a1233b7d3bd4ea435a2ea62753e687da60d58",
+    "values_sha256": "35d7f9c165c581e7ce21ccaf57eca104db6e97a2b2af6c598af333caac8287bc",
+    "auditor_sha256": "6a90060a8726a263339b31097cef165be0a79a5761e5ac840337cf582e35e503"
+  },
+  "provenance": {
+    "config_sha256": "c9ddf1bc1c67f6bc842eb3fbd020f64ce2cb90be88b5804794c5d9f59c5ab571",
+    "executed_sources_sha256": "e6147e55f97d538c0535351c6dfa360a17802f1d534732811ce3ba8d7074a57d",
+    "executed_source_files": 14,
+    "audit_sources_sha256": "b8243e88352a66a739678a66ccc45054593dec5527fc088769d35fc28bb35644",
+    "environment": {
+      "python": "3.10.12",
+      "torch": "2.7.1+cu126",
+      "numpy": "1.26.4",
+      "scipy": "1.15.3",
+      "device": "cpu"
+    }
+  },
+  "artifact_exchange": {
+    "target_directory": "five_ideas/reader_sequential_protected_updates/20261018T045707538341Z",
+    "files": 8,
+    "bytes": 286630598,
+    "manifest_sha256": "33e4ad4433198f93ce320062355fcb120534a2960fd542dc6378b0e7e7376a89",
+    "receipt_sha256": "eb09ac1b8a2b3883e6e15bddb1642bc8d22e1d047855b4bdee80226b6fde5b84",
+    "source_and_uploaded_hashes_equal": true
+  },
+  "gate": {
+    "required": "at least two accepted steps with strict rescue increase and zero original/accepted loss",
+    "status": "passed",
+    "claim_ceiling": "L0_train_only_sequential_feasibility"
+  },
+  "interpretation": {
+    "supported": "Re-linearized shared updates with an actual all59 native guard can accumulate more than one fitted training rescue without forgetting prior protected memberships.",
+    "not_supported": [
+      "held-out Top50-to-Top5 improvement",
+      "full-data utility",
+      "quantum superiority over the matched classical head",
+      "L1 or L2 evidence"
+    ]
+  },
+  "next_recommendation": {
+    "candidate_id": "frozen_unseen_membership_generalization_gate",
+    "action": "fit the frozen sequential rule on training59 only and evaluate direct/useful membership on a preregistered untouched question cohort",
+    "authorization": "proposal_only"
+  }
+}

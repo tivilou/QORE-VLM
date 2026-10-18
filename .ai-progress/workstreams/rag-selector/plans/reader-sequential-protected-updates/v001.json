@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "plan_id": "reader-sequential-protected-updates",
+  "plan_version": 1,
+  "workstream": "rag-selector",
+  "status": "completed",
+  "objective": "Run a bounded initial-head sequential protected update diagnostic and record whether safe rescues accumulate",
+  "focus_step_id": "SPU-03",
+  "next_action": "Await authorization for a separately preregistered frozen unseen-question membership generalization gate",
+  "blocker": null,
+  "steps": [
+    {
+      "id": "SPU-01",
+      "title": "Freeze sequential contract and implement",
+      "status": "done",
+      "objective": "Fix candidate order, current protection semantics, relinearization, native acceptance and matched controls",
+      "inputs": [
+        "decisions/2026-10-18-reader-sequential-protected-updates.md",
+        "configs/experiments/reader_sequential_protected_updates.json"
+      ],
+      "outputs": [
+        "applications/rag/protected_update_feasibility.py",
+        "scripts/collab/five_ideas/run_reader_sequential_protected_updates.py",
+        "configs/experiments/reader_sequential_protected_updates_plan.json"
+      ],
+      "depends_on": [],
+      "acceptance_checks": [
+        "Accepted rescue remains protected in later constraints",
+        "Current disposable slot recomputed",
+        "No evaluation fields",
+        "Synthetic trace replay passes"
+      ],
+      "evidence_paths": [],
+      "owner": "rag-selector",
+      "blocker": null,
+      "notes": [],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "SPU-02",
+      "title": "Run bounded initial-head audit",
+      "status": "done",
+      "objective": "Run quantum/classical initial heads for at most3 accepted steps and native all59 guards",
+      "inputs": [
+        "SPU-01"
+      ],
+      "outputs": [
+        "exchange/five_ideas/reader_sequential_protected_updates/<run>/summary.json"
+      ],
+      "depends_on": [
+        "SPU-01"
+      ],
+      "acceptance_checks": [
+        "Fixed candidate order and budgets",
+        "All59 scores and membership states",
+        "Original/accepted protection never lost",
+        "Independent replay"
+      ],
+      "evidence_paths": [],
+      "owner": "rag-selector",
+      "blocker": null,
+      "notes": [],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "SPU-03",
+      "title": "Analyze cumulative feasibility",
+      "status": "done",
+      "objective": "Separate strict accumulation from one-step feasibility, compare quantum/classical and record one next direction",
+      "inputs": [
+        "SPU-02"
+      ],
+      "outputs": [
+        "docs/rag-research-log/20261018T-date-only-reader-sequential-protected-updates.md"
+      ],
+      "depends_on": [
+        "SPU-02"
+      ],
+      "acceptance_checks": [
+        "L0 ceiling explicit",
+        "No utility/attribution claim",
+        "State/decision/session and focused commit recorded"
+      ],
+      "evidence_paths": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"
+      ],
+      "owner": "rag-selector",
+      "blocker": null,
+      "notes": [],
+      "supersedes": [],
+      "superseded_by": []
+    }
+  ],
+  "change_log": [],
+  "updated_at": "2026-10-18"
+}

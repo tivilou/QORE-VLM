@@ -1,0 +1,219 @@
+{
+  "schema_version": "evidence-tiered-idea-validation.evidence-card.v2",
+  "idea_id": "reader_sequential_protected_updates",
+  "title": "Sequential protected updates for quantum Reader rotations",
+  "status": "candidate",
+  "current_tier": "L0_diagnostic",
+  "claim_ceiling": "diagnostic",
+  "rating_policy": {
+    "id": "canonical_l0_l4_with_training_conditioned_guard",
+    "version": "2026-10-18",
+    "notes": "Accumulated fitted rescue remains L0 until untouched-question utility is measured."
+  },
+  "hypothesis": "Re-linearized shared Reader-rotation updates can accumulate multiple training rescues while retaining all original and previously accepted protected memberships.",
+  "mechanism": "Identity-start exact Jacobian, fixed candidate order, current-set bounded LP, native all59 strict acceptance; quantum and matched classical heads.",
+  "experiment": {
+    "stage": "preflight",
+    "training_budget": {
+      "data_scope": "Frozen59 training cases;135 eligible and183 protected; evaluation100/validation87 unopened",
+      "epochs_or_steps": "At most3 accepted updates and12 candidate attempts per step; no optimizer epochs",
+      "selection_rule": "Candidate order fixed once from initial Reader entry gaps; native all59 strict-increase guard",
+      "seed_policy": "Source rotation seed20261013; deterministic CPU HiGHS and native forward"
+    },
+    "conclusion_scope": "diagnostic_only",
+    "continuation_status": "continue",
+    "formal_run_authorized": false,
+    "executor": "other"
+  },
+  "intervention": {
+    "changes_attention": true,
+    "target": "Fixed Top50-to-Top5 via shared classifier-input feature rotations",
+    "inference_mode": "task_supervised",
+    "heldout_positive": false,
+    "leakage_audit": "pass",
+    "attention_action_evidence": {
+      "status": "pass",
+      "refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"]
+    }
+  },
+  "evidence": {
+    "data_scope": {
+      "task_family": "QA passage-selection training-feasibility diagnosis",
+      "natural_task": true,
+      "task_count": 1,
+      "split_count": 1,
+      "dataset_ids": ["nq_open qualified training59"]
+    },
+    "runs": {
+      "seed_count": 1,
+      "seeds": [20261013],
+      "independent_split_count": 1,
+      "statistics": {
+        "status": "not_run",
+        "method": "Deterministic fitted feasibility; no generalization interval applicable"
+      }
+    },
+    "metrics": [
+      {
+        "name": "eligible_rescued_count",
+        "split": "training59",
+        "variant": "quantum_initial_sequential_guarded",
+        "value": 3,
+        "baseline_value": 0,
+        "delta_vs_disabled": 3,
+        "primary": true,
+        "effect_direction": "higher",
+        "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"]
+      },
+      {
+        "name": "lost_original_or_accepted_count",
+        "split": "training59",
+        "variant": "quantum_initial_sequential_guarded",
+        "value": 0,
+        "baseline_value": 0,
+        "delta_vs_disabled": 0,
+        "primary": false,
+        "effect_direction": "lower",
+        "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"]
+      },
+      {
+        "name": "eligible_rescued_count",
+        "split": "training59",
+        "variant": "classical_initial_sequential_guarded",
+        "value": 3,
+        "baseline_value": 0,
+        "delta_vs_disabled": 3,
+        "primary": true,
+        "effect_direction": "higher",
+        "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"]
+      },
+      {
+        "name": "candidate_attempt_count",
+        "split": "training59",
+        "variant": "quantum_vs_classical",
+        "value": 8,
+        "baseline_value": 5,
+        "delta_vs_disabled": 3,
+        "primary": false,
+        "effect_direction": "lower",
+        "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"]
+      }
+    ],
+    "controls": [
+      {
+        "id": "reader_identity",
+        "kind": "disabled",
+        "status": "pass",
+        "notes": "Both initial zero updates exactly preserve the original Reader Top5 membership.",
+        "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"]
+      },
+      {
+        "id": "matched_classical",
+        "kind": "classical",
+        "status": "pass",
+        "notes": "Same200 parameters, candidate order, step/radius/fraction budget and native guard;3 rescues in5 attempts versus quantum3 in8.",
+        "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"]
+      },
+      {
+        "id": "linear_prediction_vs_native",
+        "kind": "other",
+        "status": "pass",
+        "notes": "Twenty-one native trials are rejected despite LP proposals, preserving nonlinear failure evidence.",
+        "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"]
+      }
+    ]
+  },
+  "axes": {
+    "task_utility": {
+      "status": "not_run",
+      "notes": "No untouched question features or labels accessed.",
+      "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"]
+    },
+    "robustness": {
+      "status": "not_run",
+      "notes": "One fitted cohort and one source seed.",
+      "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"]
+    },
+    "natural_transfer": {
+      "status": "not_run",
+      "notes": "No independent or full-data transfer test.",
+      "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"]
+    },
+    "attention_alignment": {
+      "status": "partial",
+      "notes": "Three fitted support rescues accumulate without original or accepted loss.",
+      "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"]
+    },
+    "classical_attribution": {
+      "status": "fail",
+      "notes": "Matched classical reaches the same rescue count with fewer candidate attempts; no quantum-specific effect.",
+      "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"]
+    },
+    "finite_shot": {
+      "status": "not_run",
+      "notes": "Exact CPU simulation only.",
+      "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"]
+    },
+    "resource_audit": {
+      "status": "partial",
+      "notes": "10 data qubits and200 shared parameters; no state-preparation/readout advantage certified.",
+      "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json"]
+    }
+  },
+  "trace_completeness": "complete",
+  "trace_observability": {
+    "status": "complete",
+    "schema_version": "sample-trace.v2",
+    "legacy_compatibility": false,
+    "artifact_refs": [
+      "five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/selector_trace.json",
+      "five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/sequential_values.npz",
+      "five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/independent_audit.json"
+    ],
+    "selection_rule": "First2 complete outputs at every step; all59 scores/Jacobians/constraints/native trials",
+    "coverage": {
+      "data": "observed",
+      "preprocess": "observed",
+      "training": "observed",
+      "retrieval": "not_applicable",
+      "scoring": "observed",
+      "selection": "observed",
+      "generation": "not_applicable",
+      "evaluation": "not_applicable",
+      "diagnosis": "observed"
+    },
+    "missing_stages": ["retrieval", "generation", "evaluation"],
+    "notes": "All378 arrays hashed and all27 native all59 trials independently replayed."
+  },
+  "mechanism_recovery": {
+    "dossier_path": ".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_recovery.json",
+    "dossier_sha256": "5665bc2803f168f2131d571dc828708b967587184e3beb5957680c3eb108db8f",
+    "outcome": "candidate",
+    "selected_candidate_id": "frozen_unseen_membership_generalization_gate"
+  },
+  "next_upgrade": {
+    "action": "Freeze an unseen question cohort before fitting, fit on training59 only, and evaluate direct/useful Top5 membership target-blind.",
+    "success_gate": "Positive untouched effect with zero protected regression; quantum-specific advancement also requires matched-classical separation.",
+    "kill_criteria": "No untouched benefit or any protected regression; do not retune on exposed questions.",
+    "estimated_cost": "Separate bounded cache experiment; no model or dataset download if features and labels are already qualified.",
+    "authorized": false
+  },
+  "limitations": [
+    "Training-label-conditioned parameter search; no held-out utility",
+    "Matched classical equals the quantum rescue count and needs fewer candidate attempts",
+    "A three-step fixed candidate/radius budget cannot establish global capacity",
+    "No generation, finite-shot or quantum-resource advantage evidence"
+  ],
+  "failed_gates": [
+    "heldout_utility_not_run",
+    "quantum_superiority_not_established"
+  ],
+  "provenance": {
+    "code_revision": "exact-source-archive:e6147e55f97d538c0535351c6dfa360a17802f1d534732811ce3ba8d7074a57d",
+    "records": [{
+      "path": ".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_receipt.json",
+      "role": "Independently replayed diagnostic and artifact receipts",
+      "sha256": "438462edf3e097c42331829903be556e19ca043861688ac450fca52a0b68ffae"
+    }]
+  }
+}

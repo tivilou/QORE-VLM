@@ -1,0 +1,524 @@
+{
+  "schema_version": "rag.reader_sequential_protected_audit.v1",
+  "run_id": "20261018T045707538341Z",
+  "status": "passed",
+  "trace_sha256": "ef187b46e1f11511f21b0886a05a1233b7d3bd4ea435a2ea62753e687da60d58",
+  "values_sha256": "35d7f9c165c581e7ce21ccaf57eca104db6e97a2b2af6c598af333caac8287bc",
+  "auditor_sha256": "6a90060a8726a263339b31097cef165be0a79a5761e5ac840337cf582e35e503",
+  "source_files_verified": 14,
+  "readiness": {
+    "status": "passed",
+    "complete_arrays": 378,
+    "sequential_membership_and_numeric_replay": true
+  },
+  "all59_native_baselines": 2,
+  "all59_native_trials": 27,
+  "accepted_steps": 6,
+  "rejected_native_trials": 21,
+  "checkpoints": [
+    {
+      "id": "quantum_initial",
+      "initial_rescued": 0,
+      "steps": [
+        {
+          "step": 1,
+          "accepted": true,
+          "attempts": [
+            {
+              "attempt": 1,
+              "proposal": {
+                "case": 23,
+                "added": 10,
+                "removed": 6,
+                "baseline_gap": 0.027123227964974364,
+                "cursor": 1,
+                "current_gap": 0.16790437698364258
+              },
+              "native": [
+                {
+                  "fraction": 1.0,
+                  "accepted": false,
+                  "rescued": 3,
+                  "lost_protected": 1,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 3
+                },
+                {
+                  "fraction": 0.5,
+                  "accepted": false,
+                  "rescued": 0,
+                  "lost_protected": 0,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 0
+                },
+                {
+                  "fraction": 0.25,
+                  "accepted": false,
+                  "rescued": 0,
+                  "lost_protected": 0,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 0
+                }
+              ]
+            },
+            {
+              "attempt": 2,
+              "proposal": {
+                "case": 1,
+                "added": 8,
+                "removed": 15,
+                "baseline_gap": 0.03850510862532291,
+                "cursor": 2,
+                "current_gap": 0.19470973312854767
+              },
+              "native": [
+                {
+                  "fraction": 1.0,
+                  "accepted": true,
+                  "rescued": 1,
+                  "lost_protected": 0,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 1
+                }
+              ]
+            }
+          ],
+          "rescued_after": 1,
+          "lost_protected": 0,
+          "accepted_lost": 0,
+          "proposed_case": "training_002",
+          "question": "who sings the theme song for miami vice",
+          "added_index": 8,
+          "accepted_total": 1
+        },
+        {
+          "step": 2,
+          "accepted": true,
+          "attempts": [
+            {
+              "attempt": 1,
+              "proposal": {
+                "case": 22,
+                "added": 2,
+                "removed": 4,
+                "baseline_gap": 0.07473660008268097,
+                "cursor": 3,
+                "current_gap": 0.37090229988098145
+              },
+              "native": [
+                {
+                  "fraction": 1.0,
+                  "accepted": false,
+                  "rescued": 2,
+                  "lost_protected": 2,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 2
+                },
+                {
+                  "fraction": 0.5,
+                  "accepted": false,
+                  "rescued": 1,
+                  "lost_protected": 0,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 1
+                },
+                {
+                  "fraction": 0.25,
+                  "accepted": false,
+                  "rescued": 1,
+                  "lost_protected": 0,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 1
+                }
+              ]
+            },
+            {
+              "attempt": 2,
+              "proposal": {
+                "case": 47,
+                "added": 48,
+                "removed": 17,
+                "baseline_gap": 0.0818875204736798,
+                "cursor": 4,
+                "current_gap": 0.3186526298522949
+              },
+              "native": [
+                {
+                  "fraction": 1.0,
+                  "accepted": true,
+                  "rescued": 2,
+                  "lost_protected": 0,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 2
+                }
+              ]
+            }
+          ],
+          "rescued_after": 2,
+          "lost_protected": 0,
+          "accepted_lost": 0,
+          "proposed_case": "training_048",
+          "question": "who wrote the national anthem of south africa",
+          "added_index": 48,
+          "accepted_total": 2
+        },
+        {
+          "step": 3,
+          "accepted": true,
+          "attempts": [
+            {
+              "attempt": 1,
+              "proposal": {
+                "case": 39,
+                "added": 2,
+                "removed": 3,
+                "baseline_gap": 0.09217440488071556,
+                "cursor": 5,
+                "current_gap": 0.5029528141021729
+              },
+              "native": [
+                {
+                  "fraction": 1.0,
+                  "accepted": false,
+                  "rescued": 1,
+                  "lost_protected": 1,
+                  "accepted_lost": 1,
+                  "eligible_rescued": 1
+                },
+                {
+                  "fraction": 0.5,
+                  "accepted": false,
+                  "rescued": 2,
+                  "lost_protected": 0,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 2
+                },
+                {
+                  "fraction": 0.25,
+                  "accepted": false,
+                  "rescued": 2,
+                  "lost_protected": 0,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 2
+                }
+              ]
+            },
+            {
+              "attempt": 2,
+              "proposal": {
+                "case": 37,
+                "added": 0,
+                "removed": 33,
+                "baseline_gap": 0.1263344979197497,
+                "cursor": 6,
+                "current_gap": 0.7570450305938721
+              },
+              "native": [
+                {
+                  "fraction": 1.0,
+                  "accepted": false,
+                  "rescued": 3,
+                  "lost_protected": 1,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 3
+                },
+                {
+                  "fraction": 0.5,
+                  "accepted": false,
+                  "rescued": 2,
+                  "lost_protected": 0,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 2
+                },
+                {
+                  "fraction": 0.25,
+                  "accepted": false,
+                  "rescued": 2,
+                  "lost_protected": 0,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 2
+                }
+              ]
+            },
+            {
+              "attempt": 3,
+              "proposal": {
+                "case": 23,
+                "added": 0,
+                "removed": 6,
+                "baseline_gap": 0.1269302149438951,
+                "cursor": 7,
+                "current_gap": 0.46819210052490234
+              },
+              "native": [
+                {
+                  "fraction": 1.0,
+                  "accepted": false,
+                  "rescued": 3,
+                  "lost_protected": 1,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 3
+                },
+                {
+                  "fraction": 0.5,
+                  "accepted": false,
+                  "rescued": 2,
+                  "lost_protected": 0,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 2
+                },
+                {
+                  "fraction": 0.25,
+                  "accepted": false,
+                  "rescued": 2,
+                  "lost_protected": 0,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 2
+                }
+              ]
+            },
+            {
+              "attempt": 4,
+              "proposal": {
+                "case": 3,
+                "added": 1,
+                "removed": 20,
+                "baseline_gap": 0.14324549721968452,
+                "cursor": 8,
+                "current_gap": 0.11561894416809082
+              },
+              "native": [
+                {
+                  "fraction": 1.0,
+                  "accepted": true,
+                  "rescued": 3,
+                  "lost_protected": 0,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 3
+                }
+              ]
+            }
+          ],
+          "rescued_after": 3,
+          "lost_protected": 0,
+          "accepted_lost": 0,
+          "proposed_case": "training_004",
+          "question": "what is the size of the angles of an equilateral triangle",
+          "added_index": 1,
+          "accepted_total": 3
+        }
+      ],
+      "final_membership": {
+        "rescued": 3,
+        "lost_protected": 0,
+        "accepted_lost": 0,
+        "eligible_rescued": 3
+      },
+      "accepted_final_total": 3
+    },
+    {
+      "id": "classical_initial",
+      "initial_rescued": 0,
+      "steps": [
+        {
+          "step": 1,
+          "accepted": true,
+          "attempts": [
+            {
+              "attempt": 1,
+              "proposal": {
+                "case": 23,
+                "added": 10,
+                "removed": 6,
+                "baseline_gap": 0.027123227964974364,
+                "cursor": 1,
+                "current_gap": 0.16790437698364258
+              },
+              "native": [
+                {
+                  "fraction": 1.0,
+                  "accepted": false,
+                  "rescued": 0,
+                  "lost_protected": 0,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 0
+                },
+                {
+                  "fraction": 0.5,
+                  "accepted": false,
+                  "rescued": 0,
+                  "lost_protected": 0,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 0
+                },
+                {
+                  "fraction": 0.25,
+                  "accepted": false,
+                  "rescued": 0,
+                  "lost_protected": 0,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 0
+                }
+              ]
+            },
+            {
+              "attempt": 2,
+              "proposal": {
+                "case": 1,
+                "added": 8,
+                "removed": 15,
+                "baseline_gap": 0.03850510862532291,
+                "cursor": 2,
+                "current_gap": 0.19470973312854767
+              },
+              "native": [
+                {
+                  "fraction": 1.0,
+                  "accepted": true,
+                  "rescued": 1,
+                  "lost_protected": 0,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 1
+                }
+              ]
+            }
+          ],
+          "rescued_after": 1,
+          "lost_protected": 0,
+          "accepted_lost": 0,
+          "proposed_case": "training_002",
+          "question": "who sings the theme song for miami vice",
+          "added_index": 8,
+          "accepted_total": 1
+        },
+        {
+          "step": 2,
+          "accepted": true,
+          "attempts": [
+            {
+              "attempt": 1,
+              "proposal": {
+                "case": 22,
+                "added": 2,
+                "removed": 4,
+                "baseline_gap": 0.07473660008268097,
+                "cursor": 3,
+                "current_gap": 0.35254716873168945
+              },
+              "native": [
+                {
+                  "fraction": 1.0,
+                  "accepted": false,
+                  "rescued": 2,
+                  "lost_protected": 1,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 2
+                },
+                {
+                  "fraction": 0.5,
+                  "accepted": false,
+                  "rescued": 1,
+                  "lost_protected": 0,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 1
+                },
+                {
+                  "fraction": 0.25,
+                  "accepted": false,
+                  "rescued": 1,
+                  "lost_protected": 0,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 1
+                }
+              ]
+            },
+            {
+              "attempt": 2,
+              "proposal": {
+                "case": 47,
+                "added": 48,
+                "removed": 17,
+                "baseline_gap": 0.0818875204736798,
+                "cursor": 4,
+                "current_gap": 0.3526344299316406
+              },
+              "native": [
+                {
+                  "fraction": 1.0,
+                  "accepted": true,
+                  "rescued": 2,
+                  "lost_protected": 0,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 2
+                }
+              ]
+            }
+          ],
+          "rescued_after": 2,
+          "lost_protected": 0,
+          "accepted_lost": 0,
+          "proposed_case": "training_048",
+          "question": "who wrote the national anthem of south africa",
+          "added_index": 48,
+          "accepted_total": 2
+        },
+        {
+          "step": 3,
+          "accepted": true,
+          "attempts": [
+            {
+              "attempt": 1,
+              "proposal": {
+                "case": 39,
+                "added": 2,
+                "removed": 3,
+                "baseline_gap": 0.09217440488071556,
+                "cursor": 5,
+                "current_gap": 0.5840942859649658
+              },
+              "native": [
+                {
+                  "fraction": 1.0,
+                  "accepted": true,
+                  "rescued": 3,
+                  "lost_protected": 0,
+                  "accepted_lost": 0,
+                  "eligible_rescued": 3
+                }
+              ]
+            }
+          ],
+          "rescued_after": 3,
+          "lost_protected": 0,
+          "accepted_lost": 0,
+          "proposed_case": "training_040",
+          "question": "who played freddy eynsford hill in my fair lady",
+          "added_index": 2,
+          "accepted_total": 3
+        }
+      ],
+      "final_membership": {
+        "rescued": 3,
+        "lost_protected": 0,
+        "accepted_lost": 0,
+        "eligible_rescued": 3
+      },
+      "accepted_final_total": 3
+    }
+  ],
+  "data_access": "training59 only; no evaluation100/validation87 judgments or features",
+  "claim_ceiling": "L0_train_only_sequential_feasibility",
+  "audit_source_snapshot": {
+    "file": "audit_sources.zip",
+    "bytes": 23244,
+    "sha256": "b8243e88352a66a739678a66ccc45054593dec5527fc088769d35fc28bb35644",
+    "source_hashes": {
+      "applications/rag/protected_update_feasibility.py": "015a2c505068658a66593acb536cb03e56be48e20af79dfa6ef231f388e02496",
+      "applications/rag/quantum_reader_rotation.py": "505b278b4b3123d8f0b598ad09e313d30ab56a0af33fa070846a57d306487610",
+      "scripts/collab/five_ideas/audit_reader_sequential_protected_updates.py": "6a90060a8726a263339b31097cef165be0a79a5761e5ac840337cf582e35e503",
+      "scripts/collab/five_ideas/run_reader_protected_update_feasibility.py": "a4f0f6925c8970169529b2dd9ad87b4a367229a48f3d86b05ca30cc695ba7c07",
+      "scripts/collab/five_ideas/run_reader_sequential_protected_updates.py": "d609b2ea385f1e77181651acb1aa16e0cdc031e522acd080e9055f3139492e09",
+      "scripts/collab/lib/source_snapshot.py": "2a3cd1cd61db85cfc9bc3c316a65bc2cb37455827763c15eace1e6f77888dca5"
+    }
+  }
+}

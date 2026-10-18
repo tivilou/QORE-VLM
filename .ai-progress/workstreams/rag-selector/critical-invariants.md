@@ -217,6 +217,7 @@
 - [ACTIVE] V100s CPU experiments; 3080Ti artifact exchange -> [detail](decisions/2026-10-16-v100s-experiment-authorization.md)
 - [ACTIVE] Reader membership screen: weak gain, rescue-protection conflict -> [detail](decisions/2026-10-17-reader-membership-screen-result.md)
 - [CLOSED] Train-only protected quantum update feasibility audit -> [detail](decisions/2026-10-17-reader-protected-update-feasibility.md)
+- [CLOSED / L0 ACCUMULATION PASSED; UNSEEN UTILITY NEXT] Sequential protected Reader updates as a bounded training-only diagnostic -> [detail](decisions/2026-10-18-reader-sequential-protected-updates.md)
 
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.
