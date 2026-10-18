@@ -78,6 +78,64 @@ def merge(packet_path: Path, review_a_path: Path, review_b_path: Path, output: P
     return consensus
 
 
+def adjudicate(packet_path: Path, partial_consensus_path: Path, disputes_path: Path,
+               adjudications_path: Path, output: Path, config_path: Path = CONFIG) -> dict:
+    """Resolve every blind disagreement without loading the sealed method key."""
+    packet, cfg = load(packet_path), load(config_path)
+    packet_sha = digest(packet_path)
+    partial, disputes, adjudications = (
+        load(partial_consensus_path), load(disputes_path), load(adjudications_path)
+    )
+    for value, name in ((partial, "partial consensus"), (disputes, "disputes"),
+                        (adjudications, "adjudications")):
+        if value.get("packet_sha256") != packet_sha:
+            raise ValueError(f"{name} packet hash mismatch")
+    if partial.get("complete") or partial.get("unresolved_count", 0) <= 0:
+        raise ValueError("adjudication requires an incomplete blind consensus")
+    support = set(cfg["semantic_codes"]["answer_support"])
+    scope = set(cfg["semantic_codes"]["scope_match"])
+    unresolved = {(r["review_case_id"], r["review_item_id"]): r
+                  for r in disputes.get("unresolved", [])}
+    resolved: dict[tuple[str, str], dict] = {}
+    for row in adjudications.get("judgments", []):
+        pair = (row.get("review_case_id"), row.get("review_item_id"))
+        if pair in resolved or row.get("answer_support") not in support or row.get("scope_match") not in scope:
+            raise ValueError("invalid or duplicate adjudication")
+        if not isinstance(row.get("rationale"), str) or not row["rationale"].strip():
+            raise ValueError("every adjudication needs a rationale")
+        resolved[pair] = row
+    if set(resolved) != set(unresolved):
+        raise ValueError("adjudication coverage must exactly match unresolved disputes")
+    agreed = {(r["review_case_id"], r["review_item_id"]): r for r in partial.get("judgments", [])}
+    if set(agreed) & set(resolved):
+        raise ValueError("agreed and adjudicated judgments overlap")
+    expected = expected_pairs(packet)
+    if set(agreed) | set(resolved) != set(expected):
+        raise ValueError("final consensus item coverage mismatch")
+    final_rows = []
+    for pair in expected:
+        if pair in agreed:
+            final_rows.append(agreed[pair])
+            continue
+        row = resolved[pair]
+        final_rows.append({
+            "review_case_id": pair[0], "review_item_id": pair[1],
+            "answer_support": row["answer_support"], "scope_match": row["scope_match"],
+            "reviewer_a": unresolved[pair]["reviewer_a"],
+            "reviewer_b": unresolved[pair]["reviewer_b"],
+            "adjudication": row,
+        })
+    consensus = {
+        "schema_version": "rag.reader_unseen_blind_consensus.v1",
+        "packet_sha256": packet_sha,
+        "complete": True,
+        "judgments": final_rows,
+        "unresolved_count": 0,
+    }
+    write(output, consensus)
+    return consensus
+
+
 def label(row: dict) -> tuple[bool, bool, bool]:
     uncertain = row["answer_support"] == "uncertain" or row["scope_match"] == "uncertain"
     direct = row["answer_support"] == "direct" and row["scope_match"] == "yes"
@@ -152,6 +210,13 @@ if __name__ == "__main__":
     merge_p.add_argument("--output", type=Path, required=True)
     merge_p.add_argument("--disputes", type=Path, required=True)
     merge_p.add_argument("--config", type=Path, default=CONFIG)
+    adjudicate_p = sub.add_parser("adjudicate")
+    adjudicate_p.add_argument("--packet", type=Path, required=True)
+    adjudicate_p.add_argument("--partial-consensus", type=Path, required=True)
+    adjudicate_p.add_argument("--disputes", type=Path, required=True)
+    adjudicate_p.add_argument("--adjudications", type=Path, required=True)
+    adjudicate_p.add_argument("--output", type=Path, required=True)
+    adjudicate_p.add_argument("--config", type=Path, default=CONFIG)
     score_p = sub.add_parser("score")
     score_p.add_argument("--packet", type=Path, required=True)
     score_p.add_argument("--consensus", type=Path, required=True)
@@ -161,6 +226,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
     if args.command == "merge":
         value = merge(args.packet, args.review_a, args.review_b, args.output, args.disputes, args.config)
+    elif args.command == "adjudicate":
+        value = adjudicate(args.packet, args.partial_consensus, args.disputes,
+                           args.adjudications, args.output, args.config)
     else:
         value = score(args.packet, args.consensus, args.key, args.output, args.config)
     print(json.dumps(value, ensure_ascii=False, indent=2))

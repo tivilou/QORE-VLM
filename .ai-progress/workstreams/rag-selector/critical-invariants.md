@@ -135,7 +135,7 @@
 - Membership screen `20261017T152312389403Z` remains L0/inconclusive: quantum useful/direct206/138 versus Reader203/138 and classical207/139; all gates fail. New objective reduces training protected losses104->3 but rescues only3. Opposing rescue/protection gradients on48/59 training cases support testing explicit train-only update constraints, not coefficient/epoch retuning or label-aware online masks. Local conflict is not proof of shared infeasibility. See [result/next gate](decisions/2026-10-17-reader-membership-screen-result.md).
 - Shared safe directions exist on training59: quantum initial1/0, final2/0; classical1/0,4/0 (rescues/lost protected). Linear feasibility still permits native mis-selection; require actual all-training membership checks. A future accumulating update must preserve both original protected members and previously accepted rescues, with current-set outsider templates. This L0 fitted existence result does not rank families or establish test utility. See [closed audit/next proposal](decisions/2026-10-17-reader-protected-update-feasibility.md).
 - The frozen unseen transport gate passed at L0: quantum changed13/87 Top5 sets, classical9/87, and quantum differed from classical on9/87; independent261-vector replay passed with labels unopened. This warrants blind semantic review, not a utility claim.
-- The blind review population is the15-case,91-item union where any arm differs. Two score/rank/method-blind reviews and zero unresolved disagreements are required before opening the method key; the prospective utility gate is frozen. See [decision](decisions/2026-10-18-reader-unseen-blind-review.md).
+- The validation87 blind review is closed: two isolated reviewers covered91/91 items,85 agreed and6 were blindly adjudicated before unblinding. Quantum retained41 useful/25 direct passages versus Reader38/25 and classical40/25 on15 changed cases; all prospective checks passed. This remains L0 and validation87 is now spent. See [decision](decisions/2026-10-18-reader-unseen-blind-review.md).
 ## Decision index
 ### Binding and current
 - [BINDING] Cumulative-evidence next-step rule -> [detail](../../shared/decisions/cumulative-evidence-next-step-selection.md)
@@ -222,7 +222,7 @@
 - [CLOSED] Train-only protected quantum update feasibility audit -> [detail](decisions/2026-10-17-reader-protected-update-feasibility.md)
 - [CLOSED / L0 ACCUMULATION PASSED; UNSEEN UTILITY NEXT] Sequential protected Reader updates as a bounded training-only diagnostic -> [detail](decisions/2026-10-18-reader-sequential-protected-updates.md)
 - [CLOSED / L0 TRANSPORT PASS] Untouched validation87 transport gate -> [detail](decisions/2026-10-18-reader-unseen-transport-gate.md)
-- [ACTIVE / PACKET READY; TWO REVIEWS PENDING] Two-reviewer blind audit for unseen Top5 transport -> [detail](decisions/2026-10-18-reader-unseen-blind-review.md)
+- [ACTIVE / L0 BLIND GATE PASSED; LARGER UNTOUCHED DESIGN NEXT] Two-reviewer blind audit for unseen Top5 transport -> [detail](decisions/2026-10-18-reader-unseen-blind-review.md)
 
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.

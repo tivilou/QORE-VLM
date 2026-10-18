@@ -120,3 +120,26 @@ def test_disagreement_blocks_unblinding(tmp_path):
         assert "complete blind consensus" in str(error)
     else:
         raise AssertionError("unblinding should be blocked")
+    disputes_path = tmp_path / "disputes.json"
+    disputes = json.loads(disputes_path.read_text())
+    pair = disputes["unresolved"][0]
+    adjudications = {
+        "schema_version": "rag.reader_unseen_blind_adjudications.v1",
+        "packet_sha256": sha(packet_dir / "blind_packet.json"),
+        "judgments": [{
+            "review_case_id": pair["review_case_id"],
+            "review_item_id": pair["review_item_id"],
+            "answer_support": "direct",
+            "scope_match": "yes",
+            "rationale": "blind third-reviewer resolution",
+        }],
+    }
+    adjudications_path = tmp_path / "adjudications.json"
+    write(adjudications_path, adjudications)
+    final_path = tmp_path / "consensus-final.json"
+    final = scorer.adjudicate(packet_dir / "blind_packet.json", consensus_path, disputes_path,
+                              adjudications_path, final_path, config)
+    assert final["complete"] and final["unresolved_count"] == 0
+    result = scorer.score(packet_dir / "blind_packet.json", final_path,
+                          packet_dir / "sealed_method_key.json", tmp_path / "score-final.json", config)
+    assert result["advance_to_larger_untouched_utility_study"]

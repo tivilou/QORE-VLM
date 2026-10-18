@@ -3,10 +3,10 @@
   "plan_id": "reader-unseen-blind-review",
   "plan_version": 1,
   "workstream": "rag-selector",
-  "status": "blocked",
+  "status": "complete",
   "objective": "Qualify the validation87 transport changes with a score/rank/method-blind two-reviewer semantic audit before any utility or quantum-specific claim",
-  "focus_step_id": "BR-04",
-  "next_action": "Assign two independent reviewers the reviewer_packet directory only and collect complete review JSON files",
+  "focus_step_id": "BR-06",
+  "next_action": "Freeze a separate larger untouched-study plan before any new execution",
   "blocker": null,
   "steps": [
     {
@@ -109,7 +109,7 @@
     {
       "id": "BR-04",
       "title": "Collect two independent blind reviews",
-      "status": "blocked",
+      "status": "done",
       "objective": "Obtain complete semantic judgments without revealing method identity",
       "inputs": [
         "blind_packet.json",
@@ -127,11 +127,13 @@
         "Reviewers did not receive sealed key",
         "No method/rank/score fields added"
       ],
-      "evidence_paths": [],
+      "evidence_paths": [
+        "remote:3080Ti-117-50-198-37:/home/Q-DUET-VLM/reader-membership-screen-20261016/exchange/five_ideas/reader_unseen_blind_review_87/20261018T073840422368Z/reviews"
+      ],
       "owner": "independent-reviewers",
-      "blocker": "Two independent semantic reviews have not yet been performed; method unblinding is prohibited until consensus",
+      "blocker": null,
       "notes": [
-        "Do not expose the sealed subdirectory to either reviewer"
+        "Both isolated reviewers completed91/91 items without access to the sealed key"
       ],
       "supersedes": [],
       "superseded_by": []
@@ -139,7 +141,7 @@
     {
       "id": "BR-05",
       "title": "Resolve disagreements while still blind",
-      "status": "todo",
+      "status": "done",
       "objective": "Produce a complete consensus file before method unblinding",
       "inputs": [
         "two reviews"
@@ -154,7 +156,10 @@
         "Zero unresolved semantic-code disagreements",
         "Sealed method key remains unopened"
       ],
-      "evidence_paths": [],
+      "evidence_paths": [
+        ".ai-progress/workstreams/rag-selector/refs/reader-unseen-blind-adjudications-20261018.json",
+        "remote:3080Ti-117-50-198-37:/home/Q-DUET-VLM/reader-membership-screen-20261016/exchange/five_ideas/reader_unseen_blind_review_87/20261018T073840422368Z/adjudication"
+      ],
       "owner": "rag-selector",
       "blocker": null,
       "notes": [],
@@ -164,7 +169,7 @@
     {
       "id": "BR-06",
       "title": "Unblind and score prospective utility gate",
-      "status": "todo",
+      "status": "done",
       "objective": "Compare quantum, Reader and matched classical Top5 quality only after consensus",
       "inputs": [
         "consensus.json",
@@ -182,14 +187,24 @@
         "Frozen gate applied without tuning",
         "Claim ceiling remains L0"
       ],
-      "evidence_paths": [],
+      "evidence_paths": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_unseen_blind_review_score_20261018.json",
+        "remote:3080Ti-117-50-198-37:/home/Q-DUET-VLM/reader-membership-screen-20261016/exchange/five_ideas/reader_unseen_blind_review_87/20261018T073840422368Z/result/blind_review_score.json"
+      ],
       "owner": "rag-selector",
       "blocker": null,
-      "notes": [],
+      "notes": [
+        "All five prospective checks passed; result remains L0 and only authorizes a larger untouched-study design"
+      ],
       "supersedes": [],
       "superseded_by": []
     }
   ],
-  "change_log": [],
+  "change_log": [
+    {
+      "date": "2026-10-18",
+      "reason": "Two complete blind reviews, six blind adjudications and post-consensus scoring completed; prospective gate passed"
+    }
+  ],
   "updated_at": "2026-10-18"
 }

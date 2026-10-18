@@ -2,6 +2,8 @@
 
 ## 当前研究总览
 
+- 最新结果：[validation87 双盲语义效用门](20261018T-blind-unseen-utility-gate.md)。两名隔离reviewer完成15题91段，85项一致、6项盲裁决后才解封；Reader/量子/经典有用段`38/41/40`、直接证据`25/25/25`，量子对Reader `4胜/1负/10平`，五项预注册门全部通过。仍为L0，小样本且量子只比经典多1个有用段；下一步冻结身份不重叠的>=200题未触碰集，不复用validation87调参。
+
 - 最新诊断：[量子Reader共享安全更新可行性](20261017T-160953Z-reader-protected-update-feasibility.md)。训练59题的量子已训练头3救回/3误伤→2/0，经典4/2→4/0；四个初始/最终检查点均有共享安全方向。全59题4组原状态及6个安全见证独立逐位重算通过，8文件已存18083。仍L0训练条件化诊断；下一建议是在原保护外同时锁住已救回段的连续更新，尚未实施，无新100题评估。
 
 - 最新结果：[Reader成员资格训练与保护梯度冲突](20261017T-152312Z-reader-membership-screen-result.md)。量子新目标有用/直接206/138，Reader203/138、经典207/139；旧量子目标147/90。训练保护损失104降至3，但只救3段，三项门槛未过，仍L0。完整数值/24次AdamW独立回放通过，48/59训练题存在梯度冲突。下一建议是训练保护约束的共享更新可行性分析，未实施；门户/版本化说明待收尾。
@@ -63,6 +65,8 @@
 - 当前研究边界：只优化固定 Top-50 -> Top-5 selector；Generator、检索、evaluator 和答案实现不属于本轮候选。下一候选必须提供独立、可追溯且 gold-free 的证据关系信号；若只能继续依赖 token overlap、Answer Scorer 融合或 generic diversity，应停止该 selector 家族并先处理 provenance/calibration 阻塞。
 
 ## 时间线
+
+- [2026-10-18 | validation87双盲语义效用门通过；量子有用段41，对Reader+3、对经典+1](20261018T-blind-unseen-utility-gate.md)
 
 - [2026-10-17 15:23:12 UTC运行 | Reader成员资格新目标弱增益，保护冲突成为下一诊断方向](20261017T-152312Z-reader-membership-screen-result.md)
 

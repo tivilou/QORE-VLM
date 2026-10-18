@@ -1,44 +1,42 @@
 # RAG Passage Selection with QORE
 
 ## Goal
-- Improve fixed Top50 -> Top5 on the quantum mainline toward independently verified full-data L2. Training-only and label-blind diagnostics remain L0.
+- Improve fixed Top50 -> Top5 on the quantum mainline toward independently verified full-data L2. Training-only and small blind diagnostics remain L0.
 
 ## Current State
-- [BLOCKED / L0 BLIND UTILITY AUDIT] The frozen validation87 transport run completed and passed both review-effort gates: quantum changed13/87 Top5 sets, classical9/87, and quantum differed from classical on9/87. Independent replay verified261 score vectors and87 Top5 sets with answers/support labels unopened.
-- This is transport evidence only. It does not show that any changed selection is better and does not support L1/L2 or quantum advantage.
-- The next-stage blind packet is frozen:15 changed-union cases,91 passages, no answers/scores/ranks/method identities. Packet construction, consensus merger, post-consensus scorer and3 synthetic tests pass.
-- Reviewer materials and sealed method key are separated on the3080Ti aggregation host. Two independent reviews are pending; the key must remain unopened until semantic-code consensus.
-- Server roles are corrected:3080Ti owns orchestration/18083/aggregation; `gpu-training` currently resolves the live-checked Titan host. The recovered3060 cache and original sequential archive passed exact hashes.
+- [ACTIVE / L0 BLIND UTILITY GATE PASSED] Two isolated reviewers completed all91 passages from the15 changed validation87 cases. They agreed on85 items; six disagreements were resolved by a third blind adjudication before the method key was opened.
+- On changed cases, Reader / quantum / matched classical retained useful evidence `38 / 41 / 40` and direct evidence `25 / 25 / 25`. Quantum versus Reader was `4 wins / 1 loss / 10 ties`, point delta `+3`; versus classical it was `2 / 1 / 12`, delta `+1`.
+- All five prospective checks passed. This is the first independent evidence that the frozen quantum head's unseen selection changes are beneficial, but it is still a small L0 audit:72/87 cases were unchanged, no L1/L2 or quantum-advantage claim follows.
+- Review files, blind consensus and score are hash-verified on the3080Ti aggregation host. GPU work remains assigned only through the live-checked `gpu-training` role.
 
 ## Plan Control
-- Plan: plans/reader-unseen-blind-review/v001.json
+- Completed Plan: plans/reader-unseen-blind-review/v001.json
 - Plan Version: 1
-- Plan Status: blocked
-- Focus Step: BR-04
-- Focus Status: blocked
-- Completed Steps: BR-01, BR-02, BR-03
-- Next Action: Give only the reviewer packet to two independent reviewers and collect complete review JSON files.
-- Blocker: Two independent semantic reviews are not yet available; opening the sealed method key before consensus is prohibited.
+- Plan Status: complete
+- Completed Steps: BR-01 through BR-06
+- Next Action: Freeze a new larger untouched question cohort and its utility gate before extracting features or inspecting outcomes.
+- Blocker: No larger untouched cohort or preregistered contract exists yet.
 - Last Checkpoint: 2026-10-18
 
 ## Next Actions
-1. Collect two independent reviews from `reviewer_packet` only.
-2. Merge semantic codes while blind; adjudicate every disagreement without opening the method key.
-3. After complete consensus only, open the key and apply the frozen utility gate. Pass advances to a larger untouched study; failure closes this fitted candidate without validation retuning.
+1. Design a fresh, non-overlapping >=200-question fixed-Top50 cohort; exclude all train59, validation87 and repeatedly inspected 100-case panel identities.
+2. Freeze the source/model/revision, trained quantum and matched-classical checkpoints, changed-case review rule, uncertainty analysis and stop gate before one-shot execution.
+3. Run feature extraction on the bound live GPU host or collaborator machine, aggregate on3080Ti, then repeat method-blind semantic review only for changed-set unions.
 
 ## Blockers
-- No qualified validation87 semantic judgments exist yet.
-- Independent reviewers must not receive `sealed_method_key.json`.
+- A provenance-locked fresh cohort with sufficient question count is not yet materialized.
+- The present effect is too small and selected-case-conditioned to establish population utility or quantum attribution.
 
 ## Validation
-- Transport run `20261018T073840422368Z`; trace SHA `c0de703d...`, values SHA `b282090b...`; independent audit passed.
-- Validation cache hashes: index `f0052eee...`, features `1837d883...`; sequential archive `35d7f9c1...`.
-- Blind packet SHA `eb5aef15...`;15 cases/91 items; banned-field audit passed. Three blind-workflow tests pass in `lambeq`; both workflow plans validate.
-- Aggregated artifacts: `/home/Q-DUET-VLM/reader-membership-screen-20261016/exchange/five_ideas/{reader_unseen_transport_gate_87,reader_unseen_blind_review_87}/20261018T073840422368Z` on3080Ti.
-- Session: [unseen transport recovery and blind packet](sessions/2026-10/20261018T075005Z-095e98.md).
+- Review A/B:91/91 each; label uncertainty0;85 agreements and6 blind adjudications; final consensus SHA `6834692a...0b38`.
+- Score SHA `e5f88b14...d65e`; packet SHA `eb5aef15...e565`; sealed key SHA `bb26843f...b3b`.
+- Blind workflow tests:3 passed after adding exact-coverage adjudication; no key is loaded by merge/adjudicate.
+- Aggregated artifacts: `/home/Q-DUET-VLM/reader-membership-screen-20261016/exchange/five_ideas/reader_unseen_blind_review_87/20261018T073840422368Z` on3080Ti.
+- Research log: [validation87 blind utility result](../../../docs/rag-research-log/20261018T-blind-unseen-utility-gate.md).
+- Session: [two-reviewer blind utility audit](sessions/2026-10/20261018T081258Z-e3f3ff.md).
 
 ## Relevant Decisions
-- [Two-reviewer blind utility audit](decisions/2026-10-18-reader-unseen-blind-review.md).
+- [Blind utility gate passed; larger untouched study next](decisions/2026-10-18-reader-unseen-blind-review.md).
 - [Completed untouched validation transport gate](decisions/2026-10-18-reader-unseen-transport-gate.md).
 - [Completed sequential contract/result](decisions/2026-10-18-reader-sequential-protected-updates.md).
 - [Frozen membership contract](decisions/2026-10-16-reader-membership-screen-handoff.md); [final train targets](decisions/2026-10-11-final-support-boundary-resolution.md).

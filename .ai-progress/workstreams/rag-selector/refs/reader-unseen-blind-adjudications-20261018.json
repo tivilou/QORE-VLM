@@ -1,0 +1,48 @@
+{
+  "schema_version": "rag.reader_unseen_blind_adjudications.v1",
+  "packet_sha256": "eb5aef15c9ac181ce152fcec0607a32ede026b043a18c1e497764e5a95a3e565",
+  "judgments": [
+    {
+      "review_case_id": "case-a04d82bf9e04cd9e8427",
+      "review_item_id": "item-354956530f61aa4b7df6",
+      "answer_support": "direct",
+      "scope_match": "yes",
+      "rationale": "The passage itself states that the title is granted to the heir apparent and identifies the current holder as Prince Charles, so the answer follows directly within the same text."
+    },
+    {
+      "review_case_id": "case-b9338b06fe3d8b770961",
+      "review_item_id": "item-41ead47ed5c0231f9920",
+      "answer_support": "partial",
+      "scope_match": "partial",
+      "rationale": "Judicial review supports an authoritative Supreme Court role, but the requested final-authority relation is not stated, so both support and relation scope are incomplete."
+    },
+    {
+      "review_case_id": "case-563bd62e40b0e967aed0",
+      "review_item_id": "item-017e57eda67a2c142437",
+      "answer_support": "partial",
+      "scope_match": "partial",
+      "rationale": "The continuation of United States sovereignty gives a valid upper bound before 1950 but not the acquisition date, making it incomplete yet substantively relevant temporal evidence."
+    },
+    {
+      "review_case_id": "case-c503d58085c8e004bf44",
+      "review_item_id": "item-62ea926693ff7d029cbc",
+      "answer_support": "none",
+      "scope_match": "partial",
+      "rationale": "The passage concerns the apparent target 2016 tournament but never names its champion; event and time scope match only partially because the requested result is absent."
+    },
+    {
+      "review_case_id": "case-a96287901b58d46eea9c",
+      "review_item_id": "item-b970f05c559cee65c0ad",
+      "answer_support": "partial",
+      "scope_match": "yes",
+      "rationale": "The passage is about the exact 2016 men's final and strongly implicates West Indies, but explicitly states only the women's result rather than the men's winner."
+    },
+    {
+      "review_case_id": "case-721c1839d3bb3334f5da",
+      "review_item_id": "item-9b70fabb7ab4364fc1db",
+      "answer_support": "none",
+      "scope_match": "partial",
+      "rationale": "The passage remains in the iPod and portable-media product family but dates different devices, not the first video-capable iPod."
+    }
+  ]
+}

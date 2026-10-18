@@ -6,7 +6,7 @@
 - Supersedes: None
 - Superseded By: None
 - Gate: after zero unresolved blind-review disagreements, quantum gains at least2 useful items over Reader, loses no direct items, gains at least1 useful item over matched classical, has at least one more case win than loss versus Reader, and has zero uncertain selected items
-- Authorization: packet construction and blind-review collection only; method unblinding is authorized only after complete consensus, and no L1/L2 or quantum-advantage claim is authorized
+- Authorization: design and preregistration of a larger untouched utility study are authorized; no larger run, L1/L2 claim, or quantum-advantage claim is authorized until its fresh cohort and gate are frozen
 
 ## Decision
 
@@ -20,4 +20,6 @@ The transport result proves that the fitted heads move unseen selections but can
 
 ## Consequences
 
-The packet is L0 and diagnostic. Passing its gate would justify a larger untouched-data utility study, not L1/L2 or quantum advantage. Failing the gate closes this fitted sequential-update candidate without retuning on validation87. Reviewer materials and the sealed key must remain separate until consensus.
+Both isolated reviews covered91/91 items. They agreed on85 semantic-code pairs; a third blind adjudication resolved six disputes before method unblinding. On the15 changed cases, Reader / quantum / classical retained useful evidence `38 / 41 / 40` and direct evidence `25 / 25 / 25`. Quantum was `4/1/10` wins/losses/ties versus Reader with point delta `+3`, and `2/1/12` versus classical with delta `+1`. All five frozen checks passed with zero uncertain selected items.
+
+The result advances the candidate to design of a larger untouched utility study. It remains L0 because72/87 cases did not change, only15 changed cases contributed comparative information, the semantic sample is small, and the quantum and classical arms differ by only one useful item. Validation87 must not be retuned or reused as fresh evidence. The next cohort must be identity-disjoint from train59, validation87 and the repeatedly inspected100-case panel, and its contract must be frozen before execution.

@@ -1,0 +1,34 @@
+{
+  "schema_version": "rag.reader_unseen_blind_review_score.v1",
+  "claim_ceiling": "L0_blinded_semantic_diagnostic",
+  "population": {"changed_cases": 15, "unchanged_cases": 72},
+  "totals_on_changed_cases": {
+    "identity_reader": {"direct": 25, "useful": 38, "uncertain": 0, "points": 63},
+    "quantum": {"direct": 25, "useful": 41, "uncertain": 0, "points": 66},
+    "classical": {"direct": 25, "useful": 40, "uncertain": 0, "points": 65}
+  },
+  "pairwise": {
+    "quantum_vs_identity": {"wins": 4, "losses": 1, "ties": 10, "point_delta": 3},
+    "quantum_vs_classical": {"wins": 2, "losses": 1, "ties": 12, "point_delta": 1}
+  },
+  "gate_checks": {
+    "useful_over_identity": true,
+    "direct_not_worse_than_identity": true,
+    "useful_over_classical": true,
+    "case_win_margin_over_identity": true,
+    "uncertainty_bound": true
+  },
+  "advance_to_larger_untouched_utility_study": true,
+  "limitations": [
+    "Unchanged cases cancel across methods",
+    "This is a small L0 semantic audit",
+    "No quantum advantage or L1/L2 claim follows"
+  ],
+  "provenance": {
+    "packet_sha256": "eb5aef15c9ac181ce152fcec0607a32ede026b043a18c1e497764e5a95a3e565",
+    "consensus_sha256": "6834692ad892e39277c8b3c08b70ff79c3d87c4faeafd00435d36dde1a500b38",
+    "sealed_key_sha256": "bb26843fac6ad8db688380bba3ef74fa716444b0d9e6671aeba03d2816548b3b",
+    "config_sha256": "47d958be8787a60b838c401448a8b49c9fd9f4925a02eb38c1a7a03010439376",
+    "score_sha256": "e5f88b143f8f908549da063694ed6958a4ec5b09a68090e52ca0b83c5a6d65ec"
+  }
+}
