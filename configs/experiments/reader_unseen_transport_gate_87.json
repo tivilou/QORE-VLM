@@ -1,0 +1,40 @@
+{
+  "schema_version": "rag.reader_unseen_transport_gate.v1",
+  "authorization": "user_authorized_label_blind_transport_preflight",
+  "claim_ceiling": "L0_label_blind_transport",
+  "source_bundle_sha256": "f723bbb6f9075c3e04fd3d8a7b2d3f8127b6e354422ee2a2f6e167bfe32248ce",
+  "source_future_role": "validation",
+  "population": {"validation_cases": 87, "top50": 50, "top5": 5},
+  "reader": {
+    "model_id": "facebook/dpr-reader-single-nq-base",
+    "revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+    "max_length": 350,
+    "batch_size": 8,
+    "local_files_only": true
+  },
+  "sequential_source": {
+    "run_id": "20261018T045707538341Z",
+    "exchange_path": "five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/sequential_values.npz",
+    "sha256": "35d7f9c165c581e7ce21ccaf57eca104db6e97a2b2af6c598af333caac8287bc"
+  },
+  "arms": ["identity_reader", "quantum_sequential_final", "classical_sequential_final"],
+  "head": {"layers": 2, "conditioning": 4, "seed": 20261013},
+  "transport_gate": {
+    "min_candidate_changed_questions": 5,
+    "min_candidate_control_different_questions": 3,
+    "purpose": "Decide whether a score/rank-blind semantic review packet is worth constructing; this is not a utility gate"
+  },
+  "label_boundary": {
+    "answers_read": false,
+    "support_annotations_read": false,
+    "silver_oracle_read": false,
+    "generator_called": false,
+    "retrieval_called": false,
+    "training_or_tuning_on_validation": false
+  },
+  "output": {
+    "numeric_file": "transport_values.npz",
+    "trace_file": "selector_trace.json",
+    "summary_file": "summary.json"
+  }
+}

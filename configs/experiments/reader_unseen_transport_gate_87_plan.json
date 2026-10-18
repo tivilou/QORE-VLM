@@ -1,0 +1,119 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v2",
+  "project": "Q-DUET-VLM rag-selector unseen validation transport gate",
+  "authorization": "implemented",
+  "baseline": {
+    "entry_point": "applications.rag.reader_unseen_transport.stable_top5",
+    "code_revision": "executed-source hash captured at run time",
+    "equivalence_test": "Cached Reader score vectors and stable Top5 reproduce all 87 stored validation baselines before an adapted head is read"
+  },
+  "core_invariants": [
+    "Validation87 is untouched by fitting and semantic labeling",
+    "Only already-frozen sequential final theta is loaded; no validation update or tuning",
+    "Answers, support labels, Silver oracle and generator outputs are never read",
+    "Identity Reader and matched quantum/classical final heads score the same cached Top50",
+    "Transport evidence cannot claim task utility or quantum advantage"
+  ],
+  "interfaces": [
+    {
+      "id": "unseen_transport_boundary",
+      "type": "transformer",
+      "input_schema": "hash-locked validation question/passage inputs, frozen Reader, fixed head parameters",
+      "output_schema": "numeric feature cache, three complete score matrices, Top5 set-transport diagnostics",
+      "invariants": ["No label inputs", "No parameter updates", "Same87x50 population for all arms"]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "validation_feature_cache", "version": "1", "role": "baseline", "interface": "unseen_transport_boundary",
+      "insertion_point": "frozen question/passage inputs -> DPR Reader",
+      "hypothesis": "The untouched validation population can be represented without semantic labels while exactly reproducing the stored Reader baseline",
+      "input_schema": "87 questions and their fixed ordered50 passages plus pinned local Reader",
+      "output_schema": "87x50 Reader scores, CLS and pooled tensors plus identity digests",
+      "requires": [], "conflicts": ["answer-aware preprocessing", "label-aware filtering"], "deterministic": true,
+      "resource_estimate": "4350 frozen Reader forwards; local cached model only",
+      "failure_signatures": ["Reader score parity failure", "Reader Top5 parity failure", "non87 coverage", "label boundary crossed"],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2", "stages": ["data", "preprocess", "scoring", "selection", "diagnosis"],
+        "input_fields": ["question text", "ordered passage title/text"], "output_fields": ["question/candidate hashes", "Reader scores", "CLS", "pooled"],
+        "input_refs": ["frozen_bundle:validation87"], "output_refs": ["feature_cache:reader_features"],
+        "emitted_fields": ["all87 identities", "all numeric features"], "shape_dtype_normalization": ["87x50", "float32"],
+        "checks": ["bundle hash", "population identity", "score parity", "Top5 parity"], "deterministic_replay": true
+      }
+    },
+    {
+      "id": "fixed_sequential_head_loader", "version": "1", "role": "adapter", "interface": "unseen_transport_boundary",
+      "insertion_point": "cached Reader feature -> fixed quantum/classical score head",
+      "hypothesis": "Training59 sequential parameters can be transported without any validation-dependent update",
+      "input_schema": "hash-locked final head tensors and validation numeric cache",
+      "output_schema": "complete quantum and matched classical 87x50 score matrices",
+      "requires": ["validation_feature_cache"], "conflicts": ["validation fitting", "posthoc theta search"], "deterministic": true,
+      "resource_estimate": "8700 small fixed-head forwards; no optimizer",
+      "failure_signatures": ["source hash mismatch", "Reader classifier mismatch", "head state mismatch", "nonfinite score"],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2", "stages": ["data", "preprocess", "scoring", "selection", "diagnosis"],
+        "input_fields": ["CLS", "pooled", "fixed theta"], "output_fields": ["quantum scores", "classical scores"],
+        "input_refs": ["feature_cache:reader_features", "sequential_run:final_theta"], "output_refs": ["run:transport_values"],
+        "emitted_fields": ["three complete score matrices"], "shape_dtype_normalization": ["87x50 float32"],
+        "checks": ["parameter hash", "classifier identity", "complete finite coordinates"], "deterministic_replay": true
+      }
+    },
+    {
+      "id": "label_blind_transport_gate", "version": "1", "role": "idea", "interface": "unseen_transport_boundary",
+      "insertion_point": "three score matrices -> stable Top5 sets -> set transport",
+      "hypothesis": "A nontrivial unseen set movement and quantum/classical separation is necessary before semantic review can be informative",
+      "input_schema": "identity, quantum and matched classical 87x50 scores",
+      "output_schema": "all87 Top5 sets, symmetric differences and prospective review decision",
+      "requires": ["fixed_sequential_head_loader"], "conflicts": ["utility labels", "generator outputs", "posthoc thresholds"], "deterministic": true,
+      "resource_estimate": "negligible CPU", "failure_signatures": ["stable ordering drift", "metric replay failure", "gate threshold drift"],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2", "stages": ["data", "preprocess", "scoring", "selection", "diagnosis"],
+        "input_fields": ["complete score matrices"], "output_fields": ["all Top5 indices", "set differences", "gate result"],
+        "input_refs": ["run:transport_values"], "output_refs": ["run:selector_trace", "run:summary"],
+        "emitted_fields": ["all87 selections", "aggregate transport distributions"], "shape_dtype_normalization": ["stable candidate-order tie break"],
+        "checks": ["Top5 reconstruction", "metric reconstruction", "prospective gate reconstruction"], "deterministic_replay": true
+      }
+    }
+  ],
+  "discovery": {"mode": "explicit_allowlist", "allowlist": ["validation_feature_cache", "fixed_sequential_head_loader", "label_blind_transport_gate"]},
+  "composition": {
+    "mode": "sequential", "order": ["validation_feature_cache", "fixed_sequential_head_loader", "label_blind_transport_gate"],
+    "merge_rule": "All arms share exact validation identities/features; only the frozen head geometry differs",
+    "interaction_ablations": ["identity zero update", "quantum final versus identity", "classical final versus identity", "quantum final versus classical final"]
+  },
+  "validation": {
+    "baseline_equivalence": "87/87 cached Reader scores and Top5 sets match the frozen source",
+    "tests": ["baseline_equivalence", "plugin_isolation", "deterministic_replay", "interaction_ablation", "trace_structural_validation", "trace_semantic_validation", "trace_replay", "label_boundary_guard", "prospective_gate_replay"]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/reader_unseen_transport_gate_87.json",
+    "dataset_identity": "hash-locked validation87 from frozen bundle f723bbb6; training59 and exposed100 excluded",
+    "environment": "existing cached DPR Reader and Torch; offline model; no retrieval/dataset download",
+    "seeds": [20261013],
+    "output_manifest": "exchange/five_ideas/reader_unseen_transport_gate_87/<timestamp>/upload_manifest.json"
+  },
+  "trace_contract": {
+    "enabled": true, "schema": "sample-trace.v2",
+    "artifact_path": "exchange/five_ideas/reader_unseen_transport_gate_87/<timestamp>/selector_trace.json",
+    "sample_selection_rule": "all87 identity hashes and Top5 sets; all261 complete score vectors in numeric archive",
+    "target_boundary": "validation87 score/rank transport only; semantic labels unopened",
+    "required_stages": ["data", "preprocess", "scoring", "selection", "diagnosis"],
+    "semantic_roles": ["input", "reference", "result"],
+    "required_representations": ["question digest", "candidate digests", "CLS", "pooled", "Reader score", "frozen theta", "Top5 sets"],
+    "producer_owned_lineage": ["frozen validation input -> Reader feature parity -> fixed heads -> complete scores -> stable Top5 -> label-blind transport gate"],
+    "readiness_checks": ["source hash", "feature parity", "synthetic trace replay", "parameter identity", "all87 metric replay", "label boundary"]
+  },
+  "recovery_contract": {
+    "dossier_path": ".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_recovery.json",
+    "dossier_sha256": "5665bc2803f168f2131d571dc828708b967587184e3beb5957680c3eb108db8f",
+    "candidate_id": "frozen_unseen_membership_generalization_gate",
+    "discriminating_intermediate_measurement": "Nontrivial validation87 Top5 transport plus quantum/classical selection separation before any label opening"
+  },
+  "trace_readiness": {
+    "status": "passed", "fixture_path": "ephemeral pytest tmp_path",
+    "structural_validation": "Synthetic 87x50 cache, two fixed heads, complete score archive and sample-trace.v2",
+    "semantic_validation": "No labels accepted; Top5 transport and prospective gate reconstructed",
+    "replay_test": "applications/rag/tests/test_reader_unseen_transport.py passes 3 tests"
+  },
+  "limitations": ["No label-free result can establish utility", "If transport passes a separate blinded semantic review is required", "Matched classical separation is only attribution viability, never quantum advantage", "Reader feature parity is required across available execution hardware"]
+}

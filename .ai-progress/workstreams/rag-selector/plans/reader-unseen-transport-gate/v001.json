@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "plan_id": "reader-unseen-transport-gate",
+  "plan_version": 1,
+  "workstream": "rag-selector",
+  "status": "blocked",
+  "objective": "Preflight whether the frozen training59 sequential Reader-head updates transport to an untouched validation87 cohort before spending semantic review effort",
+  "focus_step_id": "UG-03",
+  "next_action": "Reconnect the primary 3080Ti or restored backup, recover existing artifacts by hash, and execute the fixed label-blind transport runner",
+  "blocker": null,
+  "steps": [
+    {
+      "id": "UG-01",
+      "title": "Freeze unseen cohort and transport contract",
+      "status": "done",
+      "objective": "Prove validation87 was excluded from training and exposed evaluation, and predeclare transport and attribution thresholds",
+      "inputs": [
+        "decisions/2026-10-16-reader-membership-screen-handoff.md",
+        "decisions/2026-10-18-reader-sequential-protected-updates.md",
+        "configs/experiments/reader_unseen_transport_gate_87.json"
+      ],
+      "outputs": [
+        "decisions/2026-10-18-reader-unseen-transport-gate.md",
+        "configs/experiments/reader_unseen_transport_gate_87_plan.json"
+      ],
+      "depends_on": [],
+      "acceptance_checks": [
+        "87 validation rows have no qualified support labels",
+        "training59 and exposed100 are excluded",
+        "thresholds fixed before transport scores",
+        "no answer or annotation field is an input"
+      ],
+      "evidence_paths": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_sequential_protected_updates_20261018_recovery.json"
+      ],
+      "owner": "rag-selector",
+      "blocker": null,
+      "notes": [],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "UG-02",
+      "title": "Build label-blind validation feature cache",
+      "status": "done",
+      "objective": "Run the frozen DPR Reader locally on the 87 validation Top50 inputs and reproduce stored Reader scores and Top5 sets",
+      "inputs": [
+        "UG-01",
+        "frozen support bundle",
+        "local DPR Reader revision 38f47a4986084c53447ba92ab0a83076b58d86a8"
+      ],
+      "outputs": [
+        ".cache/reader-unseen-validation87-v1/cache_index.json",
+        ".cache/reader-unseen-validation87-v1/reader_features.npz"
+      ],
+      "depends_on": [
+        "UG-01"
+      ],
+      "acceptance_checks": [
+        "87/87 cases",
+        "Reader score parity",
+        "Reader Top5 parity",
+        "answers_read=false and support_annotations_read=false",
+        "offline model only"
+      ],
+      "evidence_paths": [],
+      "owner": "rag-selector",
+      "blocker": null,
+      "notes": [
+        "Primary 3080Ti instance currently exposes no GPU; CPU forward is authorized and running"
+      ],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "UG-03",
+      "title": "Run fixed transport gate",
+      "status": "blocked",
+      "objective": "Apply already-frozen quantum and matched classical final heads once on validation87 and quantify Top5 set transport without labels",
+      "inputs": [
+        "UG-02",
+        "reader sequential run 20261018T045707538341Z"
+      ],
+      "outputs": [
+        "exchange/five_ideas/reader_unseen_transport_gate_87/<run>/summary.json",
+        "selector_trace.json"
+      ],
+      "depends_on": [
+        "UG-02"
+      ],
+      "acceptance_checks": [
+        "identity Top5 parity",
+        "fixed theta restore",
+        "no validation fitting",
+        "transport metrics replay",
+        "prospective gate replay"
+      ],
+      "evidence_paths": [],
+      "owner": "rag-selector",
+      "blocker": "Primary 3080Ti accepts TCP but does not return SSH/HTTP banners after the CPU feature process started; backup gpushare-i1-57535 completed 87/87 feature parity then became connection-refused before artifact recovery",
+      "notes": [],
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "UG-04",
+      "title": "Decide whether to construct blinded semantic review",
+      "status": "todo",
+      "objective": "Advance only if fixed transport and quantum/classical separation thresholds pass; otherwise close this candidate without utility claims",
+      "inputs": [
+        "UG-03"
+      ],
+      "outputs": [
+        "blinded review packet or closure note"
+      ],
+      "depends_on": [
+        "UG-03"
+      ],
+      "acceptance_checks": [
+        "no label-free utility claim",
+        "review packet score/rank/method blind",
+        "paired qualified adjudication before any L1/L2 claim"
+      ],
+      "evidence_paths": [],
+      "owner": "rag-selector",
+      "blocker": null,
+      "notes": [],
+      "supersedes": [],
+      "superseded_by": []
+    }
+  ],
+  "change_log": [],
+  "updated_at": "2026-10-18"
+}

@@ -1,53 +1,46 @@
 # RAG Passage Selection with QORE
 
 ## Goal
-- Improve fixed Top50 -> Top5 on the quantum mainline toward independently verified full-data L2. The exposed100 panel and current training diagnostic remain L0.
+- Improve fixed Top50 -> Top5 on the quantum mainline toward independently verified full-data L2. Training-only and label-blind diagnostics remain L0.
 
 ## Current State
-- [COMPLETE / L0 TRAIN-ONLY SEQUENTIAL FEASIBILITY] Run20261018T045707538341Z passes the preregistered accumulation gate. Quantum and matched classical initial heads each progress0->1->2->3 rescued eligible members with zero loss of183 original or previously accepted protections. Quantum uses8 candidate attempts; classical5. Equal rescue count and lower classical search cost provide no quantum-advantage signal.
-- Independent audit replays2 initial baselines and all27 all59 native trials:6 accepted,21 rejected,378 arrays. Complete274MB evidence is hash-verified on18083 at `five_ideas/reader_sequential_protected_updates/20261018T045707538341Z`; compact trace/audit is local. Tests pass10/10 local/primary and the3-plugin plan validates.
-- [COMPLETE / TRAIN-ONLY FEASIBILITY] Run20261017T160953558137Z: all4 quantum/classical initial/final checkpoints have a shared native safe witness. Initial heads rescue1/loss0 each; quantum final3/3 ->2/0, classical4/2 ->4/0. This is training-conditioned existence, not optimal rescue or generalization.
-- Independent replay:488 arrays,13 exact executed sources, all59 native baselines4 and safe witnesses6,29500 bitwise scores. Eight artifacts/hash receipts are on18083;105192201-byte numeric archive stays server-only. All8 tests pass locally/primary; both238-array synthetic fixtures pass.
-- Linear feasibility does not guarantee nonlinear safety. Fixed first target at quantum initial loses1 protected member despite a feasible LP. Actual all-training membership acceptance is required.
-- Fixed first2 training cases: all retain original protected members; quantum-final repair abandons an earlier training002 rescue. Any accumulating rule must also preserve accepted rescues with current-set outsiders.
-- Previous membership screen remains inconclusive: Reader/quantum/classical useful203/206/207, direct138/138/139; quantum useful CI[-.02,.08]. Objective repair104 ->3 protected losses was real but no reliable task/attribution gate passed.
-- No evaluation100/validation87 fields, model/dataset download, new optimizer training, Generator or collaborator handoff in this diagnostic. Portal projection/versioned explanation documentation remains pending.
+- [ACTIVE / L0 UNSEEN TRANSPORT] The validation87 cohort is genuinely outside the fitted training59 and exposed evaluation100, but it has no qualified support labels: all87 question scopes and4350 passage judgments remain pending. Utility cannot be claimed before blinded review.
+- A prospective label-blind gate is frozen: quantum must change at least5/87 Top5 sets and differ from the matched classical arm on at least3/87 before semantic review is worth opening. These thresholds are review-effort gates, not performance gates.
+- The isolated transport module, validation feature cache builder, fixed-head runner, independent audit,3-plugin plan and3 synthetic replay tests are implemented. Plugin-plan validation passes.
+- Backup `gpushare-i1-57535` completed 87/87 frozen DPR Reader feature extraction on its RTX3060. All stored Reader scores and Top5 sets reproduced; cache hashes: index `f0052eee`, features `1837d883`. It became connection-refused before the validation cache/final result could be recovered.
+- Primary3080Ti accepted and started the same CPU feature process but then stopped returning SSH/18083 banners. The original frozen sequential values remain there; no result has been fabricated or substituted.
+- Prior completed run `20261018T045707538341Z`: quantum/classical each accumulated0->1->2->3 fitted rescues with zero original/accepted loss; quantum8 attempts, classical5. It establishes training feasibility only and no quantum advantage.
 
 ## Plan Control
-- Plan: plans/reader-sequential-protected-updates/v001.json
+- Plan: plans/reader-unseen-transport-gate/v001.json
 - Plan Version: 1
-- Plan Status: completed
-- Focus Step: SPU-03
-- Focus Status: done
-- Completed Steps: SPU-01, SPU-02, SPU-03
-- Next Action: Await authorization for a separately preregistered frozen unseen-question membership generalization gate
-- Blocker: None
+- Plan Status: blocked
+- Focus Step: UG-03
+- Focus Status: blocked
+- Completed Steps: UG-01, UG-02
+- Next Action: Reconnect the primary3080Ti or restored backup, recover artifacts by frozen hashes, and execute the fixed label-blind transport runner.
+- Blocker: Primary accepts TCP but returns no SSH/HTTP banner after CPU inference; backup completed feature parity then became connection-refused.
 - Last Checkpoint: 2026-10-18
 
 ## Next Actions
-1. Freeze an untouched question cohort before any fitting; learn sequential updates from training59 only and evaluate direct/useful Top5 membership once, target-blind.
-2. Compare identity Reader, quantum and matched classical heads under the same update and inference budget. Quantum-specific progression requires separation from classical uncertainty, not merely a different rescue path.
-3. Do not increase the fitted rescue cap on the same59 or tune candidate order/radius using exposed100; failure on untouched questions closes this training objective.
+1. Recover `sequential_values.npz` SHA `35d7f9c1...` and the validation cache without rerunning or tuning when either bound server is reachable.
+2. Apply the already-frozen quantum/classical final theta once, save all261 score vectors and all87 Top5 sets, and independently replay the transport gate.
+3. If and only if both transport thresholds pass, create a score/rank/method-blind semantic review packet; qualified utility remains a separate experiment.
 
 ## Blockers
-- Safe training updates do not guarantee new-question retention or quantum superiority; both classical checkpoints also pass.
-- First-safe stopping and distinct trained starts do not establish model capacity or best rescue count. Earlier source-provenance gaps remain historical.
-- V100s is CPU-only and capacity-limited;18083 stays on3080Ti. Use explicit serverctl placement and isolated paths.
+- No valid utility labels exist for validation87 yet; the current gate measures transport only.
+- Server reachability currently prevents recovery of the completed feature cache and original frozen final parameters.
+- Tiny cross-environment Reader differences make approximate reconstruction unacceptable; the original hash-locked parameters must be used.
 
 ## Validation
-- [Sequential receipt](refs/reader_sequential_protected_updates_20261018_receipt.json), [validated recovery](refs/reader_sequential_protected_updates_20261018_recovery.json), [L0 card](refs/reader_sequential_protected_updates_20261018_evidence.json). Standard card validator passes with expected warnings for missing heldout utility and failed quantum attribution.
-- Owner analysis: [sequential protected updates](../../../../docs/rag-research-log/20261018T045707Z-reader-sequential-protected-updates.md).
-- GitHub `five-ideas-development` published as `0e66812246d2fb54e167fd7d036680942975ba5c`; [publication mapping](refs/reader_sequential_protected_updates_20261018_publication.json) records local/remote commits and artifact placement.
-- Session: [completed sequential implementation, run and audit](sessions/2026-10/20261018T051728Z-7f6b45.md).
-- [Current receipt](refs/reader_protected_feasibility_20261017_receipt.json), [validated recovery](refs/reader_protected_feasibility_20261017_recovery.json), [L0 card](refs/reader_protected_feasibility_20261017_evidence.json). Card standard validator valid with warnings for missing heldout utility/unresolved attribution.
-- [Previous result receipt](refs/reader_membership_screen_20261017_receipt.json):2151 arrays,24 saved AdamW witnesses, prior source/metric audit.
-- Owner analysis: [shared safe updates](../../../../docs/rag-research-log/20261017T-160953Z-reader-protected-update-feasibility.md).
-- GitHub source/analysis published as c44bcd1 on five-ideas-development; [publication mapping](refs/reader_protected_feasibility_20261017_publication.json) verifies13 executed sources (5 exact,8 LF/CRLF only).
+- `applications/rag/tests/test_reader_unseen_transport.py`:3 passed in the existing `lambeq` environment, including full synthetic87 trace/audit replay.
+- Research plugin architecture validator:3 plugins validated. Workflow plan validator passes.
+- Backup feature extraction:87/87 score and Top5 parity, local cached Reader revision `38f47a49`, no model/data download, answers/support labels unopened.
+- Current implementation/config: `applications/rag/reader_unseen_transport.py`, `scripts/collab/five_ideas/{prepare,run,audit}_reader_unseen_*`, `configs/experiments/reader_unseen_transport_gate_87*.json`.
+- Session: [transport implementation and server handoff](sessions/2026-10/20261018T061040Z-311464.md).
 
 ## Relevant Decisions
+- [Untouched validation transport gate](decisions/2026-10-18-reader-unseen-transport-gate.md).
 - [Completed sequential contract/result](decisions/2026-10-18-reader-sequential-protected-updates.md).
-- [Completed current audit/next proposal](decisions/2026-10-17-reader-protected-update-feasibility.md); [previous result](decisions/2026-10-17-reader-membership-screen-result.md).
 - [Frozen membership contract](decisions/2026-10-16-reader-membership-screen-handoff.md); [final train targets](decisions/2026-10-11-final-support-boundary-resolution.md).
-- [CPU execution authorization](decisions/2026-10-16-v100s-experiment-authorization.md); topology in `../../project.md`.
-- Full long-term principles/navigation: `critical-invariants.md`.
-- Session: [completed feasibility audit](sessions/2026-10/20261017T162046Z-a85300.md).
+- Server topology and collaboration boundaries: `../../project.md`; full long-term principles/navigation: `critical-invariants.md`.
