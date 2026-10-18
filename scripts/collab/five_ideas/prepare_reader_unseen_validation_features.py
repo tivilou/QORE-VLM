@@ -75,9 +75,12 @@ def build(args: argparse.Namespace) -> Path:
             if not isinstance(body, str) or not body.strip():
                 raise ValueError(f"candidate text must be non-empty for validation_{number:03d}")
             online_texts.append(f"{title}. {body.strip()}" if title else body.strip())
+        batch_size = args.batch_size or spec["batch_size"]
+        if batch_size < 1 or batch_size > spec["batch_size"]:
+            raise ValueError("batch_size must be between 1 and the frozen maximum")
         base, pooled, _scalar, _hidden = reader_semantic_forward(
             torch, tokenizer, reader, device, case["question"], online_texts,
-            max_length=spec["max_length"], batch_size=spec["batch_size"], capture_first=False,
+            max_length=spec["max_length"], batch_size=batch_size, capture_first=False,
         )
         base_np = base.numpy().astype(np.float32, copy=True)
         pooled_np = pooled.numpy().astype(np.float32, copy=True)
@@ -108,7 +111,8 @@ def build(args: argparse.Namespace) -> Path:
     manifest = {
         "schema_version": "rag.reader_unseen_feature_cache.v1",
         "source_bundle_sha256": SOURCE_SHA,
-        "model": {"model_id": spec["model_id"], "revision": spec["revision"], "device": str(device)},
+        "model": {"model_id": spec["model_id"], "revision": spec["revision"], "device": str(device),
+                  "frozen_batch_size": spec["batch_size"], "execution_batch_size": batch_size},
         "records": records,
         "arrays": {key: {"shape": list(value.shape), "dtype": str(value.dtype), "sha256": hashlib.sha256(value.tobytes()).hexdigest()} for key, value in arrays.items()},
         "label_boundary": {"answers_read": False, "support_annotations_read": False, "silver_oracle_read": False},
@@ -126,4 +130,6 @@ if __name__ == "__main__":
     parser.add_argument("--output", type=Path, default=ROOT / ".cache/reader-unseen-validation87-v1")
     parser.add_argument("--device", default=None)
     parser.add_argument("--torch-threads", type=int, default=4)
+    parser.add_argument("--batch-size", type=int, default=None,
+                        help="Resource-only microbatch override; must not exceed the frozen batch size")
     build(parser.parse_args())

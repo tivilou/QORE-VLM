@@ -6,7 +6,7 @@
   "status": "blocked",
   "objective": "Preflight whether the frozen training59 sequential Reader-head updates transport to an untouched validation87 cohort before spending semantic review effort",
   "focus_step_id": "UG-03",
-  "next_action": "Reconnect the primary 3080Ti or restored backup, recover existing artifacts by hash, and execute the fixed label-blind transport runner",
+  "next_action": "Restore a bound server with a visible GPU, or recover the completed validation87 cache from gpushare-i1-57535; then run the fixed transport gate with the original frozen values",
   "blocker": null,
   "steps": [
     {
@@ -97,8 +97,10 @@
       ],
       "evidence_paths": [],
       "owner": "rag-selector",
-      "blocker": "Primary 3080Ti accepts TCP but does not return SSH/HTTP banners after the CPU feature process started; backup gpushare-i1-57535 completed 87/87 feature parity then became connection-refused before artifact recovery",
-      "notes": [],
+      "blocker": "The reachable primary is a 1 GiB CPU-only cgroup (nvidia-smi returns no device); DPR Reader forward makes SSH unresponsive even at microbatch1. The backup GPU completed87/87 parity but its SSH endpoint is connection-refused.",
+      "notes": [
+        "2026-10-18 retry: primary connected and original values hash verified; feature extraction cannot run within its current 1 GiB CPU-only allocation"
+      ],
       "supersedes": [],
       "superseded_by": []
     },
