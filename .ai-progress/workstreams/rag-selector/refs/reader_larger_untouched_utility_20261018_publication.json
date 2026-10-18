@@ -1,0 +1,24 @@
+{
+  "schema_version": "project-progress.publication-map.v1",
+  "workstream": "rag-selector",
+  "topic": "reader-larger-untouched-utility",
+  "recorded_at": "2026-10-18T16:51:07Z",
+  "local": {
+    "branch": "main",
+    "implementation_commit": "02c4559a316564bc5ad76650a273f6bb5cead192"
+  },
+  "github": {
+    "remote": "origin",
+    "branch": "five-ideas-development",
+    "published_commit": "ed558d2b5709b54778a8c49890f0f0e6b9204a97",
+    "remote_ref_verified": true
+  },
+  "validation": {
+    "combined_unseen_and_larger_tests_passed": 9,
+    "plugin_plan_plugins_validated": 3,
+    "workflow_plan_valid": true,
+    "validate_only_model_loaded": false,
+    "validate_only_wiki_dpr_started": false
+  },
+  "note": "The isolated publication checkout replayed the unseen-transport and blind-review commits before the larger-cohort commit; local and GitHub commit identifiers therefore differ."
+}

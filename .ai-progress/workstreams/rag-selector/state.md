@@ -31,6 +31,7 @@
 - Python compilation and Bash syntax validation passed.
 - No full corpus was downloaded and no formal experiment was run locally or on3080Ti.
 - Session: [larger untouched cohort export implementation](sessions/2026-10/20261018T164330Z-a4c7e1.md).
+- GitHub `five-ideas-development` is published at `ed558d2`; [publication mapping](refs/reader_larger_untouched_utility_20261018_publication.json) records local/remote commits and validation.
 
 ## Relevant Decisions
 - [Larger untouched utility study contract](decisions/2026-10-18-reader-larger-untouched-utility.md).
