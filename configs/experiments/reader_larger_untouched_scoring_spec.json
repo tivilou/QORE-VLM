@@ -91,7 +91,7 @@
     "source_config_sha256": "c9ddf1bc1c67f6bc842eb3fbd020f64ce2cb90be88b5804794c5d9f59c5ab571",
     "arms": {
       "quantum": {
-        "restore_state_sha256": "9f89ba0f9e8ee214f18f56591c2119c8e8a756790899fe551d66162b664319ff",
+        "restore_state_sha256": "e3b69415cd05860954a181627f46248ad0406b3871eb6a8c84392605f73e01ce",
         "critical_arrays": {
           "final_theta": {"sha256": "b762714a6c9c02a88e11b9d57a6bc6cded7337732d8a39b8c4bf6c5eca473251"},
           "head__theta": {"sha256": "0d1c4733a3313187d4c762fb744ad0672061626a7c4159f968376860954d89e9"},
@@ -101,7 +101,7 @@
         }
       },
       "classical": {
-        "restore_state_sha256": "a79da8701e2a3517e857884d6b37b41174c83846873449ea0e74d872bbe54376",
+        "restore_state_sha256": "47de5c4976abe7af47e96be7fe2382fa86daf6e1fb11750b35850bb8905e2742",
         "critical_arrays": {
           "final_theta": {"sha256": "e0c202952975428d1a6e9956fae24229001dc36e9ead186d41f8aa8dfa59afeb"},
           "head__theta": {"sha256": "0d1c4733a3313187d4c762fb744ad0672061626a7c4159f968376860954d89e9"},
