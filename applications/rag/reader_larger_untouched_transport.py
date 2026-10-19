@@ -9,6 +9,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import copy
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -88,6 +89,19 @@ def verify_manifest_sources(root: Path, manifest: Mapping[str, Any]) -> dict[str
     return actual
 
 
+def verification_spec_from_manifest(manifest: Mapping[str, Any]) -> dict[str, Any]:
+    """Restore only the two pre-freeze archive filenames in a private copy."""
+    verification_spec = copy.deepcopy(manifest)
+    cohort_source_file = (
+        manifest.get("provenance", {}).get("cohort_source_snapshot", {}).get("file")
+    )
+    if cohort_source_file != "executed_sources.zip":
+        raise ValueError("frozen cohort source filename is not bound")
+    verification_spec["cohort"]["source_snapshot"]["file"] = cohort_source_file
+    verification_spec["sequential_checkpoint"]["source_snapshot"]["file"] = "executed_sources.zip"
+    return verification_spec
+
+
 def verify_bound_inputs(
     *,
     root: Path,
@@ -101,9 +115,14 @@ def verify_bound_inputs(
     manifest_check = validate_scoring_manifest(manifest)
     if file_sha256(Path(manifest_path)) != "c46eab8726c5003dc56d7f8b3494888cf222ed63be4e3202e4e49e6d3df8267b":
         raise ValueError("immutable scoring-manifest file drift")
-    cohort_check = verify_cohort(Path(cohort_dir), manifest)
-    reader_check = verify_reader_snapshot(Path(reader_snapshot), manifest)
-    checkpoint_check = verify_sequential_checkpoint(Path(sequential_values), manifest)
+    # The frozen manifest records verified archive contents and hashes, while
+    # the original pre-freeze spec carried the filenames.  Reconstitute only
+    # those two fixed filenames in a private verification copy; never mutate
+    # the immutable manifest or infer an arbitrary archive from the directory.
+    verification_spec = verification_spec_from_manifest(manifest)
+    cohort_check = verify_cohort(Path(cohort_dir), verification_spec)
+    reader_check = verify_reader_snapshot(Path(reader_snapshot), verification_spec)
+    checkpoint_check = verify_sequential_checkpoint(Path(sequential_values), verification_spec)
     source_check = verify_manifest_sources(Path(root), manifest)
     cohort = json.loads((Path(cohort_dir) / "cohort.json").read_text(encoding="utf-8"))
     validate_cohort(cohort, expected_cases=256)
@@ -367,5 +386,6 @@ __all__ = [
     "restore_rotation_head",
     "score_heads",
     "validate_trace",
+    "verification_spec_from_manifest",
     "verify_bound_inputs",
 ]

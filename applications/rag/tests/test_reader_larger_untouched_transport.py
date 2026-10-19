@@ -14,6 +14,7 @@ from applications.rag.reader_larger_untouched_transport import (
     restore_rotation_head,
     score_heads,
     validate_trace,
+    verification_spec_from_manifest,
 )
 from applications.rag.reader_unseen_transport import transport_metrics
 
@@ -67,6 +68,23 @@ def test_candidate_text_and_prospective_gate():
         {"candidate_changed_questions": 1, "candidate_control_different_questions": 1}, manifest()
     )
     assert result["advance_to_blind_review"] is True
+
+
+def test_frozen_manifest_archive_name_is_explicitly_bound():
+    contract = manifest()
+    contract.update({
+        "provenance": {"cohort_source_snapshot": {"file": "executed_sources.zip"}},
+        "sequential_checkpoint": {"source_snapshot": {}},
+    })
+    contract["cohort"]["source_snapshot"] = {}
+    rebound = verification_spec_from_manifest(contract)
+    assert rebound["cohort"]["source_snapshot"]["file"] == "executed_sources.zip"
+    assert rebound["sequential_checkpoint"]["source_snapshot"]["file"] == "executed_sources.zip"
+    assert "file" not in contract["sequential_checkpoint"]["source_snapshot"]
+    crossed = copy.deepcopy(contract)
+    crossed["provenance"]["cohort_source_snapshot"]["file"] = "unexpected.zip"
+    with pytest.raises(ValueError, match="filename"):
+        verification_spec_from_manifest(crossed)
 
 
 def test_complete_trace_and_independent_vector_replay(tmp_path):
