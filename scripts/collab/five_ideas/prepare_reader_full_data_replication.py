@@ -79,8 +79,8 @@ def load_contract(
     plan = json.loads(plan_path.read_text(encoding="utf-8"))
     if cfg.get("schema_version") != "rag.reader_full_data_replication.v1":
         raise FullDataExportError("unexpected full-data config schema")
-    if cfg.get("authorization") != "implementation_validated_formal_run_not_authorized":
-        raise FullDataExportError("full-data implementation authorization drift")
+    if cfg.get("authorization") != "data_materialization_authorized_scoring_not_authorized":
+        raise FullDataExportError("full-data materialization authorization drift")
     if cfg.get("formal_run_authorized") is not False:
         raise FullDataExportError("formal run must remain unauthorized")
     population = cfg.get("formal_population", {})
@@ -356,6 +356,7 @@ def run(args: argparse.Namespace) -> Path | None:
             "model_loaded": False,
             "dataset_loaded": False,
             "wiki_dpr_started": False,
+            "data_materialization_authorized": True,
             "formal_run_authorized": False,
         }, sort_keys=True))
         return None

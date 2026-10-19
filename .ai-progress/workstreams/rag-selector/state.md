@@ -4,7 +4,7 @@
 - Improve fixed Top50 -> Top5 on the quantum mainline toward independently verified full-data L2, while keeping ordinary utility separate from L4 quantum attribution.
 
 ## Current State
-- [ACTIVE / FD-02 COMPLETE; FD-03 AWAITING AUTHORIZATION] The complete-population freezer/exporter, exact artifact validator and collaborator one-command wrapper are implemented.
+- [ACTIVE / FD-03 AUTHORIZED; AWAITING COLLABORATOR EXECUTION] The complete-population freezer/exporter, exact artifact validator and collaborator one-command wrapper are implemented.
 - A full-scale synthetic fixture scanned all 3,098 fixed source positions, excluded exactly 790 synthetic exposed identities, froze 2,308 eligible cases x50 candidates and replayed balanced `1,154/1,154` A/B partitions.
 - Eight focused/regression tests, target-boundary validation, source/manifest replay and remote Bash syntax validation passed. No real NQ question, Wiki-DPR passage, Reader score, label or review was opened.
 - The frozen sequential quantum Reader head still has only the prior fresh 256-question L0 semantic result; complete-data utility and quantum attribution remain unmeasured.
@@ -15,8 +15,8 @@
 - Plan Status: active
 - Completed Steps: FD-01, FD-02
 - Focus Step: FD-03
-- Next Action: After explicit FD-03 authorization, have the collaborator run the one-command complete-population materialization; do not start real data access before that authorization.
-- Blocker: FD-03 requires explicit authorization and collaborator access to the complete NQ/Wiki-DPR runtime.
+- Next Action: Have the collaborator run the one-command complete-population materialization and upload; no Reader/head scoring is authorized.
+- Blocker: Awaiting collaborator execution in the complete NQ/Wiki-DPR runtime.
 - Last Checkpoint: 2026-10-19
 
 ## Evidence Boundary
@@ -33,6 +33,7 @@
 - Experiment config/plan: `configs/experiments/reader_full_data_replication.json` and `reader_full_data_replication_plan.json`; four plugins validate.
 - No dataset/model/retrieval was loaded in `--validate-only`; no real-data or formal scoring execution occurred.
 - Session: [FD-02 implementation checkpoint](sessions/2026-10/20261019T111520Z-d45268.md).
+- Session: [FD-03 materialization authorization](sessions/2026-10/20261019T123455Z-062f0e.md).
 
 ## Relevant Decisions
 - [Active complete-data replication contract and FD-02 checkpoint](decisions/2026-10-19-reader-full-data-replication.md).

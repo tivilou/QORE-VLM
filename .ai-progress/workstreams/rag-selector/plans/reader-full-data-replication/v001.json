@@ -6,8 +6,8 @@
   "status": "active",
   "objective": "Test the frozen sequential quantum Reader head on the complete eligible untouched NQ/Wiki-DPR population using two disjoint result-independent confirmation splits and sealed blind semantic evaluation.",
   "focus_step_id": "FD-03",
-  "next_action": "After explicit FD-03 authorization, have the collaborator run the one-command complete-population materialization; do not start real data access before that authorization.",
-  "blocker": "FD-03 requires explicit authorization and collaborator access to the complete NQ/Wiki-DPR runtime.",
+  "next_action": "Have the collaborator run the one-command complete-population materialization and upload; no Reader/head scoring is authorized.",
+  "blocker": "Awaiting collaborator execution in the complete NQ/Wiki-DPR runtime.",
   "steps": [
     {
       "id": "FD-01",
@@ -108,8 +108,8 @@
       ],
       "evidence_paths": [],
       "owner": "collaborator data-bearing execution",
-      "blocker": "requires separate formal data-materialization authorization",
-      "notes": "No sampled fallback or replacement is allowed.",
+      "blocker": null,
+      "notes": "User authorized FD-03 on 2026-10-19. No sampled fallback or replacement is allowed; Reader/head scoring remains separately gated.",
       "supersedes": [],
       "superseded_by": []
     },

@@ -21,6 +21,7 @@ from applications.rag.reader_larger_untouched import (
     sha256_text,
 )
 from scripts.collab.five_ideas.prepare_reader_full_data_replication import (
+    load_contract,
     run,
     synthetic_cases,
     synthetic_inputs,
@@ -169,6 +170,9 @@ def test_duplicate_source_question_and_forbidden_target_are_rejected():
 
 
 def test_validate_only_loads_no_dataset_or_model(tmp_path: Path, capsys):
+    config, _plan = load_contract()
+    assert config["authorization"] == "data_materialization_authorized_scoring_not_authorized"
+    assert config["formal_run_authorized"] is False
     assert run(_args(tmp_path, validate_only=True)) is None
     payload = json.loads(capsys.readouterr().out)
     assert payload["pool_cases"] == 3098
@@ -176,6 +180,7 @@ def test_validate_only_loads_no_dataset_or_model(tmp_path: Path, capsys):
     assert payload["model_loaded"] is False
     assert payload["dataset_loaded"] is False
     assert payload["wiki_dpr_started"] is False
+    assert payload["data_materialization_authorized"] is True
     assert payload["formal_run_authorized"] is False
 
 

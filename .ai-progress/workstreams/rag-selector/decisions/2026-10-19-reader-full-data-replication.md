@@ -6,7 +6,7 @@
 - Supersedes: None
 - Superseded By: None
 - Gate: complete population and both independent splits must pass the prospective Reader utility gate
-- Authorization: FD-02 implementation is complete; real data materialization, formal scoring, review and claims require their own stage authorization
+- Authorization: FD-03 real data materialization is authorized; formal scoring, review and claims remain separately unauthorized
 - Current evidence tier: L0 diagnostic
 
 ## Decision
@@ -108,3 +108,7 @@ explicit authorization plus the collaborator runtime. See
 `../refs/reader_full_data_fd02_fixture_20261019_receipt.json`; implementation
 is `applications/rag/reader_full_data_replication.py` and the one-command
 entry is `scripts/collab/five_ideas/prepare_reader_full_data_replication.sh`.
+
+On 2026-10-19 the user explicitly authorized FD-03. This permits only the
+complete NQ/Wiki-DPR population scan, frozen Top-50 export and authenticated
+artifact upload. It does not authorize Reader/head scoring, review or claims.
