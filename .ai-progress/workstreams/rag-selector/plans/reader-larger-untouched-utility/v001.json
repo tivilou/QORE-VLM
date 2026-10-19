@@ -5,8 +5,8 @@
   "workstream": "rag-selector",
   "status": "active",
   "objective": "Test whether the frozen quantum Reader head retains a useful Top-5 advantage on a fresh identity-disjoint 256-question NQ/Wiki-DPR cohort, without using answers or semantic targets to choose the cohort.",
-  "focus_step_id": "LU-04",
-  "next_action": "Bind the verified cohort SHA, pinned Reader revision, frozen sequential quantum/classical checkpoint hashes and source identities into one immutable scoring manifest; validate it before GPU scoring.",
+  "focus_step_id": "LU-05",
+  "next_action": "Implement and synthetic-validate the immutable-manifest-driven 256-question Reader transport runner, then live-check Titan capacity before formal scoring.",
   "blocker": null,
   "steps": [
     {
@@ -111,7 +111,7 @@
     {
       "id": "LU-04",
       "title": "Verify the cohort and freeze transport inputs",
-      "status": "active",
+      "status": "done",
       "objective": "Verify every hash and identity before Reader feature extraction, then bind the exact cohort and frozen checkpoints to the scoring manifest.",
       "inputs": [
         "LU-03 artifacts",
@@ -130,18 +130,20 @@
         "checkpoint and source hashes are exact"
       ],
       "evidence_paths": [
-        ".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_cohort_20261018_receipt.json"
+        ".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_cohort_20261018_receipt.json",
+        "configs/experiments/reader_larger_untouched_scoring_manifest.json",
+        ".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_scoring_manifest_20261019_receipt.json"
       ],
       "owner": "3080Ti aggregation",
       "blocker": null,
-      "notes": "No post-score resampling is permitted.\nCohort half of LU-04 is verified; checkpoint/source binding remains.",
+      "notes": "No post-score resampling is permitted. Real input replay passed on 3080Ti with scoring_started=false; all cohort, Reader snapshot, sequential checkpoint, restored-state and source identities matched.",
       "supersedes": [],
       "superseded_by": []
     },
     {
       "id": "LU-05",
       "title": "Run frozen Reader and head transport",
-      "status": "todo",
+      "status": "active",
       "objective": "Use a live capacity-checked gpu-training host for Reader feature extraction and frozen Reader/quantum/classical Top-5 transport.",
       "inputs": [
         "immutable scoring manifest"

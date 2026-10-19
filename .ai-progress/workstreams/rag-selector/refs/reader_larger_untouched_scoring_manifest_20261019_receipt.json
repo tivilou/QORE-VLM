@@ -1,0 +1,36 @@
+{
+  "schema_version": "rag.reader_larger_untouched_scoring_manifest_receipt.v1",
+  "status": "passed",
+  "manifest_file": {
+    "name": "scoring_manifest.json",
+    "bytes": 15959,
+    "sha256": "c46eab8726c5003dc56d7f8b3494888cf222ed63be4e3202e4e49e6d3df8267b"
+  },
+  "manifest_identity_sha256": "c94001af30b1e302db6401c3b74788d0c2041d1d831314c6ab30359525669a3e",
+  "source_snapshot": {
+    "file": "scoring_manifest_sources.zip",
+    "bytes": 26079,
+    "sha256": "8102287249283095ae682467f2fb06df380b587f2e7a90e59e182685cec10020",
+    "source_hashes": {
+      "applications/rag/quantum_reader_rotation.py": "505b278b4b3123d8f0b598ad09e313d30ab56a0af33fa070846a57d306487610",
+      "applications/rag/quantum_semantic_reader.py": "b089470c7c0b15f7c1ea75206223d59e465072c496e6e95add5d72310ca4315a",
+      "applications/rag/reader_larger_untouched.py": "deec4ce5c6c104b5229ef3395b370b882288bed6a974f6ae1a8ea33439798986",
+      "applications/rag/reader_larger_untouched_manifest.py": "53ad7a3076c72b51df50decccd5a9dd39f056e3c30544301d90b40495be48462",
+      "applications/rag/reader_unseen_transport.py": "760ad7fd47dda4402eea50482f9d004e02472792f22a8b88e7845dc04b8312ca",
+      "configs/experiments/reader_larger_untouched_scoring_spec.json": "9f20c95ac1b471055e0990c5cae5ae8aa23e2c84b106b9619b4aebb5ef9be3fd",
+      "configs/experiments/reader_larger_untouched_utility_256.json": "006c26fcbd17dab62d779275ac238a7a80ed334f35b023e315d6f37c43ad3db8",
+      "configs/experiments/reader_larger_untouched_utility_256_plan.json": "c0674156530cfff7f9a739a3a086143b02567591649bf5f0bd995a9ba4979241",
+      "scripts/collab/five_ideas/freeze_reader_larger_untouched_scoring_manifest.py": "3eec369dc5e1b393bbb2a2129c46e9c25ccf4a1c40189d003fc5a1a94dde7356",
+      "scripts/collab/lib/source_snapshot.py": "2a3cd1cd61db85cfc9bc3c316a65bc2cb37455827763c15eace1e6f77888dca5"
+    }
+  },
+  "checks": {
+    "status": "passed",
+    "manifest_identity_sha256": "c94001af30b1e302db6401c3b74788d0c2041d1d831314c6ab30359525669a3e",
+    "cases": 256,
+    "top50_rows": 12800,
+    "arms": 3,
+    "scoring_started": false
+  },
+  "scoring_started": false
+}

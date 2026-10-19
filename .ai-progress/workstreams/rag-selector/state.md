@@ -4,18 +4,19 @@
 - Improve fixed Top50 -> Top5 on the quantum mainline toward independently verified full-data L2. Training-only and small blind diagnostics remain L0.
 
 ## Current State
-- [ACTIVE / L0 DATA FREEZE PASSED] Real run `20261018T141409477054Z` froze 256 fresh NQ validation questions and 12,800 DPR/Wiki-DPR candidates. All questions are unique; every case has 50 unique ranked candidates with finite scores.
-- Independent 3080Ti replay found zero overlap with the protected434 plus historical100 identities, zero forbidden answer/label/result fields, and exact cohort/lock/manifest/receipt/source agreement. Cohort SHA is `49c57f20...455a02`; identity SHA is `25a71785...25397`.
-- This is not a selector result: Reader, quantum and classical scoring have not run, so no utility, L1/L2 or quantum-advantage conclusion exists.
-- GitHub has no collaborator commit after `5815c74`; all required exchange artifacts are complete on18083, but the compact GitHub return is absent.
+- [ACTIVE / L0 INPUTS FROZEN] The 256-question x Top-50 cohort, DPR Reader revision, five Reader snapshot files, and frozen sequential quantum/classical restored states are bound by one immutable scoring manifest.
+- 3080Ti replay verified the 256 cohort locks, 12,800 candidate rows, 438 MB Reader weight file, 286 MB checkpoint, two 85-entry restored states, both historical executed-source archives and current method sources. Manifest SHA is `c46eab87...8267b`; identity SHA is `c94001af...69a3e`.
+- `scoring_started=false`: Reader, quantum and classical scoring have not run, so no transport, utility, L1/L2 or quantum-advantage conclusion exists.
+- GitHub `five-ideas-development` contains the input-freeze implementation through `e424e04`; the successful compact manifest is stored in Git and its source archive remains on18083.
 
 ## Plan Control
 - Active Plan: plans/reader-larger-untouched-utility/v001.json
 - Plan Version: 1
 - Plan Status: active
-- Completed Steps: LU-01 through LU-03
-- Focus Step: LU-04 — verify cohort and freeze transport inputs
-- Next Action: bind the verified cohort SHA, pinned Reader revision, exact sequential quantum/classical checkpoint hashes and source identities into one immutable scoring manifest; validate it before GPU scoring.
+- Completed Steps: LU-01 through LU-04
+- Focus Step: LU-05
+- Focus Title: Run frozen Reader and head transport
+- Next Action: Implement and synthetic-validate the immutable-manifest-driven 256-question Reader transport runner, then live-check Titan capacity before formal scoring.
 - Blocker: None.
 - Last Checkpoint: 2026-10-19
 
@@ -26,10 +27,12 @@
 
 ## Validation
 - Receipt: [larger untouched cohort verification](refs/reader_larger_untouched_cohort_20261018_receipt.json).
+- Scoring manifest: [immutable transport inputs](../../../configs/experiments/reader_larger_untouched_scoring_manifest.json); [verification receipt](refs/reader_larger_untouched_scoring_manifest_20261019_receipt.json).
 - Research log: [256-question cohort freeze](../../../docs/rag-research-log/20261018T-141409Z-reader-larger-untouched-cohort-freeze.md).
 - Exchange path: `/srv/qore-collab-uploads/five_ideas/reader_larger_untouched_cohort_256/20261018T141409477054Z` on3080Ti.
-- Six archived executed sources match Git revision `5815c74`; four declared upload payloads match service receipts by bytes and SHA-256.
-- Session: [real cohort verification and plan advance](sessions/2026-10/20261019T001305Z-200087.md).
+- Scoring-manifest exchange path: `/srv/qore-collab-uploads/five_ideas/reader_larger_untouched_scoring_manifest/20261019T003901353299Z` on3080Ti.
+- Local regression: 9 tests passed; real manifest replay passed with 3 arms and no scores produced.
+- Session: [immutable scoring-input freeze](sessions/2026-10/20261019T004136Z-95f859.md).
 
 ## Relevant Decisions
 - [Larger untouched utility study contract and checkpoint](decisions/2026-10-18-reader-larger-untouched-utility.md).

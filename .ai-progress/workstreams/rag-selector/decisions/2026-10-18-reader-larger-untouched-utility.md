@@ -1,7 +1,7 @@
 # Larger untouched Reader utility study
 
 - Date: 2026-10-18
-- Status: ACTIVE / REAL COHORT VERIFIED; SCORING MANIFEST PENDING
+- Status: ACTIVE / TRANSPORT INPUTS FROZEN; GPU SCORING PENDING
 - Evidence tier: L0 design and engineering only
 
 ## Decision
@@ -75,16 +75,12 @@ trace, structural and semantic readiness checks, and same-sample replay exist.
 
 ## 2026-10-19 checkpoint
 
-Run `20261018T141409477054Z` produced 256 unique questions and 12,800 candidate
-rows. Independent server-side replay found zero overlap with the exact 534
-historical identities, zero forbidden target/result fields, zero structural
-case errors, and exact agreement among cohort, lock, manifest, receipts and
-the six executed-source members from Git revision `5815c74`. Cohort SHA-256 is
-`49c57f20aa2319794e35264aad7a202ab343ff963667424f1685a3e623455a02`;
-identity SHA-256 is
-`25a717857ca9a9ff8892161a941101f8dc797d6a146eb35600a1958aa3925397`.
+Run `20261018T141409477054Z` produced 256 unique questions and 12,800 candidate rows. Server replay found zero overlap with the 534 historical identities, zero forbidden fields or structural errors, and exact cohort/lock/manifest/receipt/source agreement. Cohort SHA-256 is `49c57f20aa2319794e35264aad7a202ab343ff963667424f1685a3e623455a02`; identity SHA-256 is `25a717857ca9a9ff8892161a941101f8dc797d6a146eb35600a1958aa3925397`. Receipt: `../refs/reader_larger_untouched_cohort_20261018_receipt.json`.
 
-This closes cohort materialization only. Freeze the Reader revision and exact
-sequential quantum/classical checkpoint hashes in an immutable scoring
-manifest before any GPU scoring. Receipt:
-`../refs/reader_larger_untouched_cohort_20261018_receipt.json`.
+## 2026-10-19 immutable input checkpoint
+
+The pre-scoring manifest binds the cohort/lock, DPR Reader revision `38f47a4986084c53447ba92ab0a83076b58d86a8` and five snapshot files, sequential run `20261018T045707538341Z`, both complete 85-entry restored head states, distinct final theta arrays, and all cohort/checkpoint/method source identities. Real 3080Ti replay passed with `scoring_started=false`.
+
+Manifest: `../../../../configs/experiments/reader_larger_untouched_scoring_manifest.json`; file SHA-256 `c46eab8726c5003dc56d7f8b3494888cf222ed63be4e3202e4e49e6d3df8267b`; identity `c94001af30b1e302db6401c3b74788d0c2041d1d831314c6ab30359525669a3e`; receipt `../refs/reader_larger_untouched_scoring_manifest_20261019_receipt.json`; exchange run `20261019T003901353299Z`.
+
+LU-05 may implement and synthetic-test a manifest-driven runner, live-check Titan, and run one label-blind score pass. Semantic review remains unauthorized unless the 25-case transport and 15-case matched-control separation gates pass.
