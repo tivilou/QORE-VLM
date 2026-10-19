@@ -5,8 +5,8 @@
   "workstream": "rag-selector",
   "status": "active",
   "objective": "Test whether the frozen quantum Reader head retains a useful Top-5 advantage on a fresh identity-disjoint 256-question NQ/Wiki-DPR cohort, without using answers or semantic targets to choose the cohort.",
-  "focus_step_id": "LU-05",
-  "next_action": "Implement and synthetic-validate the immutable-manifest-driven 256-question Reader transport runner, then live-check Titan capacity before formal scoring.",
+  "focus_step_id": "LU-06",
+  "next_action": "Construct the 67-question/404-passage method-blind changed-set packet, then obtain two isolated reviews and blind adjudication before unblinding utility.",
   "blocker": null,
   "steps": [
     {
@@ -143,7 +143,7 @@
     {
       "id": "LU-05",
       "title": "Run frozen Reader and head transport",
-      "status": "active",
+      "status": "done",
       "objective": "Use a live capacity-checked gpu-training host for Reader feature extraction and frozen Reader/quantum/classical Top-5 transport.",
       "inputs": [
         "immutable scoring manifest"
@@ -160,17 +160,19 @@
         "quantum changes at least 25 cases and differs from classical on at least 15",
         "no semantic labels opened"
       ],
-      "evidence_paths": [],
+      "evidence_paths": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_transport_20261019_receipt.json"
+      ],
       "owner": "live gpu-training host",
       "blocker": null,
-      "notes": "3080Ti remains orchestration and aggregation only.",
+      "notes": "3080Ti remains orchestration and aggregation only.\nOne frozen Titan score pass completed; quantum changed 61/256 and differed from classical on 47/256. Independent replay of all 768 score vectors and Top-5 sets passed with zero difference; labels remained unopened.",
       "supersedes": [],
       "superseded_by": []
     },
     {
       "id": "LU-06",
       "title": "Run blinded semantic utility review",
-      "status": "todo",
+      "status": "active",
       "objective": "If the transport gate passes, review only the changed-set union using two isolated reviewers and blind adjudication before opening method identity.",
       "inputs": [
         "sealed method key",

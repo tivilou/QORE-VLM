@@ -84,3 +84,13 @@ The pre-scoring manifest binds the cohort/lock, DPR Reader revision `38f47a49860
 Manifest: `../../../../configs/experiments/reader_larger_untouched_scoring_manifest.json`; file SHA-256 `c46eab8726c5003dc56d7f8b3494888cf222ed63be4e3202e4e49e6d3df8267b`; identity `c94001af30b1e302db6401c3b74788d0c2041d1d831314c6ab30359525669a3e`; receipt `../refs/reader_larger_untouched_scoring_manifest_20261019_receipt.json`; exchange run `20261019T003901353299Z`.
 
 LU-05 may implement and synthetic-test a manifest-driven runner, live-check Titan, and run one label-blind score pass. Semantic review remains unauthorized unless the 25-case transport and 15-case matched-control separation gates pass.
+
+## 2026-10-19 LU-05 result
+
+The single frozen score pass ran on `gpushare-i1-54996-titan5` from Git `a3f416973141c16c54e906585c70923037334e70`. It changed the quantum Top-5 set relative to Reader on 61/256 questions and separated quantum from the matched classical set on 47/256, passing the prospective 25/15 transport gate; classical changed 29/256 questions relative to Reader.
+
+All 768 Reader, quantum and classical score vectors and every Top-5 were independently replayed with zero numerical difference. Answers, support and Silver labels remained unopened and no Generator was called.
+
+The changed-set union contains 67 questions and 404 unique within-question passages. LU-06 is therefore authorized to construct the method-blind packet and obtain two isolated reviews plus blind adjudication. This result remains L0: the event-rate pass does not establish semantic utility, L1/L2, or quantum advantage.
+
+Receipt: `../refs/reader_larger_untouched_transport_20261019_receipt.json`; full aggregation path: `/srv/qore-collab-uploads/five_ideas/reader_larger_untouched_transport_256/20261019T014046Z`.

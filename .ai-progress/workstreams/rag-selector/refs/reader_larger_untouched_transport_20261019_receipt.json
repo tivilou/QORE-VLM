@@ -1,0 +1,96 @@
+{
+  "schema_version": "rag.reader_larger_untouched_transport_receipt.v1",
+  "run_id": "20261019T014046Z",
+  "status": "completed_and_independently_replayed",
+  "evidence_tier": "L0_label_blind_transport",
+  "execution": {
+    "server_id": "gpushare-i1-54996-titan5",
+    "git_revision": "a3f416973141c16c54e906585c70923037334e70",
+    "python": "3.11.10",
+    "numpy": "2.4.6",
+    "torch": "2.4.0+cu121",
+    "transformers": "4.44.2",
+    "device": "cuda:0",
+    "cuda_device": "NVIDIA GeForce GTX TITAN X",
+    "execution_batch_size": 8
+  },
+  "input_binding": {
+    "manifest_sha256": "c46eab8726c5003dc56d7f8b3494888cf222ed63be4e3202e4e49e6d3df8267b",
+    "manifest_identity_sha256": "c94001af30b1e302db6401c3b74788d0c2041d1d831314c6ab30359525669a3e",
+    "cohort_sha256": "49c57f20aa2319794e35264aad7a202ab343ff963667424f1685a3e623455a02",
+    "cohort_identity_sha256": "25a717857ca9a9ff8892161a941101f8dc797d6a146eb35600a1958aa3925397",
+    "reader_model_sha256": "850c5c755efcdb39d703236bdce317635ffc9a8b7cb1d451bf421115b2015e5b",
+    "sequential_values_sha256": "35d7f9c165c581e7ce21ccaf57eca104db6e97a2b2af6c598af333caac8287bc"
+  },
+  "population": {
+    "questions": 256,
+    "candidates_per_question": 50,
+    "selected_per_arm": 5,
+    "set_changed_union_questions": 67,
+    "blind_review_union_passages": 404
+  },
+  "transport_metrics": {
+    "quantum_changed_questions_vs_reader": 61,
+    "quantum_symmetric_difference_total_vs_reader": 122,
+    "quantum_mean_top5_overlap_with_reader": 4.76171875,
+    "classical_changed_questions_vs_reader": 29,
+    "classical_symmetric_difference_total_vs_reader": 58,
+    "quantum_classical_different_questions": 47,
+    "quantum_classical_symmetric_difference_total": 94
+  },
+  "prospective_gate": {
+    "required_quantum_changed_questions": 25,
+    "required_quantum_classical_different_questions": 15,
+    "transport": "pass",
+    "matched_control_separation": "pass",
+    "advance_to_blind_review": true
+  },
+  "independent_replay": {
+    "status": "passed",
+    "reader_score_vectors": 256,
+    "quantum_score_vectors": 256,
+    "classical_score_vectors": 256,
+    "max_abs_difference": 0.0,
+    "top5_exact": true,
+    "label_boundary_verified": true
+  },
+  "label_boundary": {
+    "answers_read": false,
+    "support_annotations_read": false,
+    "silver_oracle_read": false,
+    "generator_called": false,
+    "semantic_review_started": false
+  },
+  "aggregation": {
+    "server_id": "3080Ti-117-50-198-37",
+    "storage_path": "/srv/qore-collab-uploads/five_ideas/reader_larger_untouched_transport_256/20261019T014046Z",
+    "files": {
+      "executed_sources.zip": {
+        "bytes": 31382,
+        "sha256": "35b812ac4e790e92277f91167530da4483d9bebe389b58e8388b03490e9e54a6"
+      },
+      "independent_audit.json": {
+        "bytes": 15537,
+        "sha256": "897e225f4ae542c4969ae38e48c8a39247d9e84b2b64da17b488d3fbcb0811c2"
+      },
+      "selector_trace.json": {
+        "bytes": 1292569,
+        "sha256": "5c419bbf8a975cef65260d1a7c80b0348659436f0172e13a5bec32a627ef18f1"
+      },
+      "summary.json": {
+        "bytes": 3040,
+        "sha256": "f78b1199e3b0c1c09c36257e35b08567fe954c0899d61fc5c1d6d570665cc3a7"
+      },
+      "transport_values.npz": {
+        "bytes": 236084490,
+        "sha256": "56ed7c5000af39b9559ae254e1d80193a2852d5749400bb377aace0564dcc7b1"
+      },
+      "upload_manifest.json": {
+        "bytes": 955,
+        "sha256": "a05f048c6878f674ce10340a4f555a575d398184f87aa9bf7a561c4986efff0e"
+      }
+    },
+    "all_titan_local_3080ti_hashes_equal": true
+  },
+  "claim_ceiling": "The transport event-rate and quantum/classical separation gates passed. No semantic utility, L1/L2, or quantum-advantage claim is authorized before LU-06 blind review."
+}
