@@ -1,7 +1,7 @@
 # Larger untouched Reader utility study
 
 - Date: 2026-10-18
-- Status: ACTIVE / COHORT EXPORT IMPLEMENTED; REAL COHORT PENDING
+- Status: ACTIVE / REAL COHORT VERIFIED; SCORING MANIFEST PENDING
 - Evidence tier: L0 design and engineering only
 
 ## Decision
@@ -72,3 +72,19 @@ minimum attribution comparison required by the quantum mainline.
 
 The plugin plan remains `approved`, not `implemented`, until a real cohort
 trace, structural and semantic readiness checks, and same-sample replay exist.
+
+## 2026-10-19 checkpoint
+
+Run `20261018T141409477054Z` produced 256 unique questions and 12,800 candidate
+rows. Independent server-side replay found zero overlap with the exact 534
+historical identities, zero forbidden target/result fields, zero structural
+case errors, and exact agreement among cohort, lock, manifest, receipts and
+the six executed-source members from Git revision `5815c74`. Cohort SHA-256 is
+`49c57f20aa2319794e35264aad7a202ab343ff963667424f1685a3e623455a02`;
+identity SHA-256 is
+`25a717857ca9a9ff8892161a941101f8dc797d6a146eb35600a1958aa3925397`.
+
+This closes cohort materialization only. Freeze the Reader revision and exact
+sequential quantum/classical checkpoint hashes in an immutable scoring
+manifest before any GPU scoring. Receipt:
+`../refs/reader_larger_untouched_cohort_20261018_receipt.json`.

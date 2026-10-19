@@ -1,0 +1,67 @@
+{
+  "schema_version": "rag.reader_larger_untouched_cohort.receipt.v1",
+  "run_id": "20261018T141409477054Z",
+  "verified_at": "2026-10-19",
+  "exchange_directory": "five_ideas/reader_larger_untouched_cohort_256/20261018T141409477054Z",
+  "server_storage_directory": "/srv/qore-collab-uploads/five_ideas/reader_larger_untouched_cohort_256/20261018T141409477054Z",
+  "source_git_revision": "5815c74526c8005ae31cdda010a644779e56ff3d",
+  "cohort": {
+    "cases": 256,
+    "top50_rows": 12800,
+    "unique_questions": 256,
+    "dataset_index_min": 556,
+    "dataset_index_max": 3605,
+    "cohort_identity_sha256": "25a717857ca9a9ff8892161a941101f8dc797d6a146eb35600a1958aa3925397",
+    "cohort_sha256": "49c57f20aa2319794e35264aad7a202ab343ff963667424f1685a3e623455a02",
+    "cohort_bytes": 11744621,
+    "synthetic_only": false
+  },
+  "exclusion_audit": {
+    "support_cases": 434,
+    "historical_panel_cases": 100,
+    "union_unique": 534,
+    "cohort_overlap": 0
+  },
+  "content_audit": {
+    "case_errors": 0,
+    "forbidden_target_or_outcome_keys": [],
+    "all_cases_have_50_unique_ranked_candidates": true,
+    "all_question_and_candidate_hashes_replayed": true,
+    "all_retrieval_scores_finite": true
+  },
+  "integrity": {
+    "cohort_lock_sha256": "dabe20b3a28445447c9305d3f9871938f7b6501d6ead37f73c7522d009b2b37d",
+    "executed_sources_sha256": "3309d0cc0c4215df828ad3fee7f5bd25503be49a77e198441b6b4df0904c1b62",
+    "summary_sha256": "b866db8057ccb2bffadd27ac199b5736bbea25567ad79a367f345a9fdb4e4b02",
+    "manifest_sha256": "d31fb716890188f4fb28f35b1ceec24512545d14f43098b972e5f1a4631c5ae9",
+    "receipts_sha256": "9d63863e5b65246b84b18fc134d5507fca36c7596773270ce69d640d37c8f878",
+    "manifest_receipt_pairs_verified": 4,
+    "source_archive_members_match_git_revision": 6,
+    "cohort_identity_recomputed": true,
+    "lock_cohort_hash_replayed": true
+  },
+  "trace": {
+    "schema": "sample-trace.v2",
+    "artifact": "cohort_lock.json",
+    "samples": 256,
+    "available_stages": ["data", "preprocess", "retrieval", "diagnosis"],
+    "missing_stages": {
+      "scoring": "not authorized before cohort freeze",
+      "selection": "not authorized before cohort freeze"
+    }
+  },
+  "first_fixed_case": {
+    "selection_position": 1,
+    "dataset_index": 2509,
+    "question_sha256": "8b57ed94841bcf56c91660f167d64dabc067e7c8196505d0cd39fdd2bd4c9a47",
+    "candidate_count": 50,
+    "rank_range": [1, 50],
+    "retrieval_score_range": [73.30968475341797, 77.58512878417969]
+  },
+  "github_compact_artifacts": {
+    "new_commit_after_5815c74_observed": false,
+    "note": "The required exchange artifacts are complete and independently verified; the collaborator did not publish a new compact-result commit."
+  },
+  "status": "cohort_freeze_verified",
+  "claim_ceiling": "L0_data_freeze_only_no_method_utility"
+}
