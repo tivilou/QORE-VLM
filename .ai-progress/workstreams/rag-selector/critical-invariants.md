@@ -18,6 +18,7 @@
 - GitHub accepts compact `result.json` only when <=`1,048,576` bytes; larger/raw results use authenticated exchange with manifest/hash/path.
 - Collaborator commands are project-relative and wrappers discover local dependencies. 3080Ti is orchestration/18083/aggregation; live GPU work uses an explicitly bound and capacity-checked `gpu-training` host, while collaborator-local execution remains a separate handoff path.
 - For the larger untouched Reader utility study, freeze the 256-question identity set and DPR Top-50 hash before any Reader/head score is produced. The data-bearing collaborator exports only questions and retrieval candidates; a live GPU host scores the frozen cohort; 3080Ti verifies and aggregates. No post-score resampling or target-bearing cohort field is allowed. See [study contract](decisions/2026-10-18-reader-larger-untouched-utility.md).
+- For complete-data replication, include the exhaustive exact-hash eligibility closure of `nq_open/validation[512:3610]`, exclude protected434+historical100+spent256, and freeze balanced disjoint A/B units before scoring. Both split consensuses stay method-sealed until complete. Reader utility determines project-profile L2; matched-classical, finite-shot and resource audits separately govern the quantum L4 path. See [full-data contract](decisions/2026-10-19-reader-full-data-replication.md).
 - User-authorized V100s is CPU-only (`cpu-experiments` role); verify available memory/environment before running. 18083 stays on 3080Ti. See [execution exception](decisions/2026-10-16-v100s-experiment-authorization.md).
 ## Durable cumulative knowledge
 - Answer Scorer over QORE-DPR is the only stable positive carryover; its calibration is unsafe as the sole evidence criterion.
@@ -138,6 +139,7 @@
 - The frozen unseen transport gate passed at L0: quantum changed13/87 Top5 sets, classical9/87, and quantum differed from classical on9/87; independent261-vector replay passed with labels unopened. This warrants blind semantic review, not a utility claim.
 - The validation87 blind review is closed: two isolated reviewers covered91/91 items,85 agreed and6 were blindly adjudicated before unblinding. Quantum retained41 useful/25 direct passages versus Reader38/25 and classical40/25 on15 changed cases; all prospective checks passed. This remains L0 and validation87 is now spent. See [decision](decisions/2026-10-18-reader-unseen-blind-review.md).
 - The fresh deterministic256-question NQ/Wiki-DPR study completed its method-blind screen. Two isolated reviewers covered404/404 union passages;352 agreed and52 were blindly adjudicated before unblinding. Reader/quantum/classical useful totals are141/151/142 and direct79/85/80; quantum useful deltas are+10/+9, case-win margins+10/+9, and complete-256 point bootstrap95% lower bounds+5/+4. All8 gates and independent replay passed. Keep this L0 under the project full-real-data profile; do not retune the spent cohort/head. Next freeze a complete untouched population with two independent confirmations before any new run. See [decision](decisions/2026-10-18-reader-larger-untouched-utility.md).
+- The complete-data replication design is frozen but not implemented or run. “Full data” means every eligible identity in validation indices512:3610 after three immutable exposure exclusions; the realized count is derived by the full-data scan, must lie in2308..2742, and is then hash-locked. Hash-alternated A/B are the two confirmation units. All complete/A/B useful and points CIs must clear zero versus Reader for L2; matched-classical results are a separate attribution gate. See [design](decisions/2026-10-19-reader-full-data-replication.md).
 ## Decision index
 ### Binding and current
 - [BINDING] Cumulative-evidence next-step rule -> [detail](../../shared/decisions/cumulative-evidence-next-step-selection.md)
@@ -226,6 +228,7 @@
 - [CLOSED / L0 TRANSPORT PASS] Untouched validation87 transport gate -> [detail](decisions/2026-10-18-reader-unseen-transport-gate.md)
 - [ACTIVE / L0 BLIND GATE PASSED; LARGER UNTOUCHED DESIGN NEXT] Two-reviewer blind audit for unseen Top5 transport -> [detail](decisions/2026-10-18-reader-unseen-blind-review.md)
 - [CLOSED / L0 256-SCREEN PASSED; FULL-DATA DESIGN NEXT] Larger identity-disjoint256-question Reader utility study -> [detail](decisions/2026-10-18-reader-larger-untouched-utility.md)
+- [ACTIVE / PREREGISTERED; IMPLEMENTATION NOT STARTED] Complete-data Reader replication with two independent splits -> [detail](decisions/2026-10-19-reader-full-data-replication.md)
 
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.

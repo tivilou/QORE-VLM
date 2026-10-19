@@ -1,39 +1,39 @@
 # RAG Passage Selection with QORE
 
 ## Goal
-- Improve fixed Top50 -> Top5 on the quantum mainline toward independently verified full-data L2. Training-only and bounded blind screens remain L0.
+- Improve fixed Top50 -> Top5 on the quantum mainline toward independently verified full-data L2, while keeping L2 utility separate from L4 quantum attribution.
 
 ## Current State
-- [ACTIVE CANDIDATE / L0 256-SCREEN PASSED; FULL-DATA DESIGN NEXT] The frozen sequential quantum Reader head passed the complete prospective 256-question blind semantic screen.
-- Two isolated reviewers covered all67 changed questions /404 union passages;352 judgments agreed and52 were blindly adjudicated before method unblinding, leaving0 unresolved or uncertain quantum-selected items.
-- On changed cases, Reader / quantum / classical retained useful evidence `141 /151 /142` and direct evidence `79 /85 /80`. Quantum useful deltas are `+10` vs Reader and `+9` vs classical; case win margins are `+10/+9`; full-256 point-delta bootstrap 95% intervals are `[5,28]` and `[4,25]`.
-- All8 prospective checks passed. Independent code replay reproduced consensus, totals, bootstrap and gates exactly. This promotes only to a separately frozen complete real-data replication design; it is not L1/L2 or quantum advantage.
+- [ACTIVE / COMPLETE-DATA REPLICATION PREREGISTERED; NOT IMPLEMENTED] The frozen sequential quantum Reader head previously passed all eight prospective checks on a fresh 256-question double-blind semantic screen, but that evidence remains L0 under the project `full_real_data_l2` profile.
+- The next contract now includes every eligible question in `nq_open/validation[512:3610]` after exact exclusion of protected434, historical100 and spent256 identities. There is no sampling or replacement.
+- The exhaustive data-bearing scan will derive and freeze the exact count (required bound `2308..2742`) and divide the complete population into disjoint balanced hash-frozen `split_A`/`split_B` confirmation units before scoring.
+- Ordinary utility must pass complete/A/B paired gates versus Reader. Matched-classical performance is reported through a separate quantum-attribution continuation gate; finite-shot and resource audits remain required for L4.
 
 ## Plan Control
-- Completed Plan: plans/reader-larger-untouched-utility/v001.json
-- Plan Version:1
-- Plan Status: completed
-- Completed Steps: LU-01 through LU-06
-- Focus Step: LU-06 (done)
-- Next Action: Preregister a complete untouched natural-data population with two independent confirmation units; do not execute until the new identity, metric, review and resource contract is frozen.
-- Blocker: None for design. Full raw LU-06 artifacts remain local pending an authenticated18083 credential; compact hashes/results are durable.
-- Last Checkpoint:2026-10-19
+- Active Plan: plans/reader-full-data-replication/v001.json
+- Plan Version: 1
+- Plan Status: active
+- Completed Steps: FD-01
+- Focus Step: FD-02
+- Next Action: Implement and synthetic-test the exhaustive population freezer/exporter; do not materialize real data or start formal scoring until the implementation trace and identity checks pass.
+- Blocker: None for implementation. Real data materialization, formal GPU scoring and blind review each require their later stage authorization.
+- Last Checkpoint: 2026-10-19
 
 ## Evidence Boundary
-1. The measured claim is better blind semantic evidence retention in this fixed256-question screen.
-2. Generator accuracy, complete-population utility, independent replication, finite-shot behavior and resource advantage remain untested.
-3. Do not retune this spent cohort or frozen head. Any next evidence must use the new preregistered full-data contract.
+1. No complete-data experiment has run; the new files are a preregistration, not evidence.
+2. The measured precursor claim is better blind semantic evidence retention on one fixed 256-question screen only.
+3. Do not retune the spent 256 cohort or frozen head. Do not let labels, answers, generations or review outcomes enter formal population creation or scoring.
+4. A future Reader-gate pass can establish ordinary-method L2 under the project profile; it cannot establish quantum advantage without the separate classical, finite-shot and resource audits.
 
 ## Validation
-- Result receipt: [LU-06 compact replay](refs/reader_larger_untouched_blind_review_20261019_receipt.json).
-- Evidence card: [strict-valid L0 card](refs/reader_larger_untouched_blind_review_20261019_evidence_card.json).
-- Mechanism dossier: [positive carryovers and unresolved alternatives](refs/reader_larger_untouched_blind_review_20261019_mechanism_recovery.md).
-- Research log: [256-question double-blind semantic utility](../../../docs/rag-research-log/20261019T-084256Z-reader-larger-untouched-blind-utility.md).
-- Transport receipt: [256-question label-blind run](refs/reader_larger_untouched_transport_20261019_receipt.json); full transport artifacts: `/srv/qore-collab-uploads/five_ideas/reader_larger_untouched_transport_256/20261019T014046Z` on3080Ti.
-- Review code:6 focused tests passed; evidence card strict validation passed with0 warnings; formal404-item independent replay passed.
-- Session: [LU-06 blind semantic utility closeout](sessions/2026-10/20261019T091200Z-670659.md).
+- Full-data contract: [preregistered decision](decisions/2026-10-19-reader-full-data-replication.md).
+- Experiment config: `configs/experiments/reader_full_data_replication.json`.
+- Plugin plan: `configs/experiments/reader_full_data_replication_plan.json`; canonical validator reports four plugins valid.
+- Precursor result: [LU-06 compact replay](refs/reader_larger_untouched_blind_review_20261019_receipt.json) and [strict-valid L0 card](refs/reader_larger_untouched_blind_review_20261019_evidence_card.json).
+- Session: [complete-data preregistration](sessions/2026-10/20261019T101924Z-b0c415.md).
+- No model, Wiki-DPR retrieval, dataset download, remote write or formal review occurred during FD-01.
 
 ## Relevant Decisions
-- [Completed larger untouched utility study](decisions/2026-10-18-reader-larger-untouched-utility.md).
-- [Blind validation87 precursor](decisions/2026-10-18-reader-unseen-blind-review.md).
+- [Active complete-data replication contract](decisions/2026-10-19-reader-full-data-replication.md).
+- [Completed 256-question precursor](decisions/2026-10-18-reader-larger-untouched-utility.md).
 - [Role-separated server execution](../../shared/decisions/2026-10-18-role-separated-server-execution.md); full long-term principles/navigation: `critical-invariants.md`.

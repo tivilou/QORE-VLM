@@ -1,0 +1,172 @@
+{
+  "schema_version": "rag.reader_full_data_replication.v1",
+  "authorization": "design_frozen_implementation_not_started",
+  "formal_run_authorized": false,
+  "experiment_stage": "replication",
+  "claim_ceiling": {
+    "ordinary_utility": "L2_reproducible_utility_if_all_reader_gates_pass",
+    "quantum_attribution": "below_L4_until_matched_control_finite_shot_and_resource_audits_pass"
+  },
+  "formal_population": {
+    "dataset": "nq_open",
+    "split": "validation",
+    "pool_start_inclusive": 512,
+    "pool_end_exclusive": 3610,
+    "pool_cases_before_exclusion": 3098,
+    "selection_rule": "include every unique question in validation[512:3610] whose UTF-8 question SHA-256 is absent from the frozen exposure registry; no sampling, replacement or post-score removal",
+    "realized_case_count": "derived_and_frozen_before_scoring",
+    "realized_count_bounds": [2308, 2742],
+    "count_bound_reason": "The 256 spent cases and historical100 are known-disjoint in-pool exclusions; between zero and all434 protected identities may also occur in this validation interval.",
+    "identity_digest_rule": "SHA256(canonical JSON array of dataset_index, question_sha256 and ordered candidate_id_sha256 for every eligible case)",
+    "no_empty_or_duplicate_questions": true
+  },
+  "exposure_registry": {
+    "union_rule": "exact set union of the three immutable question-identity sources below",
+    "protected434": {
+      "exchange_path": "five_ideas/protected_boundary_reader_inputs/20261011-v1/frozen_support_bundle.zip",
+      "bytes": 26121092,
+      "sha256": "f723bbb6f9075c3e04fd3d8a7b2d3f8127b6e354422ee2a2f6e167bfe32248ce",
+      "expected_question_identities": 434
+    },
+    "historical100": {
+      "exchange_path": "five_ideas/selector_replay_100_historical_input/silver-oracle-top5-100-20260915T120525Z-detail.json",
+      "bytes": 8046318,
+      "sha256": "669ce1018ec502f02bf2a4a76420c7cb9b4e2f17b250c5420b6bcf01fc1d5731",
+      "expected_question_identities": 100
+    },
+    "spent256": {
+      "exchange_path": "five_ideas/reader_larger_untouched_cohort_256/20261018T141409477054Z/cohort.json",
+      "bytes": 11744621,
+      "sha256": "49c57f20aa2319794e35264aad7a202ab343ff963667424f1685a3e623455a02",
+      "cohort_identity_sha256": "25a717857ca9a9ff8892161a941101f8dc797d6a146eb35600a1958aa3925397",
+      "expected_question_identities": 256
+    },
+    "expected_union_identities": 790,
+    "required_overlap_with_formal_population": 0
+  },
+  "independent_confirmations": {
+    "unit": "independent_splits",
+    "split_seed": 2026101907,
+    "split_rule": "sort the complete eligible population by SHA256(split_seed:dataset_index:question_sha256), then assign zero-based even positions to split_A and odd positions to split_B",
+    "required_units": ["split_A", "split_B"],
+    "coverage_rule": "split_A and split_B are disjoint, differ in size by at most one and their union exactly equals the complete formal population",
+    "freeze_before_scoring": true
+  },
+  "retrieval": {
+    "encoder_backend": "dpr",
+    "question_encoder_id": "facebook/dpr-question_encoder-single-nq-base",
+    "question_encoder_revision": "d04a52f6d2f96c60117a925e8c24c4043a75f265",
+    "corpus_mode": "wiki_dpr",
+    "wiki_dpr_config": "psgs_w100.nq.compressed",
+    "nq_fingerprint": "5507698f979c66f6",
+    "wiki_dpr_fingerprint": "5a47348d57f76ff3",
+    "nprobe": 64,
+    "top_k": 50,
+    "candidate_order_frozen": true
+  },
+  "frozen_scoring": {
+    "source_manifest": "configs/experiments/reader_larger_untouched_scoring_manifest.json",
+    "source_manifest_sha256": "c46eab8726c5003dc56d7f8b3494888cf222ed63be4e3202e4e49e6d3df8267b",
+    "reader_model_id": "facebook/dpr-reader-single-nq-base",
+    "reader_revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+    "sequential_checkpoint_sha256": "35d7f9c165c581e7ce21ccaf57eca104db6e97a2b2af6c598af333caac8287bc",
+    "arms": ["identity_reader", "quantum_sequential_final", "classical_sequential_final"],
+    "selected_count": 5,
+    "tie_break": "score_descending_then_candidate_index_ascending",
+    "training_or_tuning_on_formal_population": false
+  },
+  "label_boundary": {
+    "before_all_scores_and_top5_are_frozen": {
+      "answers_read": false,
+      "support_annotations_read": false,
+      "silver_oracle_read": false,
+      "generation_or_evaluation_read": false,
+      "semantic_review_started": false
+    },
+    "review_packet_fields": ["opaque_case_id", "opaque_passage_id", "question", "title", "passage_text"],
+    "forbidden_review_packet_fields": ["answer", "gold", "score", "rank", "method", "selection_membership", "split_outcome", "generation", "prediction"],
+    "method_key_unseal_rule": "both split consensuses must be complete and hash-locked before either method key is opened"
+  },
+  "blind_review": {
+    "case_rule": "within each split include every question where any of the three frozen Top5 sets differs; review every unique passage in the three-arm Top5 union",
+    "unchanged_case_rule": "questions with identical three-arm Top5 sets contribute exact zero paired deltas and need no duplicated semantic review",
+    "reviewers_per_split": 2,
+    "reviewer_isolation": true,
+    "codes": {
+      "answer_support": ["direct", "partial", "none", "uncertain"],
+      "scope_match": ["yes", "partial", "no", "uncertain"]
+    },
+    "adjudication": "every code disagreement receives a sealed dispute packet and a third blind judgment",
+    "completion_rule": "zero unresolved items and zero uncertain items selected by the quantum arm in either split"
+  },
+  "metrics": {
+    "primary": "mean useful passages retained per question in Top5",
+    "protected": "mean direct-evidence passages retained per question in Top5",
+    "secondary": [
+      "mean semantic points per question where points=useful+direct",
+      "case-level useful win/loss/tie counts",
+      "changed-question rate",
+      "quantum-versus-classical Top5 difference rate"
+    ],
+    "useful_definition": "answer_support in {direct,partial} and scope_match in {yes,partial}",
+    "direct_definition": "answer_support=direct and scope_match=yes",
+    "paired_statistics": {
+      "method": "question-cluster percentile bootstrap of the mean paired difference",
+      "replicates": 20000,
+      "confidence_level": 0.95,
+      "seeds": {
+        "complete_population": 2026101911,
+        "split_A": 2026101912,
+        "split_B": 2026101913
+      }
+    }
+  },
+  "ordinary_utility_l2_gate": {
+    "reference": "identity_reader",
+    "required_scopes": ["complete_population", "split_A", "split_B"],
+    "all_required": [
+      "useful mean paired delta is positive and its bootstrap CI95 lower bound is greater than zero",
+      "semantic-points mean paired delta is positive and its bootstrap CI95 lower bound is greater than zero",
+      "direct-evidence aggregate delta is nonnegative",
+      "case-level useful wins exceed useful losses",
+      "zero unresolved or quantum-selected uncertain review items",
+      "all identity, leakage, source, split and replay audits pass"
+    ],
+    "promotion_if_passed": "L2_reproducible_utility under the project full_real_data_l2 profile",
+    "stop_if_failed": "close this frozen head configuration; no threshold, cohort, split, checkpoint or review-rule rescue"
+  },
+  "quantum_attribution_continuation_gate": {
+    "reference": "classical_sequential_final",
+    "separate_from_l2": true,
+    "required_scopes": ["complete_population", "split_A", "split_B"],
+    "all_required": [
+      "useful and semantic-points bootstrap CI95 lower bounds are greater than zero",
+      "direct-evidence aggregate delta is nonnegative",
+      "case-level useful wins exceed useful losses"
+    ],
+    "if_passed": "authorize a separately preregistered finite-shot implementation and resource audit; do not claim L4 yet",
+    "if_failed": "ordinary utility may still qualify for L2, but quantum-specific attribution and L4 remain blocked"
+  },
+  "fatal_stop_conditions": [
+    "formal population is not the exact complete eligibility closure",
+    "any formal question overlaps the frozen exposure registry",
+    "a question is dropped, replaced or moved between splits after scoring begins",
+    "retrieval, Reader, checkpoint, method source or tie-break identity drifts",
+    "any answer, label, review or generation field reaches scoring",
+    "method identity is opened before both split consensuses are sealed",
+    "score or Top5 replay differs from the frozen artifact"
+  ],
+  "execution_topology": {
+    "collaborator": "materialize the complete NQ/Wiki-DPR cohort using the existing local full-data runtime and upload the frozen artifacts",
+    "orchestration_3080ti": "verify hashes, store 18083 artifacts, prepare sealed packets and aggregate only",
+    "gpu_training_role": "after live capacity verification, run one frozen Reader/quantum/classical scoring pass",
+    "commands_must_be_project_relative": true,
+    "absolute_python_or_project_paths_forbidden": true
+  },
+  "output_namespace": "five_ideas/reader_full_data_replication",
+  "artifact_policy": {
+    "github_max_result_bytes": 1048576,
+    "raw_question_passage_scores_and_reviews": "authenticated_18083_only",
+    "github": "compact summaries, manifests, hashes, provenance and evidence card only"
+  }
+}

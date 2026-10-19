@@ -1,0 +1,194 @@
+{
+  "schema_version": 1,
+  "plan_id": "reader-full-data-replication",
+  "plan_version": 1,
+  "workstream": "rag-selector",
+  "status": "active",
+  "objective": "Test the frozen sequential quantum Reader head on the complete eligible untouched NQ/Wiki-DPR population using two disjoint result-independent confirmation splits and sealed blind semantic evaluation.",
+  "focus_step_id": "FD-02",
+  "next_action": "Implement and synthetic-test the exhaustive population freezer/exporter; do not materialize real data or start formal scoring until the implementation trace and identity checks pass.",
+  "blocker": null,
+  "steps": [
+    {
+      "id": "FD-01",
+      "title": "Freeze the complete-data replication contract",
+      "status": "done",
+      "objective": "Predeclare the exhaustive population, exact exposure registry, independent A/B units, frozen methods, semantic metrics, L2 gate, attribution gate and execution topology.",
+      "inputs": [
+        "LU-06 256-question blind utility result",
+        "project full_real_data_l2 profile",
+        "immutable Reader/head scoring manifest"
+      ],
+      "outputs": [
+        "configs/experiments/reader_full_data_replication.json",
+        "configs/experiments/reader_full_data_replication_plan.json",
+        ".ai-progress/workstreams/rag-selector/decisions/2026-10-19-reader-full-data-replication.md"
+      ],
+      "depends_on": [],
+      "acceptance_checks": [
+        "every eligible question in validation[512:3610] is included without sampling",
+        "protected434, historical100 and spent256 are exact-hash exclusions",
+        "A/B are disjoint, balanced and cover the complete population",
+        "ordinary L2 and quantum-attribution gates are separate",
+        "plugin plan passes the canonical validator"
+      ],
+      "evidence_paths": [
+        "configs/experiments/reader_full_data_replication.json",
+        "configs/experiments/reader_full_data_replication_plan.json"
+      ],
+      "owner": "experiment design",
+      "blocker": null,
+      "notes": "Four plugins validated. Exact case count is derived by the exhaustive data-bearing scan and then locked before any score exists; the expected count is bounded at2308..2742.",
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "FD-02",
+      "title": "Implement and validate the complete-population freezer",
+      "status": "active",
+      "objective": "Build a project-relative exporter that scans the entire fixed interval, applies the three immutable exclusions, assigns A/B, freezes Top50 and emits a real synthetic trace without opening targets.",
+      "inputs": [
+        "FD-01 contract",
+        "existing larger-cohort exporter and validators",
+        "authenticated exchange helper"
+      ],
+      "outputs": [
+        "complete-population pure contract module",
+        "collaborator one-command wrapper",
+        "synthetic fixture and focused tests"
+      ],
+      "depends_on": ["FD-01"],
+      "acceptance_checks": [
+        "all3098 source positions are accounted for exactly once",
+        "exclusion and split digests replay",
+        "A/B disjoint union and count bounds pass",
+        "no target/outcome fields exist",
+        "sample-trace.v2 structural and project semantic checks pass"
+      ],
+      "evidence_paths": [],
+      "owner": "implementation",
+      "blocker": null,
+      "notes": "Implementation authorization is separate from the completed plan-only preregistration.",
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "FD-03",
+      "title": "Materialize and freeze the complete real population",
+      "status": "todo",
+      "objective": "On the collaborator's existing full-data runtime, export every eligible question and fixed Wiki-DPR Top50, then upload the identity lock and raw artifacts.",
+      "inputs": ["validated FD-02 wrapper", "collaborator NQ/Wiki-DPR runtime", "exchange credential"],
+      "outputs": ["complete cohort", "full population lock", "A/B locks", "upload manifest and receipts"],
+      "depends_on": ["FD-02"],
+      "acceptance_checks": [
+        "realized count is within2308..2742 and equals the exhaustive eligibility closure",
+        "zero exposure-registry overlap",
+        "exactly50 unique ordered candidates per question",
+        "local and 18083 hashes agree",
+        "scores and targets remain unopened"
+      ],
+      "evidence_paths": [],
+      "owner": "collaborator data-bearing execution",
+      "blocker": "requires separate formal data-materialization authorization",
+      "notes": "No sampled fallback or replacement is allowed.",
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "FD-04",
+      "title": "Independently verify and bind immutable scoring inputs",
+      "status": "todo",
+      "objective": "Replay every population, split, retrieval and artifact hash on 3080Ti and bind the exact cohort to the frozen Reader and sequential checkpoint.",
+      "inputs": ["FD-03 artifacts", "immutable prior scoring manifest"],
+      "outputs": ["verification receipt", "complete-data scoring manifest"],
+      "depends_on": ["FD-03"],
+      "acceptance_checks": [
+        "complete interval and exclusion accounting replay",
+        "A/B disjoint union replay",
+        "all source/model/checkpoint hashes match",
+        "scoring_started=false at manifest freeze"
+      ],
+      "evidence_paths": [],
+      "owner": "3080Ti orchestration and aggregation",
+      "blocker": null,
+      "notes": "3080Ti is not assumed to provide GPU compute.",
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "FD-05",
+      "title": "Run one immutable full-population score pass",
+      "status": "todo",
+      "objective": "On a live capacity-checked gpu-training host, produce complete Reader, quantum and matched-classical score vectors and Top5 selections without semantic targets.",
+      "inputs": ["FD-04 scoring manifest"],
+      "outputs": ["complete sample-trace.v2", "A/B changed-set packets", "numeric replay receipt"],
+      "depends_on": ["FD-04"],
+      "acceptance_checks": [
+        "all three arms cover every question x50 candidates",
+        "Reader baseline equivalence passes",
+        "independent numeric and Top5 replay passes",
+        "no answer/label/generation/review field is read"
+      ],
+      "evidence_paths": [],
+      "owner": "live gpu-training host",
+      "blocker": "requires separate expensive-run authorization and a live GPU capacity check",
+      "notes": "Do not silently fail over to another host.",
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "FD-06",
+      "title": "Complete two sealed blind semantic confirmations",
+      "status": "todo",
+      "objective": "Review every changed-set union passage independently within A and B, adjudicate every dispute and seal both consensuses before unblinding.",
+      "inputs": ["FD-05 sealed A/B packets and method keys"],
+      "outputs": ["two complete reviews per split", "blind adjudications", "sealed A/B consensus hashes"],
+      "depends_on": ["FD-05"],
+      "acceptance_checks": [
+        "all opaque items receive two judgments",
+        "every disagreement is adjudicated blind",
+        "zero unresolved or quantum-selected uncertain items",
+        "neither method key is opened until both consensuses are sealed"
+      ],
+      "evidence_paths": [],
+      "owner": "blind review and accountable adjudication",
+      "blocker": null,
+      "notes": "Unchanged questions receive exact zero paired deltas after unblinding.",
+      "supersedes": [],
+      "superseded_by": []
+    },
+    {
+      "id": "FD-07",
+      "title": "Unblind, score and close the evidence tier",
+      "status": "todo",
+      "objective": "Replay complete/A/B metrics, apply Reader L2 gates and separate classical-attribution continuation gates, then issue a strict evidence card and mechanism dossier.",
+      "inputs": ["FD-05 selections", "FD-06 sealed consensuses"],
+      "outputs": ["compact result receipt", "strict evidence card", "mechanism recovery dossier", "author-facing research log"],
+      "depends_on": ["FD-06"],
+      "acceptance_checks": [
+        "all Reader gates are evaluated separately for complete/A/B scopes",
+        "matched-classical gates are reported separately from L2",
+        "20000-resample paired bootstrap replays exactly",
+        "claim ceiling never exceeds observed axes"
+      ],
+      "evidence_paths": [],
+      "owner": "evidence audit",
+      "blocker": null,
+      "notes": "Reader-gate success may establish project-profile L2; L4 still requires a new finite-shot/resource audit.",
+      "supersedes": [],
+      "superseded_by": []
+    }
+  ],
+  "change_log": [
+    {
+      "from_version": null,
+      "to_version": 1,
+      "date": "2026-10-19",
+      "reason": "The frozen256-question double-blind screen passed all prospective semantic utility checks and authorized complete-data preregistration.",
+      "trigger": ["LU-06 eight-of-eight gate pass", "user instruction: 继续"],
+      "impact": "Freezes an exhaustive natural-data population, two independent split confirmations and separate L2 versus quantum-attribution decisions before any formal run.",
+      "cursor_migration": "new plan -> FD-02"
+    }
+  ],
+  "updated_at": "2026-10-19"
+}

@@ -1,0 +1,197 @@
+{
+  "schema_version": "research-plugin-architecture.plugin-plan.v2",
+  "project": "Q-DUET-VLM frozen Reader head complete-data replication",
+  "authorization": "plan_only",
+  "baseline": {
+    "entry_point": "frozen DPR Reader Top5 on the exact complete eligible nq_open/validation[512:3610] population",
+    "code_revision": "design inherits immutable scoring manifest c46eab8726c5003dc56d7f8b3494888cf222ed63be4e3202e4e49e6d3df8267b; implementation revision pending",
+    "equivalence_test": "Replay every Reader score vector and Top5 with the pinned Reader snapshot and stable tie break before accepting either fitted head output"
+  },
+  "core_invariants": [
+    "Every eligible untouched question is included; there is no sample, replacement or post-score deletion",
+    "The protected434, historical100 and spent256 identity sources are hash-verified and excluded by exact question SHA-256",
+    "The complete population and balanced disjoint split_A/split_B assignments are frozen before scoring",
+    "All three arms share the exact same frozen Top50 and immutable scoring manifest",
+    "Answers, labels, generations and semantic judgments are unavailable to retrieval and scoring",
+    "Both split consensuses are sealed before either method key is opened",
+    "Ordinary-method L2 and quantum-attribution continuation are adjudicated by separate gates"
+  ],
+  "interfaces": [
+    {
+      "id": "complete_replication_boundary",
+      "type": "transformer",
+      "input_schema": "complete NQ validation interval plus three immutable exposure registries and frozen Wiki-DPR retrieval",
+      "output_schema": "complete hash-locked Top50 cohort, disjoint A/B assignments, three frozen Top5 arms and split-specific blind semantic outcomes",
+      "invariants": [
+        "eligible closure is exhaustive",
+        "A intersection B is empty and A union B equals the complete cohort",
+        "no target field enters scoring"
+      ]
+    }
+  ],
+  "plugins": [
+    {
+      "id": "complete_unexposed_population_freezer",
+      "version": "1",
+      "role": "adapter",
+      "interface": "complete_replication_boundary",
+      "insertion_point": "nq_open validation[512:3610] -> exact eligible identity closure and balanced A/B units",
+      "hypothesis": "Exhaustive exact-identity closure removes sampling discretion and provides two result-independent confirmation units",
+      "input_schema": "3098 ordered validation questions plus protected434, historical100 and spent256 identity artifacts",
+      "output_schema": "all eligible question identities with deterministic split_A/split_B assignments",
+      "requires": [],
+      "conflicts": ["random subsampling", "answer-aware eligibility", "manual exclusions", "post-score split changes"],
+      "deterministic": true,
+      "resource_estimate": "one CPU scan of3098 question records and three immutable identity artifacts",
+      "failure_signatures": ["source hash mismatch", "identity overlap after exclusion", "duplicate question", "population count outside frozen bounds", "unbalanced or incomplete split union"],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2",
+        "stages": ["data", "preprocess", "retrieval", "scoring", "selection", "evaluation", "diagnosis"],
+        "input_fields": ["dataset index", "question text", "source id", "exposure question hashes"],
+        "output_fields": ["dataset index", "question SHA-256", "eligibility reason", "split assignment"],
+        "input_refs": ["nq_open:validation[512:3610]", "exposure:protected434", "exposure:historical100", "exposure:spent256"],
+        "output_refs": ["full_cohort_lock:population", "full_cohort_lock:splits"],
+        "emitted_fields": ["all included identities", "all exclusion counts by source and in-pool overlap", "complete-population digest", "A/B digests"],
+        "shape_dtype_normalization": ["3098 scanned rows", "UTF-8 SHA-256 identities", "balanced A/B cardinalities"],
+        "checks": ["source hashes", "complete interval coverage", "exact exclusion", "split disjointness", "split union", "deterministic replay"],
+        "deterministic_replay": true
+      }
+    },
+    {
+      "id": "complete_frozen_reader_baseline_transport",
+      "version": "1",
+      "role": "baseline",
+      "interface": "complete_replication_boundary",
+      "insertion_point": "complete identity closure -> fixed Wiki-DPR Top50 -> frozen Reader scores and Top5",
+      "hypothesis": "The exact pinned DPR Reader baseline can be reproduced for every member of the complete formal population",
+      "input_schema": "complete cohort lock and pinned DPR retrieval/Reader snapshots",
+      "output_schema": "complete Reader score vectors and Top5 selections",
+      "requires": ["complete_unexposed_population_freezer"],
+      "conflicts": ["formal-population fitting", "retrieval changes", "label-conditioned scoring"],
+      "deterministic": true,
+      "resource_estimate": "one Reader pass over every eligible question x50 candidates",
+      "failure_signatures": ["Reader snapshot drift", "nonfinite or incomplete score vectors", "Top5 replay mismatch", "target leakage"],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2",
+        "stages": ["data", "preprocess", "retrieval", "scoring", "selection", "evaluation", "diagnosis"],
+        "input_fields": ["question identity", "ordered candidate identities", "Reader inputs"],
+        "output_fields": ["Reader score vectors", "stable ranks", "Reader Top5 sets"],
+        "input_refs": ["full_cohort_lock:population", "scoring_manifest:c46eab8726c5003dc56d7f8b3494888cf222ed63be4e3202e4e49e6d3df8267b"],
+        "output_refs": ["full_transport:reader_values", "full_transport:reader_trace"],
+        "emitted_fields": ["every Reader score coordinate", "every Reader selected index"],
+        "shape_dtype_normalization": ["N x50 finite Reader scores", "five unique selected indices", "stable candidate-index tie break"],
+        "checks": ["snapshot identity", "complete coordinate coverage", "baseline equivalence", "independent numeric replay"],
+        "deterministic_replay": true
+      }
+    },
+    {
+      "id": "complete_frozen_head_transport",
+      "version": "1",
+      "role": "idea",
+      "interface": "complete_replication_boundary",
+      "insertion_point": "frozen complete-population Reader states -> immutable quantum and matched-classical score corrections and Top5",
+      "hypothesis": "The frozen sequential quantum head improves semantic evidence retention over the original Reader across both independent complete-population partitions",
+      "input_schema": "complete Reader transport plus immutable sequential quantum/classical checkpoint",
+      "output_schema": "complete quantum and matched-classical score vectors, Top5 selections and three-arm changed-set flags",
+      "requires": ["complete_frozen_reader_baseline_transport"],
+      "conflicts": ["formal-population fitting", "checkpoint selection", "adaptive thresholds", "label-conditioned scoring"],
+      "deterministic": true,
+      "resource_estimate": "two small frozen-head forwards over the complete Reader-state artifact",
+      "failure_signatures": ["checkpoint hash mismatch", "nonfinite or incomplete score vectors", "Top5 replay mismatch", "same-sample arm drift", "target leakage"],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2",
+        "stages": ["data", "preprocess", "retrieval", "scoring", "selection", "evaluation", "diagnosis"],
+        "input_fields": ["question identity", "ordered candidate identities", "Reader score/state inputs", "frozen head states"],
+        "output_fields": ["quantum and classical score vectors", "stable ranks", "three Top5 sets", "changed-set flags"],
+        "input_refs": ["full_transport:reader_values", "scoring_manifest:c46eab8726c5003dc56d7f8b3494888cf222ed63be4e3202e4e49e6d3df8267b"],
+        "output_refs": ["full_transport:head_values", "full_transport:selector_trace"],
+        "emitted_fields": ["every head score coordinate", "every selected index", "per-split changed-set membership"],
+        "shape_dtype_normalization": ["N x50 finite scores per fitted arm", "five unique selected indices per arm", "stable candidate-index tie break"],
+        "checks": ["checkpoint restore", "same-sample arm parity", "complete coordinate coverage", "independent numeric replay"],
+        "deterministic_replay": true
+      }
+    },
+    {
+      "id": "split_sealed_blind_semantic_evaluator",
+      "version": "1",
+      "role": "adapter",
+      "interface": "complete_replication_boundary",
+      "insertion_point": "frozen three-arm changed-set unions -> split-specific double-blind semantic consensus -> paired metrics",
+      "hypothesis": "Method-blind exhaustive changed-set review can measure selector evidence retention without feeding outcomes back into selection",
+      "input_schema": "separate sealed A/B packets containing opaque ids, question and passage text only",
+      "output_schema": "complete A/B consensus labels, sealed hashes, then unblinded overall and split metrics",
+      "requires": ["complete_frozen_head_transport"],
+      "conflicts": ["method-visible review", "score-visible review", "answer-visible review", "partial dispute resolution", "early unblinding"],
+      "deterministic": false,
+      "resource_estimate": "two independent judgments for every changed-set union passage in each split plus blind adjudication of every disagreement",
+      "failure_signatures": ["forbidden field in packet", "incomplete reviewer coverage", "unresolved or uncertain selected item", "method key opened before both consensuses", "metric replay mismatch"],
+      "observability_contract": {
+        "trace_schema": "sample-trace.v2",
+        "stages": ["data", "preprocess", "retrieval", "scoring", "selection", "evaluation", "diagnosis"],
+        "input_fields": ["opaque case id", "opaque passage id", "question", "title", "passage text"],
+        "output_fields": ["two judgments", "dispute status", "adjudicated consensus", "post-unblind paired metrics"],
+        "input_refs": ["sealed_packet:split_A", "sealed_packet:split_B"],
+        "output_refs": ["sealed_consensus:split_A", "sealed_consensus:split_B", "full_replication:metrics"],
+        "emitted_fields": ["complete reviewer coverage", "all disputes", "consensus hashes", "per-question utility vectors", "bootstrap samples summary"],
+        "shape_dtype_normalization": ["one consensus code pair per opaque item", "one paired metric vector per formal question"],
+        "checks": ["packet field allowlist", "review isolation", "dispute completeness", "dual-consensus-before-unblind", "metric and bootstrap replay"],
+        "deterministic_replay": true
+      }
+    }
+  ],
+  "discovery": {
+    "mode": "explicit_allowlist",
+    "allowlist": ["complete_unexposed_population_freezer", "complete_frozen_reader_baseline_transport", "complete_frozen_head_transport", "split_sealed_blind_semantic_evaluator"]
+  },
+  "composition": {
+    "mode": "sequential",
+    "order": ["complete_unexposed_population_freezer", "complete_frozen_reader_baseline_transport", "complete_frozen_head_transport", "split_sealed_blind_semantic_evaluator"],
+    "merge_rule": "Freeze the exhaustive population and A/B units before any score; freeze all scores and Top5 before review; seal both split consensuses before unblinding",
+    "interaction_ablations": ["quantum versus identity Reader", "classical versus identity Reader", "quantum versus matched classical", "complete population versus split_A and split_B"]
+  },
+  "validation": {
+    "baseline_equivalence": "Pinned Reader scores and stable Top5 replay for every formal question before fitted-head comparisons",
+    "tests": ["baseline_equivalence", "plugin_isolation", "deterministic_replay", "interaction_ablation", "deterministic_population_replay", "split_disjoint_union", "identity_exclusion", "target_boundary_guard", "trace_structural_validation", "trace_semantic_validation", "trace_replay", "complete_score_replay", "blind_metric_replay"]
+  },
+  "reproducibility": {
+    "config_path": "configs/experiments/reader_full_data_replication.json",
+    "dataset_identity": "complete exact-identity eligibility closure of nq_open/validation[512:3610] under protected434+historical100+spent256 exclusions",
+    "environment": "collaborator full-data runtime for cohort materialization; verified gpu-training host for immutable scoring; 3080Ti for hash verification, sealed review orchestration and aggregation",
+    "seeds": [2026101907, 2026101911, 2026101912, 2026101913],
+    "output_manifest": "exchange/five_ideas/reader_full_data_replication/<timestamp>/upload_manifest.json"
+  },
+  "trace_contract": {
+    "enabled": true,
+    "schema": "sample-trace.v2",
+    "artifact_path": "exchange/five_ideas/reader_full_data_replication/<timestamp>/full_population_lock.json",
+    "sample_selection_rule": "no sampling: include the complete exact-identity eligible closure, then deterministically alternate a frozen hash order into split_A/split_B",
+    "target_boundary": "no answers, labels, generations, semantic judgments or method outcomes reach retrieval/scoring; reviewers see no method, score, rank or answer fields",
+    "required_stages": ["data", "preprocess", "retrieval", "scoring", "selection", "evaluation", "diagnosis"],
+    "semantic_roles": ["input", "reference", "prediction", "evaluation"],
+    "required_representations": ["all question and candidate identities", "A/B membership", "all three score vectors and Top5 sets", "sealed review consensus", "per-question paired metrics"],
+    "producer_owned_lineage": ["NQ interval -> exact exposure exclusion -> complete identity lock -> balanced A/B lock -> Wiki-DPR Top50 -> three-arm scores -> sealed blind reviews -> unblinded metrics"],
+    "readiness_checks": ["complete interval scan", "exposure hashes", "zero overlap", "A/B disjoint union", "target-field ban", "Reader parity", "complete numeric replay", "both consensus hashes before key unseal"]
+  },
+  "evidence_profile": {
+    "id": "full_real_data_l2",
+    "full_real_data_l2": {
+      "formal_data_scope": "Every eligible untouched question in nq_open/validation[512:3610] after the three frozen exact-hash exclusions, with its fixed Wiki-DPR Top50",
+      "replication_unit": "independent_splits",
+      "data_exposure_policy": "Freeze exhaustive identities and A/B membership before scoring; freeze scores before semantic review; keep both method keys sealed until both split consensuses are complete",
+      "l4_attribution_plan": "Report matched-classical gates separately; only after they pass may a new protocol add finite-shot implementation checks and explicit state-preparation, gate, measurement, readout and runtime accounting"
+    }
+  },
+  "recovery_contract": {
+    "dossier_path": ".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_blind_review_20261019_mechanism_recovery.md",
+    "dossier_sha256": "9a19412ef289cb90e038f2cb93b1ce4f04591254617f2ed5b31465df7d978a36",
+    "candidate_id": "frozen-sequential-reader-complete-data-replication",
+    "discriminating_intermediate_measurement": "Before semantic review, emit complete split-specific changed-set rates and exact quantum/classical Top5 difference rates while all semantic targets remain sealed"
+  },
+  "limitations": [
+    "The exact realized case count is intentionally derived only when the collaborator scans the complete pinned dataset; the deterministic rule, bounds and exclusions are already frozen",
+    "Independent A/B splits test data robustness within one natural source, not cross-dataset transfer",
+    "Semantic evidence retention evaluates the selector boundary and does not establish Generator answer accuracy",
+    "Even a complete-data L2 pass cannot establish quantum-specific value without the separately frozen matched-control, finite-shot and resource audits",
+    "This plan is plan_only: no exporter, runner, real trace or formal result exists yet"
+  ]
+}
