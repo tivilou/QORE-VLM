@@ -1,0 +1,64 @@
+{
+  "schema_version": "rag.reader_full_data_replication.fd02_receipt.v1",
+  "run_id": "20261019T110940857837Z",
+  "verified_at": "2026-10-19",
+  "synthetic_only": true,
+  "local_fixture_directory": ".codex-tmp/reader-full-data-fd02-fixture/20261019T110940857837Z",
+  "formal_run_authorized": false,
+  "population": {
+    "source_positions_scanned": 3098,
+    "synthetic_exposure_identities": 790,
+    "eligible_cases": 2308,
+    "top50_rows": 115400,
+    "split_counts": {
+      "split_A": 1154,
+      "split_B": 1154
+    },
+    "population_identity_sha256": "2673a589c1b1de6c3ded5a751196eceabaa1ee5650167034e1a7a6abb917c970",
+    "cohort_identity_sha256": "1301d6ff2fd05718a4b0768d5429ccf71d6b02435c04bd7d663160446d3c7f62",
+    "split_cohort_identity_sha256": {
+      "split_A": "8117fa884766b58f4a99714953594f36de2aa19a8d24639641e6fe94844e95bd",
+      "split_B": "39c33f36125a0efdb1a7d47d8979778d8bbf843db545b88543a9fa208120f791"
+    }
+  },
+  "validation": {
+    "structural": "passed",
+    "semantic": "passed",
+    "target_boundary": "passed",
+    "deterministic_replay": "passed",
+    "lock_samples_replayed": 2308,
+    "manifest_files_replayed": 4,
+    "source_members_replayed": 7,
+    "focused_tests": "8 passed",
+    "wrapper_bash_syntax": "passed on bound orchestration host via stdin-only bash -n",
+    "validate_only": {
+      "dataset_loaded": false,
+      "model_loaded": false,
+      "wiki_dpr_started": false
+    }
+  },
+  "artifacts": {
+    "cohort.json": {
+      "bytes": 39688708,
+      "sha256": "771ef3d8b6312946ff0aeaf60d31a33fe6aa15894306cce1a9088fa9254b9f8b"
+    },
+    "full_population_lock.json": {
+      "bytes": 11064178,
+      "sha256": "ef922427d7d764ffecf3e2a037a3bceacedd7a860d18d3db657aed744f94988c"
+    },
+    "executed_sources.zip": {
+      "bytes": 26165,
+      "sha256": "7ec128ffa0ec0514f487aaed3f1715e64d7cee388502995d5bd477de51c031ff"
+    },
+    "summary.json": {
+      "bytes": 2229,
+      "sha256": "62dd7ef656d210474edc1fd9d05961fd9a82e254e6ffe800ea43e4617011b836"
+    },
+    "upload_manifest.json": {
+      "bytes": 1272,
+      "sha256": "ffea1c690a5e518cf61878f4a7a1bb4e4bb716d1ed263d8e9e580a85b59302f4"
+    }
+  },
+  "status": "fd02_implementation_validated",
+  "claim_ceiling": "synthetic_fixture_only_no_real_data_or_method_utility"
+}

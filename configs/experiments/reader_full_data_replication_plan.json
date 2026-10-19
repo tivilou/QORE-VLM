@@ -1,7 +1,7 @@
 {
   "schema_version": "research-plugin-architecture.plugin-plan.v2",
   "project": "Q-DUET-VLM frozen Reader head complete-data replication",
-  "authorization": "plan_only",
+  "authorization": "approved",
   "baseline": {
     "entry_point": "frozen DPR Reader Top5 on the exact complete eligible nq_open/validation[512:3610] population",
     "code_revision": "design inherits immutable scoring manifest c46eab8726c5003dc56d7f8b3494888cf222ed63be4e3202e4e49e6d3df8267b; implementation revision pending",
@@ -192,6 +192,6 @@
     "Independent A/B splits test data robustness within one natural source, not cross-dataset transfer",
     "Semantic evidence retention evaluates the selector boundary and does not establish Generator answer accuracy",
     "Even a complete-data L2 pass cannot establish quantum-specific value without the separately frozen matched-control, finite-shot and resource audits",
-    "This plan is plan_only: no exporter, runner, real trace or formal result exists yet"
+    "The population freezer/exporter is implemented and synthetic-tested, but no real cohort trace, score, review or formal result exists yet"
   ]
 }

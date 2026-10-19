@@ -2,11 +2,11 @@
 
 - Date: 2026-10-19
 - Scope: rag-selector
-- Status: active design
+- Status: active; FD-02 implementation validated
 - Supersedes: None
 - Superseded By: None
 - Gate: complete population and both independent splits must pass the prospective Reader utility gate
-- Authorization: plan and preregistration only; implementation, data materialization, formal scoring, review and claims require their own stage authorization
+- Authorization: FD-02 implementation is complete; real data materialization, formal scoring, review and claims require their own stage authorization
 - Current evidence tier: L0 diagnostic
 
 ## Decision
@@ -94,5 +94,17 @@ finite-shot implementation and resource audit; it is not itself L4.
 - Mechanism dossier:
   `../refs/reader_larger_untouched_blind_review_20261019_mechanism_recovery.md`
 
-The canonical plugin-plan validator accepts all four declared plugins. No
-formal data, model or review execution occurred during this design step.
+The canonical plugin-plan validator accepts all four declared plugins.
+
+## FD-02 implementation checkpoint
+
+The pure contract, collaborator exporter/wrapper and exact artifact validator
+are implemented. The full-scale synthetic fixture accounted for all 3,098
+positions, exactly 790 exclusions, 2,308 cases x50 candidates and balanced
+`1,154/1,154` A/B; eight tests, boundary/hash replay and remote `bash -n`
+passed. This is engineering evidence only: no real NQ/Wiki-DPR content, score,
+label or review was opened. FD-03 is the first data-bearing step and needs
+explicit authorization plus the collaborator runtime. See
+`../refs/reader_full_data_fd02_fixture_20261019_receipt.json`; implementation
+is `applications/rag/reader_full_data_replication.py` and the one-command
+entry is `scripts/collab/five_ideas/prepare_reader_full_data_replication.sh`.

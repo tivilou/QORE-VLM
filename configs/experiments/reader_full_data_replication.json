@@ -1,6 +1,6 @@
 {
   "schema_version": "rag.reader_full_data_replication.v1",
-  "authorization": "design_frozen_implementation_not_started",
+  "authorization": "implementation_validated_formal_run_not_authorized",
   "formal_run_authorized": false,
   "experiment_stage": "replication",
   "claim_ceiling": {
