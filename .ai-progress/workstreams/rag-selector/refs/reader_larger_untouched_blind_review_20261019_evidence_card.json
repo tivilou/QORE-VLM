@@ -1,0 +1,254 @@
+{
+  "schema_version": "evidence-tiered-idea-validation.evidence-card.v2",
+  "idea_id": "reader-sequential-protected-quantum-head",
+  "title": "Frozen sequential protected quantum Reader head on a fresh 256-question cohort",
+  "status": "active",
+  "current_tier": "L0_diagnostic",
+  "claim_ceiling": "diagnostic",
+  "hypothesis": "A frozen sequentially protected quantum Reader head retains more answer-supporting passages in Top5 than the frozen Reader and matched classical head on identity-disjoint natural questions.",
+  "mechanism": "The fitted head applies question-conditioned candidate score corrections after the frozen DPR Reader while sequential protection constraints preserve accepted members; inference receives no semantic review labels.",
+  "rating_policy": {
+    "id": "shared-v2-with-project-full-real-data-l2-overlay",
+    "version": "2026-10-19",
+    "notes": "The project deliberately keeps this bounded screen at L0 until a complete real-data formal evaluation and independent confirmation are finished."
+  },
+  "experiment": {
+    "stage": "screen",
+    "training_budget": {
+      "data_scope": "Frozen upstream train59 sequential checkpoint; no training or tuning on the fresh 256-question cohort.",
+      "epochs_or_steps": "No new optimization; one immutable Reader/quantum/classical inference pass.",
+      "selection_rule": "Deterministic identity-disjoint 256-question cohort frozen before scoring; semantic review restricted to the 67 changed-set union.",
+      "seed_policy": "Frozen head/checkpoint seeds; blind packet and 10000-resample bootstrap seed 2026101906."
+    },
+    "conclusion_scope": "diagnostic_only",
+    "continuation_status": "promote",
+    "formal_run_authorized": false,
+    "executor": "other"
+  },
+  "intervention": {
+    "changes_attention": false,
+    "target": "Fixed Top50 to Top5 passage membership after the frozen DPR Reader.",
+    "inference_mode": "label_free",
+    "heldout_positive": false,
+    "leakage_audit": "pass",
+    "attention_action_evidence": {
+      "status": "pass",
+      "refs": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_transport_20261019_receipt.json",
+        ".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_blind_review_20261019_receipt.json"
+      ]
+    }
+  },
+  "evidence": {
+    "data_scope": {
+      "task_family": "Natural Questions open-domain RAG passage selection with fixed Wiki-DPR Top50",
+      "natural_task": true,
+      "task_count": 256,
+      "split_count": 1,
+      "dataset_ids": ["nq_open/validation", "Wiki-DPR frozen corpus"]
+    },
+    "runs": {
+      "seed_count": 1,
+      "seeds": [2026101906],
+      "independent_split_count": 1,
+      "statistics": {
+        "status": "pass",
+        "method": "Paired question-cluster percentile bootstrap over all 256 questions; unchanged questions contribute exact zero deltas; statistic is sum of useful plus direct points.",
+        "p_value": null,
+        "confidence_interval": [5.0, 28.0]
+      }
+    },
+    "metrics": [
+      {
+        "name": "useful_passages_on_changed_set",
+        "split": "fresh_identity_disjoint_256_changed_union",
+        "variant": "quantum",
+        "value": 151,
+        "baseline_value": 141,
+        "delta_vs_disabled": 10,
+        "relative_delta_vs_disabled": 0.07092198581560284,
+        "primary": true,
+        "effect_direction": "higher",
+        "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_blind_review_20261019_receipt.json"]
+      },
+      {
+        "name": "direct_passages_on_changed_set",
+        "split": "fresh_identity_disjoint_256_changed_union",
+        "variant": "quantum",
+        "value": 85,
+        "baseline_value": 79,
+        "delta_vs_disabled": 6,
+        "relative_delta_vs_disabled": 0.0759493670886076,
+        "primary": false,
+        "effect_direction": "higher",
+        "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_blind_review_20261019_receipt.json"]
+      },
+      {
+        "name": "semantic_points_useful_plus_direct_on_changed_set",
+        "split": "fresh_identity_disjoint_256_with_zero_deltas_for_unchanged_questions",
+        "variant": "quantum",
+        "value": 236,
+        "baseline_value": 220,
+        "delta_vs_disabled": 16,
+        "relative_delta_vs_disabled": 0.07272727272727272,
+        "primary": true,
+        "effect_direction": "higher",
+        "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_blind_review_20261019_receipt.json"]
+      }
+    ],
+    "comparisons": [
+      {
+        "id": "quantum-vs-matched-classical-points",
+        "kind": "matched_control",
+        "target_variant": "quantum",
+        "reference_variant": "matched_classical",
+        "metric": "semantic_points_useful_plus_direct_on_changed_set",
+        "target_value": 236,
+        "reference_value": 222,
+        "delta": 14,
+        "relative_delta": 0.06306306306306306,
+        "status": "pass",
+        "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_blind_review_20261019_receipt.json"]
+      }
+    ],
+    "controls": [
+      {
+        "id": "frozen-dpr-reader",
+        "kind": "disabled",
+        "status": "pass",
+        "notes": "Exact original Reader Top5 on the same frozen candidates.",
+        "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_transport_20261019_receipt.json"]
+      },
+      {
+        "id": "matched-sequential-classical-head",
+        "kind": "classical",
+        "status": "pass",
+        "notes": "Frozen matched classical head evaluated in the same immutable score pass and blind review.",
+        "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_blind_review_20261019_receipt.json"]
+      }
+    ]
+  },
+  "axes": {
+    "task_utility": {
+      "status": "partial",
+      "notes": "Prospective semantic evidence-retention gates passed against both Reader and matched classical control, but the project's primary utility contract requires complete full-data evaluation.",
+      "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_blind_review_20261019_receipt.json"]
+    },
+    "robustness": {
+      "status": "partial",
+      "notes": "Paired bootstrap lower bounds are positive, but there is only one 256-question cohort and no independent full-data confirmation.",
+      "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_blind_review_20261019_receipt.json"]
+    },
+    "natural_transfer": {
+      "status": "partial",
+      "notes": "The cohort is natural NQ/Wiki-DPR data, but transfer beyond this fixed source and split is not tested.",
+      "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_blind_review_20261019_receipt.json"]
+    },
+    "attention_alignment": {
+      "status": "pass",
+      "notes": "Method-blind semantic review directly measures whether selected passages support the question; it does not measure Generator use.",
+      "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_blind_review_20261019_receipt.json"]
+    },
+    "classical_attribution": {
+      "status": "pass",
+      "notes": "The frozen quantum head exceeds the preregistered matched classical head on this screen with a positive paired bootstrap lower bound; finite-shot and resource attribution remain separate unmet axes.",
+      "evidence_refs": [".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_blind_review_20261019_receipt.json"]
+    },
+    "finite_shot": {
+      "status": "not_run",
+      "notes": "No finite-shot or noisy quantum execution was performed.",
+      "evidence_refs": []
+    },
+    "resource_audit": {
+      "status": "not_run",
+      "notes": "State preparation, gate, query, measurement, readout and runtime accounting are not complete.",
+      "evidence_refs": []
+    }
+  },
+  "trace_completeness": "complete",
+  "trace_observability": {
+    "status": "complete",
+    "schema_version": "sample-trace.v2",
+    "legacy_compatibility": false,
+    "artifact_refs": [
+      ".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_transport_20261019_receipt.json",
+      ".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_blind_review_20261019_receipt.json"
+    ],
+    "selection_rule": "All 67 questions where any frozen Top5 set differed; all 404 passages in the three-arm Top5 union; no outcome-based case selection.",
+    "coverage": {
+      "data": "observed",
+      "preprocess": "observed",
+      "training": "not_applicable",
+      "retrieval": "observed",
+      "scoring": "observed",
+      "selection": "observed",
+      "context": "not_applicable",
+      "generation": "not_applicable",
+      "evaluation": "observed",
+      "diagnosis": "observed"
+    },
+    "missing_stages": ["training", "context", "generation"],
+    "notes": "Training is outside this frozen inference screen; the previously fitted checkpoint is immutable."
+  },
+  "target_profile": {
+    "id": "full_real_data_l2",
+    "l2_full_real_data": {
+      "formal_evaluation_population": "A complete preregistered untouched natural-data population remains to be frozen.",
+      "formal_full_data_completed": false,
+      "replication_unit": "independent_splits",
+      "independent_confirmation_count": 0,
+      "selection_guard": "No post-score resampling, replacement, threshold change, or label-conditioned selection.",
+      "data_exposure_policy": "Exclude all training, validation87, historical100, and current256 identities from fresh confirmation units; semantic labels open only after frozen transport.",
+      "l2_gate_status": "planned"
+    }
+  },
+  "mechanism_recovery": {
+    "dossier_path": ".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_blind_review_20261019_mechanism_recovery.md",
+    "dossier_sha256": "9a19412ef289cb90e038f2cb93b1ce4f04591254617f2ed5b31465df7d978a36",
+    "outcome": "candidate",
+    "selected_candidate_id": "full-untouched-replication-of-frozen-sequential-head"
+  },
+  "next_upgrade": {
+    "action": "Preregister the complete untouched natural-data replication population and two independent confirmation units; do not execute the formal run yet.",
+    "success_gate": "Positive predeclared useful and points deltas versus Reader in the complete population and both independent confirmations, with paired uncertainty excluding zero; matched-classical comparison reported separately.",
+    "kill_criteria": "Stop this frozen head if the complete formal population or either required independent confirmation fails its frozen utility gate, or if any identity/leakage/provenance contract is violated.",
+    "estimated_cost": "Design is CPU-only and low cost; later execution requires one full Reader score pass plus method-blind review of every changed-set union.",
+    "authorized": true
+  },
+  "limitations": [
+    "The 256-question screen is not the complete formal evaluation population.",
+    "Only one fresh split and frozen checkpoint were tested; no independent full-data confirmation exists.",
+    "Semantic evidence retention is not Generator answer accuracy.",
+    "Finite-shot quantum execution and resource accounting were not performed.",
+    "The project preregistration caps this result at L0 despite satisfying the generic ingredients of a held-out positive intervention screen."
+  ],
+  "failed_gates": [
+    "complete_full_real_data_formal_evaluation_not_run",
+    "independent_replication_not_run",
+    "finite_shot_not_run",
+    "resource_audit_not_run"
+  ],
+  "paper_angles": [
+    "A protected quantum Reader scoring head can improve evidence retention over Reader and a matched classical head, pending full-data replication and strict attribution."
+  ],
+  "provenance": {
+    "code_revision": "transport=a3f416973141c16c54e906585c70923037334e70; blind-review=adb522a",
+    "records": [
+      {
+        "path": ".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_blind_review_20261019_receipt.json",
+        "role": "compact independently replayed result receipt",
+        "sha256": "95b196fb8ca400217aa4f301930b88629c498b8f3f91b9f43ba4ca060f6baba6"
+      },
+      {
+        "path": ".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_blind_review_20261019_mechanism_recovery.md",
+        "role": "mechanism recovery and alternative-explanation dossier",
+        "sha256": "9a19412ef289cb90e038f2cb93b1ce4f04591254617f2ed5b31465df7d978a36"
+      },
+      {
+        "path": "configs/experiments/reader_larger_untouched_blind_review_256.json",
+        "role": "prospective blind review and utility gate",
+        "sha256": "3ed753bbaab66dc792641afe38663b88d1b091d1bafd01318e7e477844df1a6c"
+      }
+    ]
+  }
+}

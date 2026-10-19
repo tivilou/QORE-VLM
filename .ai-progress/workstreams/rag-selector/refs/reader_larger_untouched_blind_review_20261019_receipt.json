@@ -1,0 +1,74 @@
+{
+  "schema_version": "rag.reader_larger_untouched_blind_review_receipt.v1",
+  "run_id": "20261019T084256Z",
+  "status": "completed_and_independently_replayed",
+  "population": {
+    "questions": 256,
+    "changed_cases": 67,
+    "unchanged_cases": 189,
+    "review_items": 404
+  },
+  "review": {
+    "independent_reviewers": 2,
+    "agreed_items": 352,
+    "disputed_items": 52,
+    "raw_exact_agreement": 0.8712871287128713,
+    "blind_adjudicated_items": 52,
+    "unresolved_items": 0
+  },
+  "totals_on_changed_cases": {
+    "identity_reader": {"direct": 79, "useful": 141, "uncertain": 0, "points": 220},
+    "quantum": {"direct": 85, "useful": 151, "uncertain": 0, "points": 236},
+    "classical": {"direct": 80, "useful": 142, "uncertain": 0, "points": 222}
+  },
+  "pairwise_full_population": {
+    "quantum_vs_identity": {
+      "useful_case_wins": 12,
+      "useful_case_losses": 2,
+      "useful_case_ties": 242,
+      "useful_case_win_margin": 10,
+      "useful_total_delta": 10,
+      "direct_total_delta": 6,
+      "point_total_delta": 16,
+      "point_delta_bootstrap_95_percent": [5.0, 28.0]
+    },
+    "quantum_vs_classical": {
+      "useful_case_wins": 10,
+      "useful_case_losses": 1,
+      "useful_case_ties": 245,
+      "useful_case_win_margin": 9,
+      "useful_total_delta": 9,
+      "direct_total_delta": 5,
+      "point_total_delta": 14,
+      "point_delta_bootstrap_95_percent": [4.0, 25.0]
+    }
+  },
+  "prospective_gate": {
+    "checks_passed": 8,
+    "checks_total": 8,
+    "advance_to_full_data_replication_design": true
+  },
+  "claim_boundary": {
+    "evidence_tier": "L0_diagnostic",
+    "claim_ceiling": "diagnostic",
+    "reason": "The frozen natural-data screen passed, but complete full-data evaluation, independent replication, finite-shot execution and resource attribution are not complete."
+  },
+  "replay": {
+    "consensus_exact": true,
+    "metrics_exact": true,
+    "bootstrap_exact": true,
+    "gate_exact": true
+  },
+  "artifacts": {
+    "local_root": ".codex-tmp/lu06-blind-review/20261019T084256Z",
+    "exchange_archive": "pending_local_credential",
+    "packet_sha256": "60691dd6e8fee7c61ac5da68ce2e381ac9c00ebbd80652d1e58bada8680a7109",
+    "review_a_sha256": "c9dd20bcd1e5ff7bdc47bc3ce5f7fdc3da052f4dacd6b5f661dad3e2dca00161",
+    "review_b_sha256": "db2a0965bee820a1f90275b39f02d500ce22df08e6be1bcfd55fbdbfd95f49cb",
+    "adjudications_sha256": "8a4ced3b4de361deacedda8fd01f54790215f39e1ebef1629e14e28127754ea0",
+    "consensus_sha256": "5fba483cb85d659f0376927b6fadd41936a8ad784e24e494ea029ba808c6160c",
+    "sealed_key_sha256": "07cdbd2e9a5760c464e75949125b1253389b0dd18a12ce0c666288d8a25669b4",
+    "score_sha256": "8169aba8154adc92e292a928ae31a662dee41fc6590baf734cb7f9352ae45548",
+    "config_sha256": "3ed753bbaab66dc792641afe38663b88d1b091d1bafd01318e7e477844df1a6c"
+  }
+}

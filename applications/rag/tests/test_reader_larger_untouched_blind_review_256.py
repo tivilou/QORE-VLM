@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT / "scripts/collab/five_ideas"))
 import prepare_reader_larger_untouched_blind_review_256 as prepare
 import score_reader_larger_untouched_blind_review_256 as scorer
+import audit_reader_larger_untouched_blind_review_256 as auditor
 
 
 def write(path: Path, value: object) -> None:
@@ -123,11 +124,24 @@ def test_consensus_then_unblind_scores_full_population_bootstrap(tmp_path):
     consensus = scorer.merge(output / "public/blind_packet.json", review_a, review_b,
                              consensus_path, disputes_path, config)
     assert consensus["complete"] and consensus["unresolved_count"] == 0
+    score_path = tmp_path / "score.json"
     result = scorer.score(output / "public/blind_packet.json", consensus_path,
-                          output / "private/sealed_method_key.json", tmp_path / "score.json", config)
+                          output / "private/sealed_method_key.json", score_path, config)
     assert result["population"] == {"questions": 4, "changed_cases": 2, "unchanged_cases": 2}
     assert result["pairwise_full_population"]["quantum_vs_identity"]["useful_total_delta"] == 2
     assert result["pairwise_full_population"]["quantum_vs_identity"]["point_delta_bootstrap"]["clusters"] == 4
+    adjudications_path = tmp_path / "adjudications.json"
+    write(adjudications_path, {
+        "schema_version": "rag.reader_larger_untouched_blind_adjudications.v1",
+        "packet_sha256": sha(output / "public/blind_packet.json"),
+        "judgments": [],
+    })
+    audit = auditor.audit(output / "public/blind_packet.json", review_a, review_b,
+                          disputes_path, adjudications_path, consensus_path,
+                          output / "private/sealed_method_key.json", score_path, config,
+                          tmp_path / "audit.json")
+    assert audit["status"] == "passed"
+    assert audit["review"]["unresolved_items"] == 0
 
 
 def test_disagreement_blocks_key_until_blind_adjudication(tmp_path):

@@ -2,6 +2,8 @@
 
 ## 当前研究总览
 
+- 最新结果：[256题未触碰双盲语义效用审计](20261019T-084256Z-reader-larger-untouched-blind-utility.md)。两名隔离 reviewer 覆盖67题404段，352项一致、52项盲裁后未决0；Reader/量子/经典 useful 为`141/151/142`、direct 为`79/85/80`。量子对Reader useful `+10`、对经典`+9`，完整256题 points bootstrap 95%下界`+5/+4`，8项预注册门全部通过且独立重放一致。仍按项目覆盖层记为L0；下一步只冻结完整真实数据复制设计，不在该screen上调参。
+
 - 最新transport：[256题未触碰 Reader 三臂迁移门](20261019T-014046Z-reader-larger-untouched-transport.md)。量子相对Reader改变61/256题、量子与经典不同47/256题，超过预注册25/15门槛；三臂768条分数向量独立回放零差异。67题、404段进入下一步盲评；当前仍是L0，只证明有足够且区别于经典控制的选择变化，尚无语义效用、L1/L2或量子优势结论。
 
 - 最新数据检查点：[256题未触碰 cohort 冻结验收](20261018T-141409Z-reader-larger-untouched-cohort-freeze.md)。真实256题、12,800候选段已在18083完成独立哈希与结构回放，对保护434题和历史100题零重叠，目标/结果字段为零，执行源码与Git `5815c74`一致。这里只证明数据冻结通过，尚无Reader/量子/经典效果；下一步先绑定不可变scoring manifest，再在GPU主机进行一次性transport。
@@ -69,6 +71,8 @@
 - 当前研究边界：只优化固定 Top-50 -> Top-5 selector；Generator、检索、evaluator 和答案实现不属于本轮候选。下一候选必须提供独立、可追溯且 gold-free 的证据关系信号；若只能继续依赖 token overlap、Answer Scorer 融合或 generic diversity，应停止该 selector 家族并先处理 provenance/calibration 阻塞。
 
 ## 时间线
+
+- [2026-10-19 08:42:56 UTC | 256题双盲效用门8/8通过；量子 useful 对Reader +10、对经典 +9](20261019T-084256Z-reader-larger-untouched-blind-utility.md)
 
 - [2026-10-19 01:40:46 UTC | 256题未触碰transport通过；67题404段进入盲评，效用尚未打开](20261019T-014046Z-reader-larger-untouched-transport.md)
 

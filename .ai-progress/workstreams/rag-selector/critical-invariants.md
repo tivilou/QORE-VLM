@@ -137,7 +137,7 @@
 - Shared safe directions exist on training59: quantum initial1/0, final2/0; classical1/0,4/0 (rescues/lost protected). Linear feasibility still permits native mis-selection; require actual all-training membership checks. A future accumulating update must preserve both original protected members and previously accepted rescues, with current-set outsider templates. This L0 fitted existence result does not rank families or establish test utility. See [closed audit/next proposal](decisions/2026-10-17-reader-protected-update-feasibility.md).
 - The frozen unseen transport gate passed at L0: quantum changed13/87 Top5 sets, classical9/87, and quantum differed from classical on9/87; independent261-vector replay passed with labels unopened. This warrants blind semantic review, not a utility claim.
 - The validation87 blind review is closed: two isolated reviewers covered91/91 items,85 agreed and6 were blindly adjudicated before unblinding. Quantum retained41 useful/25 direct passages versus Reader38/25 and classical40/25 on15 changed cases; all prospective checks passed. This remains L0 and validation87 is now spent. See [decision](decisions/2026-10-18-reader-unseen-blind-review.md).
-- The fresh deterministic256-question NQ/Wiki-DPR cohort completed its one-shot label-blind transport: quantum changed61 Reader sets and differed from classical on47, passing the predeclared25/15 gate; all768 score vectors replayed exactly. The67-question/404-passage union is now reserved for method-blind semantic review. Utility, L1/L2 and quantum advantage remain unproven; do not resample or retune. See [decision](decisions/2026-10-18-reader-larger-untouched-utility.md).
+- The fresh deterministic256-question NQ/Wiki-DPR study completed its method-blind screen. Two isolated reviewers covered404/404 union passages;352 agreed and52 were blindly adjudicated before unblinding. Reader/quantum/classical useful totals are141/151/142 and direct79/85/80; quantum useful deltas are+10/+9, case-win margins+10/+9, and complete-256 point bootstrap95% lower bounds+5/+4. All8 gates and independent replay passed. Keep this L0 under the project full-real-data profile; do not retune the spent cohort/head. Next freeze a complete untouched population with two independent confirmations before any new run. See [decision](decisions/2026-10-18-reader-larger-untouched-utility.md).
 ## Decision index
 ### Binding and current
 - [BINDING] Cumulative-evidence next-step rule -> [detail](../../shared/decisions/cumulative-evidence-next-step-selection.md)
@@ -225,7 +225,7 @@
 - [CLOSED / L0 ACCUMULATION PASSED; UNSEEN UTILITY NEXT] Sequential protected Reader updates as a bounded training-only diagnostic -> [detail](decisions/2026-10-18-reader-sequential-protected-updates.md)
 - [CLOSED / L0 TRANSPORT PASS] Untouched validation87 transport gate -> [detail](decisions/2026-10-18-reader-unseen-transport-gate.md)
 - [ACTIVE / L0 BLIND GATE PASSED; LARGER UNTOUCHED DESIGN NEXT] Two-reviewer blind audit for unseen Top5 transport -> [detail](decisions/2026-10-18-reader-unseen-blind-review.md)
-- [ACTIVE / L0 TRANSPORT PASSED; BLIND UTILITY REVIEW NEXT] Larger identity-disjoint256-question Reader utility study -> [detail](decisions/2026-10-18-reader-larger-untouched-utility.md)
+- [CLOSED / L0 256-SCREEN PASSED; FULL-DATA DESIGN NEXT] Larger identity-disjoint256-question Reader utility study -> [detail](decisions/2026-10-18-reader-larger-untouched-utility.md)
 
 ## Information map and maintenance
 - Current goal/status/next action/blocker: `state.md`.

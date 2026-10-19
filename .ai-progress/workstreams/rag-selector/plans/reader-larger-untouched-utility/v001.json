@@ -3,10 +3,10 @@
   "plan_id": "reader-larger-untouched-utility",
   "plan_version": 1,
   "workstream": "rag-selector",
-  "status": "active",
+  "status": "completed",
   "objective": "Test whether the frozen quantum Reader head retains a useful Top-5 advantage on a fresh identity-disjoint 256-question NQ/Wiki-DPR cohort, without using answers or semantic targets to choose the cohort.",
   "focus_step_id": "LU-06",
-  "next_action": "Construct the 67-question/404-passage method-blind changed-set packet, then obtain two isolated reviews and blind adjudication before unblinding utility.",
+  "next_action": "Preregister a complete untouched natural-data replication with two independent confirmation units; do not execute it without a new frozen contract.",
   "blocker": null,
   "steps": [
     {
@@ -172,7 +172,7 @@
     {
       "id": "LU-06",
       "title": "Run blinded semantic utility review",
-      "status": "active",
+      "status": "done",
       "objective": "If the transport gate passes, review only the changed-set union using two isolated reviewers and blind adjudication before opening method identity.",
       "inputs": [
         "sealed method key",
@@ -193,10 +193,13 @@
         "question-cluster bootstrap point-delta lower bounds exceed zero",
         "zero uncertain quantum-selected items"
       ],
-      "evidence_paths": [],
+      "evidence_paths": [
+        ".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_blind_review_20261019_receipt.json",
+        ".ai-progress/workstreams/rag-selector/refs/reader_larger_untouched_blind_review_20261019_evidence_card.json"
+      ],
       "owner": "blind review and accountable adjudication",
       "blocker": null,
-      "notes": "Failure of transport or any utility gate stops promotion; success remains evidence-tiered and does not by itself prove quantum advantage.",
+      "notes": "Failure of transport or any utility gate stops promotion; success remains evidence-tiered and does not by itself prove quantum advantage.\nTwo isolated reviewers covered 404/404 items; 52 disputes were blindly adjudicated; all eight prospective utility checks passed and independent replay matched.",
       "supersedes": [],
       "superseded_by": []
     }

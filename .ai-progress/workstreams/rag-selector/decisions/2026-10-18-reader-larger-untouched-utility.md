@@ -1,8 +1,13 @@
 # Larger untouched Reader utility study
 
 - Date: 2026-10-18
-- Status: ACTIVE / TRANSPORT INPUTS FROZEN; GPU SCORING PENDING
-- Evidence tier: L0 design and engineering only
+- Scope: rag-selector
+- Status: closed
+- Supersedes: None
+- Superseded By: None
+- Gate: all eight frozen LU-06 semantic utility checks pass after zero unresolved blind-review items
+- Authorization: complete-population replication design and preregistration only; no formal run, L1/L2 claim, or quantum-advantage claim is authorized
+- Evidence tier: L0 diagnostic
 
 ## Decision
 
@@ -94,3 +99,13 @@ All 768 Reader, quantum and classical score vectors and every Top-5 were indepen
 The changed-set union contains 67 questions and 404 unique within-question passages. LU-06 is therefore authorized to construct the method-blind packet and obtain two isolated reviews plus blind adjudication. This result remains L0: the event-rate pass does not establish semantic utility, L1/L2, or quantum advantage.
 
 Receipt: `../refs/reader_larger_untouched_transport_20261019_receipt.json`; full aggregation path: `/srv/qore-collab-uploads/five_ideas/reader_larger_untouched_transport_256/20261019T014046Z`.
+
+## 2026-10-19 LU-06 result
+
+The fixed blind packet contained all404 passages in the three-arm Top-5 union for the67 changed questions. Two isolated reviewers independently covered404/404 items and agreed on352 semantic-code pairs. A third adjudicator resolved all52 disputes while the method key remained sealed; unresolved and uncertain quantum-selected items are both zero.
+
+After unblinding, Reader / quantum / classical retained useful evidence `141 /151 /142` and direct evidence `79 /85 /80` on changed cases. Quantum useful deltas are `+10` versus Reader and `+9` versus classical; useful case win margins are `+10` and `+9`. On the full256-question population, with exact zero deltas for189 unchanged questions, points deltas are `+16/+14` and the frozen10000-resample question-cluster bootstrap95% intervals are `[5,28]` and `[4,25]`. All eight prospective checks passed.
+
+A separate audit implementation replayed reviewer agreement, blind adjudication, all method totals, case comparisons, bootstrap intervals and gate decisions exactly. The candidate advances to a new complete real-data replication design. The256 cohort is spent and must not be retuned or reused as fresh confirmation.
+
+The result remains `L0_diagnostic` under the project `full_real_data_l2` overlay: the complete formal population, two independent confirmations, Generator utility, finite-shot execution and resource audit are not complete. Receipt: `../refs/reader_larger_untouched_blind_review_20261019_receipt.json`; evidence card: `../refs/reader_larger_untouched_blind_review_20261019_evidence_card.json`; owner log: `../../../../docs/rag-research-log/20261019T-084256Z-reader-larger-untouched-blind-utility.md`.
