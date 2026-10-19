@@ -1,0 +1,76 @@
+{
+  "schema_version": "rag.reader_larger_untouched_blind_review_config.v1",
+  "authorization": "blind_review_then_consensus_gated_unblinding",
+  "claim_ceiling": "L0_blinded_semantic_utility_audit",
+  "cohort": {
+    "sha256": "49c57f20aa2319794e35264aad7a202ab343ff963667424f1685a3e623455a02",
+    "expected_questions": 256
+  },
+  "transport_run": {
+    "run_id": "20261019T014046Z",
+    "trace_sha256": "5c419bbf8a975cef65260d1a7c80b0348659436f0172e13a5bec32a627ef18f1",
+    "expected_changed_cases": 67,
+    "expected_review_items": 404
+  },
+  "review_population": "union of frozen Reader, quantum and matched-classical Top5 passages for every question where at least two Top5 sets differ",
+  "blind_seed": 2026101906,
+  "semantic_codes": {
+    "answer_support": [
+      "direct",
+      "partial",
+      "none",
+      "uncertain"
+    ],
+    "scope_match": [
+      "yes",
+      "partial",
+      "no",
+      "uncertain"
+    ]
+  },
+  "derived_labels": {
+    "direct": "answer_support=direct and scope_match=yes",
+    "useful": "answer_support in {direct,partial} and scope_match in {yes,partial}",
+    "points": "useful + direct"
+  },
+  "prospective_gate": {
+    "min_quantum_useful_gain_over_identity": 5,
+    "min_quantum_direct_gain_over_identity": 0,
+    "min_quantum_useful_gain_over_classical": 3,
+    "min_quantum_useful_case_win_margin_over_identity": 3,
+    "min_quantum_useful_case_win_margin_over_classical": 1,
+    "max_uncertain_quantum_selected_items": 0,
+    "bootstrap": {
+      "population": "all_256_questions_with_zero_pairwise_delta_for_unchanged_questions",
+      "cluster": "question",
+      "statistic": "sum_of_case_points_delta",
+      "points": "useful + direct",
+      "resamples": 10000,
+      "seed": 2026101906,
+      "confidence": 0.95,
+      "interval": "two_sided_percentile",
+      "required_lower_bound": "strictly_greater_than_zero"
+    },
+    "purpose": "Decide whether the frozen quantum Reader head merits a separately preregistered full-data replication; not an L1/L2 or quantum-advantage gate"
+  },
+  "blinding": {
+    "reviewer_can_see": [
+      "opaque case id",
+      "question",
+      "opaque item id",
+      "passage title",
+      "passage text"
+    ],
+    "reviewer_cannot_see": [
+      "answers",
+      "candidate identity",
+      "dataset or retrieval position",
+      "retrieved rank",
+      "Reader rank",
+      "any score",
+      "method identity",
+      "selection membership"
+    ],
+    "unblind_only_after": "two complete reviews agree on semantic codes or every disagreement is adjudicated while the method key remains sealed"
+  }
+}
