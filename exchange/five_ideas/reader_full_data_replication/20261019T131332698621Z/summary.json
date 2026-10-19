@@ -1,0 +1,42 @@
+{
+  "schema_version": "rag.reader_full_data_replication_result.v1",
+  "run_id": "20261019T131332698621Z",
+  "synthetic_only": false,
+  "status": "complete_population_frozen_pending_independent_verification",
+  "cases": 2742,
+  "top50_rows": 137100,
+  "split_counts": {
+    "split_A": 1371,
+    "split_B": 1371
+  },
+  "cohort_identity_sha256": "3809bb8a71f040ffbd3efa60f35313f62a847b18266daf41bb083c14cf1fd297",
+  "split_cohort_identity_sha256": {
+    "split_A": "3add755be6702d826274a5bd6b6c71f878bf36947bd7632e9ed888e42d34586c",
+    "split_B": "11b33cceca30b31eb25758ba821d512ea7cfb5f6b44da916a4062243b531c749"
+  },
+  "population_identity_sha256": "3f67fdce7662f38d95b5945450e1de76503c9f35301a5cde2b518d1fc7be11d7",
+  "registry_identity_sha256": "c94c61a575f13998534235615ae53ac5c9c0f33d97e1028b8819c0fa51fd30c4",
+  "pre_score_validation": {
+    "structural": "passed",
+    "semantic": "passed",
+    "target_boundary": "passed",
+    "deterministic_replay": "passed"
+  },
+  "formal_run_authorized": false,
+  "claim_ceiling": "L0_complete_population_freeze_only",
+  "next_step": "independently verify every hash before freezing a scoring manifest",
+  "source_snapshot": {
+    "file": "executed_sources.zip",
+    "bytes": 26178,
+    "sha256": "919385c679d7a718b1ee2958a5a53b1ad971e814a238cb967facfd531873bb08",
+    "source_hashes": {
+      "applications/rag/reader_full_data_replication.py": "6e36fc152daeebd29af254da67eb2465c3b231fe9a038b646070eef8d83802f2",
+      "configs/experiments/reader_full_data_replication.json": "4a8bb6427ec9ead6a06f4868e8d3ce23147e6ea11268341d458b86b6092a20b1",
+      "configs/experiments/reader_full_data_replication_plan.json": "a0604d809350497053ba5de630d47908c902a660f7d95f4dd8cecd76db5a12dd",
+      "scripts/collab/five_ideas/prepare_reader_full_data_replication.py": "0e27abe0b399e5aef2085cbe645eaf6c1265fb3c68fd54cf44cc98f77d5a5ee6",
+      "scripts/collab/five_ideas/prepare_reader_full_data_replication.sh": "a0681ea05b5a6209d377572f88030393784b9aecd1c8eb6239b12cf8d2c12387",
+      "scripts/collab/lib/exchange_upload.py": "03c897773c38c1cd79ed1e96c795f2a3bbe92156f8fb3aadc976ffab05316da2",
+      "scripts/collab/lib/source_snapshot.py": "2a3cd1cd61db85cfc9bc3c316a65bc2cb37455827763c15eace1e6f77888dca5"
+    }
+  }
+}

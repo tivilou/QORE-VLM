@@ -1,0 +1,43 @@
+{
+  "schema_version": "collaborator-exchange.manifest.v1",
+  "target_directory": "five_ideas/reader_full_data_replication/20261019T131332698621Z",
+  "status": "validated",
+  "upload_status": "pending_until_receipts",
+  "exchange_files": [
+    {
+      "name": "cohort.json",
+      "bytes": 126340888,
+      "sha256": "115cc04e5a0b657dbbaad0c5c15a9438bf2f81e78f0870e75040f6cff48bb6f9"
+    },
+    {
+      "name": "full_population_lock.json",
+      "bytes": 12842178,
+      "sha256": "cbcbe48a78936f13880e3344843aa94e4e0412f7b9bf1ab98670ca7642f27859"
+    },
+    {
+      "name": "executed_sources.zip",
+      "bytes": 26178,
+      "sha256": "919385c679d7a718b1ee2958a5a53b1ad971e814a238cb967facfd531873bb08"
+    },
+    {
+      "name": "summary.json",
+      "bytes": 2252,
+      "sha256": "83e64d0e3ffde11256cede051b3b19e16994dfc3e8886149a475ae0262b86de9"
+    }
+  ],
+  "github_files": [
+    "summary.json",
+    "upload_manifest.json",
+    "upload_receipts.json"
+  ],
+  "exchange_only": [
+    "cohort.json",
+    "full_population_lock.json",
+    "executed_sources.zip"
+  ],
+  "privacy": {
+    "raw_question_and_passage_text_exchange_only": true,
+    "answers_or_semantic_targets_present": false,
+    "method_outputs_present": false
+  }
+}

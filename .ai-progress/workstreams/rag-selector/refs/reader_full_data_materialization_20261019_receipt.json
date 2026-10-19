@@ -1,0 +1,93 @@
+{
+  "schema_version": "rag.reader_full_data_replication.fd03_verification_receipt.v1",
+  "verified_at": "2026-10-20",
+  "run_id": "20261019T131332698621Z",
+  "source_revision": "bb6e5c7bd0c8f93c43d23306ba5466b5be9d0c55",
+  "exchange_directory": "five_ideas/reader_full_data_replication/20261019T131332698621Z",
+  "status": "fd03_real_population_independently_verified",
+  "population": {
+    "dataset": "nq_open",
+    "split": "validation",
+    "pool_start_inclusive": 512,
+    "pool_end_exclusive": 3610,
+    "source_positions_scanned": 3098,
+    "eligible_cases": 2742,
+    "top50_rows": 137100,
+    "question_identity_unique": 2742,
+    "dataset_index_unique": 2742,
+    "split_counts": {
+      "split_A": 1371,
+      "split_B": 1371
+    },
+    "exposure_source_identity_counts": {
+      "protected434": 434,
+      "historical100": 100,
+      "spent256": 256
+    },
+    "exposure_source_in_pool_counts": {
+      "protected434": 0,
+      "historical100": 100,
+      "spent256": 256
+    },
+    "exposure_union_identities": 790,
+    "excluded_union_in_pool": 356,
+    "accounted_positions": 3098
+  },
+  "identities": {
+    "registry_identity_sha256": "c94c61a575f13998534235615ae53ac5c9c0f33d97e1028b8819c0fa51fd30c4",
+    "population_identity_sha256": "3f67fdce7662f38d95b5945450e1de76503c9f35301a5cde2b518d1fc7be11d7",
+    "cohort_identity_sha256": "3809bb8a71f040ffbd3efa60f35313f62a847b18266daf41bb083c14cf1fd297",
+    "split_cohort_identity_sha256": {
+      "split_A": "3add755be6702d826274a5bd6b6c71f878bf36947bd7632e9ed888e42d34586c",
+      "split_B": "11b33cceca30b31eb25758ba821d512ea7cfb5f6b44da916a4062243b531c749"
+    }
+  },
+  "artifact_files": {
+    "cohort.json": {
+      "bytes": 126340888,
+      "sha256": "115cc04e5a0b657dbbaad0c5c15a9438bf2f81e78f0870e75040f6cff48bb6f9"
+    },
+    "full_population_lock.json": {
+      "bytes": 12842178,
+      "sha256": "cbcbe48a78936f13880e3344843aa94e4e0412f7b9bf1ab98670ca7642f27859"
+    },
+    "executed_sources.zip": {
+      "bytes": 26178,
+      "sha256": "919385c679d7a718b1ee2958a5a53b1ad971e814a238cb967facfd531873bb08"
+    },
+    "summary.json": {
+      "bytes": 2252,
+      "sha256": "83e64d0e3ffde11256cede051b3b19e16994dfc3e8886149a475ae0262b86de9"
+    },
+    "upload_manifest.json": {
+      "bytes": 1230,
+      "sha256": "d08957589e9f4df10470e2ade48d584435ba9741ae90d77364132f1f2a471410"
+    },
+    "upload_receipts.json": {
+      "bytes": 1409,
+      "sha256": "19a132b54c16f1d2f5d61f1c1246a2b9bdce060ae06d6d4d2dfd0464e1ee9d65"
+    }
+  },
+  "independent_replay": {
+    "mode": "read_only_streaming_on_3080ti",
+    "cohort_cases_replayed": 2742,
+    "population_lock_samples_replayed": 2742,
+    "candidate_coordinates_replayed": 137100,
+    "manifest_files_replayed": 4,
+    "upload_receipts_replayed": 4,
+    "source_members_replayed": 7,
+    "structural_validation": "passed",
+    "identity_and_order_validation": "passed",
+    "target_boundary_validation": "passed",
+    "artifact_and_upload_hash_validation": "passed",
+    "executed_source_matches_git_revision": true
+  },
+  "authorization_boundary": {
+    "scoring_started": false,
+    "selection_started": false,
+    "evaluation_started": false,
+    "formal_scoring_authorized": false
+  },
+  "claim_ceiling": "L0_complete_population_freeze_only",
+  "next_step": "FD-04 bind the verified cohort and existing immutable Reader/head identities into a complete-data scoring manifest before any GPU scoring"
+}

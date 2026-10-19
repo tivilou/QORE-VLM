@@ -5,9 +5,9 @@
   "workstream": "rag-selector",
   "status": "active",
   "objective": "Test the frozen sequential quantum Reader head on the complete eligible untouched NQ/Wiki-DPR population using two disjoint result-independent confirmation splits and sealed blind semantic evaluation.",
-  "focus_step_id": "FD-03",
-  "next_action": "Have the collaborator run the one-command complete-population materialization and upload; no Reader/head scoring is authorized.",
-  "blocker": "Awaiting collaborator execution in the complete NQ/Wiki-DPR runtime.",
+  "focus_step_id": "FD-04",
+  "next_action": "Bind the independently verified 2742-case cohort and the existing immutable Reader/head identities into a complete-data scoring manifest; do not start GPU scoring.",
+  "blocker": null,
   "steps": [
     {
       "id": "FD-01",
@@ -83,7 +83,7 @@
     {
       "id": "FD-03",
       "title": "Materialize and freeze the complete real population",
-      "status": "active",
+      "status": "done",
       "objective": "On the collaborator's existing full-data runtime, export every eligible question and fixed Wiki-DPR Top50, then upload the identity lock and raw artifacts.",
       "inputs": [
         "validated FD-02 wrapper",
@@ -106,17 +106,22 @@
         "local and 18083 hashes agree",
         "scores and targets remain unopened"
       ],
-      "evidence_paths": [],
+      "evidence_paths": [
+        "exchange/five_ideas/reader_full_data_replication/20261019T131332698621Z/summary.json",
+        "exchange/five_ideas/reader_full_data_replication/20261019T131332698621Z/upload_manifest.json",
+        "exchange/five_ideas/reader_full_data_replication/20261019T131332698621Z/upload_receipts.json",
+        ".ai-progress/workstreams/rag-selector/refs/reader_full_data_materialization_20261019_receipt.json"
+      ],
       "owner": "collaborator data-bearing execution",
       "blocker": null,
-      "notes": "User authorized FD-03 on 2026-10-19. No sampled fallback or replacement is allowed; Reader/head scoring remains separately gated.",
+      "notes": "User authorized FD-03 on 2026-10-19. No sampled fallback or replacement is allowed; Reader/head scoring remains separately gated.\nCollaborator materialized run 20261019T131332698621Z. Independent streaming replay on 3080Ti passed for 2742 cases x50, balanced 1371/1371 splits, exact exposure accounting, target boundary, source snapshot, upload manifest and receipts.",
       "supersedes": [],
       "superseded_by": []
     },
     {
       "id": "FD-04",
       "title": "Independently verify and bind immutable scoring inputs",
-      "status": "todo",
+      "status": "active",
       "objective": "Replay every population, split, retrieval and artifact hash on 3080Ti and bind the exact cohort to the frozen Reader and sequential checkpoint.",
       "inputs": [
         "FD-03 artifacts",
@@ -246,5 +251,5 @@
       "cursor_migration": "new plan -> FD-02"
     }
   ],
-  "updated_at": "2026-10-19"
+  "updated_at": "2026-10-20"
 }

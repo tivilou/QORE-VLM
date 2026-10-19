@@ -1,0 +1,37 @@
+{
+  "status": "uploaded",
+  "receipts": [
+    {
+      "path": "five_ideas/reader_full_data_replication/20261019T131332698621Z/cohort.json",
+      "service": "qore-upload-v4",
+      "sha256": "115cc04e5a0b657dbbaad0c5c15a9438bf2f81e78f0870e75040f6cff48bb6f9",
+      "size_bytes": 126340888,
+      "status": "stored",
+      "uploaded_at": "2026-10-19T13:13:56.042768+00:00"
+    },
+    {
+      "path": "five_ideas/reader_full_data_replication/20261019T131332698621Z/full_population_lock.json",
+      "service": "qore-upload-v4",
+      "sha256": "cbcbe48a78936f13880e3344843aa94e4e0412f7b9bf1ab98670ca7642f27859",
+      "size_bytes": 12842178,
+      "status": "stored",
+      "uploaded_at": "2026-10-19T13:13:56.531971+00:00"
+    },
+    {
+      "path": "five_ideas/reader_full_data_replication/20261019T131332698621Z/executed_sources.zip",
+      "service": "qore-upload-v4",
+      "sha256": "919385c679d7a718b1ee2958a5a53b1ad971e814a238cb967facfd531873bb08",
+      "size_bytes": 26178,
+      "status": "stored",
+      "uploaded_at": "2026-10-19T13:13:56.538716+00:00"
+    },
+    {
+      "path": "five_ideas/reader_full_data_replication/20261019T131332698621Z/summary.json",
+      "service": "qore-upload-v4",
+      "sha256": "83e64d0e3ffde11256cede051b3b19e16994dfc3e8886149a475ae0262b86de9",
+      "size_bytes": 2252,
+      "status": "stored",
+      "uploaded_at": "2026-10-19T13:13:56.544230+00:00"
+    }
+  ]
+}
