@@ -1,0 +1,152 @@
+{
+  "schema_version": "rag.reader_larger_untouched_scoring_spec.v1",
+  "authorization": "freeze_inputs_only",
+  "cohort": {
+    "exchange_path": "five_ideas/reader_larger_untouched_cohort_256/20261018T141409477054Z",
+    "run_id": "20261018T141409477054Z",
+    "cases": 256,
+    "top_k": 50,
+    "cohort_identity_sha256": "25a717857ca9a9ff8892161a941101f8dc797d6a146eb35600a1958aa3925397",
+    "files": {
+      "cohort.json": {
+        "bytes": 11744621,
+        "sha256": "49c57f20aa2319794e35264aad7a202ab343ff963667424f1685a3e623455a02"
+      },
+      "cohort_lock.json": {
+        "bytes": 1181366,
+        "sha256": "dabe20b3a28445447c9305d3f9871938f7b6501d6ead37f73c7522d009b2b37d"
+      }
+    },
+    "source_snapshot": {
+      "file": "executed_sources.zip",
+      "bytes": 17569,
+      "sha256": "3309d0cc0c4215df828ad3fee7f5bd25503be49a77e198441b6b4df0904c1b62",
+      "git_revision": "5815c74526c8005ae31cdda010a644779e56ff3d",
+      "source_hashes": {
+        "applications/rag/reader_larger_untouched.py": "deec4ce5c6c104b5229ef3395b370b882288bed6a974f6ae1a8ea33439798986",
+        "configs/experiments/reader_larger_untouched_utility_256.json": "006c26fcbd17dab62d779275ac238a7a80ed334f35b023e315d6f37c43ad3db8",
+        "configs/experiments/reader_larger_untouched_utility_256_plan.json": "c0674156530cfff7f9a739a3a086143b02567591649bf5f0bd995a9ba4979241",
+        "scripts/collab/five_ideas/prepare_reader_larger_untouched_cohort_256.py": "e86221813a29a049e4197d976fb15cae33a2d718fabc207a989cf9f84e45adfe",
+        "scripts/collab/lib/exchange_upload.py": "03c897773c38c1cd79ed1e96c795f2a3bbe92156f8fb3aadc976ffab05316da2",
+        "scripts/collab/lib/source_snapshot.py": "2a3cd1cd61db85cfc9bc3c316a65bc2cb37455827763c15eace1e6f77888dca5"
+      }
+    }
+  },
+  "reader": {
+    "model_id": "facebook/dpr-reader-single-nq-base",
+    "revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+    "max_length": 350,
+    "frozen_max_batch_size": 8,
+    "files": {
+      "config.json": {
+        "bytes": 484,
+        "sha256": "b70134672b020275e816b41fbe3cecf597019c7639ae4518fa5c493d15eb0c74"
+      },
+      "pytorch_model.bin": {
+        "bytes": 437998572,
+        "sha256": "850c5c755efcdb39d703236bdce317635ffc9a8b7cb1d451bf421115b2015e5b"
+      },
+      "tokenizer.json": {
+        "bytes": 466062,
+        "sha256": "ce64fce797c24f68df90b40a3f74f579b336a493db14bd583fd520ea0d8c9a98"
+      },
+      "tokenizer_config.json": {
+        "bytes": 28,
+        "sha256": "53b6f42b8b8daddbdc6d3532c324187a92b46c1602bd6e8d4ad5a413b4fc90e1"
+      },
+      "vocab.txt": {
+        "bytes": 231508,
+        "sha256": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+      }
+    }
+  },
+  "sequential_checkpoint": {
+    "exchange_path": "five_ideas/reader_sequential_protected_updates/20261018T045707538341Z/sequential_values.npz",
+    "run_id": "20261018T045707538341Z",
+    "file": {
+      "bytes": 286155829,
+      "sha256": "35d7f9c165c581e7ce21ccaf57eca104db6e97a2b2af6c598af333caac8287bc"
+    },
+    "source_snapshot": {
+      "file": "executed_sources.zip",
+      "bytes": 47980,
+      "sha256": "e6147e55f97d538c0535351c6dfa360a17802f1d534732811ce3ba8d7074a57d",
+      "source_hashes": {
+        ".ai-progress/workstreams/rag-selector/refs/reader_protected_feasibility_20261017_recovery.json": "c7998747af48380e5ca79fdd88bc4aeebed935f56451ec6a4e3c3f7e2231a0df",
+        "applications/rag/protected_boundary_inputs.py": "e49d6d8387d4acfd1bba0baf4ba33d6b1a725a8ac1e14b0ef0fb5b4bf016a36c",
+        "applications/rag/protected_boundary_learning.py": "77d475d768a7f1fceb1ecb7981a54d5cb7124e4b32b54c7991d9d724655e5390",
+        "applications/rag/protected_update_feasibility.py": "015a2c505068658a66593acb536cb03e56be48e20af79dfa6ef231f388e02496",
+        "applications/rag/quantum_reader_rotation.py": "505b278b4b3123d8f0b598ad09e313d30ab56a0af33fa070846a57d306487610",
+        "applications/rag/reader_membership_training.py": "99b995e271c30d9908f7d90fb4686758ba224107a2bd898e3aff8fefff1f0194",
+        "applications/rag/scale_invariant_top5_objective.py": "7697697d5254d704173514a1b912d8c788f7d7781d81d46117d0530e29a8ba4c",
+        "applications/rag/support_boundary_bridge.py": "24ce7dd1b5a54cfcc8ba470bd58e36f512058c36d2adf3936f26cd276cce6129",
+        "applications/rag/support_supervision_axes.py": "5ca0b48bd7d48bce9580eeb46587015358584642a5c7f9af09756f117d35794a",
+        "configs/experiments/reader_sequential_protected_updates.json": "c9ddf1bc1c67f6bc842eb3fbd020f64ce2cb90be88b5804794c5d9f59c5ab571",
+        "configs/experiments/reader_sequential_protected_updates_plan.json": "07f2eaab8517da4c2b5008884d2b9ff31ae815566ad17a697121c1ea65eecee7",
+        "scripts/collab/five_ideas/run_reader_protected_update_feasibility.py": "a4f0f6925c8970169529b2dd9ad87b4a367229a48f3d86b05ca30cc695ba7c07",
+        "scripts/collab/five_ideas/run_reader_sequential_protected_updates.py": "d609b2ea385f1e77181651acb1aa16e0cdc031e522acd080e9055f3139492e09",
+        "scripts/collab/lib/source_snapshot.py": "2a3cd1cd61db85cfc9bc3c316a65bc2cb37455827763c15eace1e6f77888dca5"
+      }
+    },
+    "source_config_sha256": "c9ddf1bc1c67f6bc842eb3fbd020f64ce2cb90be88b5804794c5d9f59c5ab571",
+    "arms": {
+      "quantum": {
+        "restore_state_sha256": "9f89ba0f9e8ee214f18f56591c2119c8e8a756790899fe551d66162b664319ff",
+        "critical_arrays": {
+          "final_theta": {"sha256": "b762714a6c9c02a88e11b9d57a6bc6cded7337732d8a39b8c4bf6c5eca473251"},
+          "head__theta": {"sha256": "0d1c4733a3313187d4c762fb744ad0672061626a7c4159f968376860954d89e9"},
+          "head__weight": {"sha256": "fcdb767b6974f67e045b5d412ef9d216af5d48d9fe001a1f8ed28e91aeefc366"},
+          "head__bias": {"sha256": "99f63ae5ad96b21eb9d523b9e277af3d96d49c190a57a650092300193f42674f"},
+          "head__projection": {"sha256": "daff846e7c6ea8914951b1c2ddfdb209c192fc619c7c1db07998cdc76dd620de"}
+        }
+      },
+      "classical": {
+        "restore_state_sha256": "a79da8701e2a3517e857884d6b37b41174c83846873449ea0e74d872bbe54376",
+        "critical_arrays": {
+          "final_theta": {"sha256": "e0c202952975428d1a6e9956fae24229001dc36e9ead186d41f8aa8dfa59afeb"},
+          "head__theta": {"sha256": "0d1c4733a3313187d4c762fb744ad0672061626a7c4159f968376860954d89e9"},
+          "head__weight": {"sha256": "fcdb767b6974f67e045b5d412ef9d216af5d48d9fe001a1f8ed28e91aeefc366"},
+          "head__bias": {"sha256": "99f63ae5ad96b21eb9d523b9e277af3d96d49c190a57a650092300193f42674f"},
+          "head__projection": {"sha256": "daff846e7c6ea8914951b1c2ddfdb209c192fc619c7c1db07998cdc76dd620de"}
+        }
+      }
+    }
+  },
+  "arms": [
+    "identity_reader",
+    "quantum_sequential_final",
+    "classical_sequential_final"
+  ],
+  "head": {
+    "layers": 2,
+    "conditioning": 4,
+    "seed": 20261013,
+    "data_qubits": 10,
+    "conditional_angles": 40,
+    "trainable_parameters": 200
+  },
+  "selection": {
+    "candidate_count": 50,
+    "selected_count": 5,
+    "tie_break": "score_descending_then_candidate_index_ascending"
+  },
+  "transport_gate": {
+    "min_quantum_changed_cases_for_review": 25,
+    "min_quantum_classical_different_cases_for_review": 15
+  },
+  "label_boundary": {
+    "answers_read": false,
+    "support_annotations_read": false,
+    "silver_oracle_read": false,
+    "generator_called": false,
+    "semantic_review_started": false
+  },
+  "method_source_hashes": {
+    "applications/rag/quantum_reader_rotation.py": "505b278b4b3123d8f0b598ad09e313d30ab56a0af33fa070846a57d306487610",
+    "applications/rag/quantum_semantic_reader.py": "a52ab09f4d786acd7fa5a1647c53aae73a256a18822cddc7e723a961f8389ce6",
+    "applications/rag/reader_larger_untouched.py": "deec4ce5c6c104b5229ef3395b370b882288bed6a974f6ae1a8ea33439798986",
+    "applications/rag/reader_unseen_transport.py": "760ad7fd47dda4402eea50482f9d004e02472792f22a8b88e7845dc04b8312ca",
+    "configs/experiments/reader_larger_untouched_utility_256.json": "006c26fcbd17dab62d779275ac238a7a80ed334f35b023e315d6f37c43ad3db8",
+    "configs/experiments/reader_larger_untouched_utility_256_plan.json": "c0674156530cfff7f9a739a3a086143b02567591649bf5f0bd995a9ba4979241"
+  }
+}
