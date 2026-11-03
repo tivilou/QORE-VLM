@@ -68,7 +68,8 @@ class BootstrapTests(unittest.TestCase):
             inputs=dict(train='train.jsonl',eval_inputs='eval.jsonl',eval_labels='labels.json'))
         ideas = json.loads(junior.CAMPAIGN.read_bytes())['dual_ideas']
         campaign = dict(populations={'reproduction':release,'formal':dict(status='unavailable',reason='no qualified full population')},
-                        dual_ideas=ideas, dpr_only_ideas=[], implemented_ideas=ideas, reserve_bytes=0)
+                        dual_ideas=ideas, dpr_only_ideas=[], implemented_ideas=ideas,
+                        seeds=[20261102,20261103,20261104], reserve_bytes=0)
         class ExchangeFixture:
             fail = False
             uploads = []

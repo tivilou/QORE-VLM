@@ -124,7 +124,7 @@ def matrix_argv(py, assets, output, release, campaign, resume):
         '--train', str(member(assets, release['inputs']['train'])),
         '--eval-inputs', str(member(assets, release['inputs']['eval_inputs'])),
         '--eval-labels', str(member(assets, release['inputs']['eval_labels'])),
-        '--output', str(output), '--ideas', *common]
+        '--output', str(output), '--seeds', *map(str, campaign['seeds']), '--ideas', *common]
     if extras:
         command += ['--dpr-only-ideas', *extras]
     if resume:
@@ -175,7 +175,8 @@ def push_results(exchange, output, run_id, execution):
 
 
 def execute(campaign, config, population, work, *, resume=False, prepare_only=False, upload_only=False,
-            runner=subprocess.run, environment=prepare_environment, exchange_factory=Exchange):
+            runner=subprocess.run, environment=prepare_environment, exchange_factory=Exchange,
+            asset_store=None):
     exchange = exchange_factory(config['url'], config['token'])
     release = package_for(campaign, population, config.get('populations', {}).get(population))
     # Fail before installing dependencies/downloading GB/GPU execution if formal data is unavailable.
@@ -223,13 +224,16 @@ def execute(campaign, config, population, work, *, resume=False, prepare_only=Fa
             # Re-running the same command retries transport only, never a finished/failed scientific cell.
             push_results(exchange, output, execution['run_id'], execution)
             return execution['returncode']
-        free = shutil.disk_usage(work).free
-        require(free >= release['archive']['size'] + sum(r['size'] for r in release['files']) + campaign['reserve_bytes'],
-                'insufficient server disk; expand before starting')
         exchange.json('GET', '/healthz')
-        archive = work / 'assets.tar'; assets = work / 'assets'
-        exchange.download(release['archive'], archive)
-        install_package(archive, assets, release['files'])
+        if asset_store is None:
+            free = shutil.disk_usage(work).free
+            require(free >= release['archive']['size'] + sum(r['size'] for r in release['files']) + campaign['reserve_bytes'],
+                    'insufficient server disk; expand before starting')
+            archive = work / 'assets.tar'; assets = work / 'assets'
+            exchange.download(release['archive'], archive)
+            install_package(archive, assets, release['files'])
+        else:
+            assets = asset_store(release)
         counts = validate_inputs(assets, release)
         if prepare_only:
             print(json.dumps(dict(stage='assets_ready', population=population, counts=counts)))
@@ -246,7 +250,7 @@ def execute(campaign, config, population, work, *, resume=False, prepare_only=Fa
             try:
                 # Inherit the OS lock across the scientific child: killing the bootstrap
                 # cannot permit a second launcher while the original child is alive.
-                kwargs = dict(pass_fds=(fd,)) if os.name == 'posix' and runner is subprocess.run else {}
+                kwargs = dict(pass_fds=(fd,)) if os.name == 'posix' else {}
                 result = runner(command, cwd=ROOT, check=False, **kwargs)
                 code = result.returncode
             except OSError:
