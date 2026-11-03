@@ -37,7 +37,7 @@ def matrix_plan(available, registry, common=None, dpr_only=None, bge_only=None):
 def rank_metrics(seal, metrics):
     """Rank like scopes together; preserve legacy seals' two-backbone contract."""
     from statistics import mean
-    groups = {'dual': [], 'dpr_only': [], 'bge_only': []}
+    groups = {'dual': [], 'dpr_only': [], 'bge_only': [], 'fusion': []}
     schedule = seal.get('backbone_ideas')
     ranking = []
     for idea in seal['ideas']:
@@ -84,4 +84,33 @@ def rank_metrics(seal, metrics):
             else:
                 row['scope_rank'] = None
         ranking.extend(entries)
+    # A fusion cell consumes both raw score channels but produces ONE ranking.
+    # Report per-seed raw counts against each native, never fabricate two cells.
+    for idea in seal.get('fusion_ideas', []):
+        prefix = 'fusion-' + idea + '-QUANTUM-s'
+        cells = [(k,v) for k,v in metrics.items() if k.startswith(prefix)]
+        expected = sorted(map(str, seal['seeds']))
+        complete = bool(expected) and sorted(k.split('/')[0][len(prefix):] for k,_ in cells) == expected
+        per_seed = {k.split('/')[0][len(prefix):]:v for k,v in cells}
+        by_native = {}
+        for kind in ('dpr', 'bge'):
+            base = metrics.get('predictions-'+kind+'-NATIVE.json')
+            complete = complete and base is not None
+            if base is not None:
+                aligned = {s:v for s,v in per_seed.items()
+                           if v.get('questions') == base.get('questions')
+                           and v.get('denominator') == base.get('denominator')
+                           and isinstance(base.get('questions'), int) and base['questions'] > 0
+                           and base.get('denominator') == 5*base['questions']}
+                complete = complete and len(aligned) == len(per_seed)
+                by_native[kind] = dict(native=base, per_seed={s:dict(
+                    useful_delta=[v['useful_lower']-base['useful_upper'], v['useful_upper']-base['useful_lower']],
+                    direct_delta=[v['direct_lower']-base['direct_upper'], v['direct_upper']-base['direct_lower']])
+                    for s,v in aligned.items()})
+        entry = dict(idea=idea, comparison_group='fusion', requested_backbones=['dpr', 'bge'],
+            output_rankings_per_seed=1, rankable=bool(complete), per_seed=per_seed, by_native=by_native,
+            classical_controls={k:v for k,v in metrics.items()
+                if k.startswith('fusion-'+idea+'-') and '-QUANTUM-' not in k},
+            scope_rank=None, quantum_attribution='NOT_ESTABLISHED')
+        groups['fusion'].append(entry); ranking.append(entry)
     return ranking, groups

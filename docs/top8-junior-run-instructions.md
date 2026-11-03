@@ -1,6 +1,6 @@
 # 师弟一键实验入口
 
-新增 [NQ-open＋TriviaQA统一入口](two-dataset-junior-run-instructions.md)，两数据集独立训练／评估，自动汇总四个数据集／模型组合。下面的原入口继续用于单独TriviaQA；不能以此声称NQ正式数据已经恢复。
+新增 [NQ-open＋TriviaQA统一入口](two-dataset-junior-run-instructions.md)，现包含八项单模型增强＋CROSS_SCORE／CLASS_FUSION两项融合，两数据集独立训练／评估，共786学习单元。下面的原入口仍为单独TriviaQA八项范围；要运行十项请使用`bash scripts/run_two_datasets.sh`。不能以此声称NQ正式数据已经恢复。
 
 一条命令负责获取私有数据与两个固定模型、准备环境、运行八方案及全部经典对照/三个固定种子、联合封存预测、评估和回传结果。正式全量由师弟运行，owner 不代跑。
 

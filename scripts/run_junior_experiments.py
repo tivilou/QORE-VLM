@@ -127,6 +127,8 @@ def matrix_argv(py, assets, output, release, campaign, resume):
         '--output', str(output), '--seeds', *map(str, campaign['seeds']), '--ideas', *common]
     if extras:
         command += ['--dpr-only-ideas', *extras]
+    if campaign.get('fusion_ideas'):
+        command += ['--fusion-ideas', *campaign['fusion_ideas']]
     if resume:
         command += ['--resume']
     return command
@@ -267,6 +269,7 @@ def execute(campaign, config, population, work, *, resume=False, prepare_only=Fa
             independent_confirmation=release.get('independent_confirmation', False), counts=counts,
             prediction_seal_present=sealed, evaluation_present=evaluated,
             dual_ideas=campaign['dual_ideas'], dpr_only_ideas=campaign['dpr_only_ideas'],
+            fusion_ideas=campaign.get('fusion_ideas', []),
             scientific_success=code == 0, formal_success=code == 0 and population == 'formal')
         atomic_json(output / 'dataset-release.json', release)
         atomic_json(output / 'execution.json', execution)

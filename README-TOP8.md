@@ -1,4 +1,4 @@
-# Q-DUET 八方案双模型实验
+# Q-DUET 八项单模型增强＋两项双模型融合
 
 NQ-open＋TriviaQA 的统一入口现为：
 
@@ -6,7 +6,7 @@ NQ-open＋TriviaQA 的统一入口现为：
 curl -fsSL https://raw.githubusercontent.com/tivilou/QORE-VLM/codex/top8-dual-scorer/scripts/bootstrap_two_datasets.sh | bash
 ```
 
-两数据集分别训练和评估；八方案 × DPR/BGE × 三种子，保留全部经典控制，共696个学习单元。**正式输入／标签发布尚未齐全，默认会在下载和训练前报出缺口。** [双数据集运行说明与数据状态](docs/two-dataset-junior-run-instructions.md)。
+两数据集分别训练和评估；八方案 × DPR/BGE × 三种子，再加Q-CROSS-SCORE和Q-CLASS-FUSION两项双模型融合及其全部经典控制，共786个学习单元。融合使用两路原生分数，单列逐种子结果，不混作单DPR方法。**正式输入／标签发布尚未齐全，默认会在下载和训练前报出缺口。** [十项运行说明与数据状态](docs/two-dataset-junior-run-instructions.md)。
 
 以下保留原TriviaQA单数据集入口。
 

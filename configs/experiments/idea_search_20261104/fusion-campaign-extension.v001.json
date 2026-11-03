@@ -1,0 +1,23 @@
+{
+  "schema": "qduet.fusion-campaign-extension.v1",
+  "ideas": ["CROSS_SCORE", "CLASS_FUSION"],
+  "inputs": ["frozen DPR multiset native scores", "frozen BGE-v2-m3 native scores"],
+  "scope": "Two-scorer fusion; one output ranking per method/seed/dataset, separate from eight single-backbone adapters",
+  "authorization": "2026-11-04 user: 加吧, accepting the preceding eight-plus-two proposal",
+  "seeds": [20261102, 20261103, 20261104],
+  "epochs": 4,
+  "question_batch": 8,
+  "CROSS_SCORE_arms": ["HEAD", "LINEAR", "POLY", "TRIG", "MLP", "PRODUCT", "QUANTUM"],
+  "CLASS_FUSION_arms": ["HEAD", "FULLCLASS", "LINEAR", "POLY", "TRIG", "MLP", "PRODUCT", "QUANTUM"],
+  "additional_cells_per_dataset": 45,
+  "total_cells_per_dataset": 393,
+  "total_two_dataset_cells": 786,
+  "normalization": "Complete original50 training scores only; class priors from reviewed training positions only",
+  "supervision": "No training label changes; unreviewed positions are never none",
+  "evaluation": "All single-model and fusion predictions/checkpoints jointly sealed before dataset evaluation-label access",
+  "cost": "Both frozen model forward costs must be reported; native score caches shared, no duplicate model extraction for fusion",
+  "historical_status": "Both fixed historical configurations closed for stronger-control/direct protection failures; no historical result or qualification changed",
+  "quantum_attribution": "NOT_ESTABLISHED",
+  "new_owner_scientific_runs": 0,
+  "formal_release_ready": false
+}

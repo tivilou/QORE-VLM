@@ -18,10 +18,10 @@ class CampaignTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
 
-    def test_plan_exact_696_cells_without_scientific_import(self):
+    def test_plan_exact_786_cells_without_scientific_import(self):
         _, report = joint.resolve(self.campaign, {}, list(joint.DATASETS), 'formal')
-        self.assertEqual(report['total_learned_cells'], 696)
-        self.assertEqual(report['learned_cells_per_dataset'], 348)
+        self.assertEqual(report['total_learned_cells'], 786)
+        self.assertEqual(report['learned_cells_per_dataset'], 393)
         self.assertFalse(report['ready'])
         self.assertFalse(report['formal_scale_certified'])
 
@@ -141,6 +141,7 @@ class CampaignTests(unittest.TestCase):
             self.assertIn(9876,kwargs['pass_fds'])
             self.assertEqual(command[command.index('--seeds')+1:command.index('--ideas')],
                              ['20261102','20261103','20261104'])
+            self.assertEqual(command[command.index('--fusion-ideas')+1:],['CROSS_SCORE','CLASS_FUSION'])
             output=Path(command[command.index('--output')+1]);matrix=output/'matrix';matrix.mkdir(parents=True)
             (matrix/'joint-prediction-seal.json').write_text('{"files":[]}')
             (matrix/'evaluation.json').write_text('{"metrics":{}}')

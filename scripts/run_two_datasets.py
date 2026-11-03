@@ -46,6 +46,10 @@ def resolve(campaign, config, datasets, population):
     require(datasets and len(set(datasets)) == len(datasets) and set(datasets) <= set(DATASETS),
             'unique registered datasets required')
     template = json.loads((ROOT/campaign['base_campaign']).read_bytes())
+    # The two-dataset campaign extends, rather than mutates, the old eight-only entry.
+    template['fusion_ideas'] = campaign.get('fusion_ideas', [])
+    from applications.rag.qduet_fusion_v001 import fusion_plan, FUSION_ARMS
+    fusion_plan(['dpr', 'bge'], template['fusion_ideas'])
     arms = registry(); ideas = template['dual_ideas'] + template['dpr_only_ideas']
     require(template['seeds'] and len(set(template['seeds'])) == len(template['seeds']), 'fixed unique seeds')
     require(len(template['dual_ideas']) == 8 and len(set(ideas)) == len(ideas) and set(ideas) <= set(arms),
@@ -77,11 +81,13 @@ def resolve(campaign, config, datasets, population):
             reason = str(error)
         readiness.append(dict(dataset=name, ready=reason is None, reason=reason))
     per_dataset = len(template['seeds']) * (2*sum(len(arms[i]) for i in template['dual_ideas'])
-                         + sum(len(arms[i]) for i in template['dpr_only_ideas']))
+                         + sum(len(arms[i]) for i in template['dpr_only_ideas'])
+                         + sum(len(FUSION_ARMS[i]) for i in template['fusion_ideas']))
     report = dict(schema='qduet.two-dataset-plan.v1', datasets=list(datasets), population=population,
         training='independent_per_dataset', cross_dataset_transfer='NOT_SCHEDULED',
         backbones=['dpr', 'bge'], models=campaign['model_identities'],
         seeds=template['seeds'], ideas=template['dual_ideas'], dpr_only=template['dpr_only_ideas'],
+        fusion_ideas=template['fusion_ideas'], fusion_arms={i:FUSION_ARMS[i] for i in template['fusion_ideas']},
         epochs=4, learned_cells_per_dataset=per_dataset, total_learned_cells=per_dataset*len(datasets),
         readiness=readiness, ready=all(r['ready'] for r in readiness),
         aggregation='equal dataset/model weight; useful per question delta; unknown bounds retained',
@@ -155,7 +161,7 @@ def audit_inputs(staged, plans, population):
                 shared_pretrained_models=True)
 
 
-def summarize(evaluations, datasets, ideas, seeds):
+def summarize(evaluations, datasets, ideas, seeds, fusion_ideas=None):
     """Average native-relative rates, never raw totals from different populations."""
     rows = []
     for idea in ideas:
@@ -199,7 +205,19 @@ def summarize(evaluations, datasets, ideas, seeds):
             row['rank'] = rank
         else:
             row['rank'] = None
-    return dict(schema='qduet.two-dataset-summary.v1', datasets=list(datasets), ranking=rows,
+    fusion = []
+    for idea in fusion_ideas or []:
+        by_dataset = {}; complete = True
+        for name in datasets:
+            from applications.rag.top8_matrix_plan_v001 import rank_metrics
+            _, groups = rank_metrics(dict(ideas=[], seeds=seeds, fusion_ideas=[idea]),
+                                     evaluations.get(name, {}).get('metrics', {}))
+            entry = groups['fusion'][0]; complete = complete and entry['rankable']
+            by_dataset[name] = entry
+        fusion.append(dict(idea=idea, comparison_group='fusion', rankable=complete,
+                           by_dataset=by_dataset, combined_with_single_model_ranking=False))
+    return dict(schema='qduet.two-dataset-summary.v2', datasets=list(datasets), ranking=rows,
+                fusion_results=fusion,
                 quantum_attribution='NOT_ESTABLISHED', cross_dataset_transfer='NOT_RUN')
 
 
@@ -262,7 +280,8 @@ def execute(campaign, config, datasets, population, work, *, prepare_only=False,
                 # Failed/incomplete matrices cannot receive a combined rank.
                 if code == 0 and execution['scientific_success']:
                     evaluations[name] = json.loads((output/'matrix/evaluation.json').read_bytes())
-        report = summarize(evaluations, datasets, campaign['dual_ideas'], campaign['seeds'])
+        report = summarize(evaluations, datasets, campaign['dual_ideas'], campaign['seeds'],
+                           campaign.get('fusion_ideas', []))
         report['returncodes'] = statuses
         report['population'] = population
         report['input_audit_sha256'] = digest(work/'input-audit.json')

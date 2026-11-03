@@ -190,7 +190,9 @@ def extract(kind, model_root, train_path, eval_path, output, checkpoint=lambda: 
             metadata.append(dict(id=row['id'], component_id=row['component_id'], role=role,
                 candidate_ids=ids, retained_indices=keep, sequences=sequences,
                 targets=[row['labels'][ids[i]] for i in keep] if role=='training' else None,
-                native_scores=native if role=='development' else None))
+                # Fusion normalizes BOTH complete training score channels;
+                # unreviewed positions remain excluded from training targets.
+                native_scores=native))
     records.append(tensor_file(output,'features.bin',features))
     result=dict(schema='top8.native-cache.v1',backbone=kind,model_id=MODELS[kind][0],
         revision=MODELS[kind][1],config=backbone.config.to_dict(),assets=backbone.asset_records,

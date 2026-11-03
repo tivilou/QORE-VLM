@@ -2,6 +2,8 @@
   "schema": "qduet.two-dataset-campaign.v1",
   "base_campaign": "configs/experiments/idea_search_20261103/junior-campaign.v001.json",
   "dual_ideas": ["MIXED_DEPTH", "FIDELITY", "VALUE_GEOMETRY", "LOCAL_REUPLOAD", "NATIVE_BORN", "FEATURE_GATE", "LOCAL_FFN", "ORDINAL"],
+  "fusion_ideas": ["CROSS_SCORE", "CLASS_FUSION"],
+  "fusion_extension": "configs/experiments/idea_search_20261104/fusion-campaign-extension.v001.json",
   "seeds": [20261102, 20261103, 20261104],
   "reserve_bytes": 42949672960,
   "models": {"dpr": "models/dpr-reader-multiset-base", "bge": "models/bge-reranker-v2-m3"},
@@ -34,7 +36,7 @@
     "training": "independent per dataset; no mixed training",
     "evaluation": "all requested methods, controls and seeds jointly sealed per dataset before label join",
     "cross_dataset_transfer": "not scheduled; requires checkpoint transfer adapters and separate protocol",
-    "aggregate": "equal weight per dataset/model, native-relative useful per question, retain unknown intervals and classical controls",
+    "aggregate": "eight single-model ideas: equal weight per dataset/model; two fusion ideas: separate per-dataset/per-seed raw counts and both native comparators; retain unknown intervals and classical controls",
     "test_policy": "locked final test remains separate; do not silently train on the 128 development questions",
     "pretraining_exposure": "DPR multiset has prior TriviaQA/NQ training exposure; dataset splits do not certify unseen backbone pretraining",
     "formal_scale_certified": false

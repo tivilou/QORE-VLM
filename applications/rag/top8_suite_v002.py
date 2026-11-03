@@ -68,7 +68,7 @@ def recovery_probe(cache, output, checkpoint=lambda:None):
 
 
 def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=lambda:None,
-                    backbone_ideas=None):
+                    backbone_ideas=None, fusion_ideas=None):
     import torch
     from applications.rag.top8_portable_v001 import load_cache, train_cell
     from applications.rag.top8_methods_v001 import ARMS, mixed_banks
@@ -81,6 +81,8 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
         question_batch=8, lr=.001, weight_decay=0, gradient_clip=1.)
     if backbone_ideas is not None:
         binding['backbone_ideas'] = backbone_ideas
+    if fusion_ideas:
+        binding['fusion_ideas'] = fusion_ideas
     contract = output/'run-binding.json'
     if contract.exists():
         need(json.loads(contract.read_bytes()) == binding, 'immutable matrix resume contract')
@@ -159,10 +161,18 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
                         failures.append(failure)
                         gc.collect(); torch.cuda.empty_cache()
         del features; gc.collect(); torch.cuda.empty_cache()
+    if fusion_ideas:
+        from applications.rag.qduet_fusion_v001 import run_fusions
+        extra, failed, owned = run_fusions(caches, output, seeds, fusion_ideas, binding,
+                                           canary=canary, checkpoint=checkpoint)
+        results.update(extra); failures.extend(failed); files.extend(owned)
     seal = dict(schema='top8.joint-predictions.v1',seeds=seeds,ideas=ideas,canary=canary,
         requested_backbones=len(caches),results=results,failures=failures,files=files,
         all_predictions_before_evaluation_labels=True,run_binding_sha256=digest(contract),
         recovery='same immutable source/input/config; optimizer/RNG/order restored; explicit failed cells not retried')
+    if fusion_ideas:
+        seal['fusion_ideas'] = fusion_ideas
+        seal['fusion_inputs'] = ['dpr', 'bge']
     if backbone_ideas is not None:
         seal['backbone_ideas'] = backbone_ideas
         seal['not_scheduled'] = [dict(backbone=kind, idea=idea, status='NOT_SCHEDULED')
@@ -183,6 +193,8 @@ def main(argv=None):
     parser.add_argument('--dpr-only-ideas',nargs='+',default=[],
                         help='Run these registered ideas only on DPR; omitted BGE is N/A, not zero.')
     parser.add_argument('--bge-only-ideas',nargs='+',default=[])
+    parser.add_argument('--fusion-ideas',nargs='+',default=[],
+                        help='Two-scorer CROSS_SCORE/CLASS_FUSION; both native models required.')
     parser.add_argument('--plan-only',action='store_true',
                         help='Print the exact backbone/idea/arm schedule without loading models or writing output.')
     parser.add_argument('--extract-only',action='store_true')
@@ -197,9 +209,13 @@ def main(argv=None):
     available = [kind for kind, model in [('dpr',args.dpr_model),('bge',args.bge_model)] if model]
     available += [json.loads(path.read_bytes())['backbone'] for path in args.cache]
     plan = matrix_plan(available,registry['IDEAS'],args.ideas,args.dpr_only_ideas,args.bge_only_ideas)
+    from applications.rag.qduet_fusion_v001 import fusion_plan, FUSION_ARMS
+    plan['fusion_ideas'] = fusion_plan(available, args.fusion_ideas)
     plan['seeds'] = args.seeds
     plan['learned_cells'] = sum(len(registry['ARMS'][idea]) * len(args.seeds)
         for values in plan['backbone_ideas'].values() for idea in values)
+    plan['fusion_learned_cells'] = sum(len(FUSION_ARMS[i])*len(args.seeds) for i in args.fusion_ideas)
+    plan['learned_cells'] += plan['fusion_learned_cells']
     need(args.seeds and len(set(args.seeds))==len(args.seeds),'unique predeclared seeds')
     if args.plan_only:
         print(json.dumps(plan,ensure_ascii=False,indent=2))
@@ -237,7 +253,7 @@ def main(argv=None):
          'one cache for each requested backbone')
     if args.extract_only:return 0
     seal=run_recoverable(caches,args.output/'matrix',args.seeds,ideas,canary=args.canary,
-                         backbone_ideas=plan['backbone_ideas'])
+                         backbone_ideas=plan['backbone_ideas'],fusion_ideas=args.fusion_ideas)
     if args.eval_labels:
         evaluation=args.output/'matrix/evaluation.json'
         if evaluation.exists():

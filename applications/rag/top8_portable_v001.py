@@ -231,7 +231,7 @@ def evaluate(output,labels_path):
     ranking,groups=rank_metrics(seal,metrics)
     result=dict(schema='top8.evaluation.v2',joint_seal_sha256=digest(output/'joint-prediction-seal.json'),labels_sha256=digest(labels_path),metrics=metrics,ranking=ranking,ranking_groups=groups,
         backbone_ideas=seal.get('backbone_ideas'),not_scheduled=seal.get('not_scheduled',[]),
-        ranking_rule='Rank dual, DPR-only and BGE-only scopes separately against their own native; absent requested cells unranked, unscheduled models N/A; no cross-scope average',
+        ranking_rule='Rank dual/DPR-only/BGE-only separately; fusion has one output and both native comparators with per-seed raw counts; no cross-scope average',
         classical_controls_separate=True,quantum_attribution='not_established',exposed_population=True)
     json_file(output,'evaluation.json',result);return result
 
