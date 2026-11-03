@@ -1,0 +1,271 @@
+{
+  "schema": "top8.backbone-aware-selection.v2",
+  "created_at": "2026-11-03T12:18:56.219297+00:00",
+  "authorization": "Human: DPR-only methods with strong DPR utility may enter the eight; run only DPR in one-command script.",
+  "selection_rule": [
+    "DPR-only and dual-backbone mechanisms are eligible; BGE compatibility is not required",
+    "Retain historical DPR mean useful lower bound, then direct lower bound; preserve equal-score ties explicitly",
+    "No missing BGE zero, invented dual average, or downgrade of requested failed dual cells to single-backbone",
+    "Cross-scorer fusion is a separate two-model-input mechanism, never described as DPR-only",
+    "Maximum eight selected distinct ideas; an executable registered adapter and matched controls required before scheduling"
+  ],
+  "selected": [
+    {
+      "rank": 1,
+      "key": "MIXED_DEPTH",
+      "candidate": "Q-MIXED-DEPTH-FIDELITY-v001",
+      "useful_lower": [
+        375,
+        374,
+        373
+      ],
+      "useful_upper": [
+        377,
+        374,
+        373
+      ],
+      "direct_lower": [
+        172,
+        170,
+        167
+      ],
+      "evidence": "configs/experiments/idea_search_20261103/qmixed-depth-terminal-result.v003.json",
+      "evidence_sha256": "324d14162a4c40e98c784f5fc7e1023cd63f36a0d99a0e3ea9f9e19006bbec44",
+      "bge_status": "not_run",
+      "scheduled_backbones": [
+        "dpr",
+        "bge"
+      ],
+      "scope_reason": "Current implemented adapter supports both; this is not a prerequisite for future selection."
+    },
+    {
+      "rank": 2,
+      "key": "FIDELITY",
+      "candidate": "Q-FIDELITY-v001",
+      "useful_lower": [
+        374,
+        373
+      ],
+      "useful_upper": [
+        374,
+        373
+      ],
+      "direct_lower": [
+        169,
+        170
+      ],
+      "evidence": "configs/experiments/idea_search_20261102/qfidelity-terminal-result.v003.json",
+      "evidence_sha256": "ddc520706cfa05131140dbe075c6c4d76c81fc47c6941505150000275b32f6e6",
+      "bge_status": "not_run",
+      "scheduled_backbones": [
+        "dpr",
+        "bge"
+      ],
+      "scope_reason": "Current implemented adapter supports both; this is not a prerequisite for future selection."
+    },
+    {
+      "rank": 3,
+      "key": "VALUE_GEOMETRY",
+      "candidate": "Q-VALUE-GEOMETRY-v001",
+      "useful_lower": [
+        373,
+        373,
+        373
+      ],
+      "useful_upper": [
+        373,
+        373,
+        373
+      ],
+      "direct_lower": [
+        169,
+        170,
+        170
+      ],
+      "evidence": "configs/experiments/idea_search_20261103/qvalue-geometry-terminal-result.v002.json",
+      "evidence_sha256": "fdcaa13e0b9b46f6ce6de454c4cb57c08db42c47f0cca1a7cfab957a31b53f9e",
+      "bge_status": "not_run",
+      "scheduled_backbones": [
+        "dpr",
+        "bge"
+      ],
+      "scope_reason": "Current implemented adapter supports both; this is not a prerequisite for future selection."
+    },
+    {
+      "rank": 4,
+      "key": "LOCAL_REUPLOAD",
+      "candidate": "Q-LOCAL-REUPLOAD-v001",
+      "useful_lower": [
+        372,
+        372,
+        373
+      ],
+      "useful_upper": [
+        372,
+        372,
+        373
+      ],
+      "direct_lower": [
+        170,
+        170,
+        170
+      ],
+      "evidence": "configs/experiments/idea_search_20261101/qreuploadffn-terminal-result.v001.json",
+      "evidence_sha256": "c97638c1c0fe7511ae398ad98d27dfb9a0e417d6dbd26f603f73b7a51181196e",
+      "bge_status": "not_run",
+      "scheduled_backbones": [
+        "dpr",
+        "bge"
+      ],
+      "scope_reason": "Current implemented adapter supports both; this is not a prerequisite for future selection."
+    },
+    {
+      "rank": 5,
+      "key": "NATIVE_BORN",
+      "candidate": "Q-NATIVE-BORN-v001",
+      "useful_lower": [
+        372,
+        372,
+        373
+      ],
+      "useful_upper": [
+        372,
+        372,
+        373
+      ],
+      "direct_lower": [
+        170,
+        170,
+        170
+      ],
+      "evidence": "configs/experiments/idea_search_20261101/qnative-born-final-disposition.v001.json",
+      "evidence_sha256": "024c5200fd532fffecce4ab0db417d1f17c77a79096d3d430660bd524cbec968",
+      "bge_status": "not_run",
+      "scheduled_backbones": [
+        "dpr",
+        "bge"
+      ],
+      "scope_reason": "Current implemented adapter supports both; this is not a prerequisite for future selection."
+    },
+    {
+      "rank": 6,
+      "key": "FEATURE_GATE",
+      "candidate": "Q-FEATURE-GATE-v001",
+      "useful_lower": [
+        372,
+        372,
+        373
+      ],
+      "useful_upper": [
+        372,
+        372,
+        373
+      ],
+      "direct_lower": [
+        170,
+        169,
+        170
+      ],
+      "evidence": "configs/experiments/idea_search_20261101/qfeature-gate-final-disposition.v001.json",
+      "evidence_sha256": "9d2f737fb9f4d2e7e139e7f42d28e67a66f5efa3f3bde9dafd6020e5a01dcf34",
+      "bge_status": "not_run",
+      "scheduled_backbones": [
+        "dpr",
+        "bge"
+      ],
+      "scope_reason": "Current implemented adapter supports both; this is not a prerequisite for future selection."
+    },
+    {
+      "rank": 7,
+      "key": "LOCAL_FFN",
+      "candidate": "Q-LOCAL-FFN-v001",
+      "useful_lower": [
+        372,
+        372,
+        373
+      ],
+      "useful_upper": [
+        372,
+        372,
+        373
+      ],
+      "direct_lower": [
+        170,
+        169,
+        170
+      ],
+      "evidence": "configs/experiments/idea_search_20261101/qlocalffn-terminal-result.v001.json",
+      "evidence_sha256": "14d985bbdb41bbfd6b0e9cc6e75fb2713921f42a357f85018d09c17ff442412a",
+      "bge_status": "not_run",
+      "scheduled_backbones": [
+        "dpr",
+        "bge"
+      ],
+      "scope_reason": "Current implemented adapter supports both; this is not a prerequisite for future selection."
+    },
+    {
+      "rank": 8,
+      "key": "ORDINAL",
+      "candidate": "Q-ORDINAL-MEASUREMENT-v001",
+      "useful_lower": [
+        372,
+        372,
+        373
+      ],
+      "useful_upper": [
+        372,
+        372,
+        373
+      ],
+      "direct_lower": [
+        170,
+        169,
+        170
+      ],
+      "evidence": "configs/experiments/idea_search_20261101/qordinal-final-disposition.v001.json",
+      "evidence_sha256": "d4800cc4cf88de1a8d0bcc9c86b5066b9d5d2d6738bc35ea764f19930b6adb6c",
+      "bge_status": "not_run",
+      "scheduled_backbones": [
+        "dpr",
+        "bge"
+      ],
+      "scope_reason": "Current implemented adapter supports both; this is not a prerequisite for future selection."
+    }
+  ],
+  "source_population": "exposed TriviaQA B1; 512 train/128 development, same raw top50->top5",
+  "baselines": {
+    "dpr": {
+      "useful": 368,
+      "direct": 164,
+      "direct_questions": 64
+    },
+    "bge": {
+      "useful": 361,
+      "direct": 161,
+      "direct_questions": 65
+    }
+  },
+  "prospective_seeds": [
+    20261102,
+    20261103,
+    20261104
+  ],
+  "owner_seed": [
+    20261103
+  ],
+  "training": {
+    "epochs": 4,
+    "question_batch": 8,
+    "lr": 0.001,
+    "weight_decay": 0,
+    "clip_norm": 1
+  },
+  "ranking": "equal-weight mean improvement over each own native useful; intervals preserved; classical contrast separately",
+  "formal_full_experiments": "junior only",
+  "p4_verified_free_bytes": 49791266816,
+  "public_downloads_authorized_new": 0,
+  "supersedes_scope_only": "top8-dual-selection.v001.json",
+  "selection_changed": false,
+  "reason_no_replacement": "Reviewed DPR-native span candidates do not exceed current mean useful lower-bound cutoff; no weaker candidate inserted merely to fill a DPR-only category.",
+  "full_33_candidate_reconciliation": "Not certified by this bounded scope correction; previous missing exhaustive inclusion/exclusion ledger remains a limitation."
+}

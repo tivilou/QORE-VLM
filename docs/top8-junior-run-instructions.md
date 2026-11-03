@@ -35,3 +35,21 @@ python scripts/run_top8.py --dpr-model models/dpr-reader-multiset-base --bge-mod
 ```
 
 这里的 `data/full/` 是师弟实际准备并冻结的全量人口，不在 B1 私有包中。程序按实际问题数运行四轮，不把 512 / 128 写死；存储与内存需求也随人口增长，不能将 B1 的空间估计直接当作全量估计。
+
+## 允许仅 DPR 的方案
+
+入选不再要求同时兼容 BGE。DPR 专用方案可以根据自己的 DPR 成绩入选；双模型适用性是运行范围字段，不是成绩门槛。最多仍选八个不同方案，同信息经典对照全部保留。跨模型融合另标为同时需要两个模型，不冒充 DPR 单模型增强。
+
+入口支持 `--dpr-only-ideas` 和 `--bge-only-ideas`。这些参数控制实际调度，未指定的其余注册方案在提供的两个模型上运行。也可用 `--ideas` 显式指定共同运行的方案；共同列表与专用列表必须互不重叠，总数不得超过八。专用列表缺少对应模型时立即报错。
+
+例如，下列命令**演示把 FIDELITY 只安排在 DPR**，其余七项仍跑双模型；这不是声称 FIDELITY 无法适配 BGE，也不改变它已有的 BGE 成绩：
+
+```bash
+python scripts/run_top8.py --dpr-model models/dpr-reader-multiset-base --bge-model models/bge-reranker-v2-m3 --dpr-only-ideas FIDELITY --train data/full/train.jsonl --eval-inputs data/full/confirmation.inputs.jsonl --eval-labels data/full/confirmation.labels.json --output outputs/top8-mixed-scope
+```
+
+追加 `--plan-only` 可先打印精确模型/方案安排及学习单元数；不加载模型、不启动训练、不创建输出目录。这个示例三个种子共333个学习单元，默认全双模型仍为348个。
+
+结果分别列出 `dual`、`dpr_only`、`bge_only` 排名。DPR 专用方案仅相对 DPR native 统计，BGE 记 `NOT_SCHEDULED`，不计零分、不除以二；原定双模型却失败或缺少种子的方案仍是不完整结果，不能自动降格成 DPR 专用来隐藏失败。
+
+当前八项都有 BGE 实现，现有默认名单保持。DPR 专用候选重新参加选拔，不因为缺 BGE 被排除；未实现移植的旧候选不得仅添加名称就当作可运行，须先接入其确切机制和对照。当前复核的 DPR 跨度方案尚未按原排序超过入选线，见 [范围修订记录](../configs/experiments/idea_search_20261103/top8-scope-policy.v002.json)。

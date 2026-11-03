@@ -211,7 +211,7 @@ def run_matrix(cache_paths,output,seeds,ideas,epochs=4,canary=False,checkpoint=l
 
 
 def evaluate(output,labels_path):
-    from statistics import mean
+    from applications.rag.top8_matrix_plan_v001 import rank_metrics
     output=Path(output);seal=json.loads((output/'joint-prediction-seal.json').read_bytes())
     need(seal['all_predictions_before_evaluation_labels'] is True,'joint seal precedes labels')
     # First verify every sealed file, then and only then open the sparse targets.
@@ -228,23 +228,10 @@ def evaluate(output,labels_path):
             selected=[known.get(r['candidate_ids'][i]) for i in r['ranking'][:5]]
             useful+=sum(y in (1,2) for y in selected);direct+=sum(y==2 for y in selected);unknown+=sum(y is None for y in selected);directq+=int(2 in selected)
         metrics[key]=dict(useful_lower=useful,useful_upper=useful+unknown,direct_lower=direct,direct_upper=direct+unknown,direct_questions_lower=directq,unknown=unknown,questions=len(rows),denominator=5*len(rows))
-    ranking=[]
-    for idea in seal['ideas']:
-        deltas=[];by_model={};complete=True
-        for kind in ('dpr','bge'):
-            base=metrics.get('predictions-'+kind+'-NATIVE.json')
-            cells=[(k,v) for k,v in metrics.items() if k.startswith(kind+'-'+idea+'-QUANTUM-s')]
-            if not base or len(cells)!=len(seal['seeds']):complete=False;continue
-            lower=mean(v['useful_lower']-base['useful_upper'] for k,v in cells)
-            upper=mean(v['useful_upper']-base['useful_lower'] for k,v in cells)
-            by_model[kind]=dict(mean_native_delta_lower=lower,mean_native_delta_upper=upper,seeds=len(cells))
-            deltas.append((lower,upper))
-        ranking.append(dict(idea=idea,by_model=by_model,rankable=complete,
-            equal_weight_native_delta_lower=mean(v[0] for v in deltas) if complete else None,
-            equal_weight_native_delta_upper=mean(v[1] for v in deltas) if complete else None))
-    ranking.sort(key=lambda r:(not r['rankable'],-r['equal_weight_native_delta_lower'] if r['rankable'] else 0,r['idea']))
-    result=dict(schema='top8.evaluation.v1',joint_seal_sha256=digest(output/'joint-prediction-seal.json'),labels_sha256=digest(labels_path),metrics=metrics,ranking=ranking,
-        ranking_rule='mean of DPR and BGE seed-mean useful improvements over each own native; lower bounds; incomplete cells unranked',
+    ranking,groups=rank_metrics(seal,metrics)
+    result=dict(schema='top8.evaluation.v2',joint_seal_sha256=digest(output/'joint-prediction-seal.json'),labels_sha256=digest(labels_path),metrics=metrics,ranking=ranking,ranking_groups=groups,
+        backbone_ideas=seal.get('backbone_ideas'),not_scheduled=seal.get('not_scheduled',[]),
+        ranking_rule='Rank dual, DPR-only and BGE-only scopes separately against their own native; absent requested cells unranked, unscheduled models N/A; no cross-scope average',
         classical_controls_separate=True,quantum_attribution='not_established',exposed_population=True)
     json_file(output,'evaluation.json',result);return result
 

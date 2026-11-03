@@ -67,7 +67,8 @@ def recovery_probe(cache, output, checkpoint=lambda:None):
     return result
 
 
-def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=lambda:None):
+def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=lambda:None,
+                    backbone_ideas=None):
     import torch
     from applications.rag.top8_portable_v001 import load_cache, train_cell
     from applications.rag.top8_methods_v001 import ARMS, mixed_banks
@@ -78,6 +79,8 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
         caches=[dict(path=str(Path(p).resolve()), sha256=digest(p)) for p in caches],
         seeds=seeds, ideas=ideas, epochs=1 if canary else 4, canary=canary,
         question_batch=8, lr=.001, weight_decay=0, gradient_clip=1.)
+    if backbone_ideas is not None:
+        binding['backbone_ideas'] = backbone_ideas
     contract = output/'run-binding.json'
     if contract.exists():
         need(json.loads(contract.read_bytes()) == binding, 'immutable matrix resume contract')
@@ -93,6 +96,8 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
     for path in caches:
         manifest, features = load_cache(path)
         root = Path(path).parent; kind = manifest['backbone']
+        scheduled = ideas if backbone_ideas is None else backbone_ideas.get(kind, [])
+        need(scheduled and set(scheduled) <= set(ideas), 'explicit nonempty backbone schedule')
         training = [r for r in manifest['rows'] if r['role']=='training']
         development = [r for r in manifest['rows'] if r['role']=='development']
         need(training and development, 'both complete roles')
@@ -100,7 +105,7 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
             selected = training[:2] + development[:2]
             manifest = dict(manifest, rows=selected)
             features = {r['id']:features[r['id']] for r in selected}
-        elif 'MIXED_DEPTH' in ideas:
+        elif 'MIXED_DEPTH' in scheduled:
             # Deterministic training-only refit; no development targets are present.
             # Bank files from interrupted generations remain intact.
             bank = mixed_banks(features, manifest['rows'], checkpoint)
@@ -117,7 +122,7 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
                               sha256=digest(output/native_name)))
         else:
             files.append(json_file(output,native_name,native))
-        order = [x for x in ideas if x!='FIDELITY'] + (['FIDELITY'] if 'FIDELITY' in ideas else [])
+        order = [x for x in scheduled if x!='FIDELITY'] + (['FIDELITY'] if 'FIDELITY' in scheduled else [])
         for idea in order:
             if canary and idea=='MIXED_DEPTH':
                 failures.append(dict(backbone=kind,idea=idea,status='DEFERRED_BANK_FIT'))
@@ -158,6 +163,11 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
         requested_backbones=len(caches),results=results,failures=failures,files=files,
         all_predictions_before_evaluation_labels=True,run_binding_sha256=digest(contract),
         recovery='same immutable source/input/config; optimizer/RNG/order restored; explicit failed cells not retried')
+    if backbone_ideas is not None:
+        seal['backbone_ideas'] = backbone_ideas
+        seal['not_scheduled'] = [dict(backbone=kind, idea=idea, status='NOT_SCHEDULED')
+            for kind in ('dpr', 'bge') for idea in ideas
+            if idea not in backbone_ideas.get(kind, [])]
     json_file(output,seal_path.name,seal)
     return seal
 
@@ -170,8 +180,30 @@ def main(argv=None):
     parser.add_argument('--output',type=Path,required=True);parser.add_argument('--resume',action='store_true')
     parser.add_argument('--seeds',type=int,nargs='+',default=[20261102,20261103,20261104])
     parser.add_argument('--ideas',nargs='+');parser.add_argument('--canary',action='store_true')
+    parser.add_argument('--dpr-only-ideas',nargs='+',default=[],
+                        help='Run these registered ideas only on DPR; omitted BGE is N/A, not zero.')
+    parser.add_argument('--bge-only-ideas',nargs='+',default=[])
+    parser.add_argument('--plan-only',action='store_true',
+                        help='Print the exact backbone/idea/arm schedule without loading models or writing output.')
     parser.add_argument('--extract-only',action='store_true')
     args=parser.parse_args(argv)
+    from applications.rag.top8_matrix_plan_v001 import matrix_plan
+    # Read the static registry without importing its scientific dependencies.
+    import ast
+    module = ast.parse(Path(__file__).with_name('top8_methods_v001.py').read_text(encoding='utf-8'))
+    registry = {node.targets[0].id: ast.literal_eval(node.value) for node in module.body
+                if isinstance(node, ast.Assign) and isinstance(node.targets[0], ast.Name)
+                and node.targets[0].id in ('IDEAS', 'ARMS')}
+    available = [kind for kind, model in [('dpr',args.dpr_model),('bge',args.bge_model)] if model]
+    available += [json.loads(path.read_bytes())['backbone'] for path in args.cache]
+    plan = matrix_plan(available,registry['IDEAS'],args.ideas,args.dpr_only_ideas,args.bge_only_ideas)
+    plan['seeds'] = args.seeds
+    plan['learned_cells'] = sum(len(registry['ARMS'][idea]) * len(args.seeds)
+        for values in plan['backbone_ideas'].values() for idea in values)
+    need(args.seeds and len(set(args.seeds))==len(args.seeds),'unique predeclared seeds')
+    if args.plan_only:
+        print(json.dumps(plan,ensure_ascii=False,indent=2))
+        return 0
     os.environ.update(HF_HUB_OFFLINE='1',TRANSFORMERS_OFFLINE='1',CUBLAS_WORKSPACE_CONFIG=':4096:8')
     import torch,transformers
     need(torch.cuda.is_available() and transformers.__version__=='4.44.2','CUDA / Transformers4.44.2')
@@ -180,7 +212,7 @@ def main(argv=None):
     from applications.rag.top8_backbone_v001 import extract
     from applications.rag.top8_methods_v001 import IDEAS
     from applications.rag.top8_portable_v001 import evaluate
-    ideas=args.ideas or list(IDEAS)
+    ideas=plan['ideas']
     need(ideas and len(set(ideas))==len(ideas) and set(ideas)<=set(IDEAS),'selected unique ideas')
     need(args.seeds and len(set(args.seeds))==len(args.seeds),'unique predeclared seeds')
     if args.resume:need(args.output.is_dir(),'existing output required for explicit resume')
@@ -204,7 +236,8 @@ def main(argv=None):
     need(caches and len({json.loads(Path(p).read_bytes())['backbone'] for p in caches})==len(caches),
          'one cache for each requested backbone')
     if args.extract_only:return 0
-    seal=run_recoverable(caches,args.output/'matrix',args.seeds,ideas,canary=args.canary)
+    seal=run_recoverable(caches,args.output/'matrix',args.seeds,ideas,canary=args.canary,
+                         backbone_ideas=plan['backbone_ideas'])
     if args.eval_labels:
         evaluation=args.output/'matrix/evaluation.json'
         if evaluation.exists():

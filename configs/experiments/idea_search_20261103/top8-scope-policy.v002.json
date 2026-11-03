@@ -1,0 +1,89 @@
+{
+  "schema": "top8.scope-policy.v2",
+  "created_utc": "2026-11-03T12:18:56.219297+00:00",
+  "authorization": "Human: DPR-only methods with strong DPR utility may enter the eight; run only DPR in one-command script.",
+  "maximum_selected_ideas": 8,
+  "bge_compatibility_required": false,
+  "supported_cli": [
+    "--ideas",
+    "--dpr-only-ideas",
+    "--bge-only-ideas",
+    "--plan-only"
+  ],
+  "ranking_groups": [
+    "dual",
+    "dpr_only",
+    "bge_only"
+  ],
+  "absent_unscheduled_model": "NOT_SCHEDULED / N/A, never zero or divided-by-two",
+  "missing_requested_result": "Incomplete and unranked in its original declared scope; never hidden",
+  "selected_registry_changed": false,
+  "selection": "top8-dual-selection.v002.json",
+  "bounded_recheck": [
+    {
+      "candidate": "Q-SPAN-MIX-v001",
+      "evidence": "configs/experiments/idea_search_20261101/spanmix-final-disposition.v001.json",
+      "sha256": "affb3bbe4c6714006a62a042ba32ed55b9ff44f6628cf381bfecd3257aa7ddba",
+      "useful_lower": [
+        362,
+        365,
+        364
+      ],
+      "useful_upper": [
+        362,
+        365,
+        364
+      ],
+      "decision": "DPR start/end span features; eligible under new scope, mean useful below cutoff"
+    },
+    {
+      "candidate": "Q-COHERENT-SPAN-v001",
+      "evidence": "configs/experiments/idea_search_20261101/qcoherent-final-disposition.v001.json",
+      "sha256": "0472156386304773eeec83a1ec80435fc6c5a861e05806e582d2893da4006ea9",
+      "useful_lower": [
+        370,
+        372,
+        373
+      ],
+      "useful_upper": [
+        371,
+        372,
+        375
+      ],
+      "decision": "DPR native span feature dependency; eligible under new scope, mean useful lower bound below cutoff"
+    },
+    {
+      "candidate": "Q-CROSS-SCORE-v001",
+      "evidence": "configs/experiments/idea_search_20261101/qfusion-final-disposition.v001.json",
+      "sha256": "a68db1ecc6bcabcc1f343eebd30737bbf4ec6a5945b90f7f9348dcc640dbab49",
+      "useful_lower": [
+        376,
+        377,
+        376
+      ],
+      "useful_upper": [
+        382,
+        383,
+        381
+      ],
+      "decision": "Requires two scorer outputs; higher useful is retained, but not a DPR-only adapter"
+    }
+  ],
+  "tests": {
+    "environment": "Existing conda QT / Python3.11.10; stdlib only; no installations",
+    "unit_tests_passed": 9,
+    "plan_only_cells": {
+      "default_dual": 348,
+      "fidelity_dpr_only": 333
+    },
+    "new_scientific_experiments": 0,
+    "new_training": 0,
+    "new_downloads": 0,
+    "new_labels": 0
+  },
+  "limitations": [
+    "Current eight all have dual adapters; new legacy DPR-specific adapters still require actual integration.",
+    "No new GPU numerical certification; old scores unchanged; no quantum attribution established.",
+    "Earlier exhaustive 33-candidate ledger was incomplete and is not retroactively certified."
+  ]
+}
