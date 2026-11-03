@@ -1,0 +1,252 @@
+{
+  "state": "complete",
+  "returncode": 0,
+  "quiescent": true,
+  "task": "d48d34f24ed9426d9261a1ace0e3b74c",
+  "attempt": "250f84a8d0de4777b34918abbf93d0d7",
+  "source_revision": "67f64b48324fcf18a9e50255983c27bc61b5a2e6",
+  "completion_sha256": "42be07b4d2740a658f7b4a1e7c4b9934dc86a391b864a147328ea921a9955214",
+  "verified_unique_files": 6,
+  "verified_bytes": 2553239,
+  "scientific_seal": {
+    "relative_path": "scientific-completion-seal.json",
+    "sha256": "cd54c40bb422cb2ac2c060a862d5f133b36bf2d9a99fceac4722c98a9a9d384c",
+    "size": 838
+  },
+  "joint_seal_sha256": "7c9a8d8c9066f314a37b38077d712baa94284c64d0485e1fe6e6cb518ee29c99",
+  "numerical_summary": {
+    "development_labels_decoded": 0,
+    "prior_joint_sha256": "ca2d67f24e9fbe49176655147889906a170394dc300d4943cb3b37b536ccfc00",
+    "source_score_replays": 384,
+    "summaries": {
+      "20261102": {
+        "fd": {
+          "archived_final": {
+            "analytic": -0.005663263667687947,
+            "coordinate": 222,
+            "informative": true,
+            "objective": 0.1136560777199139,
+            "ordered_pairs_by_question": [
+              0,
+              51
+            ],
+            "question_denominator": 2,
+            "restored": true,
+            "tests": [
+              {
+                "absolute_error": 1.451894836995704e-10,
+                "minus": 0.11366174162358109,
+                "numeric": -0.005663263522498463,
+                "plus": 0.11365041509653609,
+                "step": 0.001
+              },
+              {
+                "absolute_error": 1.3012806110435093e-11,
+                "minus": 0.11365777675662335,
+                "numeric": -0.0056632636546751405,
+                "plus": 0.11365437879843054,
+                "step": 0.0003
+              }
+            ]
+          },
+          "initial": {
+            "analytic": -0.006637129137885119,
+            "coordinate": 217,
+            "informative": true,
+            "objective": 0.21791892748499617,
+            "ordered_pairs_by_question": [
+              0,
+              51
+            ],
+            "question_denominator": 2,
+            "restored": true,
+            "tests": [
+              {
+                "absolute_error": 2.1185870505840976e-10,
+                "minus": 0.21792556454982578,
+                "numeric": -0.006637128926026414,
+                "plus": 0.21791229029197373,
+                "step": 0.001
+              },
+              {
+                "absolute_error": 1.8943575874619256e-11,
+                "minus": 0.21792091861796323,
+                "numeric": -0.0066371291189415435,
+                "plus": 0.21791693634049186,
+                "step": 0.0003
+              }
+            ]
+          }
+        },
+        "source_score_replays": 128,
+        "structure": {
+          "dense_oracle_error": 5.551115123125783e-16,
+          "initial_identity": true,
+          "initial_operator_tangent_rank_per_head": 12,
+          "initial_rank_upperbound_all_heads": 144,
+          "local_not_unentangled_control": true,
+          "nominal_angles": 288,
+          "orthogonality_error": 1.7763568394002505e-15,
+          "task_jacobian_rank_not_certified": true
+        }
+      },
+      "20261103": {
+        "fd": {
+          "archived_final": {
+            "analytic": -0.006196312858308467,
+            "coordinate": 222,
+            "informative": true,
+            "objective": 0.1132662839057524,
+            "ordered_pairs_by_question": [
+              0,
+              51
+            ],
+            "question_denominator": 2,
+            "restored": true,
+            "tests": [
+              {
+                "absolute_error": 1.6429197412237695e-10,
+                "minus": 0.11327248087823245,
+                "numeric": -0.0061963126940164925,
+                "plus": 0.11326008825284442,
+                "step": 0.001
+              },
+              {
+                "absolute_error": 1.483976396626785e-11,
+                "minus": 0.11326814285898618,
+                "numeric": -0.006196312843468703,
+                "plus": 0.1132644250712801,
+                "step": 0.0003
+              }
+            ]
+          },
+          "initial": {
+            "analytic": -0.006637129137885119,
+            "coordinate": 217,
+            "informative": true,
+            "objective": 0.21791892748499617,
+            "ordered_pairs_by_question": [
+              0,
+              51
+            ],
+            "question_denominator": 2,
+            "restored": true,
+            "tests": [
+              {
+                "absolute_error": 2.1185870505840976e-10,
+                "minus": 0.21792556454982578,
+                "numeric": -0.006637128926026414,
+                "plus": 0.21791229029197373,
+                "step": 0.001
+              },
+              {
+                "absolute_error": 1.8943575874619256e-11,
+                "minus": 0.21792091861796323,
+                "numeric": -0.0066371291189415435,
+                "plus": 0.21791693634049186,
+                "step": 0.0003
+              }
+            ]
+          }
+        },
+        "source_score_replays": 128,
+        "structure": {
+          "dense_oracle_error": 5.551115123125783e-16,
+          "initial_identity": true,
+          "initial_operator_tangent_rank_per_head": 12,
+          "initial_rank_upperbound_all_heads": 144,
+          "local_not_unentangled_control": true,
+          "nominal_angles": 288,
+          "orthogonality_error": 1.7763568394002505e-15,
+          "task_jacobian_rank_not_certified": true
+        }
+      },
+      "20261104": {
+        "fd": {
+          "archived_final": {
+            "analytic": -0.006204442266695477,
+            "coordinate": 216,
+            "informative": true,
+            "objective": 0.11520399512703255,
+            "ordered_pairs_by_question": [
+              0,
+              51
+            ],
+            "question_denominator": 2,
+            "restored": true,
+            "tests": [
+              {
+                "absolute_error": 2.2218760251796477e-10,
+                "minus": 0.11521019989688486,
+                "numeric": -0.006204442044507874,
+                "plus": 0.11519779101279584,
+                "step": 0.001
+              },
+              {
+                "absolute_error": 1.9988233290746393e-11,
+                "minus": 0.1152058564892093,
+                "numeric": -0.006204442246707243,
+                "plus": 0.11520213382386127,
+                "step": 0.0003
+              }
+            ]
+          },
+          "initial": {
+            "analytic": -0.006637129137885119,
+            "coordinate": 217,
+            "informative": true,
+            "objective": 0.21791892748499617,
+            "ordered_pairs_by_question": [
+              0,
+              51
+            ],
+            "question_denominator": 2,
+            "restored": true,
+            "tests": [
+              {
+                "absolute_error": 2.1185870505840976e-10,
+                "minus": 0.21792556454982578,
+                "numeric": -0.006637128926026414,
+                "plus": 0.21791229029197373,
+                "step": 0.001
+              },
+              {
+                "absolute_error": 1.8943575874619256e-11,
+                "minus": 0.21792091861796323,
+                "numeric": -0.0066371291189415435,
+                "plus": 0.21791693634049186,
+                "step": 0.0003
+              }
+            ]
+          }
+        },
+        "source_score_replays": 128,
+        "structure": {
+          "dense_oracle_error": 5.551115123125783e-16,
+          "initial_identity": true,
+          "initial_operator_tangent_rank_per_head": 12,
+          "initial_rank_upperbound_all_heads": 144,
+          "local_not_unentangled_control": true,
+          "nominal_angles": 288,
+          "orthogonality_error": 1.7763568394002505e-15,
+          "task_jacobian_rank_not_certified": true
+        }
+      }
+    },
+    "training_steps": 0
+  },
+  "child_wait4": {
+    "cpu_seconds": 123.989097,
+    "exit_code": 0,
+    "peak_rss_bytes": 1648480256,
+    "wait_status": 0
+  },
+  "observed_utc": "2026-11-03T01:20:40.340964+00:00",
+  "schema": "qvalue_l2_closeout.terminal_result.v1",
+  "disposition": "PRESCRIBED_COORDINATE_FD_AND_ARCHIVED_REPLAY_PASSED",
+  "training_steps": 0,
+  "new_labels": 0,
+  "new_public_http": 0,
+  "old_degenerate_certificate": "NOT_PASSED unchanged",
+  "claim": "L2 ordinary pipeline versus frozen nativeDPR unchanged; no quantum attribution or portable readiness from this alone"
+}

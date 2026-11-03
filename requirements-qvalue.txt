@@ -1,0 +1,6 @@
+# Python3.11; install a CUDA-compatible torch2.5.1 wheel for your own GPU.
+torch==2.5.1
+transformers==4.44.2
+tokenizers==0.19.1
+safetensors==0.7.0
+numpy==1.26.4

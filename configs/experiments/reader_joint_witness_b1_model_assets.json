@@ -1,0 +1,202 @@
+{
+  "schema_version": "rag.joint_witness_B1_model_assets.v1",
+  "models": [
+    {
+      "id": "dpr_reader_single_nq",
+      "model_id": "facebook/dpr-reader-single-nq-base",
+      "revision": "38f47a4986084c53447ba92ab0a83076b58d86a8",
+      "backend": "dpr_reader",
+      "max_length": 350,
+      "mandatory": true,
+      "tokenizer_files": [
+        {
+          "name": "config.json",
+          "bytes": 484,
+          "sha256": "b70134672b020275e816b41fbe3cecf597019c7639ae4518fa5c493d15eb0c74"
+        },
+        {
+          "name": "tokenizer.json",
+          "bytes": 466062,
+          "sha256": "ce64fce797c24f68df90b40a3f74f579b336a493db14bd583fd520ea0d8c9a98"
+        },
+        {
+          "name": "tokenizer_config.json",
+          "bytes": 28,
+          "sha256": "53b6f42b8b8daddbdc6d3532c324187a92b46c1602bd6e8d4ad5a413b4fc90e1"
+        },
+        {
+          "name": "vocab.txt",
+          "bytes": 231508,
+          "sha256": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+        }
+      ],
+      "weight": {
+        "name": "pytorch_model.bin",
+        "bytes": 437998572,
+        "sha256": "850c5c755efcdb39d703236bdce317635ffc9a8b7cb1d451bf421115b2015e5b"
+      },
+      "storage": "existing_reader_directory"
+    },
+    {
+      "id": "BAAI__bge-reranker-large",
+      "model_id": "BAAI/bge-reranker-large",
+      "revision": "55611d7bca2a7133960a6d3b71e083071bbfc312",
+      "backend": "hf_sequence_classifier",
+      "max_length": 512,
+      "mandatory": true,
+      "tokenizer_files": [
+        {
+          "name": "config.json",
+          "bytes": 801,
+          "sha256": "25dda0319f57e9de243c32eb7ecefa0768271afac6b5d8a94ba7f779198ab102",
+          "git_blob_oid": "bb100d3a6586ee71aed778b7566ccf68dd498947"
+        },
+        {
+          "name": "sentencepiece.bpe.model",
+          "bytes": 5069051,
+          "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865",
+          "git_blob_oid": "7a3f40a75f870bc1f21700cd414dc2acc431583c"
+        },
+        {
+          "name": "special_tokens_map.json",
+          "bytes": 279,
+          "sha256": "d5469a60db23249c7f8945013d78df30b44b6bf686c6bb4740f4223f77b1b535",
+          "git_blob_oid": "68171d1ff68b731a33d119708476692c094a466b"
+        },
+        {
+          "name": "tokenizer.json",
+          "bytes": 17098107,
+          "sha256": "9eb652ac4e40cc093272bbbe0f55d521cf67570060227109b5cdc20945a4489e",
+          "git_blob_oid": "a128fc2756518dd55d7cad49e3b6663d01a07f95"
+        },
+        {
+          "name": "tokenizer_config.json",
+          "bytes": 443,
+          "sha256": "a1d6bc8734a6f635dc158508bef000f8e2e5a759c7d92f984b2c86e5ff53425b",
+          "git_blob_oid": "059214673d9d6d2ee319411e2ffec8c024b816d5"
+        }
+      ],
+      "weight": {
+        "name": "model.safetensors",
+        "bytes": 2239618772,
+        "sha256": "c5ae4e262c60ed2fb507ec587358285377ec36ee0a2e6da029f0534272b06d36"
+      },
+      "storage": "new_model_root/id",
+      "metadata_provenance": {
+        "method": "GET",
+        "url": "https://huggingface.co/api/models/BAAI/bge-reranker-large/revision/55611d7bca2a7133960a6d3b71e083071bbfc312?blobs=true",
+        "response_status": 200,
+        "response_classification": "pinned_model_metadata",
+        "access_mode": "public_http",
+        "sha256": "e947f176b66f946fcce49fbd30658404f3e11ed01f4b53153d4ddc93608d2a9d",
+        "checked_at": "2026-10-21T09:08:03.730572+00:00"
+      }
+    },
+    {
+      "id": "BAAI__bge-reranker-v2-m3",
+      "model_id": "BAAI/bge-reranker-v2-m3",
+      "revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e",
+      "backend": "hf_sequence_classifier",
+      "max_length": 512,
+      "mandatory": true,
+      "tokenizer_files": [
+        {
+          "name": "config.json",
+          "bytes": 795,
+          "sha256": "13dcd6c31d9fec9d1d8e158702072f62d7fa7d312a64b9fe057bec9a08cfe41a",
+          "git_blob_oid": "9f62673cb00ec41dcec8947b9ed16f6f2eb23ba2"
+        },
+        {
+          "name": "sentencepiece.bpe.model",
+          "bytes": 5069051,
+          "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865",
+          "git_blob_oid": "7a3f40a75f870bc1f21700cd414dc2acc431583c"
+        },
+        {
+          "name": "special_tokens_map.json",
+          "bytes": 964,
+          "sha256": "8c785abebea9ae3257b61681b4e6fd8365ceafde980c21970d001e834cf10835",
+          "git_blob_oid": "b1879d702821e753ffe4245048eee415d54a9385"
+        },
+        {
+          "name": "tokenizer.json",
+          "bytes": 17098273,
+          "sha256": "69564b696052886ed0ac63fa393e928384e0f8caada38c1f4864a9bfbf379c15",
+          "git_blob_oid": "1c98a28b19c084901b2622d8e8b15e85eed13bff"
+        },
+        {
+          "name": "tokenizer_config.json",
+          "bytes": 1173,
+          "sha256": "7e4c1cc848840aeccdd763458c18dd525eb0f795c992e00ebe9c28554e7db2d4",
+          "git_blob_oid": "328a00a9a560aadcf2a3064f917517359eb3cc26"
+        }
+      ],
+      "weight": {
+        "name": "model.safetensors",
+        "bytes": 2271071852,
+        "sha256": "d9e3e081faff1eefb84019509b2f5558fd74c1a05a2c7db22f74174fcedb5286"
+      },
+      "storage": "new_model_root/id",
+      "metadata_provenance": {
+        "method": "GET",
+        "url": "https://huggingface.co/api/models/BAAI/bge-reranker-v2-m3/revision/953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e?blobs=true",
+        "response_status": 200,
+        "response_classification": "pinned_model_metadata",
+        "access_mode": "public_http",
+        "sha256": "1428cab092c3945ed080460d574db810de2d51583b7384e2288b8e05868c959d",
+        "checked_at": "2026-10-21T09:08:05.093386+00:00"
+      }
+    },
+    {
+      "id": "facebook__dpr-reader-multiset-base",
+      "model_id": "facebook/dpr-reader-multiset-base",
+      "revision": "ab1974d6023bc4dd27cd713c9ac2b6247509244d",
+      "backend": "dpr_reader",
+      "max_length": 350,
+      "mandatory": false,
+      "tokenizer_files": [
+        {
+          "name": "config.json",
+          "bytes": 484,
+          "sha256": "b70134672b020275e816b41fbe3cecf597019c7639ae4518fa5c493d15eb0c74",
+          "git_blob_oid": "95123c930dcc437ff69cdde867b528ec2499513f"
+        },
+        {
+          "name": "tokenizer.json",
+          "bytes": 466062,
+          "sha256": "ce64fce797c24f68df90b40a3f74f579b336a493db14bd583fd520ea0d8c9a98",
+          "git_blob_oid": "949a6f013d67eb8a5b4b5b46026217b888021b88"
+        },
+        {
+          "name": "tokenizer_config.json",
+          "bytes": 28,
+          "sha256": "53b6f42b8b8daddbdc6d3532c324187a92b46c1602bd6e8d4ad5a413b4fc90e1",
+          "git_blob_oid": "a661b1a138dac6dc5590367402d100765010ffd6"
+        },
+        {
+          "name": "vocab.txt",
+          "bytes": 231508,
+          "sha256": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3",
+          "git_blob_oid": "fb140275c155a9c7c5a3b3e0e77a9e839594a938"
+        }
+      ],
+      "weight": {
+        "name": "pytorch_model.bin",
+        "bytes": 438037991,
+        "sha256": "d26b3804486e5afa5a27fb9414589d46ae74ebeae2d8fa76f3eee725343d94d0"
+      },
+      "storage": "new_model_root/id",
+      "metadata_provenance": {
+        "method": "GET",
+        "url": "https://huggingface.co/api/models/facebook/dpr-reader-multiset-base/revision/ab1974d6023bc4dd27cd713c9ac2b6247509244d?blobs=true",
+        "response_status": 200,
+        "response_classification": "pinned_model_metadata",
+        "access_mode": "public_http",
+        "sha256": "4358ffae74412d47dd434d486bbe7fd92d00b97fc5c31d1e20ae32ec797def2f",
+        "checked_at": "2026-10-21T09:08:06.453540+00:00"
+      }
+    }
+  ],
+  "no_custom_code": true,
+  "storage_policy": "verified tokenizer copies plus one pinned weight file per model; existing Reader unchanged"
+}

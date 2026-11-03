@@ -1,0 +1,121 @@
+{
+  "schema_version": "evidence-tiered-idea-validation.evidence-card.v3",
+  "rating_policy": {
+    "id": "advantage-evidence",
+    "version": "1"
+  },
+  "idea_id": "Q-VALUE-GEOMETRY-v001",
+  "title": "Q-VALUE-GEOMETRY-v001 full pipeline versus frozen native DPR, exposed B1 multi-seed screen",
+  "status": "active",
+  "current_tier": "L2_multi_seed_advantage",
+  "claim_ceiling": "multi_seed_advantage",
+  "claim_scope": "Ordinary method-level useful retrieval benefit over frozen DPR multiset on the same exposed128-question B1 development screen. No advantage over adapted HEAD or matched classical replacements is claimed. This grade is not portable-package readiness.",
+  "hypothesis": "The trained full pipeline can improve useful Top5 selection over the unadapted frozen native scoring model.",
+  "result_status": "positive",
+  "theory": {
+    "self_consistent": true,
+    "feasible": true,
+    "assumptions": [
+      "Same frozen source/input/role/train labels and native DPR weights.",
+      "Held out from adapter optimization only; exposed-development limitations retained."
+    ],
+    "implementation_plan": "Exact archived method; original full planned training and all final predictions completed. Close numerical/portability debt without changing method or selecting new settings.",
+    "evidence_refs": [
+      "configs/experiments/idea_search_20261103/qvalue-geometry-design.v001.json",
+      "configs/experiments/idea_search_20261103/qvalue-geometry-terminal-result.v002.json"
+    ]
+  },
+  "evidence": {
+    "data_scope": {
+      "task_family": "TriviaQA B1 Top50-to-Top5 passage scoring",
+      "source_kind": "experimental",
+      "evaluation_population": "128 exposed development questions;640 selected positions; original512 training questions/7339 reviewed training labels",
+      "benchmark_ref": "configs/experiments/idea_search_20261103/qvalue-geometry-terminal-result.v002.json"
+    },
+    "comparison": {
+      "id": "qvalue_vs_frozen_native_B1_useful",
+      "metric": "operational useful selected count out of640",
+      "direction": "higher",
+      "baseline_identity": "facebook/dpr-reader-multiset-base@ab1974d6023bc4dd27cd713c9ac2b6247509244d frozen native FP32",
+      "method_identity": "Q-VALUE-GEOMETRY-v001 archived final256-step full pipeline, source 1e9d1b12e66695a1d4b70471fbf5a809e7cc7bf4",
+      "evaluation_split": "Original B1 development128, disjoint from adapter training512; repeatedly exposed to research decisions",
+      "heldout": true,
+      "primary_predeclared": true,
+      "inference_mode": "label_free",
+      "leakage_audit": "pass",
+      "fairness_audit": "pass",
+      "selection_guard": "pass",
+      "evidence_refs": [
+        "configs/experiments/idea_search_20261103/qvalue-geometry-design.v001.json",
+        "configs/experiments/idea_search_20261103/qvalue-geometry-terminal-result.v002.json"
+      ]
+    },
+    "runs": {
+      "planned_seeds": [
+        20261102,
+        20261103,
+        20261104
+      ],
+      "seeds_predeclared": true,
+      "aggregation": "arithmetic_mean",
+      "results": [
+        {
+          "seed": 20261102,
+          "status": "completed",
+          "method_value": 373,
+          "baseline_value": 368,
+          "evidence_refs": [
+            "configs/experiments/idea_search_20261103/qvalue-geometry-terminal-result.v002.json"
+          ]
+        },
+        {
+          "seed": 20261103,
+          "status": "completed",
+          "method_value": 373,
+          "baseline_value": 368,
+          "evidence_refs": [
+            "configs/experiments/idea_search_20261103/qvalue-geometry-terminal-result.v002.json"
+          ]
+        },
+        {
+          "seed": 20261104,
+          "status": "completed",
+          "method_value": 373,
+          "baseline_value": 368,
+          "evidence_refs": [
+            "configs/experiments/idea_search_20261103/qvalue-geometry-terminal-result.v002.json"
+          ]
+        }
+      ]
+    },
+    "attribution": {
+      "status": "fail",
+      "scope": "quantum_component",
+      "mechanism": "The quantum-containing full pipeline is not shown superior to adapted HEAD and matched classical replacements. This does not erase its named ordinary-method benefit over frozen native DPR.",
+      "evidence_refs": [
+        "configs/experiments/idea_search_20261103/qvalue-geometry-terminal-result.v002.json"
+      ]
+    }
+  },
+  "limitations": [
+    "Scope is the complete adapted pipeline versus frozen native DPR; it does not establish quantum-module contribution.",
+    "All planned runs included. Distinct declared stochastic training orders; Value starts from identical zero angles, not distinct quantum initializations.",
+    "The same 128 development questions were repeatedly exposed during research and excluded from optimization; no fresh-test generalization or significance claim.",
+    "Operational Silver labels and known TriviaQA backbone pretraining exposure; not official gold evidence.",
+    "Original stronger-control screen disposition remains unchanged; this separate comparator-specific assessment follows the human request to establish L2 before L3.",
+    "The useful metric and native reference were present in the original protocol; the comparator-specific L2 card is issued after target clarification, not a retrospective pass of the stricter gate.",
+    "Corrected whole-two-question numerical backward check and portable canary before handoff",
+    "seed20261102: Q useful373/direct169/directQ66; native368/164/64; adapted HEAD useful374/direct169/directQ66.",
+    "seed20261103: Q useful373/direct170/directQ66; native368/164/64; adapted HEAD useful373/direct170/directQ66.",
+    "seed20261104: Q useful373/direct170/directQ66; native368/164/64; adapted HEAD useful373/direct170/directQ66.",
+    "Historical first-question finite-difference certificate was degenerate zero/zero and remains NOT_PASSED; real combined-two-question gradient exists, corrected closeout still required. OFT collision/novelty unresolved. Full sample-trace.v2 and portable canary not passed."
+  ],
+  "provenance": {
+    "code_revision": "1e9d1b12e66695a1d4b70471fbf5a809e7cc7bf4",
+    "records": [
+      "configs/experiments/idea_search_20261103/qvalue-geometry-terminal-result.v002.json",
+      "configs/experiments/idea_search_20261103/comparator-specific-l2-audit.v001.json",
+      "configs/experiments/idea_search_20261103/qvalue-geometry-design.v001.json"
+    ]
+  }
+}

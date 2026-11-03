@@ -1,0 +1,2821 @@
+{
+  "schema": "qvalue.oracle-comparison.v1",
+  "candidate": "Q-VALUE-GEOMETRY-v001",
+  "disposition": "NO_GO_EXACT_SCREEN",
+  "source_revision": "1e9d1b12e66695a1d4b70471fbf5a809e7cc7bf4",
+  "task": "3121be085ce54b0f9f1414ecc304155f",
+  "attempt": "8e0ba3a6b96748a3a33183da8fa9fd41",
+  "observed_utc": "2026-11-02T22:44:47.615180+00:00",
+  "joint_seal_sha256": "ca2d67f24e9fbe49176655147889906a170394dc300d4943cb3b37b536ccfc00",
+  "metrics": {
+    "native": {
+      "useful_bounds": [
+        368,
+        368
+      ],
+      "direct_bounds": [
+        164,
+        164
+      ],
+      "direct_question_bounds": [
+        64,
+        64
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261102_head": {
+      "useful_bounds": [
+        374,
+        374
+      ],
+      "direct_bounds": [
+        169,
+        169
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261102_concat": {
+      "useful_bounds": [
+        375,
+        377
+      ],
+      "direct_bounds": [
+        172,
+        174
+      ],
+      "direct_question_bounds": [
+        66,
+        67
+      ],
+      "unreviewed": 2,
+      "unreviewed_questions": 2
+    },
+    "s20261102_mlp": {
+      "useful_bounds": [
+        375,
+        377
+      ],
+      "direct_bounds": [
+        172,
+        174
+      ],
+      "direct_question_bounds": [
+        66,
+        67
+      ],
+      "unreviewed": 2,
+      "unreviewed_questions": 2
+    },
+    "s20261102_dense": {
+      "useful_bounds": [
+        364,
+        365
+      ],
+      "direct_bounds": [
+        169,
+        170
+      ],
+      "direct_question_bounds": [
+        67,
+        67
+      ],
+      "unreviewed": 1,
+      "unreviewed_questions": 1
+    },
+    "s20261102_lora": {
+      "useful_bounds": [
+        372,
+        372
+      ],
+      "direct_bounds": [
+        170,
+        170
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261102_tangent": {
+      "useful_bounds": [
+        373,
+        373
+      ],
+      "direct_bounds": [
+        169,
+        169
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261102_cayley": {
+      "useful_bounds": [
+        373,
+        373
+      ],
+      "direct_bounds": [
+        169,
+        169
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261102_local": {
+      "useful_bounds": [
+        373,
+        373
+      ],
+      "direct_bounds": [
+        169,
+        169
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261102_quantum": {
+      "useful_bounds": [
+        373,
+        373
+      ],
+      "direct_bounds": [
+        169,
+        169
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261103_head": {
+      "useful_bounds": [
+        373,
+        373
+      ],
+      "direct_bounds": [
+        170,
+        170
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261103_concat": {
+      "useful_bounds": [
+        374,
+        374
+      ],
+      "direct_bounds": [
+        170,
+        170
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261103_mlp": {
+      "useful_bounds": [
+        375,
+        375
+      ],
+      "direct_bounds": [
+        170,
+        170
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261103_dense": {
+      "useful_bounds": [
+        371,
+        372
+      ],
+      "direct_bounds": [
+        171,
+        172
+      ],
+      "direct_question_bounds": [
+        67,
+        67
+      ],
+      "unreviewed": 1,
+      "unreviewed_questions": 1
+    },
+    "s20261103_lora": {
+      "useful_bounds": [
+        373,
+        373
+      ],
+      "direct_bounds": [
+        170,
+        170
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261103_tangent": {
+      "useful_bounds": [
+        373,
+        373
+      ],
+      "direct_bounds": [
+        170,
+        170
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261103_cayley": {
+      "useful_bounds": [
+        373,
+        373
+      ],
+      "direct_bounds": [
+        170,
+        170
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261103_local": {
+      "useful_bounds": [
+        373,
+        373
+      ],
+      "direct_bounds": [
+        170,
+        170
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261103_quantum": {
+      "useful_bounds": [
+        373,
+        373
+      ],
+      "direct_bounds": [
+        170,
+        170
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261104_head": {
+      "useful_bounds": [
+        373,
+        373
+      ],
+      "direct_bounds": [
+        170,
+        170
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261104_concat": {
+      "useful_bounds": [
+        373,
+        373
+      ],
+      "direct_bounds": [
+        167,
+        167
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261104_mlp": {
+      "useful_bounds": [
+        373,
+        373
+      ],
+      "direct_bounds": [
+        167,
+        167
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261104_dense": {
+      "useful_bounds": [
+        374,
+        375
+      ],
+      "direct_bounds": [
+        173,
+        174
+      ],
+      "direct_question_bounds": [
+        67,
+        67
+      ],
+      "unreviewed": 1,
+      "unreviewed_questions": 1
+    },
+    "s20261104_lora": {
+      "useful_bounds": [
+        372,
+        372
+      ],
+      "direct_bounds": [
+        170,
+        170
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261104_tangent": {
+      "useful_bounds": [
+        373,
+        373
+      ],
+      "direct_bounds": [
+        170,
+        170
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261104_cayley": {
+      "useful_bounds": [
+        373,
+        373
+      ],
+      "direct_bounds": [
+        170,
+        170
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261104_local": {
+      "useful_bounds": [
+        372,
+        372
+      ],
+      "direct_bounds": [
+        170,
+        170
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    },
+    "s20261104_quantum": {
+      "useful_bounds": [
+        373,
+        373
+      ],
+      "direct_bounds": [
+        170,
+        170
+      ],
+      "direct_question_bounds": [
+        66,
+        66
+      ],
+      "unreviewed": 0,
+      "unreviewed_questions": 0
+    }
+  },
+  "paired_arm_minus_head": {
+    "20261102": {
+      "concat": {
+        "useful": [
+          1,
+          3
+        ],
+        "direct": [
+          3,
+          5
+        ],
+        "direct_questions": [
+          0,
+          1
+        ]
+      },
+      "mlp": {
+        "useful": [
+          1,
+          3
+        ],
+        "direct": [
+          3,
+          5
+        ],
+        "direct_questions": [
+          0,
+          1
+        ]
+      },
+      "dense": {
+        "useful": [
+          -10,
+          -9
+        ],
+        "direct": [
+          0,
+          1
+        ],
+        "direct_questions": [
+          1,
+          1
+        ]
+      },
+      "lora": {
+        "useful": [
+          -2,
+          -2
+        ],
+        "direct": [
+          1,
+          1
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "tangent": {
+        "useful": [
+          -1,
+          -1
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "cayley": {
+        "useful": [
+          -1,
+          -1
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "local": {
+        "useful": [
+          -1,
+          -1
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "quantum": {
+        "useful": [
+          -1,
+          -1
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      }
+    },
+    "20261103": {
+      "concat": {
+        "useful": [
+          1,
+          1
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "mlp": {
+        "useful": [
+          2,
+          2
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "dense": {
+        "useful": [
+          -2,
+          -1
+        ],
+        "direct": [
+          1,
+          2
+        ],
+        "direct_questions": [
+          1,
+          1
+        ]
+      },
+      "lora": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "tangent": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "cayley": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "local": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "quantum": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      }
+    },
+    "20261104": {
+      "concat": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          -3,
+          -3
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "mlp": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          -3,
+          -3
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "dense": {
+        "useful": [
+          1,
+          2
+        ],
+        "direct": [
+          3,
+          4
+        ],
+        "direct_questions": [
+          1,
+          1
+        ]
+      },
+      "lora": {
+        "useful": [
+          -1,
+          -1
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "tangent": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "cayley": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "local": {
+        "useful": [
+          -1,
+          -1
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "quantum": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      }
+    }
+  },
+  "aggregate_paired_bounds": {
+    "concat": {
+      "useful": [
+        2,
+        4
+      ],
+      "direct": [
+        0,
+        2
+      ],
+      "direct_questions": [
+        0,
+        1
+      ]
+    },
+    "mlp": {
+      "useful": [
+        3,
+        5
+      ],
+      "direct": [
+        0,
+        2
+      ],
+      "direct_questions": [
+        0,
+        1
+      ]
+    },
+    "dense": {
+      "useful": [
+        -11,
+        -8
+      ],
+      "direct": [
+        4,
+        7
+      ],
+      "direct_questions": [
+        3,
+        3
+      ]
+    },
+    "lora": {
+      "useful": [
+        -3,
+        -3
+      ],
+      "direct": [
+        1,
+        1
+      ],
+      "direct_questions": [
+        0,
+        0
+      ]
+    },
+    "tangent": {
+      "useful": [
+        -1,
+        -1
+      ],
+      "direct": [
+        0,
+        0
+      ],
+      "direct_questions": [
+        0,
+        0
+      ]
+    },
+    "cayley": {
+      "useful": [
+        -1,
+        -1
+      ],
+      "direct": [
+        0,
+        0
+      ],
+      "direct_questions": [
+        0,
+        0
+      ]
+    },
+    "local": {
+      "useful": [
+        -2,
+        -2
+      ],
+      "direct": [
+        0,
+        0
+      ],
+      "direct_questions": [
+        0,
+        0
+      ]
+    },
+    "quantum": {
+      "useful": [
+        -1,
+        -1
+      ],
+      "direct": [
+        0,
+        0
+      ],
+      "direct_questions": [
+        0,
+        0
+      ]
+    }
+  },
+  "quantum_minus_each_control": {
+    "head": {
+      "useful": [
+        -1,
+        -1
+      ],
+      "direct": [
+        0,
+        0
+      ],
+      "direct_questions": [
+        0,
+        0
+      ]
+    },
+    "concat": {
+      "useful": [
+        -5,
+        -3
+      ],
+      "direct": [
+        -2,
+        0
+      ],
+      "direct_questions": [
+        -1,
+        0
+      ]
+    },
+    "mlp": {
+      "useful": [
+        -6,
+        -4
+      ],
+      "direct": [
+        -2,
+        0
+      ],
+      "direct_questions": [
+        -1,
+        0
+      ]
+    },
+    "dense": {
+      "useful": [
+        7,
+        10
+      ],
+      "direct": [
+        -7,
+        -4
+      ],
+      "direct_questions": [
+        -3,
+        -3
+      ]
+    },
+    "lora": {
+      "useful": [
+        2,
+        2
+      ],
+      "direct": [
+        -1,
+        -1
+      ],
+      "direct_questions": [
+        0,
+        0
+      ]
+    },
+    "tangent": {
+      "useful": [
+        0,
+        0
+      ],
+      "direct": [
+        0,
+        0
+      ],
+      "direct_questions": [
+        0,
+        0
+      ]
+    },
+    "cayley": {
+      "useful": [
+        0,
+        0
+      ],
+      "direct": [
+        0,
+        0
+      ],
+      "direct_questions": [
+        0,
+        0
+      ]
+    },
+    "local": {
+      "useful": [
+        1,
+        1
+      ],
+      "direct": [
+        0,
+        0
+      ],
+      "direct_questions": [
+        0,
+        0
+      ]
+    }
+  },
+  "quantum_per_seed_minus_controls": {
+    "20261102": {
+      "head": {
+        "useful": [
+          -1,
+          -1
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "concat": {
+        "useful": [
+          -4,
+          -2
+        ],
+        "direct": [
+          -5,
+          -3
+        ],
+        "direct_questions": [
+          -1,
+          0
+        ]
+      },
+      "mlp": {
+        "useful": [
+          -4,
+          -2
+        ],
+        "direct": [
+          -5,
+          -3
+        ],
+        "direct_questions": [
+          -1,
+          0
+        ]
+      },
+      "dense": {
+        "useful": [
+          8,
+          9
+        ],
+        "direct": [
+          -1,
+          0
+        ],
+        "direct_questions": [
+          -1,
+          -1
+        ]
+      },
+      "lora": {
+        "useful": [
+          1,
+          1
+        ],
+        "direct": [
+          -1,
+          -1
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "tangent": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "cayley": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "local": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      }
+    },
+    "20261103": {
+      "head": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "concat": {
+        "useful": [
+          -1,
+          -1
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "mlp": {
+        "useful": [
+          -2,
+          -2
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "dense": {
+        "useful": [
+          1,
+          2
+        ],
+        "direct": [
+          -2,
+          -1
+        ],
+        "direct_questions": [
+          -1,
+          -1
+        ]
+      },
+      "lora": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "tangent": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "cayley": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "local": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      }
+    },
+    "20261104": {
+      "head": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "concat": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          3,
+          3
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "mlp": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          3,
+          3
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "dense": {
+        "useful": [
+          -2,
+          -1
+        ],
+        "direct": [
+          -4,
+          -3
+        ],
+        "direct_questions": [
+          -1,
+          -1
+        ]
+      },
+      "lora": {
+        "useful": [
+          1,
+          1
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "tangent": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "cayley": {
+        "useful": [
+          0,
+          0
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      },
+      "local": {
+        "useful": [
+          1,
+          1
+        ],
+        "direct": [
+          0,
+          0
+        ],
+        "direct_questions": [
+          0,
+          0
+        ]
+      }
+    }
+  },
+  "unreviewed_union": 3,
+  "all_planned_seeds_included": true,
+  "exposed_development": true,
+  "quantum_compute_claim": false,
+  "qualified_for_handoff": false,
+  "new_data": 0,
+  "new_training_labels": 0,
+  "state": "complete",
+  "returncode": 0,
+  "quiescent": true,
+  "verified_unique_files": 118,
+  "verified_bytes": 526265165,
+  "completion_sha256": "05f4e06499519261476466cd63b2abb8287c3dbe6d9c82105deca03f04835d11",
+  "scientific_seal": {
+    "relative_path": "scientific-completion-seal.json",
+    "sha256": "b62b6886fba9b7aec6e920ee6c89a4dd492b181d3c7f83c5b5a58abd0fbb6d2e",
+    "size": 16698
+  },
+  "scientific_child_wait4": {
+    "cpu_seconds": 391.921037,
+    "exit_code": 0,
+    "peak_rss_bytes": 1980108800,
+    "wait_status": 0
+  },
+  "parent_group_quiescence": "killpg_zero_ESRCH",
+  "planned_trained_arms": 27,
+  "all_arms_steps": 256,
+  "complete128_checkpoint_replay": true,
+  "probes": {
+    "by_seed": {
+      "20261102": {
+        "CAYLEY": {
+          "delayed_gradient": 0.006545200012624264,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.059988439083099365,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "dense_oracle_error": 5.551115123125783e-16,
+            "initial_identity": true,
+            "initial_operator_tangent_rank_per_head": 12,
+            "initial_rank_upperbound_all_heads": 144,
+            "local_not_unentangled_control": true,
+            "nominal_angles": 288,
+            "orthogonality_error": 1.7763568394002505e-15,
+            "task_jacobian_rank_not_certified": true
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "CONCAT": {
+          "delayed_gradient": null,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.07514943182468414,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.earlier_weights"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "scope": "standard native-depth readout"
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.earlier_weights"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "DENSE": {
+          "delayed_gradient": 0.009969428181648254,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.059988439083099365,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "delta"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "initial_identity": true,
+            "nominal_parameters": 49920
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "delta"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "HEAD": {
+          "delayed_gradient": null,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.059988439083099365,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "scope": "standard native-depth readout"
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "LOCAL": {
+          "delayed_gradient": 0.006544469390064478,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.059988439083099365,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "dense_oracle_error": 6.661338147750939e-16,
+            "initial_identity": true,
+            "initial_operator_tangent_rank_per_head": 6,
+            "initial_rank_upperbound_all_heads": 72,
+            "local_not_unentangled_control": true,
+            "nominal_angles": 288,
+            "orthogonality_error": 1.3322676295501878e-15,
+            "task_jacobian_rank_not_certified": true
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "LORA": {
+          "delayed_gradient": 0.00010200365795753896,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.059988439083099365,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "low_a"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "low_b"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "initial_identity": true,
+            "nominal_parameters": 6912
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "low_a"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "low_b"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "MLP": {
+          "delayed_gradient": 4.184304998489097e-05,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.07514943182468414,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.projection"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.offset"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.coefficients"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.earlier_weights"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "scope": "standard native-depth readout"
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.projection"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.offset"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.coefficients"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.earlier_weights"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "QUANTUM": {
+          "delayed_gradient": 0.006546468008309603,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.059988439083099365,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "dense_oracle_error": 5.551115123125783e-16,
+            "initial_identity": true,
+            "initial_operator_tangent_rank_per_head": 12,
+            "initial_rank_upperbound_all_heads": 144,
+            "local_not_unentangled_control": true,
+            "nominal_angles": 288,
+            "orthogonality_error": 1.7763568394002505e-15,
+            "task_jacobian_rank_not_certified": true
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "TANGENT": {
+          "delayed_gradient": 0.006549771409481764,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.059988439083099365,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "dense_oracle_error": 5.551115123125783e-16,
+            "initial_identity": true,
+            "initial_operator_tangent_rank_per_head": 12,
+            "initial_rank_upperbound_all_heads": 144,
+            "local_not_unentangled_control": true,
+            "nominal_angles": 288,
+            "orthogonality_error": 1.7763568394002505e-15,
+            "task_jacobian_rank_not_certified": true
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        }
+      },
+      "20261103": {
+        "CAYLEY": {
+          "delayed_gradient": 0.006545200012624264,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.059988439083099365,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "dense_oracle_error": 5.551115123125783e-16,
+            "initial_identity": true,
+            "initial_operator_tangent_rank_per_head": 12,
+            "initial_rank_upperbound_all_heads": 144,
+            "local_not_unentangled_control": true,
+            "nominal_angles": 288,
+            "orthogonality_error": 1.7763568394002505e-15,
+            "task_jacobian_rank_not_certified": true
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "CONCAT": {
+          "delayed_gradient": null,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.07514943182468414,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.earlier_weights"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "scope": "standard native-depth readout"
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.earlier_weights"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "DENSE": {
+          "delayed_gradient": 0.009969428181648254,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.059988439083099365,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "delta"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "initial_identity": true,
+            "nominal_parameters": 49920
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "delta"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "HEAD": {
+          "delayed_gradient": null,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.059988439083099365,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "scope": "standard native-depth readout"
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "LOCAL": {
+          "delayed_gradient": 0.006544469390064478,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.059988439083099365,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "dense_oracle_error": 6.661338147750939e-16,
+            "initial_identity": true,
+            "initial_operator_tangent_rank_per_head": 6,
+            "initial_rank_upperbound_all_heads": 72,
+            "local_not_unentangled_control": true,
+            "nominal_angles": 288,
+            "orthogonality_error": 1.3322676295501878e-15,
+            "task_jacobian_rank_not_certified": true
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "LORA": {
+          "delayed_gradient": 0.00013224637950770557,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.059988439083099365,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "low_a"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "low_b"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "initial_identity": true,
+            "nominal_parameters": 6912
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "low_a"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "low_b"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "MLP": {
+          "delayed_gradient": 5.397505083237775e-05,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.07514943182468414,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.projection"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.offset"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.coefficients"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.earlier_weights"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "scope": "standard native-depth readout"
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.projection"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.offset"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.coefficients"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.earlier_weights"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "QUANTUM": {
+          "delayed_gradient": 0.006546468008309603,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.059988439083099365,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "dense_oracle_error": 5.551115123125783e-16,
+            "initial_identity": true,
+            "initial_operator_tangent_rank_per_head": 12,
+            "initial_rank_upperbound_all_heads": 144,
+            "local_not_unentangled_control": true,
+            "nominal_angles": 288,
+            "orthogonality_error": 1.7763568394002505e-15,
+            "task_jacobian_rank_not_certified": true
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "TANGENT": {
+          "delayed_gradient": 0.006549771409481764,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.059988439083099365,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "dense_oracle_error": 5.551115123125783e-16,
+            "initial_identity": true,
+            "initial_operator_tangent_rank_per_head": 12,
+            "initial_rank_upperbound_all_heads": 144,
+            "local_not_unentangled_control": true,
+            "nominal_angles": 288,
+            "orthogonality_error": 1.7763568394002505e-15,
+            "task_jacobian_rank_not_certified": true
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        }
+      },
+      "20261104": {
+        "CAYLEY": {
+          "delayed_gradient": 0.006545200012624264,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.059988439083099365,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "dense_oracle_error": 5.551115123125783e-16,
+            "initial_identity": true,
+            "initial_operator_tangent_rank_per_head": 12,
+            "initial_rank_upperbound_all_heads": 144,
+            "local_not_unentangled_control": true,
+            "nominal_angles": 288,
+            "orthogonality_error": 1.7763568394002505e-15,
+            "task_jacobian_rank_not_certified": true
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "CONCAT": {
+          "delayed_gradient": null,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.07514943182468414,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.earlier_weights"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "scope": "standard native-depth readout"
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.earlier_weights"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "DENSE": {
+          "delayed_gradient": 0.009969428181648254,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.059988439083099365,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "delta"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "initial_identity": true,
+            "nominal_parameters": 49920
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "delta"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "HEAD": {
+          "delayed_gradient": null,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.059988439083099365,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "scope": "standard native-depth readout"
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "LOCAL": {
+          "delayed_gradient": 0.006544469390064478,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.059988439083099365,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "dense_oracle_error": 6.661338147750939e-16,
+            "initial_identity": true,
+            "initial_operator_tangent_rank_per_head": 6,
+            "initial_rank_upperbound_all_heads": 72,
+            "local_not_unentangled_control": true,
+            "nominal_angles": 288,
+            "orthogonality_error": 1.3322676295501878e-15,
+            "task_jacobian_rank_not_certified": true
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "LORA": {
+          "delayed_gradient": 0.00013358982687350363,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.059988439083099365,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "low_a"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "low_b"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "initial_identity": true,
+            "nominal_parameters": 6912
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "low_a"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "low_b"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "MLP": {
+          "delayed_gradient": 4.417237505549565e-05,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.07514943182468414,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.projection"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.offset"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.coefficients"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.earlier_weights"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "scope": "standard native-depth readout"
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.projection"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.offset"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.coefficients"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.earlier_weights"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "standard.base.head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "QUANTUM": {
+          "delayed_gradient": 0.006546468008309603,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.059988439083099365,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "dense_oracle_error": 5.551115123125783e-16,
+            "initial_identity": true,
+            "initial_operator_tangent_rank_per_head": 12,
+            "initial_rank_upperbound_all_heads": 144,
+            "local_not_unentangled_control": true,
+            "nominal_angles": 288,
+            "orthogonality_error": 1.7763568394002505e-15,
+            "task_jacobian_rank_not_certified": true
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        },
+        "TANGENT": {
+          "delayed_gradient": 0.006549771409481764,
+          "full_value_roundtrip": true,
+          "gradient_max": 0.059988439083099365,
+          "initial_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "initial_null_exact": true,
+          "ordered_pairs": 51,
+          "question_count": 2,
+          "structure": {
+            "dense_oracle_error": 5.551115123125783e-16,
+            "initial_identity": true,
+            "initial_operator_tangent_rank_per_head": 12,
+            "initial_rank_upperbound_all_heads": 144,
+            "local_not_unentangled_control": true,
+            "nominal_angles": 288,
+            "orthogonality_error": 1.7763568394002505e-15,
+            "task_jacobian_rank_not_certified": true
+          },
+          "updated_fd": [
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "angles"
+            },
+            {
+              "absolute_error": 0.0,
+              "analytic": 0.0,
+              "central": 0.0,
+              "coordinate": 0,
+              "parameter": "head.weight"
+            }
+          ],
+          "updated_full50_replay": true
+        }
+      }
+    },
+    "scope": "fixed two train questions only; no hardware advantage or independent confirmation"
+  },
+  "scope": "Three training-order seeds on repeatedly exposed128 development. Identity quantum initialization same across seeds. Full-native Value geometry before frozen residual/LN/FFN; OFTcollision unresolved. Exact classical simulation; no quantum hardware/entanglement/firstness claim; portable/independent confirmation still pending.",
+  "resource_ledger": "resource-ledger-reconciliation.v038.json"
+}

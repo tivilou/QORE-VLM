@@ -1,0 +1,129 @@
+{
+  "schema": "qvalue.public-handoff-manifest.v1",
+  "evidence_tier": "L2 ordinary method versus frozen DPR on exposed B1",
+  "quantum_attribution": "NOT_ESTABLISHED",
+  "formal_full_run_by": "junior researcher",
+  "all8_original_scientific_gates": "NOT_CLAIMED_ALL_PASSED",
+  "portable_canary": "actual_complete_exit0_quiescent_v004",
+  "files": [
+    {
+      "path": "applications/rag/qcapacity_depth_v001.py",
+      "bytes": 2392,
+      "sha256": "4ba0cac65005f61aec6a041dc037d813ec5691dc455e2f74f1849b5726d0b9f4"
+    },
+    {
+      "path": "applications/rag/qcls_artifacts_v001.py",
+      "bytes": 22380,
+      "sha256": "0bce0cf1037c1b9dc09568410ae395b93df62e255c529ca92a67fc63a6e4c02e"
+    },
+    {
+      "path": "applications/rag/qcls_attention_v004.py",
+      "bytes": 41008,
+      "sha256": "41ccac2cbeb515f90a7c643695f16caae8ef7ed82c7e33959de3f059562ec37f"
+    },
+    {
+      "path": "applications/rag/qcls_b1_resolver_v001.py",
+      "bytes": 28439,
+      "sha256": "21b331433b042f17e009be736feffe82f879b9d160c2aeadb86e3a34b5822c8c"
+    },
+    {
+      "path": "applications/rag/qcls_five_arm_driver_v001.py",
+      "bytes": 27420,
+      "sha256": "fd4929d68578885e2dbec107adec824fd8d8c5a70ba9560417b4b20775f37390"
+    },
+    {
+      "path": "applications/rag/qcls_native_producer_v001.py",
+      "bytes": 30643,
+      "sha256": "28bc7158f838d77679e133fe5eca5b9242af4ffb3ac1a07b5394a2ebf8dda4a9"
+    },
+    {
+      "path": "applications/rag/qcls_preflight_diagnostics_v001.py",
+      "bytes": 11042,
+      "sha256": "0acfe1eb5b4a1aa81f7daf0024c9bfe2b19523d8e045e5a26127a99ced9b8511"
+    },
+    {
+      "path": "applications/rag/qcls_runtime_evidence_v001.py",
+      "bytes": 22590,
+      "sha256": "8053e0ba90f14370cb8e28edf370e9e27bbb5ec00947ca016ea5ad3d7b13a6e6"
+    },
+    {
+      "path": "applications/rag/qcls_sealed_evaluation_v001.py",
+      "bytes": 12812,
+      "sha256": "973b7b51fe4bdb9d22cd7264e1dd7b38e5e5d2c6efd228a2ed918726669a15d0"
+    },
+    {
+      "path": "applications/rag/qdepth_readout_v001.py",
+      "bytes": 2882,
+      "sha256": "6cff7bcad25fd9bd50eab35caf47449a3a336f4adf34aed6b1b83b70858235ee"
+    },
+    {
+      "path": "applications/rag/qvalue_geometry_v002.py",
+      "bytes": 9239,
+      "sha256": "874f4b69d13d640fafed7a4eaa705efcc24020351d61085c5034b60ea0f14007"
+    },
+    {
+      "path": "applications/rag/qvalue_portable_v001.py",
+      "bytes": 22444,
+      "sha256": "cf0422af133b0fa26c8d511b0f4c1f0f3200370ea503628ea0da4cdb29bad16d"
+    },
+    {
+      "path": "applications/rag/qweight_manifold_v001.py",
+      "bytes": 10832,
+      "sha256": "5b66f766a231ce89b5880bfcadbedcec87e4e0341e8be9f79cb0b3fa008a640b"
+    },
+    {
+      "path": "scripts/run_qvalue.py",
+      "bytes": 327,
+      "sha256": "971d340e03e6ad03ad3ed93653798e7941c9bc21af1e22d5f846a7c50603a858"
+    },
+    {
+      "path": "requirements-qvalue.txt",
+      "bytes": 161,
+      "sha256": "dfe79c0d90bc433e2a981c832cdc11a55a67eed76eec873e4b5e52bee571b535"
+    },
+    {
+      "path": "docs/qvalue-handoff.md",
+      "bytes": 8079,
+      "sha256": "8fdcb557a7ab7662cbb0aece3a8c5c896f191fa902674900b4fd8676535e4e5b"
+    },
+    {
+      "path": "README-QVALUE.md",
+      "bytes": 1064,
+      "sha256": "d651705652b49da6230ed865f5db2d6352bdc4fe301479812f00861ff63fe803"
+    },
+    {
+      "path": "configs/experiments/reader_joint_witness_b1_model_assets.json",
+      "bytes": 7753,
+      "sha256": "71b67830ac16e3ba49215bf47abfe3ef2782a34722622c25077acc1b5606d0c7"
+    },
+    {
+      "path": "configs/experiments/idea_search_20261103/qvalue-native-comparison-l2-card.v001.json",
+      "bytes": 6414,
+      "sha256": "00786200599fb2d5264748d2263369083266edf4614b6484f4e204546341bd8b"
+    },
+    {
+      "path": "configs/experiments/idea_search_20261103/qvalue-geometry-terminal-result.v002.json",
+      "bytes": 65093,
+      "sha256": "fdcaa13e0b9b46f6ce6de454c4cb57c08db42c47f0cca1a7cfab957a31b53f9e"
+    },
+    {
+      "path": "configs/experiments/idea_search_20261103/qvalue-l2-closeout-terminal-result.v001.json",
+      "bytes": 8506,
+      "sha256": "1225da19f1da64ce46e055a3c3480b5d4fca9a2c6110c1a57701a883581b87bd"
+    },
+    {
+      "path": "configs/experiments/idea_search_20261103/qvalue-portable-canary-terminal-result.v004.json",
+      "bytes": 2046,
+      "sha256": "5504b37cb60be6427a369f9c3bfb50c1c6cfae51cd0b09ab1903d275cd29befc"
+    }
+  ],
+  "private_bundle": {
+    "name": "qvalue-private-inputs-model.tar",
+    "bytes": 459857920,
+    "sha256": "27cca24fee6508cb39742f2badce0ba74e3149eabef93c8df85bc3854bfa348d",
+    "members": 10,
+    "contains": "private existing B1 train/eval, separated evaluation targets, exact pinned DPR model; not GitHub"
+  },
+  "source_controls_retained": true,
+  "old_stronger_control_no_go_retained": true
+}
