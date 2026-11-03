@@ -1,0 +1,1240 @@
+{
+  "schema": "top8.bge-terminal.v1",
+  "task": "3e40e651e66f43829b0c0944e8637b1e",
+  "attempt": "63788104c4764710bf4dabb4bc8930cd",
+  "source": "f3230439bfdebfc1356f92a8ac33fbc97dddc5d0",
+  "state": "scientific_matrix_complete_wrapper_failed",
+  "exit_code": 1,
+  "quiescent": true,
+  "completed_cells": 58,
+  "expected_cells": 58,
+  "failures": [],
+  "all_success": true,
+  "all_completed_steps256": true,
+  "verified_joint_files": 176,
+  "verified_joint_bytes": 319991141,
+  "joint_seal_sha256": "6706aa8e99bafef09071e58bc7678730eaa98bd16cbed0ff70ec76359fa092fb",
+  "cache_manifest_sha256": "1b9a4442553777b618506e13f97789ec0e2c6252e50c17c1cdc6c0d4900c13b9",
+  "cache_safe": {
+    "max_native_replay_error": 7.62939453125e-06,
+    "max_native_math_error": 0.0,
+    "truncated_rows": 0.0
+  },
+  "native": {
+    "denominator": 640,
+    "direct_lower": 161,
+    "direct_questions_lower": 65,
+    "direct_upper": 161,
+    "questions": 128,
+    "unknown": 0,
+    "useful_lower": 361,
+    "useful_upper": 361
+  },
+  "metrics": {
+    "bge-FEATURE_GATE-ADDITIVE-s20261103/run-0000/predictions-FEATURE_GATE-ADDITIVE-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-FEATURE_GATE-HEAD-s20261103/run-0000/predictions-FEATURE_GATE-HEAD-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-FEATURE_GATE-LINEAR-s20261103/run-0000/predictions-FEATURE_GATE-LINEAR-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-FEATURE_GATE-MLP-s20261103/run-0000/predictions-FEATURE_GATE-MLP-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-FEATURE_GATE-PRODUCT-s20261103/run-0000/predictions-FEATURE_GATE-PRODUCT-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-FEATURE_GATE-QUANTUM-s20261103/run-0000/predictions-FEATURE_GATE-QUANTUM-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-FEATURE_GATE-STOCHASTIC-s20261103/run-0000/predictions-FEATURE_GATE-STOCHASTIC-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-FEATURE_GATE-TRIG-s20261103/run-0000/predictions-FEATURE_GATE-TRIG-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-FIDELITY-GIVENS-s20261103/run-0001/predictions-FIDELITY-GIVENS-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-FIDELITY-HEAD-s20261103/run-0000/predictions-FIDELITY-HEAD-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-FIDELITY-MLP-s20261103/run-0000/predictions-FIDELITY-MLP-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-FIDELITY-PRODUCT-s20261103/run-0001/predictions-FIDELITY-PRODUCT-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-FIDELITY-QUANTUM-s20261103/run-0000/predictions-FIDELITY-QUANTUM-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-LOCAL_FFN-HEAD-s20261103/run-0000/predictions-LOCAL_FFN-HEAD-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-LOCAL_FFN-LORA-s20261103/run-0000/predictions-LOCAL_FFN-LORA-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 166,
+      "direct_questions_lower": 66,
+      "direct_upper": 169,
+      "questions": 128,
+      "unknown": 3,
+      "useful_lower": 367,
+      "useful_upper": 370
+    },
+    "bge-LOCAL_FFN-MLP-s20261103/run-0000/predictions-LOCAL_FFN-MLP-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-LOCAL_FFN-PRODUCT-s20261103/run-0000/predictions-LOCAL_FFN-PRODUCT-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-LOCAL_FFN-QUADRATIC-s20261103/run-0000/predictions-LOCAL_FFN-QUADRATIC-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-LOCAL_FFN-QUANTUM-s20261103/run-0000/predictions-LOCAL_FFN-QUANTUM-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-LOCAL_FFN-REAL-s20261103/run-0000/predictions-LOCAL_FFN-REAL-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-LOCAL_REUPLOAD-HEAD-s20261103/run-0000/predictions-LOCAL_REUPLOAD-HEAD-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-LOCAL_REUPLOAD-LORA-s20261103/run-0000/predictions-LOCAL_REUPLOAD-LORA-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 166,
+      "direct_questions_lower": 66,
+      "direct_upper": 169,
+      "questions": 128,
+      "unknown": 3,
+      "useful_lower": 367,
+      "useful_upper": 370
+    },
+    "bge-LOCAL_REUPLOAD-MLP-s20261103/run-0000/predictions-LOCAL_REUPLOAD-MLP-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-LOCAL_REUPLOAD-PRODUCT-s20261103/run-0000/predictions-LOCAL_REUPLOAD-PRODUCT-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-LOCAL_REUPLOAD-QUANTUM-s20261103/run-0000/predictions-LOCAL_REUPLOAD-QUANTUM-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-LOCAL_REUPLOAD-REAL-s20261103/run-0000/predictions-LOCAL_REUPLOAD-REAL-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-LOCAL_REUPLOAD-TRIG-s20261103/run-0000/predictions-LOCAL_REUPLOAD-TRIG-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 162,
+      "questions": 128,
+      "unknown": 1,
+      "useful_lower": 363,
+      "useful_upper": 364
+    },
+    "bge-MIXED_DEPTH-CONCAT-s20261103/run-0000/predictions-MIXED_DEPTH-CONCAT-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 168,
+      "direct_questions_lower": 66,
+      "direct_upper": 171,
+      "questions": 128,
+      "unknown": 3,
+      "useful_lower": 368,
+      "useful_upper": 371
+    },
+    "bge-MIXED_DEPTH-COSINE-s20261103/run-0000/predictions-MIXED_DEPTH-COSINE-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 168,
+      "direct_questions_lower": 66,
+      "direct_upper": 171,
+      "questions": 128,
+      "unknown": 3,
+      "useful_lower": 368,
+      "useful_upper": 371
+    },
+    "bge-MIXED_DEPTH-DEPHASED-s20261103/run-0000/predictions-MIXED_DEPTH-DEPHASED-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 168,
+      "direct_questions_lower": 66,
+      "direct_upper": 171,
+      "questions": 128,
+      "unknown": 3,
+      "useful_lower": 368,
+      "useful_upper": 371
+    },
+    "bge-MIXED_DEPTH-HEAD-s20261103/run-0000/predictions-MIXED_DEPTH-HEAD-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-MIXED_DEPTH-HS-s20261103/run-0000/predictions-MIXED_DEPTH-HS-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 168,
+      "direct_questions_lower": 66,
+      "direct_upper": 171,
+      "questions": 128,
+      "unknown": 3,
+      "useful_lower": 368,
+      "useful_upper": 371
+    },
+    "bge-MIXED_DEPTH-QDA-s20261103/run-0000/predictions-MIXED_DEPTH-QDA-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 168,
+      "direct_questions_lower": 66,
+      "direct_upper": 171,
+      "questions": 128,
+      "unknown": 3,
+      "useful_lower": 367,
+      "useful_upper": 370
+    },
+    "bge-MIXED_DEPTH-QUANTUM-s20261103/run-0000/predictions-MIXED_DEPTH-QUANTUM-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 168,
+      "direct_questions_lower": 66,
+      "direct_upper": 171,
+      "questions": 128,
+      "unknown": 3,
+      "useful_lower": 368,
+      "useful_upper": 371
+    },
+    "bge-NATIVE_BORN-COMMUTING-s20261103/run-0000/predictions-NATIVE_BORN-COMMUTING-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-NATIVE_BORN-HEAD-s20261103/run-0000/predictions-NATIVE_BORN-HEAD-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-NATIVE_BORN-LINEAR-s20261103/run-0000/predictions-NATIVE_BORN-LINEAR-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 362,
+      "useful_upper": 364
+    },
+    "bge-NATIVE_BORN-LOGIT_MLP-s20261103/run-0000/predictions-NATIVE_BORN-LOGIT_MLP-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-NATIVE_BORN-MLP-s20261103/run-0000/predictions-NATIVE_BORN-MLP-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 160,
+      "direct_questions_lower": 65,
+      "direct_upper": 162,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 361,
+      "useful_upper": 363
+    },
+    "bge-NATIVE_BORN-PRODUCT-s20261103/run-0000/predictions-NATIVE_BORN-PRODUCT-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-NATIVE_BORN-QUANTUM-s20261103/run-0000/predictions-NATIVE_BORN-QUANTUM-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-NATIVE_BORN-TRIG-s20261103/run-0000/predictions-NATIVE_BORN-TRIG-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-ORDINAL-COMMUTING-s20261103/run-0000/predictions-ORDINAL-COMMUTING-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-ORDINAL-DEPHASED-s20261103/run-0000/predictions-ORDINAL-DEPHASED-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-ORDINAL-HEAD-s20261103/run-0000/predictions-ORDINAL-HEAD-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-ORDINAL-INDEPENDENT-s20261103/run-0000/predictions-ORDINAL-INDEPENDENT-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-ORDINAL-ORDINAL_LINEAR-s20261103/run-0000/predictions-ORDINAL-ORDINAL_LINEAR-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-ORDINAL-ORDINAL_MLP-s20261103/run-0000/predictions-ORDINAL-ORDINAL_MLP-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-ORDINAL-QUANTUM-s20261103/run-0000/predictions-ORDINAL-QUANTUM-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-VALUE_GEOMETRY-CAYLEY-s20261103/run-0000/predictions-VALUE_GEOMETRY-CAYLEY-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-VALUE_GEOMETRY-CONCAT-s20261103/run-0000/predictions-VALUE_GEOMETRY-CONCAT-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 168,
+      "direct_questions_lower": 66,
+      "direct_upper": 171,
+      "questions": 128,
+      "unknown": 3,
+      "useful_lower": 368,
+      "useful_upper": 371
+    },
+    "bge-VALUE_GEOMETRY-DENSE-s20261103/run-0000/predictions-VALUE_GEOMETRY-DENSE-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 164,
+      "direct_questions_lower": 65,
+      "direct_upper": 166,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 367,
+      "useful_upper": 369
+    },
+    "bge-VALUE_GEOMETRY-HEAD-s20261103/run-0000/predictions-VALUE_GEOMETRY-HEAD-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-VALUE_GEOMETRY-LOCAL-s20261103/run-0000/predictions-VALUE_GEOMETRY-LOCAL-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-VALUE_GEOMETRY-LORA-s20261103/run-0000/predictions-VALUE_GEOMETRY-LORA-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 164,
+      "direct_questions_lower": 65,
+      "direct_upper": 166,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 366,
+      "useful_upper": 368
+    },
+    "bge-VALUE_GEOMETRY-MLP-s20261103/run-0000/predictions-VALUE_GEOMETRY-MLP-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 168,
+      "direct_questions_lower": 66,
+      "direct_upper": 171,
+      "questions": 128,
+      "unknown": 3,
+      "useful_lower": 368,
+      "useful_upper": 371
+    },
+    "bge-VALUE_GEOMETRY-QUANTUM-s20261103/run-0000/predictions-VALUE_GEOMETRY-QUANTUM-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "bge-VALUE_GEOMETRY-TANGENT-s20261103/run-0000/predictions-VALUE_GEOMETRY-TANGENT-s20261103.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 163,
+      "questions": 128,
+      "unknown": 2,
+      "useful_lower": 363,
+      "useful_upper": 365
+    },
+    "predictions-bge-NATIVE.json": {
+      "denominator": 640,
+      "direct_lower": 161,
+      "direct_questions_lower": 65,
+      "direct_upper": 161,
+      "questions": 128,
+      "unknown": 0,
+      "useful_lower": 361,
+      "useful_upper": 361
+    }
+  },
+  "training_summary": {
+    "bge-FEATURE_GATE-ADDITIVE-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 10268,
+      "max_initial_null_error": 0.0,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-FEATURE_GATE-HEAD-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1024,
+      "max_initial_null_error": 0.0,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-FEATURE_GATE-LINEAR-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 10244,
+      "max_initial_null_error": 4.76837158203125e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-FEATURE_GATE-MLP-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 10284,
+      "max_initial_null_error": 4.76837158203125e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-FEATURE_GATE-PRODUCT-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 10268,
+      "max_initial_null_error": 5.960464477539063e-08,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-FEATURE_GATE-QUANTUM-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 10268,
+      "max_initial_null_error": 2.384185791015625e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-FEATURE_GATE-STOCHASTIC-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 10268,
+      "max_initial_null_error": 9.5367431640625e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-FEATURE_GATE-TRIG-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 10244,
+      "max_initial_null_error": 4.76837158203125e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-FIDELITY-GIVENS-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1231,
+      "max_initial_null_error": 1.430511474609375e-06,
+      "representative_native_math_error": 1.430511474609375e-06,
+      "prediction_replay_error": 0.0
+    },
+    "bge-FIDELITY-HEAD-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1024,
+      "max_initial_null_error": 9.5367431640625e-07,
+      "representative_native_math_error": 9.5367431640625e-07,
+      "prediction_replay_error": 0.0
+    },
+    "bge-FIDELITY-MLP-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1275,
+      "max_initial_null_error": 1.430511474609375e-06,
+      "representative_native_math_error": 1.430511474609375e-06,
+      "prediction_replay_error": 0.0
+    },
+    "bge-FIDELITY-PRODUCT-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1231,
+      "max_initial_null_error": 1.430511474609375e-06,
+      "representative_native_math_error": 1.430511474609375e-06,
+      "prediction_replay_error": 0.0
+    },
+    "bge-FIDELITY-QUANTUM-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1231,
+      "max_initial_null_error": 1.430511474609375e-06,
+      "representative_native_math_error": 1.430511474609375e-06,
+      "prediction_replay_error": 0.0
+    },
+    "bge-LOCAL_FFN-HEAD-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1024,
+      "max_initial_null_error": 0.0,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-LOCAL_FFN-LORA-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 33792,
+      "max_initial_null_error": 9.5367431640625e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-LOCAL_FFN-MLP-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1088,
+      "max_initial_null_error": 9.5367431640625e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-LOCAL_FFN-PRODUCT-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1036,
+      "max_initial_null_error": 9.5367431640625e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-LOCAL_FFN-QUADRATIC-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1088,
+      "max_initial_null_error": 9.5367431640625e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-LOCAL_FFN-QUANTUM-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1036,
+      "max_initial_null_error": 9.5367431640625e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-LOCAL_FFN-REAL-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1036,
+      "max_initial_null_error": 1.430511474609375e-06,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-LOCAL_REUPLOAD-HEAD-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1024,
+      "max_initial_null_error": 0.0,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-LOCAL_REUPLOAD-LORA-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 33792,
+      "max_initial_null_error": 9.5367431640625e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-LOCAL_REUPLOAD-MLP-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1088,
+      "max_initial_null_error": 9.5367431640625e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-LOCAL_REUPLOAD-PRODUCT-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1036,
+      "max_initial_null_error": 9.5367431640625e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-LOCAL_REUPLOAD-QUANTUM-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1036,
+      "max_initial_null_error": 1.430511474609375e-06,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-LOCAL_REUPLOAD-REAL-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1036,
+      "max_initial_null_error": 1.430511474609375e-06,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-LOCAL_REUPLOAD-TRIG-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1152,
+      "max_initial_null_error": 1.9073486328125e-06,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-MIXED_DEPTH-CONCAT-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 3072,
+      "max_initial_null_error": 0.0,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-MIXED_DEPTH-COSINE-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 3075,
+      "max_initial_null_error": 0.0,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-MIXED_DEPTH-DEPHASED-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 3075,
+      "max_initial_null_error": 0.0,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-MIXED_DEPTH-HEAD-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1024,
+      "max_initial_null_error": 0.0,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-MIXED_DEPTH-HS-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 3075,
+      "max_initial_null_error": 0.0,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-MIXED_DEPTH-QDA-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 3075,
+      "max_initial_null_error": 0.0,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-MIXED_DEPTH-QUANTUM-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 3075,
+      "max_initial_null_error": 0.0,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-NATIVE_BORN-COMMUTING-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 4123,
+      "max_initial_null_error": 4.76837158203125e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-NATIVE_BORN-HEAD-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1024,
+      "max_initial_null_error": 0.0,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-NATIVE_BORN-LINEAR-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 4103,
+      "max_initial_null_error": 4.76837158203125e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-NATIVE_BORN-LOGIT_MLP-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 4120,
+      "max_initial_null_error": 0.0,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-NATIVE_BORN-MLP-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 4120,
+      "max_initial_null_error": 4.76837158203125e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-NATIVE_BORN-PRODUCT-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 4123,
+      "max_initial_null_error": 4.76837158203125e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-NATIVE_BORN-QUANTUM-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 4123,
+      "max_initial_null_error": 4.76837158203125e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-NATIVE_BORN-TRIG-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 4106,
+      "max_initial_null_error": 4.76837158203125e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-ORDINAL-COMMUTING-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 9216,
+      "max_initial_null_error": 0.0,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-ORDINAL-DEPHASED-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 17408,
+      "max_initial_null_error": 4.76837158203125e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-ORDINAL-HEAD-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1024,
+      "max_initial_null_error": 0.0,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-ORDINAL-INDEPENDENT-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 17408,
+      "max_initial_null_error": 0.0,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-ORDINAL-ORDINAL_LINEAR-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 3074,
+      "max_initial_null_error": 4.76837158203125e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-ORDINAL-ORDINAL_MLP-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 17458,
+      "max_initial_null_error": 2.384185791015625e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-ORDINAL-QUANTUM-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 17408,
+      "max_initial_null_error": 0.0,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-VALUE_GEOMETRY-CAYLEY-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1408,
+      "max_initial_null_error": 9.5367431640625e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-VALUE_GEOMETRY-CONCAT-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 3072,
+      "max_initial_null_error": 0.0,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-VALUE_GEOMETRY-DENSE-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 66560,
+      "max_initial_null_error": 9.5367431640625e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-VALUE_GEOMETRY-HEAD-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1024,
+      "max_initial_null_error": 0.0,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-VALUE_GEOMETRY-LOCAL-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1408,
+      "max_initial_null_error": 9.5367431640625e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-VALUE_GEOMETRY-LORA-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 9216,
+      "max_initial_null_error": 9.5367431640625e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-VALUE_GEOMETRY-MLP-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 15364,
+      "max_initial_null_error": 0.0,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-VALUE_GEOMETRY-QUANTUM-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1408,
+      "max_initial_null_error": 9.5367431640625e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    },
+    "bge-VALUE_GEOMETRY-TANGENT-s20261103": {
+      "steps": 256,
+      "training_questions": 512,
+      "evaluation_questions": 128,
+      "trainable_parameters": 1408,
+      "max_initial_null_error": 9.5367431640625e-07,
+      "representative_native_math_error": 0.0,
+      "prediction_replay_error": 0.0
+    }
+  },
+  "recovery_probe": {
+    "actual_gpu_restore": true,
+    "cases": [
+      {
+        "arm": "QUANTUM",
+        "idea": "FEATURE_GATE",
+        "parameter_optimizer_rng_order_bit_equal": true,
+        "restored_from_step": 1,
+        "steps": 2
+      },
+      {
+        "arm": "DENSE",
+        "idea": "VALUE_GEOMETRY",
+        "parameter_optimizer_rng_order_bit_equal": true,
+        "restored_from_step": 1,
+        "steps": 2
+      }
+    ],
+    "development_labels_opened": false,
+    "limitation": "Fresh model/optimizer reconstruction in same worker; OS process-restart not certified",
+    "process_restart_test": false,
+    "schema": "top8.recovery-probe.v1"
+  },
+  "full_trace": "DEFERRED_NOT_PASSED",
+  "exposed_development": true,
+  "formal_full_run": false,
+  "new_http": 0,
+  "new_labels": 0,
+  "raw_predictions_decoded_by_operator": 0,
+  "wrapper_failed": true,
+  "wrapper_exit_code": 1,
+  "mechanical_closeout_exit_code": 0,
+  "mechanical_closeout": {
+    "schema": "top8.metadata-finalization.v1",
+    "scientific_cells": 58,
+    "wrapper_state": "failed",
+    "wrapper_exit": 1,
+    "root_cause": "Flat AttemptArtifacts._usage rejects normal matrix/recovery-probe directories; no file hardlink found",
+    "old_root_modified": false,
+    "scientific_imports": 0,
+    "retraining": 0,
+    "new_evaluation": 0,
+    "joint_seal_sha256": "6706aa8e99bafef09071e58bc7678730eaa98bd16cbed0ff70ec76359fa092fb",
+    "evaluation_sha256": "2d0e20929506d620b592b58546cec4af567cbcc5b79974435be484814c4fe381",
+    "verified_joint_files": 176,
+    "verified_joint_bytes": 319991141,
+    "receipt_sha256": "b0e5aa483b5f18815a1cfc1af33a225776dbd368f4d8a30e3f5c6240068d4dac"
+  },
+  "matrix_complete_not_queue_exit0": true,
+  "environment": {
+    "python": "3.10.10",
+    "torch": "2.5.1+cu121",
+    "transformers": "4.44.2",
+    "numpy": "1.26.4",
+    "safetensors": "0.7.0",
+    "tokenizers": "0.19.1",
+    "dtype": "FP32",
+    "BGE_attention": "native eager",
+    "DPR_attention": "native SDPA with documented intervention math paths"
+  },
+  "continuation": [
+    {
+      "task": "007812a04c414edc988bf9483505b747",
+      "source": "70662449e319fd0e5fed387a644ba024fadaba50",
+      "state": "failed",
+      "exit_code": 1,
+      "quiescent": true,
+      "preserved_complete_cells": 55,
+      "resumed_cell": "FIDELITY/GIVENS",
+      "resumed_step": 96
+    },
+    {
+      "task": "62dc9d3e7b83410ba54ec3ff41989051",
+      "source": "edd1493903cdad1747780c6886a517b5e986033d",
+      "state": "cancelled",
+      "exit_code": null,
+      "quiescent": true,
+      "preserved_complete_cells": 56,
+      "resumed_cell": "FIDELITY/PRODUCT",
+      "resumed_step": 96
+    }
+  ],
+  "owner_seeds": [
+    20261103
+  ],
+  "training_questions": 512,
+  "evaluation_questions": 128,
+  "epochs": 4,
+  "all_predictions_before_evaluation_labels": true,
+  "quantum_attribution": "NOT_ESTABLISHED",
+  "independent_confirmation": false
+}

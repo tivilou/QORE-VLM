@@ -17,9 +17,9 @@
 
 ## 环境与输入
 
-使用 CUDA、FP32、PyTorch 2.4+、Transformers **4.44.2**、safetensors、tokenizers。原始模型版本及逐文件 SHA 在 `configs/experiments/reader_joint_witness_b1_model_assets.json`，程序只加载既有文件，不下载模型。
+使用 CUDA、FP32、PyTorch **2.5.1**、Transformers **4.44.2**、safetensors、tokenizers；依赖版本见 `requirements-qvalue.txt`。本轮服务器实际使用 Python 3.10.10、Torch 2.5.1+cu121、NumPy 1.26.4、safetensors 0.7.0、tokenizers 0.19.1。按运行服务器的 CUDA 环境安装兼容的 Torch 轮子。原始模型版本及逐文件 SHA 在 `configs/experiments/reader_joint_witness_b1_model_assets.json`，程序只加载既有文件，不下载模型。
 
-输入沿用 `docs/qvalue-junior-run-instructions.md` 的 JSONL 格式：训练行包含问题、原文 50 段、组件身份及**已审训练项**的稀疏标签；评估输入没有标签。评估标签单独保存。缺标签不能作为 none。正式研究的人口、角色、模型训练曝光及独立确认须另行冻结；不能把 owner 的 512/128 探索样本换个名称当独立确认。
+输入沿用 [输入格式](qvalue-handoff.md) 的 JSONL 定义：训练行包含问题、原文 50 段、组件身份及**已审训练项**的稀疏标签；评估输入没有标签。评估标签单独保存。缺标签不能作为 none。正式研究的人口、角色、模型训练曝光及独立确认须另行冻结；不能把 owner 的 512/128 探索样本换个名称当独立确认。
 
 BGE 保留原生 `dense → tanh → out_proj`，通用读出方案位于 out_proj 的原生输入处；上游改造仍穿过冻结 dense/tanh。DPR 对应桥接为恒等。两模型共用问题和原文、无标题、原顺序每 8 段动态右 padding；DPR 原生上限 350，BGE 512。实际截断计数和每个原生块的 readout/tail 重放误差写入缓存。模型原生长度差异不伪装为相同词元序列。
 
@@ -55,4 +55,6 @@ python scripts/run_top8.py \
 
 `--canary` 只验证固定前两训练/评估题的一步通路，五折混合态拟合不会伪造通过。完整 sample-trace.v2 和量子归因审查仍独立标记，不以脚本可运行冒充完成。
 
-当前仓库包含源码准备；具体运行通过范围以本轮 `top8-*-result` 收据为准。师弟正式启动前应检查这些收据与同版本代码；未完成的 BGE 臂不得写成已验证结果。
+本轮 owner 已完成 BGE 的全部58个学习单元，各256步、512训练/128曝光开发，全部最终Top50预测检查点重放误差为0；176份联合封存文件逐大小/SHA核验通过。八方案BGE useful下界均超过原生361。具体区间、全部经典控制与历史DPR综合探索排序见 [实测结果](top8-dual-scorer-results.md)。
+
+owner队列在58臂及评估完成后，因旧扁平摘要写入器遇到正常子目录而exit1；该失败保持，不伪造exit0。独立纯标准库元数据收尾已在新目录完成，未重训、未重新评估、未修改旧根。这里的一键入口直接调用 `top8_suite_v002`，不经过owner专用的扁平摘要写入器。上述结果不替代双模型同代码同种子的正式全量矩阵、完整sample-trace或独立确认。

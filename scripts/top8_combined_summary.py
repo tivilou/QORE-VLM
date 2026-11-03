@@ -23,16 +23,22 @@ def summarize(selection, bge):
         entry=dict(idea=key,initial_dpr_rank=idea['rank'],bge_completed_quantum_seeds=len(cells),
             dpr_mean_useful_lower=mean(idea['useful_lower']),
             dpr_mean_useful_upper=mean(idea['useful_upper']),
+            dpr_mean_direct_lower=mean(idea['direct_lower']),
             dpr_archived_seeds=len(idea['useful_lower']),
             dpr_evidence_sha256=idea['evidence_sha256'],
-            bge_controls={arm:dict(useful_lower=mean(x['useful_lower'] for x in values),
-                useful_upper=mean(x['useful_upper'] for x in values)) for arm,values in classical.items()})
+            bge_controls={arm:{field:mean(x[field] for x in values) for field in
+                ('useful_lower','useful_upper','direct_lower','direct_upper',
+                 'direct_questions_lower','unknown')} for arm,values in classical.items()})
         if cells:
             lo=mean(v['useful_lower'] for _,v in cells);hi=mean(v['useful_upper'] for _,v in cells)
             dlo=entry['dpr_mean_useful_lower']-selection['baselines']['dpr']['useful']
             dhi=entry['dpr_mean_useful_upper']-selection['baselines']['dpr']['useful']
             blo=lo-base['useful_upper'];bhi=hi-base['useful_lower']
             entry.update(bge_useful_lower=lo,bge_useful_upper=hi,bge_native_delta_lower=blo,
+                bge_direct_lower=mean(v['direct_lower'] for _,v in cells),
+                bge_direct_upper=mean(v['direct_upper'] for _,v in cells),
+                bge_direct_questions_lower=mean(v['direct_questions_lower'] for _,v in cells),
+                bge_unknown=mean(v['unknown'] for _,v in cells),
                 bge_native_delta_upper=bhi,dpr_native_delta_lower=dlo,dpr_native_delta_upper=dhi,
                 provisional_equal_weight_delta_lower=(dlo+blo)/2,
                 provisional_equal_weight_delta_upper=(dhi+bhi)/2)
