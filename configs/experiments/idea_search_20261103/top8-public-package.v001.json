@@ -1,0 +1,247 @@
+{
+  "schema": "top8.public-package.v1",
+  "created_at": "2026-11-03T06:52:10.178273+00:00",
+  "purpose": "Eight selected single-backbone ideas; DPR/BGE native-preserving exploratory and junior matrix suite",
+  "files": [
+    {
+      "path": "README-QVALUE.md",
+      "bytes": 1064,
+      "sha256": "d651705652b49da6230ed865f5db2d6352bdc4fe301479812f00861ff63fe803"
+    },
+    {
+      "path": "README-TOP8.md",
+      "bytes": 1340,
+      "sha256": "56f209165391cab4c58dcae6b2133bcfba73f1358f693782f1d7fff15de7d288"
+    },
+    {
+      "path": "applications/rag/qcapacity_depth_v001.py",
+      "bytes": 2392,
+      "sha256": "4ba0cac65005f61aec6a041dc037d813ec5691dc455e2f74f1849b5726d0b9f4"
+    },
+    {
+      "path": "applications/rag/qcls_artifacts_v001.py",
+      "bytes": 22380,
+      "sha256": "0bce0cf1037c1b9dc09568410ae395b93df62e255c529ca92a67fc63a6e4c02e"
+    },
+    {
+      "path": "applications/rag/qcls_attention_v004.py",
+      "bytes": 41008,
+      "sha256": "41ccac2cbeb515f90a7c643695f16caae8ef7ed82c7e33959de3f059562ec37f"
+    },
+    {
+      "path": "applications/rag/qcls_b1_resolver_v001.py",
+      "bytes": 28439,
+      "sha256": "21b331433b042f17e009be736feffe82f879b9d160c2aeadb86e3a34b5822c8c"
+    },
+    {
+      "path": "applications/rag/qcls_five_arm_driver_v001.py",
+      "bytes": 27420,
+      "sha256": "fd4929d68578885e2dbec107adec824fd8d8c5a70ba9560417b4b20775f37390"
+    },
+    {
+      "path": "applications/rag/qcls_native_producer_v001.py",
+      "bytes": 30643,
+      "sha256": "28bc7158f838d77679e133fe5eca5b9242af4ffb3ac1a07b5394a2ebf8dda4a9"
+    },
+    {
+      "path": "applications/rag/qcls_preflight_diagnostics_v001.py",
+      "bytes": 11042,
+      "sha256": "0acfe1eb5b4a1aa81f7daf0024c9bfe2b19523d8e045e5a26127a99ced9b8511"
+    },
+    {
+      "path": "applications/rag/qcls_runtime_evidence_v001.py",
+      "bytes": 22590,
+      "sha256": "8053e0ba90f14370cb8e28edf370e9e27bbb5ec00947ca016ea5ad3d7b13a6e6"
+    },
+    {
+      "path": "applications/rag/qcls_sealed_evaluation_v001.py",
+      "bytes": 12812,
+      "sha256": "973b7b51fe4bdb9d22cd7264e1dd7b38e5e5d2c6efd228a2ed918726669a15d0"
+    },
+    {
+      "path": "applications/rag/qdepth_readout_v001.py",
+      "bytes": 2882,
+      "sha256": "6cff7bcad25fd9bd50eab35caf47449a3a336f4adf34aed6b1b83b70858235ee"
+    },
+    {
+      "path": "applications/rag/qfeature_gate_v001.py",
+      "bytes": 8341,
+      "sha256": "48b73eaba5e57fe1521fad33edad2984291db8646ec841fd44d371d45703acbb"
+    },
+    {
+      "path": "applications/rag/qffn_activation_v001.py",
+      "bytes": 6156,
+      "sha256": "a5cc46d81d32f25e8f4faa44158977285ab4a4669aedf9bf499d8d623c3eaa85"
+    },
+    {
+      "path": "applications/rag/qfidelity_v002.py",
+      "bytes": 16462,
+      "sha256": "c55b0593270f7a5e9f16c1d2d908c6de30405467bd463cb49524b2be7418d93d"
+    },
+    {
+      "path": "applications/rag/qfusion_v001.py",
+      "bytes": 6134,
+      "sha256": "d99ad94c6f1fcd46e38c94f9227c614d2c6ae5c38434cd2e5a1d1ba471e8051d"
+    },
+    {
+      "path": "applications/rag/qlocalffn_v001.py",
+      "bytes": 4394,
+      "sha256": "ea3cac8616a0ed316988cbda64d026a6dd6a3fd7bd16ad994f45805236434913"
+    },
+    {
+      "path": "applications/rag/qmixed_depth_v001.py",
+      "bytes": 9278,
+      "sha256": "3d93968b9658e4ff7900463240a9a88d276b0ab4a3c1c8e20456952fdd52c8ed"
+    },
+    {
+      "path": "applications/rag/qmps_born_v001.py",
+      "bytes": 8053,
+      "sha256": "55137277efeb51d352d15a17c32aad34be66ed5cddb923a9251ea809ee341fad"
+    },
+    {
+      "path": "applications/rag/qnative_born_v001.py",
+      "bytes": 9411,
+      "sha256": "07aef0b8d78b59d3d1478f392e7d1477a55570a740ebcf9c1bd1f3f4054ac470"
+    },
+    {
+      "path": "applications/rag/qordinal_v001.py",
+      "bytes": 6063,
+      "sha256": "5307c56977d8b868d3fae04b7417390d64999f65866852fc9b81a9cb0e6c0c17"
+    },
+    {
+      "path": "applications/rag/qregion_numeric_v001.py",
+      "bytes": 2848,
+      "sha256": "7b03b76c8b8a1c2d25cc1d145073becdfb41a257c221b0c901e860c2c362b545"
+    },
+    {
+      "path": "applications/rag/qreuploadffn_v001.py",
+      "bytes": 4068,
+      "sha256": "232ab6cfa71208898e5e310b04796ab2abb7fc8c663b2320fb556699601ae5f0"
+    },
+    {
+      "path": "applications/rag/qvalue_geometry_v002.py",
+      "bytes": 9239,
+      "sha256": "874f4b69d13d640fafed7a4eaa705efcc24020351d61085c5034b60ea0f14007"
+    },
+    {
+      "path": "applications/rag/qvalue_portable_v001.py",
+      "bytes": 22444,
+      "sha256": "cf0422af133b0fa26c8d511b0f4c1f0f3200370ea503628ea0da4cdb29bad16d"
+    },
+    {
+      "path": "applications/rag/qweight_manifold_v001.py",
+      "bytes": 10832,
+      "sha256": "5b66f766a231ce89b5880bfcadbedcec87e4e0341e8be9f79cb0b3fa008a640b"
+    },
+    {
+      "path": "applications/rag/tests/test_top8_artifact_evaluation.py",
+      "bytes": 2523,
+      "sha256": "a61440561c9de3545418a6d3a580dcbb6631125a932ae2f42f68e312f35cda16"
+    },
+    {
+      "path": "applications/rag/tests/test_top8_recovery.py",
+      "bytes": 1895,
+      "sha256": "8dec9381f9ad8b1db8b08415b59a4d6f4798f5b83d5610906a84721128388250"
+    },
+    {
+      "path": "applications/rag/top8_backbone_v001.py",
+      "bytes": 13766,
+      "sha256": "17a52257e9a47e1f7b4a8e8e6034f996cd6a0458bb7c69b03747cc79d0afa14d"
+    },
+    {
+      "path": "applications/rag/top8_methods_v001.py",
+      "bytes": 14014,
+      "sha256": "ecb50a9b8b7ed276357f9274f924b5b62e3bb19a7e383e465d1615cd92bb5a3b"
+    },
+    {
+      "path": "applications/rag/top8_portable_v001.py",
+      "bytes": 18642,
+      "sha256": "3fe0ddf6cd337b0526b949a02fde34c3b55fdfe054ffb01970ca308f07f57f3b"
+    },
+    {
+      "path": "applications/rag/top8_recovery_v001.py",
+      "bytes": 2567,
+      "sha256": "8988ba8c1d105a28822b3de1aa1e182188bf1272ebfb93241a62f1ef8ef5bd97"
+    },
+    {
+      "path": "applications/rag/top8_suite_v002.py",
+      "bytes": 13397,
+      "sha256": "d684d46265b26f853d151c6153630093976e912538d045af323d67bd13148907"
+    },
+    {
+      "path": "configs/experiments/idea_search_20261103/qvalue-geometry-terminal-result.v002.json",
+      "bytes": 65093,
+      "sha256": "fdcaa13e0b9b46f6ce6de454c4cb57c08db42c47f0cca1a7cfab957a31b53f9e"
+    },
+    {
+      "path": "configs/experiments/idea_search_20261103/qvalue-l2-closeout-terminal-result.v001.json",
+      "bytes": 8506,
+      "sha256": "1225da19f1da64ce46e055a3c3480b5d4fca9a2c6110c1a57701a883581b87bd"
+    },
+    {
+      "path": "configs/experiments/idea_search_20261103/qvalue-native-comparison-l2-card.v001.json",
+      "bytes": 6414,
+      "sha256": "00786200599fb2d5264748d2263369083266edf4614b6484f4e204546341bd8b"
+    },
+    {
+      "path": "configs/experiments/idea_search_20261103/qvalue-portable-canary-terminal-result.v004.json",
+      "bytes": 2046,
+      "sha256": "5504b37cb60be6427a369f9c3bfb50c1c6cfae51cd0b09ab1903d275cd29befc"
+    },
+    {
+      "path": "configs/experiments/idea_search_20261103/top8-dual-selection.v001.json",
+      "bytes": 5508,
+      "sha256": "08aafe0f49320e9f106a6e6d13a9d12847e72f49e837900e1d66784679a63eb5"
+    },
+    {
+      "path": "configs/experiments/reader_joint_witness_b1_model_assets.json",
+      "bytes": 7753,
+      "sha256": "71b67830ac16e3ba49215bf47abfe3ef2782a34722622c25077acc1b5606d0c7"
+    },
+    {
+      "path": "docs/qvalue-handoff.md",
+      "bytes": 8079,
+      "sha256": "8fdcb557a7ab7662cbb0aece3a8c5c896f191fa902674900b4fd8676535e4e5b"
+    },
+    {
+      "path": "docs/top8-dual-scorer-experiments.md",
+      "bytes": 5919,
+      "sha256": "ea4291311950c9863f2db24a0670fb5682b010da28f990f5dde24c908fe5aadc"
+    },
+    {
+      "path": "docs/top8-junior-run-instructions.md",
+      "bytes": 3056,
+      "sha256": "6c26ed760625e758f1690c477158f51520871d4eb04cfce968b3a11252dbdbaa"
+    },
+    {
+      "path": "requirements-qvalue.txt",
+      "bytes": 161,
+      "sha256": "dfe79c0d90bc433e2a981c832cdc11a55a67eed76eec873e4b5e52bee571b535"
+    },
+    {
+      "path": "scripts/run_qvalue.py",
+      "bytes": 327,
+      "sha256": "971d340e03e6ad03ad3ed93653798e7941c9bc21af1e22d5f846a7c50603a858"
+    },
+    {
+      "path": "scripts/run_top8.py",
+      "bytes": 302,
+      "sha256": "6d5a72b58e801d44c3b046abae598f5879850efd884543b04b7b87a68d6ee964"
+    },
+    {
+      "path": "scripts/top8_combined_summary.py",
+      "bytes": 3293,
+      "sha256": "31c1557e041685b82eeebf1f28cc7cfc54636793548046c257966137c2e8d9c0"
+    }
+  ],
+  "runtime_validation_status": "BGE owner v3 running; actual reconstruction probe pending",
+  "owner_task": "a954a2c9a19146c29b6a171def0d9e11",
+  "owner_attempt": "c3346d73248d44fd8ee5ed02005eb486",
+  "owner_runtime_source": "fbc6f0aaffeb93279eddb11b4a26ef81f3c43bc6",
+  "source_delta_from_runtime": "CLI-only resume model-byte check and nonzero failure exit; scientific functions unchanged",
+  "formal_full_runs": "junior only",
+  "quantum_attribution": "NOT_ESTABLISHED",
+  "new_data": 0,
+  "private_weights_inputs_predictions_included": false,
+  "local_verification": "4 pure-stdlib artifact/recovery tests passed; no local scientific import"
+}
