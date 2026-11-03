@@ -212,7 +212,10 @@ def load_modules(manifest, root):
     from transformers.models.bert.modeling_bert import BertLayer
     from transformers.models.xlm_roberta.modeling_xlm_roberta import XLMRobertaLayer
     kind=manifest['backbone'];config=(BertConfig if kind=='dpr' else XLMRobertaConfig)(**manifest['config'])
-    config._attn_implementation='sdpa'
+    # Transformers 4.44.2 exposes SDPA for BERT, but XLM-R only has its
+    # original eager implementation. Reconstruct the native class, not a
+    # backend name unsupported by the pinned BGE runtime.
+    config._attn_implementation='sdpa' if kind=='dpr' else 'eager'
     layer=(BertLayer if kind=='dpr' else XLMRobertaLayer)(config).float().cuda().eval().requires_grad_(False)
     d=config.hidden_size
     bridge=ReadoutBridge(nn.Linear(d,d) if kind=='bge' else None).cuda()

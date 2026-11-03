@@ -143,7 +143,8 @@ class Fidelity(Head):
     def forward(self,row):
         if self.kind=='HEAD':return super().forward(row)
         hidden=row['hidden'];att=self.layer.attention.self
-        need(type(att).__name__ in ('BertSdpaSelfAttention','XLMRobertaSdpaSelfAttention'), 'native SDPA adapter identity')
+        need(type(att).__name__ in ('BertSdpaSelfAttention','XLMRobertaSelfAttention'),
+             'native pinned BERT SDPA / XLM-R eager adapter identity')
         h=att.num_attention_heads;d=att.attention_head_size
         with torch.no_grad():
             q=att.query(hidden).reshape(len(hidden),-1,h,d).transpose(1,2)[:,:,0]
