@@ -1,0 +1,69 @@
+{
+  "schema": "qduet.formal-data-history-audit.v1",
+  "request": "Human asked agent to recover the dataset location from progress history",
+  "status": "NO_READY_INDEPENDENT_TRIVIAQA_RELEASE_FOUND_IN_REVIEWED_HISTORY",
+  "findings": [
+    {
+      "population": "current TriviaQA B1",
+      "counts": [
+        512,
+        128
+      ],
+      "location": "3080 private two-model archive; pinned in junior-campaign.v001.json",
+      "usable_as": "exposed reproduction only"
+    },
+    {
+      "population": "historical NQ-open full run",
+      "evaluation_questions": 2742,
+      "same_task": false,
+      "limitation": "different dataset and historical scorer; recovery record says some raw bodies/numeric arrays missing"
+    },
+    {
+      "population": "prospective TriviaQA full",
+      "planned_counts": [
+        61689,
+        7891,
+        7606
+      ],
+      "ready": false,
+      "limitation": "planning counts, not a frozen component manifest or reviewed paragraph-label release"
+    },
+    {
+      "population": "retrieval assets",
+      "limitation": "corpus/index/answer support is not the required none/partial/direct semantic annotation"
+    }
+  ],
+  "evidence": [
+    {
+      "path": "configs/experiments/b1_unknown_majority_20261028/untouched-population-audit.v001.json",
+      "sha256": "20cf5772a65cee8649cd8325c5c5133197f75d2c46f5793e29c952c3667a1de2"
+    },
+    {
+      "path": ".ai-progress/workstreams/rag-selector/decisions/2026-10-20-joint-witness-data-baseline-boundary.md",
+      "sha256": "557a521648939003e0c42457acb5d2e4057fbd6495c12073ac6bd6143d862667"
+    },
+    {
+      "path": "configs/experiments/reader_full_data_replication.json",
+      "sha256": "4a8bb6427ec9ead6a06f4868e8d3ce23147e6ea11268341d458b86b6092a20b1"
+    },
+    {
+      "path": "configs/experiments/reader_joint_witness_b1_input_contract.json",
+      "sha256": "abf6498d2ecc9de028ddb5242f04e70e401505ad78401e63cb789c93503f63e8"
+    },
+    {
+      "path": "docs/ops/environment-recovery.md",
+      "sha256": "9e49cb68509b840e16c2754434063dc64c68d7df060ccfe688d4aa2776a911cd"
+    }
+  ],
+  "remote_metadata": {
+    "raw_data_read": false,
+    "roots": [
+      "/srv/qore-research-assets/triviaqa-pinned",
+      "/srv/qore-research-assets/private-audits",
+      "/srv/qore-collab-uploads/five_ideas/reader_full_data_completed_review"
+    ],
+    "scope": "bounded filename inventory; no global nonexistence claim"
+  },
+  "next_required_artifact": "Versioned full population release: original50 inputs, component/role manifest, separated reviewed training/evaluation 0/1/2 labels and independent qualification, privately staged once by owner; runner then auto-fetches all paths",
+  "prohibition": "Do not relabel exposed B1 or NQ-open as independent formal TriviaQA; do not manufacture semantic labels from answer-string matches"
+}

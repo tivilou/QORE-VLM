@@ -1,19 +1,21 @@
-# 八方案 × DPR / BGE 实验套件
+# Q-DUET 八方案双模型实验
 
-固定八方案：MIXED_DEPTH、FIDELITY、VALUE_GEOMETRY、LOCAL_REUPLOAD、NATIVE_BORN、FEATURE_GATE、LOCAL_FFN、ORDINAL。保留各自完整经典对照，统一比较每个模型自己的原生打分，不将 DPR 与 BGE 原始分数直接混排。
-
-候选入选不要求兼容两个模型。入口已支持 `--dpr-only-ideas` / `--bge-only-ideas`，同一条命令可以组合双模型与单模型方案；`--plan-only` 只打印执行安排，不加载模型或创建输出。单模型成绩独立排名，未安排的另一模型记 N/A，不计零分。当前八项均有双模型实现，默认名单不因此强行替换。详见[分模型运行说明](docs/top8-junior-run-instructions.md#允许仅-dpr-的方案)。
-
-本轮 BGE 58 个学习单元已全部完成并核对联合封存与预测重放；八方案均超过原生 BGE 的已审 useful 下界。详见 [实测结果与探索排序](docs/top8-dual-scorer-results.md)。历史 DPR 与本轮 BGE 的种子数不同，排序为探索优先级，量子独立贡献尚未确立。旧 owner 摘要写入失败及独立元数据收尾记录完整保留。
-
-正式全量的环境准备、私有双模型输入包和运行指令见 [给师弟的说明](docs/top8-junior-run-instructions.md)；逐文件 SHA、已验证范围与限制见 [交付清单](configs/experiments/idea_search_20261103/top8-delivery-manifest.v002.json)。
-
-依赖准备并把私有输入和模型放在 GPU 服务器后，一条命令运行全部双模型三种子矩阵：
+统一入口自动完成私有资产获取、环境准备、全部实验、预测封存、评估及结果回传：
 
 ```bash
-python scripts/run_top8.py --dpr-model models/dpr-reader-multiset-base --bge-model models/bge-reranker-v2-m3 --train data/qvalue/train.jsonl --eval-inputs data/qvalue/eval.inputs.jsonl --eval-labels data/qvalue/eval.labels.json --output outputs/top8-full
+bash scripts/run_all_top8.sh
 ```
 
-训练中断后在原命令末尾加 `--resume`。不自动下载、不改系统网络，不把缺标签当 none；全部预测联合封存后才读评估标签。输出含逐臂结果、未知界限、失败和双模型排序。数据、模型与原始预测属于私有实验材料，不提交公开 GitHub。
+首次克隆也可一条命令：
 
-环境、八种机制、原生接口、固定优化设置、结果解释、恢复限制和已验证范围见 [完整说明](docs/top8-dual-scorer-experiments.md)。正式全量由师弟运行；已有 B1 是曝光开发人口，不是独立确认集。量子方法相对 native 的提升与相对匹配经典控制的独立贡献分别报告。
+```bash
+curl -fsSL https://raw.githubusercontent.com/tivilou/QORE-VLM/codex/top8-dual-scorer/scripts/bootstrap_top8.sh | bash
+```
+
+**当前正式独立 TriviaQA 全量人口未就绪，默认 formal 会在下载/安装/GPU 前明确报缺口。** 现有私有包仅为曝光 B1 512/128；完整复现它需明确追加 `--population reproduction`。旧 NQ-open 全量不是此 TriviaQA 数据。
+
+[一次配置、运行和自动回传](docs/top8-junior-run-instructions.md) · [模型及实验机制](docs/top8-dual-scorer-experiments.md) · [现有结果](docs/top8-dual-scorer-results.md)
+
+八项双模型保持；新增 DPR 专用项按历史平均 useful 严格大于373.5筛选，已审终态记录没有额外合格项，跨模型融合不混作 DPR-only。记录在 `configs/experiments/idea_search_20261103/dpr-additions-audit.v001.json`。
+
+代码和审计公开；数据、权重、逐题输出及访问凭据通过项目私有交换服务传送。正常失败和未审区间如实保留，量子方法超过 native 不自动证明超过匹配经典控制。

@@ -1,0 +1,1053 @@
+{
+  "schema": "top8.dpr-additions-audit.v1",
+  "threshold": {
+    "second_original_dual": "FIDELITY",
+    "useful": [
+      374,
+      373
+    ],
+    "mean": 373.5,
+    "rule": "strictly greater historical mean useful lower bound; include all predeclared seeds"
+  },
+  "results": [
+    {
+      "candidate": "Q-PREF-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        366,
+        366,
+        366
+      ],
+      "upper": [
+        391,
+        391,
+        392
+      ],
+      "mean_useful_lower": 366,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261031/qpref-final-disposition.v001.json",
+        "sha256": "0fab574262fc0e270343ef73b3f97b915a22e791c5b036e15d64fc88b5692203"
+      },
+      "metric_paths": [
+        "evidence/results/20261029_QUANTUM",
+        "evidence/results/20261030_QUANTUM",
+        "evidence/results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "SET-QKERNEL-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        370,
+        372,
+        373
+      ],
+      "upper": [
+        370,
+        372,
+        373
+      ],
+      "mean_useful_lower": 371.6666666666667,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261031/setqkernel-final-disposition.v001.json",
+        "sha256": "1103a94388461856266d9ddb78351b02bf08ac4568983982a6595dba97d53243"
+      },
+      "metric_paths": [
+        "results/20261029_QUANTUM",
+        "results/20261030_QUANTUM",
+        "results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-SPAN-MIX-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        362,
+        365,
+        364
+      ],
+      "upper": [
+        362,
+        365,
+        364
+      ],
+      "mean_useful_lower": 363.6666666666667,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/spanmix-final-disposition.v001.json",
+        "sha256": "affb3bbe4c6714006a62a042ba32ed55b9ff44f6628cf381bfecd3257aa7ddba"
+      },
+      "metric_paths": [
+        "results/20261029_QUANTUM",
+        "results/20261030_QUANTUM",
+        "results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-FULL-OBS-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        372,
+        372,
+        372
+      ],
+      "upper": [
+        372,
+        372,
+        372
+      ],
+      "mean_useful_lower": 372,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qfull-final-disposition.v001.json",
+        "sha256": "8ef5143d59c3d4ddf0d7032b523ed3a4fb1d4584134e4810b0d662f5c39e1eb0"
+      },
+      "metric_paths": [
+        "comparison/results/20261029_QUANTUM",
+        "comparison/results/20261030_QUANTUM",
+        "comparison/results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-GIBBS-COUPLING-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        373,
+        371,
+        372
+      ],
+      "upper": [
+        373,
+        371,
+        372
+      ],
+      "mean_useful_lower": 372,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qgibbs-final-disposition.v001.json",
+        "sha256": "1b1634184236cf3ecf3cdd718d916387b73f94ee3c5b5a6fe020790cfbeecd53"
+      },
+      "metric_paths": [
+        "comparison/results/20261029_QUANTUM",
+        "comparison/results/20261030_QUANTUM",
+        "comparison/results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-COHERENT-WALK-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        368,
+        357,
+        345
+      ],
+      "upper": [
+        368,
+        357,
+        345
+      ],
+      "mean_useful_lower": 356.6666666666667,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qwalk-final-disposition.v001.json",
+        "sha256": "4e22eadb4e26bdebef5fc77f02807d9907af32fdf4f5e2713a9bf629597baf67"
+      },
+      "metric_paths": [
+        "comparison/results/20261029_QUANTUM",
+        "comparison/results/20261030_QUANTUM",
+        "comparison/results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-ORDINAL-MEASUREMENT-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        372,
+        372,
+        373
+      ],
+      "upper": [
+        372,
+        372,
+        373
+      ],
+      "mean_useful_lower": 372.3333333333333,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qordinal-final-disposition.v001.json",
+        "sha256": "d4800cc4cf88de1a8d0bcc9c86b5066b9d5d2d6738bc35ea764f19930b6adb6c"
+      },
+      "metric_paths": [
+        "results/20261029_QUANTUM",
+        "results/20261030_QUANTUM",
+        "results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-REFERENCE-KERNEL-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        370,
+        370,
+        370
+      ],
+      "upper": [
+        370,
+        371,
+        370
+      ],
+      "mean_useful_lower": 370,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qkernel-final-disposition.v001.json",
+        "sha256": "06e3b06db3d7c485ac2227c660b70697b73e499bfae260f270249cf81438316e"
+      },
+      "metric_paths": [
+        "results/20261029_QUANTUM",
+        "results/20261030_QUANTUM",
+        "results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-FEATURE-GATE-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        372,
+        372,
+        373
+      ],
+      "upper": [
+        372,
+        372,
+        373
+      ],
+      "mean_useful_lower": 372.3333333333333,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qfeature-gate-final-disposition.v001.json",
+        "sha256": "9d2f737fb9f4d2e7e139e7f42d28e67a66f5efa3f3bde9dafd6020e5a01dcf34"
+      },
+      "metric_paths": [
+        "results/20261029_QUANTUM",
+        "results/20261030_QUANTUM",
+        "results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-TOP5-UTILITY-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        370,
+        374,
+        372
+      ],
+      "upper": [
+        370,
+        374,
+        372
+      ],
+      "mean_useful_lower": 372,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qtop5-utility-final-disposition.v001.json",
+        "sha256": "57d519072f0eec5c386e51cb57718dd2b7907fb62b29f0b23a9f9dbe7c87b689"
+      },
+      "metric_paths": [
+        "results/20261029_QUANTUM",
+        "results/20261030_QUANTUM",
+        "results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-NATIVE-BORN-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        372,
+        372,
+        373
+      ],
+      "upper": [
+        372,
+        372,
+        373
+      ],
+      "mean_useful_lower": 372.3333333333333,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qnative-born-final-disposition.v001.json",
+        "sha256": "024c5200fd532fffecce4ab0db417d1f17c77a79096d3d430660bd524cbec968"
+      },
+      "metric_paths": [
+        "results/20261029_QUANTUM",
+        "results/20261030_QUANTUM",
+        "results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-FISHER-HEAD-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        373,
+        373,
+        370
+      ],
+      "upper": [
+        373,
+        373,
+        371
+      ],
+      "mean_useful_lower": 372,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qfisher-head-final-disposition.v001.json",
+        "sha256": "9539be3cd61604f305d4a2626004a9e8ad8a3091e1229f801b7f835be10a3ba8"
+      },
+      "metric_paths": [
+        "results/20261029_QUANTUM",
+        "results/20261030_QUANTUM",
+        "results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-LUDERS-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        356,
+        363,
+        363
+      ],
+      "upper": [
+        356,
+        363,
+        363
+      ],
+      "mean_useful_lower": 360.6666666666667,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qluders-final-disposition.v001.json",
+        "sha256": "140a37243fb7c8990b3266549b6616b1593f873162cbe27a7d378cfeb9a210cb"
+      },
+      "metric_paths": [
+        "results/20261029_QUANTUM",
+        "results/20261030_QUANTUM",
+        "results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "qsdm-final-disposition",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        372,
+        372,
+        373
+      ],
+      "upper": [
+        372,
+        372,
+        373
+      ],
+      "mean_useful_lower": 372.3333333333333,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qsdm-final-disposition.v001.json",
+        "sha256": "b402a82152098c472959fbee129fce4aeef079f475b2e28ea23f715438ffe1f1"
+      },
+      "metric_paths": [
+        "comparison/results/20261029_QUANTUM",
+        "comparison/results/20261030_QUANTUM",
+        "comparison/results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-ADAPT-POVM-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        371,
+        371,
+        370
+      ],
+      "upper": [
+        374,
+        374,
+        372
+      ],
+      "mean_useful_lower": 370.6666666666667,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qadaptive-final-disposition.v001.json",
+        "sha256": "ca7b20424f82188f73d4290f7c114208138cf2031c8a8b3063c59d52f3ece750"
+      },
+      "metric_paths": [
+        "comparison_after_2250/results/20261029_QUANTUM",
+        "comparison_after_2250/results/20261030_QUANTUM",
+        "comparison_after_2250/results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-CROSS-SCORE-v001",
+      "variant": "_QUANTUM",
+      "scope": "two_scorer_fusion",
+      "lower": [
+        376,
+        377,
+        376
+      ],
+      "upper": [
+        382,
+        383,
+        381
+      ],
+      "mean_useful_lower": 376.3333333333333,
+      "strictly_above_373_5": true,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qfusion-final-disposition.v001.json",
+        "sha256": "a68db1ecc6bcabcc1f343eebd30737bbf4ec6a5945b90f7f9348dcc640dbab49"
+      },
+      "metric_paths": [
+        "comparison_after_2250/results/20261029_QUANTUM",
+        "comparison_after_2250/results/20261030_QUANTUM",
+        "comparison_after_2250/results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-CLASS-FUSION-v001",
+      "variant": "_QUANTUM",
+      "scope": "two_scorer_fusion",
+      "lower": [
+        376,
+        376,
+        375
+      ],
+      "upper": [
+        379,
+        380,
+        378
+      ],
+      "mean_useful_lower": 375.6666666666667,
+      "strictly_above_373_5": true,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qclass-final-disposition.v001.json",
+        "sha256": "d2c79c4b7adb1d977bf98cde381a6af705178acafef3e2d89fe1b2a46d59aed9"
+      },
+      "metric_paths": [
+        "comparison/results/20261029_QUANTUM",
+        "comparison/results/20261030_QUANTUM",
+        "comparison/results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-COHERENT-SPAN-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        370,
+        372,
+        373
+      ],
+      "upper": [
+        371,
+        372,
+        375
+      ],
+      "mean_useful_lower": 371.6666666666667,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qcoherent-final-disposition.v001.json",
+        "sha256": "0472156386304773eeec83a1ec80435fc6c5a861e05806e582d2893da4006ea9"
+      },
+      "metric_paths": [
+        "comparison/results/20261029_QUANTUM",
+        "comparison/results/20261030_QUANTUM",
+        "comparison/results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-RISK-FUSION-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        372,
+        372,
+        372
+      ],
+      "upper": [
+        376,
+        377,
+        377
+      ],
+      "mean_useful_lower": 372,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qrisk-final-disposition.v001.json",
+        "sha256": "2e54798b279f45d773457d5245dda4bbad981266b2d3b0c9ecc77106352a890a"
+      },
+      "metric_paths": [
+        "comparison/results/20261029_QUANTUM",
+        "comparison/results/20261030_QUANTUM",
+        "comparison/results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-REGION-MEMORY-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        308,
+        313,
+        319
+      ],
+      "upper": [
+        417,
+        421,
+        422
+      ],
+      "mean_useful_lower": 313.3333333333333,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qregion-terminal-result.v001.json",
+        "sha256": "a0ed48bf9902e72cd2f13d042dabc8ee744e62e2bbfd7cf867348713c0990e5a"
+      },
+      "metric_paths": [
+        "comparison/results/20261029_QUANTUM",
+        "comparison/results/20261030_QUANTUM",
+        "comparison/results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-COLLISIONAL-MEMORY-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        372,
+        372,
+        371
+      ],
+      "upper": [
+        372,
+        372,
+        371
+      ],
+      "mean_useful_lower": 371.6666666666667,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qcollision-terminal-result.v001.json",
+        "sha256": "1d558d498386208914d70f24296729ff69fd539e7a0750b45a33b4d18987e3e9"
+      },
+      "metric_paths": [
+        "comparison/results/20261029_QUANTUM",
+        "comparison/results/20261030_QUANTUM",
+        "comparison/results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-TOKEN-BORN-POOL-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        371,
+        371,
+        373
+      ],
+      "upper": [
+        371,
+        371,
+        373
+      ],
+      "mean_useful_lower": 371.6666666666667,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qtoken-terminal-result.v003.json",
+        "sha256": "8f5948160c88d10465dea7720525c593e629664645b4ec50a21d54e8f3d730e9"
+      },
+      "metric_paths": [
+        "comparison/results/20261029_QUANTUM",
+        "comparison/results/20261030_QUANTUM",
+        "comparison/results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "qmps-terminal-result",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        368,
+        364,
+        360
+      ],
+      "upper": [
+        373,
+        370,
+        383
+      ],
+      "mean_useful_lower": 364,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qmps-terminal-result.v001.json",
+        "sha256": "e3e20dbae9b91fdf0367ed82bf8565020928877694d79f1dabf4058c452a75a2"
+      },
+      "metric_paths": [
+        "comparison/results/20261029_QUANTUM",
+        "comparison/results/20261030_QUANTUM",
+        "comparison/results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "qmps-terminal-result",
+      "variant": "_JOINT_Q",
+      "scope": "single_dpr",
+      "lower": [
+        371,
+        364,
+        367
+      ],
+      "upper": [
+        374,
+        369,
+        372
+      ],
+      "mean_useful_lower": 367.3333333333333,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qmps-terminal-result.v001.json",
+        "sha256": "e3e20dbae9b91fdf0367ed82bf8565020928877694d79f1dabf4058c452a75a2"
+      },
+      "metric_paths": [
+        "comparison/results/20261029_JOINT_Q",
+        "comparison/results/20261030_JOINT_Q",
+        "comparison/results/20261031_JOINT_Q"
+      ]
+    },
+    {
+      "candidate": "qffn-terminal-result",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        369,
+        369,
+        368
+      ],
+      "upper": [
+        369,
+        369,
+        368
+      ],
+      "mean_useful_lower": 368.6666666666667,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qffn-terminal-result.v004.json",
+        "sha256": "9ee64fb87216032368255140a493927a587c5ba40024458c2f09bb07aab11246"
+      },
+      "metric_paths": [
+        "comparison/results/20261029_QUANTUM",
+        "comparison/results/20261030_QUANTUM",
+        "comparison/results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "qffn-terminal-result",
+      "variant": "_JOINT_Q",
+      "scope": "single_dpr",
+      "lower": [
+        372,
+        372,
+        372
+      ],
+      "upper": [
+        372,
+        372,
+        372
+      ],
+      "mean_useful_lower": 372,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qffn-terminal-result.v004.json",
+        "sha256": "9ee64fb87216032368255140a493927a587c5ba40024458c2f09bb07aab11246"
+      },
+      "metric_paths": [
+        "comparison/results/20261029_JOINT_Q",
+        "comparison/results/20261030_JOINT_Q",
+        "comparison/results/20261031_JOINT_Q"
+      ]
+    },
+    {
+      "candidate": "Q-PRE-FFN-SIGNED-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        369,
+        369,
+        369
+      ],
+      "upper": [
+        369,
+        369,
+        369
+      ],
+      "mean_useful_lower": 369,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qpreffn-terminal-result.v001.json",
+        "sha256": "70646dff6401406b4a7b2b8a40ac02898f5288d7eb35951f74e8506ab3a0768d"
+      },
+      "metric_paths": [
+        "comparison/results/20261029_QUANTUM",
+        "comparison/results/20261030_QUANTUM",
+        "comparison/results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-PRE-FFN-SIGNED-v001",
+      "variant": "_JOINT_Q",
+      "scope": "single_dpr",
+      "lower": [
+        372,
+        372,
+        373
+      ],
+      "upper": [
+        372,
+        372,
+        373
+      ],
+      "mean_useful_lower": 372.3333333333333,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qpreffn-terminal-result.v001.json",
+        "sha256": "70646dff6401406b4a7b2b8a40ac02898f5288d7eb35951f74e8506ab3a0768d"
+      },
+      "metric_paths": [
+        "comparison/results/20261029_JOINT_Q",
+        "comparison/results/20261030_JOINT_Q",
+        "comparison/results/20261031_JOINT_Q"
+      ]
+    },
+    {
+      "candidate": "Q-LOCAL-FFN-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        372,
+        372,
+        373
+      ],
+      "upper": [
+        372,
+        372,
+        373
+      ],
+      "mean_useful_lower": 372.3333333333333,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qlocalffn-terminal-result.v001.json",
+        "sha256": "14d985bbdb41bbfd6b0e9cc6e75fb2713921f42a357f85018d09c17ff442412a"
+      },
+      "metric_paths": [
+        "comparison/results/20261029_QUANTUM",
+        "comparison/results/20261030_QUANTUM",
+        "comparison/results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-LOCAL-REUPLOAD-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        372,
+        372,
+        373
+      ],
+      "upper": [
+        372,
+        372,
+        373
+      ],
+      "mean_useful_lower": 372.3333333333333,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qreuploadffn-terminal-result.v001.json",
+        "sha256": "c97638c1c0fe7511ae398ad98d27dfb9a0e417d6dbd26f603f73b7a51181196e"
+      },
+      "metric_paths": [
+        "comparison/results/20261029_QUANTUM",
+        "comparison/results/20261030_QUANTUM",
+        "comparison/results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-ZCA-REUPLOAD-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        372,
+        372,
+        372
+      ],
+      "upper": [
+        372,
+        372,
+        372
+      ],
+      "mean_useful_lower": 372,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qzcaffn-terminal-result.v001.json",
+        "sha256": "590072af394aad259ba31bbe3db20ea3714b4db3280fec98ea5c7b26e684d1a7"
+      },
+      "metric_paths": [
+        "comparison/results/20261029_QUANTUM",
+        "comparison/results/20261030_QUANTUM",
+        "comparison/results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-CLS-PHASE-v001",
+      "variant": "_QUANTUM",
+      "scope": "single_dpr",
+      "lower": [
+        372,
+        372,
+        373
+      ],
+      "upper": [
+        372,
+        372,
+        373
+      ],
+      "mean_useful_lower": 372.3333333333333,
+      "strictly_above_373_5": false,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qclsphase-terminal-result.v002.json",
+        "sha256": "091bf8ca65bca24e132f82691c06c95bfc0c519463b81beb9f1a079dcf8b3f70"
+      },
+      "metric_paths": [
+        "comparison/results/20261029_QUANTUM",
+        "comparison/results/20261030_QUANTUM",
+        "comparison/results/20261031_QUANTUM"
+      ]
+    },
+    {
+      "candidate": "Q-MIXED-DEPTH-FIDELITY-v001",
+      "scope": "already_dual_selected",
+      "lower": [
+        375,
+        374,
+        373
+      ],
+      "upper": [
+        377,
+        374,
+        373
+      ],
+      "mean_useful_lower": 374,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261103/qmixed-depth-terminal-result.v003.json",
+        "sha256": "324d14162a4c40e98c784f5fc7e1023cd63f36a0d99a0e3ea9f9e19006bbec44"
+      }
+    },
+    {
+      "candidate": "Q-FIDELITY-v001",
+      "scope": "already_dual_selected",
+      "lower": [
+        374,
+        373
+      ],
+      "upper": [
+        374,
+        373
+      ],
+      "mean_useful_lower": 373.5,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261102/qfidelity-terminal-result.v003.json",
+        "sha256": "ddc520706cfa05131140dbe075c6c4d76c81fc47c6941505150000275b32f6e6"
+      }
+    },
+    {
+      "candidate": "Q-VALUE-GEOMETRY-v001",
+      "scope": "already_dual_selected",
+      "lower": [
+        373,
+        373,
+        373
+      ],
+      "upper": [
+        373,
+        373,
+        373
+      ],
+      "mean_useful_lower": 373,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261103/qvalue-geometry-terminal-result.v002.json",
+        "sha256": "fdcaa13e0b9b46f6ce6de454c4cb57c08db42c47f0cca1a7cfab957a31b53f9e"
+      }
+    },
+    {
+      "candidate": "Q-LOCAL-REUPLOAD-v001",
+      "scope": "already_dual_selected",
+      "lower": [
+        372,
+        372,
+        373
+      ],
+      "upper": [
+        372,
+        372,
+        373
+      ],
+      "mean_useful_lower": 372.3333333333333,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qreuploadffn-terminal-result.v001.json",
+        "sha256": "c97638c1c0fe7511ae398ad98d27dfb9a0e417d6dbd26f603f73b7a51181196e"
+      }
+    },
+    {
+      "candidate": "Q-NATIVE-BORN-v001",
+      "scope": "already_dual_selected",
+      "lower": [
+        372,
+        372,
+        373
+      ],
+      "upper": [
+        372,
+        372,
+        373
+      ],
+      "mean_useful_lower": 372.3333333333333,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qnative-born-final-disposition.v001.json",
+        "sha256": "024c5200fd532fffecce4ab0db417d1f17c77a79096d3d430660bd524cbec968"
+      }
+    },
+    {
+      "candidate": "Q-FEATURE-GATE-v001",
+      "scope": "already_dual_selected",
+      "lower": [
+        372,
+        372,
+        373
+      ],
+      "upper": [
+        372,
+        372,
+        373
+      ],
+      "mean_useful_lower": 372.3333333333333,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qfeature-gate-final-disposition.v001.json",
+        "sha256": "9d2f737fb9f4d2e7e139e7f42d28e67a66f5efa3f3bde9dafd6020e5a01dcf34"
+      }
+    },
+    {
+      "candidate": "Q-LOCAL-FFN-v001",
+      "scope": "already_dual_selected",
+      "lower": [
+        372,
+        372,
+        373
+      ],
+      "upper": [
+        372,
+        372,
+        373
+      ],
+      "mean_useful_lower": 372.3333333333333,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qlocalffn-terminal-result.v001.json",
+        "sha256": "14d985bbdb41bbfd6b0e9cc6e75fb2713921f42a357f85018d09c17ff442412a"
+      }
+    },
+    {
+      "candidate": "Q-ORDINAL-MEASUREMENT-v001",
+      "scope": "already_dual_selected",
+      "lower": [
+        372,
+        372,
+        373
+      ],
+      "upper": [
+        372,
+        372,
+        373
+      ],
+      "mean_useful_lower": 372.3333333333333,
+      "eligible_dpr_addition": false,
+      "evidence": {
+        "path": "configs/experiments/idea_search_20261101/qordinal-final-disposition.v001.json",
+        "sha256": "d4800cc4cf88de1a8d0bcc9c86b5066b9d5d2d6738bc35ea764f19930b6adb6c"
+      }
+    }
+  ],
+  "eligible_dpr_additions": [],
+  "limitations": [
+    "Only selected-eight records and recovered final/terminal scientific records were scored, not every abandoned preparation/specification",
+    "Unreviewed intervals are retained; an upper bound alone is not a measured strong result",
+    "Cross-scorer Q-CROSS-SCORE and Q-CLASS-FUSION require both scores; not DPR-only",
+    "Q-REGION terminal bounds precede later early-close review; kept explicitly historical, not promoted"
+  ],
+  "excluded_fusion_sources": [
+    {
+      "path": "applications/rag/qclass_fusion_v001.py",
+      "sha256": "9c9b741ce0368179f3045c801ba83c68ad608b80a4e9c7d3d868abd1b7713b50"
+    },
+    {
+      "path": "applications/rag/qfusion_v001.py",
+      "sha256": "d99ad94c6f1fcd46e38c94f9227c614d2c6ae5c38434cd2e5a1d1ba471e8051d"
+    }
+  ]
+}

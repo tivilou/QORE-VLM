@@ -1,0 +1,158 @@
+{
+  "schema": "qduet.junior-campaign.v1",
+  "dual_ideas": [
+    "MIXED_DEPTH",
+    "FIDELITY",
+    "VALUE_GEOMETRY",
+    "LOCAL_REUPLOAD",
+    "NATIVE_BORN",
+    "FEATURE_GATE",
+    "LOCAL_FFN",
+    "ORDINAL"
+  ],
+  "dpr_only_ideas": [],
+  "implemented_ideas": [
+    "MIXED_DEPTH",
+    "FIDELITY",
+    "VALUE_GEOMETRY",
+    "LOCAL_REUPLOAD",
+    "NATIVE_BORN",
+    "FEATURE_GATE",
+    "LOCAL_FFN",
+    "ORDINAL"
+  ],
+  "seeds": [
+    20261102,
+    20261103,
+    20261104
+  ],
+  "epochs": 4,
+  "reserve_bytes": 42949672960,
+  "dpr_only_selection": {
+    "threshold_idea": "FIDELITY",
+    "threshold_mean_useful_lower": 373.5,
+    "comparison": "strictly_greater",
+    "basis": "all predeclared historical seeds; conservative lower bounds; no best-seed selection",
+    "eligible": [],
+    "audit": "dpr-additions-audit.v001.json"
+  },
+  "populations": {
+    "formal": {
+      "population": "formal",
+      "status": "unavailable",
+      "reason": "History audit found no frozen independent full TriviaQA release with reviewed 0/1/2 paragraph labels. Historical 2742-question full run is NQ-open, not this task. Exposed B1 cannot substitute. See formal-dataset-history-audit.v001.json."
+    },
+    "reproduction": {
+      "population": "reproduction",
+      "status": "ready",
+      "exposed_population": true,
+      "independent_confirmation": false,
+      "label_semantics": "reviewed_none_partial_direct",
+      "archive": {
+        "exchange_path": "five_ideas/top8-junior-inputs/20261103-v001/top8-private-inputs-two-models.tar",
+        "size": 2753105920,
+        "sha256": "29a4d5808a330b45f5dcb307ffca59de498d020ec7d70409e1716eedf3566a32"
+      },
+      "files": [
+        {
+          "path": "data/qvalue/eval.inputs.jsonl",
+          "size": 4177490,
+          "sha256": "ba5c56cee69d9ded53828ba1b52edf03e4e4d40f9912c950ef5d1c08dfac41fe"
+        },
+        {
+          "path": "data/qvalue/eval.labels.json",
+          "size": 60552,
+          "sha256": "4cf9d6e955476caf9974ccc78e3fc5a142525429208d6197d8e5aee865673661"
+        },
+        {
+          "path": "data/qvalue/train.jsonl",
+          "size": 16865671,
+          "sha256": "46baf6ab8cd1732db994228adb6f58dc6c1f1be9786ec0bdfeeb47fc97996a0a"
+        },
+        {
+          "path": "data/qvalue/input-manifest.json",
+          "size": 1239,
+          "sha256": "e2413d75bdcb15d0feed4d3e2d693400f05b664d9a49277172979b44d3de7acd"
+        },
+        {
+          "path": "PRIVATE-BUNDLE-MANIFEST.json",
+          "size": 1863,
+          "sha256": "b5f33d110a7fdb8dd8dfd7e7abdbb88326d4ec66c94fc255e1982d99bcede3ae"
+        },
+        {
+          "path": "TOP8-PRIVATE-BUNDLE-MANIFEST.json",
+          "size": 1441,
+          "sha256": "4e8149563f171009e6060fe4ddc396cf35f5cc91d02c4c28d82879895aecd14c"
+        },
+        {
+          "path": "models/bge-reranker-v2-m3/config.json",
+          "size": 795,
+          "sha256": "13dcd6c31d9fec9d1d8e158702072f62d7fa7d312a64b9fe057bec9a08cfe41a"
+        },
+        {
+          "path": "models/bge-reranker-v2-m3/sentencepiece.bpe.model",
+          "size": 5069051,
+          "sha256": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865"
+        },
+        {
+          "path": "models/bge-reranker-v2-m3/special_tokens_map.json",
+          "size": 964,
+          "sha256": "8c785abebea9ae3257b61681b4e6fd8365ceafde980c21970d001e834cf10835"
+        },
+        {
+          "path": "models/bge-reranker-v2-m3/tokenizer.json",
+          "size": 17098273,
+          "sha256": "69564b696052886ed0ac63fa393e928384e0f8caada38c1f4864a9bfbf379c15"
+        },
+        {
+          "path": "models/bge-reranker-v2-m3/tokenizer_config.json",
+          "size": 1173,
+          "sha256": "7e4c1cc848840aeccdd763458c18dd525eb0f795c992e00ebe9c28554e7db2d4"
+        },
+        {
+          "path": "models/bge-reranker-v2-m3/model.safetensors",
+          "size": 2271071852,
+          "sha256": "d9e3e081faff1eefb84019509b2f5558fd74c1a05a2c7db22f74174fcedb5286"
+        },
+        {
+          "path": "models/dpr-reader-multiset-base/config.json",
+          "size": 484,
+          "sha256": "b70134672b020275e816b41fbe3cecf597019c7639ae4518fa5c493d15eb0c74"
+        },
+        {
+          "path": "models/dpr-reader-multiset-base/tokenizer.json",
+          "size": 466062,
+          "sha256": "ce64fce797c24f68df90b40a3f74f579b336a493db14bd583fd520ea0d8c9a98"
+        },
+        {
+          "path": "models/dpr-reader-multiset-base/tokenizer_config.json",
+          "size": 28,
+          "sha256": "53b6f42b8b8daddbdc6d3532c324187a92b46c1602bd6e8d4ad5a413b4fc90e1"
+        },
+        {
+          "path": "models/dpr-reader-multiset-base/vocab.txt",
+          "size": 231508,
+          "sha256": "07eced375cec144d27c900241f3e339478dec958f92fddbc551f295c992038a3"
+        },
+        {
+          "path": "models/dpr-reader-multiset-base/pytorch_model.bin",
+          "size": 438037991,
+          "sha256": "d26b3804486e5afa5a27fb9414589d46ae74ebeae2d8fa76f3eee725343d94d0"
+        }
+      ],
+      "inputs": {
+        "train": "data/qvalue/train.jsonl",
+        "eval_inputs": "data/qvalue/eval.inputs.jsonl",
+        "eval_labels": "data/qvalue/eval.labels.json"
+      },
+      "models": {
+        "dpr": "models/dpr-reader-multiset-base",
+        "bge": "models/bge-reranker-v2-m3"
+      },
+      "counts": {
+        "train": 512,
+        "evaluation": 128
+      }
+    }
+  }
+}

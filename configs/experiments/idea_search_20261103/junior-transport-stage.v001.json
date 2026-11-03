@@ -1,0 +1,16 @@
+{
+  "staged": true,
+  "hardlink_same_inode": true,
+  "head_status": 200,
+  "archive_size": 2753105920,
+  "synthetic_upload_download": {
+    "path": "five_ideas/top8-junior-transport-tests/20261103-v001/probe.json",
+    "size_bytes": 52,
+    "sha256": "26976cd205b1db35a9b14ae981fba7052e94a17c459d2aeb7cb62957bb1d56f7"
+  },
+  "large_owner_local_bytes": 0,
+  "schema": "qduet.junior-transport-stage.v1",
+  "server": "3080Ti-recovery-20261021",
+  "actual_model_training": false,
+  "private_credentials_published": false
+}
