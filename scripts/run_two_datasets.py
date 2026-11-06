@@ -237,7 +237,8 @@ def campaign_lock(work):
 def execute(campaign, config, datasets, population, work, *, prepare_only=False,
             runner=subprocess.run, environment=single.prepare_environment, exchange_factory=Exchange):
     plans, report = resolve(campaign, config, datasets, population)
-    require(report['ready'], ' | '.join(r['dataset']+': '+r['reason'] for r in report['readiness'] if not r['ready']))
+    from applications.rag.junior_readiness_v001 import release_error
+    require(report['ready'], release_error(report))
     work = Path(work).resolve()
     with campaign_lock(work) as lock_fd:
         exchange = exchange_factory(config['url'], config['token'])
@@ -299,6 +300,9 @@ def main(argv=None):
     p.add_argument('--workspace', type=Path, default=Path('qduet-two-dataset-work'))
     p.add_argument('--config', type=Path)
     p.add_argument('--plan-only', action='store_true')
+    p.add_argument('--diagnose', action='store_true', help='Read-only release diagnosis; no downloads, prompts or science.')
+    p.add_argument('--check-local-models', type=Path,
+                   help='With --diagnose, hash existing models/ beneath this root against the pinned inventory.')
     p.add_argument('--prepare-only', action='store_true')
     args = p.parse_args(argv)
     try:
@@ -312,9 +316,19 @@ def main(argv=None):
                 if candidate.is_file():
                     config = json.loads(candidate.read_bytes()); break
         _, report = resolve(campaign, config, args.datasets, args.population)
+        if args.check_local_models is not None and not args.diagnose:
+            raise ValueError('--check-local-models requires --diagnose; no implicit training')
+        if args.diagnose:
+            from applications.rag.junior_readiness_v001 import diagnosis, local_models
+            value = diagnosis(report, access_config_present=bool(config.get('url') and config.get('token')))
+            if args.check_local_models is not None:
+                template = json.loads((ROOT/campaign['base_campaign']).read_bytes())
+                value['local_models'] = local_models(template, args.check_local_models)
+            print(json.dumps(value, ensure_ascii=False, indent=2)); return 0
         if args.plan_only:
             print(json.dumps(report, ensure_ascii=False, indent=2)); return 0
-        require(report['ready'], ' | '.join(r['dataset']+': '+r['reason'] for r in report['readiness'] if not r['ready']))
+        from applications.rag.junior_readiness_v001 import release_error
+        require(report['ready'], release_error(report))
         if not config.get('url') or not config.get('token'):
             config.update(single.configuration(args.config))
         return execute(campaign, config, args.datasets, args.population, args.workspace,

@@ -27,6 +27,8 @@ bash scripts/run_two_datasets.sh
 
 **当前入口代码已具备，但默认正式人口尚不能开始训练。** 两个正式数据发布包仍未就绪。默认命令会同时报告缺口，在依赖安装、大文件下载、模型加载前退出2，不静默只跑一个数据集，也不以曝光小集代替正式实验。
 
+若遇到`DATA_RELEASE_NOT_READY`，这是负责人尚未补齐正式数据发布，不是模型运行失败。先运行`bash scripts/run_two_datasets.sh --diagnose`；已下载模型可用`--diagnose --check-local-models .`只读核SHA，无需重复下载。历史路径、范围及八个常见问题见[启动问题说明](junior-startup-data-release-faq.md)。
+
 只查看完整矩阵与就绪情况，不联网、不写输出、不需要凭据：
 
 ```bash
