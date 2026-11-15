@@ -22,18 +22,20 @@ class Scorer(nn.Module):
         super().__init__();self.kind=kind;self.denominator=1.
         self.register_buffer('mean',mean.detach().clone());self.register_buffer('std',std.detach().clone())
         self.register_buffer('priors',priors.detach().clone())
+        self.classes=len(priors)
+        need(self.classes in (2,3),'two useful classes or three original tiers')
         self.register_buffer('bias',bias.detach().reshape(()).clone())
         generator=torch.Generator(device='cpu').manual_seed(seed)
         def draw(*shape):return (.1*torch.randn(shape,generator=generator)).to(mean.device)
         if kind=='HEAD':self.weight=nn.Parameter(weight.detach().reshape(-1).clone())
         elif kind=='FULLCLASS':
-            self.class_weight=nn.Parameter(draw(768,3)/768**.5);self.class_bias=nn.Parameter(torch.zeros(3,device=mean.device))
+            self.class_weight=nn.Parameter(draw(768,self.classes)/768**.5);self.class_bias=nn.Parameter(torch.zeros(self.classes,device=mean.device))
         elif kind in ('LINEAR','POLY','TRIG'):
             d=2 if kind=='LINEAR' else 10
-            self.class_weight=nn.Parameter(draw(d,3)/d**.5);self.class_bias=nn.Parameter(torch.zeros(3,device=mean.device))
+            self.class_weight=nn.Parameter(draw(d,self.classes)/d**.5);self.class_bias=nn.Parameter(torch.zeros(self.classes,device=mean.device))
         elif kind=='MLP':
             self.hidden_weight=nn.Parameter(draw(2,2));self.hidden_bias=nn.Parameter(draw(2))
-            self.class_weight=nn.Parameter(draw(2,3));self.class_bias=nn.Parameter(torch.zeros(3,device=mean.device))
+            self.class_weight=nn.Parameter(draw(2,self.classes));self.class_bias=nn.Parameter(torch.zeros(self.classes,device=mean.device))
         else:
             self.p=nn.Parameter(draw(2,2,2));self.gain=nn.Parameter(torch.ones(2,device=mean.device));self.offset=nn.Parameter(torch.zeros(2,device=mean.device))
 
@@ -46,9 +48,10 @@ class Scorer(nn.Module):
         if self.kind in ('PRODUCT','QUANTUM'):
             _,state=circuit(self.angles(scores),self.p,self.kind=='QUANTUM')
             born=state.abs().square()
-            classes=torch.stack((born[...,0],born[...,1],born[...,2]+born[...,3]),-1)
+            classes=(torch.stack((born[...,:2].sum(-1),born[...,2:].sum(-1)),-1) if self.classes==2 else
+                     torch.stack((born[...,0],born[...,1],born[...,2]+born[...,3]),-1))
             # Correct measurement-subspace dimensions before train-prior odds.
-            evidence=classes/classes.new_tensor([1.,1.,2.])
+            evidence=classes/classes.new_tensor([2.,2.] if self.classes==2 else [1.,1.,2.])
             weighted=evidence.clamp_min(1e-6)*self.priors
             return weighted/weighted.sum(-1,keepdim=True)
         z=(scores-self.mean)/self.std
@@ -63,7 +66,7 @@ class Scorer(nn.Module):
         p=self.probabilities(h,scores)
         need(bool(torch.isfinite(p).all()),'finite class posterior')
         # Expected ORIGINAL ordered label, with no dev-tuned utility weights.
-        return p[...,1]+2*p[...,2]
+        return p[...,1] if self.classes==2 else p[...,1]+2*p[...,2]
 
 
 def loss_for(model,h,tiers,scores):

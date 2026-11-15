@@ -163,16 +163,17 @@ class Fidelity(Head):
 
 
 class MixedScorer(DepthHead):
-    def __init__(self,head,kind,seed):
+    def __init__(self,head,kind,seed,label_classes=3):
         super().__init__(head,'HEAD' if kind=='HEAD' else 'CONCAT',seed);self.kind=kind
-        if kind not in ('HEAD','CONCAT'):self.coefficients=nn.Parameter(torch.zeros(3,device=head.weight.device))
+        if kind not in ('HEAD','CONCAT'):self.coefficients=nn.Parameter(torch.zeros(label_classes,device=head.weight.device))
     def forward(self,row):
         score=super().forward(row)
         if self.kind not in ('HEAD','CONCAT'):score=score+row['mixed'][self.kind]@self.coefficients/math.sqrt(3)
         return score
 
 
-def mixed_banks(features, metadata, check):
+def mixed_banks(features, metadata, check,label_classes=3):
+    need(label_classes in (2,3),'explicit binary or tiered training semantics')
     from applications.rag.qmixed_depth_v001 import sym, psd_eigen
     train=[r for r in metadata if r['role']=='training'];folds={r['id']:int(r['component_id'],16)%5 for r in train}
     need(set(folds.values())==set(range(5)), 'all five component folds present')
@@ -181,11 +182,11 @@ def mixed_banks(features, metadata, check):
         x=h.double();n=x.norm(dim=-1,keepdim=True);need(bool((n>1e-8).all()), 'nonzero amplitude state');return x/n
     banks={}
     for excluded in list(range(5))+[None]:
-        totals=torch.zeros(3,d,d,dtype=torch.float64,device='cuda');means=torch.zeros(3,d,dtype=torch.float64,device='cuda');counts=[0]*3
+        totals=torch.zeros(label_classes,d,d,dtype=torch.float64,device='cuda');means=torch.zeros(label_classes,d,dtype=torch.float64,device='cuda');counts=[0]*label_classes
         for r in train:
             if folds[r['id']]==excluded:continue
             check();u=states(features[r['id']]['depths'].cuda());y=torch.tensor(r['targets'],device='cuda')
-            for c in range(3):
+            for c in range(label_classes):
                 x=u[y==c].reshape(-1,d)
                 if len(x):totals[c]+=x.T@x/len(x);means[c]+=x.mean(0);counts[c]+=1
         need(min(counts)>1,'training class support in every fold')
@@ -214,9 +215,10 @@ def mixed_banks(features, metadata, check):
     return dict(banks=banks,statistics=stats,folds=folds,normalization='global training OOF moments; same disclosed weak global dependency as DPR')
 
 
-def build(idea,arm,seed,head,layer,bridge,statistics):
+def build(idea,arm,seed,head,layer,bridge,statistics,label_classes=3):
+    need(label_classes in (2,3),'explicit training label classes')
     need(idea in IDEAS and arm in ARMS[idea], 'frozen idea/arm registry')
-    if idea=='MIXED_DEPTH':return MixedScorer(head,arm,seed)
+    if idea=='MIXED_DEPTH':return MixedScorer(head,arm,seed,label_classes)
     if idea=='FIDELITY':return Fidelity(head,layer,bridge,arm,seed)
     if idea=='VALUE_GEOMETRY':
         return DepthHead(head,arm,seed) if arm in ('HEAD','CONCAT','MLP') else ValueGeometry(head,layer,bridge,arm,seed)
@@ -226,7 +228,7 @@ def build(idea,arm,seed,head,layer,bridge,statistics):
     constructor=importlib.import_module('applications.rag.'+cls[0]).Scorer
     model=constructor(arm,head.weight,head.bias,seed,*statistics) if cls[1] else constructor(arm,head.weight,head.bias,seed)
     class Wrapped(nn.Module):
-        def __init__(self):super().__init__();self.inner=model;self.kind=arm
+        def __init__(self):super().__init__();self.inner=model;self.kind=arm;self.label_classes=label_classes
         def forward(self,row):return self.inner(row['readout'])
     return Wrapped().to(head.weight.device)
 
@@ -235,6 +237,10 @@ def objective(model,idea,row,tiers):
     score=model(row);mask=tiers[:,None]>tiers[None,:];count=mask.sum()
     loss=(F.softplus(-(score[:,None]-score[None,:]))*mask).sum()/count.clamp_min(1)
     if idea=='ORDINAL' and model.kind!='HEAD':
-        _,p=model.inner.effect(row['readout']);chosen=p.gather(-1,tiers[:,None]).squeeze(-1)
+        _,p=model.inner.effect(row['readout'])
+        # Binary labels supervise usefulness only. The two useful latent
+        # outcomes retain the old sequential mechanism; neither means direct.
+        if model.label_classes==2:p=torch.stack((p[:,0],p[:,1:].sum(-1)),-1)
+        chosen=p.gather(-1,tiers[:,None]).squeeze(-1)
         loss=loss-chosen.clamp_min(1e-7).log().mean() if len(tiers) else loss
     return loss,count

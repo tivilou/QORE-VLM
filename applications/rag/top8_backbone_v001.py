@@ -13,6 +13,7 @@ from applications.rag.qvalue_portable_v001 import (
     need, digest, inputs, json_file, tensor_file, checked_member,
 )
 from applications.rag.qvalue_geometry_v002 import NativeTail
+from applications.rag.model_input_guards import require_complete_question
 
 MODELS = {
     'dpr': ('facebook/dpr-reader-multiset-base',
@@ -81,19 +82,25 @@ class Backbone:
         if truncated:
             kw.update(max_length=self.limit, return_tensors='pt')
         if self.kind == 'dpr':
-            return self.tokenizer(questions=[question]*len(texts), texts=texts, **kw)
-        return self.tokenizer([question]*len(texts), texts, **kw)
+            encoded = self.tokenizer(questions=[question]*len(texts), texts=texts, **kw)
+        else:
+            encoded = self.tokenizer([question]*len(texts), texts, **kw)
+        require_complete_question(self.tokenizer, question, encoded['input_ids'])
+        return encoded
 
     def logits(self, encoded):
         out = self.model(**encoded, output_attentions=False, return_dict=True)
         return out.relevance_logits if self.kind == 'dpr' else out.logits.squeeze(-1)
 
 
-def extract(kind, model_root, train_path, eval_path, output, checkpoint=lambda: None):
+def extract(kind, model_root, train_path, eval_path, output, checkpoint=lambda: None,label_classes=3):
     """Cache all native chunks first; retain reviewed training rows afterwards."""
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)
+    need(label_classes in (2,3),'explicit training label classes')
     train = inputs(train_path, True)
+    need(all(all(y in range(label_classes) for y in r['labels'].values()) for r in train),
+         'training labels match declared semantics')
     evaluation = inputs(eval_path, False)
     for key in ('id', 'component_id'):
         need(not {r[key] for r in train} & {r[key] for r in evaluation}, 'disjoint role identities')
@@ -194,7 +201,7 @@ def extract(kind, model_root, train_path, eval_path, output, checkpoint=lambda: 
                 # unreviewed positions remain excluded from training targets.
                 native_scores=native))
     records.append(tensor_file(output,'features.bin',features))
-    result=dict(schema='top8.native-cache.v1',backbone=kind,model_id=MODELS[kind][0],
+    result=dict(schema='top8.native-cache.v1',label_classes=label_classes,backbone=kind,model_id=MODELS[kind][0],
         revision=MODELS[kind][1],config=backbone.config.to_dict(),assets=backbone.asset_records,
         files=records,rows=metadata,max_native_replay_error=maximum_error,max_native_math_error=maximum_math_error,truncated_rows=truncated,
         train_sha256=digest(train_path),eval_input_sha256=digest(eval_path),

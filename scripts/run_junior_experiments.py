@@ -150,7 +150,8 @@ def declared_artifacts(output):
         seal = json.loads(seal_file.read_bytes()); add('matrix/joint-prediction-seal.json')
         for row in seal['files']:
             add('matrix/' + (row['path'] if 'path' in row else row['name']), row)
-    for name in ['execution.json', 'dataset-release.json', 'matrix/run-binding.json', 'matrix/evaluation.json']:
+    for name in ['execution.json', 'dataset-release.json', 'matrix/run-binding.json', 'matrix/evaluation.json',
+                 'matrix/smallset-evaluation.json']:
         if (output / name).is_file():
             add(name)
     for path in sorted((output / 'matrix').glob('*/disposition.json')):

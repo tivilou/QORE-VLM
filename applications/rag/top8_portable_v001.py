@@ -78,7 +78,8 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
     layer,bridge,head=load_modules(manifest,cache_root)
     values=torch.cat([features[r['id']]['readout'] for r in train])
     mean=values.mean(0).cuda();std=values.std(0,unbiased=False);std=torch.where(std>1e-8,std,torch.ones_like(std)).cuda()
-    model=build(idea,arm,seed,head,layer,bridge,(mean,std)).cuda()
+    label_classes=manifest.get('label_classes',3)
+    model=build(idea,arm,seed,head,layer,bridge,(mean,std),label_classes).cuda()
     parameters={n:p for n,p in model.named_parameters() if p.requires_grad}
     need(parameters and len({id(p) for p in parameters.values()})==len(parameters),'exact trainable parameter ownership')
     optimizer=torch.optim.AdamW(list(parameters.values()),lr=.001,betas=(.9,.999),eps=1e-8,weight_decay=0)
@@ -140,7 +141,7 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
     compact={n:p.detach().cpu().clone() for n,p in parameters.items()}
     files.append(tensor_file(output,'checkpoint-'+key+'.bin',compact))
     # Rebuild from fixed native modules and seed, then load only owned parameters.
-    replay=build(idea,arm,seed,head,layer,bridge,(mean,std)).cuda()
+    replay=build(idea,arm,seed,head,layer,bridge,(mean,std),label_classes).cuda()
     restored={n:p for n,p in replay.named_parameters() if p.requires_grad}
     need(set(restored)==set(compact),'complete compact trainable schema')
     with torch.no_grad():

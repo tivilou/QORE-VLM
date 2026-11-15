@@ -35,8 +35,11 @@ def relative(value):
 
 
 def member(root, name):
-    path = Path(root).joinpath(*relative(name).parts)
-    require(path.resolve().is_relative_to(Path(root).resolve()) and
+    # Resolve an absolute path: some Windows Python versions preserve a
+    # nonexistent relative suffix in resolve(), breaking the containment check.
+    root = Path(root).absolute()
+    path = root.joinpath(*relative(name).parts)
+    require(path.resolve().is_relative_to(root.resolve()) and
             not any(p.is_symlink() for p in [path, *path.parents]), 'symlink/path escape')
     return path
 

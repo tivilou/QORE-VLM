@@ -4,6 +4,7 @@ import argparse
 import gc
 import json
 import os
+import shutil
 from pathlib import Path
 from applications.rag.qvalue_portable_v001 import need, digest, json_file, tensor_file, checked_member
 
@@ -110,7 +111,7 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
         elif 'MIXED_DEPTH' in scheduled:
             # Deterministic training-only refit; no development targets are present.
             # Bank files from interrupted generations remain intact.
-            bank = mixed_banks(features, manifest['rows'], checkpoint)
+            bank = mixed_banks(features, manifest['rows'], checkpoint,manifest.get('label_classes',3))
             generation = len(list(output.glob('banks-'+kind+'-*.bin')))
             files.append(tensor_file(output, f'banks-{kind}-{generation:04d}.bin', bank))
             del bank; torch.cuda.empty_cache()
@@ -187,6 +188,8 @@ def main(argv=None):
     parser.add_argument('--dpr-model',type=Path);parser.add_argument('--bge-model',type=Path)
     parser.add_argument('--train',type=Path);parser.add_argument('--eval-inputs',type=Path)
     parser.add_argument('--eval-labels',type=Path);parser.add_argument('--cache',type=Path,action='append',default=[])
+    parser.add_argument('--label-classes',type=int,choices=[2,3],default=3)
+    parser.add_argument('--minimum-free-gib',type=int,default=0)
     parser.add_argument('--output',type=Path,required=True);parser.add_argument('--resume',action='store_true')
     parser.add_argument('--seeds',type=int,nargs='+',default=[20261102,20261103,20261104])
     parser.add_argument('--ideas',nargs='+');parser.add_argument('--canary',action='store_true')
@@ -212,11 +215,14 @@ def main(argv=None):
     from applications.rag.qduet_fusion_v001 import fusion_plan, FUSION_ARMS
     plan['fusion_ideas'] = fusion_plan(available, args.fusion_ideas)
     plan['seeds'] = args.seeds
+    plan['label_classes'] = args.label_classes
     plan['learned_cells'] = sum(len(registry['ARMS'][idea]) * len(args.seeds)
         for values in plan['backbone_ideas'].values() for idea in values)
     plan['fusion_learned_cells'] = sum(len(FUSION_ARMS[i])*len(args.seeds) for i in args.fusion_ideas)
     plan['learned_cells'] += plan['fusion_learned_cells']
     need(args.seeds and len(set(args.seeds))==len(args.seeds),'unique predeclared seeds')
+    need(args.label_classes==3 or args.eval_labels is None,
+         'binary evaluation uses the separate smallset evaluator after joint sealing')
     if args.plan_only:
         print(json.dumps(plan,ensure_ascii=False,indent=2))
         return 0
@@ -229,6 +235,13 @@ def main(argv=None):
     from applications.rag.top8_methods_v001 import IDEAS
     from applications.rag.top8_portable_v001 import evaluate
     ideas=plan['ideas']
+    need(args.minimum_free_gib>=0,'nonnegative disk reserve')
+    def checkpoint():
+        if args.minimum_free_gib:
+            parent=args.output if args.output.exists() else args.output.parent
+            need(shutil.disk_usage(parent).free>=args.minimum_free_gib*1024**3,
+                 'server disk reserve reached; expand experiment disk before continuation')
+    checkpoint()
     need(ideas and len(set(ideas))==len(ideas) and set(ideas)<=set(IDEAS),'selected unique ideas')
     need(args.seeds and len(set(args.seeds))==len(args.seeds),'unique predeclared seeds')
     if args.resume:need(args.output.is_dir(),'existing output required for explicit resume')
@@ -239,6 +252,7 @@ def main(argv=None):
         cache=args.output/('cache-'+kind)/'cache.json'
         if args.resume and cache.exists():
             m=json.loads(cache.read_bytes())
+            need(m.get('label_classes',3)==args.label_classes,'same label semantics on resume')
             need(args.train and args.eval_inputs and m['train_sha256']==digest(args.train)
                  and m['eval_input_sha256']==digest(args.eval_inputs),'same raw input files on resume')
             for record in m['assets']:
@@ -248,12 +262,15 @@ def main(argv=None):
             caches.append(cache)
         else:
             need(args.train and args.eval_inputs,'explicit train / label-free evaluation inputs')
-            caches.append(extract(kind,model,args.train,args.eval_inputs,args.output/('cache-'+kind)))
+            caches.append(extract(kind,model,args.train,args.eval_inputs,args.output/('cache-'+kind),
+                                  checkpoint=checkpoint,label_classes=args.label_classes))
     need(caches and len({json.loads(Path(p).read_bytes())['backbone'] for p in caches})==len(caches),
          'one cache for each requested backbone')
+    need(all(json.loads(Path(p).read_bytes()).get('label_classes',3)==args.label_classes for p in caches),
+         'all caches use the requested supervision semantics')
     if args.extract_only:return 0
     seal=run_recoverable(caches,args.output/'matrix',args.seeds,ideas,canary=args.canary,
-                         backbone_ideas=plan['backbone_ideas'],fusion_ideas=args.fusion_ideas)
+                         checkpoint=checkpoint,backbone_ideas=plan['backbone_ideas'],fusion_ideas=args.fusion_ideas)
     if args.eval_labels:
         evaluation=args.output/'matrix/evaluation.json'
         if evaluation.exists():

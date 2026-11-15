@@ -42,6 +42,7 @@ def aligned_rows(dpr, bge):
          'label-free evaluation caches')
     need(dpr['schema'] == 'top8.native-cache.v1' and len(dpr['rows']) == len(bge['rows']),
          'same complete fusion population')
+    need(dpr.get('label_classes',3)==bge.get('label_classes',3),'same supervision semantics')
     seen = set(); roles = {'training': set(), 'development': set()}; rows = []
     for a, b in zip(dpr['rows'], bge['rows']):
         for key in ('id', 'component_id', 'role', 'candidate_ids', 'retained_indices', 'targets'):
@@ -62,7 +63,8 @@ def aligned_rows(dpr, bge):
             need(isinstance(values, list) and len(values) == 50
                  and all(type(v) in (int, float) and math.isfinite(v) for v in values),
                  'complete finite original50 scores required; old cache needs new workspace')
-        rows.append(dict(a, paired_scores=list(map(list, zip(a['native_scores'], b['native_scores'])))))
+        rows.append(dict(a, label_classes=dpr.get('label_classes',3),
+                         paired_scores=list(map(list, zip(a['native_scores'], b['native_scores'])))))
     need(roles['training'] and roles['development'] and not roles['training'] & roles['development'],
          'disjoint nonempty fusion components')
     return rows
@@ -103,8 +105,11 @@ def train_fusion_cell(idea, arm, seed, rows, features, head, output, epochs,
     mean = full.mean(0); std = full.std(0, unbiased=False)
     need(bool((std > 1e-6).all()), 'nonconstant training-only score channels')
     labels = torch.tensor([y for r in train for y in r['targets']], device='cuda', dtype=torch.long)
-    counts = torch.bincount(labels, minlength=3).float()
-    need(bool((counts > 0).all()) or idea != 'CLASS_FUSION', 'three training classes for class fusion')
+    classes=rows[0].get('label_classes',3)
+    need(all(r.get('label_classes',3)==classes for r in rows),'uniform fusion label semantics')
+    need(bool(((labels>=0)&(labels<classes)).all()),'valid class labels')
+    counts = torch.bincount(labels, minlength=classes).float()
+    need(bool((counts > 0).all()) or idea != 'CLASS_FUSION', 'all declared training classes for class fusion')
     priors = counts / counts.sum().clamp_min(1)
     model = _build(idea, arm, seed, head, mean, std, priors, full)
     denominator = model.denominator

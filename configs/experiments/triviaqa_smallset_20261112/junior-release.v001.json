@@ -1,0 +1,72 @@
+{
+  "schema": "qduet.triviaqa-smallset-release.v1",
+  "status": "ready",
+  "dataset": "triviaqa",
+  "roles": {
+    "train": 8000,
+    "valid": 1000,
+    "test": 1000
+  },
+  "label_semantics": "binary_useful",
+  "semantic_gold": false,
+  "archive": {
+    "exchange_path": "five_ideas/triviaqa-smallset-inputs/20261115-v001/triviaqa-8000-1000-1000-binary.tar",
+    "size": 190976000,
+    "sha256": "1a53cf1da9099b0b432b0e6b7b30625cde674cf6de3e7c19414b0da7ffc827af"
+  },
+  "source_input_manifest_sha256": "90e164321a7ef4b8b783e0a22fad62705f354f71d4155bc63bf32cd0a921df0c",
+  "files": [
+    {
+      "path": "train.inputs.jsonl.gz",
+      "size": 112512560,
+      "sha256": "a314aac417b35af0d9963779acfd75dddf60f48e045470fb1e39861b64f95fc1"
+    },
+    {
+      "path": "valid.inputs.jsonl.gz",
+      "size": 14073904,
+      "sha256": "3ac2ecb682db7f3b41939b1235cbe11903d2e3e6e34b33c706436f88732b93ae"
+    },
+    {
+      "path": "test.inputs.jsonl.gz",
+      "size": 14140310,
+      "sha256": "d6a2cf1ee3173077fa5865e0ae25540f50bc3998f85d89514ede465f744ef69f"
+    },
+    {
+      "path": "train.labels.private.jsonl",
+      "size": 40141267,
+      "sha256": "fd93449c59215b85866f57c76ae33db242c0a7b128c00c908a43eb2544093b71"
+    },
+    {
+      "path": "valid.labels.private.jsonl",
+      "size": 5089355,
+      "sha256": "d2774d79ec0d4c7455f0ebe9becf57fc7a534c4f8b6fb85ae3d7ee08567a732b"
+    },
+    {
+      "path": "test.labels.private.jsonl",
+      "size": 5012376,
+      "sha256": "ef4f82ef675889d82b883835a30f5ba2b06ccdaeedc153be3fde61ddb9023b88"
+    }
+  ],
+  "maximum_native_cache_bytes": 1649267441664,
+  "headroom": {
+    "basis": "complete operational binary labels, original Top50; not semantic gold",
+    "train": {"questions": 8000, "positive_positions": 38704, "oracle_top5": 24320, "denominator": 40000},
+    "valid": {"questions": 1000, "positive_positions": 5111, "oracle_top5": 3049, "denominator": 5000},
+    "test": "NOT_COMPUTED_FOR_SELECTION"
+  },
+  "qualification": {
+    "complete_original_top50": true,
+    "binary_labels_complete": true,
+    "source_mapping_SHA_EOF_pass": true,
+    "component_roles_disjoint": true,
+    "pretraining_independence_certified": false,
+    "semantic_paraphrase_independence_certified": false
+  },
+  "test_policy": "All methods/controls/seeds frozen; no test-based selection or tuning. Report valid/test separately.",
+  "binary_adaptations": {
+    "MIXED_DEPTH": "two actual supervised class banks",
+    "CLASS_FUSION": "two equal-dimensional Born subspaces and two training priors",
+    "ORDINAL": "coarse-grained useful likelihood; latent subtypes never presented as direct labels"
+  },
+  "model_package": "Reuse exact hash-bound model package in junior-campaign.v001.json; no new model identity"
+}
