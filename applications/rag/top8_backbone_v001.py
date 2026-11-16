@@ -93,7 +93,7 @@ class Backbone:
         return out.relevance_logits if self.kind == 'dpr' else out.logits.squeeze(-1)
 
 
-def extract(kind, model_root, train_path, eval_path, output, checkpoint=lambda: None,label_classes=3):
+def _extract_full(kind, model_root, train_path, eval_path, output, checkpoint=lambda: None,label_classes=3):
     """Cache all native chunks first; retain reviewed training rows afterwards."""
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)
@@ -209,6 +209,14 @@ def extract(kind, model_root, train_path, eval_path, output, checkpoint=lambda: 
         bge_bridge='frozen dense/tanh; original scalar out_proj' if kind=='bge' else 'identity')
     json_file(output,'cache.json',result)
     return output/'cache.json'
+
+
+def extract(kind, model_root, train_path, eval_path, output, checkpoint=lambda:None,label_classes=3,
+            resume=False, sequence_cache_bytes=32*1024**3):
+    """FP32 per-question shards; full prefixes are regenerated into a bounded LRU."""
+    from applications.rag.top8_cache_v002 import extract_bounded
+    return extract_bounded(kind,model_root,train_path,eval_path,output,checkpoint,label_classes,
+                           resume=resume,sequence_cache_bytes=sequence_cache_bytes)
 
 
 def digest_tensor(x):

@@ -161,6 +161,8 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
                         json_file(cell,'disposition.json',dict(status='failed',binding=binding,failure=failure))
                         failures.append(failure)
                         gc.collect(); torch.cuda.empty_cache()
+        from applications.rag.top8_cache_v002 import close_sequences
+        close_sequences(root)
         del features; gc.collect(); torch.cuda.empty_cache()
     if fusion_ideas:
         from applications.rag.qduet_fusion_v001 import run_fusions
@@ -190,6 +192,8 @@ def main(argv=None):
     parser.add_argument('--eval-labels',type=Path);parser.add_argument('--cache',type=Path,action='append',default=[])
     parser.add_argument('--label-classes',type=int,choices=[2,3],default=3)
     parser.add_argument('--minimum-free-gib',type=int,default=0)
+    parser.add_argument('--sequence-cache-gib',type=int,default=32,
+                        help='Disposable FP32 prefix LRU per backbone; 0 recomputes without disk caching.')
     parser.add_argument('--output',type=Path,required=True);parser.add_argument('--resume',action='store_true')
     parser.add_argument('--seeds',type=int,nargs='+',default=[20261102,20261103,20261104])
     parser.add_argument('--ideas',nargs='+');parser.add_argument('--canary',action='store_true')
@@ -202,6 +206,7 @@ def main(argv=None):
                         help='Print the exact backbone/idea/arm schedule without loading models or writing output.')
     parser.add_argument('--extract-only',action='store_true')
     args=parser.parse_args(argv)
+    need(args.sequence_cache_gib>=0,'nonnegative sequence cache limit')
     from applications.rag.top8_matrix_plan_v001 import matrix_plan
     # Read the static registry without importing its scientific dependencies.
     import ast
@@ -263,12 +268,15 @@ def main(argv=None):
         else:
             need(args.train and args.eval_inputs,'explicit train / label-free evaluation inputs')
             caches.append(extract(kind,model,args.train,args.eval_inputs,args.output/('cache-'+kind),
-                                  checkpoint=checkpoint,label_classes=args.label_classes))
+                                  checkpoint=checkpoint,label_classes=args.label_classes,resume=args.resume,
+                                  sequence_cache_bytes=args.sequence_cache_gib*1024**3))
     need(caches and len({json.loads(Path(p).read_bytes())['backbone'] for p in caches})==len(caches),
          'one cache for each requested backbone')
     need(all(json.loads(Path(p).read_bytes()).get('label_classes',3)==args.label_classes for p in caches),
          'all caches use the requested supervision semantics')
     if args.extract_only:return 0
+    from applications.rag.top8_cache_v002 import set_sequence_budget
+    set_sequence_budget(args.sequence_cache_gib*1024**3)
     seal=run_recoverable(caches,args.output/'matrix',args.seeds,ideas,canary=args.canary,
                          checkpoint=checkpoint,backbone_ideas=plan['backbone_ideas'],fusion_ideas=args.fusion_ideas)
     if args.eval_labels:

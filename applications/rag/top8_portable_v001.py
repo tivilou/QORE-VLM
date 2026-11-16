@@ -24,6 +24,9 @@ def load_cache(path):
         need(len(r['candidate_ids'])==50 and len(set(r['candidate_ids']))==50,'same50 identities')
         if r['role']=='training':need(len(r['targets'])==len(r['retained_indices']),'reviewed training supervision')
         else:need(r['targets'] is None and r['retained_indices']==list(range(50)),'target-free complete50 evaluation')
+    from applications.rag.top8_cache_v002 import LAYOUT, FeatureRows
+    if m.get('storage_layout') == LAYOUT:
+        return m,FeatureRows(p.parent,rows)
     record=next(r for r in m['files'] if r['name']=='features.bin')
     features=torch.load(checked_member(p.parent,record),map_location='cpu',weights_only=True)
     need(set(features)=={r['id'] for r in rows},'complete cache population')
@@ -44,7 +47,14 @@ def sequence_rows(root, record, features, checkpoint):
     import torch
     offset=0
     for entry in record['sequences']:
-        checkpoint();p=checked_member(root,entry);x=torch.load(p,map_location='cuda',weights_only=True)
+        checkpoint()
+        if entry.get('regenerate'):
+            from applications.rag.top8_cache_v002 import sequence_reader
+            x=sequence_reader(root,None,checkpoint).read(entry)
+            x=dict(x,positions=entry['positions'])
+            x={k:(v.cuda() if isinstance(v,torch.Tensor) else v) for k,v in x.items()}
+        else:
+            p=checked_member(root,entry);x=torch.load(p,map_location='cuda',weights_only=True)
         n=len(x['positions']);out=gpu_row(features,slice(offset,offset+n));out.update(hidden=x['hidden'],mask=x['mask'])
         expected=record['retained_indices'][offset:offset+n]
         need(expected==x['positions'],'complete sequence/native feature alignment')
@@ -202,6 +212,8 @@ def run_matrix(cache_paths,output,seeds,ideas,epochs=4,canary=False,checkpoint=l
                         json_file(cell,'failed.json',failure);failures.append(failure)
                         gc.collect();torch.cuda.empty_cache()
                         if isinstance(e,(KeyboardInterrupt,MemoryError)):raise
+        from applications.rag.top8_cache_v002 import close_sequences
+        close_sequences(root)
         del features;gc.collect();torch.cuda.empty_cache()
     # Manifest inventories all predictions/checkpoints before target access.
     seal=dict(schema='top8.joint-predictions.v1',seeds=seeds,ideas=ideas,canary=canary,

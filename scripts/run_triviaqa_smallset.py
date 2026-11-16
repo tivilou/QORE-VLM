@@ -29,7 +29,10 @@ def main(argv=None):
     p.add_argument('--prepare-only',action='store_true')
     p.add_argument('--plan-only',action='store_true')
     p.add_argument('--resume',action='store_true')
+    p.add_argument('--sequence-cache-gib',type=int,default=32,
+                   help='Bounded FP32 sequence cache per model; smaller uses more recomputation.')
     a=p.parse_args(argv)
+    if a.sequence_cache_gib < 0:p.error('--sequence-cache-gib must be nonnegative')
     check_delivery()
     release=json.loads(RELEASE.read_bytes());validate_release(release,ready=not a.plan_only)
     campaign=json.loads(CAMPAIGN.read_bytes())
@@ -61,22 +64,28 @@ def main(argv=None):
         print(json.dumps(dict(stage='smallset_ready',roles=release['roles'],labels=500000,
                               label_semantics='binary_useful',scientific_execution=False)))
         return 0
-    # Existing full native FP32 caches retain all last-layer sequences for the
-    # FIDELITY family. This is a conservative maximum, not measured disk use.
+    # Compact FP32 question shards and token recipes replace full sequence dumps.
+    # Each backbone gets a bounded, disposable working set; old partial v1 files
+    # are preserved and are NOT included in the new-cache estimate below.
     require(shutil.disk_usage(work).free>=40*1024**3,
             'Less than 40GiB free. Expand the experiment disk; --prepare-only remains available.')
-    print(json.dumps(dict(stage='storage_plan',worst_case_cache_bytes=release['maximum_native_cache_bytes'],
+    print(json.dumps(dict(stage='storage_plan',storage_layout='question-shards-fp32-v2',
+                          sequence_cache_GiB_per_model=a.sequence_cache_gib,
+                          combined_sequence_cache_limit_GiB=2*a.sequence_cache_gib,
+                          compact_features_max_GiB=43.4,tokens_and_metadata_estimate_GiB=9,
                           measured_cache_bytes=None,minimum_free_GiB=40,
-                          note='Full FP32 sequence caches can require hundreds of GiB. The runtime checks free disk throughout.')),flush=True)
+                          note='Bounded FP32 prefixes regenerate on misses. Legacy partial files are preserved, additional to this estimate. Training outputs require extra space.')),flush=True)
     py=prepare_environment(work,config)
     subprocess.run([str(py),'-B','-m','unittest',
-                    'applications.rag.tests.test_top8_binary_numerics','-q'],cwd=ROOT,check=True)
+                    'applications.rag.tests.test_top8_binary_numerics',
+                    'applications.rag.tests.test_top8_cache_numerics','-q'],cwd=ROOT,check=True)
     output=work/'run-smallset';output.mkdir(exist_ok=True)
     command=[str(py),'-B',str(ROOT/'scripts/run_top8.py'),
              '--dpr-model',str(models/base['populations']['reproduction']['models']['dpr']),
              '--bge-model',str(models/base['populations']['reproduction']['models']['bge']),
              '--train',str(data/'train.jsonl'),'--eval-inputs',str(data/'evaluation.inputs.jsonl'),
-             '--output',str(output),'--label-classes','2','--minimum-free-gib','40','--ideas',*base['dual_ideas'],
+             '--output',str(output),'--label-classes','2','--minimum-free-gib','40',
+             '--sequence-cache-gib',str(a.sequence_cache_gib),'--ideas',*base['dual_ideas'],
              '--fusion-ideas',*campaign['fusion_ideas'],'--seeds',*map(str,base['seeds'])]
     if a.resume:command.append('--resume')
     else:

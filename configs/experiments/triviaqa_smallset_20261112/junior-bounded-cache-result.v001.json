@@ -1,0 +1,111 @@
+{
+  "schema": "qduet.junior-bounded-cache-result.v1",
+  "date": "2026-11-16",
+  "status": "software_verified_ready_for_junior_runtime",
+  "storage_layout": "question-shards-fp32-v2",
+  "changes": [
+    "Immutable per-question FP32 feature/token shards with atomic SHA-bound receipts",
+    "128MiB question-feature CPU LRU; auxiliary training statistics remain additional memory",
+    "32GiB disposable sequence payload cap per backbone; same padded token chunks regenerated on miss",
+    "Complete hidden/mask/native-score signatures required before any regenerated or legacy prefix is accepted",
+    "Preserve and verify legacy unsealed prefix files; no automatic deletion or false resume credit",
+    "Frozen model reload preserves training RNG; one writer per disposable cache/extraction"
+  ],
+  "unchanged": {
+    "precision": "FP32",
+    "train": 8000,
+    "valid": 1000,
+    "test": 1000,
+    "top50": 50,
+    "topk": 5,
+    "learned_cells": 393,
+    "seeds": [
+      20261102,
+      20261103,
+      20261104
+    ],
+    "epochs": 4,
+    "ideas": 8,
+    "fusion_ideas": 2,
+    "labels_changed": false,
+    "formal_owner_training_steps": 0
+  },
+  "estimated_new_cache": {
+    "compact_vectors_GiB": 43.4,
+    "tokens_and_metadata_GiB": 9,
+    "sequence_payload_limit_per_model_GiB": 32,
+    "combined_sequence_payload_limit_GiB": 64,
+    "approximate_total_GiB": 120,
+    "free_reserve_GiB": 40,
+    "exclusions": [
+      "Existing legacy prefixes (junior reported about142GiB)",
+      "Training checkpoints, predictions, other existing files, filesystem overhead"
+    ],
+    "complete_run_measured": false
+  },
+  "validation": [
+    {
+      "label": "final_stdlib",
+      "exit_code": 0,
+      "evidence_directory": "/home/Q-DUET-VLM/junior-bounded-cache-20261116-v001"
+    },
+    {
+      "label": "final_cpu_tensors",
+      "exit_code": 0,
+      "evidence_directory": "/home/Q-DUET-VLM/junior-bounded-cache-20261116-v001"
+    },
+    {
+      "label": "final_source_dependencies",
+      "exit_code": 0,
+      "evidence_directory": "/home/Q-DUET-VLM/junior-bounded-cache-20261116-v001"
+    },
+    {
+      "label": "fixed_matrix",
+      "exit_code": 0,
+      "evidence_directory": "/home/Q-DUET-VLM/junior-bounded-cache-20261116-v001"
+    },
+    {
+      "label": "shell_syntax",
+      "exit_code": 0,
+      "evidence_directory": "/home/Q-DUET-VLM/junior-bounded-cache-20261116-v001"
+    },
+    {
+      "label": "tiny_runtime_import",
+      "exit_code": 0,
+      "evidence_directory": "/home/Q-DUET-VLM/junior-bounded-cache-20261116-v001"
+    },
+    {
+      "label": "baseline_storage_contract",
+      "exit_code": 0,
+      "evidence_directory": "/home/Q-DUET-VLM/junior-bounded-cache-20261116-v001"
+    },
+    {
+      "label": "modified_storage_contract",
+      "exit_code": 0,
+      "evidence_directory": "/home/Q-DUET-VLM/junior-bounded-cache-20261116-v001"
+    },
+    {
+      "label": "runnable_rollback",
+      "exit_code": 0,
+      "evidence_directory": "/home/Q-DUET-VLM/junior-bounded-cache-20261116-v001"
+    }
+  ],
+  "test_counts": {
+    "stdlib": 52,
+    "cpu_tensor": 11,
+    "source_dependency_files": 44
+  },
+  "real_cpu_layers": [
+    "Transformers4.44.2 tiny random BertLayer SDPA",
+    "tiny random XLMRobertaLayer eager"
+  ],
+  "limitations": [
+    "No pretrained weights, dataset examples or CUDA scientific run used by the owner",
+    "Actual GPU prefix bitwise signatures and free space remain guarded at junior runtime",
+    "FIDELITY cache misses increase computation; no throughput improvement promised",
+    "Legacy unsealed feature dictionaries were never persisted; compact extraction must first be supplemented",
+    "Byte limit applies to disposable sequence payload; metadata/filesystem overhead is extra"
+  ],
+  "resume_command": "bash scripts/run_triviaqa_smallset.sh --resume",
+  "rollback": "Verified source-only rollback kept with patch and exact command/output/exit record on3080 development server"
+}

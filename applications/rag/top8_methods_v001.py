@@ -211,7 +211,11 @@ def mixed_banks(features, metadata, check,label_classes=3):
     for k in names:
         x=torch.cat([raw[r['id']][k] for r in train]);m=x.mean(0);s=x.std(0,unbiased=False);s=torch.where(s>1e-10,s,torch.ones_like(s));stats[k]={'mean':m.cpu(),'std':s.cpu()}
         for r in metadata:
-            features[r['id']].setdefault('mixed',{})[k]=((raw[r['id']][k]-m)/s).float().cpu()
+            value=((raw[r['id']][k]-m)/s).float().cpu()
+            if hasattr(features,'set_aux'):
+                mixed=features.aux.get(r['id'],{}).get('mixed',{})
+                mixed[k]=value;features.set_aux(r['id'],'mixed',mixed)
+            else:features[r['id']].setdefault('mixed',{})[k]=value
     return dict(banks=banks,statistics=stats,folds=folds,normalization='global training OOF moments; same disclosed weak global dependency as DPR')
 
 
