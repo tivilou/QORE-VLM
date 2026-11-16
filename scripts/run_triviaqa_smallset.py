@@ -16,6 +16,7 @@ from scripts.run_junior_experiments import configuration,prepare_environment,pus
 from scripts.run_two_datasets import AssetStore
 from applications.rag.junior_transport_v001 import Exchange,atomic_json,digest,require
 from applications.rag.triviaqa_smallset_v001 import materialize,evaluate,validate_release
+from scripts.check_top8_delivery import check_delivery
 
 RELEASE=ROOT/'configs/experiments/triviaqa_smallset_20261112/junior-release.v001.json'
 CAMPAIGN=ROOT/'configs/experiments/idea_search_20261103/two-dataset-campaign.v001.json'
@@ -29,6 +30,7 @@ def main(argv=None):
     p.add_argument('--plan-only',action='store_true')
     p.add_argument('--resume',action='store_true')
     a=p.parse_args(argv)
+    check_delivery()
     release=json.loads(RELEASE.read_bytes());validate_release(release,ready=not a.plan_only)
     campaign=json.loads(CAMPAIGN.read_bytes())
     base=json.loads((ROOT/campaign['base_campaign']).read_bytes())

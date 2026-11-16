@@ -28,6 +28,19 @@ bash scripts/run_triviaqa_smallset.sh
 上传声明结果并核对大小与 SHA 回执。私有配置的 URL／token 不放 Git，也不放命令行。
 负责人本轮没有运行正式模型实验。
 
+源码入口会先检查本地启动依赖，不加载模型、不读取数据。如果遇到
+`INCOMPLETE_SOURCE_DELIVERY` 或旧版的 `No module named
+'applications.rag.model_input_guards'`，先完整更新交付分支：
+
+```bash
+git pull --ff-only origin codex/top8-dual-scorer
+bash scripts/run_triviaqa_smallset.sh
+```
+
+该旧版错误发生在创建实验输出前，更新后使用原命令即可。已下载并通过 SHA 核验的
+数据、模型以及已准备环境会复用；无需删除目录或重新下载。可单独运行
+`python3 -B scripts/check_top8_delivery.py` 检查源码依赖；通过不代表 GPU 实验通过。
+
 只准备数据和模型、不运行实验：
 
 ```bash

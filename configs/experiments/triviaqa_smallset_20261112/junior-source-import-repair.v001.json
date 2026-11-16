@@ -1,0 +1,37 @@
+{
+  "schema": "qduet.junior-source-import-repair.v1",
+  "date": "2026-11-16",
+  "cause": "Input guard existed in owner checkout but was omitted from public handoff branch",
+  "parent_public_commit": "4d5cf760efdd47748f1e2e88b7b5c7e8c5202a62",
+  "source_files": {
+    "applications/rag/model_input_guards.py": "862ac16611fc8681b082aa6537a02853a7e8afe022a818c4b6b21bd98d315276",
+    "applications/rag/tests/test_model_input_guards.py": "9d71f196824fc5ed73e2e7b975cb1a4a5740e266a03d8a9a6516b8767082c929",
+    "applications/rag/tests/test_top8_delivery.py": "25ea737f288b17847c34d5b616383c0a63de2163ebb13634d21fd22aba8c3fff",
+    "scripts/check_top8_delivery.py": "a19958dbb46799ae819c946fdadc82898c4a11e671c8781a5e0d56f1d31fe26b",
+    "scripts/run_top8.py": "2e4631d0709dd5a554c641e41fd8189adcb9ef28f78917b5d7a2a8db58ab9565",
+    "scripts/run_triviaqa_smallset.py": "37f95a0750d14a5597697ef752359bbc52933d826f86b9750ea390c6ca5ed143",
+    "docs/triviaqa-smallset-junior-run-instructions.md": "7f925528c633a2f7641c722a2019e9c03113902992903cd7b6832332edaf9066"
+  },
+  "validation": {
+    "baseline_actual_import_exit": 1,
+    "baseline_error": "No module named 'applications.rag.model_input_guards'",
+    "patched_actual_import_exit": 0,
+    "stdlib_tests": 47,
+    "stdlib_tests_exit": 0,
+    "source_closure_complete": true,
+    "fixed_learned_cells": 393,
+    "missing_private_config_exit": 2,
+    "missing_private_config_workspace_created": false,
+    "CUDA_initialized": false,
+    "model_loads": 0,
+    "training_steps": 0
+  },
+  "dataset_relabel_or_retrieval": false,
+  "scientific_results_changed": false,
+  "data_archive_unchanged": true,
+  "downloaded_assets_reusable": true,
+  "known_failure_before_experiment_output": true,
+  "normal_launch": "bash scripts/run_triviaqa_smallset.sh",
+  "delivery_check": "python3 -B scripts/check_top8_delivery.py",
+  "claim": "Software delivery repair, not numerical or full experiment acceptance"
+}
