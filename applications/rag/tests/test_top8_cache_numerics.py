@@ -45,7 +45,7 @@ class FakeBackbone:
     """Deterministic CPU stand-in with the same native hook/row interfaces."""
     calls=0
     def __init__(self,kind,root):
-        with torch.random.fork_rng():
+        with torch.random.fork_rng(devices=[]):
             torch.manual_seed(17)
             self.layers=nn.ModuleList([Prefix(),TinyLayer()]).eval().requires_grad_(False)
             self.head=nn.Linear(8,1).eval().requires_grad_(False)
@@ -77,7 +77,7 @@ class NativeFixture(FakeBackbone):
         from transformers.models.xlm_roberta.modeling_xlm_roberta import XLMRobertaLayer
         from applications.rag.qvalue_geometry_v002 import NativeTail
         from applications.rag.top8_backbone_v001 import ReadoutBridge
-        with torch.random.fork_rng():
+        with torch.random.fork_rng(devices=[]):
             torch.manual_seed(17)
             cls=BertConfig if kind=='dpr' else XLMRobertaConfig
             config=cls(hidden_size=64,num_attention_heads=1,intermediate_size=128,
