@@ -10,7 +10,8 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 ENTRYPOINTS = ('scripts/run_triviaqa_smallset.py', 'scripts/run_top8.py',
                'applications/rag/tests/test_top8_binary_numerics.py',
-               'applications/rag/tests/test_top8_cache_numerics.py')
+               'applications/rag/tests/test_top8_cache_numerics.py',
+               'applications/rag/tests/test_top8_feature_io.py')
 LOCAL_PACKAGES = {'applications', 'scripts'}
 
 

@@ -73,12 +73,14 @@ def main(argv=None):
                           sequence_cache_GiB_per_model=a.sequence_cache_gib,
                           combined_sequence_cache_limit_GiB=2*a.sequence_cache_gib,
                           compact_features_max_GiB=43.4,tokens_and_metadata_estimate_GiB=9,
+                          derived_feature_columns_max_GiB=40.1,
                           measured_cache_bytes=None,minimum_free_GiB=40,
                           note='Bounded FP32 prefixes regenerate on misses. Legacy partial files are preserved, additional to this estimate. Training outputs require extra space.')),flush=True)
     py=prepare_environment(work,config)
     subprocess.run([str(py),'-B','-m','unittest',
                     'applications.rag.tests.test_top8_binary_numerics',
-                    'applications.rag.tests.test_top8_cache_numerics','-q'],cwd=ROOT,check=True)
+                    'applications.rag.tests.test_top8_cache_numerics',
+                    'applications.rag.tests.test_top8_feature_io','-q'],cwd=ROOT,check=True)
     output=work/'run-smallset';output.mkdir(exist_ok=True)
     command=[str(py),'-B',str(ROOT/'scripts/run_top8.py'),
              '--dpr-model',str(models/base['populations']['reproduction']['models']['dpr']),

@@ -86,8 +86,10 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
     from applications.rag.top8_methods_v001 import build
     train=[r for r in manifest['rows'] if r['role']=='training'];dev=[r for r in manifest['rows'] if r['role']=='development']
     layer,bridge,head=load_modules(manifest,cache_root)
-    values=torch.cat([features[r['id']]['readout'] for r in train])
-    mean=values.mean(0).cuda();std=values.std(0,unbiased=False);std=torch.where(std>1e-8,std,torch.ones_like(std)).cuda()
+    from applications.rag.top8_feature_io_v003 import training_moments, project_features, required_fields
+    mean,std=training_moments(features,manifest,cache_root,checkpoint)
+    mean=mean.cuda();std=std.cuda()
+    features=project_features(features,manifest,cache_root,required_fields(idea,arm),checkpoint)
     label_classes=manifest.get('label_classes',3)
     model=build(idea,arm,seed,head,layer,bridge,(mean,std),label_classes).cuda()
     parameters={n:p for n,p in model.named_parameters() if p.requires_grad}
@@ -214,6 +216,8 @@ def run_matrix(cache_paths,output,seeds,ideas,epochs=4,canary=False,checkpoint=l
                         if isinstance(e,(KeyboardInterrupt,MemoryError)):raise
         from applications.rag.top8_cache_v002 import close_sequences
         close_sequences(root)
+        from applications.rag.top8_feature_io_v003 import close_fields
+        close_fields(root)
         del features;gc.collect();torch.cuda.empty_cache()
     # Manifest inventories all predictions/checkpoints before target access.
     seal=dict(schema='top8.joint-predictions.v1',seeds=seeds,ideas=ideas,canary=canary,

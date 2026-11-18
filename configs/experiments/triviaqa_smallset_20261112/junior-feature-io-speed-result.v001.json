@@ -1,0 +1,100 @@
+{
+  "schema": "qduet.junior-feature-io-speed.v1",
+  "date": "2026-11-18",
+  "status": "software_verified_pending_junior_cuda_runtime",
+  "public_parent": "87e239a417b8092e033fe97f714290fb4c493ce3",
+  "scope": [
+    "Lossless per-field FP32 CPU file maps; transfer only requested fields",
+    "Identical original training-only CPU cat/mean/std once per source cache"
+  ],
+  "unchanged": {
+    "precision": "FP32",
+    "train": 8000,
+    "valid": 1000,
+    "test": 1000,
+    "top50": 50,
+    "topk": 5,
+    "seeds": [
+      20261102,
+      20261103,
+      20261104
+    ],
+    "epochs": 4,
+    "learned_cells": 393,
+    "question_batch": 8,
+    "optimizer": "AdamW lr0.001 weight_decay0 clip1",
+    "labels_changed": false,
+    "owner_formal_training_steps": 0,
+    "gpu_synchronization_changed": false,
+    "fidelity_full_sequence_computation_changed": false
+  },
+  "tests": {
+    "stdlib": 52,
+    "cpu_tensor": 20,
+    "nonsequence_arm_gradient_comparisons": 106,
+    "source_dependency_files": 47,
+    "source_pair_recovery_mock_passed": true,
+    "real_junior_gpu_recovery_tested": false
+  },
+  "statistics": {
+    "training_only": true,
+    "original_concatenation_order": true,
+    "mean_std_bit_equal": true,
+    "streaming_approximation": false,
+    "persistent_sha_bound": true,
+    "computed_once_per_backbone_cache": true
+  },
+  "synthetic_cpu_benchmark": {
+    "shape": [
+      64,
+      50,
+      128
+    ],
+    "passes": 4,
+    "old_full_package_payload_bytes": 85196800,
+    "new_readout_payload_bytes": 6553600,
+    "readout_payload_ratio": 13,
+    "old_warm_seconds": 1.1791179509600624,
+    "new_warm_seconds": 0.02279082906898111,
+    "first_column_build_seconds": 0.3002459539566189,
+    "old_three_statistics_calls_seconds": 0.788544645998627,
+    "new_three_statistics_calls_seconds": 0.024191761971451342,
+    "warm_original_question_file_reads_before": 256,
+    "warm_original_question_file_reads_after": 0,
+    "old_statistics_reductions": 3,
+    "new_statistics_reductions": 1,
+    "cuda_initialized": false,
+    "limitations": [
+      "Synthetic CPU-only warm IO, not GPU transfer timing or total suite speedup",
+      "First-use column conversion/SHA scan is additional work; all source shards remain immutable"
+    ]
+  },
+  "storage": {
+    "additional_all_fields_both_models_max_GiB": 40.1,
+    "approximate_cache_and_working_set_GiB": 160,
+    "existing_files_and_outputs_extra": true,
+    "free_reserve_GiB": 40,
+    "columns_on_demand": true,
+    "deleted_old_files": 0
+  },
+  "resume": {
+    "compatibility_specification": "configs/experiments/triviaqa_smallset_20261112/feature-io-compatibility.v001.json",
+    "compatibility_sha256": "7b05fa9cf54bddda8a1c371b90a373712e36207d81663adea09fcbd7e6f3a4bf",
+    "exact_old_new_runtime_source_maps_only": true,
+    "all_other_input_configuration_equal": true,
+    "original_binding_and_completed_files_unchanged": true,
+    "actual_runtime_record": "matrix/feature-io-continuation.v1.json",
+    "stop_old_process_before_update": true,
+    "checkpoint_interval_steps": 32,
+    "unknown_versions_rejected": true,
+    "latest_uncommitted_steps_recomputed": true,
+    "failed_cells_not_retried": true,
+    "command": "bash scripts/run_triviaqa_smallset.sh --resume"
+  },
+  "verification_directory": "/home/Q-DUET-VLM/junior-feature-speed-20261118-v001",
+  "limitations": [
+    "No pretrained weights, real dataset examples, CUDA training or junior process accessed",
+    "No claim of reduced 70-100h ETA until junior runtime measurements",
+    "No batching, vectorization, synchronization, precision, method/arm/seed reduction in this change"
+  ]
+}

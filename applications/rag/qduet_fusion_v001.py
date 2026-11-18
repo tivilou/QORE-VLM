@@ -226,6 +226,8 @@ def run_fusions(caches, output, seeds, ideas, binding, *, canary=False, checkpoi
     if canary:
         rows = ([r for r in rows if r['role'] == 'training'][:2] +
                 [r for r in rows if r['role'] == 'development'][:2])
+    from applications.rag.top8_feature_io_v003 import project_features, close_fields
+    features=project_features(features,manifest,manifests['dpr'].parent,('readout',),checkpoint)
     record = next(r for r in manifest['files'] if r['name'] == 'frozen-modules.bin')
     head = torch.load(checked_member(manifests['dpr'].parent, record), map_location='cpu', weights_only=True)['head']
     results = {}; failures = []; files = []
@@ -255,5 +257,6 @@ def run_fusions(caches, output, seeds, ideas, binding, *, canary=False, checkpoi
                                    error_type=type(error).__name__, message=str(error)[:1000])
                     json_file(cell, disposition.name, dict(status='failed', binding=binding, failure=failure))
                     failures.append(failure); gc.collect(); torch.cuda.empty_cache()
+    close_fields(manifests['dpr'].parent)
     del features; gc.collect(); torch.cuda.empty_cache()
     return results, failures, files

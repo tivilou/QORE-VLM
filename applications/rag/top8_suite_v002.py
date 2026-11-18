@@ -85,8 +85,10 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
     if fusion_ideas:
         binding['fusion_ideas'] = fusion_ideas
     contract = output/'run-binding.json'
+    continuation=None
     if contract.exists():
-        need(json.loads(contract.read_bytes()) == binding, 'immutable matrix resume contract')
+        from applications.rag.top8_feature_io_v003 import resume_binding
+        binding,continuation=resume_binding(json.loads(contract.read_bytes()),binding,output)
     else:
         json_file(output, contract.name, binding)
     seal_path = output/'joint-prediction-seal.json'
@@ -96,6 +98,8 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
         return seal
     need(not (output/'evaluation.json').exists(), 'never continue training after evaluation')
     results = {}; failures = []; files = []
+    if continuation is not None:
+        files.append(dict(name=continuation.name,path=continuation.name,size=continuation.stat().st_size,sha256=digest(continuation)))
     for path in caches:
         manifest, features = load_cache(path)
         root = Path(path).parent; kind = manifest['backbone']
@@ -163,6 +167,8 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
                         gc.collect(); torch.cuda.empty_cache()
         from applications.rag.top8_cache_v002 import close_sequences
         close_sequences(root)
+        from applications.rag.top8_feature_io_v003 import close_fields
+        close_fields(root)
         del features; gc.collect(); torch.cuda.empty_cache()
     if fusion_ideas:
         from applications.rag.qduet_fusion_v001 import run_fusions
