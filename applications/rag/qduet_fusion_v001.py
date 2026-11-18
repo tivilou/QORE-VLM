@@ -94,6 +94,7 @@ def train_fusion_cell(idea, arm, seed, rows, features, head, output, epochs,
     reviewed ordered pairs. No developmental labels reach this function.
     """
     import torch
+    from applications.rag.top8_runtime_io_v004 import step_diagnostics, finite_parameters
     if idea == 'CROSS_SCORE':
         from applications.rag.qfusion_v001 import loss_for
     else:
@@ -154,7 +155,7 @@ def train_fusion_cell(idea, arm, seed, rows, features, head, output, epochs,
             if restoring and start < saved['next_start']:
                 continue
             checkpoint(); batch = [train[i] for i in order[start:start+8]]
-            optimizer.zero_grad(set_to_none=True); total = 0.; supervised = 0; empty = 0
+            optimizer.zero_grad(set_to_none=True); losses=[]; counts=[]; empty = 0
             for row in batch:
                 h, s = values(row)
                 if not len(h):
@@ -163,13 +164,10 @@ def train_fusion_cell(idea, arm, seed, rows, features, head, output, epochs,
                 y = torch.tensor(row['targets'], device='cuda', dtype=torch.long)
                 loss, n = loss_for(model, h[None], y[None], s[None])
                 need(bool(torch.isfinite(loss)), 'finite fusion objective')
-                (loss/len(batch)).backward(); total += float(loss.detach())/len(batch)
-                supervised += int(n.sum()); empty += int(n.sum() == 0)
-            active = [p.grad for p in parameters.values() if p.grad is not None]
-            need(all(bool(torch.isfinite(g).all()) for g in active), 'finite fusion gradients')
-            need(not supervised or any(bool((g != 0).any()) for g in active), 'active fusion objective')
+                (loss/len(batch)).backward(); losses.append(loss.detach()); counts.append(n.detach().sum())
+            total,supervised,empty=step_diagnostics(losses,counts,parameters.values(),len(batch),fusion=True,empty=empty)
             norm = torch.nn.utils.clip_grad_norm_(parameters.values(), 1.); optimizer.step(); step += 1
-            need(all(bool(torch.isfinite(p).all()) for p in parameters.values()), 'finite fusion parameters')
+            need(finite_parameters(parameters.values()), 'finite fusion parameters')
             records.append(dict(step=step, loss=total, supervision=supervised,
                                 empty_questions=empty, gradient_norm=float(norm)))
             if step % 32 == 0 or start+8 >= len(order) or (steps_limit and step >= steps_limit):

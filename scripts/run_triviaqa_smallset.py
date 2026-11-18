@@ -80,7 +80,8 @@ def main(argv=None):
     subprocess.run([str(py),'-B','-m','unittest',
                     'applications.rag.tests.test_top8_binary_numerics',
                     'applications.rag.tests.test_top8_cache_numerics',
-                    'applications.rag.tests.test_top8_feature_io','-q'],cwd=ROOT,check=True)
+                    'applications.rag.tests.test_top8_feature_io',
+                    'applications.rag.tests.test_top8_runtime_io','-q'],cwd=ROOT,check=True)
     output=work/'run-smallset';output.mkdir(exist_ok=True)
     command=[str(py),'-B',str(ROOT/'scripts/run_top8.py'),
              '--dpr-model',str(models/base['populations']['reproduction']['models']['dpr']),

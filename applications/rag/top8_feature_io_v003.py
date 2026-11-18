@@ -197,7 +197,8 @@ def close_fields(root=None):
 
 def compatible_binding(previous, current, specification):
     """Exact approved old/new source pair only; every scientific/input option equal."""
-    need(previous.get('sources')==specification['before_sources'] and
+    accepted=specification.get('accepted_previous_sources',[specification.get('before_sources')])
+    need(previous.get('sources') in accepted and
          current.get('sources')==specification['after_sources'],
          'performance upgrade requires the exact reviewed source versions')
     need({k:v for k,v in previous.items() if k!='sources'}==
@@ -208,14 +209,35 @@ def compatible_binding(previous, current, specification):
 
 def resume_binding(previous, current, output, specification_path=None):
     if previous==current:return previous,None
-    spec_path=Path(specification_path) if specification_path is not None else Path(__file__).resolve().parents[2]/'configs/experiments/triviaqa_smallset_20261112/feature-io-compatibility.v001.json'
+    directory=Path(__file__).resolve().parents[2]/'configs/experiments/triviaqa_smallset_20261112'
+    spec_path=Path(specification_path) if specification_path is not None else directory/'runtime-speed-compatibility.v002.json'
+    if specification_path is None and not spec_path.exists():spec_path=directory/'feature-io-compatibility.v001.json'
     specification=json.loads(spec_path.read_bytes())
     selected=compatible_binding(previous,current,specification)
+    version2=specification.get('schema')=='top8.runtime-speed-compatibility.v2'
+    output=Path(output)
     receipt=dict(schema='top8.performance-continuation.v1',original_matrix_binding=previous,
                  actual_runtime_binding=current,compatibility_sha256=digest(spec_path),
                  changes=['field-only lossless IO','identical training statistics reused'],
                  original_bindings_and_completed_results_unchanged=True)
-    output=Path(output);name='feature-io-continuation.v1.json';path=output/name
+    name='feature-io-continuation.v1.json'
+    if version2:
+        name='runtime-speed-continuation.v2.json';receipt['schema']='top8.performance-continuation.v2'
+        receipt['changes']+=['batched diagnostic transfers; original question backward order',
+                             'FIDELITY HEAD readout-only original chunk shapes']
+        legacy=output/'feature-io-continuation.v1.json'
+        if legacy.exists():
+            # An existing v1 audit stays immutable; certify its exact original
+            # source pair, complete configuration and original receipt contents.
+            old=json.loads(legacy.read_bytes());old_spec=directory/'feature-io-compatibility.v001.json'
+            compatible_binding(previous,old['actual_runtime_binding'],json.loads(old_spec.read_bytes()))
+            expected=dict(schema='top8.performance-continuation.v1',original_matrix_binding=previous,
+                actual_runtime_binding=old['actual_runtime_binding'],compatibility_sha256=digest(old_spec),
+                changes=['field-only lossless IO','identical training statistics reused'],
+                original_bindings_and_completed_results_unchanged=True)
+            need(old==expected,'exact immutable prior performance continuation')
+            receipt['previous_continuation']=dict(name=legacy.name,size=legacy.stat().st_size,sha256=digest(legacy))
+    path=output/name
     if path.exists():need(json.loads(path.read_bytes())==receipt,'same recorded performance continuation')
     elif not (output/'joint-prediction-seal.json').exists():_json_commit(output,name,receipt)
     return selected,path if path.exists() else None

@@ -1,0 +1,178 @@
+{
+  "schema": "qduet.junior-runtime-speed.v2",
+  "date": "2026-11-18",
+  "status": "software_verified_pending_junior_cuda_runtime",
+  "public_parent": "3035225e5f4c96372b7cccdfd987c88ac21e0514",
+  "changes": [
+    "Batch detached diagnostic scalar/gradient predicates into one CPU packet; consolidate post-update finite predicate",
+    "FIDELITY HEAD uses readout-only reader with original sparse positions and chunk shapes"
+  ],
+  "unchanged": {
+    "precision": "FP32",
+    "train": 8000,
+    "valid": 1000,
+    "test": 1000,
+    "top50": 50,
+    "topk": 5,
+    "seeds": [
+      20261102,
+      20261103,
+      20261104
+    ],
+    "epochs": 4,
+    "learned_cells": 393,
+    "question_batch": 8,
+    "optimizer": "AdamW lr0.001 weight_decay0 clip1",
+    "per_question_backward_order": true,
+    "per_loss_finite_gate_before_backward": true,
+    "gradient_gates_before_optimizer": true,
+    "all_fidelity_attention_arms_keep_full_layer": true,
+    "source_data_and_labels_changed": false,
+    "owner_formal_training_steps": 0
+  },
+  "tests": {
+    "stdlib": 52,
+    "cpu_tensor": 27,
+    "nonsequence_arm_gradient_comparisons_inherited": 106,
+    "source_dependency_files": 49,
+    "legacy_current_recovery_cases": [
+      {
+        "backbone": "dpr",
+        "idea": "FIDELITY",
+        "arm": "HEAD",
+        "steps": 3,
+        "training_questions": 8,
+        "synthetic_evaluation_questions": 2,
+        "predictions_scores_ranks_history_checkpoint_bit_equal": true,
+        "optimizer_rng_order_resume_bit_equal": true,
+        "restored_from_step": 1,
+        "baseline_sequence_question_reads": 44,
+        "updated_sequence_question_reads": 0,
+        "device": "CPU shim; not a CUDA recovery certification"
+      },
+      {
+        "backbone": "dpr",
+        "idea": "FEATURE_GATE",
+        "arm": "QUANTUM",
+        "steps": 3,
+        "training_questions": 8,
+        "synthetic_evaluation_questions": 2,
+        "predictions_scores_ranks_history_checkpoint_bit_equal": true,
+        "optimizer_rng_order_resume_bit_equal": true,
+        "restored_from_step": 1,
+        "baseline_sequence_question_reads": 0,
+        "updated_sequence_question_reads": 0,
+        "device": "CPU shim; not a CUDA recovery certification"
+      },
+      {
+        "backbone": "bge",
+        "idea": "FIDELITY",
+        "arm": "HEAD",
+        "steps": 3,
+        "training_questions": 8,
+        "synthetic_evaluation_questions": 2,
+        "predictions_scores_ranks_history_checkpoint_bit_equal": true,
+        "optimizer_rng_order_resume_bit_equal": true,
+        "restored_from_step": 1,
+        "baseline_sequence_question_reads": 44,
+        "updated_sequence_question_reads": 0,
+        "device": "CPU shim; not a CUDA recovery certification"
+      },
+      {
+        "backbone": "bge",
+        "idea": "FEATURE_GATE",
+        "arm": "QUANTUM",
+        "steps": 3,
+        "training_questions": 8,
+        "synthetic_evaluation_questions": 2,
+        "predictions_scores_ranks_history_checkpoint_bit_equal": true,
+        "optimizer_rng_order_resume_bit_equal": true,
+        "restored_from_step": 1,
+        "baseline_sequence_question_reads": 0,
+        "updated_sequence_question_reads": 0,
+        "device": "CPU shim; not a CUDA recovery certification"
+      }
+    ],
+    "five_adam_steps_bit_equal": true,
+    "exact_old_new_source_pair_continuation_and_prior_receipt_immutability_passed": true,
+    "real_junior_gpu_recovery_tested": false
+  },
+  "synthetic_cpu_diagnostics": {
+    "inputs": {
+      "questions": 8,
+      "parameters": 6,
+      "parameter_shape": [
+        32
+      ],
+      "losses": [
+        0.0,
+        0.09090909090909091,
+        0.18181818181818182,
+        0.2727272727272727,
+        0.36363636363636365,
+        0.45454545454545453,
+        0.5454545454545454,
+        0.6363636363636364
+      ],
+      "counts": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14
+      ],
+      "dtype": "float32",
+      "device": "CPU"
+    },
+    "old_output": [
+      0.318181823939085,
+      56,
+      1
+    ],
+    "new_output": [
+      0.318181823939085,
+      56,
+      1
+    ],
+    "scalar_extractions_before": 42,
+    "scalar_extractions_after": 1,
+    "new_batched_packet_copies": 1,
+    "scope": "Diagnostic helper and post-update parameter guard; pre-backward gates excluded; not GPU latency",
+    "latency_or_whole_run_speedup_measured": false
+  },
+  "storage": {
+    "additional_large_cache_this_change_bytes": 0,
+    "prior_field_columns_max_GiB": 40.1,
+    "prior_cache_plus_working_set_estimate_GiB": 160,
+    "existing_files_and_outputs_extra": true,
+    "free_reserve_GiB": 40,
+    "old_files_deleted": 0
+  },
+  "resume": {
+    "specification": "configs/experiments/triviaqa_smallset_20261112/runtime-speed-compatibility.v002.json",
+    "specification_sha256": "48253f55d26c20247a5cf63df86a57ca3dd4d28760e181491159268bb372bc6d",
+    "exact_accepted_ancestors": [
+      "87e239a417b8092e033fe97f714290fb4c493ce3",
+      "3035225e5f4c96372b7cccdfd987c88ac21e0514"
+    ],
+    "every_other_input_and_config_equal": true,
+    "old_binding_completed_cells_optimizer_rng_preserved": true,
+    "prior_v1_receipt_preserved_and_sha_referenced": true,
+    "actual_runtime_record": "matrix/runtime-speed-continuation.v2.json",
+    "stop_old_process_before_update": true,
+    "checkpoint_interval_steps": 32,
+    "uncommitted_steps_recomputed": true,
+    "unknown_versions_rejected": true,
+    "failed_cells_not_retried": true,
+    "command": "bash scripts/run_triviaqa_smallset.sh --resume"
+  },
+  "verification_directory": "/home/Q-DUET-VLM/junior-runtime-speed-20261118-v002",
+  "limitations": [
+    "Synthetic CPU validation only; no pretrained weights, real examples, CUDA or formal experiments",
+    "CPU scalar extraction count is not CUDA synchronization timing or total ETA",
+    "Frozen QKV/reference caching and CLS-only attention rewriting deferred; no batch, precision, step or arm reduction"
+  ]
+}

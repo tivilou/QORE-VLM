@@ -65,8 +65,10 @@ def sequence_rows(root, record, features, checkpoint):
 def scores_for(model, idea, record, features, root, checkpoint):
     import torch
     if idea!='FIDELITY':return model(gpu_row(features))
+    from applications.rag.top8_runtime_io_v004 import head_sequence_rows
+    rows=head_sequence_rows(record,features,checkpoint) if model.kind=='HEAD' else sequence_rows(root,record,features,checkpoint)
     scores=[]
-    for row,native in sequence_rows(root,record,features,checkpoint):scores.append(model(row))
+    for row,native in rows:scores.append(model(row))
     return torch.cat(scores) if scores else model.head.weight.sum().reshape(1)[:0]
 
 
@@ -84,6 +86,7 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
     import torch
     from applications.rag.top8_backbone_v001 import load_modules
     from applications.rag.top8_methods_v001 import build
+    from applications.rag.top8_runtime_io_v004 import step_diagnostics, finite_parameters, head_sequence_rows
     train=[r for r in manifest['rows'] if r['role']=='training'];dev=[r for r in manifest['rows'] if r['role']=='development']
     layer,bridge,head=load_modules(manifest,cache_root)
     from applications.rag.top8_feature_io_v003 import training_moments, project_features, required_fields
@@ -101,7 +104,8 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
         for r in train[:2]:
             f=features[r['id']]
             if idea=='FIDELITY':
-                for row,native in sequence_rows(cache_root,r,f,checkpoint):
+                rows=head_sequence_rows(r,f,checkpoint) if arm=='HEAD' else sequence_rows(cache_root,r,f,checkpoint)
+                for row,native in rows:
                     actual=model(row);error=float((actual-native).abs().max())
                     need(torch.allclose(actual,native,atol=2e-5,rtol=2e-6),'fixed native/zero/frozen-reference attention parity')
                     max_null=max(max_null,error);native_math_error=max(native_math_error,error)
@@ -129,17 +133,15 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
         for start in range(0,len(order),8):
             if restoring and start<saved['next_start']:continue
             checkpoint();batch=[train[i] for i in order[start:start+8]];optimizer.zero_grad(set_to_none=True)
-            total=0.;pairs=0;without=0
+            losses=[];counts=[]
             # Every complete question contributes 1/B, including zero-pair cases.
             for r in batch:
                 loss,count=loss_for(model,idea,r,features[r['id']],cache_root,checkpoint)
                 need(bool(torch.isfinite(loss)),'finite training-only objective')
-                (loss/len(batch)).backward();total+=float(loss.detach())/len(batch);pairs+=int(count);without+=int(count==0)
-            need(all(p.grad is None or bool(torch.isfinite(p.grad).all()) for p in parameters.values()),'finite data gradients')
-            active={n:float(p.grad.abs().max()) for n,p in parameters.items() if p.grad is not None}
-            need(active and (pairs==0 or max(active.values())>0),'nonzero actual objective gradient when pairs exist')
+                (loss/len(batch)).backward();losses.append(loss.detach());counts.append(count.detach())
+            total,pairs,without=step_diagnostics(losses,counts,parameters.values(),len(batch))
             norm=torch.nn.utils.clip_grad_norm_(list(parameters.values()),1.);optimizer.step();step+=1
-            need(all(bool(torch.isfinite(p).all()) for p in parameters.values()),'finite trained parameters')
+            need(finite_parameters(parameters.values()),'finite trained parameters')
             records.append(dict(step=step,loss=total,ordered_pairs=pairs,without_ordered_pairs=without,gradient_norm=float(norm)))
             if journal is not None and (step%32==0 or start+8>=len(order) or (steps_limit and step>=steps_limit)):
                 journal.save(dict(step=step,epoch=epoch,next_start=start+8,order=order,

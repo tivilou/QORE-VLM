@@ -162,3 +162,44 @@ bash scripts/run_triviaqa_smallset.sh --resume
 ```bash
 python scripts/benchmark_top8_feature_io.py --mode optimized
 ```
+
+## 2026-11-18：减少诊断同步，FIDELITY HEAD 跳过完整序列
+
+在上述两项优化上继续减少等待，保持全部393组、FP32、原每批8题、逐题
+forward/backward顺序、梯度裁剪和AdamW更新不变：
+
+1. 每题反向前的非有限loss检查保留。loss／监督对数及更新前的梯度有限性、
+   活跃性检查合并成一个小的数据包回传CPU，再按原题顺序累加Python浮点数；
+   更新后的参数有限性合为一个CPU判断。没有把逐题loss改为批量前向或GPU求和，
+   也没有推迟梯度错误到优化器更新之后。
+2. FIDELITY的HEAD对照只用缓存的readout及已绑定原生分数，跳过hidden／mask
+   的读取或重算。保留原候选位置、原chunk边界和每次线性头调用形状，
+   不把整题合成更大的矩阵乘法。FIDELITY其余量子／经典注意力臂继续走原完整层路径。
+
+52项基础检查、27项CPU张量测试通过；另在DPR/BGE随机小模型的FIDELITY HEAD和
+FEATURE_GATE QUANTUM四个组合中，对照旧代码运行3步，并从旧第1步检查点恢复：
+预测分数／排序、训练记录、参数、优化器、RNG与题顺序均完全相同。
+空输入保护另由单测覆盖。这些是合成CPU验证，未运行负责人正式实验，
+也不代表已经认证师弟GPU上的逐位等价或实际加速倍数。
+
+诊断微基准的CPU标量提取调用从42次减至1次，另有1次合并数据包回传；
+统计范围不含保留的每题反向前loss检查、梯度范数记录和方法内部检查。
+这是同步点数量的代码路径证据，不是GPU耗时测量。
+本轮两处不增加新的大型持久缓存，上述按字段列文件的空间估计仍适用。
+
+精确接受两个旧源码版本到本版的继续运行：原87e239a版本或前两项优化3035225版本。
+`runtime-speed-compatibility.v002.json`记录完整源码SHA映射；其余配置和输入必须相同。
+旧矩阵绑定、完成结果和检查点保持原样；若已有v1续作收据也保留原字节，
+另记`matrix/runtime-speed-continuation.v2.json`及对v1收据的SHA引用。
+未知源码和改动科学配置仍拒绝恢复。
+
+**先在完整检查点后停止旧Python并确认退出，再拉取；复用原workspace及参数：**
+
+```bash
+git pull --ff-only origin codex/top8-dual-scorer
+bash scripts/run_triviaqa_smallset.sh --resume
+```
+
+完整cell核SHA后跳过；未完成cell从最后完整检查点继续。
+暂不加入冻结Q/K/reference新缓存或改写CLS-only注意力，它们需要另行核对完整层数值路径。
+70—100小时的旧估计不能直接换算为优化后的耗时，应记录更新后同类cell每步速度再外推。
