@@ -81,7 +81,7 @@ class ProgressTests(unittest.TestCase):
             output=io.StringIO()
             with contextlib.redirect_stdout(output):main(['--workspace',d,'--plan-only'])
             plan=json.loads(output.getvalue())['matrix']
-            self.assertEqual(plan['learned_cells'],393)
+            self.assertEqual(plan['learned_cells'],54)
             import ast
             from scripts.smallset_events import jobs_for
             root=Path(__file__).resolve().parents[3]
@@ -91,7 +91,7 @@ class ProgressTests(unittest.TestCase):
                             and isinstance(n.targets[0],ast.Name) and n.targets[0].id==key)
             roster=jobs_for(plan,registry('applications/rag/top8_methods_v001.py','ARMS'),
                            registry('applications/rag/qduet_fusion_v001.py','FUSION_ARMS'))
-            self.assertEqual(len(roster),393);self.assertEqual(len(set(roster)),393)
+            self.assertEqual(len(roster),54);self.assertEqual(len(set(roster)),54)
             self.assertFalse(list(Path(d).iterdir()))
 
     def test_actual_child_argv_logs_final_snapshot_and_watch_no_writes(self):

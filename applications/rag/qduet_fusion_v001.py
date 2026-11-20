@@ -166,11 +166,12 @@ def train_fusion_cell(idea, arm, seed, rows, features, head, output, epochs,
                     continue
                 y = torch.tensor(row['targets'], device='cuda', dtype=torch.long)
                 loss, n = loss_for(model, h[None], y[None], s[None])
-                need(bool(torch.isfinite(loss)), 'finite fusion objective')
                 (loss/len(batch)).backward(); losses.append(loss.detach()); counts.append(n.detach().sum())
             total,supervised,empty=step_diagnostics(losses,counts,parameters.values(),len(batch),fusion=True,empty=empty)
             norm = torch.nn.utils.clip_grad_norm_(parameters.values(), 1.); optimizer.step(); step += 1
             need(finite_parameters(parameters.values()), 'finite fusion parameters')
+            from scripts.smallset_events import allocator_event
+            allocator_event()
             records.append(dict(step=step, loss=total, supervision=supervised,
                                 empty_questions=empty, gradient_norm=float(norm)))
             if step % 32 == 0 or start+8 >= len(order) or (steps_limit and step >= steps_limit):
@@ -220,7 +221,7 @@ def train_fusion_cell(idea, arm, seed, rows, features, head, output, epochs,
     return result
 
 
-def run_fusions(caches, output, seeds, ideas, binding, *, canary=False, checkpoint=lambda:None):
+def run_fusions(caches, output, seeds, ideas, binding, *, canary=False, checkpoint=lambda:None,experiment_profile='full'):
     """Return artifacts to the SAME joint seal as all eight single-model ideas."""
     import torch
     from applications.rag.top8_portable_v001 import load_cache
@@ -239,10 +240,12 @@ def run_fusions(caches, output, seeds, ideas, binding, *, canary=False, checkpoi
     record = next(r for r in manifest['files'] if r['name'] == 'frozen-modules.bin')
     head = torch.load(checked_member(manifests['dpr'].parent, record), map_location='cpu', weights_only=True)['head']
     from scripts.smallset_events import emit
+    from applications.rag.top8_primary_v001 import selected_arms
+    arms=selected_arms(FUSION_ARMS,experiment_profile)
     results = {}; failures = []; files = []
     for idea in ideas:
         for seed in seeds:
-            for arm in FUSION_ARMS[idea]:
+            for arm in arms[idea]:
                 checkpoint(); key = f'fusion-{idea}-{arm}-s{seed}'
                 cell = output/key; cell.mkdir(exist_ok=True); disposition = cell/'disposition.json'
                 if disposition.exists():

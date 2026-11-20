@@ -1,0 +1,70 @@
+{
+  "schema": "qduet.primary54-performance-result.v1",
+  "date": "2026-11-20",
+  "status": "software_verified_pending_junior_cuda",
+  "learned_cells": 54,
+  "previous_full_cells": 393,
+  "native_evaluations": 2,
+  "scope": "eight dual-backbone QUANTUM methods plus two fusion QUANTUM methods, three seeds",
+  "old_results": "SHA-verified complete/failure dispositions and latest corresponding checkpoints adopted into separate matrix-primary54; original matrix retained",
+  "scientific_constants": {
+    "roles": [
+      8000,
+      1000,
+      1000
+    ],
+    "epochs": 4,
+    "question_batch": 8,
+    "seeds": [
+      20261102,
+      20261103,
+      20261104
+    ],
+    "dtype": "FP32",
+    "top50_to_top5": true
+  },
+  "changes": [
+    "fresh FIDELITY: CLS attention/FFN only; old checkpoint retains full route",
+    "two independent prediction forwards share one input read/transfer",
+    "one <=32MiB verified disk prefetch, no tensors/CUDA/RNG in thread",
+    "per-question finite-loss synchronizations merged into existing diagnostic transfer; reject before optimizer",
+    "parent samples whole-card GPU and owned process/cgroup memory; worker reports CUDA allocator; stale/unknown explicit",
+    "ignore historical probe events outside frozen schedule; genuine per-step progress separate from durable checkpoint"
+  ],
+  "verification": {
+    "stdlib_tests": 21,
+    "cpu_tensor_tests": 16,
+    "source_dependencies": 54,
+    "exact_clean_source_binding": true,
+    "shell_syntax": true,
+    "checks": [
+      {
+        "label": "primary_and_ui",
+        "exit_code": 0
+      },
+      {
+        "label": "cls_numeric",
+        "exit_code": 0
+      },
+      {
+        "label": "source_dependencies",
+        "exit_code": 0
+      },
+      {
+        "label": "exact_sources",
+        "exit_code": 0
+      },
+      {
+        "label": "shell",
+        "exit_code": 0
+      }
+    ]
+  },
+  "claim_limits": [
+    "no4090 or real pretrained CUDA throughput measured",
+    "CLS and full routes mathematically equivalent; cross-route scores/gradients tolerance tested, not bit-identical trajectories",
+    "fresh route replay remains exact; incomplete legacy checkpoints retain their original route",
+    "no automatic quantum mechanism attribution from54 primary effects",
+    "no formal experiments run by owner; no access to junior server"
+  ]
+}

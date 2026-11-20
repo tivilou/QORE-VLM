@@ -69,10 +69,12 @@ def recovery_probe(cache, output, checkpoint=lambda:None):
 
 
 def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=lambda:None,
-                    backbone_ideas=None, fusion_ideas=None):
+                    backbone_ideas=None, fusion_ideas=None,experiment_profile='full'):
     import torch
     from applications.rag.top8_portable_v001 import load_cache, train_cell
     from applications.rag.top8_methods_v001 import ARMS, mixed_banks
+    from applications.rag.top8_primary_v001 import selected_arms
+    arms=selected_arms(ARMS,experiment_profile)
     from applications.rag.top8_recovery_v001 import Journal, source_binding, new_generation
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
@@ -107,7 +109,8 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
     if continuation is not None:
         files.append(dict(name=continuation.name,path=continuation.name,size=continuation.stat().st_size,sha256=digest(continuation)))
         for prior_name in ('feature-io-continuation.v1.json','runtime-speed-continuation.v2.json',
-                           'fidelity-speed-continuation.v3.json','cache-policy-continuation.v4.json'):
+                           'fidelity-speed-continuation.v3.json','cache-policy-continuation.v4.json',
+                           'progress-ui-continuation.v5.json'):
             prior=output/prior_name
             if prior!=continuation and prior.exists():
                 files.append(dict(name=prior.name,path=prior.name,size=prior.stat().st_size,sha256=digest(prior)))
@@ -148,7 +151,7 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
                 failures.append(dict(backbone=kind,idea=idea,status='DEFERRED_BANK_FIT'))
                 continue
             for seed in seeds:
-                for arm in ARMS[idea]:
+                for arm in arms[idea]:
                     checkpoint()
                     key = f'{kind}-{idea}-{arm}-s{seed}'
                     cell = output/key; cell.mkdir(exist_ok=True)
@@ -190,9 +193,10 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
     if fusion_ideas:
         from applications.rag.qduet_fusion_v001 import run_fusions
         extra, failed, owned = run_fusions(caches, output, seeds, fusion_ideas, binding,
-                                           canary=canary, checkpoint=checkpoint)
+                                           canary=canary, checkpoint=checkpoint,experiment_profile=experiment_profile)
         results.update(extra); failures.extend(failed); files.extend(owned)
     seal = dict(schema='top8.joint-predictions.v1',seeds=seeds,ideas=ideas,canary=canary,
+        experiment_profile=experiment_profile,quantum_attribution_certified=False,
         requested_backbones=len(caches),results=results,failures=failures,files=files,
         all_predictions_before_evaluation_labels=True,run_binding_sha256=digest(contract),
         recovery='same immutable source/input/config; optimizer/RNG/order restored; explicit failed cells not retried')
@@ -229,6 +233,7 @@ def main(argv=None):
                         help='Two-scorer CROSS_SCORE/CLASS_FUSION; both native models required.')
     parser.add_argument('--plan-only',action='store_true',
                         help='Print the exact backbone/idea/arm schedule without loading models or writing output.')
+    parser.add_argument('--experiment-profile',choices=['primary54','full'],default='full')
     parser.add_argument('--extract-only',action='store_true')
     args=parser.parse_args(argv)
     from applications.rag.top8_matrix_plan_v001 import matrix_plan
@@ -245,9 +250,13 @@ def main(argv=None):
     plan['fusion_ideas'] = fusion_plan(available, args.fusion_ideas)
     plan['seeds'] = args.seeds
     plan['label_classes'] = args.label_classes
-    plan['learned_cells'] = sum(len(registry['ARMS'][idea]) * len(args.seeds)
+    from applications.rag.top8_primary_v001 import selected_arms,adopt_primary,freeze_profile
+    plan['experiment_profile']=args.experiment_profile
+    arm_registry=selected_arms(registry['ARMS'],args.experiment_profile)
+    fusion_registry=selected_arms(FUSION_ARMS,args.experiment_profile)
+    plan['learned_cells'] = sum(len(arm_registry[idea]) * len(args.seeds)
         for values in plan['backbone_ideas'].values() for idea in values)
-    plan['fusion_learned_cells'] = sum(len(FUSION_ARMS[i])*len(args.seeds) for i in args.fusion_ideas)
+    plan['fusion_learned_cells'] = sum(len(fusion_registry[i])*len(args.seeds) for i in args.fusion_ideas)
     plan['learned_cells'] += plan['fusion_learned_cells']
     need(args.seeds and len(set(args.seeds))==len(args.seeds),'unique predeclared seeds')
     need(args.label_classes==3 or args.eval_labels is None,
@@ -256,7 +265,8 @@ def main(argv=None):
         print(json.dumps(plan,ensure_ascii=False,indent=2))
         return 0
     from scripts.smallset_events import emit,jobs_for
-    emit('schedule',jobs=jobs_for(plan,registry['ARMS'],FUSION_ARMS))
+    jobs=jobs_for(plan,registry['ARMS'],FUSION_ARMS)
+    emit('schedule',jobs=jobs)
     emit('phase',phase='加载框架／核验GPU')
     os.environ.update(HF_HUB_OFFLINE='1',TRANSFORMERS_OFFLINE='1',CUBLAS_WORKSPACE_CONFIG=':4096:8')
     import torch,transformers
@@ -308,18 +318,24 @@ def main(argv=None):
                                    max(40,args.minimum_free_gib)*1024**3)
     print(json.dumps(capacity),flush=True)
     set_sequence_budget(limits=capacity['limits'],minimum_free_bytes=max(40,args.minimum_free_gib)*1024**3)
-    seal=run_recoverable(caches,args.output/'matrix',args.seeds,ideas,canary=args.canary,
-                         checkpoint=checkpoint,backbone_ideas=plan['backbone_ideas'],fusion_ideas=args.fusion_ideas)
+    matrix=args.output/('matrix-primary54' if args.experiment_profile=='primary54' else 'matrix')
+    if args.experiment_profile=='primary54' and not (matrix/'adoption.json').exists():
+        adopt_primary(args.output/'matrix',matrix,jobs)
+    matrix.mkdir(exist_ok=True)
+    freeze_profile(matrix,args.experiment_profile,jobs)
+    seal=run_recoverable(caches,matrix,args.seeds,ideas,canary=args.canary,
+                         checkpoint=checkpoint,backbone_ideas=plan['backbone_ideas'],fusion_ideas=args.fusion_ideas,
+                         experiment_profile=args.experiment_profile)
     if args.eval_labels:
-        evaluation=args.output/'matrix/evaluation.json'
+        evaluation=matrix/'evaluation.json'
         if evaluation.exists():
             r=json.loads(evaluation.read_bytes())
             need(r['labels_sha256']==digest(args.eval_labels) and r['joint_seal_sha256']==
-                 digest(args.output/'matrix/joint-prediction-seal.json'),'same sealed evaluation')
-        else:evaluate(args.output/'matrix',args.eval_labels)
+                 digest(matrix/'joint-prediction-seal.json'),'same sealed evaluation')
+        else:evaluate(matrix,args.eval_labels)
     failures=[x for x in seal['failures'] if x.get('status')!='DEFERRED_BANK_FIT']
     print(json.dumps(dict(stage='matrix_finished',completed_cells=len(seal['results']),
-        failed_cells=len(failures),evaluation_written=(args.output/'matrix/evaluation.json').exists(),
+        failed_cells=len(failures),evaluation_written=(matrix/'evaluation.json').exists(),
         predictions_sealed=True)),flush=True)
     return 2 if failures else 0
 

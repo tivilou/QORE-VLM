@@ -210,7 +210,15 @@ def compatible_binding(previous, current, specification):
 def resume_binding(previous, current, output, specification_path=None):
     if previous==current:return previous,None
     directory=Path(__file__).resolve().parents[2]/'configs/experiments/triviaqa_smallset_20261112'
-    spec_path=Path(specification_path) if specification_path is not None else directory/'progress-ui-compatibility.v005.json'
+    spec_path=Path(specification_path) if specification_path is not None else directory/'primary54-compatibility.v006.json'
+    if specification_path is None:
+        for name in ('primary54-compatibility.v006.json','progress-ui-compatibility.v005.json',
+                     'cache-policy-compatibility.v004.json','fidelity-speed-compatibility.v003.json',
+                     'runtime-speed-compatibility.v002.json','feature-io-compatibility.v001.json'):
+            candidate=directory/name
+            if candidate.exists() and json.loads(candidate.read_bytes()).get('after_sources')==current.get('sources'):
+                spec_path=candidate;break
+    if specification_path is None and not spec_path.exists():spec_path=directory/'progress-ui-compatibility.v005.json'
     if specification_path is None and not spec_path.exists():spec_path=directory/'cache-policy-compatibility.v004.json'
     if specification_path is None and not spec_path.exists():spec_path=directory/'fidelity-speed-compatibility.v003.json'
     if specification_path is None and not spec_path.exists():spec_path=directory/'runtime-speed-compatibility.v002.json'
@@ -220,13 +228,15 @@ def resume_binding(previous, current, output, specification_path=None):
     version2=specification.get('schema')=='top8.runtime-speed-compatibility.v2'
     output=Path(output)
     version4=specification.get('schema')=='top8.cache-policy-compatibility.v4'
-    version5=specification.get('schema')=='top8.progress-ui-compatibility.v5'
+    version6=specification.get('schema')=='top8.primary54-compatibility.v6'
+    version5=version6 or specification.get('schema')=='top8.progress-ui-compatibility.v5'
     if version5 or version4 or specification.get('schema')=='top8.fidelity-speed-compatibility.v3':
         priors=[]
         prior_specs=[('feature-io-continuation.v1.json','feature-io-compatibility.v001.json'),
                      ('runtime-speed-continuation.v2.json','runtime-speed-compatibility.v002.json')]
         if version5 or version4:prior_specs.append(('fidelity-speed-continuation.v3.json','fidelity-speed-compatibility.v003.json'))
         if version5:prior_specs.append(('cache-policy-continuation.v4.json','cache-policy-compatibility.v004.json'))
+        if version6:prior_specs.append(('progress-ui-continuation.v5.json','progress-ui-compatibility.v005.json'))
         for old_name,old_spec in prior_specs:
             old_path=output/old_name
             if old_path.exists():
@@ -234,11 +244,11 @@ def resume_binding(previous, current, output, specification_path=None):
                 _,verified=resume_binding(previous,old['actual_runtime_binding'],output,directory/old_spec)
                 need(verified==old_path,'exact immutable prior performance continuation')
                 priors.append(dict(name=old_name,size=old_path.stat().st_size,sha256=digest(old_path)))
-        receipt=dict(schema='top8.performance-continuation.v5' if version5 else 'top8.performance-continuation.v4' if version4 else 'top8.performance-continuation.v3',original_matrix_binding=previous,
+        receipt=dict(schema='top8.performance-continuation.v6' if version6 else 'top8.performance-continuation.v5' if version5 else 'top8.performance-continuation.v4' if version4 else 'top8.performance-continuation.v3',original_matrix_binding=previous,
                      actual_runtime_binding=current,compatibility_sha256=digest(spec_path),
                      changes=specification['changes'],previous_continuations=priors,
                      original_bindings_and_completed_results_unchanged=True)
-        path=output/('progress-ui-continuation.v5.json' if version5 else 'cache-policy-continuation.v4.json' if version4 else 'fidelity-speed-continuation.v3.json')
+        path=output/('primary54-continuation.v6.json' if version6 else 'progress-ui-continuation.v5.json' if version5 else 'cache-policy-continuation.v4.json' if version4 else 'fidelity-speed-continuation.v3.json')
         if path.exists():need(json.loads(path.read_bytes())==receipt,'same recorded performance continuation')
         elif not (output/'joint-prediction-seal.json').exists():_json_commit(output,path.name,receipt)
         return selected,path if path.exists() else None

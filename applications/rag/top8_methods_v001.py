@@ -163,6 +163,7 @@ class Fidelity(Head):
     REFERENCE_CACHE_BYTES=32*1024**2
     def __init__(self,head,layer,bridge,kind,seed):
         super().__init__(head,kind);self.layer=layer;self.bridge=bridge
+        self.cls_only=False  # Selected by the checkpoint-owned execution route.
         self._references=OrderedDict();self._reference_bytes=0;self._reference_binding=None
         if kind!='HEAD':
             from applications.rag.qfidelity_v002 import Fidelity as Kernel
@@ -212,6 +213,28 @@ class Fidelity(Head):
             for m in (att.query,att.key))
         reference=self._reference(row,q,k,reusable)
         delta=self.effect.kernel(q,k)-reference;l=hidden.shape[1]
+        if self.cls_only:
+            need(not self.layer.training and getattr(att,'position_embedding_type','absolute')=='absolute',
+                 'CLS route requires frozen eval attention with absolute positions')
+            value=att.value(hidden).reshape(len(hidden),-1,h,d).transpose(1,2)
+            original=row['mask']
+            if original is None:mask=delta.unsqueeze(2)
+            else:
+                original=original if original.shape[-2]==1 else original[...,:1,:]
+                if original.dtype==torch.bool:
+                    base=torch.zeros_like(original,dtype=delta.dtype).masked_fill(~original,torch.finfo(delta.dtype).min)
+                    mask=base+delta.unsqueeze(2)*original.to(delta.dtype)
+                else:mask=original+delta.unsqueeze(2)*(original==0).to(delta.dtype)
+            if type(att).__name__=='BertSdpaSelfAttention':
+                with sdpa_kernel(SDPBackend.MATH):
+                    context=F.scaled_dot_product_attention(q.unsqueeze(2),k,value,attn_mask=mask,dropout_p=0.)
+            else:
+                probabilities=F.softmax(torch.matmul(q.unsqueeze(2),k.transpose(-1,-2))/math.sqrt(d)+mask,dim=-1)
+                context=torch.matmul(probabilities,value)
+            context=context.transpose(1,2).contiguous().reshape(len(hidden),1,h*d)
+            attention=self.layer.attention.output(context,hidden[:,:1])
+            cls=self.layer.output(self.layer.intermediate(attention),attention)[:,0]
+            return self.head(self.bridge(cls)).squeeze(-1)
         selector=F.one_hot(torch.tensor(0,device=delta.device),l).to(delta.dtype).reshape(1,1,l,1)
         original=row['mask'];base=0. if original is None else original
         if original is not None and original.dtype==torch.bool:

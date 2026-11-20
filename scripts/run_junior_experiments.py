@@ -134,7 +134,7 @@ def matrix_argv(py, assets, output, release, campaign, resume):
     return command
 
 
-def declared_artifacts(output):
+def declared_artifacts(output,matrix_name='matrix'):
     """Inventory only the joint-sealed closure plus named compact run records."""
     output = Path(output); rows = {}
     def add(name, expected=None):
@@ -145,16 +145,17 @@ def declared_artifacts(output):
             require(row['size'] == expected['size'] and row['sha256'] == expected['sha256'], 'sealed output changed')
         require(name not in rows or rows[name] == row, 'conflicting duplicate output')
         rows[name] = row
-    seal_file = output / 'matrix/joint-prediction-seal.json'
+    require(matrix_name in ('matrix','matrix-primary54'),'known result matrix')
+    seal_file = output / matrix_name / 'joint-prediction-seal.json'
     if seal_file.exists():
-        seal = json.loads(seal_file.read_bytes()); add('matrix/joint-prediction-seal.json')
+        seal = json.loads(seal_file.read_bytes()); add(matrix_name+'/joint-prediction-seal.json')
         for row in seal['files']:
-            add('matrix/' + (row['path'] if 'path' in row else row['name']), row)
-    for name in ['execution.json', 'dataset-release.json', 'matrix/run-binding.json', 'matrix/evaluation.json',
-                 'matrix/smallset-evaluation.json']:
+            add(matrix_name+'/' + (row['path'] if 'path' in row else row['name']), row)
+    for name in ['execution.json', 'dataset-release.json', matrix_name+'/run-binding.json', matrix_name+'/evaluation.json',
+                 matrix_name+'/smallset-evaluation.json',matrix_name+'/experiment-profile.json',matrix_name+'/adoption.json']:
         if (output / name).is_file():
             add(name)
-    for path in sorted((output / 'matrix').glob('*/disposition.json')):
+    for path in sorted((output / matrix_name).glob('*/disposition.json')):
         add(path.relative_to(output).as_posix())
     require(rows, 'no declared results to upload')
     return list(rows.values())
@@ -162,7 +163,7 @@ def declared_artifacts(output):
 
 def push_results(exchange, output, run_id, execution):
     prefix = 'five_ideas/top8-junior-results/' + str(relative(run_id))
-    files = declared_artifacts(output)
+    files = declared_artifacts(output,'matrix-primary54' if execution.get('experiment_profile')=='primary54' else 'matrix')
     pending = dict(schema='qduet.junior-results.v1', run_id=run_id, execution=execution,
                    target=prefix, files=files, status='pending')
     atomic_json(output / 'pending-upload.json', pending)

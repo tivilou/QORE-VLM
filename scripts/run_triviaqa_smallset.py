@@ -29,6 +29,8 @@ def main(argv=None):
     p.add_argument('--prepare-only',action='store_true')
     p.add_argument('--plan-only',action='store_true')
     p.add_argument('--resume',action='store_true')
+    p.add_argument('--experiment-profile',choices=['primary54','full'],default='primary54',
+                   help='primary54: quantum main effects only; full: historical393 controls.')
     p.add_argument('--display',choices=['auto','inplace','append','off'],default='auto',
                    help='Terminal dashboard; auto appends under redirection, off retains raw logs.')
     p.add_argument('--refresh',type=float,default=5.,help='Dashboard refresh seconds (>=0.5).')
@@ -52,6 +54,7 @@ def main(argv=None):
     campaign=json.loads(CAMPAIGN.read_bytes())
     base=json.loads((ROOT/campaign['base_campaign']).read_bytes())
     command=[sys.executable,'-B',str(ROOT/'scripts/run_top8.py'),
+             '--experiment-profile',a.experiment_profile,
              '--dpr-model','models/dpr','--bge-model','models/bge','--output','matrix',
              '--label-classes','2','--ideas',*base['dual_ideas'],
              '--fusion-ideas',*campaign['fusion_ideas'],'--seeds',*map(str,base['seeds'])]
@@ -104,6 +107,7 @@ def main(argv=None):
                     'applications.rag.tests.test_top8_runtime_io','-q'],cwd=ROOT,check=True)
     output=work/'run-smallset';output.mkdir(exist_ok=True)
     command=[str(py),'-B',str(ROOT/'scripts/run_top8.py'),
+             '--experiment-profile',a.experiment_profile,
              '--dpr-model',str(models/base['populations']['reproduction']['models']['dpr']),
              '--bge-model',str(models/base['populations']['reproduction']['models']['bge']),
              '--train',str(data/'train.jsonl'),'--eval-inputs',str(data/'evaluation.inputs.jsonl'),
@@ -116,11 +120,13 @@ def main(argv=None):
         output.rmdir() # suite owns exclusive creation
     result=subprocess.run(command)
     evaluation=None
-    if (output/'matrix/joint-prediction-seal.json').exists():
+    matrix=output/('matrix-primary54' if a.experiment_profile=='primary54' else 'matrix')
+    if (matrix/'joint-prediction-seal.json').exists():
         emit('phase',phase='联合预测封存后的验证／测试评估')
-        evaluation=evaluate(output/'matrix',data)
+        evaluation=evaluate(matrix,data)
     run_id='triviaqa-smallset-'+dt.datetime.now(dt.timezone.utc).strftime('%Y%m%dT%H%M%SZ')
     execution=dict(schema='qduet.smallset-execution.v1',returncode=result.returncode,roles=release['roles'],
+                   experiment_profile=a.experiment_profile,quantum_attribution_certified=False,
                    all_cells_complete=evaluation is not None and not evaluation['failures'],
                    label_semantics='binary_useful',formal_full_dataset=False,test_used_for_selection=False)
     require(output.is_dir(),'run failed before producing output')

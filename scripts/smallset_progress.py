@@ -26,16 +26,20 @@ class Progress:
         self.log_path=str(log);self.checkpoint='待测；显示心跳不代表检查点已保存'
         self.result='等待完成';self.last_event=None;self.cache=None
         self.worker_exit_code=None
+        self.resources=None;self.allocator=None;self.roster=None
 
     def event(self, e):
         if e.get('qduet_progress')!=1:return
         kind=e.get('event');stamp=e['time'];self.last_event=stamp
         if kind=='schedule':
+            self.roster=set(e['jobs'])
             for key in e['jobs']:self.jobs.setdefault(key,dict(id=key,state='pending'))
         elif kind=='cell':
+            if self.roster is not None and e['job'] not in self.roster:return
             key=e['job'];job=self.jobs.setdefault(key,dict(id=key))
             job.update(state=e['state'])
             if e['state']=='running':
+                self.allocator=None
                 self.current=key;job.update(started_at=stamp,attempt_started_at=stamp,pid=e['pid'],attempt=self.attempt,phase='加载／初始化',
                                             completed=None,total=None,progress_at=None)
             else:
@@ -59,6 +63,7 @@ class Progress:
         elif kind=='device' and self.current:
             self.jobs[self.current].update(device=e['device'],execution=e.get('execution','backend待测'))
         elif kind=='cache':self.cache=e['cache']
+        elif kind=='allocator':self.allocator=e
         elif kind=='outcome':self.result=e['result']
 
     def finish(self, code, interrupted=False):
@@ -77,12 +82,15 @@ class Progress:
         return dict(schema='qduet.cli-progress.v1',name='TriviaQA · DPR / BGE · 8+2方案',
             attempt=self.attempt,watch_only=watch,phase=self.phase,jobs=list(self.jobs.values()),
             log_path=self.log_path,checkpoint_status=self.checkpoint,return_status=self.result,
-            supervisor_heartbeat_at=now,worker_event_at=self.last_event,cache=self.cache)
+            supervisor_heartbeat_at=now,worker_event_at=self.last_event,cache=self.cache,
+            resources=self.resources,allocator=self.allocator)
 
 
 def render(dashboard, snapshot, now=None):
     now=time.time() if now is None else now
     lines=dashboard.render(snapshot,now).splitlines()
+    from scripts.smallset_resources import resource_lines
+    lines[3:3]=resource_lines(snapshot.get('resources'),snapshot.get('allocator'),now)
     outer=snapshot.get('supervisor_heartbeat_at');worker=snapshot.get('worker_event_at')
     lines.insert(3,'父进程心跳 '+(duration(now-outer)+' 前' if outer is not None else '待测')+
                  ' | worker事件 '+(duration(now-worker)+' 前' if worker is not None else '待测')+
@@ -94,7 +102,7 @@ def render(dashboard, snapshot, now=None):
     cache=snapshot.get('cache')
     if cache:
         fraction=cache.get('verified_hit_fraction')
-        lines.insert(-3,'序列缓存：命中 '+(f'{100*fraction:.1f}%' if fraction is not None else '待测')+
+        lines.insert(-3,'序列缓存（本reader累计）：命中 '+(f'{100*fraction:.1f}%' if fraction is not None else '待测')+
             ' | 重算 '+str(cache.get('regenerated_chunks'))+
             ' | host重算秒 '+str(round(cache.get('host_regeneration_seconds',0),1)))
     for job in snapshot.get('jobs',[]):
@@ -179,7 +187,7 @@ def supervise(command, workspace, display='auto', interval=5., cwd=None):
     attempt=time.strftime('%Y%m%dT%H%M%SZ',time.gmtime())+'-'+uuid.uuid4().hex[:8]
     folder=progress/attempt;folder.mkdir();jobs=folder/'jobs';jobs.mkdir()
     log=folder/'runner.log';model=Progress(attempt,log);dashboard=Dashboard();events=queue.Queue()
-    latest=progress/'latest.json';child=None;reader=None;handlers={};interrupted=False;code=1
+    latest=progress/'latest.json';child=None;reader=None;sampler=None;handlers={};interrupted=False;code=1
     # A second UI must never become a second owner of this same workspace.
     from applications.rag.top8_cache_v002 import DiskLRU
     lock=DiskLRU(progress/'owner',0)
@@ -190,6 +198,8 @@ def supervise(command, workspace, display='auto', interval=5., cwd=None):
                 env=dict(os.environ,QDUET_PROGRESS_EVENTS='1',PYTHONUNBUFFERED='1')
                 child=subprocess.Popen(command,cwd=cwd,env=env,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,
                                        start_new_session=os.name!='nt')
+                from scripts.smallset_resources import Sampler
+                sampler=Sampler(child.pid)
                 for sig in (signal.SIGINT,signal.SIGTERM):handlers[sig]=signal.signal(sig,interrupt)
                 if hasattr(signal,'SIGHUP'):handlers[signal.SIGHUP]=signal.signal(signal.SIGHUP,interrupt)
                 reader=threading.Thread(target=read_events,args=(child.stdout,log,events,jobs),daemon=True);reader.start()
@@ -199,6 +209,7 @@ def supervise(command, workspace, display='auto', interval=5., cwd=None):
                         except queue.Empty:break
                         if isinstance(event,BaseException):raise event
                         model.event(event)
+                    model.resources=sampler.latest
                     snapshot=model.snapshot();atomic(latest,snapshot);terminal.show(render(dashboard,snapshot))
                     if child.poll() is not None and not reader.is_alive() and events.empty():
                         model.worker_exit_code=child.returncode;code=child.returncode
@@ -211,6 +222,7 @@ def supervise(command, workspace, display='auto', interval=5., cwd=None):
                 for sig in handlers:signal.signal(sig,signal.SIG_IGN)
                 if child is not None:
                     stop_child(child)
+                    if sampler is not None:sampler.close()
                     if reader is not None:reader.join(timeout=3)
                     if child.stdout is not None and (reader is None or not reader.is_alive()):child.stdout.close()
                 model.finish(code,interrupted);snapshot=model.snapshot()

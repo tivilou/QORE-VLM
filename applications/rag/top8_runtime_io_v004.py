@@ -5,7 +5,7 @@ from applications.rag.qvalue_portable_v001 import need
 def step_diagnostics(losses, counts, parameters, denominator, *, fusion=False, empty=0):
     """One host packet for loss/count summaries and pre-update gradient gates.
 
-    Callers still reject each nonfinite loss BEFORE backward. FP32 loss values
+    Reject every nonfinite loss and gradient BEFORE optimizer update. FP32 loss values
     become Python doubles exactly as before, then accumulate in original order;
     no GPU reduction substitutes for that host accumulation. No live graphs are
     retained. Clip/AdamW are called only after all original gradient gates pass.
@@ -27,6 +27,8 @@ def step_diagnostics(losses, counts, parameters, denominator, *, fusion=False, e
     values += [finite.to(torch.float64),maximum.to(torch.float64)]
     packet=torch.stack(values).cpu().tolist()
     n=len(losses);pairs=sum(int(x) for x in packet[n:2*n])
+    import math
+    need(all(math.isfinite(x) for x in packet[:n]),'finite fusion objective' if fusion else 'finite training-only objective')
     need(bool(packet[-2]),'finite fusion gradients' if fusion else 'finite data gradients')
     need((bool(grads) or fusion) and (pairs==0 or packet[-1]>0),
          'active fusion objective' if fusion else 'nonzero actual objective gradient when pairs exist')

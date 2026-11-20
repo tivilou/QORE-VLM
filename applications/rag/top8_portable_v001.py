@@ -48,11 +48,13 @@ def sequence_rows(root, record, features, checkpoint):
     """Full-value exhaustion of every original retained chunk, in original order."""
     import torch
     offset=0
-    for entry in record['sequences']:
+    for number,entry in enumerate(record['sequences']):
         checkpoint()
         if entry.get('regenerate'):
             from applications.rag.top8_cache_v002 import sequence_reader
-            x=sequence_reader(root,None,checkpoint).read(entry,role=record['role'])
+            reader=sequence_reader(root,None,checkpoint)
+            x=reader.read(entry,role=record['role'])
+            if number+1<len(record['sequences']):reader.prefetch(record['sequences'][number+1])
             x=dict(x,positions=entry['positions'])
             x={k:(v.cuda() if isinstance(v,torch.Tensor) else v) for k,v in x.items()}
         else:
@@ -88,6 +90,20 @@ def loss_for(model,idea,record,features,root,checkpoint):
     return (F.softplus(-(s[:,None]-s[None,:]))*mask).sum()/count.clamp_min(1),count
 
 
+def scores_and_replay(model,replay,idea,record,features,root,checkpoint):
+    """Two independent forwards, one immutable input read/transfer per chunk."""
+    import torch
+    if idea!='FIDELITY':
+        row=gpu_row(features)
+        return model(row),replay(row)
+    from applications.rag.top8_runtime_io_v004 import head_sequence_rows
+    rows=head_sequence_rows(record,features,checkpoint) if model.kind=='HEAD' else sequence_rows(root,record,features,checkpoint)
+    first=[];second=[]
+    for row,_ in rows:
+        first.append(model(row));second.append(replay(row))
+    return torch.cat(first),torch.cat(second)
+
+
 def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_limit,checkpoint,journal=None):
     import torch
     from applications.rag.top8_backbone_v001 import load_modules
@@ -101,9 +117,13 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
     features=project_features(features,manifest,cache_root,required_fields(idea,arm),checkpoint)
     label_classes=manifest.get('label_classes',3)
     model=build(idea,arm,seed,head,layer,bridge,(mean,std),label_classes).cuda()
+    if idea=='FIDELITY':model.cls_only=arm!='HEAD'
     parameters={n:p for n,p in model.named_parameters() if p.requires_grad}
     need(parameters and len({id(p) for p in parameters.values()})==len(parameters),'exact trainable parameter ownership')
     optimizer=torch.optim.AdamW(list(parameters.values()),lr=.001,betas=(.9,.999),eps=1e-8,weight_decay=0)
+    saved=journal.load() if journal is not None else None
+    if idea=='FIDELITY' and saved is not None:
+        model.cls_only=saved.get('attention_route','full')=='cls-fp32-v1'
     max_null=0.;native_math_error=0.
     # Fixed first two complete training questions. No outcome-selected probes.
     with torch.no_grad():
@@ -120,7 +140,6 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
                 need(torch.allclose(actual,expected,atol=2e-5,rtol=2e-6),'fixed native/reference null')
                 max_null=max(max_null,float((actual-expected).abs().max()))
     records=[];generator=torch.Generator().manual_seed(seed);step=0;started=time.monotonic()
-    saved=journal.load() if journal is not None else None
     if saved is not None:
         need(set(saved['parameters'])==set(parameters),'complete recovery parameter ownership')
         with torch.no_grad():
@@ -132,6 +151,7 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
         step=saved['step'];records=saved['records']
         need(len(records)==step,'complete recovery training history')
     from scripts.smallset_events import emit
+    event_at=time.monotonic()
     total_steps=min(epochs*((len(train)+7)//8),steps_limit) if steps_limit else epochs*((len(train)+7)//8)
     emit('progress',completed=step,total=total_steps,unit='steps',phase='训练',origin=step)
     if os.environ.get('QDUET_PROGRESS_EVENTS')=='1':
@@ -149,15 +169,20 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
             # Every complete question contributes 1/B, including zero-pair cases.
             for r in batch:
                 loss,count=loss_for(model,idea,r,features[r['id']],cache_root,checkpoint)
-                need(bool(torch.isfinite(loss)),'finite training-only objective')
                 (loss/len(batch)).backward();losses.append(loss.detach());counts.append(count.detach())
             total,pairs,without=step_diagnostics(losses,counts,parameters.values(),len(batch))
             norm=torch.nn.utils.clip_grad_norm_(list(parameters.values()),1.);optimizer.step();step+=1
             need(finite_parameters(parameters.values()),'finite trained parameters')
             records.append(dict(step=step,loss=total,ordered_pairs=pairs,without_ordered_pairs=without,gradient_norm=float(norm)))
+            from scripts.smallset_events import allocator_event
+            allocator_event()
+            if time.monotonic()-event_at>=5:
+                emit('progress',completed=step,total=total_steps,unit='steps',phase='训练',metrics={'loss':total})
+                event_at=time.monotonic()
             if journal is not None and (step%32==0 or start+8>=len(order) or (steps_limit and step>=steps_limit)):
                 emit('phase',phase='保存完整恢复检查点')
                 journal.save(dict(step=step,epoch=epoch,next_start=start+8,order=order,
+                    attention_route='cls-fp32-v1' if idea=='FIDELITY' and model.cls_only else 'full',
                     parameters={n:p.detach().cpu().clone() for n,p in parameters.items()},
                     optimizer=optimizer.state_dict(),generator=generator.get_state(),
                     cpu_rng=torch.get_rng_state(),cuda_rng=torch.cuda.get_rng_state_all(),records=records))
@@ -174,6 +199,7 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
     files.append(tensor_file(output,'checkpoint-'+key+'.bin',compact))
     # Rebuild from fixed native modules and seed, then load only owned parameters.
     replay=build(idea,arm,seed,head,layer,bridge,(mean,std),label_classes).cuda()
+    if idea=='FIDELITY':replay.cls_only=model.cls_only
     restored={n:p for n,p in replay.named_parameters() if p.requires_grad}
     need(set(restored)==set(compact),'complete compact trainable schema')
     with torch.no_grad():
@@ -182,8 +208,8 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
     emit('progress',completed=0,total=len(dev),unit='questions_checked',phase='预测与逐题回放（未封存）',origin=0)
     with torch.no_grad():
         for r in dev:
-            checkpoint();f=features[r['id']];s=scores_for(model,idea,r,f,cache_root,checkpoint)
-            s2=scores_for(replay,idea,r,f,cache_root,checkpoint)
+            checkpoint();f=features[r['id']]
+            s,s2=scores_and_replay(model,replay,idea,r,f,cache_root,checkpoint)
             need(s.shape==(50,) and bool(torch.isfinite(s).all()) and torch.equal(s,s2),'all50 prediction/final checkpoint bit replay')
             replay_error=max(replay_error,float((s-s2).abs().max()));values=s.cpu().tolist()
             ranking=sorted(range(50),key=lambda i:(-values[i],i))
@@ -196,7 +222,8 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
     result=dict(idea=idea,arm=arm,seed=seed,steps=step,training_questions=len(train),evaluation_questions=len(dev),
         trainable_parameters=sum(p.numel() for p in parameters.values()),max_initial_null_error=max_null,
         representative_native_math_error=native_math_error,prediction_replay_error=replay_error,
-        seconds=time.monotonic()-started,files=files,sample_trace_v2='DEFERRED_NOT_PASSED')
+        seconds=time.monotonic()-started,files=files,sample_trace_v2='DEFERRED_NOT_PASSED',
+        attention_route='cls-fp32-v1' if idea=='FIDELITY' and model.cls_only else 'full')
     del optimizer,model,replay,layer,bridge,head;gc.collect();torch.cuda.empty_cache()
     return result
 

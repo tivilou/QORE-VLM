@@ -269,6 +269,28 @@ class FrozenSequences:
         self.memory = OrderedDict();self.memory_bytes = self.memory_hits = 0
         self.reads = 0;self.read_seconds = self.regeneration_seconds = 0.
         self._reported_at = time.monotonic()
+        self._prefetch=None;self._prefetch_pool=None;self.prefetch_hits=0
+
+    def prefetch(self,entry):
+        """One <=32MiB immutable disk read ahead; no tensors/CUDA/RNG in thread."""
+        if not entry.get('regenerate'):return
+        key=hashlib.sha256(json.dumps(entry,sort_keys=True).encode()).hexdigest()
+        if key in self.memory:return
+        row=self.disk.entries.get(key)
+        if row is None or row['size']>32*1024**2:return
+        if self._prefetch is not None:
+            _,old=self._prefetch
+            if not old.done():return
+        from concurrent.futures import ThreadPoolExecutor
+        if self._prefetch_pool is None:self._prefetch_pool=ThreadPoolExecutor(max_workers=1)
+        path=self.disk.root/row['name'];size=row['size'];sha=row['sha256']
+        def read():
+            try:
+                if path.is_symlink():return None
+                with path.open('rb') as f:raw=f.read(size+1)
+                return raw if len(raw)==size and hashlib.sha256(raw).hexdigest()==sha else None
+            except OSError:return None
+        self._prefetch=(key,self._prefetch_pool.submit(read))
 
     def _valid(self, payload, entry):
         return sequence_signature(payload['hidden'], payload['mask'], payload['native_scores']) == entry['signature']
@@ -291,6 +313,7 @@ class FrozenSequences:
             sequence_payload_limit_bytes=self.disk.maximum,
             sequence_payload_bytes=sum(r['size'] for r in self.disk.entries.values()),
             cpu_hot_payload_bytes=self.memory_bytes,cpu_hot_limit_bytes=SEQUENCE_MEMORY_BYTES,
+            prefetch_hits=self.prefetch_hits,prefetch_max_bytes=32*1024**2,
             evicted_chunks=self.disk.evictions,skipped_optional_writes=self.disk.skipped_writes)
 
     def read(self, entry, role='unknown'):
@@ -311,7 +334,17 @@ class FrozenSequences:
             need(self._valid(payload, entry), 'memory full-prefix hash mismatch')
             self.memory_hits += 1
             return payload
-        raw = self.disk.get(key, role)
+        raw=None
+        if self._prefetch is not None and self._prefetch[0]==key:
+            _,future=self._prefetch;self._prefetch=None;raw=future.result()
+            if raw is not None:
+                row=self.disk.entries.get(key)
+                if row is None or len(raw)!=row['size'] or hashlib.sha256(raw).hexdigest()!=row['sha256']:raw=None
+                else:
+                    row['used']=time.time_ns();self.disk._access_dirty=True
+                    if role=='training' or row.get('role','unknown')=='unknown':row['role']=role
+                    self.prefetch_hits+=1
+        if raw is None:raw = self.disk.get(key, role)
         if raw is not None:
             payload = load_tensor(raw)
             need(self._valid(payload, entry), 'cached full-prefix hash mismatch')
@@ -366,6 +399,8 @@ class FrozenSequences:
         return payload
 
     def close(self):
+        if self._prefetch_pool is not None:self._prefetch_pool.shutdown(wait=True,cancel_futures=True)
+        self._prefetch=None;self._prefetch_pool=None
         self.backbone = None;self.memory.clear();self.memory_bytes = 0
         try:print(json.dumps(dict(stage='sequence_cache_final',**self.stats())),flush=True)
         finally:self.disk.close()
