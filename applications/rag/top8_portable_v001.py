@@ -53,8 +53,12 @@ def sequence_rows(root, record, features, checkpoint):
         if entry.get('regenerate'):
             from applications.rag.top8_cache_v002 import sequence_reader
             reader=sequence_reader(root,None,checkpoint)
-            x=reader.read(entry,role=record['role'])
-            if number+1<len(record['sequences']):reader.prefetch(record['sequences'][number+1])
+            if reader.device_cache is not None:
+                x=reader.device_cache.read(reader,entry,record['role'])
+                if number+1<len(record['sequences']):reader.device_cache.read(reader,record['sequences'][number+1],record['role'],prefetch=True)
+            else:
+                x=reader.read(entry,role=record['role'])
+                if number+1<len(record['sequences']):reader.prefetch(record['sequences'][number+1])
             x=dict(x,positions=entry['positions'])
             x={k:(v.cuda() if isinstance(v,torch.Tensor) else v) for k,v in x.items()}
         else:
@@ -75,6 +79,9 @@ def scores_for(model, idea, record, features, root, checkpoint):
     if idea!='FIDELITY':return model(gpu_row(features))
     from applications.rag.top8_runtime_io_v004 import head_sequence_rows
     rows=head_sequence_rows(record,features,checkpoint) if model.kind=='HEAD' else sequence_rows(root,record,features,checkpoint)
+    if getattr(model,'throughput',None) is not None:
+        from applications.rag.top8_fidelity_runtime_v007 import batch_rows
+        rows=batch_rows(rows,model.candidate_batch)
     scores=[]
     for row,native in rows:scores.append(model(row))
     return torch.cat(scores) if scores else model.head.weight.sum().reshape(1)[:0]
@@ -98,6 +105,9 @@ def scores_and_replay(model,replay,idea,record,features,root,checkpoint):
         return model(row),replay(row)
     from applications.rag.top8_runtime_io_v004 import head_sequence_rows
     rows=head_sequence_rows(record,features,checkpoint) if model.kind=='HEAD' else sequence_rows(root,record,features,checkpoint)
+    if getattr(model,'throughput',None) is not None:
+        from applications.rag.top8_fidelity_runtime_v007 import batch_rows
+        rows=batch_rows(rows,model.candidate_batch)
     first=[];second=[]
     for row,_ in rows:
         first.append(model(row));second.append(replay(row))
@@ -124,6 +134,14 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
     saved=journal.load() if journal is not None else None
     if idea=='FIDELITY' and saved is not None:
         model.cls_only=saved.get('attention_route','full')=='cls-fp32-v1'
+    throughput_plan=None;device_reader=None
+    if idea=='FIDELITY' and arm!='HEAD':
+        from applications.rag.top8_fidelity_runtime_v007 import memory_plan,SequenceDeviceCache
+        from applications.rag.top8_cache_v002 import sequence_reader
+        throughput_plan=memory_plan(model.head.weight.device);model.enable_throughput(throughput_plan)
+        device_reader=sequence_reader(cache_root,manifest,checkpoint)
+        if device_reader.device_cache is None:
+            device_reader.device_cache=SequenceDeviceCache(model.head.weight.device,throughput_plan['input_bytes'])
     max_null=0.;native_math_error=0.
     # Fixed first two complete training questions. No outcome-selected probes.
     with torch.no_grad():
@@ -139,6 +157,8 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
                 expected=head(f['readout'].cuda()).squeeze(-1);actual=model(gpu_row(f))
                 need(torch.allclose(actual,expected,atol=2e-5,rtol=2e-6),'fixed native/reference null')
                 max_null=max(max_null,float((actual-expected).abs().max()))
+    if throughput_plan is not None:
+        need(all(bool(x) for x in model.take_kernel_flags()),'finite bounded fidelity probe')
     records=[];generator=torch.Generator().manual_seed(seed);step=0;started=time.monotonic()
     if saved is not None:
         need(set(saved['parameters'])==set(parameters),'complete recovery parameter ownership')
@@ -156,7 +176,8 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
     emit('progress',completed=step,total=total_steps,unit='steps',phase='训练',origin=step)
     if os.environ.get('QDUET_PROGRESS_EVENTS')=='1':
         device=next(iter(parameters.values())).device
-        emit('device',device=str(device)+(' / '+torch.cuda.get_device_name() if device.type=='cuda' else ''),execution='参数 '+str(next(iter(parameters.values())).dtype)+'；kernel待测')
+        route=('；CLS末层' if model.cls_only else '；完整末层（检查点路径）') if throughput_plan is not None else ''
+        emit('device',device=str(device)+(' / '+torch.cuda.get_device_name() if device.type=='cuda' else ''),execution='参数 '+str(next(iter(parameters.values())).dtype)+route+'；kernel待测')
     for epoch in range(epochs):
         if saved is not None and epoch<saved['epoch']:continue
         restoring=saved is not None and epoch==saved['epoch']
@@ -170,7 +191,8 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
             for r in batch:
                 loss,count=loss_for(model,idea,r,features[r['id']],cache_root,checkpoint)
                 (loss/len(batch)).backward();losses.append(loss.detach());counts.append(count.detach())
-            total,pairs,without=step_diagnostics(losses,counts,parameters.values(),len(batch))
+            flags=model.take_kernel_flags() if throughput_plan is not None else []
+            total,pairs,without=step_diagnostics(losses,counts,parameters.values(),len(batch),extra_flags=flags)
             norm=torch.nn.utils.clip_grad_norm_(list(parameters.values()),1.);optimizer.step();step+=1
             need(finite_parameters(parameters.values()),'finite trained parameters')
             records.append(dict(step=step,loss=total,ordered_pairs=pairs,without_ordered_pairs=without,gradient_norm=float(norm)))
@@ -178,11 +200,17 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
             allocator_event()
             if time.monotonic()-event_at>=5:
                 emit('progress',completed=step,total=total_steps,unit='steps',phase='训练',metrics={'loss':total})
+                if device_reader is not None:
+                    emit('throughput',throughput=dict(route='batched-fidelity-v7',candidates=model.candidate_batch,
+                        attention_route='cls-fp32-v1' if model.cls_only else 'full',
+                        projection_bytes=model._projection_cache.bytes,projection_hits=model._projection_cache.hits,
+                        reference_bytes=model._reference_bytes,**device_reader.device_cache.stats()))
                 event_at=time.monotonic()
             if journal is not None and (step%32==0 or start+8>=len(order) or (steps_limit and step>=steps_limit)):
                 emit('phase',phase='保存完整恢复检查点')
                 journal.save(dict(step=step,epoch=epoch,next_start=start+8,order=order,
                     attention_route='cls-fp32-v1' if idea=='FIDELITY' and model.cls_only else 'full',
+                    throughput_route='batched-fidelity-v7' if throughput_plan is not None else None,
                     parameters={n:p.detach().cpu().clone() for n,p in parameters.items()},
                     optimizer=optimizer.state_dict(),generator=generator.get_state(),
                     cpu_rng=torch.get_rng_state(),cuda_rng=torch.cuda.get_rng_state_all(),records=records))
@@ -200,6 +228,7 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
     # Rebuild from fixed native modules and seed, then load only owned parameters.
     replay=build(idea,arm,seed,head,layer,bridge,(mean,std),label_classes).cuda()
     if idea=='FIDELITY':replay.cls_only=model.cls_only
+    if throughput_plan is not None:replay.enable_throughput(throughput_plan)
     restored={n:p for n,p in replay.named_parameters() if p.requires_grad}
     need(set(restored)==set(compact),'complete compact trainable schema')
     with torch.no_grad():
@@ -210,6 +239,8 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
         for r in dev:
             checkpoint();f=features[r['id']]
             s,s2=scores_and_replay(model,replay,idea,r,f,cache_root,checkpoint)
+            if throughput_plan is not None:
+                need(all(bool(x) for x in model.take_kernel_flags()+replay.take_kernel_flags()),'finite bounded fidelity prediction')
             need(s.shape==(50,) and bool(torch.isfinite(s).all()) and torch.equal(s,s2),'all50 prediction/final checkpoint bit replay')
             replay_error=max(replay_error,float((s-s2).abs().max()));values=s.cpu().tolist()
             ranking=sorted(range(50),key=lambda i:(-values[i],i))
@@ -223,7 +254,9 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
         trainable_parameters=sum(p.numel() for p in parameters.values()),max_initial_null_error=max_null,
         representative_native_math_error=native_math_error,prediction_replay_error=replay_error,
         seconds=time.monotonic()-started,files=files,sample_trace_v2='DEFERRED_NOT_PASSED',
-        attention_route='cls-fp32-v1' if idea=='FIDELITY' and model.cls_only else 'full')
+        attention_route='cls-fp32-v1' if idea=='FIDELITY' and model.cls_only else 'full',
+        throughput_route='batched-fidelity-v7' if throughput_plan is not None else None,
+        throughput_plan=throughput_plan,previous_throughput_route=None if saved is None else saved.get('throughput_route'))
     del optimizer,model,replay,layer,bridge,head;gc.collect();torch.cuda.empty_cache()
     return result
 

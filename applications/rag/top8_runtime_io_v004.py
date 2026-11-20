@@ -2,7 +2,7 @@
 from applications.rag.qvalue_portable_v001 import need
 
 
-def step_diagnostics(losses, counts, parameters, denominator, *, fusion=False, empty=0):
+def step_diagnostics(losses, counts, parameters, denominator, *, fusion=False, empty=0, extra_flags=()):
     """One host packet for loss/count summaries and pre-update gradient gates.
 
     Reject every nonfinite loss and gradient BEFORE optimizer update. FP32 loss values
@@ -24,6 +24,7 @@ def step_diagnostics(losses, counts, parameters, denominator, *, fusion=False, e
         maximum=torch.stack([g.abs().max() for g in grads]).max()
     else:
         finite=values[0].new_tensor(1.);maximum=values[0].new_tensor(0.)
+    if extra_flags:finite=finite.bool()&torch.stack(list(extra_flags)).all()
     values += [finite.to(torch.float64),maximum.to(torch.float64)]
     packet=torch.stack(values).cpu().tolist()
     n=len(losses);pairs=sum(int(x) for x in packet[n:2*n])

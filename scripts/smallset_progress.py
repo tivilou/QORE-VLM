@@ -26,7 +26,7 @@ class Progress:
         self.log_path=str(log);self.checkpoint='待测；显示心跳不代表检查点已保存'
         self.result='等待完成';self.last_event=None;self.cache=None
         self.worker_exit_code=None
-        self.resources=None;self.allocator=None;self.roster=None
+        self.resources=None;self.allocator=None;self.roster=None;self.throughput=None
 
     def event(self, e):
         if e.get('qduet_progress')!=1:return
@@ -40,6 +40,7 @@ class Progress:
             job.update(state=e['state'])
             if e['state']=='running':
                 self.allocator=None
+                self.throughput=None
                 self.current=key;job.update(started_at=stamp,attempt_started_at=stamp,pid=e['pid'],attempt=self.attempt,phase='加载／初始化',
                                             completed=None,total=None,progress_at=None)
             else:
@@ -64,6 +65,7 @@ class Progress:
             self.jobs[self.current].update(device=e['device'],execution=e.get('execution','backend待测'))
         elif kind=='cache':self.cache=e['cache']
         elif kind=='allocator':self.allocator=e
+        elif kind=='throughput':self.throughput=e['throughput']
         elif kind=='outcome':self.result=e['result']
 
     def finish(self, code, interrupted=False):
@@ -83,7 +85,7 @@ class Progress:
             attempt=self.attempt,watch_only=watch,phase=self.phase,jobs=list(self.jobs.values()),
             log_path=self.log_path,checkpoint_status=self.checkpoint,return_status=self.result,
             supervisor_heartbeat_at=now,worker_event_at=self.last_event,cache=self.cache,
-            resources=self.resources,allocator=self.allocator)
+            resources=self.resources,allocator=self.allocator,throughput=self.throughput)
 
 
 def render(dashboard, snapshot, now=None):
@@ -105,6 +107,13 @@ def render(dashboard, snapshot, now=None):
         lines.insert(-3,'序列缓存（本reader累计）：命中 '+(f'{100*fraction:.1f}%' if fraction is not None else '待测')+
             ' | 重算 '+str(cache.get('regenerated_chunks'))+
             ' | host重算秒 '+str(round(cache.get('host_regeneration_seconds',0),1)))
+    throughput=snapshot.get('throughput')
+    if throughput:
+        gib=lambda n:f'{n/1024**3:.2f} GiB'
+        lines.insert(-3,'FIDELITY：同形候选块上限 '+str(throughput['candidates'])+
+            ' | GPU输入缓存 '+gib(throughput['device_input_bytes'])+'/'+gib(throughput['device_input_limit'])+
+            ' | 命中 '+str(throughput['device_input_hits'])+' | QKV命中 '+str(throughput['projection_hits'])+
+            ' | reader累计等待 '+str(round(throughput['reader_wait_seconds'],1))+'s')
     for job in snapshot.get('jobs',[]):
         if job.get('state')=='running' and job.get('checkpoint_at') is not None:
             lines.append('本地检查点提交于 '+duration(now-job['checkpoint_at'])+' 前（独立于父心跳）')

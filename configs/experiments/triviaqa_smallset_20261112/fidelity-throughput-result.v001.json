@@ -1,0 +1,91 @@
+{
+  "schema": "qduet.fidelity-throughput-result.v1",
+  "date": "2026-11-20",
+  "status": "software_verified_pending_junior_cuda",
+  "learned_cells": 54,
+  "native_evaluations": 2,
+  "scientific_constants": {
+    "roles": [
+      8000,
+      1000,
+      1000
+    ],
+    "epochs": 4,
+    "question_batch": 8,
+    "seeds": [
+      20261102,
+      20261103,
+      20261104
+    ],
+    "dtype": "FP32",
+    "top50_to_top5": true
+  },
+  "changes": [
+    "consecutive equal-native-shape candidate batches up to32/16",
+    "reader-owned input GPU LRU up to4GiB and bounded pinned asynchronous copies",
+    "per-model frozen QKV and reference LRU with immutable identity/version binding",
+    "compose12 common3-qubit gates as8x8 matrix, cache constant indices",
+    "device-side finite/range flags combined before original8-question AdamW",
+    "progress: actual attention route, input/QKV hits and reader wait seconds"
+  ],
+  "cache_plan": {
+    "max_total_budget_bytes": 6442450944,
+    "input_maximum_bytes": 4294967296,
+    "aggregate_input_and_two_models_bounded": true,
+    "free_headroom_target_bytes": 4294967296,
+    "pinned_buffers_maximum": 2,
+    "pinned_bytes_per_buffer": 33554432,
+    "candidates_on_at_least16GiB": 32,
+    "candidates_on_smaller_gpu": 16,
+    "total_attempt_peak_not_certified": true
+  },
+  "compatibility": {
+    "schema_version": 7,
+    "checkpoint_attention_route_preserved": true,
+    "immutable_old_results_and_failures": true,
+    "optimizer_and_rng_preserved": true,
+    "old_vs_new_floating_point_bit_identity": false
+  },
+  "verification": {
+    "new_tests": 9,
+    "regression_tests": 36,
+    "total_tests": 45,
+    "dpr_bge_full_cls_arm_mask_cases": 96,
+    "source_dependencies": 55,
+    "checks": [
+      {
+        "label": "throughput_cpu",
+        "exit_code": 0
+      },
+      {
+        "label": "regression_cpu",
+        "exit_code": 0
+      },
+      {
+        "label": "regression_stdlib",
+        "exit_code": 0
+      },
+      {
+        "label": "delivery_dependencies",
+        "exit_code": 0
+      },
+      {
+        "label": "default_plan54",
+        "exit_code": 0
+      },
+      {
+        "label": "shell_syntax",
+        "exit_code": 0
+      }
+    ]
+  },
+  "claim_limits": [
+    "synthetic CPU evidence, no real pretrained or junior CUDA throughput measurement",
+    "matrix/batch floating-point reassociation uses disclosed tolerances, no exact old trajectory guarantee",
+    "new-route cold-cache checkpoint restart and independent replay exact in synthetic checks",
+    "async CUDA stream behavior and real allocator peak still require junior hardware observation",
+    "input working set covers a bounded subset; cold prefixes may still regenerate",
+    "54 primary effects do not certify missing classical attribution controls",
+    "owner formal experiments0; no junior server access"
+  ]
+}

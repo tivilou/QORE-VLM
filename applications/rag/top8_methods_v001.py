@@ -164,19 +164,33 @@ class Fidelity(Head):
     def __init__(self,head,layer,bridge,kind,seed):
         super().__init__(head,kind);self.layer=layer;self.bridge=bridge
         self.cls_only=False  # Selected by the checkpoint-owned execution route.
+        self.throughput=None
         self._references=OrderedDict();self._reference_bytes=0;self._reference_binding=None
         if kind!='HEAD':
             from applications.rag.qfidelity_v002 import Fidelity as Kernel
             self.effect=Kernel(kind,seed,head.weight.device)
+    def enable_throughput(self,plan):
+        from applications.rag.top8_fidelity_runtime_v007 import CircuitKernel,DeviceLRU
+        self.throughput=CircuitKernel(self.kind,self.head.weight.device)
+        self._projection_cache=DeviceLRU(plan['projection_bytes'])
+        self.REFERENCE_CACHE_BYTES=plan['reference_bytes']
+        self.candidate_batch=plan['candidates']
+        self.clear_references()
+    def take_kernel_flags(self):
+        return [] if self.throughput is None else self.throughput.take_flags()
+    def _kernel(self,q,k,reference=False):
+        return self.effect.kernel(q,k,reference) if self.throughput is None else self.throughput.kernel(self.effect,q,k,reference)
     def clear_references(self):
         self._references.clear();self._reference_bytes=0;self._reference_binding=None
+        if hasattr(self,'_projection_cache'):self._projection_cache.clear()
     def _apply(self,fn,recurse=True):
         self.clear_references()
+        self.throughput=None  # Device/dtype plans must be explicitly rebuilt.
         return super()._apply(fn,recurse=recurse)
     def _reference(self,row,q,k,cacheable):
         key=row.get('frozen_sequence_key') if cacheable else None
         if key is None:
-            with torch.no_grad():return self.effect.kernel(q,k,True)
+            with torch.no_grad():return self._kernel(q,k,True)
         # Tensor versions cover in-place edits and state restore; identity covers
         # replacement, dtype/device conversion and a different frozen backbone.
         tensors=list(self.layer.attention.self.query.parameters())+list(self.layer.attention.self.key.parameters())
@@ -188,7 +202,7 @@ class Fidelity(Head):
         if key in self._references:
             value=self._references.pop(key);self._references[key]=value
             return value
-        with torch.no_grad():value=self.effect.kernel(q,k,True).detach()
+        with torch.no_grad():value=self._kernel(q,k,True).detach()
         size=value.numel()*value.element_size()
         if size<=self.REFERENCE_CACHE_BYTES:
             while self._references and self._reference_bytes+size>self.REFERENCE_CACHE_BYTES:
@@ -202,8 +216,21 @@ class Fidelity(Head):
         need(type(att).__name__ in ('BertSdpaSelfAttention','XLMRobertaSelfAttention'),
              'native pinned BERT SDPA / XLM-R eager adapter identity')
         h=att.num_attention_heads;d=att.attention_head_size
+        modules=(att.query,att.key,att.value)
+        cacheable=self.throughput is not None and not hidden.requires_grad and row.get('frozen_sequence_key') is not None and all(
+            type(m) is nn.Linear and not any(p.requires_grad for p in m.parameters()) and not
+            (m._forward_hooks or m._forward_pre_hooks or m._backward_hooks or 'forward' in m.__dict__) for m in modules)
+        projection_key=None;projected=None
+        if cacheable:
+            projection_key=(row['frozen_sequence_key'],tuple(hidden.shape),str(hidden.dtype),str(hidden.device),
+                tuple((id(p),p._version) for m in modules for p in m.parameters()))
+            projected=self._projection_cache.get(projection_key)
         with torch.no_grad():
-            query=att.query(hidden);key=att.key(hidden)
+            if projected is None:
+                query=att.query(hidden);key=att.key(hidden)
+                cached_value=att.value(hidden) if cacheable else None
+                if cacheable:self._projection_cache.put(projection_key,(query,key,cached_value))
+            else:query,key,cached_value=projected
             q=query.reshape(len(hidden),-1,h,d).transpose(1,2)[:,:,0]
             k=key.reshape(len(hidden),-1,h,d).transpose(1,2)
         frozen=not hidden.requires_grad and not any(p.requires_grad for m in (att.query,att.key) for p in m.parameters())
@@ -212,11 +239,11 @@ class Fidelity(Head):
             (m._forward_hooks or m._forward_pre_hooks or m._backward_hooks or 'forward' in m.__dict__)
             for m in (att.query,att.key))
         reference=self._reference(row,q,k,reusable)
-        delta=self.effect.kernel(q,k)-reference;l=hidden.shape[1]
+        delta=self._kernel(q,k)-reference;l=hidden.shape[1]
         if self.cls_only:
             need(not self.layer.training and getattr(att,'position_embedding_type','absolute')=='absolute',
                  'CLS route requires frozen eval attention with absolute positions')
-            value=att.value(hidden).reshape(len(hidden),-1,h,d).transpose(1,2)
+            value=(cached_value if cacheable else att.value(hidden)).reshape(len(hidden),-1,h,d).transpose(1,2)
             original=row['mask']
             if original is None:mask=delta.unsqueeze(2)
             else:
@@ -244,7 +271,8 @@ class Fidelity(Head):
         mask=base+bias
         with sdpa_kernel(SDPBackend.MATH):
             if reusable:
-                with _frozen_projections(hidden,((att.query,query),(att.key,key))):
+                projections=((att.query,query),(att.key,key))+(((att.value,cached_value),) if cacheable else ())
+                with _frozen_projections(hidden,projections):
                     cls=self.layer(hidden,attention_mask=mask,output_attentions=False)[0][:,0]
             else:cls=self.layer(hidden,attention_mask=mask,output_attentions=False)[0][:,0]
         return self.head(self.bridge(cls)).squeeze(-1)

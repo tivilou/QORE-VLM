@@ -110,7 +110,7 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
         files.append(dict(name=continuation.name,path=continuation.name,size=continuation.stat().st_size,sha256=digest(continuation)))
         for prior_name in ('feature-io-continuation.v1.json','runtime-speed-continuation.v2.json',
                            'fidelity-speed-continuation.v3.json','cache-policy-continuation.v4.json',
-                           'progress-ui-continuation.v5.json'):
+                           'progress-ui-continuation.v5.json','primary54-continuation.v6.json'):
             prior=output/prior_name
             if prior!=continuation and prior.exists():
                 files.append(dict(name=prior.name,path=prior.name,size=prior.stat().st_size,sha256=digest(prior)))

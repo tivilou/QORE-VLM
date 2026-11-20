@@ -270,6 +270,7 @@ class FrozenSequences:
         self.reads = 0;self.read_seconds = self.regeneration_seconds = 0.
         self._reported_at = time.monotonic()
         self._prefetch=None;self._prefetch_pool=None;self.prefetch_hits=0
+        self.device_cache=None
 
     def prefetch(self,entry):
         """One <=32MiB immutable disk read ahead; no tensors/CUDA/RNG in thread."""
@@ -399,6 +400,7 @@ class FrozenSequences:
         return payload
 
     def close(self):
+        if self.device_cache is not None:self.device_cache.close();self.device_cache=None
         if self._prefetch_pool is not None:self._prefetch_pool.shutdown(wait=True,cancel_futures=True)
         self._prefetch=None;self._prefetch_pool=None
         self.backbone = None;self.memory.clear();self.memory_bytes = 0
