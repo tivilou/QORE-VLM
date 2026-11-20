@@ -100,9 +100,10 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
     results = {}; failures = []; files = []
     if continuation is not None:
         files.append(dict(name=continuation.name,path=continuation.name,size=continuation.stat().st_size,sha256=digest(continuation)))
-        if continuation.name=='runtime-speed-continuation.v2.json' and (output/'feature-io-continuation.v1.json').exists():
-            prior=output/'feature-io-continuation.v1.json'
-            files.append(dict(name=prior.name,path=prior.name,size=prior.stat().st_size,sha256=digest(prior)))
+        for prior_name in ('feature-io-continuation.v1.json','runtime-speed-continuation.v2.json'):
+            prior=output/prior_name
+            if prior!=continuation and prior.exists():
+                files.append(dict(name=prior.name,path=prior.name,size=prior.stat().st_size,sha256=digest(prior)))
     for path in caches:
         manifest, features = load_cache(path)
         root = Path(path).parent; kind = manifest['backbone']

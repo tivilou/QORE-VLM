@@ -6,6 +6,7 @@ remain failed, missing labels stay unknown, and mixed precision is not used.
 from __future__ import annotations
 import argparse
 import gc
+import hashlib
 import json
 import math
 import os
@@ -58,6 +59,10 @@ def sequence_rows(root, record, features, checkpoint):
         n=len(x['positions']);out=gpu_row(features,slice(offset,offset+n));out.update(hidden=x['hidden'],mask=x['mask'])
         expected=record['retained_indices'][offset:offset+n]
         need(expected==x['positions'],'complete sequence/native feature alignment')
+        # Entry bytes/signatures were verified above; bind memoization to this
+        # immutable source chunk, never a transient GPU pointer or label value.
+        out['frozen_sequence_key']=hashlib.sha256(json.dumps(
+            [str(Path(root).resolve()),record['id'],entry],sort_keys=True).encode()).hexdigest()
         yield out,x['native_scores'];offset+=n
     need(offset==len(record['retained_indices']),'full sequence reader exhausted')
 

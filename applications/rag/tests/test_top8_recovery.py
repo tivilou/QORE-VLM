@@ -9,6 +9,36 @@ from applications.rag.top8_suite_v002 import verify_files
 
 
 class RecoveryTests(unittest.TestCase):
+    def test_fidelity_upgrade_keeps_prior_receipts_and_exact_scientific_binding(self):
+        from applications.rag.top8_feature_io_v003 import resume_binding
+        directory=Path(__file__).resolve().parents[3]/'configs/experiments/triviaqa_smallset_20261112'
+        v1=directory/'feature-io-compatibility.v001.json';v2=directory/'runtime-speed-compatibility.v002.json'
+        v3=directory/'fidelity-speed-compatibility.v003.json'
+        one=json.loads(v1.read_bytes());two=json.loads(v2.read_bytes());three=json.loads(v3.read_bytes())
+        for ancestor in three['accepted_previous_sources']:
+            original=dict(sources=ancestor,seeds=[20261102],epochs=4,caches=[dict(sha256='fixed')])
+            current=dict(original,sources=three['after_sources'])
+            with tempfile.TemporaryDirectory() as d:
+                root=Path(d);priors={}
+                if ancestor==one['before_sources']:
+                    _,p=resume_binding(original,dict(original,sources=one['after_sources']),root,v1);priors[p.name]=p.read_bytes()
+                if ancestor in two['accepted_previous_sources']:
+                    _,p=resume_binding(original,dict(original,sources=two['after_sources']),root,v2);priors[p.name]=p.read_bytes()
+                selected,p=resume_binding(original,current,root,v3)
+                self.assertEqual(selected,original);self.assertEqual(p.name,'fidelity-speed-continuation.v3.json')
+                for name,raw in priors.items():self.assertEqual((root/name).read_bytes(),raw)
+                self.assertEqual(len(json.loads(p.read_bytes())['previous_continuations']),len(priors))
+                self.assertEqual(resume_binding(original,current,root,v3),(original,p))
+                with self.assertRaisesRegex(RuntimeError,'cannot change'):
+                    resume_binding(original,dict(current,epochs=3),root,v3)
+                with self.assertRaisesRegex(RuntimeError,'exact reviewed'):
+                    resume_binding(original,dict(current,sources={'unknown':'source'}),root,v3)
+                if priors:
+                    name=next(iter(priors));bad=json.loads(priors[name]);bad['changes']=['tampered']
+                    (root/name).write_text(json.dumps(bad))
+                    with self.assertRaisesRegex(RuntimeError,'same recorded'):
+                        resume_binding(original,current,root,v3)
+
     def test_latest_committed_step_and_source_mismatch(self):
         with tempfile.TemporaryDirectory() as d:
             root=Path(d);binding={'source':'locked','seed':7}

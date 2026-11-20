@@ -63,6 +63,8 @@ class DiskLRU:
             raise
 
     def _initialize(self):
+        self._access_dirty = False
+        self._last_access_save = time.monotonic()
         self.index_path = self.root/'lru.json'
         self.entries = json.loads(self.index_path.read_bytes()) if self.index_path.exists() else {}
         need(isinstance(self.entries, dict), 'sequence LRU index')
@@ -87,6 +89,8 @@ class DiskLRU:
             stream.write(json.dumps(self.entries, sort_keys=True).encode())
             stream.flush(); os.fsync(stream.fileno())
         os.replace(temporary, self.index_path)
+        self._access_dirty = False
+        self._last_access_save = time.monotonic()
 
     def _trim(self, incoming):
         while self.entries and sum(x['size'] for x in self.entries.values())+incoming > self.maximum:
@@ -104,7 +108,11 @@ class DiskLRU:
         raw = path.read_bytes() if path.is_file() else None
         if raw is None or len(raw) != row['size'] or hashlib.sha256(raw).hexdigest() != row['sha256']:
             self.entries.pop(key); path.unlink(missing_ok=True); self._save(); return None
-        row['used'] = time.time_ns(); self._save()
+        # Payload membership/bytes are durable on put. Losing only recent LRU
+        # ages on a crash affects eviction order, never the accepted tensors.
+        row['used'] = time.time_ns(); self._access_dirty = True
+        if time.monotonic()-self._last_access_save >= 30:
+            self._save()
         return raw
 
     def put(self, key, raw):
@@ -123,10 +131,13 @@ class DiskLRU:
 
     def close(self):
         if not self.lock.closed:
-            if os.name == 'nt':
-                import msvcrt
-                self.lock.seek(0); msvcrt.locking(self.lock.fileno(), msvcrt.LK_UNLCK, 1)
-            self.lock.close()
+            try:
+                if getattr(self, '_access_dirty', False):self._save()
+            finally:
+                if os.name == 'nt':
+                    import msvcrt
+                    self.lock.seek(0); msvcrt.locking(self.lock.fileno(), msvcrt.LK_UNLCK, 1)
+                self.lock.close()
 
 
 class FeatureRows(Mapping):

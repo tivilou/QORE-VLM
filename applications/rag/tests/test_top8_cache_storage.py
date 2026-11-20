@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 from applications.rag.top8_cache_v002 import DiskLRU, _json_commit
 
 
@@ -39,6 +40,32 @@ class BoundedStorage(unittest.TestCase):
             cache=DiskLRU(d,0);cache.put(self.key('x'),b'some bytes')
             self.assertIsNone(cache.get(self.key('x')))
             self.assertFalse(list(Path(d).glob('*.bin')));cache.close()
+
+    def test_hits_batch_access_only_index_writes_and_close_flushes(self):
+        with tempfile.TemporaryDirectory() as d, patch('applications.rag.top8_cache_v002.time.monotonic',return_value=0.):
+            cache=DiskLRU(d,20);key=self.key('a');cache.put(key,b'expected')
+            with patch.object(cache,'_save',wraps=cache._save) as save:
+                for _ in range(200):self.assertEqual(cache.get(key),b'expected')
+                self.assertEqual(save.call_count,0)
+                cache.close();self.assertEqual(save.call_count,1)
+            cache=DiskLRU(d,20)
+            self.assertEqual(cache.get(key),b'expected');cache.close()
+
+    def test_periodic_flush_corruption_and_failed_close_release_lock(self):
+        with tempfile.TemporaryDirectory() as d:
+            with patch('applications.rag.top8_cache_v002.time.monotonic',return_value=0.):
+                cache=DiskLRU(d,20);key=self.key('a');cache.put(key,b'expected')
+            with patch('applications.rag.top8_cache_v002.time.monotonic',return_value=31.),\
+                 patch.object(cache,'_save',wraps=cache._save) as save:
+                self.assertEqual(cache.get(key),b'expected');self.assertEqual(save.call_count,1)
+            (Path(d)/(key+'.bin')).write_bytes(b'corrupt')
+            self.assertIsNone(cache.get(key))
+            self.assertNotIn(key,json.loads((Path(d)/'lru.json').read_bytes()))
+            cache.put(key,b'expected');cache.get(key)
+            with patch.object(cache,'_save',side_effect=OSError('synthetic flush failure')):
+                with self.assertRaisesRegex(OSError,'flush failure'):cache.close()
+            self.assertTrue(cache.lock.closed)
+            other=DiskLRU(d,20);self.assertEqual(other.get(key),b'expected');other.close()
 
     def test_writer_lock_and_corrupt_index_reject(self):
         with tempfile.TemporaryDirectory() as d:

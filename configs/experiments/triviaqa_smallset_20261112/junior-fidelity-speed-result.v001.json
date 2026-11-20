@@ -1,0 +1,73 @@
+{
+  "schema": "qduet.junior-fidelity-speed.v1",
+  "date": "2026-11-20",
+  "status": "software_verified_pending_junior_cuda_runtime",
+  "public_parent": "39a14a4600467b4c9c86a361c77482707217458e",
+  "changes": [
+    "Batch disposable LRU access-age index persistence at 30 seconds and close; payload commits and SHA validation unchanged",
+    "Memoize detached frozen-reference kernels in a cell-local bounded device LRU, bound to verified chunk and frozen tensor identities/versions",
+    "Reuse same-shape frozen Q/K Linear outputs within one full native final-layer call; restore scoped forwards on every exit",
+    "Exact three-ancestor continuation with immutable v1/v2 receipts and original scientific bindings"
+  ],
+  "unchanged": {
+    "precision": "FP32",
+    "train": 8000,
+    "valid": 1000,
+    "test": 1000,
+    "top50": 50,
+    "topk": 5,
+    "seeds": [20261102, 20261103, 20261104],
+    "epochs": 4,
+    "learned_cells": 393,
+    "question_batch": 8,
+    "optimizer": "AdamW lr0.001 weight_decay0 clip1",
+    "full_native_final_layer": true,
+    "dpr_math_sdpa_and_bge_eager": true,
+    "per_question_backward_order": true,
+    "two_independent_full_evaluation_forwards": true,
+    "source_data_and_labels_changed": false,
+    "owner_formal_training_steps": 0,
+    "junior_server_accessed": false
+  },
+  "bounds": {
+    "reference_device_cache_bytes_per_model": 33554432,
+    "training_plus_replay_cache_bytes_maximum": 67108864,
+    "new_persistent_tensor_cache_bytes": 0,
+    "existing_sequence_disk_bytes_per_backbone": 34359738368,
+    "cache_is_in_checkpoint": false,
+    "losing_recent_lru_access_ages_on_crash_changes_only_eviction_order": true
+  },
+  "verification": {
+    "location": "existing project-bound CPU development environment; isolated source copy",
+    "stdlib_tests": 10,
+    "cpu_tensor_tests": 31,
+    "active_fidelity_backbones": ["dpr", "bge"],
+    "active_fidelity_arms": ["MLP", "GIVENS", "PRODUCT", "QUANTUM"],
+    "five_adam_updates_with_cold_checkpoint_restore": true,
+    "scores_ranks_gradients_parameters_optimizer_bit_equal": true,
+    "padding_multihead_none_masks_checked": true,
+    "cache_invalidation_eviction_dtype_and_exception_cleanup_passed": true,
+    "q_and_k_linear_evaluations_per_forward_before": 4,
+    "q_and_k_linear_evaluations_per_forward_after": 2,
+    "kernel_evaluations_for_two_identical_forwards_before": 4,
+    "kernel_evaluations_for_two_identical_forwards_after": 3,
+    "access_only_index_saves_for_200_immediate_hits_before": 200,
+    "access_only_index_saves_for_200_immediate_hits_after": 0,
+    "close_flush_index_saves": 1,
+    "source_dependency_files": 49,
+    "fixed_matrix_cells": 393,
+    "shell_syntax_exit": 0,
+    "exact_after_source_binding_matches": true,
+    "patch_apply_and_executed_rollback_passed": true
+  },
+  "limits": [
+    "No pretrained weights, real questions, labels or CUDA used in software tests",
+    "No measured junior GPU speedup or complete-suite ETA",
+    "Reference hit rate depends on working set; bounded memoization does not guarantee reuse across shuffled epochs",
+    "Custom/instrumented or trainable projections keep the original double-evaluation path",
+    "CLS-only attention and extra persistent Q/K storage were not introduced",
+    "One SSH transport timeout and one incomplete rollback-fixture dependency failure were corrected; original failed steps remain in private evidence"
+  ],
+  "evidence_root": "/home/Q-DUET-VLM/junior-fidelity-speed-20261120-v001",
+  "local_evidence_root": "D:/CodexHome/private/junior-fidelity-speed-20261120-v001"
+}

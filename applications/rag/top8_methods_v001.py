@@ -5,6 +5,7 @@ Exact classical simulation; no speed or uniquely quantum attribution claim.
 """
 from __future__ import annotations
 import copy
+from collections import OrderedDict
 import inspect
 import math
 from contextlib import contextmanager
@@ -134,12 +135,66 @@ class LocalFFN(Head):
         return self.head(self.bridge(cls)).squeeze(-1)
 
 
+@contextmanager
+def _frozen_projections(hidden, projections):
+    """Reuse same-shape Linear outputs within one serial frozen-layer call.
+
+    Keep nn.Module.__call__ and its hooks; restore instance forwards even when
+    native attention raises. No projection weight, parameter or state key changes.
+    """
+    saved=[];missing=object()
+    try:
+        for module,value in projections:
+            own=module.__dict__.get('forward',missing)
+            saved.append((module,own))
+            def forward(x, *, value=value):
+                need(x is hidden, 'frozen projection must consume the identical native hidden tensor')
+                return value
+            module.forward=forward
+        yield
+    finally:
+        for module,own in reversed(saved):
+            if own is missing:module.__dict__.pop('forward',None)
+            else:module.forward=own
+
+
 class Fidelity(Head):
+    # Device tensors, detached and cell-local; model + final replay <=64 MiB.
+    REFERENCE_CACHE_BYTES=32*1024**2
     def __init__(self,head,layer,bridge,kind,seed):
         super().__init__(head,kind);self.layer=layer;self.bridge=bridge
+        self._references=OrderedDict();self._reference_bytes=0;self._reference_binding=None
         if kind!='HEAD':
             from applications.rag.qfidelity_v002 import Fidelity as Kernel
             self.effect=Kernel(kind,seed,head.weight.device)
+    def clear_references(self):
+        self._references.clear();self._reference_bytes=0;self._reference_binding=None
+    def _apply(self,fn,recurse=True):
+        self.clear_references()
+        return super()._apply(fn,recurse=recurse)
+    def _reference(self,row,q,k,cacheable):
+        key=row.get('frozen_sequence_key') if cacheable else None
+        if key is None:
+            with torch.no_grad():return self.effect.kernel(q,k,True)
+        # Tensor versions cover in-place edits and state restore; identity covers
+        # replacement, dtype/device conversion and a different frozen backbone.
+        tensors=list(self.layer.attention.self.query.parameters())+list(self.layer.attention.self.key.parameters())
+        tensors += [v for n,v in self.effect.named_buffers() if n.startswith('reference_')]
+        binding=tuple((id(v),v._version,str(v.device),str(v.dtype)) for v in tensors)
+        if self._reference_binding!=binding:
+            self.clear_references();self._reference_binding=binding
+        key=(key,tuple(k.shape),str(k.device),str(k.dtype))
+        if key in self._references:
+            value=self._references.pop(key);self._references[key]=value
+            return value
+        with torch.no_grad():value=self.effect.kernel(q,k,True).detach()
+        size=value.numel()*value.element_size()
+        if size<=self.REFERENCE_CACHE_BYTES:
+            while self._references and self._reference_bytes+size>self.REFERENCE_CACHE_BYTES:
+                _,old=self._references.popitem(last=False)
+                self._reference_bytes-=old.numel()*old.element_size()
+            self._references[key]=value;self._reference_bytes+=size
+        return value
     def forward(self,row):
         if self.kind=='HEAD':return super().forward(row)
         hidden=row['hidden'];att=self.layer.attention.self
@@ -147,9 +202,16 @@ class Fidelity(Head):
              'native pinned BERT SDPA / XLM-R eager adapter identity')
         h=att.num_attention_heads;d=att.attention_head_size
         with torch.no_grad():
-            q=att.query(hidden).reshape(len(hidden),-1,h,d).transpose(1,2)[:,:,0]
-            k=att.key(hidden).reshape(len(hidden),-1,h,d).transpose(1,2)
-        delta=self.effect(q,k);l=hidden.shape[1]
+            query=att.query(hidden);key=att.key(hidden)
+            q=query.reshape(len(hidden),-1,h,d).transpose(1,2)[:,:,0]
+            k=key.reshape(len(hidden),-1,h,d).transpose(1,2)
+        frozen=not hidden.requires_grad and not any(p.requires_grad for m in (att.query,att.key) for p in m.parameters())
+        # Instrumented/custom projections retain their original double-call path.
+        reusable=frozen and all(type(m) is nn.Linear and not
+            (m._forward_hooks or m._forward_pre_hooks or m._backward_hooks or 'forward' in m.__dict__)
+            for m in (att.query,att.key))
+        reference=self._reference(row,q,k,reusable)
+        delta=self.effect.kernel(q,k)-reference;l=hidden.shape[1]
         selector=F.one_hot(torch.tensor(0,device=delta.device),l).to(delta.dtype).reshape(1,1,l,1)
         original=row['mask'];base=0. if original is None else original
         if original is not None and original.dtype==torch.bool:
@@ -158,7 +220,10 @@ class Fidelity(Head):
         if original is not None:bias=bias*(original if original.dtype==torch.bool else original==0).to(delta.dtype)
         mask=base+bias
         with sdpa_kernel(SDPBackend.MATH):
-            cls=self.layer(hidden,attention_mask=mask,output_attentions=False)[0][:,0]
+            if reusable:
+                with _frozen_projections(hidden,((att.query,query),(att.key,key))):
+                    cls=self.layer(hidden,attention_mask=mask,output_attentions=False)[0][:,0]
+            else:cls=self.layer(hidden,attention_mask=mask,output_attentions=False)[0][:,0]
         return self.head(self.bridge(cls)).squeeze(-1)
 
 
