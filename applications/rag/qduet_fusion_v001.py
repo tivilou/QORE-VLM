@@ -145,6 +145,9 @@ def train_fusion_cell(idea, arm, seed, rows, features, head, output, epochs,
         torch.set_rng_state(saved['cpu_rng']); torch.cuda.set_rng_state_all(saved['cuda_rng'])
         step = saved['step']; records = saved['records']
         need(len(records) == step and saved['denominator'] == denominator, 'fusion recovery normalization/history')
+    from scripts.smallset_events import emit
+    total_steps=min(epochs*((len(train)+7)//8),steps_limit) if steps_limit else epochs*((len(train)+7)//8)
+    emit('progress',completed=step,total=total_steps,unit='steps',phase='融合训练',origin=step)
     for epoch in range(epochs):
         if saved is not None and epoch < saved['epoch']:
             continue
@@ -171,16 +174,19 @@ def train_fusion_cell(idea, arm, seed, rows, features, head, output, epochs,
             records.append(dict(step=step, loss=total, supervision=supervised,
                                 empty_questions=empty, gradient_norm=float(norm)))
             if step % 32 == 0 or start+8 >= len(order) or (steps_limit and step >= steps_limit):
+                emit('phase',phase='保存融合恢复检查点')
                 journal.save(dict(step=step, epoch=epoch, next_start=start+8, order=order,
                     model={n:v.detach().cpu().clone() for n,v in model.state_dict().items()},
                     denominator=denominator, optimizer=optimizer.state_dict(), generator=generator.get_state(),
                     cpu_rng=torch.get_rng_state(), cuda_rng=torch.cuda.get_rng_state_all(), records=records))
+                emit('progress',completed=step,total=total_steps,unit='steps',phase='融合训练',checkpoint_step=step,metrics={'loss':total})
             if step % 32 == 0:
                 print(json.dumps(dict(stage='fusion_training', idea=idea, arm=arm, seed=seed, step=step)), flush=True)
             if steps_limit and step >= steps_limit:
                 break
         if steps_limit and step >= steps_limit:
             break
+    emit('phase',phase='保存融合最终参数')
     state = {n:v.detach().cpu().clone() for n,v in model.state_dict().items()}
     key = f'{idea}-{arm}-s{seed}'
     files = [tensor_file(output, 'checkpoint-'+key+'.bin', dict(model=state, denominator=denominator))]
@@ -189,6 +195,7 @@ def train_fusion_cell(idea, arm, seed, rows, features, head, output, epochs,
     replay = _build(idea, arm, seed, head, mean, std, priors, None, stored['denominator'])
     replay.load_state_dict(stored['model'], strict=True)
     predictions = []
+    emit('progress',completed=0,total=len(dev),unit='questions_checked',phase='融合预测与回放（未封存）',origin=0)
     with torch.no_grad():
         for row in dev:
             checkpoint(); h, s = values(row, all50=True)
@@ -198,6 +205,9 @@ def train_fusion_cell(idea, arm, seed, rows, features, head, output, epochs,
             v = a.cpu().tolist()
             predictions.append(dict(id=row['id'], candidate_ids=row['candidate_ids'], scores=v,
                                     ranking=sorted(range(50), key=lambda i:(-v[i], i))))
+            if len(predictions)%16==0 or len(predictions)==len(dev):
+                emit('progress',completed=len(predictions),total=len(dev),unit='questions_checked',phase='融合预测与回放（未封存）')
+    emit('phase',phase='保存融合预测与训练记录')
     files += [json_file(output, 'predictions-'+key+'.json', dict(rows=predictions)),
               json_file(output, 'training-'+key+'.json', dict(records=records))]
     result = dict(idea=idea, arm=arm, seed=seed, steps=step, training_questions=len(train),
@@ -228,6 +238,7 @@ def run_fusions(caches, output, seeds, ideas, binding, *, canary=False, checkpoi
     features=project_features(features,manifest,manifests['dpr'].parent,('readout',),checkpoint)
     record = next(r for r in manifest['files'] if r['name'] == 'frozen-modules.bin')
     head = torch.load(checked_member(manifests['dpr'].parent, record), map_location='cpu', weights_only=True)['head']
+    from scripts.smallset_events import emit
     results = {}; failures = []; files = []
     for idea in ideas:
         for seed in seeds:
@@ -241,7 +252,9 @@ def run_fusions(caches, output, seeds, ideas, binding, *, canary=False, checkpoi
                         verify_files(output, value['files']); results[key] = value['result']; files.extend(value['files'])
                     else:
                         failures.append(value['failure'])
+                    emit('cell',job=key,state='computed' if value['status']=='complete' else 'failed')
                     continue
+                emit('cell',job=key,state='running')
                 journal = Journal(cell/'recovery', dict(matrix=binding, idea=idea, arm=arm, seed=seed, scope='fusion'))
                 generation = new_generation(cell)
                 try:
@@ -250,11 +263,12 @@ def run_fusions(caches, output, seeds, ideas, binding, *, canary=False, checkpoi
                     owned = [dict(r, path=(generation.relative_to(output)/r['name']).as_posix()) for r in result['files']]
                     json_file(cell, disposition.name, dict(status='complete', binding=binding, result=result, files=owned))
                     results[key] = result; files.extend(owned)
+                    emit('cell',job=key,state='computed')
                 except Exception as error:
                     failure = dict(scope='fusion', idea=idea, arm=arm, seed=seed,
                                    error_type=type(error).__name__, message=str(error)[:1000])
                     json_file(cell, disposition.name, dict(status='failed', binding=binding, failure=failure))
-                    failures.append(failure); gc.collect(); torch.cuda.empty_cache()
+                    failures.append(failure);emit('cell',job=key,state='failed'); gc.collect(); torch.cuda.empty_cache()
     close_fields(manifests['dpr'].parent)
     del features; gc.collect(); torch.cuda.empty_cache()
     return results, failures, files

@@ -258,3 +258,50 @@ host端读取和重算耗时、驻留字节／上限与淘汰统计。host时间
 滚动及全attempt速率、只覆盖已测阶段的ETA，以及TTY原地刷新／重定向追加和日志隔离。
 未测的BGE或fusion耗时应保留unknown，不用已完成组合数量线性外推总时长。
 此处记录核对结论；本次未把UI改造纳入缓存优化。
+
+### 2026-11-20：统一终端进度界面（默认开启）
+
+原命令默认启用统一CLI界面，无需另装UI依赖或另起服务：
+
+```bash
+git pull --ff-only origin codex/top8-dual-scorer
+bash scripts/run_triviaqa_smallset.sh --resume
+```
+
+更新前先让旧Python退出，使用同一workspace和原参数。本版还修复上一版第32步缓存日志
+误用`root`变量的问题，正确读取`cache_root`；不改任何训练计算。
+
+界面每5秒刷新，显示393个学习组合的完成／运行／待跑／失败／暂停及当前任务、PID、
+实际worker报告的设备／参数dtype（未测kernel仍标待测）。准备和提取、初始化、训练、
+完整恢复检查点保存、2000题预测与逐题回放、联合封存、评估、结果回传分别显示。
+训练4000/4000只表示训练计数完成，cell在预测／回放／文件提交完成后才记完成。
+续跑的既有cell在worker核SHA后更新计数；重新检查期间不会把未核旧状态当完成。
+
+速率来自本次实际计数事件，恢复起点使用已加载step，不把旧工作计入本进程速度。
+切换训练与预测阶段会重置单位和计时范围；只估算当前计数阶段，不包含后续阶段或排队任务。
+未测BGE／fusion和全套剩余时间保留待测，不以163/393等组合数量线性外推总天数。
+阶段计数长时间未更新时暂停ETA，父心跳仍可保持在线，二者不等于失败。
+
+TTY／tmux中原地刷新；重定向或TERM=dumb自动追加快照。可显式选择：
+
+```bash
+bash scripts/run_triviaqa_smallset.sh --resume --display append --refresh 10
+bash scripts/run_triviaqa_smallset.sh --watch
+```
+
+自定义过workspace时，watch传入同一个`--workspace`。watch只读，不启动／恢复／停止任务，
+退出watch不会影响训练。`--display off`保留旧原始输出模式；`--plan-only`仍不写目录。
+
+显示状态在`<workspace>/progress/latest.json`原子替换，outer heartbeat、worker事件、
+训练计数与本地检查点提交各自记录。完整stdout/stderr在
+`<workspace>/progress/<attempt>/runner.log`，逐cell日志在同目录`jobs/`。
+这些运行日志不因本次UI改动自动上传。父进程与worker实际退出状态分开记录；
+worker返回0但仍有未完成计划项目时，界面入口返回2，不宣称实验完整完成。
+
+Ctrl-C或TERM/HUP清理本次启动的进程组，返回中断状态；只认证已经提交的检查点，
+不宣称正在执行的batch已安全保存。恢复继续使用原`--resume`规则；不自动重试失败cell。
+`progress-ui-compatibility.v005.json`接纳列出的五版精确旧源码，追加v5收据，旧v1..v4不改。
+
+软件验证28项标准库、33项合成CPU张量检查、52源码依赖、393cell计划和shell语法通过。
+32步微型训练中，显示开／关的最终分数、参数和AdamW状态相同；中断、损坏显示管道、
+reader故障、只读watch和未完成时exit0均有覆盖。这些不是师弟真实GPU／tmux的运行认证。

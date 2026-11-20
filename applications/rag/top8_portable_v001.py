@@ -8,6 +8,7 @@ import argparse
 import gc
 import hashlib
 import json
+import os
 import math
 import os
 from pathlib import Path
@@ -130,6 +131,12 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
         torch.cuda.set_rng_state_all(saved['cuda_rng'])
         step=saved['step'];records=saved['records']
         need(len(records)==step,'complete recovery training history')
+    from scripts.smallset_events import emit
+    total_steps=min(epochs*((len(train)+7)//8),steps_limit) if steps_limit else epochs*((len(train)+7)//8)
+    emit('progress',completed=step,total=total_steps,unit='steps',phase='训练',origin=step)
+    if os.environ.get('QDUET_PROGRESS_EVENTS')=='1':
+        device=next(iter(parameters.values())).device
+        emit('device',device=str(device)+(' / '+torch.cuda.get_device_name() if device.type=='cuda' else ''),execution='参数 '+str(next(iter(parameters.values())).dtype)+'；kernel待测')
     for epoch in range(epochs):
         if saved is not None and epoch<saved['epoch']:continue
         restoring=saved is not None and epoch==saved['epoch']
@@ -149,17 +156,20 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
             need(finite_parameters(parameters.values()),'finite trained parameters')
             records.append(dict(step=step,loss=total,ordered_pairs=pairs,without_ordered_pairs=without,gradient_norm=float(norm)))
             if journal is not None and (step%32==0 or start+8>=len(order) or (steps_limit and step>=steps_limit)):
+                emit('phase',phase='保存完整恢复检查点')
                 journal.save(dict(step=step,epoch=epoch,next_start=start+8,order=order,
                     parameters={n:p.detach().cpu().clone() for n,p in parameters.items()},
                     optimizer=optimizer.state_dict(),generator=generator.get_state(),
                     cpu_rng=torch.get_rng_state(),cuda_rng=torch.cuda.get_rng_state_all(),records=records))
+                emit('progress',completed=step,total=total_steps,unit='steps',phase='训练',checkpoint_step=step,metrics={'loss':total})
             if step%32==0:
                 from applications.rag.top8_cache_v002 import sequence_cache_stats
                 print(json.dumps(dict(stage='training',idea=idea,arm=arm,seed=seed,step=step,
-                                      sequence_cache=sequence_cache_stats(root))),flush=True)
+                                      sequence_cache=sequence_cache_stats(cache_root))),flush=True)
             if steps_limit and step>=steps_limit:break
         if steps_limit and step>=steps_limit:break
     checkpoint();key=f'{idea}-{arm}-s{seed}';files=[]
+    emit('phase',phase='保存最终训练参数')
     compact={n:p.detach().cpu().clone() for n,p in parameters.items()}
     files.append(tensor_file(output,'checkpoint-'+key+'.bin',compact))
     # Rebuild from fixed native modules and seed, then load only owned parameters.
@@ -169,6 +179,7 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
     with torch.no_grad():
         for n,p in restored.items():p.copy_(compact[n].to(p.device))
     predictions=[];replay_error=0.
+    emit('progress',completed=0,total=len(dev),unit='questions_checked',phase='预测与逐题回放（未封存）',origin=0)
     with torch.no_grad():
         for r in dev:
             checkpoint();f=features[r['id']];s=scores_for(model,idea,r,f,cache_root,checkpoint)
@@ -177,6 +188,9 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
             replay_error=max(replay_error,float((s-s2).abs().max()));values=s.cpu().tolist()
             ranking=sorted(range(50),key=lambda i:(-values[i],i))
             predictions.append(dict(id=r['id'],candidate_ids=r['candidate_ids'],scores=values,ranking=ranking))
+            if len(predictions)%16==0 or len(predictions)==len(dev):
+                emit('progress',completed=len(predictions),total=len(dev),unit='questions_checked',phase='预测与逐题回放（未封存）')
+    emit('phase',phase='保存预测与训练记录')
     files.append(json_file(output,'predictions-'+key+'.json',dict(rows=predictions)))
     files.append(json_file(output,'training-'+key+'.json',dict(records=records)))
     result=dict(idea=idea,arm=arm,seed=seed,steps=step,training_questions=len(train),evaluation_questions=len(dev),

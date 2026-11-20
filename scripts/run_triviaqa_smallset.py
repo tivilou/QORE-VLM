@@ -29,10 +29,24 @@ def main(argv=None):
     p.add_argument('--prepare-only',action='store_true')
     p.add_argument('--plan-only',action='store_true')
     p.add_argument('--resume',action='store_true')
+    p.add_argument('--display',choices=['auto','inplace','append','off'],default='auto',
+                   help='Terminal dashboard; auto appends under redirection, off retains raw logs.')
+    p.add_argument('--refresh',type=float,default=5.,help='Dashboard refresh seconds (>=0.5).')
+    p.add_argument('--watch',action='store_true',help='Read-only display of workspace/progress/latest.json.')
+    p.add_argument('--_progress-worker',action='store_true',help=argparse.SUPPRESS)
     from applications.rag.top8_cache_v002 import cache_capacity
     p.add_argument('--sequence-cache-gib',type=cache_capacity,default='auto',
                    help='auto: filesystem-aware prefix cache; or explicit nonnegative GiB per model.')
     a=p.parse_args(argv)
+    if a.refresh<.5 or not __import__('math').isfinite(a.refresh):p.error('--refresh must be finite and >=0.5')
+    from scripts.smallset_progress import supervise,watch
+    if a.watch:return watch(a.workspace,a.display if a.display!='off' else 'append',a.refresh)
+    if not a.plan_only and not a._progress_worker and a.display!='off':
+        command=[sys.executable,'-u','-B',str(Path(__file__).resolve()),
+                 *(sys.argv[1:] if argv is None else argv),'--_progress-worker']
+        return supervise(command,a.workspace,a.display,a.refresh,cwd=os.getcwd())
+    from scripts.smallset_events import emit
+    emit('phase',phase='核对交付配置')
     check_delivery()
     release=json.loads(RELEASE.read_bytes());validate_release(release,ready=not a.plan_only)
     campaign=json.loads(CAMPAIGN.read_bytes())
@@ -57,9 +71,12 @@ def main(argv=None):
     # Download data independently of old B1 models; models may be reused by exact
     # hash from the existing private model package. No owner paths are required.
     store=AssetStore(work/'assets',exchange,2*1024**3)
+    emit('phase',phase='下载／校验数据包')
     raw=store(release)
     data=work/'data'
+    emit('phase',phase='展开并核验共同输入')
     materialize(raw,release,data)
+    emit('phase',phase='获取／核验DPR与BGE模型')
     models=store(base['populations']['reproduction'])
     if a.prepare_only:
         print(json.dumps(dict(stage='smallset_ready',roles=release['roles'],labels=500000,
@@ -77,7 +94,9 @@ def main(argv=None):
                           derived_feature_columns_max_GiB=40.1,
                           measured_cache_bytes=None,minimum_free_GiB=40,
                           note='Auto caps resolved on actual cache filesystems after extraction, with 40GiB free plus 48GiB growth allowance. Caps are not preallocated. Legacy partial files are preserved.')),flush=True)
+    emit('phase',phase='准备运行环境')
     py=prepare_environment(work,config)
+    emit('phase',phase='软件检查（非正式实验）')
     subprocess.run([str(py),'-B','-m','unittest',
                     'applications.rag.tests.test_top8_binary_numerics',
                     'applications.rag.tests.test_top8_cache_numerics',
@@ -97,7 +116,9 @@ def main(argv=None):
         output.rmdir() # suite owns exclusive creation
     result=subprocess.run(command)
     evaluation=None
-    if (output/'matrix/joint-prediction-seal.json').exists():evaluation=evaluate(output/'matrix',data)
+    if (output/'matrix/joint-prediction-seal.json').exists():
+        emit('phase',phase='联合预测封存后的验证／测试评估')
+        evaluation=evaluate(output/'matrix',data)
     run_id='triviaqa-smallset-'+dt.datetime.now(dt.timezone.utc).strftime('%Y%m%dT%H%M%SZ')
     execution=dict(schema='qduet.smallset-execution.v1',returncode=result.returncode,roles=release['roles'],
                    all_cells_complete=evaluation is not None and not evaluation['failures'],
@@ -105,7 +126,9 @@ def main(argv=None):
     require(output.is_dir(),'run failed before producing output')
     atomic_json(output/'execution.json',execution);atomic_json(output/'dataset-release.json',release)
     # The new binary report is explicitly included by the common uploader.
+    emit('phase',phase='归档并上传结果')
     receipt=push_results(exchange,output,run_id,execution)
+    emit('outcome',result='结果上传完成；all_cells_complete='+str(execution['all_cells_complete']))
     print(json.dumps(dict(stage='results_uploaded',returncode=result.returncode,receipt=receipt)))
     return result.returncode if result.returncode else (0 if execution['all_cells_complete'] else 2)
 

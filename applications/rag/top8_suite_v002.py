@@ -95,17 +95,25 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
     if seal_path.exists():
         seal = json.loads(seal_path.read_bytes())
         verify_files(output, seal['files'])
+        from scripts.smallset_events import emit
+        for key in seal['results']:emit('cell',job=key,state='computed')
+        for failure in seal.get('failures',[]):
+            if all(k in failure for k in ('idea','arm','seed')):
+                kind='fusion' if failure.get('scope')=='fusion' else failure.get('backbone')
+                if kind:emit('cell',job=f"{kind}-{failure['idea']}-{failure['arm']}-s{failure['seed']}",state='failed')
         return seal
     need(not (output/'evaluation.json').exists(), 'never continue training after evaluation')
     results = {}; failures = []; files = []
     if continuation is not None:
         files.append(dict(name=continuation.name,path=continuation.name,size=continuation.stat().st_size,sha256=digest(continuation)))
         for prior_name in ('feature-io-continuation.v1.json','runtime-speed-continuation.v2.json',
-                           'fidelity-speed-continuation.v3.json'):
+                           'fidelity-speed-continuation.v3.json','cache-policy-continuation.v4.json'):
             prior=output/prior_name
             if prior!=continuation and prior.exists():
                 files.append(dict(name=prior.name,path=prior.name,size=prior.stat().st_size,sha256=digest(prior)))
+    from scripts.smallset_events import emit
     for path in caches:
+        emit('phase',phase='核验特征／训练归一化与原生基线')
         manifest, features = load_cache(path)
         root = Path(path).parent; kind = manifest['backbone']
         scheduled = ideas if backbone_ideas is None else backbone_ideas.get(kind, [])
@@ -153,7 +161,9 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
                             results[key]=result; files.extend(value['files'])
                         else:
                             failures.append(value['failure'])
+                        emit('cell',job=key,state='computed' if value['status']=='complete' else 'failed')
                         continue
+                    emit('cell',job=key,state='running')
                     journal = Journal(cell/'recovery',dict(matrix=binding,idea=idea,arm=arm,seed=seed,backbone=kind))
                     generation = new_generation(cell)
                     try:
@@ -164,11 +174,13 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
                         json_file(cell,'disposition.json',dict(status='complete',binding=binding,
                             result=result,files=owned))
                         results[key]=result; files.extend(owned)
+                        emit('cell',job=key,state='computed')
                     except Exception as e:
                         failure = dict(backbone=kind,idea=idea,arm=arm,seed=seed,
                             error_type=type(e).__name__,message=str(e)[:1000])
                         json_file(cell,'disposition.json',dict(status='failed',binding=binding,failure=failure))
                         failures.append(failure)
+                        emit('cell',job=key,state='failed')
                         gc.collect(); torch.cuda.empty_cache()
         from applications.rag.top8_cache_v002 import close_sequences
         close_sequences(root)
@@ -192,6 +204,7 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
         seal['not_scheduled'] = [dict(backbone=kind, idea=idea, status='NOT_SCHEDULED')
             for kind in ('dpr', 'bge') for idea in ideas
             if idea not in backbone_ideas.get(kind, [])]
+    emit('phase',phase='写入全部模型联合预测封存')
     json_file(output,seal_path.name,seal)
     return seal
 
@@ -242,6 +255,9 @@ def main(argv=None):
     if args.plan_only:
         print(json.dumps(plan,ensure_ascii=False,indent=2))
         return 0
+    from scripts.smallset_events import emit,jobs_for
+    emit('schedule',jobs=jobs_for(plan,registry['ARMS'],FUSION_ARMS))
+    emit('phase',phase='加载框架／核验GPU')
     os.environ.update(HF_HUB_OFFLINE='1',TRANSFORMERS_OFFLINE='1',CUBLAS_WORKSPACE_CONFIG=':4096:8')
     import torch,transformers
     need(torch.cuda.is_available() and transformers.__version__=='4.44.2','CUDA / Transformers4.44.2')
@@ -278,6 +294,7 @@ def main(argv=None):
             caches.append(cache)
         else:
             need(args.train and args.eval_inputs,'explicit train / label-free evaluation inputs')
+            emit('phase',phase='提取完整冻结特征 '+kind)
             caches.append(extract(kind,model,args.train,args.eval_inputs,args.output/('cache-'+kind),
                                   checkpoint=checkpoint,label_classes=args.label_classes,resume=args.resume,
                                   sequence_cache_bytes=(32 if args.sequence_cache_gib=='auto' else args.sequence_cache_gib)*1024**3))

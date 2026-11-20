@@ -25,9 +25,9 @@ class RecoveryTests(unittest.TestCase):
                 selected,p=resume_binding(original,current,root,spec)
                 self.assertEqual(selected,original);self.assertEqual(p.name,'cache-policy-continuation.v4.json')
                 for name,raw in before.items():self.assertEqual((root/name).read_bytes(),raw)
-                self.assertEqual(resume_binding(original,current,root),(original,p))
+                self.assertEqual(resume_binding(original,current,root,spec),(original,p))
                 with self.assertRaisesRegex(RuntimeError,'cannot change'):
-                    resume_binding(original,dict(current,epochs=3),root)
+                    resume_binding(original,dict(current,epochs=3),root,spec)
 
     def test_fidelity_upgrade_keeps_prior_receipts_and_exact_scientific_binding(self):
         from applications.rag.top8_feature_io_v003 import resume_binding

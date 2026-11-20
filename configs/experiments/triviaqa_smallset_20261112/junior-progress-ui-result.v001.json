@@ -1,0 +1,55 @@
+{
+  "schema": "qduet.junior-progress-ui-result.v1",
+  "date": "2026-11-20",
+  "status": "software_verified_pending_executor_terminal_check",
+  "changes": [
+    "Default stdlib dashboard in the existing one-command launcher; no Web or fleet deployment",
+    "TTY in-place / redirected append / display off;5second default refresh",
+    "393 learning jobs with computed/running/pending/failed/paused, actual job/PID/device metadata",
+    "Preparation,model extraction,training,checkpoint saving,prediction/full replay,joint sealing,evaluation,upload phases",
+    "Measured current-phase rolling/attempt-origin rates; no unmeasured whole-matrix ETA",
+    "Separate supervisor heartbeat,worker events,stage work and durable local checkpoint timestamps",
+    "Full combined child output in runner.log; separate job logs; atomic latest JSON; read-only watch",
+    "Owned process-group termination on interrupt/reader/display failure; interrupted currentbatch save is not claimed",
+    "Five exact ancestor source maps accepted; prior receipts,old scientific bindings,393cells and all checkpoint state unchanged"
+  ],
+  "bug_fix": {
+    "previous_commit": "3463ce881a2ebfcfa6ecaceadebaa9cbd74de909",
+    "location": "top8_portable_v001.py32-step cache log",
+    "problem": "undefined root",
+    "fixed": "use cache_root; real32step syntheticCPU optimizer comparison with events on/off"
+  },
+  "validation": {
+    "stdlib_tests": 28,
+    "cpu_tensor_tests": 33,
+    "source_dependencies": 52,
+    "learning_cells": 393,
+    "actual_synthetic_worker_argv_executed": true,
+    "reader_failure_cleanup": true,
+    "console_failure_cleanup": true,
+    "interrupt_worker_and_descendant_cleanup": true,
+    "watch_performs_no_writes": true,
+    "resumed_count_origin_and_phase_rates": true,
+    "zero_exit_with_pending_jobs_rejected": true,
+    "torch_step32_score_optimizer_prediction_equal": true
+  },
+  "template": {
+    "name": "multi-gpu-experiment-orchestration CLI dashboard",
+    "source_sha256": "6ec35e57286f906f6d395198f10013fe433e7630277c5619ee8a3f821c6269c3",
+    "adaptations": [
+      "compact job lists; task/device lines separated",
+      "SGT clock; stage progress age wording",
+      "phase-scoped ETA; job elapsed independent of stage rate"
+    ]
+  },
+  "scope": {
+    "junior_server_accessed": false,
+    "formal_experiments": 0,
+    "new_assets_or_downloads": 0,
+    "real_pretrained_GPU_measured": false
+  },
+  "pending": [
+    "Junior tmux/TTY appearance and actual GPU telemetry under real workload"
+  ],
+  "verification": "D:/CodexHome/private/junior-progress-ui-20261120-v001/verification.safe.json"
+}
