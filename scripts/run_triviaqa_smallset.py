@@ -29,10 +29,10 @@ def main(argv=None):
     p.add_argument('--prepare-only',action='store_true')
     p.add_argument('--plan-only',action='store_true')
     p.add_argument('--resume',action='store_true')
-    p.add_argument('--sequence-cache-gib',type=int,default=32,
-                   help='Bounded FP32 sequence cache per model; smaller uses more recomputation.')
+    from applications.rag.top8_cache_v002 import cache_capacity
+    p.add_argument('--sequence-cache-gib',type=cache_capacity,default='auto',
+                   help='auto: filesystem-aware prefix cache; or explicit nonnegative GiB per model.')
     a=p.parse_args(argv)
-    if a.sequence_cache_gib < 0:p.error('--sequence-cache-gib must be nonnegative')
     check_delivery()
     release=json.loads(RELEASE.read_bytes());validate_release(release,ready=not a.plan_only)
     campaign=json.loads(CAMPAIGN.read_bytes())
@@ -46,7 +46,8 @@ def main(argv=None):
         print(json.dumps(dict(dataset='triviaqa',roles=release['roles'],label_semantics='binary_useful',
                               matrix=json.loads(r.stdout),test_used_for_selection=False,
                               owner_scientific_run=False,release_status=release['status'],
-                              data_archive_bytes=release.get('archive',{}).get('size')),indent=2))
+                              data_archive_bytes=release.get('archive',{}).get('size'),
+                              sequence_cache_policy=a.sequence_cache_gib),indent=2))
         return 0
     config=configuration(a.config);exchange=Exchange(config['url'],config['token'])
     work=a.workspace.resolve();work.mkdir(parents=True,exist_ok=True)
@@ -71,11 +72,11 @@ def main(argv=None):
             'Less than 40GiB free. Expand the experiment disk; --prepare-only remains available.')
     print(json.dumps(dict(stage='storage_plan',storage_layout='question-shards-fp32-v2',
                           sequence_cache_GiB_per_model=a.sequence_cache_gib,
-                          combined_sequence_cache_limit_GiB=2*a.sequence_cache_gib,
+                          combined_sequence_cache_limit_GiB=None if a.sequence_cache_gib=='auto' else 2*a.sequence_cache_gib,
                           compact_features_max_GiB=43.4,tokens_and_metadata_estimate_GiB=9,
                           derived_feature_columns_max_GiB=40.1,
                           measured_cache_bytes=None,minimum_free_GiB=40,
-                          note='Bounded FP32 prefixes regenerate on misses. Legacy partial files are preserved, additional to this estimate. Training outputs require extra space.')),flush=True)
+                          note='Auto caps resolved on actual cache filesystems after extraction, with 40GiB free plus 48GiB growth allowance. Caps are not preallocated. Legacy partial files are preserved.')),flush=True)
     py=prepare_environment(work,config)
     subprocess.run([str(py),'-B','-m','unittest',
                     'applications.rag.tests.test_top8_binary_numerics',

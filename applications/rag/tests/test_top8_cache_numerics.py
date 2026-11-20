@@ -205,7 +205,7 @@ class CacheNumerics(unittest.TestCase):
             try:
                 actual=reader.read(entry);same=reader.read(entry)
                 self.assertTrue(torch.equal(actual['hidden'],same['hidden']))
-                self.assertEqual(reader.regenerated,1);self.assertEqual(reader.hits,1)
+                self.assertEqual(reader.regenerated,1);self.assertEqual(reader.hits+reader.memory_hits,1)
                 package=torch.load(checked_member(cache.parent,entry['tokens']),weights_only=True)
                 b=FakeBackbone('dpr',root);captured,logits,_,_=capture_chunk(b,package[entry['chunk']]['encoded'])
                 self.assertTrue(torch.equal(actual['hidden'],captured['prefix']))

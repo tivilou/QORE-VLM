@@ -1,0 +1,49 @@
+{
+  "schema": "qduet.junior-cache-policy-result.v1",
+  "date": "2026-11-20",
+  "status": "software_verified_pending_junior_cuda_measurement",
+  "scope": "Fourth performance item: frozen full-sequence cache hit rate; no scientific algorithm change",
+  "changes": {
+    "default": "auto",
+    "allocation": "Group actual cache roots by filesystem after extraction; (free + existing own scratch - 40GiB headroom - 48GiB growth allowance) / number of roots; <=256GiB per model",
+    "allocation_is_preallocation": false,
+    "explicit_integer_override_preserved": true,
+    "admission": "Retain admitted training subset; lower priority evaluation/unknown entries may be evicted; no cyclic training eviction when full",
+    "hot_cache": "Immutable serialized CPU payloads, 256MiB per active sequence reader; complete original tensor signatures rechecked on every hit",
+    "telemetry": "memory/disk/legacy hits, regenerated chunks, hit fraction, host read/regeneration seconds, payload bytes/cap, skipped writes and evictions"
+  },
+  "validation": {
+    "stdlib_tests": 16,
+    "cpu_tensor_tests": 32,
+    "delivery_dependencies": 49,
+    "learned_cells": 393,
+    "shell_syntax": true,
+    "source_binding": "four exact ancestor maps; old receipts/scientific options unchanged",
+    "numerical_regression": "Inherited DPR/BGE four Fidelity active-arm CPU tests preserve scores, ranks, gradients, parameters and optimizer bit equality; fake-backbone hot-cache replay matches complete FP32 tensor signatures"
+  },
+  "progress_ui": {
+    "current": "Append-only JSON per32steps; separate stage/cache events",
+    "new_fields": "verified cache hit and host regeneration telemetry",
+    "cli_dashboard_compliant": false,
+    "missing": [
+      "in-place/append dashboard modes",
+      "global completed/running/pending/paused/failed table",
+      "current phase/committed-progress/heartbeat clocks",
+      "rolling and whole-attempt rates; scoped measured ETA",
+      "integrated child logs and terminal restoration"
+    ]
+  },
+  "limits": [
+    "No junior server accessed",
+    "No formal idea/model/data experiment run",
+    "No real pretrained CUDA timing or universal speedup claim",
+    "Cache usefulness depends on actual prefix working set and disk headroom",
+    "CLS-only final layer not implemented"
+  ],
+  "resources": {
+    "new_downloads": 0,
+    "new_formal_experiments": 0,
+    "local_large_tensor_cache_bytes": 0
+  },
+  "verification": "D:/CodexHome/private/junior-cache-policy-20261120-v001/verification.safe.json"
+}

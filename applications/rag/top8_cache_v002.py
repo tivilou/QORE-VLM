@@ -13,12 +13,70 @@ import os
 from pathlib import Path
 import pickle
 import re
+import shutil
 import time
 from applications.rag.qvalue_portable_v001 import need, digest, checked_member, json_file, tensor_file
 
 LAYOUT = 'question-shards-fp32-v2'
 DEFAULT_SEQUENCE_BYTES = 32 * 1024**3
 FEATURE_MEMORY_BYTES = 128 * 1024**2
+SEQUENCE_MEMORY_BYTES = 256 * 1024**2
+AUTO_MAXIMUM_BYTES = 256 * 1024**3
+AUTO_GROWTH_BYTES = 48 * 1024**3
+
+
+def cache_capacity(value):
+    """CLI accepts auto or the existing explicit nonnegative GiB limit."""
+    if str(value) == 'auto':return 'auto'
+    try:amount = int(value)
+    except (TypeError, ValueError):raise ValueError('sequence cache must be auto or nonnegative integer GiB')
+    if amount < 0:raise ValueError('sequence cache must be auto or nonnegative integer GiB')
+    return amount
+
+
+def owned_scratch_bytes(root):
+    """Count only indexed existing payloads; never count legacy/partial files."""
+    root = Path(root)/'bounded-sequences-v2';index = root/'lru.json'
+    if not index.exists():return 0
+    need(not root.is_symlink() and not index.is_symlink(), 'owned scratch inventory')
+    entries = json.loads(index.read_bytes());need(isinstance(entries, dict), 'scratch inventory index')
+    total = 0
+    for key, row in entries.items():
+        need(re.fullmatch('[0-9a-f]{64}', key) is not None and row['name'] == key+'.bin'
+             and type(row['size']) is int and row['size'] >= 0, 'owned scratch inventory entry')
+        path = root/row['name'];need(not path.is_symlink(), 'owned scratch inventory payload')
+        if path.is_file():
+            size = path.stat().st_size
+            need(size == row['size'], 'scratch inventory size')
+            total += size
+    return total
+
+
+def sequence_capacity_plan(roots, requested='auto', minimum_free_bytes=40*1024**3):
+    """One allocation per filesystem, after extraction; no reservation or writes.
+
+    Auto leaves free-space headroom plus a stated growth allowance. Existing own
+    scratch is added back so resuming a filled cache does not shrink it twice.
+    Limits are caps, not preallocated files or a claim that all prefixes fit.
+    """
+    requested = cache_capacity(requested)
+    need(minimum_free_bytes >= 0, 'nonnegative cache filesystem headroom')
+    groups = {};limits = {};observations = []
+    for root in sorted({str(Path(r).resolve()) for r in roots}):
+        path = Path(root);groups.setdefault(path.stat().st_dev, []).append(path)
+    for paths in groups.values():
+        free = shutil.disk_usage(paths[0]).free
+        existing = sum(owned_scratch_bytes(p) for p in paths)
+        available = max(0, free+existing-minimum_free_bytes-AUTO_GROWTH_BYTES)
+        cap = min(AUTO_MAXIMUM_BYTES, available//len(paths)) if requested == 'auto' else requested*1024**3
+        for path in paths:limits[str(path)] = cap
+        observations.append(dict(roots=[str(p) for p in paths],observed_free_bytes=free,
+            existing_owned_payload_bytes=existing,per_model_limit_bytes=cap,
+            minimum_free_bytes=minimum_free_bytes,growth_allowance_bytes=AUTO_GROWTH_BYTES,
+            automatic=requested == 'auto'))
+    return dict(stage='sequence_cache_policy',requested=requested,limits=limits,
+                filesystems=observations,cpu_hot_limit_bytes_per_reader=SEQUENCE_MEMORY_BYTES,
+                training_admission='retain admitted training chunks; evict evaluation first')
 
 
 def tensor_hash(value):
@@ -40,10 +98,12 @@ def load_tensor(raw):
 
 class DiskLRU:
     """Single-writer scratch namespace; only indexed, digest-named blobs evicted."""
-    def __init__(self, root, maximum):
+    def __init__(self, root, maximum, protect_training=False, minimum_free_bytes=0):
         self.root = Path(root)
         need(maximum >= 0 and not self.root.is_symlink(), 'valid bounded sequence cache')
         self.maximum = maximum
+        self.protect_training = protect_training;self.minimum_free_bytes = minimum_free_bytes
+        self.evictions = self.skipped_writes = 0
         self.root.mkdir(parents=True, exist_ok=True)
         self.lock = (self.root/'writer.lock').open('a+b')
         try:
@@ -92,14 +152,22 @@ class DiskLRU:
         self._access_dirty = False
         self._last_access_save = time.monotonic()
 
-    def _trim(self, incoming):
+    def _trim(self, incoming, role=None):
         while self.entries and sum(x['size'] for x in self.entries.values())+incoming > self.maximum:
-            key = min(self.entries, key=lambda k: self.entries[k]['used'])
+            # Pin the admitted training subset instead of cyclically evicting it
+            # across epochs. Optional evaluation data cannot displace training.
+            priority = {'development':0, 'unknown':1, 'training':2}
+            eligible = [k for k,r in self.entries.items() if role is None or not self.protect_training
+                        or priority.get(r.get('role','unknown'),1) < priority.get(role,1)]
+            if not eligible:return False
+            key = min(eligible, key=lambda k: (priority.get(self.entries[k].get('role','unknown'),1)
+                      if self.protect_training else 0, self.entries[k]['used']))
             row = self.entries.pop(key); path = self.root/row['name']
             need(not path.is_symlink(), 'scratch eviction cannot follow a symlink')
-            path.unlink(missing_ok=True)
+            path.unlink(missing_ok=True);self.evictions += 1
+        return sum(x['size'] for x in self.entries.values())+incoming <= self.maximum
 
-    def get(self, key):
+    def get(self, key, role='unknown'):
         row = self.entries.get(key)
         if row is None:
             return None
@@ -111,23 +179,31 @@ class DiskLRU:
         # Payload membership/bytes are durable on put. Losing only recent LRU
         # ages on a crash affects eviction order, never the accepted tensors.
         row['used'] = time.time_ns(); self._access_dirty = True
+        if role == 'training' or row.get('role','unknown') == 'unknown':row['role'] = role
         if time.monotonic()-self._last_access_save >= 30:
             self._save()
         return raw
 
-    def put(self, key, raw):
+    def put(self, key, raw, role='unknown'):
         need(re.fullmatch('[0-9a-f]{64}', key) is not None, 'owned scratch key')
-        if len(raw) > self.maximum:
-            return
-        self._trim(len(raw))
+        need(role in ('training','development','unknown'), 'known sequence cache role')
+        if key in self.entries:return True  # Published payloads are immutable.
+        if len(raw) > self.maximum or (self.minimum_free_bytes and
+                shutil.disk_usage(self.root).free-len(raw) < self.minimum_free_bytes):
+            self.skipped_writes += 1;return False
+        before = self.evictions
+        if not self._trim(len(raw), role):
+            if self.evictions != before:self._save()
+            self.skipped_writes += 1;return False
         path = self.root/(key+'.bin'); temporary = self.root/(key+'.bin.part')
         need(not path.is_symlink() and not temporary.is_symlink(), 'safe scratch output')
         with temporary.open('wb') as stream:
             stream.write(raw); stream.flush(); os.fsync(stream.fileno())
         os.replace(temporary, path)
         self.entries[key] = dict(name=path.name, size=len(raw),
-                                sha256=hashlib.sha256(raw).hexdigest(), used=time.time_ns())
+                                sha256=hashlib.sha256(raw).hexdigest(), used=time.time_ns(),role=role)
         self._save()
+        return True
 
     def close(self):
         if not self.lock.closed:
@@ -183,23 +259,63 @@ def sequence_signature(hidden, mask, native):
 
 
 class FrozenSequences:
-    def __init__(self, root, manifest, checkpoint=lambda: None, maximum=None):
+    def __init__(self, root, manifest, checkpoint=lambda: None, maximum=None, minimum_free_bytes=0):
         self.root = Path(root); self.manifest = manifest; self.checkpoint = checkpoint
-        self.disk = DiskLRU(self.root/'bounded-sequences-v2', manifest['sequence_cache_bytes'] if maximum is None else maximum)
+        self.disk = DiskLRU(self.root/'bounded-sequences-v2',
+            manifest['sequence_cache_bytes'] if maximum is None else maximum,
+            protect_training=True,minimum_free_bytes=minimum_free_bytes)
         self.backbone = None
         self.hits = self.legacy_hits = self.regenerated = 0
+        self.memory = OrderedDict();self.memory_bytes = self.memory_hits = 0
+        self.reads = 0;self.read_seconds = self.regeneration_seconds = 0.
+        self._reported_at = time.monotonic()
 
     def _valid(self, payload, entry):
         return sequence_signature(payload['hidden'], payload['mask'], payload['native_scores']) == entry['signature']
 
-    def read(self, entry):
+    def _remember(self, key, raw):
+        # Immutable serialized bytes prevent a caller from modifying a cached
+        # tensor. Deserialization and complete signature checks remain on hits.
+        if len(raw) > SEQUENCE_MEMORY_BYTES:return
+        if key in self.memory:self.memory_bytes -= len(self.memory.pop(key))
+        while self.memory and self.memory_bytes+len(raw) > SEQUENCE_MEMORY_BYTES:
+            _, old = self.memory.popitem(last=False);self.memory_bytes -= len(old)
+        self.memory[key] = raw;self.memory_bytes += len(raw)
+
+    def stats(self):
+        hit_count = self.memory_hits+self.hits+self.legacy_hits
+        return dict(backbone=self.manifest['backbone'],reads=self.reads,
+            memory_hits=self.memory_hits,working_set_hits=self.hits,verified_legacy_hits=self.legacy_hits,
+            regenerated_chunks=self.regenerated,verified_hit_fraction=hit_count/self.reads if self.reads else None,
+            host_read_seconds=self.read_seconds,host_regeneration_seconds=self.regeneration_seconds,
+            sequence_payload_limit_bytes=self.disk.maximum,
+            sequence_payload_bytes=sum(r['size'] for r in self.disk.entries.values()),
+            cpu_hot_payload_bytes=self.memory_bytes,cpu_hot_limit_bytes=SEQUENCE_MEMORY_BYTES,
+            evicted_chunks=self.disk.evictions,skipped_optional_writes=self.disk.skipped_writes)
+
+    def read(self, entry, role='unknown'):
+        started = time.monotonic();self.reads += 1
+        try:return self._read(entry, role)
+        finally:
+            now = time.monotonic();self.read_seconds += now-started
+            if now-self._reported_at >= 60:
+                print(json.dumps(dict(stage='sequence_cache',**self.stats())),flush=True)
+                self._reported_at = now
+
+    def _read(self, entry, role):
         import torch
         key = hashlib.sha256(json.dumps(entry, sort_keys=True).encode()).hexdigest()
-        raw = self.disk.get(key)
+        if key in self.memory:
+            raw = self.memory.pop(key);self.memory[key] = raw
+            payload = load_tensor(raw)
+            need(self._valid(payload, entry), 'memory full-prefix hash mismatch')
+            self.memory_hits += 1
+            return payload
+        raw = self.disk.get(key, role)
         if raw is not None:
             payload = load_tensor(raw)
             need(self._valid(payload, entry), 'cached full-prefix hash mismatch')
-            self.hits += 1
+            self.hits += 1;self._remember(key, raw)
             return payload
         legacy = self.root/entry['legacy_name']
         need(Path(entry['legacy_name']).name == entry['legacy_name'], 'legacy prefix basename')
@@ -207,11 +323,11 @@ class FrozenSequences:
             try:
                 old = torch.load(legacy, map_location='cpu', weights_only=True)
                 if old['positions'] == entry['positions'] and self._valid(old, entry):
-                    self.legacy_hits += 1
+                    self.legacy_hits += 1;self._remember(key, object_bytes(old))
                     return old
             except (OSError, RuntimeError, KeyError, EOFError, ValueError, pickle.UnpicklingError):
                 pass  # Disposable unsealed cache; recompute and check original hashes.
-        self.checkpoint()
+        regeneration_started = time.monotonic();self.checkpoint()
         if self.backbone is None:
             from applications.rag.top8_backbone_v001 import Backbone
             # Loading a frozen model can initialize temporary random parameters.
@@ -244,35 +360,44 @@ class FrozenSequences:
                        native_scores=logits.index_select(0,index).detach().cpu())
         need(self._valid(payload, entry), 'regenerated FP32 hidden/mask/native hashes differ from extraction')
         self.regenerated += 1
-        self.checkpoint(); self.disk.put(key, object_bytes(payload)); self.checkpoint()
+        self.regeneration_seconds += time.monotonic()-regeneration_started
+        raw = object_bytes(payload);self._remember(key, raw)
+        self.checkpoint(); self.disk.put(key, raw, role); self.checkpoint()
         return payload
 
     def close(self):
-        if self.backbone is not None:
-            print(json.dumps(dict(stage='sequence_cache',backbone=self.manifest['backbone'],
-                                  regenerated_chunks=self.regenerated,working_set_hits=self.hits,
-                                  verified_legacy_hits=self.legacy_hits,
-                                  sequence_payload_limit_bytes=self.disk.maximum)),flush=True)
-        self.backbone = None
-        self.disk.close()
+        self.backbone = None;self.memory.clear();self.memory_bytes = 0
+        try:print(json.dumps(dict(stage='sequence_cache_final',**self.stats())),flush=True)
+        finally:self.disk.close()
 
 
 _SEQUENCES = {}
 _SEQUENCE_BUDGET = None
+_SEQUENCE_LIMITS = {}
+_SEQUENCE_MINIMUM_FREE = 0
 
 
-def set_sequence_budget(maximum):
-    global _SEQUENCE_BUDGET
-    need(maximum >= 0 and not _SEQUENCES, 'set scratch limit before sequence readers start')
-    _SEQUENCE_BUDGET = maximum
+def set_sequence_budget(maximum=None, limits=None, minimum_free_bytes=0):
+    global _SEQUENCE_BUDGET, _SEQUENCE_LIMITS, _SEQUENCE_MINIMUM_FREE
+    need(not _SEQUENCES and (maximum is None or maximum >= 0) and minimum_free_bytes >= 0,
+         'set scratch limit before sequence readers start')
+    _SEQUENCE_BUDGET = maximum;_SEQUENCE_LIMITS = dict(limits or {})
+    need(all(type(v) is int and v >= 0 for v in _SEQUENCE_LIMITS.values()), 'nonnegative per-root cache caps')
+    _SEQUENCE_MINIMUM_FREE = minimum_free_bytes
 
 
 def sequence_reader(root, manifest, checkpoint):
     key = str(Path(root).resolve())
     if key not in _SEQUENCES:
         if manifest is None: manifest = json.loads((Path(root)/'cache.json').read_bytes())
-        _SEQUENCES[key] = FrozenSequences(root, manifest, checkpoint, _SEQUENCE_BUDGET)
+        _SEQUENCES[key] = FrozenSequences(root, manifest, checkpoint,
+            _SEQUENCE_LIMITS.get(key, _SEQUENCE_BUDGET),_SEQUENCE_MINIMUM_FREE)
     return _SEQUENCES[key]
+
+
+def sequence_cache_stats(root):
+    reader = _SEQUENCES.get(str(Path(root).resolve()))
+    return None if reader is None else reader.stats()
 
 
 def close_sequences(root=None):

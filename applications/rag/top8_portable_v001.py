@@ -51,7 +51,7 @@ def sequence_rows(root, record, features, checkpoint):
         checkpoint()
         if entry.get('regenerate'):
             from applications.rag.top8_cache_v002 import sequence_reader
-            x=sequence_reader(root,None,checkpoint).read(entry)
+            x=sequence_reader(root,None,checkpoint).read(entry,role=record['role'])
             x=dict(x,positions=entry['positions'])
             x={k:(v.cuda() if isinstance(v,torch.Tensor) else v) for k,v in x.items()}
         else:
@@ -153,7 +153,10 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
                     parameters={n:p.detach().cpu().clone() for n,p in parameters.items()},
                     optimizer=optimizer.state_dict(),generator=generator.get_state(),
                     cpu_rng=torch.get_rng_state(),cuda_rng=torch.cuda.get_rng_state_all(),records=records))
-            if step%32==0:print(json.dumps(dict(stage='training',idea=idea,arm=arm,seed=seed,step=step)),flush=True)
+            if step%32==0:
+                from applications.rag.top8_cache_v002 import sequence_cache_stats
+                print(json.dumps(dict(stage='training',idea=idea,arm=arm,seed=seed,step=step,
+                                      sequence_cache=sequence_cache_stats(root))),flush=True)
             if steps_limit and step>=steps_limit:break
         if steps_limit and step>=steps_limit:break
     checkpoint();key=f'{idea}-{arm}-s{seed}';files=[]

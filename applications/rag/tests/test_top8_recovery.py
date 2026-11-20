@@ -9,6 +9,26 @@ from applications.rag.top8_suite_v002 import verify_files
 
 
 class RecoveryTests(unittest.TestCase):
+    def test_cache_policy_upgrade_retains_all_prior_continuations(self):
+        from applications.rag.top8_feature_io_v003 import resume_binding
+        directory=Path(__file__).resolve().parents[3]/'configs/experiments/triviaqa_smallset_20261112'
+        spec=directory/'cache-policy-compatibility.v004.json';four=json.loads(spec.read_bytes())
+        v3=directory/'fidelity-speed-compatibility.v003.json';three=json.loads(v3.read_bytes())
+        for ancestor in four['accepted_previous_sources']:
+            original=dict(sources=ancestor,seeds=[20261102],epochs=4,caches=[dict(sha256='fixed')])
+            current=dict(original,sources=four['after_sources'])
+            with tempfile.TemporaryDirectory() as d:
+                root=Path(d);before={}
+                if ancestor in three['accepted_previous_sources']:
+                    _,p=resume_binding(original,dict(original,sources=three['after_sources']),root,v3)
+                    before[p.name]=p.read_bytes()
+                selected,p=resume_binding(original,current,root,spec)
+                self.assertEqual(selected,original);self.assertEqual(p.name,'cache-policy-continuation.v4.json')
+                for name,raw in before.items():self.assertEqual((root/name).read_bytes(),raw)
+                self.assertEqual(resume_binding(original,current,root),(original,p))
+                with self.assertRaisesRegex(RuntimeError,'cannot change'):
+                    resume_binding(original,dict(current,epochs=3),root)
+
     def test_fidelity_upgrade_keeps_prior_receipts_and_exact_scientific_binding(self):
         from applications.rag.top8_feature_io_v003 import resume_binding
         directory=Path(__file__).resolve().parents[3]/'configs/experiments/triviaqa_smallset_20261112'

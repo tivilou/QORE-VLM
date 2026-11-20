@@ -100,7 +100,8 @@ def run_recoverable(caches, output, seeds, ideas, *, canary=False, checkpoint=la
     results = {}; failures = []; files = []
     if continuation is not None:
         files.append(dict(name=continuation.name,path=continuation.name,size=continuation.stat().st_size,sha256=digest(continuation)))
-        for prior_name in ('feature-io-continuation.v1.json','runtime-speed-continuation.v2.json'):
+        for prior_name in ('feature-io-continuation.v1.json','runtime-speed-continuation.v2.json',
+                           'fidelity-speed-continuation.v3.json'):
             prior=output/prior_name
             if prior!=continuation and prior.exists():
                 files.append(dict(name=prior.name,path=prior.name,size=prior.stat().st_size,sha256=digest(prior)))
@@ -202,8 +203,9 @@ def main(argv=None):
     parser.add_argument('--eval-labels',type=Path);parser.add_argument('--cache',type=Path,action='append',default=[])
     parser.add_argument('--label-classes',type=int,choices=[2,3],default=3)
     parser.add_argument('--minimum-free-gib',type=int,default=0)
-    parser.add_argument('--sequence-cache-gib',type=int,default=32,
-                        help='Disposable FP32 prefix LRU per backbone; 0 recomputes without disk caching.')
+    from applications.rag.top8_cache_v002 import cache_capacity
+    parser.add_argument('--sequence-cache-gib',type=cache_capacity,default='auto',
+                        help='auto: bounded filesystem-aware prefix caps; integer: explicit GiB per backbone; 0: no disk payloads.')
     parser.add_argument('--output',type=Path,required=True);parser.add_argument('--resume',action='store_true')
     parser.add_argument('--seeds',type=int,nargs='+',default=[20261102,20261103,20261104])
     parser.add_argument('--ideas',nargs='+');parser.add_argument('--canary',action='store_true')
@@ -216,7 +218,6 @@ def main(argv=None):
                         help='Print the exact backbone/idea/arm schedule without loading models or writing output.')
     parser.add_argument('--extract-only',action='store_true')
     args=parser.parse_args(argv)
-    need(args.sequence_cache_gib>=0,'nonnegative sequence cache limit')
     from applications.rag.top8_matrix_plan_v001 import matrix_plan
     # Read the static registry without importing its scientific dependencies.
     import ast
@@ -279,14 +280,17 @@ def main(argv=None):
             need(args.train and args.eval_inputs,'explicit train / label-free evaluation inputs')
             caches.append(extract(kind,model,args.train,args.eval_inputs,args.output/('cache-'+kind),
                                   checkpoint=checkpoint,label_classes=args.label_classes,resume=args.resume,
-                                  sequence_cache_bytes=args.sequence_cache_gib*1024**3))
+                                  sequence_cache_bytes=(32 if args.sequence_cache_gib=='auto' else args.sequence_cache_gib)*1024**3))
     need(caches and len({json.loads(Path(p).read_bytes())['backbone'] for p in caches})==len(caches),
          'one cache for each requested backbone')
     need(all(json.loads(Path(p).read_bytes()).get('label_classes',3)==args.label_classes for p in caches),
          'all caches use the requested supervision semantics')
     if args.extract_only:return 0
-    from applications.rag.top8_cache_v002 import set_sequence_budget
-    set_sequence_budget(args.sequence_cache_gib*1024**3)
+    from applications.rag.top8_cache_v002 import set_sequence_budget, sequence_capacity_plan
+    capacity=sequence_capacity_plan([Path(p).parent for p in caches],args.sequence_cache_gib,
+                                   max(40,args.minimum_free_gib)*1024**3)
+    print(json.dumps(capacity),flush=True)
+    set_sequence_budget(limits=capacity['limits'],minimum_free_bytes=max(40,args.minimum_free_gib)*1024**3)
     seal=run_recoverable(caches,args.output/'matrix',args.seeds,ideas,canary=args.canary,
                          checkpoint=checkpoint,backbone_ideas=plan['backbone_ideas'],fusion_ideas=args.fusion_ideas)
     if args.eval_labels:
