@@ -170,6 +170,8 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
         torch.cuda.set_rng_state_all(saved['cuda_rng'])
         step=saved['step'];records=saved['records']
         need(len(records)==step,'complete recovery training history')
+    from applications.rag.top8_microbatch_v008 import Microbatch,losses_for_questions,discard_transients
+    microbatch=Microbatch(None if saved is None else saved.get('microbatch'))
     from scripts.smallset_events import emit
     event_at=time.monotonic()
     total_steps=min(epochs*((len(train)+7)//8),steps_limit) if steps_limit else epochs*((len(train)+7)//8)
@@ -186,11 +188,11 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
         for start in range(0,len(order),8):
             if restoring and start<saved['next_start']:continue
             checkpoint();batch=[train[i] for i in order[start:start+8]];optimizer.zero_grad(set_to_none=True)
-            losses=[];counts=[]
-            # Every complete question contributes 1/B, including zero-pair cases.
-            for r in batch:
-                loss,count=loss_for(model,idea,r,features[r['id']],cache_root,checkpoint)
-                (loss/len(batch)).backward();losses.append(loss.detach());counts.append(count.detach())
+            # Physical grouping changes; logical eight-question update is fixed.
+            losses,counts=microbatch.backward(batch,
+                lambda part:losses_for_questions(model,idea,part,features,cache_root,checkpoint,
+                                                 next(iter(parameters.values())).device),
+                parameters.values(),optimizer,lambda:discard_transients(model,device_reader))
             flags=model.take_kernel_flags() if throughput_plan is not None else []
             total,pairs,without=step_diagnostics(losses,counts,parameters.values(),len(batch),extra_flags=flags)
             norm=torch.nn.utils.clip_grad_norm_(list(parameters.values()),1.);optimizer.step();step+=1
@@ -200,17 +202,19 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
             allocator_event()
             if time.monotonic()-event_at>=5:
                 emit('progress',completed=step,total=total_steps,unit='steps',phase='训练',metrics={'loss':total})
+                physical=dict(route='question-microbatch-v8',**microbatch.state())
                 if device_reader is not None:
-                    emit('throughput',throughput=dict(route='batched-fidelity-v7',candidates=model.candidate_batch,
+                    physical.update(dict(candidates=model.candidate_batch,
                         attention_route='cls-fp32-v1' if model.cls_only else 'full',
                         projection_bytes=model._projection_cache.bytes,projection_hits=model._projection_cache.hits,
                         reference_bytes=model._reference_bytes,**device_reader.device_cache.stats()))
+                emit('throughput',throughput=physical)
                 event_at=time.monotonic()
             if journal is not None and (step%32==0 or start+8>=len(order) or (steps_limit and step>=steps_limit)):
                 emit('phase',phase='保存完整恢复检查点')
                 journal.save(dict(step=step,epoch=epoch,next_start=start+8,order=order,
                     attention_route='cls-fp32-v1' if idea=='FIDELITY' and model.cls_only else 'full',
-                    throughput_route='batched-fidelity-v7' if throughput_plan is not None else None,
+                    throughput_route='question-microbatch-v8',microbatch=microbatch.state(),
                     parameters={n:p.detach().cpu().clone() for n,p in parameters.items()},
                     optimizer=optimizer.state_dict(),generator=generator.get_state(),
                     cpu_rng=torch.get_rng_state(),cuda_rng=torch.cuda.get_rng_state_all(),records=records))
@@ -255,7 +259,7 @@ def train_cell(idea,arm,seed,manifest,features,cache_root,output,epochs,steps_li
         representative_native_math_error=native_math_error,prediction_replay_error=replay_error,
         seconds=time.monotonic()-started,files=files,sample_trace_v2='DEFERRED_NOT_PASSED',
         attention_route='cls-fp32-v1' if idea=='FIDELITY' and model.cls_only else 'full',
-        throughput_route='batched-fidelity-v7' if throughput_plan is not None else None,
+        throughput_route='question-microbatch-v8',microbatch=microbatch.state(),
         throughput_plan=throughput_plan,previous_throughput_route=None if saved is None else saved.get('throughput_route'))
     del optimizer,model,replay,layer,bridge,head;gc.collect();torch.cuda.empty_cache()
     return result

@@ -109,6 +109,13 @@ def render(dashboard, snapshot, now=None):
             ' | host重算秒 '+str(round(cache.get('host_regeneration_seconds',0),1)))
     throughput=snapshot.get('throughput')
     if throughput:
+        if 'physical_questions' in throughput:
+            lines.insert(-3,'批处理：有效batch '+str(throughput['logical_questions'])+
+                '题 | microbatch上限 '+str(throughput['physical_questions'])+
+                '题 | 累积组数 '+str(throughput['accumulation_groups'])+
+                ' | OOM降档 '+str(throughput['oom_retries']))
+            if throughput.get('last_reason'):lines.insert(-3,'降档原因：'+throughput['last_reason'])
+    if throughput and 'candidates' in throughput:
         gib=lambda n:f'{n/1024**3:.2f} GiB'
         lines.insert(-3,'FIDELITY：同形候选块上限 '+str(throughput['candidates'])+
             ' | GPU输入缓存 '+gib(throughput['device_input_bytes'])+'/'+gib(throughput['device_input_limit'])+
