@@ -1,0 +1,96 @@
+{
+  "schema": "qduet.existing-control-request.v1",
+  "primary_run_id": "triviaqa-smallset-20261122T011753Z",
+  "primary_joint_seal_sha256": "379deaeee89e4d6d147e464a774d06c5cf4b4c6d56fa975e1d9d44f73b5dca8c",
+  "original_run_binding_sha256": "ea6bf913ae80923f4eec0255cba003bd0694fff087796216f6eb349b4b7ae83e",
+  "seeds": [
+    20261102,
+    20261103,
+    20261104
+  ],
+  "roles": {
+    "train": 8000,
+    "valid": 1000,
+    "test": 1000
+  },
+  "steps": 4000,
+  "cache_sha256": {
+    "dpr": "4bfeca3a871871521c47c410ab63cf03ff40668892cb9e3ff5dd0f30d73fbcc6",
+    "bge": "0a9d6dd138b42710c997d69d8bb46386a555b742843db6c2ca684a16eed6dfd9"
+  },
+  "control_arms": {
+    "MIXED_DEPTH": [
+      "HEAD",
+      "CONCAT",
+      "COSINE",
+      "HS",
+      "DEPHASED",
+      "QDA"
+    ],
+    "FIDELITY": [
+      "HEAD",
+      "MLP",
+      "GIVENS",
+      "PRODUCT"
+    ],
+    "VALUE_GEOMETRY": [
+      "HEAD",
+      "CONCAT",
+      "MLP",
+      "DENSE",
+      "LORA",
+      "TANGENT",
+      "CAYLEY",
+      "LOCAL"
+    ],
+    "LOCAL_REUPLOAD": [
+      "HEAD",
+      "LORA",
+      "MLP",
+      "TRIG",
+      "PRODUCT",
+      "REAL"
+    ],
+    "NATIVE_BORN": [
+      "HEAD",
+      "LINEAR",
+      "MLP",
+      "TRIG",
+      "PRODUCT",
+      "COMMUTING",
+      "LOGIT_MLP"
+    ],
+    "FEATURE_GATE": [
+      "HEAD",
+      "LINEAR",
+      "MLP",
+      "TRIG",
+      "PRODUCT",
+      "STOCHASTIC",
+      "ADDITIVE"
+    ],
+    "LOCAL_FFN": [
+      "HEAD",
+      "LORA",
+      "MLP",
+      "QUADRATIC",
+      "PRODUCT",
+      "REAL"
+    ],
+    "ORDINAL": [
+      "HEAD",
+      "ORDINAL_LINEAR",
+      "ORDINAL_MLP",
+      "COMMUTING",
+      "DEPHASED",
+      "INDEPENDENT"
+    ]
+  },
+  "max_upload_bytes": 2147483648,
+  "max_prediction_bytes": 33554432,
+  "max_metadata_bytes": 16777216,
+  "new_training": false,
+  "new_prediction": false,
+  "label_join": false,
+  "claim": "Inventory and recover existing controls only; no new global pre-label seal is inferred."
+}

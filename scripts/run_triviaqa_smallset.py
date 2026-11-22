@@ -28,6 +28,8 @@ def main(argv=None):
     p.add_argument('--config',type=Path)
     p.add_argument('--prepare-only',action='store_true')
     p.add_argument('--plan-only',action='store_true')
+    p.add_argument('--upload-existing-controls',action='store_true',
+                   help='Only verify and upload already completed legacy controls; no model, training or prediction.')
     p.add_argument('--resume',action='store_true')
     p.add_argument('--experiment-profile',choices=['primary54','full'],default='primary54',
                    help='primary54: quantum main effects only; full: historical393 controls.')
@@ -40,6 +42,13 @@ def main(argv=None):
     p.add_argument('--sequence-cache-gib',type=cache_capacity,default='auto',
                    help='auto: filesystem-aware prefix cache; or explicit nonnegative GiB per model.')
     a=p.parse_args(argv)
+    if a.upload_existing_controls:
+        if a.prepare_only or a.plan_only or a.watch or a._progress_worker or a.resume:
+            p.error('--upload-existing-controls is an exclusive read-only recovery mode')
+        from applications.rag.smallset_controls_v001 import collect
+        request=ROOT/'configs/experiments/triviaqa_smallset_20261112/existing-controls-request.v001.json'
+        print(json.dumps(collect(a.workspace,request,upload=True,config_path=a.config),ensure_ascii=False))
+        return 0
     if a.refresh<.5 or not __import__('math').isfinite(a.refresh):p.error('--refresh must be finite and >=0.5')
     from scripts.smallset_progress import supervise,watch
     if a.watch:return watch(a.workspace,a.display if a.display!='off' else 'append',a.refresh)
