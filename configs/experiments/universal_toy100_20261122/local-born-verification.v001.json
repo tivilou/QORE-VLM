@@ -1,0 +1,138 @@
+{
+  "schema": "qduet.local-born-verification.v1",
+  "recorded_at": "2026-11-25T02:51:17.481175+00:00",
+  "source_sha256": {
+    "applications/rag/toy100_local_born_v001.py": "60b2c702fa8bd53da4a42c1f0b1ab3a9014e3b69af1ed1ded3a00af8d52ecb73",
+    "applications/rag/tests/test_toy100_local_born_v001.py": "8f602ce24b913a7bfb95c4181db40a174cdbd428d697f06eb89b80c064bd3d56",
+    "applications/rag/toy100_plugins_v001.py": "87df9c5263685d643305b953788f7f4f87ef51d4ede6d62e8db9b4d19bcbf91f"
+  },
+  "actual_commands": {
+    "tests": {
+      "argv": [
+        "/usr/local/miniconda3/envs/py312/bin/python",
+        "-B",
+        "-m",
+        "applications.rag.tests.test_toy100_local_born_v001"
+      ],
+      "started": 1795573941.8174028,
+      "finished": {
+        "exit": 0,
+        "finished": 1795573946.9644055,
+        "peak_group_rss": 3268608,
+        "quiescent": true,
+        "resource_violation": null
+      },
+      "literal_output": "./workspace/q-duet-toy100-20261122-v001/repo/applications/rag/tests/test_toy100_local_born_v001.py:30: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.\nConsider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:822.)\n  self.assertGreater(float((pure-mixed).abs().max()),1e-4)\n.\n----------------------------------------------------------------------\nRan 2 tests in 2.271s\n\nOK\n"
+    },
+    "study": {
+      "argv": [
+        "/usr/local/miniconda3/envs/py312/bin/python",
+        "-B",
+        "-m",
+        "applications.rag.toy100_shared_study_v001",
+        "--data",
+        "/workspace/q-duet-toy100-20261122-v001/data/toy100-high-ceiling-v001",
+        "--models",
+        "/workspace/q-duet-toy100-20261122-v001/models",
+        "--output",
+        "/workspace/q-duet-toy100-20261122-v001/local-born-run-v001/output",
+        "--progress",
+        "/workspace/q-duet-toy100-20261122-v001/progress.json",
+        "--binding",
+        "/workspace/q-duet-toy100-20261122-v001/study-binding.json",
+        "--readouts",
+        "/workspace/q-duet-toy100-20261122-v001/output-frame-run-v001/ffn-readouts",
+        "--head-results",
+        "/workspace/q-duet-toy100-20261122-v001/high-ceiling-head-pilot-run-v001/output",
+        "--plugin",
+        "local-mode-born-attribution"
+      ],
+      "started": 1795573946.9666622,
+      "finished": {
+        "exit": 0,
+        "finished": 1795574960.9683998,
+        "peak_group_rss": 2279161856,
+        "quiescent": true,
+        "resource_violation": null
+      },
+      "literal_output": "{\"metrics\": [{\"backbone\": \"dpr\", \"arm\": \"NATIVE\", \"seed\": null, \"useful\": 81, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"NATIVE\", \"seed\": null, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"HEAD\", \"seed\": 20261122, \"useful\": 87, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"HEAD\", \"seed\": 20261122, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"HEAD\", \"seed\": 20261123, \"useful\": 88, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"HEAD\", \"seed\": 20261123, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"HEAD\", \"seed\": 20261124, \"useful\": 87, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"HEAD\", \"seed\": 20261124, \"useful\": 82, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"SIGNED_LOCAL\", \"seed\": 20261122, \"useful\": 87, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"SIGNED_LOCAL\", \"seed\": 20261122, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"SIGNED_LOCAL\", \"seed\": 20261123, \"useful\": 87, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"SIGNED_LOCAL\", \"seed\": 20261123, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"SIGNED_LOCAL\", \"seed\": 20261124, \"useful\": 86, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"SIGNED_LOCAL\", \"seed\": 20261124, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"GELU_LOCAL\", \"seed\": 20261122, \"useful\": 87, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"GELU_LOCAL\", \"seed\": 20261122, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"GELU_LOCAL\", \"seed\": 20261123, \"useful\": 88, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"GELU_LOCAL\", \"seed\": 20261123, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"GELU_LOCAL\", \"seed\": 20261124, \"useful\": 87, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"GELU_LOCAL\", \"seed\": 20261124, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"ABS_LOCAL\", \"seed\": 20261122, \"useful\": 87, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"ABS_LOCAL\", \"seed\": 20261122, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"ABS_LOCAL\", \"seed\": 20261123, \"useful\": 87, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"ABS_LOCAL\", \"seed\": 20261123, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"ABS_LOCAL\", \"seed\": 20261124, \"useful\": 87, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"ABS_LOCAL\", \"seed\": 20261124, \"useful\": 82, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"DEPHASED\", \"seed\": 20261122, \"useful\": 87, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"DEPHASED\", \"seed\": 20261122, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"DEPHASED\", \"seed\": 20261123, \"useful\": 87, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"DEPHASED\", \"seed\": 20261123, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"DEPHASED\", \"seed\": 20261124, \"useful\": 87, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"DEPHASED\", \"seed\": 20261124, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"RANDOM_FRAME\", \"seed\": 20261122, \"useful\": 87, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"RANDOM_FRAME\", \"seed\": 20261122, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"RANDOM_FRAME\", \"seed\": 20261123, \"useful\": 87, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"RANDOM_FRAME\", \"seed\": 20261123, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"RANDOM_FRAME\", \"seed\": 20261124, \"useful\": 87, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"RANDOM_FRAME\", \"seed\": 20261124, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"CLASSICAL_MATCHING\", \"seed\": 20261122, \"useful\": 86, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"CLASSICAL_MATCHING\", \"seed\": 20261122, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"CLASSICAL_MATCHING\", \"seed\": 20261123, \"useful\": 86, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"CLASSICAL_MATCHING\", \"seed\": 20261123, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"CLASSICAL_MATCHING\", \"seed\": 20261124, \"useful\": 86, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"CLASSICAL_MATCHING\", \"seed\": 20261124, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"MLP8\", \"seed\": 20261122, \"useful\": 84, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"MLP8\", \"seed\": 20261122, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"MLP8\", \"seed\": 20261123, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"MLP8\", \"seed\": 20261123, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"MLP8\", \"seed\": 20261124, \"useful\": 85, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"MLP8\", \"seed\": 20261124, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"QUANTUM\", \"seed\": 20261122, \"useful\": 87, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"QUANTUM\", \"seed\": 20261122, \"useful\": 83, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"QUANTUM\", \"seed\": 20261123, \"useful\": 88, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"QUANTUM\", \"seed\": 20261123, \"useful\": 84, \"denominator\": 100}, {\"backbone\": \"dpr\", \"arm\": \"QUANTUM\", \"seed\": 20261124, \"useful\": 88, \"denominator\": 100}, {\"backbone\": \"bge\", \"arm\": \"QUANTUM\", \"seed\": 20261124, \"useful\": 83, \"denominator\": 100}], \"oracle\": 100, \"questions\": 20, \"denominator\": 100, \"claim_ceiling\": \"fixed100-question exploratory toy; no fullsmallset generalization\", \"joint_seal_sha256\": \"4685df3f8c9f88edefa4065bf5d2ab88f7e2b4ed9bf22a99335f8ba225e999e2\"}\n"
+    }
+  },
+  "supervisor": {
+    "exit": 0,
+    "completed": 1795574960.9692197,
+    "science_child_quiescent": true
+  },
+  "prediction_groups": 56,
+  "final_checkpoints": 27,
+  "full_score_values_checked": 64000,
+  "null_maximum": 0.0,
+  "checkpoint_replay_maximum": 0.0,
+  "own_model_replay_maximum": 4.76837158203125e-07,
+  "joint_seal_sha256": "4685df3f8c9f88edefa4065bf5d2ab88f7e2b4ed9bf22a99335f8ba225e999e2",
+  "remote_result_sha256": "5c432abfa919ab443b8cc3e9e33c74bcc16f693c08a224c8b1dfbea73762b3a5",
+  "source_binding_files": 611,
+  "source_binding_sha256": "1a26faedb98fa07132d0ba1100eac9476887dba0c5259ec1ab4c1695887f36ac",
+  "supervisor_sha256": "ebe7b8e62bce167030f619919efe4657ba8be952c43642f4b5b36656fbe5836e",
+  "telemetry": {
+    "observed_at": 1795574955.9292119,
+    "phase": "study",
+    "child_pid": 854370,
+    "group_rss": 2276913152,
+    "peak_group_rss": 2279161856,
+    "group_gpu_MiB": 1686
+  },
+  "prior119_parity": {
+    "HEAD": {
+      "old_arm": "HEAD",
+      "maximum_difference": 0.0,
+      "changed_top5_questions": 0,
+      "full_scores_compared": 6000
+    },
+    "QUANTUM": {
+      "old_arm": "NO_CNOT",
+      "maximum_difference": 0.0,
+      "changed_top5_questions": 0,
+      "full_scores_compared": 6000
+    },
+    "CLASSICAL_MATCHING": {
+      "old_arm": "CLASSICAL_MATCHING",
+      "maximum_difference": 0.0,
+      "changed_top5_questions": 0,
+      "full_scores_compared": 6000
+    },
+    "MLP8": {
+      "old_arm": "MLP8",
+      "maximum_difference": 0.0,
+      "changed_top5_questions": 0,
+      "full_scores_compared": 6000
+    }
+  },
+  "retained_parent_parity": {
+    "HEAD": {
+      "old_arm": "HEAD",
+      "maximum_difference": 0.0,
+      "changed_top5_questions": 0,
+      "full_scores_compared": 6000
+    },
+    "QUANTUM": {
+      "old_arm": "NO_CNOT",
+      "maximum_difference": 0.0,
+      "changed_top5_questions": 0,
+      "full_scores_compared": 6000
+    },
+    "CLASSICAL_MATCHING": {
+      "old_arm": "CLASSICAL_MATCHING",
+      "maximum_difference": 0.0,
+      "changed_top5_questions": 0,
+      "full_scores_compared": 6000
+    },
+    "MLP8": {
+      "old_arm": "MLP8",
+      "maximum_difference": 0.0,
+      "changed_top5_questions": 0,
+      "full_scores_compared": 6000
+    }
+  },
+  "limits": "Actual test stdout/commands/exit preserved. Complete fixed three seeds; allgroups/CP/finiteness/seals checked. SampledRAM/GPU notabsolutepeaks. No localTorch/newHTTP/assets/labels/ownerfullsmallset; allpriorfailures retained."
+}

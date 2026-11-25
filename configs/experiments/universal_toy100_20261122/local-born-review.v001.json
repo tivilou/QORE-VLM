@@ -1,0 +1,17 @@
+{
+  "recorded_at": "2026-11-25T02:28:32.723281+00:00",
+  "exact_source_status": "PASS_WITH_RISK",
+  "accepted_source_sha256": {
+    "applications/rag/toy100_local_born_v001.py": "60b2c702fa8bd53da4a42c1f0b1ab3a9014e3b69af1ed1ded3a00af8d52ecb73",
+    "applications/rag/tests/test_toy100_local_born_v001.py": "8f602ce24b913a7bfb95c4181db40a174cdbd428d697f06eb89b80c064bd3d56",
+    "applications/rag/toy100_plugins_v001.py": "87df9c5263685d643305b953788f7f4f87ef51d4ede6d62e8db9b4d19bcbf91f"
+  },
+  "checks": [
+    "Rootstaticreviewnewlocaldecoders/input-dephasing/probes/tests/3lineregistrydelta; exactknown146NO_CNOTcandidate/HEAD/matching/MLPfactories reused; stablecore unchanged.",
+    "Inputdephased intensity starts y² andappliesnetangles notseparatelayers; positivity/norm anddensemixeddensity/gradient oracle tests mandatory.20nominal10effective+samefrozenrefs/optimizer.",
+    "Actual146source/memberSHA/frame/radius boundaries pinned, no newexport. Alltrainable/initial/optimizer/RNG persisted, immutableframe/tail factoryrestored andcontinuation checked.",
+    "Matchedlocalclassical/deletioncontrols frozenbeforeexecution; no retroactive146L3/claimofquantumnecessity. Numericalstatusnot_run."
+  ],
+  "formula_review": "local-born-formula-review.v001.json",
+  "numerical_status": "not_run"
+}

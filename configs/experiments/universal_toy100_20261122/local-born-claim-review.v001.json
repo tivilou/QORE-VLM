@@ -1,0 +1,14 @@
+{
+  "schema": "qduet.local-born-claim-review.v1",
+  "mode": "same_family_text_only_subagent_fallback",
+  "reviewer": "/root/token_density_math_review",
+  "status": "PASS_WITH_RISK",
+  "scope": "Provided facts only; no tools/files/network/source/runtime/portable verification.",
+  "wording": "Fixed adaptive toy, complete three-seed aggregate strictly exceeds all predeclared independent classical/deletion controls in each backbone. Input dephasing lowers aggregate utility, giving limited attribution to specified mode-basis cross terms. No independent generalization, statistical confirmation, quantum necessity or hardware advantage.",
+  "limitations": [
+    "Knownexactclassicalstructuredquadraticmap andinputdephasing. No entanglementnecessity/quantumexclusivity/newprimitive/hardware/independentconfirmation/fullsmallsetclaim. All146rank/radius/fullBGEzero-sum/nonuniqueSVD/framecost limits retained. SameU outputsnotamplitudematched; statepuritydeletionchangescapacity. No selectingmodel-specificwinners.",
+    "Only three-seed aggregate superiority; not every seed wins. Only one useful position above strongest independent control per backbone across300 positions. Repeated adaptive20held; candidate selected after146; not independent confirmation or significance.",
+    "Exact efficient classical structured quadratic equivalent; no entanglement necessity, quantum exclusivity, computational/hardware advantage or novelty certification. FullCNOT146 BGE84each exceeds this local candidate; not superiority to all quantum configurations.",
+    "Same-U signed/GELU/ABS not amplitude matched; MLP8 larger nominal capacity, optimizer identical but not equally tuned functional capacity. Inputdephasing removes fixed-basis off-diagonal terms, not exclusively quantum information. Randomframe changes multiple orientations."
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "qduet.local-born-portable-source-roles.v1",
+  "recorded_at": "2026-11-25T03:52:48.924100+00:00",
+  "status": "PASS",
+  "roles": {
+    "modified": "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\modified",
+    "patch": "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\patch.diff",
+    "verification": "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\verification.json",
+    "rollback": "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\rollback.py"
+  },
+  "role_sha256": {
+    "patch": "0c781e2b564b8c3d28c09b44218908e845b1c9276dfb15d52ba1f27379088e8b",
+    "verification": "044aeb24a322360e53cee1592e9ef8e7c7883c77c7bee5d28ddd2f38d3135e3a",
+    "rollback": "779a2b51f1f628a644b4107c93e930015c227fa9c4952edc5498b5ae3b9ef7df"
+  },
+  "modified_files": {
+    "applications/rag/local_born_cache_v001.py": "91760c615af81b7655ab15cea9e164dd94fa90400a36b18d88b851186b729b55",
+    "applications/rag/local_born_smallset_v001.py": "f514a0b8c090b65430dbdbbc621e57e50433c494565f3dba9e05ad7202737b6d",
+    "applications/rag/local_born_io_v001.py": "75f9b42f1571f6b1c24de0c9779fe4862993ebad8c6567383c2011ac560f7809",
+    "scripts/run_local_born_smallset.py": "955b0980d456ae72aa96ad692d877a671f7c21f46334218fc4e7a067659585e9",
+    "scripts/run_local_born_smallset.sh": "f5e4f5be1ff0c3461594cb4a4b20e4f2f0e0c44d0cf7ecd1fa5f9404a3a93de5",
+    "scripts/verify_local_born_toy_port_v001.py": "1c1a06c6513fe3ae1d30f92c161b4f2807ece41c47a7113df5e3befa771b0487",
+    "applications/rag/tests/test_local_born_portable_v001.py": "1f22cecfafff2d1702f9660800e1d7907a536cb3361255e7b654b1c9a4a9afc6",
+    "applications/rag/tests/test_local_born_delivery_v001.py": "ea1a85b5634fa7370339e42612ebe95d87454a3de48c581128f96779cecb2726",
+    "scripts/smallset_progress.py": "e1c176f54433d894fe05b7d645e460d822e4f68f742d0f021223f025f7d7b885",
+    "configs/experiments/local_born_smallset_20261125/protocol.v001.json": "3f51af0e4c6fc068e9593bbc25daf7a49aa2e1f350b684579d240d36d196f1c1",
+    "configs/experiments/local_born_smallset_20261125/requirements.txt": "d7d82c8120e246e25fbb0c747a4ac1e87b42974316ef2ead890cc8493f2b4018",
+    "docs/local-born-smallset-handoff.md": "ddbec6392d33a67b6b81f5f2c551af8140c4849ab1261dc0451be3bc9e0e98a9",
+    "scripts/verify_local_born_native_v001.py": "e9c2cc9510cd01b63e6195b70e24d332eaf42957b4656de8800ded602b6d3c49"
+  },
+  "commands_record": "local-born-portable-verification.v001.json/local_source_roles/commands",
+  "baseline_behavior": "No local-Born entry, Pythonexit2; original legacy progress source preserved.",
+  "modified_behavior": "Isolated plan-only0 and5deliverytests0; all9toy arms /18000scores and native28chunks acceptance passed. Patch apply byte hashes and executable isolated rollback passed. No workspace rollback or deletion of original experiments."
+}

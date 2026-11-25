@@ -1,0 +1,75 @@
+{
+  "schema": "qduet.local-born.v1",
+  "candidate": 147,
+  "recorded_at": "2026-11-25T02:28:32.723281+00:00",
+  "source_sha256": {
+    "applications/rag/toy100_local_born_v001.py": "60b2c702fa8bd53da4a42c1f0b1ab3a9014e3b69af1ed1ded3a00af8d52ecb73",
+    "applications/rag/tests/test_toy100_local_born_v001.py": "8f602ce24b913a7bfb95c4181db40a174cdbd428d697f06eb89b80c064bd3d56",
+    "applications/rag/toy100_plugins_v001.py": "87df9c5263685d643305b953788f7f4f87ef51d4ede6d62e8db9b4d19bcbf91f"
+  },
+  "evidence": [
+    "post146-local-born-attribution-problem.v001.json",
+    "output-frame-result.v001.json",
+    "output-frame-verification.v001.json"
+  ],
+  "hypothesis": "Observed146localBorn branch positive onbothbackbones vsHEAD needsprospective matchedattribution. MainfactoryexactoldNO_CNOT; notnewgate orretrospectiveL3.",
+  "formula": "Same146nativeoutputframes y=Vᵀz h768/1024 padded1024; U=tensorRY(theta1+theta2),noCNOT. A=|Uy|²/r-r, fullinitialreference, originalGELU+V*(A-Ainitial)/originaltail/currenthead.20nominal10effective/model.",
+  "dephasing": "Inputcomputationaldephase only: initialintensity y², tenstochasticT(netangle), T=[[cos²(eta/2),sin²],[sin²,cos²]]. ExactsameU measuredoninputdiagstate, totalmass||y||². A=intensity/r-r. No betweenlayerdephasing substitution; owncompleteinitialreference.",
+  "controls": [
+    "HEAD",
+    "SIGNED_LOCAL",
+    "GELU_LOCAL",
+    "ABS_LOCAL",
+    "DEPHASED",
+    "RANDOM_FRAME",
+    "CLASSICAL_MATCHING",
+    "MLP8",
+    "QUANTUM"
+  ],
+  "controls_meaning": "SameU SIGNED/GELU/ABS; exactinput-DEPHASED same20nominal10effective; randomframe sameNO_CNOT pairedencoding/decoding; existing146matching20Born andMLP8(17h+8parameters/model) exact; HEADexact. FullCNOT146quantumalternative remainsfailedcomparativecontext, notnewlocalclaimclassical/deletionrival. Mathematicalsamefunctionclassicalimplementation correctnessoracle notindependentcompetitor.",
+  "protocol": {
+    "population_sha256": "d71aea5271796b64c1b42e8bc626e72e777eb85f680508c9ef9c02a6caa13fbb",
+    "train": 80,
+    "adaptive_exposed_held": 20,
+    "oracle": {
+      "train": 400,
+      "held": 100
+    },
+    "seeds": [
+      20261122,
+      20261123,
+      20261124
+    ],
+    "steps": 200,
+    "epochs": 20,
+    "logicalbatch": 8,
+    "optimizer": "originalAdamW.001/wd0/foreachFalse/clip1/final200",
+    "loss": "unchangedcoupled(DPR+BGE)/2 /8pairedqueries/allbinarypairs/no-pair0denominator",
+    "prediction_groups": 56,
+    "final_checkpoints": 27,
+    "seals": "all56jointsealedbeforeheldlabels"
+  },
+  "source": "Reuseactual146frame manifest55b148ee/memberSHA; no newexport/model/data/labels/nativeforward/HTTP. Actualpinnedbasis/fullrawrole/source chain unchanged. Factoryreconstructsfrozenframe/tail, initial/optimizer/RNG fullyCPpersisted.",
+  "review": {
+    "mode": "same_family_text_only_subagent_fallback",
+    "reviewer": "/root/token_density_math_review",
+    "status": "PASS_WITH_RISK",
+    "scope": "net-angle inputdephasing/controlmath only; nofiles/tools/network/source/runtime/benefit/L3certification",
+    "conditions": [
+      "eta_q=theta1_q+theta2_q, applyT=[[cos²(eta/2),sin²],[sin²,cos²]] toinitialintensity y²; exactinputcomputationaldephase then sameUmeasurement, mass||y||² andA=p/r-r.",
+      "Both20nominal10effective, sameoptimizer andownfullfrozenreference; no dephasingbetweentwolayers substitution.",
+      "Deletion isolatesfixedframeinputoff-diagonalterms, notentanglementnecessity/quantumexclusivity.",
+      "FullCNOTremainsunfavorablecomparisonbackground, notoneofnewlocalclaimclassical/deletionrivals;146notretroactivelyupgraded.",
+      "Actualframe/radius/BGEzero-sum/source/cost/nonuniqueSVDboundaries unchanged."
+    ]
+  },
+  "tests": [
+    "IndependentdenseKroneckerpure/mixeddensityoracle, mixedgradient/constantmassgrad/signinvariance/basisstateboundary/actual1024mass andchunkparity",
+    "All9arms null/ownmodelgradientisolation/fullstateoptimizercontinuation/immutableframe-tailfactoryreconstruction"
+  ],
+  "resources": "Same71733460allocation8CPU32GiBRAM20GiBGPU/currentrun2GiB/free512MiB.64candidatechunks preservefull8querybackwardgraphs. No export ordata copy; allcontrols/caches/failures count. No localTorch/fullsmallset.",
+  "success": "Perbackbone completefixed3seedQtotal >native andEVERYdeclaredindependentclassical/deletioncontrol. No fullCNOT146retrogradechange; prospective matchedlocalattribution only. Ifpassed scopedL3pendingjuniorpackage/contentreview, notindependentconfirmation.",
+  "stop": "Source/role/radius/norm/nonfinite/null/gradient/replay/resourcefatal; nofloors/newseed/gain/epoch/widthretune orcontrolomission.",
+  "history": "All141completeconfigs old68+high73 retained. 146fullCNOT mainfailed. ItslocalNO_CNOTwasD87/88/88,B83/84/83 vsHEAD D87/88/87,B83/83/82; selectedafteradaptiveheldinspection andnotalreadyL3. Adaptivecomplexentanglerfutureproposal notimplemented/run/counted.",
+  "limitations": "Knownexactclassicalstructuredquadraticmap andinputdephasing. No entanglementnecessity/quantumexclusivity/newprimitive/hardware/independentconfirmation/fullsmallsetclaim. All146rank/radius/fullBGEzero-sum/nonuniqueSVD/framecost limits retained. SameU outputsnotamplitudematched; statepuritydeletionchangescapacity. No selectingmodel-specificwinners."
+}

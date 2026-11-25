@@ -1,0 +1,913 @@
+{
+  "schema": "qduet.local-born-portable-verification.v1",
+  "status": "PASS",
+  "recorded_at": "2026-11-25T03:52:48.924100+00:00",
+  "source_sha256": {
+    "applications/rag/top8_recovery_v001.py": "8988ba8c1d105a28822b3de1aa1e182188bf1272ebfb93241a62f1ef8ef5bd97",
+    "applications/rag/toy100_global_ffn_v001.py": "6961022c20df03904c4c80f446ad6eab152801c6546da2aec21f3e9a4766fd82",
+    "applications/rag/toy100_native_feature_readout_v001.py": "c43fbe2f28d3e08bba1e07e88d57efd4dddce74c30ce8a2429227df09a714fe9",
+    "applications/rag/qkernel_v001.py": "de0ba3193f480fa213dc9fcd1a7834ca99314914c77c3c4a9ca4917c8be68793",
+    "applications/rag/toy100_ffn_activation_v001.py": "091248cefb697c6621cd30c3c3308af0038d6d196fbb351ea3b75018091c37ae",
+    "applications/rag/qcapacity_depth_v001.py": "4ba0cac65005f61aec6a041dc037d813ec5691dc455e2f74f1849b5726d0b9f4",
+    "applications/rag/toy100_reference_depth_v001.py": "51860713079cb58ff164c93241fa26d4aac3b94166b81fcd11cef3783e00c1d7",
+    "applications/rag/toy100_qk_study_v001.py": "5a7737af906e5d2d226a6fcffaf0c9c6f8e573da684e25faaf69a81c7367cb3e",
+    "configs/experiments/local_born_smallset_20261125/protocol.v001.json": "3f51af0e4c6fc068e9593bbc25daf7a49aa2e1f350b684579d240d36d196f1c1",
+    "applications/rag/triviaqa_smallset_v001.py": "ea0508f162586ffbc1995fa59592df718b3ff951760aac64310851abd0267746",
+    "applications/rag/tests/test_local_born_delivery_v001.py": "ea1a85b5634fa7370339e42612ebe95d87454a3de48c581128f96779cecb2726",
+    "applications/rag/local_born_smallset_v001.py": "f514a0b8c090b65430dbdbbc621e57e50433c494565f3dba9e05ad7202737b6d",
+    "configs/experiments/idea_search_20261103/junior-campaign.v001.json": "ef8955b0b93af970281c24c3fe733ce89dc62af77ee7386df756826d91dc3eae",
+    "applications/rag/coherent_qk_v001.py": "439d9fb4b90c329d882f98901d36f5c29b7008ccaf68eb7f90772eab98c36895",
+    "applications/rag/top8_backbone_v001.py": "597891513758b87901f29ee816c888ce2f00bf8209f15eac14cae124e930f34f",
+    "applications/rag/toy100_amplitude_readout_v001.py": "81c49f5e54ca7fd60420a3aaf78a977234f25de3cac14108dea852e981a78b11",
+    "scripts/progress_ui.py": "c07691107ee2d2d4218c0948a9bc9226fce9e9d43870a7e34fb6651eca989c37",
+    "scripts/run_two_datasets.py": "6fc22ff5dfb2a7a77da8ef7041d0e6fb2f20a32b76ed065c66330285221ad125",
+    "scripts/smallset_progress.py": "e1c176f54433d894fe05b7d645e460d822e4f68f742d0f021223f025f7d7b885",
+    "applications/rag/toy100_product_input_mps_v001.py": "3bf2fbbc02115f4fb9449be73c6e910da70326fa76b6a9e762ea42e0a94206da",
+    "applications/rag/toy100_local_born_v001.py": "60b2c702fa8bd53da4a42c1f0b1ab3a9014e3b69af1ed1ded3a00af8d52ecb73",
+    "applications/rag/qdepth_readout_v001.py": "6cff7bcad25fd9bd50eab35caf47449a3a336f4adf34aed6b1b83b70858235ee",
+    "applications/rag/top8_cache_v002.py": "376e9ac08b97ce7bac3f1375abfed49fd266ad67b24c05d5e4acd383799b96af",
+    "scripts/smallset_resources.py": "5649401da1bafb35b0356d493ce79d1baf7dcf88bc50632c64fb254e2ef5a944",
+    "applications/rag/toy100_output_frame_v001.py": "0d1064bac6db2b4cd1f43a4fad1d9249bcca7b493852a4aa17f2d28ac9c0dc61",
+    "applications/rag/toy100_shared_study_v001.py": "a15900496c246536d226be2b1beaa18fb9d8945ccce1744a9781527f995ae77d",
+    "configs/experiments/reader_joint_witness_b1_model_assets.json": "71b67830ac16e3ba49215bf47abfe3ef2782a34722622c25077acc1b5606d0c7",
+    "scripts/run_local_born_smallset.py": "955b0980d456ae72aa96ad692d877a671f7c21f46334218fc4e7a067659585e9",
+    "applications/rag/toy100_shared_readout_v001.py": "2bcc5153425222b46810e9c382517d9ecbebf73038555bb438a035b839f752b3",
+    "scripts/smallset_events.py": "ef881daeee32688b8fc39be5fb7d7c26820fcda5378344ea960846ef5ac99eba",
+    "applications/rag/local_born_cache_v001.py": "91760c615af81b7655ab15cea9e164dd94fa90400a36b18d88b851186b729b55",
+    "scripts/run_local_born_smallset.sh": "f5e4f5be1ff0c3461594cb4a4b20e4f2f0e0c44d0cf7ecd1fa5f9404a3a93de5",
+    "configs/experiments/triviaqa_smallset_20261112/junior-release.v001.json": "b1e4e06e809523030757e9a36891a0e7277c8fc42ba6e9c4fd738d8ba5ffda8e",
+    "applications/rag/qweight_manifold_v001.py": "5b66f766a231ce89b5880bfcadbedcec87e4e0341e8be9f79cb0b3fa008a640b",
+    "applications/rag/toy100_block_activation_v001.py": "f62ffd0369028176a385c119c644f59e650d8c395beb743d145138ea95ba7e23",
+    "applications/rag/qvalue_geometry_v002.py": "874f4b69d13d640fafed7a4eaa705efcc24020351d61085c5034b60ea0f14007",
+    "scripts/verify_local_born_toy_port_v001.py": "1c1a06c6513fe3ae1d30f92c161b4f2807ece41c47a7113df5e3befa771b0487",
+    "applications/rag/local_born_io_v001.py": "75f9b42f1571f6b1c24de0c9779fe4862993ebad8c6567383c2011ac560f7809",
+    "applications/rag/tests/test_local_born_portable_v001.py": "1f22cecfafff2d1702f9660800e1d7907a536cb3361255e7b654b1c9a4a9afc6",
+    "applications/rag/toy100_density_kernel_v001.py": "80a0712e0132ed8df644ff22ac3ed04e9032fcf8cc0d347bb4fa473a65daeb04",
+    "applications/rag/toy100_depth_product_born_v001.py": "a4ce8580c806209946461fe6b2b71f57b2447f099c9656a994832105d1819ca4",
+    "applications/rag/qvalue_portable_v001.py": "f33fd11092d4119cf11b24a75f461bbd1d1f6136bb0a91fe03226c68a68e8e0c",
+    "configs/experiments/local_born_smallset_20261125/requirements.txt": "d7d82c8120e246e25fbb0c747a4ac1e87b42974316ef2ead890cc8493f2b4018",
+    "scripts/verify_local_born_native_v001.py": "e9c2cc9510cd01b63e6195b70e24d332eaf42957b4656de8800ded602b6d3c49",
+    "applications/rag/junior_transport_v001.py": "28cbcf5f4f99b6e74eab175d4e96218d876ad79e16071fdc9b078880d4afae73",
+    "docs/local-born-smallset-handoff.md": "ddbec6392d33a67b6b81f5f2c551af8140c4849ab1261dc0451be3bc9e0e98a9",
+    "applications/rag/model_input_guards.py": "862ac16611fc8681b082aa6537a02853a7e8afe022a818c4b6b21bd98d315276",
+    "scripts/run_junior_experiments.py": "0873abdba4ecbd9b1126f00b0f1613c11f33bd78f0ba4925b6436b5db0d55b76",
+    "applications/rag/toy100_qk_task_v001.py": "a1159fb3fdfc32b44c23a5626588726a2a1851f6eba6abc4dfc1a100aba19e40",
+    "applications/rag/toy100_ffn_export_v001.py": "55f1912a244cde8e0033e2253d5f3f3b9253f592a2f8d2a349f746d020463b55"
+  },
+  "scientific_factory_sha256": "60b2c702fa8bd53da4a42c1f0b1ab3a9014e3b69af1ed1ded3a00af8d52ecb73",
+  "allocation": {
+    "id": "71733460f83348349733589727a83d31",
+    "runner_attempt": "34742f92f3614417a4c17b5da3710d49",
+    "binding_sha256": "e3921e806c0929e6bccde6dc76277d3a958e801c0c0a6af4fb7e112be769b6c6",
+    "node": "q-duet-toy4090-v1"
+  },
+  "actual_remote_runs": {
+    "local-born-port-run-v001": {
+      "tests.started.json": {
+        "size": 171,
+        "sha256": "5e801cc365c1b9acb860fd30d7beb5beb787ed6c2897c75a9c69dca0ef95cd7a",
+        "value": {
+          "pid": 863423,
+          "started": 1795576880.7513843,
+          "argv": [
+            "/usr/local/miniconda3/envs/py312/bin/python",
+            "-B",
+            "-m",
+            "applications.rag.tests.test_local_born_portable_v001"
+          ]
+        }
+      },
+      "tests.finished.json": {
+        "size": 120,
+        "sha256": "d5fd31623fc9709bb7f654730a7ed38f369b62a19c203140b3c0b5885360eae4",
+        "value": {
+          "exit": 0,
+          "finished": 1795576896.1737773,
+          "peak_group_rss": 1700626432,
+          "quiescent": true,
+          "resource_violation": null
+        }
+      },
+      "tests.log": {
+        "size": 101,
+        "sha256": "f8648c54539ab9fb4d7510e9917882ea21f41abb34bffcef4e355e884c2927de",
+        "value": "..\n----------------------------------------------------------------------\nRan 2 tests in 10.848s\n\nOK\n"
+      },
+      "study.finished.json": {
+        "size": 117,
+        "sha256": "b25cd5b318471f3786750ec81bffe568571157dafbf538d35cb5c15a5aea61a9",
+        "value": {
+          "exit": 1,
+          "finished": 1795576901.3153248,
+          "peak_group_rss": 3276800,
+          "quiescent": true,
+          "resource_violation": null
+        }
+      },
+      "supervisor.finished.json": {
+        "size": 216,
+        "sha256": "64c5550d7a171dd3ddc2e7c0d73ccd79106e5149ff0dcca114aa6d89367e578e",
+        "value": {
+          "exit": 1,
+          "finished": 1795576901.3159168,
+          "error_type": "AssertionError",
+          "error": "('study', {'exit': 1, 'finished': 1795576901.3153248, 'peak_group_rss': 3276800, 'quiescent': True, 'resource_violation': None})"
+        }
+      }
+    },
+    "local-born-port-run-v002": {
+      "study.finished.json": {
+        "size": 139,
+        "sha256": "c5f3b87655d7d12be14bc879c87723d80ad614483c9b80bffcf84ddc2dc8ad1e",
+        "value": {
+          "exit": -15,
+          "finished": 1795576978.9222653,
+          "peak_group_rss": 870416384,
+          "quiescent": true,
+          "resource_violation": "currentrun total2GiB"
+        }
+      },
+      "supervisor.finished.json": {
+        "size": 237,
+        "sha256": "0e5b3d5dcc01657edc3c962977a0f5c08ba367771e9c939a3b1016eec528fb6c",
+        "value": {
+          "exit": 1,
+          "finished": 1795576978.922597,
+          "error_type": "AssertionError",
+          "error": "('study', {'exit': -15, 'finished': 1795576978.9222653, 'peak_group_rss': 870416384, 'quiescent': True, 'resource_violation': 'currentrun total2GiB'})"
+        }
+      }
+    },
+    "local-born-port-run-v003": {
+      "study.started.json": {
+        "size": 293,
+        "sha256": "5f4439ec85fdf4d5a542d6e3c2f823a930ae3ab27a8705cb97002d598da68610",
+        "value": {
+          "pid": 865630,
+          "started": 1795577275.3087666,
+          "argv": [
+            "/usr/local/miniconda3/envs/py312/bin/python",
+            "-B",
+            "scripts/verify_local_born_toy_port_v001.py",
+            "--root",
+            "/workspace/q-duet-toy100-20261122-v001",
+            "--output",
+            "/workspace/q-duet-toy100-20261122-v001/local-born-port-run-v003/output"
+          ]
+        }
+      },
+      "study.finished.json": {
+        "size": 120,
+        "sha256": "f209d9628cf8481432fed7a35280f165b484dca2f3f84d83ded9b258044426d4",
+        "value": {
+          "exit": 0,
+          "finished": 1795577691.9938402,
+          "peak_group_rss": 2594803712,
+          "quiescent": true,
+          "resource_violation": null
+        }
+      },
+      "study.log": {
+        "size": 2476,
+        "sha256": "8b1424103a65d47b57937a281c975afde3f5eca8df9766b97d6f6f171c828e7b",
+        "value": "{\"status\": \"PASS\", \"scope\": \"same existing toy80/20 single fixedseed task-adapter acceptance\", \"source_147\": {\"accepted147_sha256\": \"4685df3f8c9f88edefa4065bf5d2ab88f7e2b4ed9bf22a99335f8ba225e999e2\", \"purpose\": \"task-adapter parity; no fullsmallset\"}, \"groups\": 20, \"complete_fixed_seed\": 20261122, \"learning_jobs\": 9, \"steps_each\": 200, \"compared_scores\": 18000, \"changed_top5\": 0, \"parity\": {\"HEAD/dpr\": {\"maximum_score_difference\": 0.0, \"changed_top5\": 0, \"values\": 1000}, \"HEAD/bge\": {\"maximum_score_difference\": 0.0, \"changed_top5\": 0, \"values\": 1000}, \"SIGNED_LOCAL/dpr\": {\"maximum_score_difference\": 1.430511474609375e-06, \"changed_top5\": 0, \"values\": 1000}, \"SIGNED_LOCAL/bge\": {\"maximum_score_difference\": 2.86102294921875e-06, \"changed_top5\": 0, \"values\": 1000}, \"GELU_LOCAL/dpr\": {\"maximum_score_difference\": 1.430511474609375e-06, \"changed_top5\": 0, \"values\": 1000}, \"GELU_LOCAL/bge\": {\"maximum_score_difference\": 1.9073486328125e-06, \"changed_top5\": 0, \"values\": 1000}, \"ABS_LOCAL/dpr\": {\"maximum_score_difference\": 1.430511474609375e-06, \"changed_top5\": 0, \"values\": 1000}, \"ABS_LOCAL/bge\": {\"maximum_score_difference\": 1.9073486328125e-06, \"changed_top5\": 0, \"values\": 1000}, \"DEPHASED/dpr\": {\"maximum_score_difference\": 9.5367431640625e-07, \"changed_top5\": 0, \"values\": 1000}, \"DEPHASED/bge\": {\"maximum_score_difference\": 1.9073486328125e-06, \"changed_top5\": 0, \"values\": 1000}, \"RANDOM_FRAME/dpr\": {\"maximum_score_difference\": 9.5367431640625e-07, \"changed_top5\": 0, \"values\": 1000}, \"RANDOM_FRAME/bge\": {\"maximum_score_difference\": 2.86102294921875e-06, \"changed_top5\": 0, \"values\": 1000}, \"CLASSICAL_MATCHING/dpr\": {\"maximum_score_difference\": 1.430511474609375e-06, \"changed_top5\": 0, \"values\": 1000}, \"CLASSICAL_MATCHING/bge\": {\"maximum_score_difference\": 2.6226043701171875e-06, \"changed_top5\": 0, \"values\": 1000}, \"MLP8/dpr\": {\"maximum_score_difference\": 1.430511474609375e-06, \"changed_top5\": 0, \"values\": 1000}, \"MLP8/bge\": {\"maximum_score_difference\": 1.6689300537109375e-06, \"changed_top5\": 0, \"values\": 1000}, \"QUANTUM/dpr\": {\"maximum_score_difference\": 9.5367431640625e-07, \"changed_top5\": 0, \"values\": 1000}, \"QUANTUM/bge\": {\"maximum_score_difference\": 2.86102294921875e-06, \"changed_top5\": 0, \"values\": 1000}}, \"sealed_resume_identical\": true, \"maximum_score_difference\": 2.86102294921875e-06, \"no_owner_fullsmallset\": true, \"no_new_assets_or_labels\": true, \"scientific_efficacy_claim\": \"Reuse all3seed147; this tests the changed adapter only\"}\n"
+      },
+      "supervisor.finished.json": {
+        "size": 76,
+        "sha256": "8d030a328c62c29c7ff5ba647fffb3437023b6192aee49489916476aa233fe14",
+        "value": {
+          "exit": 0,
+          "completed": 1795577691.994555,
+          "science_child_quiescent": true
+        }
+      },
+      "output/acceptance.json": {
+        "size": 2476,
+        "sha256": "f7e465e462ca6c608c03bbee017cc54d1683d2598d1f3e759823994bce72de04",
+        "value": {
+          "changed_top5": 0,
+          "compared_scores": 18000,
+          "complete_fixed_seed": 20261122,
+          "groups": 20,
+          "learning_jobs": 9,
+          "maximum_score_difference": 2.86102294921875e-06,
+          "no_new_assets_or_labels": true,
+          "no_owner_fullsmallset": true,
+          "parity": {
+            "ABS_LOCAL/bge": {
+              "changed_top5": 0,
+              "maximum_score_difference": 1.9073486328125e-06,
+              "values": 1000
+            },
+            "ABS_LOCAL/dpr": {
+              "changed_top5": 0,
+              "maximum_score_difference": 1.430511474609375e-06,
+              "values": 1000
+            },
+            "CLASSICAL_MATCHING/bge": {
+              "changed_top5": 0,
+              "maximum_score_difference": 2.6226043701171875e-06,
+              "values": 1000
+            },
+            "CLASSICAL_MATCHING/dpr": {
+              "changed_top5": 0,
+              "maximum_score_difference": 1.430511474609375e-06,
+              "values": 1000
+            },
+            "DEPHASED/bge": {
+              "changed_top5": 0,
+              "maximum_score_difference": 1.9073486328125e-06,
+              "values": 1000
+            },
+            "DEPHASED/dpr": {
+              "changed_top5": 0,
+              "maximum_score_difference": 9.5367431640625e-07,
+              "values": 1000
+            },
+            "GELU_LOCAL/bge": {
+              "changed_top5": 0,
+              "maximum_score_difference": 1.9073486328125e-06,
+              "values": 1000
+            },
+            "GELU_LOCAL/dpr": {
+              "changed_top5": 0,
+              "maximum_score_difference": 1.430511474609375e-06,
+              "values": 1000
+            },
+            "HEAD/bge": {
+              "changed_top5": 0,
+              "maximum_score_difference": 0.0,
+              "values": 1000
+            },
+            "HEAD/dpr": {
+              "changed_top5": 0,
+              "maximum_score_difference": 0.0,
+              "values": 1000
+            },
+            "MLP8/bge": {
+              "changed_top5": 0,
+              "maximum_score_difference": 1.6689300537109375e-06,
+              "values": 1000
+            },
+            "MLP8/dpr": {
+              "changed_top5": 0,
+              "maximum_score_difference": 1.430511474609375e-06,
+              "values": 1000
+            },
+            "QUANTUM/bge": {
+              "changed_top5": 0,
+              "maximum_score_difference": 2.86102294921875e-06,
+              "values": 1000
+            },
+            "QUANTUM/dpr": {
+              "changed_top5": 0,
+              "maximum_score_difference": 9.5367431640625e-07,
+              "values": 1000
+            },
+            "RANDOM_FRAME/bge": {
+              "changed_top5": 0,
+              "maximum_score_difference": 2.86102294921875e-06,
+              "values": 1000
+            },
+            "RANDOM_FRAME/dpr": {
+              "changed_top5": 0,
+              "maximum_score_difference": 9.5367431640625e-07,
+              "values": 1000
+            },
+            "SIGNED_LOCAL/bge": {
+              "changed_top5": 0,
+              "maximum_score_difference": 2.86102294921875e-06,
+              "values": 1000
+            },
+            "SIGNED_LOCAL/dpr": {
+              "changed_top5": 0,
+              "maximum_score_difference": 1.430511474609375e-06,
+              "values": 1000
+            }
+          },
+          "scientific_efficacy_claim": "Reuse all3seed147; this tests the changed adapter only",
+          "scope": "same existing toy80/20 single fixedseed task-adapter acceptance",
+          "sealed_resume_identical": true,
+          "source_147": {
+            "accepted147_sha256": "4685df3f8c9f88edefa4065bf5d2ab88f7e2b4ed9bf22a99335f8ba225e999e2",
+            "purpose": "task-adapter parity; no fullsmallset"
+          },
+          "status": "PASS",
+          "steps_each": 200
+        }
+      }
+    },
+    "local-born-native-run-v001": {
+      "cli.started.json": {
+        "size": 188,
+        "sha256": "7db1d4aa94616160f02f8389d996743c97c43711cf24dcdfc8aa9438567e9f25",
+        "value": {
+          "pid": 872531,
+          "started": 1795578432.697743,
+          "argv": [
+            "/usr/local/miniconda3/envs/py312/bin/python",
+            "-B",
+            "-m",
+            "unittest",
+            "applications.rag.tests.test_local_born_delivery_v001",
+            "-q"
+          ]
+        }
+      },
+      "cli.finished.json": {
+        "size": 111,
+        "sha256": "485965c20b8136914c5a05bdab029c22f69ad1126f63bcf616b4a234117f88f6",
+        "value": {
+          "exit": 0,
+          "finished": 1795578437.8465831,
+          "peak_group_rss": 0,
+          "quiescent": true,
+          "resource_violation": null
+        }
+      },
+      "cli.log": {
+        "size": 97,
+        "sha256": "aa48c54f3cad4150c3c68048ba5887d0574fe2c5e0e007b01c4490fbc5bb3e35",
+        "value": "----------------------------------------------------------------------\nRan 5 tests in 1.172s\n\nOK\n"
+      },
+      "native.started.json": {
+        "size": 293,
+        "sha256": "3b494340e7bc4155afd6225a08beb62a128d52a50ed0e71a07122d6a78e775dc",
+        "value": {
+          "pid": 872572,
+          "started": 1795578437.8493605,
+          "argv": [
+            "/usr/local/miniconda3/envs/py312/bin/python",
+            "-B",
+            "scripts/verify_local_born_native_v001.py",
+            "--root",
+            "/workspace/q-duet-toy100-20261122-v001",
+            "--output",
+            "/workspace/q-duet-toy100-20261122-v001/local-born-native-run-v001/output"
+          ]
+        }
+      },
+      "native.finished.json": {
+        "size": 120,
+        "sha256": "d3426136c50d0b4de7c76f5d28ef7101ec239869f21dbb673838ed7a8885bf2f",
+        "value": {
+          "exit": 0,
+          "finished": 1795578453.2488124,
+          "peak_group_rss": 1844797440,
+          "quiescent": true,
+          "resource_violation": null
+        }
+      },
+      "native.log": {
+        "size": 2551,
+        "sha256": "e64ffd741fe2a68d0c71181c94dbaecfc7df3d330322bb28ff2aa2d375cca36d",
+        "value": "Some weights of the model checkpoint at /workspace/q-duet-toy100-20261122-v001/models/dpr were not used when initializing DPRReader: ['span_predictor.encoder.bert_model.pooler.dense.bias', 'span_predictor.encoder.bert_model.pooler.dense.weight']\n- This IS expected if you are initializing DPRReader from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).\n- This IS NOT expected if you are initializing DPRReader from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).\nThe tokenizer class you load from this checkpoint is not the same type as the class this function is called from. It may result in unexpected tokenization. \nThe tokenizer class you load from this checkpoint is 'DPRQuestionEncoderTokenizer'. \nThe class this function is called from is 'DPRReaderTokenizer'.\n/usr/local/miniconda3/envs/py312/lib/python3.12/site-packages/transformers/tokenization_utils_base.py:1601: FutureWarning: `clean_up_tokenization_spaces` was not set. It will be set to `True` by default. This behavior will be depracted in transformers v4.45, and will be then set to `False` by default. For more details check this issue: https://github.com/huggingface/transformers/issues/31884\n  warnings.warn(\n{\"status\": \"PASS\", \"scope\": \"Actual native forwards on first TRAIN and first exposed-held toy questions, both backbones; no fullsmallset or labels\", \"backbones\": {\"dpr\": {\"questions\": 2, \"original_candidate_chunks\": 14, \"differences\": {\"train/z\": 9.5367431640625e-06, \"train/residual\": 0.0, \"train/features\": 0.0, \"train/native\": 0.0, \"holdout/z\": 7.62939453125e-06, \"holdout/residual\": 0.0, \"holdout/features\": 0.0, \"holdout/native\": 0.0}, \"new_frame_vs_old_basis_maximum\": 1.7445503375235205e-11, \"new_frame_pinned_sha256\": \"b9f551b96839c327e6b5fe49142b8173f28c42644366f6d5d31a3611e096c9d2\", \"maximum_tail_replay_error\": 1.5497207641601562e-06}, \"bge\": {\"questions\": 2, \"original_candidate_chunks\": 14, \"differences\": {\"train/z\": 1.239776611328125e-05, \"train/residual\": 0.0, \"train/features\": 0.0, \"train/native\": 0.0, \"holdout/z\": 1.52587890625e-05, \"holdout/residual\": 0.0, \"holdout/features\": 0.0, \"holdout/native\": 0.0}, \"new_frame_vs_old_basis_maximum\": 8.985860666665957e-12, \"new_frame_pinned_sha256\": \"6e86e56a470ad3ed0a982734fbdf8a3d0fcd53e6c83ae479813406748fc403f7\", \"maximum_tail_replay_error\": 4.544854164123535e-07}}}\n"
+      },
+      "supervisor.finished.json": {
+        "size": 77,
+        "sha256": "eb78cd98e6120157041c1076c7d6a328e76d0d0f42f3886859fbdca2eb4a835c",
+        "value": {
+          "exit": 0,
+          "completed": 1795578453.2498772,
+          "science_child_quiescent": true
+        }
+      },
+      "output/acceptance.json": {
+        "size": 1134,
+        "sha256": "c5ab173fbd5faed35fa53352eb56ab51c27576412868c744eafd0db568f251c4",
+        "value": {
+          "backbones": {
+            "bge": {
+              "differences": {
+                "holdout/features": 0.0,
+                "holdout/native": 0.0,
+                "holdout/residual": 0.0,
+                "holdout/z": 1.52587890625e-05,
+                "train/features": 0.0,
+                "train/native": 0.0,
+                "train/residual": 0.0,
+                "train/z": 1.239776611328125e-05
+              },
+              "maximum_tail_replay_error": 4.544854164123535e-07,
+              "new_frame_pinned_sha256": "6e86e56a470ad3ed0a982734fbdf8a3d0fcd53e6c83ae479813406748fc403f7",
+              "new_frame_vs_old_basis_maximum": 8.985860666665957e-12,
+              "original_candidate_chunks": 14,
+              "questions": 2
+            },
+            "dpr": {
+              "differences": {
+                "holdout/features": 0.0,
+                "holdout/native": 0.0,
+                "holdout/residual": 0.0,
+                "holdout/z": 7.62939453125e-06,
+                "train/features": 0.0,
+                "train/native": 0.0,
+                "train/residual": 0.0,
+                "train/z": 9.5367431640625e-06
+              },
+              "maximum_tail_replay_error": 1.5497207641601562e-06,
+              "new_frame_pinned_sha256": "b9f551b96839c327e6b5fe49142b8173f28c42644366f6d5d31a3611e096c9d2",
+              "new_frame_vs_old_basis_maximum": 1.7445503375235205e-11,
+              "original_candidate_chunks": 14,
+              "questions": 2
+            }
+          },
+          "scope": "Actual native forwards on first TRAIN and first exposed-held toy questions, both backbones; no fullsmallset or labels",
+          "status": "PASS"
+        }
+      }
+    },
+    "disk_free": 42009743360,
+    "binding_sha256": "e3921e806c0929e6bccde6dc76277d3a958e801c0c0a6af4fb7e112be769b6c6",
+    "checkpoint_bytes": [
+      39667,
+      39667,
+      39667,
+      39667,
+      39667,
+      39667,
+      39667,
+      39667,
+      39667,
+      39667,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      1045028,
+      1045028,
+      1045028,
+      1045028,
+      1045028,
+      1045028,
+      1045028,
+      1045028,
+      1045028,
+      1045028,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884,
+      70884
+    ]
+  },
+  "local_source_roles": {
+    "status": "PASS",
+    "scope": "stdlib isolated portability and exact patch/rollback; scientific acceptance separately recorded",
+    "commands": [
+      {
+        "command": [
+          "git",
+          "init",
+          "-q"
+        ],
+        "cwd": "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\modified",
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "git",
+          "config",
+          "core.autocrlf",
+          "false"
+        ],
+        "cwd": "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\modified",
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "git",
+          "add",
+          "--",
+          "applications/rag/coherent_qk_v001.py",
+          "applications/rag/junior_transport_v001.py",
+          "applications/rag/model_input_guards.py",
+          "applications/rag/qcapacity_depth_v001.py",
+          "applications/rag/qdepth_readout_v001.py",
+          "applications/rag/qkernel_v001.py",
+          "applications/rag/qvalue_geometry_v002.py",
+          "applications/rag/qvalue_portable_v001.py",
+          "applications/rag/qweight_manifold_v001.py",
+          "applications/rag/top8_backbone_v001.py",
+          "applications/rag/top8_cache_v002.py",
+          "applications/rag/top8_recovery_v001.py",
+          "applications/rag/toy100_amplitude_readout_v001.py",
+          "applications/rag/toy100_block_activation_v001.py",
+          "applications/rag/toy100_density_kernel_v001.py",
+          "applications/rag/toy100_depth_product_born_v001.py",
+          "applications/rag/toy100_ffn_activation_v001.py",
+          "applications/rag/toy100_ffn_export_v001.py",
+          "applications/rag/toy100_global_ffn_v001.py",
+          "applications/rag/toy100_local_born_v001.py",
+          "applications/rag/toy100_native_feature_readout_v001.py",
+          "applications/rag/toy100_output_frame_v001.py",
+          "applications/rag/toy100_product_input_mps_v001.py",
+          "applications/rag/toy100_qk_study_v001.py",
+          "applications/rag/toy100_qk_task_v001.py",
+          "applications/rag/toy100_reference_depth_v001.py",
+          "applications/rag/toy100_shared_readout_v001.py",
+          "applications/rag/toy100_shared_study_v001.py",
+          "applications/rag/triviaqa_smallset_v001.py",
+          "configs/experiments/idea_search_20261103/junior-campaign.v001.json",
+          "configs/experiments/reader_joint_witness_b1_model_assets.json",
+          "configs/experiments/triviaqa_smallset_20261112/junior-release.v001.json",
+          "scripts/progress_ui.py",
+          "scripts/run_junior_experiments.py",
+          "scripts/run_two_datasets.py",
+          "scripts/smallset_events.py",
+          "scripts/smallset_progress.py",
+          "scripts/smallset_resources.py"
+        ],
+        "cwd": "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\modified",
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "git",
+          "add",
+          "-N",
+          "--",
+          "applications/rag/local_born_cache_v001.py",
+          "applications/rag/local_born_smallset_v001.py",
+          "applications/rag/local_born_io_v001.py",
+          "scripts/run_local_born_smallset.py",
+          "scripts/run_local_born_smallset.sh",
+          "scripts/verify_local_born_toy_port_v001.py",
+          "applications/rag/tests/test_local_born_portable_v001.py",
+          "applications/rag/tests/test_local_born_delivery_v001.py",
+          "configs/experiments/local_born_smallset_20261125/protocol.v001.json",
+          "configs/experiments/local_born_smallset_20261125/requirements.txt",
+          "docs/local-born-smallset-handoff.md",
+          "scripts/verify_local_born_native_v001.py"
+        ],
+        "cwd": "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\modified",
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "git",
+          "diff",
+          "--binary",
+          "--",
+          "applications/rag/local_born_cache_v001.py",
+          "applications/rag/local_born_smallset_v001.py",
+          "applications/rag/local_born_io_v001.py",
+          "scripts/run_local_born_smallset.py",
+          "scripts/run_local_born_smallset.sh",
+          "scripts/verify_local_born_toy_port_v001.py",
+          "applications/rag/tests/test_local_born_portable_v001.py",
+          "applications/rag/tests/test_local_born_delivery_v001.py",
+          "scripts/smallset_progress.py",
+          "configs/experiments/local_born_smallset_20261125/protocol.v001.json",
+          "configs/experiments/local_born_smallset_20261125/requirements.txt",
+          "docs/local-born-smallset-handoff.md",
+          "scripts/verify_local_born_native_v001.py"
+        ],
+        "cwd": "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\modified",
+        "exit": 0,
+        "stdout": "diff --git a/applications/rag/local_born_cache_v001.py b/applications/rag/local_born_cache_v001.py\nnew file mode 100644\nindex 0000000..1dcb323\n--- /dev/null\n+++ b/applications/rag/local_born_cache_v001.py\n@@ -0,0 +1,140 @@\n+\"\"\"Question-sharded native FFN task adapter for the qualified local Born factory.\n+\n+No evaluation target reads, full-sequence dumps, fitting, or network clients.\n+\"\"\"\n+from collections import OrderedDict\n+import hashlib,json,shutil\n+from pathlib import Path\n+import torch\n+from torch.nn import functional as F\n+from applications.rag.qvalue_portable_v001 import need,digest,inputs,checked_member,tensor_file\n+from applications.rag.local_born_io_v001 import immutable_json as json_file\n+from applications.rag.top8_backbone_v001 import Backbone\n+from applications.rag.toy100_ffn_export_v001 import frozen_tail\n+from applications.rag.toy100_output_frame_v001 import output_frames\n+\n+\n+def populations(data,counts):\n+    data=Path(data);roles=json.loads((data/'roles.json').read_bytes())\n+    train=inputs(data/'train.jsonl',True);evaluation=inputs(data/'evaluation.inputs.jsonl',False)\n+    rows=train+evaluation\n+    need(len(train)==counts['train'] and len(evaluation)==sum(v for k,v in counts.items() if k!='train'),'complete declared population')\n+    need(len({x['id'] for x in rows})==len(rows) and set(roles)=={x['id'] for x in rows},'unique complete role identities')\n+    need(all(roles[x['id']]=='train' for x in train) and all(roles[x['id']]!='train' for x in evaluation),'training role boundary')\n+    seen={}\n+    for row in rows:\n+        role=roles[row['id']]\n+        need(role in counts,'declared role only')\n+        for key in [row['component_id'],'q:'+hashlib.sha256(' '.join(row['question'].casefold().split()).encode()).hexdigest()]:\n+            need(key not in seen or seen[key]==role,'component/question cross-role leakage');seen[key]=role\n+        if role=='train':need(set(row['labels'])=={p['id'] for p in row['paragraphs']} and all(type(y)is int and y in (0,1) for y in row['labels'].values()),'complete binary TRAIN labels')\n+    need({k:sum(roles[x['id']]==k for x in rows) for k in counts}==counts,'exact role counts')\n+    return rows,roles\n+\n+\n+def input_identity(row):\n+    return hashlib.sha256(json.dumps({k:row[k] for k in ['id','component_id','question','paragraphs']},sort_keys=True,separators=(',',':')).encode()).hexdigest()\n+\n+\n+def new_tensor(root,stem,value):\n+    generation=0\n+    while (root/(stem+f'-g{generation}.bin')).exists() or (root/(stem+f'-g{generation}.bin.part')).exists():generation+=1\n+    return tensor_file(root,stem+f'-g{generation}.bin',value)\n+\n+\n+def extract(kind,model_root,rows,roles,root,source_key,emit=lambda **kw:None):\n+    \"\"\"One native forward per original8-candidate block; resume sealed questions.\"\"\"\n+    root=Path(root);root.mkdir(parents=True,exist_ok=True)\n+    binding=dict(kind=kind,source=source_key,inputs=[input_identity(r) for r in rows],roles=[roles[r['id']] for r in rows])\n+    bpath=root/'binding.json'\n+    if bpath.exists():need(json.loads(bpath.read_bytes())==binding,'native cache binding changed')\n+    else:need(all(p.name.startswith('binding.json.') and p.name.endswith('.part') for p in root.iterdir()),'unbound cache not empty');json_file(root,'binding.json',binding)\n+    if (root/'cache.json').exists():\n+        value=json.loads((root/'cache.json').read_bytes());need(value['binding']==binding,'cache manifest identity')\n+        checked_member(root,value['metadata'])\n+        need(len(value['questions'])==len(rows),'complete cached population')\n+        for i,record in enumerate(value['questions']):\n+            need(record['index']==i and record['input_sha256']==binding['inputs'][i] and record['id']==rows[i]['id'] and\n+                record['candidate_ids']==[p['id'] for p in rows[i]['paragraphs']],'cache exact row/candidate order')\n+            checked_member(root,record['tensor'])\n+        return value\n+    backbone=Backbone(kind,model_root)\n+    cpu=lambda module:{n:v.detach().cpu() for n,v in module.state_dict().items()}\n+    metadata=dict(original_head=cpu(backbone.head),ffn_dense=cpu(backbone.last.output.dense),\n+        ffn_normalization=cpu(backbone.last.output.LayerNorm),ffn_bridge=cpu(backbone.bridge.dense) if kind=='bge' else None,\n+        ffn_eps=backbone.last.output.LayerNorm.eps,model_assets=backbone.asset_records)\n+    need(type(backbone.last.intermediate.intermediate_act_fn).__name__=='GELUActivation','native exact GELU')\n+    questions=[];maximum=0.\n+    for i,row in enumerate(rows):\n+        need(shutil.disk_usage(root).free>=8*1024**3,'Native cache needs8GiB free; expand server filesystem and resume')\n+        receipt=root/f'question-{i:05d}.json';identity=binding['inputs'][i]\n+        if receipt.exists():\n+            record=json.loads(receipt.read_bytes())\n+            need(record['index']==i and record['input_sha256']==identity and record['id']==row['id'] and record['binding_sha256']==digest(bpath),'sealed question identity')\n+            checked_member(root,record['tensor'])\n+        else:\n+            parts=[];tokens=[]\n+            for start in range(0,50,8):\n+                encoded=backbone.tokenize(row['question'],[p['text'] for p in row['paragraphs'][start:start+8]]).to('cuda');captured={}\n+                def before(module,args):\n+                    need('z' not in captured,'single native intermediate capture')\n+                    captured.update(z=module.dense(args[0][:,0]).detach(),residual=args[0][:,0].detach())\n+                def after(module,args,out):captured['features']=backbone.bridge(out[0][:,0]).detach()\n+                hs=[backbone.last.intermediate.register_forward_pre_hook(before),backbone.last.register_forward_hook(after)]\n+                try:\n+                    with torch.no_grad():native=backbone.logits(encoded)\n+                finally:\n+                    for handle in hs:handle.remove()\n+                with torch.no_grad():\n+                    tail=frozen_tail(captured['z'],captured['residual'],metadata['ffn_dense'],metadata['ffn_normalization'],metadata['ffn_bridge'],metadata['ffn_eps'])\n+                    expected=captured['features'];error=float((tail-expected).abs().max())\n+                    need(torch.allclose(tail,expected,atol=2e-5,rtol=2e-5),'native FFN/bridge numeric replay')\n+                    need(torch.allclose(backbone.head(expected).squeeze(-1),native,atol=2e-5,rtol=2e-5),'original head identity')\n+                parts.append(dict(z=captured['z'].cpu(),residual=captured['residual'].cpu(),features=expected.cpu(),native=native.detach().cpu()))\n+                tokens.append(dict(start=start,shape=list(encoded['input_ids'].shape),ids_sha256=hashlib.sha256(encoded['input_ids'].cpu().numpy().tobytes()).hexdigest(),mask_sha256=hashlib.sha256(encoded['attention_mask'].cpu().numpy().tobytes()).hexdigest()))\n+                maximum=max(maximum,error)\n+                del captured,expected,tail,native,encoded\n+            payload={n:torch.cat([p[n] for p in parts]) for n in ['z','residual','features','native']}\n+            need(all(len(t)==50 and bool(torch.isfinite(t).all()) for t in payload.values()),'complete finite question FFN record')\n+            record=dict(index=i,id=row['id'],component_id=row['component_id'],role=roles[row['id']],input_sha256=identity,\n+                candidate_ids=[p['id'] for p in row['paragraphs']],tensor=new_tensor(root,f'question-{i:05d}',payload),tokens=tokens,binding_sha256=digest(bpath))\n+            json_file(root,receipt.name,record)\n+        questions.append(record);emit(phase='提取 '+kind,completed=i+1,total=len(rows),unit='questions')\n+    del backbone\n+    torch.cuda.empty_cache()\n+    metadata['ffn_frames']=output_frames(metadata['ffn_dense']['weight'])\n+    first=torch.load(checked_member(root,questions[0]['tensor']),weights_only=True)\n+    need(questions[0]['role']=='train','factory diagnostic uses first TRAIN only')\n+    # Only these two inherited bookkeeping buffers use this first query. They\n+    # are unused by HEAD/local-mode scoring; real-data parity tests cover this.\n+    metadata.update(ffn_z=dict(train=first['z'][None]),native=dict(train=first['native'][None]),\n+        features=dict(train=first['features'][None]),portable_bookkeeping='First TRAIN query only; inherited scale buffers unused by all147arms. Not full TRAIN statistics.')\n+    meta=new_tensor(root,'metadata',metadata)\n+    value=dict(schema='qduet.local-born-native-cache.v1',binding=binding,metadata=meta,questions=questions,maximum_tail_error_new_questions=maximum,\n+        input_chunk=8,features_dtype='torch.float32',full_sequences_stored=False,evaluation_labels_opened=False)\n+    json_file(root,'cache.json',value);return value\n+\n+\n+class QuestionStore:\n+    \"\"\"Hash-verified bounded CPU LRU; no caching of full sequence tensors.\"\"\"\n+    def __init__(self,roots,manifests,limit=512*1024**2):\n+        self.roots={k:Path(v) for k,v in roots.items()};self.manifests=manifests;self.limit=limit;self.cache=OrderedDict();self.bytes=0\n+        self.packed={k:torch.load(checked_member(self.roots[k],m['metadata']),weights_only=True) for k,m in manifests.items()}\n+    def one(self,k,i):\n+        key=k,i\n+        if key in self.cache:self.cache.move_to_end(key);return self.cache[key][0]\n+        record=self.manifests[k]['questions'][i];v=torch.load(checked_member(self.roots[k],record['tensor']),weights_only=True)\n+        need(set(v)=={'z','residual','features','native'} and all(len(t)==50 and bool(torch.isfinite(t).all()) for t in v.values()),'finite complete cached50')\n+        size=sum(t.numel()*t.element_size() for t in v.values())\n+        while self.cache and self.bytes+size>self.limit:\n+            _,(_,old)=self.cache.popitem(last=False);self.bytes-=old\n+        if size<=self.limit:self.cache[key]=(v,size);self.bytes+=size\n+        return v\n+    def batch(self,indices,device='cuda'):\n+        features={};native={};coords={}\n+        for k in ['dpr','bge']:\n+            vs=[self.one(k,i) for i in indices]\n+            features[k]=torch.stack([x['features'] for x in vs]).to(device)\n+            native[k]=torch.stack([x['native'] for x in vs]).to(device)\n+            coords[k]=torch.cat((torch.stack([x['z'] for x in vs]),torch.stack([x['residual'] for x in vs])),-1).to(device)\n+        return features,native,coords\ndiff --git a/applications/rag/local_born_io_v001.py b/applications/rag/local_born_io_v001.py\nnew file mode 100644\nindex 0000000..e5ecb81\n--- /dev/null\n+++ b/applications/rag/local_born_io_v001.py\n@@ -0,0 +1,84 @@\n+\"\"\"Portable publication and journals; reuse the accepted full-state reader.\"\"\"\n+import hashlib,json,math,os,uuid\n+from pathlib import Path\n+from applications.rag.top8_recovery_v001 import Journal\n+from applications.rag.qvalue_portable_v001 import need,digest\n+\n+\n+def immutable_json(root,name,value):\n+    root=Path(root);root.mkdir(parents=True,exist_ok=True)\n+    need(Path(name).name==name,'publication basename')\n+    raw=(json.dumps(value,sort_keys=True,allow_nan=False)+'\\n').encode();target=root/name\n+    if target.exists():\n+        need(target.read_bytes()==raw,'immutable JSON mismatch');return member(root,target)\n+    part=root/(name+'.'+uuid.uuid4().hex+'.part')\n+    with part.open('xb') as f:f.write(raw);f.flush();os.fsync(f.fileno())\n+    try:os.link(part,target)\n+    except FileExistsError:need(target.read_bytes()==raw,'concurrent publication mismatch')\n+    part.unlink()\n+    fd=os.open(root,os.O_DIRECTORY) if os.name=='posix' else None\n+    if fd is not None:\n+        try:os.fsync(fd)\n+        finally:os.close(fd)\n+    need(target.read_bytes()==raw,'published JSON readback')\n+    return member(root,target)\n+\n+\n+def member(root,path):\n+    root=Path(root);path=Path(path)\n+    need(path.is_file() and not path.is_symlink(),'regular declared artifact')\n+    return dict(name=path.relative_to(root).as_posix(),size=path.stat().st_size,sha256=digest(path))\n+\n+\n+def verify_seal(root):\n+    root=Path(root);seal=json.loads((root/'joint-prediction-seal.json').read_bytes())\n+    names=[]\n+    for r in seal['files']:\n+        p=root/r['path'];need(not Path(r['path']).is_absolute() and '..' not in Path(r['path']).parts,'safe sealed member')\n+        actual=member(root,p);need(actual==dict(name=r['path'],size=r['size'],sha256=r['sha256']),'sealed member hash')\n+        names.append(r['path'])\n+    need(len(names)==len(set(names)) and sum(Path(n).name.startswith('predictions-') for n in names)==seal['expected_prediction_groups'],'unique complete sealed predictions')\n+    need(not seal['failures'] and seal['all_predictions_before_evaluation_labels'],'complete prediction barrier')\n+    return seal\n+\n+\n+def verify_campaign(root,binding,protocol,evaluation_rows):\n+    \"\"\"Validate the requested roster, not a self-reported seal group count.\"\"\"\n+    root=Path(root);seal=verify_seal(root);expected=2+2*len(protocol['arms'])*len(protocol['seeds'])\n+    need(seal['expected_prediction_groups']==expected and seal['arms']==protocol['arms'] and seal['seeds']==protocol['seeds'] and seal['roles']==protocol['roles'],'sealed exact requested campaign')\n+    allowed={'run-binding.json','frozen-dpr.bin','frozen-bge.bin','predictions-native-dpr.json','predictions-native-bge.json'}\n+    steps=protocol['roles']['train']//protocol['logical_questions']*protocol['epochs']\n+    for arm in protocol['arms']:\n+        for seed in protocol['seeds']:\n+            folder=root/(arm+'-s'+str(seed));cell=json.loads((folder/'result.json').read_bytes())\n+            need(cell['binding']==dict(binding,arm=arm,seed=seed) and cell['step']==steps and cell['arm']==arm and cell['seed']==seed,'exact completed cell identity/endpoint')\n+            cp=cell['checkpoint'];need(cp['step']==steps and cp['binding']==cell['binding'],'final full-state binding')\n+            record=folder/'journal'/f'step-{steps:08d}.json'\n+            need(json.loads(record.read_bytes())==cp and json.loads((folder/'journal/binding.json').read_bytes())==cell['binding'],'final journal/manifest identity')\n+            from applications.rag.qvalue_portable_v001 import checked_member\n+            paths=[folder/'result.json',record,folder/'journal/binding.json',checked_member(folder/'journal',cp['tensor'])]\n+            paths += [checked_member(folder,cell['predictions'][k]) for k in ['dpr','bge']]\n+            allowed.update(p.relative_to(root).as_posix() for p in paths)\n+    actual={r['path'] for r in seal['files']};need(actual==allowed,'seal closure is the exact complete requested roster')\n+    expected_ids=[r['id'] for r in evaluation_rows]\n+    for name in actual:\n+        if not Path(name).name.startswith('predictions-'):continue\n+        rows=json.loads((root/name).read_bytes())['rows'];need([r['id'] for r in rows]==expected_ids,'every group preserves all evaluation identities/order')\n+        for row,source in zip(rows,evaluation_rows):\n+            scores=row['scores'];need(row['candidate_ids']==[p['id'] for p in source['paragraphs']] and len(scores)==50 and\n+                all(type(x) in (int,float) and math.isfinite(x) for x in scores) and row['ranking']==sorted(range(50),key=lambda i:(-scores[i],i)),'complete finite original candidate order/native ties')\n+    return seal\n+\n+\n+class RecoveryJournal(Journal):\n+    def __init__(self,root,binding):\n+        self.root=Path(root);self.root.mkdir(parents=True,exist_ok=True);self.binding=binding\n+        if not (self.root/'binding.json').exists():\n+            need(all(p.name.startswith('binding.json.') and p.name.endswith('.part') for p in self.root.iterdir()),'unbound journal is not empty; do not adopt checkpoints')\n+        immutable_json(self.root,'binding.json',binding)\n+\n+    def save(self,value):\n+        from applications.rag.local_born_cache_v001 import new_tensor\n+        step=value['step'];need(step>0,'positive checkpoint')\n+        tensor=new_tensor(self.root,f'step-{step:08d}',value)\n+        immutable_json(self.root,f'step-{step:08d}.json',dict(step=step,binding=self.binding,tensor=tensor))\ndiff --git a/applications/rag/local_born_smallset_v001.py b/applications/rag/local_born_smallset_v001.py\nnew file mode 100644\nindex 0000000..5ee040e\n--- /dev/null\n+++ b/applications/rag/local_born_smallset_v001.py\n@@ -0,0 +1,183 @@\n+\"\"\"Portable task runner, reusing the exact147 factory, loss and full-state Journal.\n+\n+This file does not acquire assets or open validation/test targets. The coordinator\n+joins targets only after the whole fixed campaign prediction seal is committed.\n+\"\"\"\n+import gc,json,os,shutil,time\n+from pathlib import Path\n+import torch\n+from torch.nn import functional as F\n+from applications.rag.qvalue_portable_v001 import need,digest,checked_member\n+from applications.rag.local_born_io_v001 import RecoveryJournal as Journal,immutable_json as json_file,member,verify_seal,verify_campaign\n+from applications.rag.toy100_local_born_v001 import factory,ARMS\n+from applications.rag.toy100_shared_study_v001 import combined_objective,model_batch_loss,frozen_parameters,verify_activity\n+from applications.rag.local_born_cache_v001 import QuestionStore,extract,populations\n+from scripts.smallset_events import emit,allocator_event\n+\n+\n+def policy():\n+    need(torch.cuda.is_available(),'CUDA GPU required')\n+    torch.set_num_threads(min(8,os.cpu_count() or 1))\n+    torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.allow_tf32=False\n+    torch.use_deterministic_algorithms(True)\n+\n+\n+def schedule(n,epochs,seed):\n+    need(n>0 and n%8==0 and epochs>0,'complete logical eight-question batches')\n+    g=torch.Generator(device='cpu').manual_seed(seed+17)\n+    return [batch for _ in range(epochs) for batch in torch.randperm(n,generator=g).reshape(-1,8).tolist()]\n+\n+\n+def score(module,store,indices):\n+    features,native,coords=store.batch(indices)\n+    with torch.no_grad():reference=module.references(coords,native,features)\n+    original={k:F.linear(features[k],store.packed[k]['original_head']['weight'].to(features[k]),store.packed[k]['original_head']['bias'].to(features[k])).squeeze(-1) for k in features}\n+    return module(features,native,original,coords,reference),native\n+\n+\n+def checked_cell(folder,binding,evaluation_count,steps):\n+    p=folder/'result.json'\n+    if not p.exists():return None\n+    v=json.loads(p.read_bytes());need(v['binding']==binding and v['step']==steps,'completed cell binding/endpoint')\n+    for k in ['dpr','bge']:\n+        pred=json.loads(checked_member(folder,v['predictions'][k]).read_bytes());need(len(pred['rows'])==evaluation_count,'completed cell full evaluation')\n+    journal=Journal(folder/'journal',binding);need(journal.latest_record()['step']==steps,'final full state present')\n+    return v\n+\n+\n+def run_cell(folder,binding,store,rows,ntrain,arm,seed,epochs,checkpoint_every=100):\n+    \"\"\"Identical coupled gradients; bounded sharded input replaces all-GPU toy bank.\"\"\"\n+    folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)\n+    batches=schedule(ntrain,epochs,seed);steps=len(batches);job=f'local-born-{arm}-s{seed}'\n+    done=checked_cell(folder,binding,len(rows)-ntrain,steps)\n+    if done is not None:emit('cell',job=job,state='computed');return done\n+    emit('cell',job=job,state='running');emit('device',device='cuda:0 / '+torch.cuda.get_device_name(),execution='FP32 native tail/head; FP64 exact147 critic; no TF32')\n+    torch.manual_seed(seed);torch.cuda.manual_seed_all(seed)\n+    module=factory(store.packed,arm,seed).cuda().eval();frozen=frozen_parameters(module)\n+    parameters=[p for p in module.parameters() if p.requires_grad]\n+    opt=torch.optim.AdamW(parameters,lr=.001,weight_decay=0.,foreach=False)\n+    with torch.no_grad():\n+        initial,native=score(module,store,list(range(8)));null=max(float((initial[k]-native[k]).abs().max()) for k in native)\n+        need(null<=1e-5,'initial native/null on fixed first8 TRAIN questions')\n+    active={n:0. for n,p in module.named_parameters() if p.requires_grad};last_loss=None;start=0\n+    journal=Journal(folder/'journal',binding);saved=journal.load()\n+    if saved is not None:\n+        start=saved['step'];need(0<start<=steps,'valid resume step')\n+        module.load_state_dict(saved['module']);opt.load_state_dict(saved['optimizer'])\n+        torch.set_rng_state(saved['cpu_rng']);torch.cuda.set_rng_state_all(saved['cuda_rng'])\n+        active=saved['gradient_maxima'];last_loss=saved['loss']\n+    targets=[torch.tensor([r['labels'][p['id']] for p in r['paragraphs']],device='cuda',dtype=torch.long) for r in rows[:ntrain]]\n+    shared_probe=saved.get('shared_gradient_probe') if saved is not None else None\n+    begun=time.monotonic();emit('phase',phase='训练')\n+    for index in range(start,steps):\n+        batch=batches[index];opt.zero_grad(set_to_none=True);values,_=score(module,store,batch)\n+        individual={k:model_batch_loss(k,batch,z,targets) for k,z in values.items()};value=combined_objective(individual)\n+        need(bool(torch.isfinite(value)),'finite coupled TRAIN objective')\n+        if index==0 and module.shared is not None:\n+            parameter=module.gradient_probe_parameter();probes={k:torch.autograd.grad(v,parameter,retain_graph=True)[0] for k,v in individual.items()}\n+            need(all(float(g.abs().max())>0 for g in probes.values()),'both model data gradients active')\n+            expected=(probes['dpr']+probes['bge'])/2;shared_probe={k:float(g.abs().max()) for k,g in probes.items()}\n+        value.backward()\n+        if index==0 and module.shared is not None:need(torch.allclose(parameter.grad,expected,atol=1e-6,rtol=1e-4),'exact coupled gradient ownership')\n+        for name,p in module.named_parameters():\n+            if p.requires_grad:\n+                need(p.grad is not None and bool(torch.isfinite(p.grad).all()),'finite complete owned gradients')\n+                active[name]=max(active[name],float(p.grad.abs().max()))\n+        torch.nn.utils.clip_grad_norm_(parameters,1.,error_if_nonfinite=True);opt.step();last_loss=float(value.detach());step=index+1\n+        if step%checkpoint_every==0 or step==steps:\n+            journal.save(dict(step=step,module=module.state_dict(),optimizer=opt.state_dict(),cpu_rng=torch.get_rng_state(),\n+                cuda_rng=torch.cuda.get_rng_state_all(),gradient_maxima=active,loss=last_loss,shared_gradient_probe=shared_probe))\n+        if step%20==0 or step==steps:\n+            need(shutil.disk_usage(folder).free>=8*1024**3,'Training needs8GiB free; expand filesystem and resume latest state')\n+            emit('progress',phase='训练',completed=step,total=steps,unit='steps',origin=start,metrics=dict(loss=last_loss),\n+                checkpoint_step=step if step%checkpoint_every==0 or step==steps else None);allocator_event()\n+    verify_activity(module,active,frozen)\n+    restored=factory(store.packed,arm,seed).cuda().eval();restored.load_state_dict(journal.load()['module'])\n+    with torch.no_grad():\n+        ids=list(range(ntrain,min(ntrain+8,len(rows))))\n+        old,_=score(module,store,ids);new,_=score(restored,store,ids)\n+        replay=max(float((old[k]-new[k]).abs().max()) for k in old);need(replay==0,'first complete evaluation batch restored exactly')\n+    del module,opt,saved,parameters,targets;gc.collect();torch.cuda.empty_cache()\n+    predictions={k:[] for k in ['dpr','bge']};emit('phase',phase='验证／测试统一预测（未读标签）')\n+    for begin in range(ntrain,len(rows),8):\n+        ids=list(range(begin,min(begin+8,len(rows))))\n+        with torch.no_grad():values,_=score(restored,store,ids)\n+        for k,values0 in values.items():\n+            need(bool(torch.isfinite(values0).all()),'finite complete evaluation scores')\n+            for i,scores in zip(ids,values0.cpu().tolist()):\n+                predictions[k].append(dict(id=rows[i]['id'],candidate_ids=[p['id'] for p in rows[i]['paragraphs']],scores=scores,\n+                    ranking=sorted(range(50),key=lambda j:(-scores[j],j))))\n+        emit('progress',phase='验证／测试统一预测（未读标签）',completed=ids[-1]+1-ntrain,total=len(rows)-ntrain,unit='questions');allocator_event()\n+    records={}\n+    for k,rs in predictions.items():\n+        name='predictions-'+k+'.json';path=folder/name\n+        # A prediction interrupted before result publication is checked against a\n+        # fresh final-checkpoint replay, never blindly adopted or overwritten.\n+        if path.exists():\n+            need(json.loads(path.read_bytes())==dict(rows=rs),'unsealed prediction final-checkpoint replay mismatch')\n+            records[k]=dict(name=name,size=path.stat().st_size,sha256=digest(path))\n+        else:records[k]=json_file(folder,name,dict(rows=rs))\n+    result=dict(binding=binding,arm=arm,seed=seed,step=steps,predictions=records,checkpoint=journal.latest_record(),\n+        null_first8_train=null,replay_first8_evaluation=replay,gradient_maxima=active,shared_gradient_probe=shared_probe,\n+        loss=last_loss,elapsed_this_attempt=time.monotonic()-begun,resumed_step=start,evaluation_labels_opened=False)\n+    json_file(folder,'result.json',result);emit('cell',job=job,state='computed');del restored;gc.collect();torch.cuda.empty_cache();return result\n+\n+\n+def execute(data,models,output,cache,protocol,source,minimum_free_gib=8):\n+    policy();need(protocol['logical_questions']==8 and list(ARMS)==protocol['arms'],'exact147 arm/batch roster');data=Path(data);output=Path(output);cache=Path(cache);output.mkdir(parents=True,exist_ok=True);cache.mkdir(parents=True,exist_ok=True)\n+    need(shutil.disk_usage(cache.parent).free>=minimum_free_gib*1024**3,'Expand experiment filesystem: native question cache needs free space')\n+    rows,roles=populations(data,protocol['roles']);ntrain=protocol['roles']['train']\n+    binding=dict(protocol=protocol,source=source,input_files={n:digest(data/n) for n in ['train.jsonl','evaluation.inputs.jsonl','roles.json']})\n+    p=output/'run-binding.json'\n+    if p.exists():need(json.loads(p.read_bytes())==binding,'run source/protocol/input mismatch; use separate workspace')\n+    else:need(all(p.name.startswith('run-binding.json.') and p.name.endswith('.part') for p in output.iterdir()),'unbound run directory not empty');json_file(output,p.name,binding)\n+    if (output/'joint-prediction-seal.json').exists():\n+        seal=verify_campaign(output,binding,protocol,rows[ntrain:]);return dict(complete=True,prediction_groups=seal['expected_prediction_groups'],joint_seal_sha256=digest(output/'joint-prediction-seal.json'))\n+    jobs=['native-cache-'+k for k in ['dpr','bge']]+[f'local-born-{a}-s{s}' for a in ARMS for s in protocol['seeds']]\n+    emit('schedule',name='TriviaQA · 双模型 Local Born · 9臂×3种子',jobs=jobs)\n+    roots={k:cache/k for k in ['dpr','bge']};manifests={}\n+    for k in roots:\n+        job='native-cache-'+k;emit('cell',job=job,state='running')\n+        emit('device',device='cuda:0 / '+torch.cuda.get_device_name(),execution='original frozen FP32 full forwards, native8 candidate chunks')\n+        def event(**kw):emit('progress',**kw);allocator_event()\n+        manifests[k]=extract(k,Path(models[k]),rows,roles,roots[k],binding,event)\n+        emit('cell',job=job,state='computed')\n+    store=QuestionStore(roots,manifests,limit=protocol['cpu_question_cache_mib']*1024**2)\n+    declared=[output/'run-binding.json']\n+    for k in roots:\n+        path=output/('frozen-'+k+'.bin');original=checked_member(roots[k],manifests[k]['metadata'])\n+        if not path.exists():\n+            import uuid\n+            part=path.with_name(path.name+'.'+uuid.uuid4().hex+'.part');shutil.copyfile(original,part)\n+            with part.open('rb') as f:os.fsync(f.fileno())\n+            os.link(part,path);part.unlink()\n+        need(digest(path)==digest(original),'pinned factory frame/tail metadata')\n+        declared.append(path)\n+    for k in ['dpr','bge']:\n+        path=output/('predictions-native-'+k+'.json')\n+        rs=[]\n+        for i in range(ntrain,len(rows)):\n+            scores=store.one(k,i)['native'].tolist()\n+            rs.append(dict(id=rows[i]['id'],candidate_ids=manifests[k]['questions'][i]['candidate_ids'],scores=scores,ranking=sorted(range(50),key=lambda j:(-scores[j],j))))\n+        values=dict(rows=rs)\n+        if path.exists():need(json.loads(path.read_bytes())==values,'native prediction mismatch')\n+        else:json_file(output,path.name,values)\n+        declared.append(path)\n+    for arm in ARMS:\n+        for seed in protocol['seeds']:\n+            folder=output/(arm+'-s'+str(seed))\n+            result=run_cell(folder,dict(binding,arm=arm,seed=seed),store,rows,ntrain,arm,seed,protocol['epochs'],protocol['checkpoint_every'])\n+            record=result['checkpoint']\n+            declared += [folder/'result.json',folder/'journal/binding.json',folder/'journal'/f\"step-{record['step']:08d}.json\",checked_member(folder/'journal',record['tensor'])]\n+            declared += [checked_member(folder,result['predictions'][k]) for k in ['dpr','bge']]\n+    expected=2+2*len(ARMS)*len(protocol['seeds']);files=[]\n+    for path in sorted(declared):\n+        r=member(output,path);files.append(dict(path=r['name'],size=r['size'],sha256=r['sha256']))\n+    need(sum(Path(x['path']).name.startswith('predictions-') for x in files)==expected,'complete joint prediction groups')\n+    seal=dict(schema='qduet.local-born-joint.v1',files=files,failures=[],all_predictions_before_evaluation_labels=True,\n+        restored_checkpoint_inference=True,roles=protocol['roles'],seeds=protocol['seeds'],arms=list(ARMS),expected_prediction_groups=expected)\n+    p=output/'joint-prediction-seal.json'\n+    if p.exists():need(json.loads(p.read_bytes())==seal,'joint seal changed')\n+    else:json_file(output,p.name,seal)\n+    verify_campaign(output,binding,protocol,rows[ntrain:])\n+    return dict(complete=True,prediction_groups=expected,joint_seal_sha256=digest(p))\ndiff --git a/applications/rag/tests/test_local_born_delivery_v001.py b/applications/rag/tests/test_local_born_delivery_v001.py\nnew file mode 100644\nindex 0000000..3508301\n--- /dev/null\n+++ b/applications/rag/tests/test_local_born_delivery_v001.py\n@@ -0,0 +1,124 @@\n+\"\"\"Bootstrap/manifest/publication tests: standard library only.\"\"\"\n+import contextlib,io,json,tempfile,unittest\n+from pathlib import Path\n+from unittest.mock import patch\n+from scripts.run_local_born_smallset import main,source_snapshot,PROTOCOL\n+from applications.rag.local_born_io_v001 import immutable_json,verify_seal\n+from scripts.smallset_progress import Progress\n+\n+\n+class DeliveryTests(unittest.TestCase):\n+    def test_plan_only_and_transitive_scientific_source(self):\n+        with tempfile.TemporaryDirectory() as d:\n+            with contextlib.redirect_stdout(io.StringIO()) as out:\n+                self.assertEqual(main(['--plan-only','--workspace',d+'/absent']),0)\n+            value=json.loads(out.getvalue());self.assertFalse(value['scientific_execution'])\n+            p=value['protocol'];self.assertEqual(p['sealed_prediction_groups'],2+2*len(p['arms'])*len(p['seeds']))\n+            self.assertEqual(p['steps_per_learning_job'],p['roles']['train']//p['logical_questions']*p['epochs'])\n+            self.assertFalse(Path(d,'absent').exists())\n+        source=source_snapshot()['files']\n+        for n in ['toy100_local_born_v001.py','toy100_output_frame_v001.py','toy100_global_ffn_v001.py','local_born_io_v001.py','model_input_guards.py','top8_cache_v002.py']:\n+            self.assertIn('applications/rag/'+n,source)\n+\n+    def test_interrupted_immutable_publish_and_seal_tamper(self):\n+        with tempfile.TemporaryDirectory() as d:\n+            root=Path(d)\n+            with patch('applications.rag.local_born_io_v001.os.link',side_effect=OSError('injected publication interruption')):\n+                with self.assertRaises(OSError):immutable_json(root,'predictions-dpr.json',dict(rows=[]))\n+            self.assertEqual(len(list(root.glob('*.part'))),1)\n+            record=immutable_json(root,'predictions-dpr.json',dict(rows=[]))\n+            immutable_json(root,'predictions-dpr.json',dict(rows=[]))\n+            with self.assertRaises(RuntimeError):immutable_json(root,'predictions-dpr.json',dict(rows=[1]))\n+            seal=dict(files=[dict(path=record['name'],size=record['size'],sha256=record['sha256'])],failures=[],all_predictions_before_evaluation_labels=True,expected_prediction_groups=1)\n+            immutable_json(root,'joint-prediction-seal.json',seal);verify_seal(root)\n+            (root/record['name']).write_text('corrupt')\n+            with self.assertRaises(RuntimeError):verify_seal(root)\n+\n+    def test_progress_custom_name_preserves_legacy_default(self):\n+        p=Progress('test','/tmp/log');self.assertIn('8+2',p.snapshot()['name'])\n+        p.event(dict(qduet_progress=1,event='schedule',time=0,jobs=['a'],name='Local Born · 9 arms'))\n+        self.assertEqual(p.snapshot()['name'],'Local Born · 9 arms')\n+        import ast\n+        engine=Path(__file__).resolve().parents[1]/'local_born_smallset_v001.py'\n+        states=[kw.value.value for n in ast.walk(ast.parse(engine.read_bytes())) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='emit' for kw in n.keywords if kw.arg=='state' and isinstance(kw.value,ast.Constant)]\n+        self.assertEqual(set(states),{'running','computed'})\n+\n+    def test_real_ui_child_uses_the_computed_completion_vocabulary(self):\n+        import sys\n+        from scripts.smallset_progress import supervise\n+        code=\"from scripts.smallset_events import emit;emit('schedule',name='Local Born',jobs=['native-cache-dpr']);emit('cell',job='native-cache-dpr',state='running');emit('cell',job='native-cache-dpr',state='computed')\"\n+        with tempfile.TemporaryDirectory() as d,contextlib.redirect_stdout(io.StringIO()):\n+            result=supervise([sys.executable,'-B','-c',code],d,'append',.02,cwd=Path(__file__).resolve().parents[3])\n+            self.assertEqual(result,0)\n+            snapshot=json.loads((Path(d)/'progress/latest.json').read_bytes())\n+            self.assertEqual(snapshot['name'],'Local Born');self.assertTrue(all(j['state']=='computed' for j in snapshot['jobs']))\n+\n+    def test_coordinator_complete_barrier_evaluation_and_upload_only(self):\n+        \"\"\"Real coordinator/evaluator/exporter; fake science/assets/transport.\"\"\"\n+        import types\n+        from applications.rag.junior_transport_v001 import digest\n+        with tempfile.TemporaryDirectory() as d:\n+            work=Path(d);protocol=json.loads(PROTOCOL.read_bytes())\n+            protocol.update(roles=dict(train=8,valid=1,test=1),epochs=1,steps_per_learning_job=1)\n+            pp=work/'protocol.json';pp.write_text(json.dumps(protocol));source=dict(files={},git_revision='synthetic')\n+            uploads=[];calls=[]\n+            class Exchange:\n+                def __init__(self,*a):pass\n+                def upload(self,path,name):\n+                    uploads.append(name);return dict(path=name,size=path.stat().st_size,sha256=digest(path))\n+            @contextlib.contextmanager\n+            def lock(*a):yield 17\n+            def materialize(raw,release,data):\n+                data.mkdir();roles={'t':'train','v':'valid','x':'test'}\n+                (data/'roles.json').write_text(json.dumps(roles));(data/'train.jsonl').write_text('training fixture')\n+                rows=[]\n+                for q,role in [('v','valid'),('x','test')]:\n+                    ps=[dict(id=f'p{i}',text='synthetic') for i in range(50)]\n+                    rows.append(dict(id=q,component_id=q,question=q,paragraphs=ps))\n+                    (data/(role+'.labels.jsonl')).write_text(json.dumps(dict(id=q,labels={p['id']:i%2 for i,p in enumerate(ps)}))+'\\n')\n+                (data/'evaluation.inputs.jsonl').write_text(''.join(json.dumps(r)+'\\n' for r in rows))\n+            def runner(argv,**kw):\n+                calls.append(argv);self.assertIn('--_science',argv);self.assertEqual(kw['pass_fds'],(17,))\n+                matrix=work/'run/matrix';matrix.mkdir()\n+                binding=dict(protocol=protocol,source=source,input_files={n:digest(work/'data'/n) for n in ['train.jsonl','evaluation.inputs.jsonl','roles.json']})\n+                immutable_json(matrix,'run-binding.json',binding);declared=[matrix/'run-binding.json']\n+                predictions=dict(rows=[dict(id=q,candidate_ids=[f'p{i}' for i in range(50)],scores=[float(-i) for i in range(50)],ranking=list(range(50))) for q in ['v','x']])\n+                for k in ['dpr','bge']:\n+                    (matrix/('frozen-'+k+'.bin')).write_bytes(b'synthetic metadata');declared.append(matrix/('frozen-'+k+'.bin'))\n+                    immutable_json(matrix,'predictions-native-'+k+'.json',predictions);declared.append(matrix/('predictions-native-'+k+'.json'))\n+                for arm in protocol['arms']:\n+                    for seed in protocol['seeds']:\n+                        folder=matrix/(arm+'-s'+str(seed));journal=folder/'journal';journal.mkdir(parents=True)\n+                        b=dict(binding,arm=arm,seed=seed);immutable_json(journal,'binding.json',b)\n+                        cp=journal/'step-00000001-g0.bin';cp.write_bytes(b'synthetic checkpoint, not scientific state')\n+                        record=dict(step=1,binding=b,tensor=dict(name=cp.name,size=cp.stat().st_size,sha256=digest(cp)))\n+                        immutable_json(journal,'step-00000001.json',record);pred={}\n+                        for k in ['dpr','bge']:\n+                            pred[k]=immutable_json(folder,'predictions-'+k+'.json',predictions);declared.append(folder/pred[k]['name'])\n+                        immutable_json(folder,'result.json',dict(binding=b,arm=arm,seed=seed,step=1,checkpoint=record,predictions=pred))\n+                        declared += [folder/'result.json',journal/'binding.json',journal/'step-00000001.json',cp]\n+                files=[dict(path=p.relative_to(matrix).as_posix(),size=p.stat().st_size,sha256=digest(p)) for p in declared]\n+                immutable_json(matrix,'joint-prediction-seal.json',dict(files=files,failures=[],all_predictions_before_evaluation_labels=True,arms=protocol['arms'],seeds=protocol['seeds'],roles=protocol['roles'],expected_prediction_groups=56))\n+                return types.SimpleNamespace(returncode=0)\n+            # No actual download, model import, GPU or external upload.\n+            with contextlib.ExitStack() as stack:\n+                for target,value in {\n+                    'scripts.run_local_born_smallset.PROTOCOL':pp,\n+                    'scripts.run_local_born_smallset.source_snapshot':lambda:source,\n+                    'scripts.run_local_born_smallset.campaign_lock':lock,\n+                    'scripts.run_local_born_smallset.environment':lambda _:Path('python-fixture'),\n+                    'scripts.run_local_born_smallset.Exchange':Exchange,\n+                    'scripts.run_local_born_smallset.shutil.disk_usage':lambda _:types.SimpleNamespace(free=100*1024**3),\n+                    'scripts.run_local_born_smallset.subprocess.run':runner,\n+                    'scripts.run_junior_experiments.configuration':lambda _:dict(url='https://fixture.invalid',token='synthetic'),\n+                    'scripts.run_two_datasets.AssetStore':lambda *a:lambda _:work/'fake-assets',\n+                    'applications.rag.triviaqa_smallset_v001.materialize':materialize,\n+                }.items():stack.enter_context(patch(target,value))\n+                with contextlib.redirect_stdout(io.StringIO()):self.assertEqual(main(['--workspace',str(work),'--display','off']),0)\n+                self.assertEqual(len(calls),1);self.assertTrue((work/'run/upload-complete.json').exists())\n+                self.assertEqual(len(json.loads((work/'run/matrix/smallset-evaluation.json').read_bytes())['metrics']),56)\n+                with contextlib.redirect_stdout(io.StringIO()):self.assertEqual(main(['--workspace',str(work),'--display','off','--upload-only']),0)\n+                self.assertEqual(len(calls),1);self.assertGreater(len(uploads),56)\n+\n+\n+if __name__=='__main__':unittest.main()\ndiff --git a/applications/rag/tests/test_local_born_portable_v001.py b/applications/rag/tests/test_local_born_portable_v001.py\nnew file mode 100644\nindex 0000000..0c47d4b\n--- /dev/null\n+++ b/applications/rag/tests/test_local_born_portable_v001.py\n@@ -0,0 +1,87 @@\n+\"\"\"Numerical adapter/recovery delta tests. Execute on allocated GPU only.\"\"\"\n+import copy,json,tempfile,unittest\n+from pathlib import Path\n+from unittest.mock import patch\n+import torch\n+from torch.nn import functional as F\n+from applications.rag.toy100_local_born_v001 import factory,ARMS\n+from applications.rag.toy100_output_frame_v001 import output_frames\n+from applications.rag.toy100_ffn_export_v001 import frozen_tail\n+from applications.rag.local_born_cache_v001 import QuestionStore,new_tensor\n+from applications.rag.local_born_io_v001 import immutable_json,RecoveryJournal\n+from applications.rag.local_born_smallset_v001 import policy,run_cell,score,schedule\n+\n+\n+def fixture(root):\n+    torch.manual_seed(14701);packed={};roots={};manifests={};rows=[]\n+    for i in range(16):\n+        ps=[dict(id=f'p{j}',text='synthetic') for j in range(50)]\n+        row=dict(id=f'q{i}',component_id=f'c{i}',question='synthetic '+str(i),paragraphs=ps)\n+        if i<8:row['labels']={p['id']:int(j%3==0) for j,p in enumerate(ps)}\n+        rows.append(row)\n+    for k,d in [('dpr',6),('bge',8)]:\n+        h=4;z=torch.randn(16,50,d);res=torch.randn(16,50,h)\n+        dense=dict(weight=torch.randn(h,d)*.2,bias=torch.randn(h)*.1);norm=dict(weight=torch.ones(h),bias=torch.zeros(h))\n+        bridge=None if k=='dpr' else dict(weight=torch.randn(h,h)*.2,bias=torch.randn(h)*.1)\n+        f=frozen_tail(z,res,dense,norm,bridge,1e-5);w=torch.randn(1,h)*.1;b=torch.zeros(1);n=F.linear(f,w,b).squeeze(-1)\n+        packed[k]=dict(original_head=dict(weight=w,bias=b),features=dict(train=f[:8]),native=dict(train=n[:8]),ffn_z=dict(train=z[:8]),\n+            ffn_dense=dense,ffn_normalization=norm,ffn_bridge=bridge,ffn_eps=1e-5,ffn_frames=output_frames(dense['weight']))\n+        roots[k]=root/k;roots[k].mkdir();metadata=copy.deepcopy(packed[k])\n+        for name in ('features','native','ffn_z'):metadata[name]['train']=metadata[name]['train'][:1]\n+        qs=[]\n+        for i in range(16):qs.append(dict(tensor=new_tensor(roots[k],f'q{i}',dict(z=z[i],residual=res[i],features=f[i],native=n[i]))))\n+        manifests[k]=dict(metadata=new_tensor(roots[k],'metadata',metadata),questions=qs)\n+    return packed,QuestionStore(roots,manifests,4096),rows\n+\n+\n+def equal_state(left,right):\n+    if isinstance(left,torch.Tensor):return torch.equal(left,right)\n+    if isinstance(left,dict):return left.keys()==right.keys() and all(equal_state(left[k],right[k]) for k in left)\n+    if isinstance(left,(tuple,list)):return len(left)==len(right) and all(equal_state(a,b) for a,b in zip(left,right))\n+    return left==right\n+\n+\n+class PortableTests(unittest.TestCase):\n+    @classmethod\n+    def setUpClass(cls):policy()\n+\n+    def test_all_arm_bookkeeping_adapter_forward_gradient_update(self):\n+        with tempfile.TemporaryDirectory() as d:\n+            packed,store,_=fixture(Path(d))\n+            for arm in ARMS:\n+                full=factory(packed,arm,20261122).cuda().eval();shard=factory(store.packed,arm,20261122).cuda().eval()\n+                a,na=score(full,store,list(range(8)));b,nb=score(shard,store,list(range(8)))\n+                self.assertTrue(all(torch.equal(a[k],b[k]) for k in a))\n+                (sum(v[:,0].sum()-v[:,1].sum() for v in a.values())/2).backward()\n+                (sum(v[:,0].sum()-v[:,1].sum() for v in b.values())/2).backward()\n+                for (n,p),(m,q) in zip(full.named_parameters(),shard.named_parameters()):\n+                    self.assertEqual(n,m)\n+                    if p.requires_grad:self.assertTrue(torch.equal(p.grad,q.grad))\n+                opt=lambda model:torch.optim.AdamW([p for p in model.parameters() if p.requires_grad],lr=.001,weight_decay=0,foreach=False)\n+                opt(full).step();opt(shard).step()\n+                a,_=score(full,store,list(range(8,16)));b,_=score(shard,store,list(range(8,16)))\n+                self.assertTrue(all(torch.equal(a[k],b[k]) for k in a))\n+\n+    def test_interrupted_full_state_continuation_and_completed_skip(self):\n+        with tempfile.TemporaryDirectory() as d:\n+            root=Path(d);_,store,rows=fixture(root);bound=dict(test='fixed16synthetic')\n+            complete=run_cell(root/'complete',bound,store,rows,8,'QUANTUM',20261122,2,1)\n+            real_save=RecoveryJournal.save\n+            def save_then_stop(journal,value):\n+                real_save(journal,value)\n+                if value['step']==1:raise InterruptedError('injected after durable step1')\n+            with patch.object(RecoveryJournal,'save',save_then_stop):\n+                with self.assertRaises(InterruptedError):run_cell(root/'resumed',bound,store,rows,8,'QUANTUM',20261122,2,1)\n+            resumed=run_cell(root/'resumed',bound,store,rows,8,'QUANTUM',20261122,2,1)\n+            a=RecoveryJournal(root/'complete/journal',bound).load();b=RecoveryJournal(root/'resumed/journal',bound).load()\n+            self.assertTrue(equal_state(a,b));self.assertEqual(resumed['resumed_step'],1)\n+            for k in ('dpr','bge'):\n+                self.assertEqual(json.loads((root/'complete'/complete['predictions'][k]['name']).read_bytes()),json.loads((root/'resumed'/resumed['predictions'][k]['name']).read_bytes()))\n+            with patch('applications.rag.local_born_smallset_v001.factory',side_effect=AssertionError('completed cells must not reconstruct or train')):\n+                self.assertEqual(run_cell(root/'resumed',bound,store,rows,8,'QUANTUM',20261122,2,1),resumed)\n+            with self.assertRaises(RuntimeError):RecoveryJournal(root/'resumed/journal',dict(changed=True))\n+            bad=root/'unbound';bad.mkdir();(bad/'step-00000001.json').write_text('{}')\n+            with self.assertRaises(RuntimeError):RecoveryJournal(bad,bound)\n+\n+\n+if __name__=='__main__':unittest.main()\ndiff --git a/configs/experiments/local_born_smallset_20261125/protocol.v001.json b/configs/experiments/local_born_smallset_20261125/protocol.v001.json\nnew file mode 100644\nindex 0000000..2e12dbf\n--- /dev/null\n+++ b/configs/experiments/local_born_smallset_20261125/protocol.v001.json\n@@ -0,0 +1,23 @@\n+{\n+  \"schema\": \"qduet.local-born-smallset.v1\",\n+  \"candidate\": \"147_LOCAL_NATIVE_MODE_BORN_ATTRIBUTION\",\n+  \"factory\": \"applications.rag.toy100_local_born_v001.factory\",\n+  \"roles\": {\"train\": 8000, \"valid\": 1000, \"test\": 1000},\n+  \"arms\": [\"HEAD\", \"SIGNED_LOCAL\", \"GELU_LOCAL\", \"ABS_LOCAL\", \"DEPHASED\", \"RANDOM_FRAME\", \"CLASSICAL_MATCHING\", \"MLP8\", \"QUANTUM\"],\n+  \"seeds\": [20261122, 20261123, 20261124],\n+  \"epochs\": 20,\n+  \"logical_questions\": 8,\n+  \"steps_per_learning_job\": 20000,\n+  \"coupled_learning_jobs\": 27,\n+  \"sealed_prediction_groups\": 56,\n+  \"optimizer\": \"AdamW lr0.001 weight_decay0 foreachFalse clip_norm1 final_checkpoint\",\n+  \"loss\": \"Mean all ordered binary TRAIN pairs per question (no-pair zero); mean8 questions; meanDPR/BGE\",\n+  \"checkpoint_every\": 100,\n+  \"cpu_question_cache_mib\": 512,\n+  \"input_candidate_chunk\": 8,\n+  \"dtype\": \"Native FP32, exact147 critic FP64; deterministic, no TF32\",\n+  \"evaluation\": \"Seal all56 complete candidate score groups before valid/test label join; report roles and all seeds separately, no test selection\",\n+  \"recovery\": \"Full model/optimizer/frozen initial reference/RNG/gradient activity; immutable source/input identity; completed cells skipped; latest valid local checkpoint\",\n+  \"storage\": \"Question FFN/residual/features/native FP32 shards; no full sequence dump. First extraction needs40GiB free; no old outputs removed.\",\n+  \"claim\": \"Prospective smallset experiment. Existing toy L3 is limited to adaptive20 held questions; no hardware speedup, entanglement necessity or independent-confirmation claim.\"\n+}\ndiff --git a/configs/experiments/local_born_smallset_20261125/requirements.txt b/configs/experiments/local_born_smallset_20261125/requirements.txt\nnew file mode 100644\nindex 0000000..0c8eed8\n--- /dev/null\n+++ b/configs/experiments/local_born_smallset_20261125/requirements.txt\n@@ -0,0 +1,6 @@\n+torch==2.13.0\n+transformers==4.44.2\n+tokenizers==0.19.1\n+numpy==2.3.5\n+safetensors==0.4.5\n+sentencepiece==0.2.0\ndiff --git a/docs/local-born-smallset-handoff.md b/docs/local-born-smallset-handoff.md\nnew file mode 100644\nindex 0000000..7add7e2\n--- /dev/null\n+++ b/docs/local-born-smallset-handoff.md\n@@ -0,0 +1,63 @@\n+# Local Born：师弟完整 smallset 实验\n+\n+更新到包含本文件的 GitHub 提交后，在 Linux GPU 服务器的项目根目录执行：\n+\n+```bash\n+bash scripts/run_local_born_smallset.sh\n+```\n+\n+已有私有 `~/.config/qduet/junior.json` 会自动复用。首次缺少配置时，入口只询问服务地址和隐藏输入的令牌；不要求手填数据或模型路径。配置和令牌不要提交到 GitHub。入口自动获取并校验既有 **TriviaQA 8000 train／1000 valid／1000 test** 输入、二分类运营标签和原模型文件，准备环境、训练、封存预测、评估并上传声明结果。它不会执行旧的393项或54项方案。\n+\n+训练中断后：\n+\n+```bash\n+bash scripts/run_local_born_smallset.sh --resume\n+```\n+\n+只观察、不启动任务：\n+\n+```bash\n+bash scripts/run_local_born_smallset.sh --watch\n+```\n+\n+`--plan-only` 无下载、无训练；`--prepare-only` 只准备并核验资产；上传失败后用 `--upload-only` 重传已封存结果。默认工作目录为 `~/qduet-local-born-smallset`，可用 `--workspace` 指定其他服务器磁盘。图形进度包含阶段、固定任务清单、worker/父进程心跳、CPU进程组内存、GPU显存、训练步及已提交检查点；整套ETA在缺少可比实测时保持待测。\n+\n+## 实验构成\n+\n+两骨干分别保留原生 DPR Reader multiset、BGE reranker v2-m3 的输入、原权重和最后层FFN输出投影／残差／LayerNorm；BGE保留原dense+tanh。训练只使用train。每个臂联合优化两骨干的当前线性头及该臂的机制参数，两模型的机制参数块分开；这不是已经证明的跨模型权重迁移。\n+\n+| 臂 | 用途 |\n+|---|---|\n+| NATIVE（各模型一次） | 冻结原始评分 |\n+| HEAD | 只适配原线性评分头 |\n+| QUANTUM | 固定原生输出模态坐标中的局域旋转与Born平方读出 |\n+| SIGNED_LOCAL | 同旋转，保留有符号值 |\n+| GELU_LOCAL | 同旋转，经典GELU读出 |\n+| ABS_LOCAL | 同旋转，绝对值读出 |\n+| DEPHASED | 同旋转，删除固定输入基中的相干交叉项 |\n+| RANDOM_FRAME | 同局域Born机制，配对随机坐标方向 |\n+| CLASSICAL_MATCHING | 既定随机配对经典替代 |\n+| MLP8 | 既定8隐单元经典替代，参数量差异保留披露 |\n+\n+9个学习臂 × 3种子（20261122、20261123、20261124）=27个双模型训练任务；加上两个原生评分组，最终为 **56组预测**。每组包含各自完整valid与test，每题50个分数、固定原索引并列规则，选Top5。共同20轮、逻辑batch8、AdamW lr0.001／weight_decay0／clip1，最终检查点，不按test选轮次或模型。8000训练题时每任务20000步。所有失败和负种子都应保留。\n+\n+机制：对原生冻结输出矩阵取完整行空间基V，令 y=Vᵀz；DPR的768维补零至1024，BGE使用1024维。局域U是10个单比特RY的张量积，20个名义角度／10个有效角度。以 r=||y||/sqrt(1024)，Aθ=|Uθy|²/r−r，用 `GELU(z)+V(Aθ−A初始化)` 替换最后FFN的激活输入，原生后续层不变。零路径与初始冻结参考保持一致。实际V、原生尾部参数和初始化在声明元数据／检查点中保留；不能仅凭重做SVD声称字节相同。\n+\n+## 已有证据与本轮目的\n+\n+现有结果只来自固定80训练／20反复曝光留出题。三种子的useful总数（每种子分母100）为：\n+\n+| 模型 | 原生，每种子 | HEAD | QUANTUM | 最强声明经典／删除对照合计 |\n+|---|---|---|---|---|\n+| DPR | 81 | 87／88／87 | 87／88／88 | 262／300 |\n+| BGE | 83 | 83／83／82 | 83／84／83 | 249／300 |\n+\n+QUANTUM合计DPR263／300、BGE250／300，仅各超过最强声明对照1个useful位置。这支持**固定adaptive toy范围内的受控L3**，没有统计确认或独立泛化证明；不是每个seed都胜。全纠缠旧146方案的负结果仍保留。局域Born可精确经典模拟；无硬件加速、量子专属性、新基本原语或纠缠必要性结论。完整smallset结果尚待师弟实际运行。\n+\n+## 存储、环境与恢复\n+\n+推荐Linux、可用CUDA GPU、至少32GiB内存，首次提取前至少40GiB空闲磁盘。按题保存FP32 FFN输入／残差／特征，两个模型10000题的原生数值主体约22GiB，另加模型、缓存元数据、检查点和结果；不保存全序列张量，不需要1.5TB缓存。CPU工作缓存上限512MiB，只将当前8题送入GPU；尚未承诺特定GPU上的吞吐。后续至少保留8GiB空闲，扩盘后可续跑。\n+\n+复用兼容环境，或自动建立私有venv，固定Torch2.13.0、Transformers4.44.2、tokenizers0.19.1。保持FP32原生尾部、FP64机制、禁用TF32和确定性策略，不静默切换精度或attention实现。来源闭包、输入与角色SHA、完整模型及优化器状态、初始化参考、RNG及梯度活动均绑定；已完成任务直接校验并跳过。版本或输入变化应使用新工作目录。\n+\n+资产准备阶段会校验并整理valid/test标签文件，也会计算发布数据的可提升上限；训练与预测子进程不使用这些评价标签。全部56组预测先共同封存，之后才按身份连接标签计算最终指标。完整50候选标签的二分类useful不等于人工语义金标准。结果和最终完整检查点、实际坐标与尾部元数据通过已有私有服务回传；token、题文、标签不进入GitHub。运行中的恢复点目前为服务器本地状态，未宣称已部署跨机定期云备份。请保留服务器工作目录直至回传收据核验完成。\ndiff --git a/scripts/run_local_born_smallset.py b/scripts/run_local_born_smallset.py\nnew file mode 100644\nindex 0000000..a6c4d80\n--- /dev/null\n+++ b/scripts/run_local_born_smallset.py\n@@ -0,0 +1,170 @@\n+#!/usr/bin/env python3\n+\"\"\"One command: pinned assets, coupled DPR/BGE study, sealed evaluation, upload.\"\"\"\n+import argparse,ast,contextlib,datetime,hashlib,importlib.metadata,json,os,shutil,subprocess,sys\n+from pathlib import Path\n+sys.dont_write_bytecode=True\n+ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))\n+from applications.rag.junior_transport_v001 import require,atomic_json,digest,Exchange\n+from applications.rag.local_born_io_v001 import immutable_json,verify_seal,verify_campaign\n+\n+PROTOCOL=ROOT/'configs/experiments/local_born_smallset_20261125/protocol.v001.json'\n+RELEASE=ROOT/'configs/experiments/triviaqa_smallset_20261112/junior-release.v001.json'\n+CAMPAIGN=ROOT/'configs/experiments/idea_search_20261103/junior-campaign.v001.json'\n+\n+\n+def source_snapshot():\n+    # Bind import-time local dependencies recursively. Explicit lazy execution\n+    # roots cover the task factory, runtime and delivery branches actually used.\n+    pending=[Path(__file__).relative_to(ROOT).as_posix(),\n+        'applications/rag/local_born_smallset_v001.py','applications/rag/local_born_cache_v001.py',\n+        'scripts/run_junior_experiments.py','scripts/run_two_datasets.py',\n+        'scripts/smallset_progress.py','scripts/smallset_resources.py',\n+        'applications/rag/top8_cache_v002.py',\n+        'applications/rag/triviaqa_smallset_v001.py']\n+    values={}\n+    while pending:\n+        name=pending.pop()\n+        if name in values:continue\n+        p=ROOT/name;require(p.is_file(),'missing shipped dependency: '+name);values[name]=digest(p)\n+        if p.suffix!='.py':continue\n+        for node in ast.parse(p.read_bytes()).body:\n+            imports=([x.name for x in node.names] if isinstance(node,ast.Import) else\n+                [node.module] if isinstance(node,ast.ImportFrom) and node.module and not node.level else [])\n+            for module in imports:\n+                if module.startswith(('applications.','scripts.')):\n+                    q=module.replace('.','/')+'.py'\n+                    if (ROOT/q).is_file():pending.append(q)\n+    for p in [PROTOCOL,RELEASE,CAMPAIGN,ROOT/'scripts/run_local_born_smallset.sh',\n+              ROOT/'configs/experiments/reader_joint_witness_b1_model_assets.json',\n+              ROOT/'configs/experiments/local_born_smallset_20261125/requirements.txt']:\n+        values[p.relative_to(ROOT).as_posix()]=digest(p)\n+    revision='unavailable; exact file hashes retained'\n+    try:\n+        git=subprocess.run(['git','rev-parse','HEAD'],cwd=ROOT,capture_output=True,text=True)\n+        if git.returncode==0:revision=git.stdout.strip()\n+    except OSError:pass\n+    return dict(files=dict(sorted(values.items())),git_revision=revision)\n+\n+\n+def runtime_matches(python):\n+    code=\"import importlib.metadata as m,json;print(json.dumps({n:m.version(n).split('+')[0] for n in ['torch','transformers','tokenizers']}))\"\n+    r=subprocess.run([str(python),'-B','-c',code],capture_output=True,text=True)\n+    if r.returncode:return False\n+    try:return json.loads(r.stdout)==dict(torch='2.13.0',transformers='4.44.2',tokenizers='0.19.1')\n+    except ValueError:return False\n+\n+\n+def environment(work):\n+    require(sys.version_info>=(3,11),'Use Python3.11+ (QDUET_BOOTSTRAP_PYTHON may select the installed interpreter)')\n+    if runtime_matches(sys.executable):return Path(sys.executable)\n+    py=work/'runtime/bin/python'\n+    if not py.exists():subprocess.run([sys.executable,'-m','venv',str(work/'runtime')],check=True)\n+    if not runtime_matches(py):\n+        subprocess.run([str(py),'-m','pip','install','-r',str(PROTOCOL.parent/'requirements.txt')],check=True)\n+    require(runtime_matches(py),'pinned runtime installation incomplete');return py\n+\n+\n+def sealed_campaign(work,protocol):\n+    matrix=work/'run/matrix';binding=json.loads((matrix/'run-binding.json').read_bytes())\n+    require(binding['protocol']==protocol,'sealed campaign protocol differs')\n+    for name,sha in binding['input_files'].items():require(digest(work/'data'/name)==sha,'sealed campaign input identity differs')\n+    with (work/'data/evaluation.inputs.jsonl').open(encoding='utf-8') as stream:\n+        rows=[json.loads(line) for line in stream]\n+    return verify_campaign(matrix,binding,protocol,rows)\n+\n+\n+@contextlib.contextmanager\n+def campaign_lock(work):\n+    require(os.name=='posix','Run this launcher on the Linux experiment server')\n+    import fcntl\n+    fd=os.open(work/'campaign.lock',os.O_CREAT|os.O_RDWR,0o600)\n+    try:\n+        try:fcntl.flock(fd,fcntl.LOCK_EX|fcntl.LOCK_NB)\n+        except BlockingIOError:raise RuntimeError('Another campaign worker owns this workspace') from None\n+        yield fd\n+    finally:os.close(fd)\n+\n+\n+def main(argv=None):\n+    p=argparse.ArgumentParser(description=__doc__)\n+    p.add_argument('--workspace',type=Path,default=Path('~/qduet-local-born-smallset').expanduser())\n+    p.add_argument('--config',type=Path)\n+    for name in ['resume','plan-only','prepare-only','watch','upload-only']:\n+        p.add_argument('--'+name,action='store_true')\n+    p.add_argument('--display',choices=['auto','inplace','append','off'],default='auto')\n+    p.add_argument('--refresh',type=float,default=5.)\n+    p.add_argument('--_progress-worker',action='store_true',help=argparse.SUPPRESS)\n+    p.add_argument('--_science',action='store_true',help=argparse.SUPPRESS)\n+    a=p.parse_args(argv);work=a.workspace.expanduser().resolve()\n+    require(__import__('math').isfinite(a.refresh) and a.refresh>=.5,'refresh >=0.5 seconds')\n+    from scripts.smallset_progress import supervise,watch\n+    if a.watch:return watch(work,a.display if a.display!='off' else 'append',a.refresh)\n+    protocol=json.loads(PROTOCOL.read_bytes());source=source_snapshot()\n+    if a.plan_only:\n+        print(json.dumps(dict(protocol=protocol,source_files=len(source['files']),\n+            release_status=json.loads(RELEASE.read_bytes())['status'],scientific_execution=False),ensure_ascii=False,indent=2));return 0\n+    if a._science:\n+        from applications.rag.local_born_smallset_v001 import execute\n+        prepared=json.loads((work/'prepared.json').read_bytes())\n+        result=execute(work/'data',prepared['models'],work/'run/matrix',work/'native-cache',protocol,source)\n+        print(json.dumps(result));return 0\n+    if not a._progress_worker and a.display!='off':\n+        return supervise([sys.executable,'-u','-B',str(Path(__file__).resolve()),\n+            *(sys.argv[1:] if argv is None else argv),'--_progress-worker'],work,a.display,a.refresh,cwd=ROOT)\n+    work.mkdir(parents=True,exist_ok=True)\n+    from scripts.run_junior_experiments import configuration,push_results\n+    from scripts.run_two_datasets import AssetStore\n+    from applications.rag.triviaqa_smallset_v001 import materialize,evaluate,validate_release\n+    from scripts.smallset_events import emit\n+    with campaign_lock(work) as fd:\n+        config=configuration(a.config);exchange=Exchange(config['url'],config['token'])\n+        output=work/'run';matrix=output/'matrix'\n+        if a.upload_only:\n+            sealed_campaign(work,protocol);execution=json.loads((output/'execution.json').read_bytes())\n+            push_results(exchange,output,execution['run_id'],execution);return 0\n+        release=json.loads(RELEASE.read_bytes());validate_release(release,ready=True)\n+        immutable_json(work,'source-binding.json',source)\n+        if matrix.exists() and any(matrix.iterdir()):require(a.resume,'Existing study requires --resume (completed jobs are retained)')\n+        emit('phase',phase='下载／校验固定smallset与两个原模型')\n+        store=AssetStore(work/'assets',exchange,2*1024**3)\n+        raw=store(release);materialize(raw,release,work/'data')\n+        package=json.loads(CAMPAIGN.read_bytes())['populations']['reproduction'];models=store(package)\n+        prepared=dict(models={k:str(models/package['models'][k]) for k in ['dpr','bge']})\n+        immutable_json(work,'prepared.json',prepared)\n+        if a.prepare_only:print(json.dumps(dict(stage='assets_ready',scientific_execution=False,roles=release['roles'])));return 0\n+        # 10000 questions, both FFNs/residuals/features ~22 GiB. No sequence dump.\n+        cached=sum(f.stat().st_size for f in (work/'native-cache').rglob('*') if f.is_file())\n+        complete_cache=all((work/'native-cache'/k/'cache.json').exists() for k in ['dpr','bge'])\n+        required_free=8*1024**3 if complete_cache else max(8*1024**3,40*1024**3-cached)\n+        require((matrix/'joint-prediction-seal.json').exists() or shutil.disk_usage(work).free>=required_free,\n+            'Need 40 GiB free for first extraction; expand server storage. Existing caches/checkpoints are preserved.')\n+        emit('phase',phase='准备与已验证toy相同的运行环境')\n+        py=environment(work);output.mkdir(exist_ok=True)\n+        identity=output/'identity.json'\n+        if not identity.exists():immutable_json(output,identity.name,dict(run_id='local-born-smallset-'+datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ')))\n+        run_id=json.loads(identity.read_bytes())['run_id']\n+        env=os.environ.copy();env.update(CUBLAS_WORKSPACE_CONFIG=':4096:8',OMP_NUM_THREADS='8',MKL_NUM_THREADS='8',HF_HUB_OFFLINE='1',TRANSFORMERS_OFFLINE='1',TOKENIZERS_PARALLELISM='false',PYTHONDONTWRITEBYTECODE='1')\n+        args=[str(py),'-u','-B',str(Path(__file__).resolve()),'--workspace',str(work),'--_science','--display','off']\n+        started=datetime.datetime.now(datetime.timezone.utc).isoformat()\n+        result=subprocess.run(args,cwd=ROOT,env=env,pass_fds=(fd,))\n+        evaluation=None\n+        if result.returncode==0:\n+            sealed_campaign(work,protocol);emit('phase',phase='全部56组预测封存后评估valid／test')\n+            evaluation=evaluate(matrix,work/'data')\n+        execution=dict(schema='qduet.local-born-smallset-execution.v1',run_id=run_id,returncode=result.returncode,\n+            all_cells_complete=evaluation is not None,roles=release['roles'],arms=protocol['arms'],seeds=protocol['seeds'],\n+            label_semantics='binary_useful',experiment_profile='local-born',test_used_for_selection=False,\n+            toy_claim='scoped adaptive L3; smallset outcome pending actual run',cross_machine_resume='Final sealed checkpoint + pinned frozen metadata; active milestones local only')\n+        import uuid\n+        immutable_json(output/'attempts',uuid.uuid4().hex+'.json',dict(started=started,finished=datetime.datetime.now(datetime.timezone.utc).isoformat(),command=args,**execution))\n+        atomic_json(output/'execution.json',execution);atomic_json(output/'dataset-release.json',release)\n+        emit('phase',phase='上传声明结果与最终检查点')\n+        push_results(exchange,output,run_id,execution)\n+        emit('outcome',result='已完成并上传' if evaluation is not None else '训练未完成；保留完整日志与检查点，使用 --resume')\n+        return result.returncode\n+\n+\n+if __name__=='__main__':\n+    try:raise SystemExit(main())\n+    except (ValueError,RuntimeError,KeyError,subprocess.CalledProcessError) as error:\n+        print(str(error),file=sys.stderr);raise SystemExit(2)\ndiff --git a/scripts/run_local_born_smallset.sh b/scripts/run_local_born_smallset.sh\nnew file mode 100644\nindex 0000000..cec1f5d\n--- /dev/null\n+++ b/scripts/run_local_born_smallset.sh\n@@ -0,0 +1,4 @@\n+#!/usr/bin/env bash\n+set -euo pipefail\n+cd -- \"$(dirname -- \"${BASH_SOURCE[0]}\")/..\"\n+exec \"${QDUET_BOOTSTRAP_PYTHON:-python3}\" -u -B scripts/run_local_born_smallset.py \"$@\"\ndiff --git a/scripts/smallset_progress.py b/scripts/smallset_progress.py\nindex c08c8a9..dde72f2 100644\n--- a/scripts/smallset_progress.py\n+++ b/scripts/smallset_progress.py\n@@ -22,7 +22,7 @@ def atomic(path, value):\n \n class Progress:\n     def __init__(self, attempt, log):\n-        self.attempt=attempt;self.jobs={};self.current=None;self.phase='启动／准备'\n+        self.name='TriviaQA · DPR / BGE · 8+2方案';self.attempt=attempt;self.jobs={};self.current=None;self.phase='启动／准备'\n         self.log_path=str(log);self.checkpoint='待测；显示心跳不代表检查点已保存'\n         self.result='等待完成';self.last_event=None;self.cache=None\n         self.worker_exit_code=None\n@@ -32,6 +32,7 @@ class Progress:\n         if e.get('qduet_progress')!=1:return\n         kind=e.get('event');stamp=e['time'];self.last_event=stamp\n         if kind=='schedule':\n+            self.name=e.get('name',self.name)\n             self.roster=set(e['jobs'])\n             for key in e['jobs']:self.jobs.setdefault(key,dict(id=key,state='pending'))\n         elif kind=='cell':\n@@ -81,7 +82,7 @@ class Progress:\n \n     def snapshot(self, now=None, watch=False):\n         now=time.time() if now is None else now\n-        return dict(schema='qduet.cli-progress.v1',name='TriviaQA · DPR / BGE · 8+2方案',\n+        return dict(schema='qduet.cli-progress.v1',name=self.name,\n             attempt=self.attempt,watch_only=watch,phase=self.phase,jobs=list(self.jobs.values()),\n             log_path=self.log_path,checkpoint_status=self.checkpoint,return_status=self.result,\n             supervisor_heartbeat_at=now,worker_event_at=self.last_event,cache=self.cache,\ndiff --git a/scripts/verify_local_born_native_v001.py b/scripts/verify_local_born_native_v001.py\nnew file mode 100644\nindex 0000000..6bbf80d\n--- /dev/null\n+++ b/scripts/verify_local_born_native_v001.py\n@@ -0,0 +1,40 @@\n+\"\"\"Two fixed existing toy rows: actual native extractor acceptance, not efficacy.\"\"\"\n+import argparse,json,sys\n+from pathlib import Path\n+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))\n+import torch\n+from applications.rag.local_born_cache_v001 import extract\n+from applications.rag.local_born_io_v001 import immutable_json\n+from applications.rag.local_born_smallset_v001 import policy\n+from applications.rag.toy100_qk_task_v001 import rows\n+from applications.rag.qvalue_portable_v001 import checked_member,need\n+\n+\n+def main():\n+    p=argparse.ArgumentParser();p.add_argument('--root',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()\n+    policy();a.output.mkdir(parents=True,exist_ok=False);population=rows(a.root/'data/toy100-high-ceiling-v001')\n+    selected=[{k:r[k] for k in ['id','component_id','question','paragraphs']} for r in [population['train'][0],population['holdout'][0]]]\n+    roles={selected[0]['id']:'train',selected[1]['id']:'valid'};frame=a.root/'output-frame-run-v001/ffn-readouts';records=json.loads((frame/'result.json').read_bytes());report={}\n+    for kind in ['dpr','bge']:\n+        old=torch.load(checked_member(frame,records[kind]['compact_file']),weights_only=True)\n+        root=a.output/kind;manifest=extract(kind,a.root/'models'/kind,selected,roles,root,dict(scope='fixed firstTRAIN/firstheld native adapter only'))\n+        differences={}\n+        for i,role in enumerate(['train','holdout']):\n+            current=torch.load(checked_member(root,manifest['questions'][i]['tensor']),weights_only=True)\n+            for new_name,old_name in [('z','ffn_z'),('residual','ffn_residual'),('features','features'),('native','native')]:\n+                reference=old[old_name][role][0];value=current[new_name]\n+                maximum=float((value-reference).abs().max());need(torch.allclose(value,reference,atol=2e-5,rtol=2e-5),'actual original native extractor parity')\n+                differences[role+'/'+new_name]=maximum\n+            need(torch.equal(torch.argsort(current['native'],descending=True,stable=True)[:5],torch.argsort(old['native'][role][0],descending=True,stable=True)[:5]),'fixed original native Top5 order')\n+        metadata=torch.load(checked_member(root,manifest['metadata']),weights_only=True)\n+        basis=float((metadata['ffn_frames']['basis']-old['ffn_frames']['basis']).abs().max())\n+        # New metadata is always pinned, even when an SVD orientation is not unique.\n+        report[kind]=dict(questions=2,original_candidate_chunks=14,differences=differences,\n+            new_frame_vs_old_basis_maximum=basis,new_frame_pinned_sha256=manifest['metadata']['sha256'],\n+            maximum_tail_replay_error=manifest['maximum_tail_error_new_questions'])\n+        del old,metadata\n+    result=dict(status='PASS',scope='Actual native forwards on first TRAIN and first exposed-held toy questions, both backbones; no fullsmallset or labels',backbones=report)\n+    immutable_json(a.output,'acceptance.json',result);print(json.dumps(result))\n+\n+\n+if __name__=='__main__':main()\ndiff --git a/scripts/verify_local_born_toy_port_v001.py b/scripts/verify_local_born_toy_port_v001.py\nnew file mode 100644\nindex 0000000..a46350c\n--- /dev/null\n+++ b/scripts/verify_local_born_toy_port_v001.py\n@@ -0,0 +1,78 @@\n+\"\"\"Affected-adapter acceptance only: reuse existing toy/native banks, no new data.\n+\n+Run inside the accepted owner allocation. It never acquires fullsmallset assets.\n+\"\"\"\n+import argparse,copy,json,sys\n+from pathlib import Path\n+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))\n+import torch\n+from applications.rag.qvalue_portable_v001 import digest,checked_member,need\n+from applications.rag.local_born_io_v001 import immutable_json,verify_seal\n+from applications.rag.local_born_cache_v001 import new_tensor,input_identity\n+from applications.rag.local_born_smallset_v001 import execute\n+from applications.rag.toy100_qk_task_v001 import rows,train_targets\n+\n+\n+def main():\n+    p=argparse.ArgumentParser();p.add_argument('--root',type=Path,required=True);p.add_argument('--output',type=Path,required=True)\n+    a=p.parse_args();root=a.root;out=a.output;out.mkdir(parents=True,exist_ok=False)\n+    original=root/'data/toy100-high-ceiling-v001';population=rows(original);targets=train_targets(original,population['train'])\n+    data=out/'data';data.mkdir();source=dict(accepted147_sha256=digest(root/'local-born-run-v001/output/joint-seal.json'),purpose='task-adapter parity; no fullsmallset')\n+    allrows=[];roles={}\n+    for role in ['train','holdout']:\n+        for i,r in enumerate(population[role]):\n+            value={k:r[k] for k in ['id','component_id','question','paragraphs']}\n+            if role=='train':value['labels']={p['id']:int(y) for p,y in zip(value['paragraphs'],targets[i])}\n+            allrows.append(value);roles[r['id']]='train' if role=='train' else 'valid'\n+    for name,rs in [('train.jsonl',allrows[:80]),('evaluation.inputs.jsonl',allrows[80:])]:\n+        (data/name).write_text(''.join(json.dumps(r)+'\\n' for r in rs))\n+    immutable_json(data,'roles.json',roles)\n+    protocol=json.loads((Path(__file__).resolve().parents[1]/'configs/experiments/local_born_smallset_20261125/protocol.v001.json').read_bytes())\n+    protocol.update(roles=dict(train=80,valid=20,test=0),seeds=[20261122],steps_per_learning_job=200,checkpoint_every=20,\n+        coupled_learning_jobs=9,sealed_prediction_groups=20,acceptance_scope='Existing toy only; not a new efficacy study')\n+    binding=dict(protocol=protocol,source=source,input_files={n:digest(data/n) for n in ['train.jsonl','evaluation.inputs.jsonl','roles.json']})\n+    frame_root=root/'output-frame-run-v001/ffn-readouts';records=json.loads((frame_root/'result.json').read_bytes())\n+    for k in ['dpr','bge']:\n+        packed=torch.load(checked_member(frame_root,records[k]['compact_file']),weights_only=True)\n+        need(packed['population_sha256']==digest(original/'population.private.json'),'exact same existing toy population')\n+        cache=out/'native-cache'/k;cache.mkdir(parents=True)\n+        cb=dict(kind=k,source=binding,inputs=[input_identity(r) for r in allrows],roles=[roles[r['id']] for r in allrows])\n+        immutable_json(cache,'binding.json',cb);qs=[]\n+        tensors={n:torch.cat([packed[n]['train'],packed[n]['holdout']]) for n in ['ffn_z','ffn_residual','features','native']}\n+        for i,row in enumerate(allrows):\n+            # torch.save(view) retains its entire backing storage. Materialize\n+            # this one question, as the production extractor's torch.cat does.\n+            value={n:tensors[m][i].clone() for n,m in [('z','ffn_z'),('residual','ffn_residual'),('features','features'),('native','native')]}\n+            qs.append(dict(index=i,id=row['id'],candidate_ids=[p['id'] for p in row['paragraphs']],input_sha256=cb['inputs'][i],\n+                tensor=new_tensor(cache,f'question-{i:05d}',value)))\n+        metadata={n:copy.deepcopy(packed[n]) for n in ['original_head','ffn_dense','ffn_normalization','ffn_bridge','ffn_eps','ffn_frames']}\n+        for n in ['ffn_z','features','native']:metadata[n]=dict(train=packed[n]['train'][:1].clone())\n+        manifest=dict(binding=cb,metadata=new_tensor(cache,'metadata',metadata),questions=qs)\n+        immutable_json(cache,'cache.json',manifest)\n+    result=execute(data,dict(dpr='unused',bge='unused'),out/'matrix',out/'native-cache',protocol,source)\n+    seal=verify_seal(out/'matrix');need(seal['expected_prediction_groups']==20,'full native plus9coupled arms onfixedseed')\n+    differences={};changed=0;count=0\n+    for arm in protocol['arms']:\n+        cell=json.loads((out/'matrix'/f'{arm}-s20261122/result.json').read_bytes())\n+        oldfolder=root/'local-born-run-v001/output'/f'{arm}-s20261122';oldcell=json.loads((oldfolder/'result.json').read_bytes())\n+        for k in ['dpr','bge']:\n+            new=json.loads(checked_member(out/'matrix'/f'{arm}-s20261122',cell['predictions'][k]).read_bytes())['rows']\n+            old=json.loads(checked_member(oldfolder,oldcell['predictions'][k]).read_bytes());need(len(old)==len(new)==20,'same complete heldout')\n+            maximum=max(abs(x-y) for aa,bb in zip(old,new) for x,y in zip(aa['scores'],bb['scores']))\n+            need(maximum<=2e-5,'portable score parity within original FP32 tolerance')\n+            flips=sum(aa['top5']!=bb['ranking'][:5] for aa,bb in zip(old,new));need(flips==0,'all20completeTop5 rankings preserved')\n+            differences[arm+'/'+k]=dict(maximum_score_difference=maximum,changed_top5=flips,values=1000);changed+=flips;count+=1000\n+    # Sealed completion is repeatable even with later coordinator reports;\n+    # completed cells/cache do not reconstruct or train during this branch.\n+    immutable_json(out/'matrix','smallset-evaluation.json',dict(acceptance_test=True,not_actual_smallset=True))\n+    repeated=execute(data,dict(dpr='unused',bge='unused'),out/'matrix',out/'native-cache',protocol,source)\n+    need(repeated==result,'completed sealed resume unaffected by post-seal reports')\n+    report=dict(status='PASS',scope='same existing toy80/20 single fixedseed task-adapter acceptance',\n+        source_147=source,groups=20,complete_fixed_seed=20261122,learning_jobs=9,steps_each=200,\n+        compared_scores=count,changed_top5=changed,parity=differences,sealed_resume_identical=True,\n+        maximum_score_difference=max(v['maximum_score_difference'] for v in differences.values()),\n+        no_owner_fullsmallset=True,no_new_assets_or_labels=True,scientific_efficacy_claim='Reuse all3seed147; this tests the changed adapter only')\n+    immutable_json(out,'acceptance.json',report);print(json.dumps(report))\n+\n+\n+if __name__=='__main__':main()\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "D:\\Software\\Dev\\Language\\Anaconda3\\envs\\ame\\python.exe",
+          "-B",
+          "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\baseline\\scripts\\run_local_born_smallset.py",
+          "--plan-only"
+        ],
+        "cwd": "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\baseline",
+        "exit": 2,
+        "stdout": "",
+        "stderr": "D:\\Software\\Dev\\Language\\Anaconda3\\envs\\ame\\python.exe: can't open file 'D:\\\\CodexHome\\\\private\\\\universal-quantum-toy100-20261122-v001\\\\local-born-port-source-fixture-v006\\\\baseline\\\\scripts\\\\run_local_born_smallset.py': [Errno 2] No such file or directory\n"
+      },
+      {
+        "command": [
+          "D:\\Software\\Dev\\Language\\Anaconda3\\envs\\ame\\python.exe",
+          "-B",
+          "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\modified\\scripts\\run_local_born_smallset.py",
+          "--plan-only"
+        ],
+        "cwd": "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\modified",
+        "exit": 0,
+        "stdout": "{\n  \"protocol\": {\n    \"schema\": \"qduet.local-born-smallset.v1\",\n    \"candidate\": \"147_LOCAL_NATIVE_MODE_BORN_ATTRIBUTION\",\n    \"factory\": \"applications.rag.toy100_local_born_v001.factory\",\n    \"roles\": {\n      \"train\": 8000,\n      \"valid\": 1000,\n      \"test\": 1000\n    },\n    \"arms\": [\n      \"HEAD\",\n      \"SIGNED_LOCAL\",\n      \"GELU_LOCAL\",\n      \"ABS_LOCAL\",\n      \"DEPHASED\",\n      \"RANDOM_FRAME\",\n      \"CLASSICAL_MATCHING\",\n      \"MLP8\",\n      \"QUANTUM\"\n    ],\n    \"seeds\": [\n      20261122,\n      20261123,\n      20261124\n    ],\n    \"epochs\": 20,\n    \"logical_questions\": 8,\n    \"steps_per_learning_job\": 20000,\n    \"coupled_learning_jobs\": 27,\n    \"sealed_prediction_groups\": 56,\n    \"optimizer\": \"AdamW lr0.001 weight_decay0 foreachFalse clip_norm1 final_checkpoint\",\n    \"loss\": \"Mean all ordered binary TRAIN pairs per question (no-pair zero); mean8 questions; meanDPR/BGE\",\n    \"checkpoint_every\": 100,\n    \"cpu_question_cache_mib\": 512,\n    \"input_candidate_chunk\": 8,\n    \"dtype\": \"Native FP32, exact147 critic FP64; deterministic, no TF32\",\n    \"evaluation\": \"Seal all56 complete candidate score groups before valid/test label join; report roles and all seeds separately, no test selection\",\n    \"recovery\": \"Full model/optimizer/frozen initial reference/RNG/gradient activity; immutable source/input identity; completed cells skipped; latest valid local checkpoint\",\n    \"storage\": \"Question FFN/residual/features/native FP32 shards; no full sequence dump. First extraction needs40GiB free; no old outputs removed.\",\n    \"claim\": \"Prospective smallset experiment. Existing toy L3 is limited to adaptive20 held questions; no hardware speedup, entanglement necessity or independent-confirmation claim.\"\n  },\n  \"source_files\": 45,\n  \"release_status\": \"ready\",\n  \"scientific_execution\": false\n}\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "D:\\Software\\Dev\\Language\\Anaconda3\\envs\\ame\\python.exe",
+          "-B",
+          "-m",
+          "unittest",
+          "applications.rag.tests.test_local_born_delivery_v001",
+          "-q"
+        ],
+        "cwd": "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\modified",
+        "exit": 0,
+        "stdout": "",
+        "stderr": "----------------------------------------------------------------------\nRan 5 tests in 5.782s\n\nOK\n"
+      },
+      {
+        "command": [
+          "D:\\Software\\Dev\\Language\\Anaconda3\\envs\\ame\\python.exe",
+          "-B",
+          "-c",
+          "import ast,pathlib;names=['applications/rag/local_born_cache_v001.py', 'applications/rag/local_born_smallset_v001.py', 'applications/rag/local_born_io_v001.py', 'scripts/run_local_born_smallset.py', 'scripts/verify_local_born_toy_port_v001.py', 'applications/rag/tests/test_local_born_portable_v001.py', 'applications/rag/tests/test_local_born_delivery_v001.py', 'scripts/smallset_progress.py', 'scripts/verify_local_born_native_v001.py'];[ast.parse(pathlib.Path(n).read_bytes()) for n in names];print('AST all owned Python sources PASS')"
+        ],
+        "cwd": "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\modified",
+        "exit": 0,
+        "stdout": "AST all owned Python sources PASS\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "git",
+          "-c",
+          "core.autocrlf=false",
+          "apply",
+          "--check",
+          "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\patch.diff"
+        ],
+        "cwd": "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\patch-replay",
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "git",
+          "-c",
+          "core.autocrlf=false",
+          "apply",
+          "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\patch.diff"
+        ],
+        "cwd": "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\patch-replay",
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "D:\\Software\\Dev\\Language\\Anaconda3\\envs\\ame\\python.exe",
+          "-B",
+          "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\rollback.py",
+          "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\rollback-execution"
+        ],
+        "cwd": "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006",
+        "exit": 0,
+        "stdout": "rollback: original bytes restored; only hash-bound added files removed\n",
+        "stderr": ""
+      }
+    ],
+    "modified_files": {
+      "applications/rag/local_born_cache_v001.py": "91760c615af81b7655ab15cea9e164dd94fa90400a36b18d88b851186b729b55",
+      "applications/rag/local_born_smallset_v001.py": "f514a0b8c090b65430dbdbbc621e57e50433c494565f3dba9e05ad7202737b6d",
+      "applications/rag/local_born_io_v001.py": "75f9b42f1571f6b1c24de0c9779fe4862993ebad8c6567383c2011ac560f7809",
+      "scripts/run_local_born_smallset.py": "955b0980d456ae72aa96ad692d877a671f7c21f46334218fc4e7a067659585e9",
+      "scripts/run_local_born_smallset.sh": "f5e4f5be1ff0c3461594cb4a4b20e4f2f0e0c44d0cf7ecd1fa5f9404a3a93de5",
+      "scripts/verify_local_born_toy_port_v001.py": "1c1a06c6513fe3ae1d30f92c161b4f2807ece41c47a7113df5e3befa771b0487",
+      "applications/rag/tests/test_local_born_portable_v001.py": "1f22cecfafff2d1702f9660800e1d7907a536cb3361255e7b654b1c9a4a9afc6",
+      "applications/rag/tests/test_local_born_delivery_v001.py": "ea1a85b5634fa7370339e42612ebe95d87454a3de48c581128f96779cecb2726",
+      "scripts/smallset_progress.py": "e1c176f54433d894fe05b7d645e460d822e4f68f742d0f021223f025f7d7b885",
+      "configs/experiments/local_born_smallset_20261125/protocol.v001.json": "3f51af0e4c6fc068e9593bbc25daf7a49aa2e1f350b684579d240d36d196f1c1",
+      "configs/experiments/local_born_smallset_20261125/requirements.txt": "d7d82c8120e246e25fbb0c747a4ac1e87b42974316ef2ead890cc8493f2b4018",
+      "docs/local-born-smallset-handoff.md": "ddbec6392d33a67b6b81f5f2c551af8140c4849ab1261dc0451be3bc9e0e98a9",
+      "scripts/verify_local_born_native_v001.py": "e9c2cc9510cd01b63e6195b70e24d332eaf42957b4656de8800ded602b6d3c49"
+    },
+    "baseline": {
+      "scripts/smallset_progress.py": "131daf6e25c62775c2bd5776fb5fc498beeaf791a5adfa7e1377837c492106cb"
+    },
+    "roles": {
+      "modified": "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\modified",
+      "patch": "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\patch.diff",
+      "verification": "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\verification.json",
+      "rollback": "D:\\CodexHome\\private\\universal-quantum-toy100-20261122-v001\\local-born-port-source-fixture-v006\\rollback.py"
+    }
+  },
+  "linux_isolated_staging": {
+    "status": "PASS",
+    "files_sha256": {
+      "applications/rag/coherent_qk_v001.py": "439d9fb4b90c329d882f98901d36f5c29b7008ccaf68eb7f90772eab98c36895",
+      "applications/rag/junior_transport_v001.py": "28cbcf5f4f99b6e74eab175d4e96218d876ad79e16071fdc9b078880d4afae73",
+      "applications/rag/local_born_cache_v001.py": "91760c615af81b7655ab15cea9e164dd94fa90400a36b18d88b851186b729b55",
+      "applications/rag/local_born_io_v001.py": "75f9b42f1571f6b1c24de0c9779fe4862993ebad8c6567383c2011ac560f7809",
+      "applications/rag/local_born_smallset_v001.py": "f514a0b8c090b65430dbdbbc621e57e50433c494565f3dba9e05ad7202737b6d",
+      "applications/rag/model_input_guards.py": "862ac16611fc8681b082aa6537a02853a7e8afe022a818c4b6b21bd98d315276",
+      "applications/rag/qcapacity_depth_v001.py": "4ba0cac65005f61aec6a041dc037d813ec5691dc455e2f74f1849b5726d0b9f4",
+      "applications/rag/qdepth_readout_v001.py": "6cff7bcad25fd9bd50eab35caf47449a3a336f4adf34aed6b1b83b70858235ee",
+      "applications/rag/qkernel_v001.py": "de0ba3193f480fa213dc9fcd1a7834ca99314914c77c3c4a9ca4917c8be68793",
+      "applications/rag/qvalue_geometry_v002.py": "874f4b69d13d640fafed7a4eaa705efcc24020351d61085c5034b60ea0f14007",
+      "applications/rag/qvalue_portable_v001.py": "f33fd11092d4119cf11b24a75f461bbd1d1f6136bb0a91fe03226c68a68e8e0c",
+      "applications/rag/qweight_manifold_v001.py": "5b66f766a231ce89b5880bfcadbedcec87e4e0341e8be9f79cb0b3fa008a640b",
+      "applications/rag/tests/test_local_born_delivery_v001.py": "ea1a85b5634fa7370339e42612ebe95d87454a3de48c581128f96779cecb2726",
+      "applications/rag/tests/test_local_born_portable_v001.py": "1f22cecfafff2d1702f9660800e1d7907a536cb3361255e7b654b1c9a4a9afc6",
+      "applications/rag/top8_backbone_v001.py": "597891513758b87901f29ee816c888ce2f00bf8209f15eac14cae124e930f34f",
+      "applications/rag/top8_cache_v002.py": "376e9ac08b97ce7bac3f1375abfed49fd266ad67b24c05d5e4acd383799b96af",
+      "applications/rag/top8_recovery_v001.py": "8988ba8c1d105a28822b3de1aa1e182188bf1272ebfb93241a62f1ef8ef5bd97",
+      "applications/rag/toy100_amplitude_readout_v001.py": "81c49f5e54ca7fd60420a3aaf78a977234f25de3cac14108dea852e981a78b11",
+      "applications/rag/toy100_block_activation_v001.py": "f62ffd0369028176a385c119c644f59e650d8c395beb743d145138ea95ba7e23",
+      "applications/rag/toy100_density_kernel_v001.py": "80a0712e0132ed8df644ff22ac3ed04e9032fcf8cc0d347bb4fa473a65daeb04",
+      "applications/rag/toy100_depth_product_born_v001.py": "a4ce8580c806209946461fe6b2b71f57b2447f099c9656a994832105d1819ca4",
+      "applications/rag/toy100_ffn_activation_v001.py": "091248cefb697c6621cd30c3c3308af0038d6d196fbb351ea3b75018091c37ae",
+      "applications/rag/toy100_ffn_export_v001.py": "55f1912a244cde8e0033e2253d5f3f3b9253f592a2f8d2a349f746d020463b55",
+      "applications/rag/toy100_global_ffn_v001.py": "6961022c20df03904c4c80f446ad6eab152801c6546da2aec21f3e9a4766fd82",
+      "applications/rag/toy100_local_born_v001.py": "60b2c702fa8bd53da4a42c1f0b1ab3a9014e3b69af1ed1ded3a00af8d52ecb73",
+      "applications/rag/toy100_native_feature_readout_v001.py": "c43fbe2f28d3e08bba1e07e88d57efd4dddce74c30ce8a2429227df09a714fe9",
+      "applications/rag/toy100_output_frame_v001.py": "0d1064bac6db2b4cd1f43a4fad1d9249bcca7b493852a4aa17f2d28ac9c0dc61",
+      "applications/rag/toy100_product_input_mps_v001.py": "3bf2fbbc02115f4fb9449be73c6e910da70326fa76b6a9e762ea42e0a94206da",
+      "applications/rag/toy100_qk_study_v001.py": "5a7737af906e5d2d226a6fcffaf0c9c6f8e573da684e25faaf69a81c7367cb3e",
+      "applications/rag/toy100_qk_task_v001.py": "a1159fb3fdfc32b44c23a5626588726a2a1851f6eba6abc4dfc1a100aba19e40",
+      "applications/rag/toy100_reference_depth_v001.py": "51860713079cb58ff164c93241fa26d4aac3b94166b81fcd11cef3783e00c1d7",
+      "applications/rag/toy100_shared_readout_v001.py": "2bcc5153425222b46810e9c382517d9ecbebf73038555bb438a035b839f752b3",
+      "applications/rag/toy100_shared_study_v001.py": "a15900496c246536d226be2b1beaa18fb9d8945ccce1744a9781527f995ae77d",
+      "applications/rag/triviaqa_smallset_v001.py": "ea0508f162586ffbc1995fa59592df718b3ff951760aac64310851abd0267746",
+      "configs/experiments/idea_search_20261103/junior-campaign.v001.json": "ef8955b0b93af970281c24c3fe733ce89dc62af77ee7386df756826d91dc3eae",
+      "configs/experiments/local_born_smallset_20261125/protocol.v001.json": "3f51af0e4c6fc068e9593bbc25daf7a49aa2e1f350b684579d240d36d196f1c1",
+      "configs/experiments/local_born_smallset_20261125/requirements.txt": "d7d82c8120e246e25fbb0c747a4ac1e87b42974316ef2ead890cc8493f2b4018",
+      "configs/experiments/reader_joint_witness_b1_model_assets.json": "71b67830ac16e3ba49215bf47abfe3ef2782a34722622c25077acc1b5606d0c7",
+      "configs/experiments/triviaqa_smallset_20261112/junior-release.v001.json": "b1e4e06e809523030757e9a36891a0e7277c8fc42ba6e9c4fd738d8ba5ffda8e",
+      "docs/local-born-smallset-handoff.md": "8d06341c9ebbd2fcad7a8029c46de42ed46316c6008cd932823bd07b2e3f0821",
+      "scripts/progress_ui.py": "c07691107ee2d2d4218c0948a9bc9226fce9e9d43870a7e34fb6651eca989c37",
+      "scripts/run_junior_experiments.py": "0873abdba4ecbd9b1126f00b0f1613c11f33bd78f0ba4925b6436b5db0d55b76",
+      "scripts/run_local_born_smallset.py": "955b0980d456ae72aa96ad692d877a671f7c21f46334218fc4e7a067659585e9",
+      "scripts/run_local_born_smallset.sh": "f5e4f5be1ff0c3461594cb4a4b20e4f2f0e0c44d0cf7ecd1fa5f9404a3a93de5",
+      "scripts/run_two_datasets.py": "6fc22ff5dfb2a7a77da8ef7041d0e6fb2f20a32b76ed065c66330285221ad125",
+      "scripts/smallset_events.py": "ef881daeee32688b8fc39be5fb7d7c26820fcda5378344ea960846ef5ac99eba",
+      "scripts/smallset_progress.py": "e1c176f54433d894fe05b7d645e460d822e4f68f742d0f021223f025f7d7b885",
+      "scripts/smallset_resources.py": "5649401da1bafb35b0356d493ce79d1baf7dcf88bc50632c64fb254e2ef5a944",
+      "scripts/verify_local_born_native_v001.py": "e9c2cc9510cd01b63e6195b70e24d332eaf42957b4656de8800ded602b6d3c49",
+      "scripts/verify_local_born_toy_port_v001.py": "1c1a06c6513fe3ae1d30f92c161b4f2807ece41c47a7113df5e3befa771b0487"
+    },
+    "checks": [
+      {
+        "command": [
+          "bash",
+          "-n",
+          "scripts/run_local_born_smallset.sh"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "bash",
+          "scripts/run_local_born_smallset.sh",
+          "--plan-only"
+        ],
+        "exit": 0,
+        "stdout": "{\n  \"protocol\": {\n    \"schema\": \"qduet.local-born-smallset.v1\",\n    \"candidate\": \"147_LOCAL_NATIVE_MODE_BORN_ATTRIBUTION\",\n    \"factory\": \"applications.rag.toy100_local_born_v001.factory\",\n    \"roles\": {\n      \"train\": 8000,\n      \"valid\": 1000,\n      \"test\": 1000\n    },\n    \"arms\": [\n      \"HEAD\",\n      \"SIGNED_LOCAL\",\n      \"GELU_LOCAL\",\n      \"ABS_LOCAL\",\n      \"DEPHASED\",\n      \"RANDOM_FRAME\",\n      \"CLASSICAL_MATCHING\",\n      \"MLP8\",\n      \"QUANTUM\"\n    ],\n    \"seeds\": [\n      20261122,\n      20261123,\n      20261124\n    ],\n    \"epochs\": 20,\n    \"logical_questions\": 8,\n    \"steps_per_learning_job\": 20000,\n    \"coupled_learning_jobs\": 27,\n    \"sealed_prediction_groups\": 56,\n    \"optimizer\": \"AdamW lr0.001 weight_decay0 foreachFalse clip_norm1 final_checkpoint\",\n    \"loss\": \"Mean all ordered binary TRAIN pairs per question (no-pair zero); mean8 questions; meanDPR/BGE\",\n    \"checkpoint_every\": 100,\n    \"cpu_question_cache_mib\": 512,\n    \"input_candidate_chunk\": 8,\n    \"dtype\": \"Native FP32, exact147 critic FP64; deterministic, no TF32\",\n    \"evaluation\": \"Seal all56 complete candidate score groups before valid/test label join; report roles and all seeds separately, no test selection\",\n    \"recovery\": \"Full model/optimizer/frozen initial reference/RNG/gradient activity; immutable source/input identity; completed cells skipped; latest valid local checkpoint\",\n    \"storage\": \"Question FFN/residual/features/native FP32 shards; no full sequence dump. First extraction needs40GiB free; no old outputs removed.\",\n    \"claim\": \"Prospective smallset experiment. Existing toy L3 is limited to adaptive20 held questions; no hardware speedup, entanglement necessity or independent-confirmation claim.\"\n  },\n  \"source_files\": 45,\n  \"release_status\": \"ready\",\n  \"scientific_execution\": false\n}\n",
+        "stderr": ""
+      },
+      {
+        "command": [
+          "/usr/bin/python3",
+          "-B",
+          "-m",
+          "unittest",
+          "applications.rag.tests.test_local_born_delivery_v001",
+          "-q"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": "----------------------------------------------------------------------\nRan 5 tests in 1.842s\n\nOK\n"
+      }
+    ],
+    "source_root": "/home/Q-DUET-VLM/local-born-smallset-20261125-v001/source",
+    "scope": "stdlib only; no scientific imports, datasets or training"
+  },
+  "asset_availability": {
+    "status": "PASS",
+    "checks": [
+      {
+        "exchange_path": "five_ideas/triviaqa-smallset-inputs/20261115-v001/triviaqa-8000-1000-1000-binary.tar",
+        "status": 200,
+        "size": 190976000,
+        "expected_archive_sha256": "1a53cf1da9099b0b432b0e6b7b30625cde674cf6de3e7c19414b0da7ffc827af",
+        "actual_body_downloaded": 0,
+        "scope": "HEAD proves availability and declared length; body hash remains pinned and verified during junior download"
+      },
+      {
+        "exchange_path": "five_ideas/top8-junior-inputs/20261103-v001/top8-private-inputs-two-models.tar",
+        "status": 200,
+        "size": 2753105920,
+        "expected_archive_sha256": "29a4d5808a330b45f5dcb307ffca59de498d020ec7d70409e1716eedf3566a32",
+        "actual_body_downloaded": 0,
+        "scope": "HEAD proves availability and declared length; body hash remains pinned and verified during junior download"
+      }
+    ],
+    "secret_values_printed": false
+  },
+  "test_layers": {
+    "local_delivery": 5,
+    "local_delivery_plus_legacy": 17,
+    "local_platform_skipped": 1,
+    "linux_delivery": 5,
+    "allocated_numeric": 2
+  },
+  "review": {
+    "mode": "same_family_bounded_source_subagent_fallback",
+    "reviewer": "/root/token_density_math_review",
+    "status": "PASS_WITH_RISK",
+    "scope": "Six supplied portable source/test files only, stdlib reading; no other repository/data/network/scientific access. First review BLOCK retained: unbound Journal adoption, self-reported roster, missing-git fallback. Final supplied code corrected these. Later UI computed vocabulary, lazy DiskLRU root and diagnostics wiring validated by actual focused tests; no claim of independent review of those later bytes."
+  },
+  "failures_preserved": [
+    {
+      "root": "local-born-port-run-v001",
+      "reason": "verifier missing project import root; algorithm tests2 passed, study1/quiescent, no fullsmallset"
+    },
+    {
+      "root": "local-born-port-run-v002",
+      "reason": "acceptance converter saved torch tensor views with full backing storage; own2GiB guard terminated before training. Fixed converter clone, production extractor already torch.cat owns its data. Root retained."
+    },
+    {
+      "root": "local-born-port-source-fixture-v002",
+      "reason": "isolated dependency test revealed missing lazy DiskLRU source root; fixed shipped closure. Unrelated legacy tests require old runner dependencies and are tested separately in original repository."
+    },
+    {
+      "roots": [
+        "local-born-port-source-fixture-v003",
+        "local-born-port-source-fixture-v004"
+      ],
+      "reason": "Windows global git autocrlf affected patch replay bytes. Explicit core.autocrlf=false passed in finalfixture. Failed fixtures retained."
+    }
+  ],
+  "scope": {
+    "port_parity": "All9arms, original80/20toy, firstfixedseed only;18000scores max2.86102294921875e-6, no Top5 changes; completed sealed resume identical",
+    "native": "First TRAIN and first exposed-held existing toy question, both models,28chunks. Original scores/features/rankings exact; z differences within declared2e-5; actual basis separately pinned.",
+    "resume": "All arms first-step numerical parity; interrupted QUANTUM step1->2 equals uninterrupted full module/optimizer/RNG/activity/predictions, completed skip and source/unbound rejection. CPU integration real seal/evaluation/uploader with mocked science+transport.",
+    "owner_fullsmallset": 0,
+    "new_datasets_labels_assets": 0,
+    "public_dataset_body_bytes": 0,
+    "fullsmallset_runtime_throughput": "UNMEASURED",
+    "claim": "Reuse scoped147three-seed result. Adapter acceptance is not additional efficacy/generalization evidence."
+  }
+}

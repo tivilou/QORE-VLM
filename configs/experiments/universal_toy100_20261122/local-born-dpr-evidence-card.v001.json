@@ -1,0 +1,484 @@
+{
+  "schema_version": "evidence-tiered-idea-validation.evidence-card.v3",
+  "rating_policy": {
+    "id": "advantage-evidence",
+    "version": "1"
+  },
+  "idea_id": "147-dpr",
+  "title": "Native output-mode local Born FFN / dpr",
+  "status": "active",
+  "current_tier": "L3_mechanism_attribution",
+  "claim_ceiling": "mechanism_supported_advantage",
+  "claim_scope": "Fixed toy100-high-ceiling-v001,80TRAIN/20adaptive exposed held, Top50to5; no held labels in training/scoring. Post146 selected exact local branch; prospectively frozen147 attribution only. Not independent generalization.",
+  "hypothesis": "Frozen native FFN output-mode coherent square-map adaptation plus original head has useful mode-basis cross terms beyond same-U replacements and inputdephasing.",
+  "result_status": "positive",
+  "theory": {
+    "self_consistent": true,
+    "feasible": true,
+    "assumptions": [
+      "Source-bound fullrank native SVD frame; valid positive radius; ideal analytic expectation; frozencompleteinitialreference."
+    ],
+    "implementation_plan": "Exact147 factory/source tested on accepted4090 allocation; portable fullsmallset adapter pending.",
+    "evidence_refs": [
+      "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+      "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+      "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+    ]
+  },
+  "evidence": {
+    "data_scope": {
+      "task_family": "Fixed retrieval candidate scoring Top50to5",
+      "source_kind": "experimental",
+      "evaluation_population": "20 fixed adaptive exposed questions,100Top5positions perseed",
+      "benchmark_ref": "configs/experiments/universal_toy100_20261122/local-born-design.v001.json"
+    },
+    "comparison": {
+      "id": "147-dpr",
+      "metric": "useful Top5 count /100",
+      "direction": "higher",
+      "baseline_identity": "Coupled original linear HEAD / dpr",
+      "method_identity": "Exact146NO_CNOT local Born147 / dpr",
+      "evaluation_split": "train-heldout but adaptively reused toy20",
+      "heldout": true,
+      "primary_predeclared": true,
+      "inference_mode": "label_free",
+      "leakage_audit": "pass",
+      "fairness_audit": "pass",
+      "selection_guard": "pass",
+      "evidence_refs": [
+        "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+        "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+        "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+      ]
+    },
+    "runs": {
+      "planned_seeds": [
+        20261122,
+        20261123,
+        20261124
+      ],
+      "seeds_predeclared": true,
+      "aggregation": "arithmetic_mean",
+      "results": [
+        {
+          "seed": 20261122,
+          "status": "completed",
+          "method_value": 87,
+          "baseline_value": 87,
+          "evidence_refs": [
+            "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+            "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+            "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+          ]
+        },
+        {
+          "seed": 20261123,
+          "status": "completed",
+          "method_value": 88,
+          "baseline_value": 88,
+          "evidence_refs": [
+            "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+            "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+            "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+          ]
+        },
+        {
+          "seed": 20261124,
+          "status": "completed",
+          "method_value": 88,
+          "baseline_value": 87,
+          "evidence_refs": [
+            "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+            "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+            "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+          ]
+        }
+      ]
+    },
+    "attribution": {
+      "status": "pass",
+      "scope": "component",
+      "mechanism": "Fixed-frame input off-diagonal cross terms / normalized Born readout within this specific frozen local-mode configuration.",
+      "evidence_refs": [
+        "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+        "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+        "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json",
+        "configs/experiments/universal_toy100_20261122/local-born-claim-review.v001.json"
+      ]
+    },
+    "controls": [
+      {
+        "id": "147-dpr-SIGNED_LOCAL",
+        "kind": "matched",
+        "comparison_id": "147-dpr",
+        "status": "pass",
+        "design_frozen": true,
+        "fairness_audit": "pass",
+        "baseline_identity": "SIGNED_LOCAL",
+        "design": "Same original full input/mode frame/tail/train supervision/three seeds/200 steps/optimizer; own complete initialreference. SIGNED_LOCAL; exact declared capacity/output-scale caveats retained.",
+        "replacement_type": "SIGNED_LOCAL",
+        "evidence_refs": [
+          "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+          "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+          "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+        ],
+        "results": [
+          {
+            "seed": 20261122,
+            "status": "completed",
+            "method_value": 87,
+            "baseline_value": 87,
+            "evidence_refs": [
+              "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+            ]
+          },
+          {
+            "seed": 20261123,
+            "status": "completed",
+            "method_value": 88,
+            "baseline_value": 87,
+            "evidence_refs": [
+              "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+            ]
+          },
+          {
+            "seed": 20261124,
+            "status": "completed",
+            "method_value": 88,
+            "baseline_value": 86,
+            "evidence_refs": [
+              "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "147-dpr-GELU_LOCAL",
+        "kind": "matched",
+        "comparison_id": "147-dpr",
+        "status": "pass",
+        "design_frozen": true,
+        "fairness_audit": "pass",
+        "baseline_identity": "GELU_LOCAL",
+        "design": "Same original full input/mode frame/tail/train supervision/three seeds/200 steps/optimizer; own complete initialreference. GELU_LOCAL; exact declared capacity/output-scale caveats retained.",
+        "replacement_type": "GELU_LOCAL",
+        "evidence_refs": [
+          "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+          "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+          "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+        ],
+        "results": [
+          {
+            "seed": 20261122,
+            "status": "completed",
+            "method_value": 87,
+            "baseline_value": 87,
+            "evidence_refs": [
+              "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+            ]
+          },
+          {
+            "seed": 20261123,
+            "status": "completed",
+            "method_value": 88,
+            "baseline_value": 88,
+            "evidence_refs": [
+              "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+            ]
+          },
+          {
+            "seed": 20261124,
+            "status": "completed",
+            "method_value": 88,
+            "baseline_value": 87,
+            "evidence_refs": [
+              "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "147-dpr-ABS_LOCAL",
+        "kind": "matched",
+        "comparison_id": "147-dpr",
+        "status": "pass",
+        "design_frozen": true,
+        "fairness_audit": "pass",
+        "baseline_identity": "ABS_LOCAL",
+        "design": "Same original full input/mode frame/tail/train supervision/three seeds/200 steps/optimizer; own complete initialreference. ABS_LOCAL; exact declared capacity/output-scale caveats retained.",
+        "replacement_type": "ABS_LOCAL",
+        "evidence_refs": [
+          "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+          "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+          "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+        ],
+        "results": [
+          {
+            "seed": 20261122,
+            "status": "completed",
+            "method_value": 87,
+            "baseline_value": 87,
+            "evidence_refs": [
+              "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+            ]
+          },
+          {
+            "seed": 20261123,
+            "status": "completed",
+            "method_value": 88,
+            "baseline_value": 87,
+            "evidence_refs": [
+              "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+            ]
+          },
+          {
+            "seed": 20261124,
+            "status": "completed",
+            "method_value": 88,
+            "baseline_value": 87,
+            "evidence_refs": [
+              "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "147-dpr-DEPHASED",
+        "kind": "ablation",
+        "comparison_id": "147-dpr",
+        "status": "pass",
+        "design_frozen": true,
+        "fairness_audit": "pass",
+        "baseline_identity": "DEPHASED",
+        "design": "Same original full input/mode frame/tail/train supervision/three seeds/200 steps/optimizer; own complete initialreference. DEPHASED; exact declared capacity/output-scale caveats retained.",
+        "replacement_type": "DEPHASED",
+        "evidence_refs": [
+          "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+          "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+          "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+        ],
+        "results": [
+          {
+            "seed": 20261122,
+            "status": "completed",
+            "method_value": 87,
+            "baseline_value": 87,
+            "evidence_refs": [
+              "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+            ]
+          },
+          {
+            "seed": 20261123,
+            "status": "completed",
+            "method_value": 88,
+            "baseline_value": 87,
+            "evidence_refs": [
+              "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+            ]
+          },
+          {
+            "seed": 20261124,
+            "status": "completed",
+            "method_value": 88,
+            "baseline_value": 87,
+            "evidence_refs": [
+              "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "147-dpr-RANDOM_FRAME",
+        "kind": "matched",
+        "comparison_id": "147-dpr",
+        "status": "pass",
+        "design_frozen": true,
+        "fairness_audit": "pass",
+        "baseline_identity": "RANDOM_FRAME",
+        "design": "Same original full input/mode frame/tail/train supervision/three seeds/200 steps/optimizer; own complete initialreference. RANDOM_FRAME; exact declared capacity/output-scale caveats retained.",
+        "replacement_type": "RANDOM_FRAME",
+        "evidence_refs": [
+          "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+          "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+          "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+        ],
+        "results": [
+          {
+            "seed": 20261122,
+            "status": "completed",
+            "method_value": 87,
+            "baseline_value": 87,
+            "evidence_refs": [
+              "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+            ]
+          },
+          {
+            "seed": 20261123,
+            "status": "completed",
+            "method_value": 88,
+            "baseline_value": 87,
+            "evidence_refs": [
+              "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+            ]
+          },
+          {
+            "seed": 20261124,
+            "status": "completed",
+            "method_value": 88,
+            "baseline_value": 87,
+            "evidence_refs": [
+              "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "147-dpr-CLASSICAL_MATCHING",
+        "kind": "matched",
+        "comparison_id": "147-dpr",
+        "status": "pass",
+        "design_frozen": true,
+        "fairness_audit": "pass",
+        "baseline_identity": "CLASSICAL_MATCHING",
+        "design": "Same original full input/mode frame/tail/train supervision/three seeds/200 steps/optimizer; own complete initialreference. CLASSICAL_MATCHING; exact declared capacity/output-scale caveats retained.",
+        "replacement_type": "CLASSICAL_MATCHING",
+        "evidence_refs": [
+          "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+          "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+          "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+        ],
+        "results": [
+          {
+            "seed": 20261122,
+            "status": "completed",
+            "method_value": 87,
+            "baseline_value": 86,
+            "evidence_refs": [
+              "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+            ]
+          },
+          {
+            "seed": 20261123,
+            "status": "completed",
+            "method_value": 88,
+            "baseline_value": 86,
+            "evidence_refs": [
+              "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+            ]
+          },
+          {
+            "seed": 20261124,
+            "status": "completed",
+            "method_value": 88,
+            "baseline_value": 86,
+            "evidence_refs": [
+              "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "147-dpr-MLP8",
+        "kind": "matched",
+        "comparison_id": "147-dpr",
+        "status": "pass",
+        "design_frozen": true,
+        "fairness_audit": "pass",
+        "baseline_identity": "MLP8",
+        "design": "Same original full input/mode frame/tail/train supervision/three seeds/200 steps/optimizer; own complete initialreference. MLP8; exact declared capacity/output-scale caveats retained.",
+        "replacement_type": "MLP8",
+        "evidence_refs": [
+          "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+          "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+          "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+        ],
+        "results": [
+          {
+            "seed": 20261122,
+            "status": "completed",
+            "method_value": 87,
+            "baseline_value": 84,
+            "evidence_refs": [
+              "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+            ]
+          },
+          {
+            "seed": 20261123,
+            "status": "completed",
+            "method_value": 88,
+            "baseline_value": 83,
+            "evidence_refs": [
+              "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+            ]
+          },
+          {
+            "seed": 20261124,
+            "status": "completed",
+            "method_value": 88,
+            "baseline_value": 85,
+            "evidence_refs": [
+              "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+              "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "limitations": [
+    "Knownexactclassicalstructuredquadraticmap andinputdephasing. No entanglementnecessity/quantumexclusivity/newprimitive/hardware/independentconfirmation/fullsmallsetclaim. All146rank/radius/fullBGEzero-sum/nonuniqueSVD/framecost limits retained. SameU outputsnotamplitudematched; statepuritydeletionchangescapacity. No selectingmodel-specificwinners.",
+    "Only three-seed aggregate superiority; not every seed wins. Only one useful position above strongest independent control per backbone across300 positions. Repeated adaptive20held; candidate selected after146; not independent confirmation or significance.",
+    "Exact efficient classical structured quadratic equivalent; no entanglement necessity, quantum exclusivity, computational/hardware advantage or novelty certification. FullCNOT146 BGE84each exceeds this local candidate; not superiority to all quantum configurations.",
+    "Same-U signed/GELU/ABS not amplitude matched; MLP8 larger nominal capacity, optimizer identical but not equally tuned functional capacity. Inputdephasing removes fixed-basis off-diagonal terms, not exclusively quantum information. Randomframe changes multiple orientations."
+  ],
+  "provenance": {
+    "records": [
+      "configs/experiments/universal_toy100_20261122/local-born-design.v001.json",
+      "configs/experiments/universal_toy100_20261122/local-born-result.v001.json",
+      "configs/experiments/universal_toy100_20261122/local-born-verification.v001.json",
+      "configs/experiments/universal_toy100_20261122/output-frame-result.v001.json"
+    ],
+    "code_revision": "ParentGit e2b100a924b583e6ea16dfbe6c5bcf75debe0d2a plus exact accepted611-source binding1a26faedb98fa07132d0ba1100eac9476887dba0c5259ec1ab4c1695887f36ac; plugin60b2c702fa8bd53da4a42c1f0b1ab3a9014e3b69af1ed1ded3a00af8d52ecb73 (run source then uncommitted, not a fabricated Git revision)."
+  }
+}

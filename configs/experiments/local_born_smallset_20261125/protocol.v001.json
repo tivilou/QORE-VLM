@@ -1,0 +1,23 @@
+{
+  "schema": "qduet.local-born-smallset.v1",
+  "candidate": "147_LOCAL_NATIVE_MODE_BORN_ATTRIBUTION",
+  "factory": "applications.rag.toy100_local_born_v001.factory",
+  "roles": {"train": 8000, "valid": 1000, "test": 1000},
+  "arms": ["HEAD", "SIGNED_LOCAL", "GELU_LOCAL", "ABS_LOCAL", "DEPHASED", "RANDOM_FRAME", "CLASSICAL_MATCHING", "MLP8", "QUANTUM"],
+  "seeds": [20261122, 20261123, 20261124],
+  "epochs": 20,
+  "logical_questions": 8,
+  "steps_per_learning_job": 20000,
+  "coupled_learning_jobs": 27,
+  "sealed_prediction_groups": 56,
+  "optimizer": "AdamW lr0.001 weight_decay0 foreachFalse clip_norm1 final_checkpoint",
+  "loss": "Mean all ordered binary TRAIN pairs per question (no-pair zero); mean8 questions; meanDPR/BGE",
+  "checkpoint_every": 100,
+  "cpu_question_cache_mib": 512,
+  "input_candidate_chunk": 8,
+  "dtype": "Native FP32, exact147 critic FP64; deterministic, no TF32",
+  "evaluation": "Seal all56 complete candidate score groups before valid/test label join; report roles and all seeds separately, no test selection",
+  "recovery": "Full model/optimizer/frozen initial reference/RNG/gradient activity; immutable source/input identity; completed cells skipped; latest valid local checkpoint",
+  "storage": "Question FFN/residual/features/native FP32 shards; no full sequence dump. First extraction needs40GiB free; no old outputs removed.",
+  "claim": "Prospective smallset experiment. Existing toy L3 is limited to adaptive20 held questions; no hardware speedup, entanglement necessity or independent-confirmation claim."
+}

@@ -1,0 +1,719 @@
+{
+  "schema": "qduet.local-born-result.v1",
+  "candidate_id": 147,
+  "recorded_at": "2026-11-25T02:51:17.481175+00:00",
+  "status": "complete_scoped_L3_gate_PASS_pending_handoff_review",
+  "scope": {
+    "population": "toy100-high-ceiling-v001",
+    "train": 80,
+    "adaptive_exposed_held": 20,
+    "seeds": [
+      20261122,
+      20261123,
+      20261124
+    ],
+    "steps": 200,
+    "top50": 50,
+    "topk": 5,
+    "denominator": 100,
+    "oracle": 100
+  },
+  "by_backbone": {
+    "dpr": {
+      "NATIVE": [
+        81
+      ],
+      "HEAD": [
+        87,
+        88,
+        87
+      ],
+      "SIGNED_LOCAL": [
+        87,
+        87,
+        86
+      ],
+      "GELU_LOCAL": [
+        87,
+        88,
+        87
+      ],
+      "ABS_LOCAL": [
+        87,
+        87,
+        87
+      ],
+      "DEPHASED": [
+        87,
+        87,
+        87
+      ],
+      "RANDOM_FRAME": [
+        87,
+        87,
+        87
+      ],
+      "CLASSICAL_MATCHING": [
+        86,
+        86,
+        86
+      ],
+      "MLP8": [
+        84,
+        83,
+        85
+      ],
+      "QUANTUM": [
+        87,
+        88,
+        88
+      ]
+    },
+    "bge": {
+      "NATIVE": [
+        83
+      ],
+      "HEAD": [
+        83,
+        83,
+        82
+      ],
+      "SIGNED_LOCAL": [
+        83,
+        83,
+        83
+      ],
+      "GELU_LOCAL": [
+        83,
+        83,
+        83
+      ],
+      "ABS_LOCAL": [
+        83,
+        83,
+        82
+      ],
+      "DEPHASED": [
+        83,
+        83,
+        83
+      ],
+      "RANDOM_FRAME": [
+        83,
+        83,
+        83
+      ],
+      "CLASSICAL_MATCHING": [
+        83,
+        83,
+        83
+      ],
+      "MLP8": [
+        83,
+        83,
+        83
+      ],
+      "QUANTUM": [
+        83,
+        84,
+        83
+      ]
+    }
+  },
+  "strict_gates": {
+    "dpr": {
+      "quantum_minus_HEAD_total": 1,
+      "quantum_exceeds_native": true,
+      "quantum_exceeds_each_control": {
+        "HEAD": true,
+        "SIGNED_LOCAL": true,
+        "GELU_LOCAL": true,
+        "ABS_LOCAL": true,
+        "DEPHASED": true,
+        "RANDOM_FRAME": true,
+        "CLASSICAL_MATCHING": true,
+        "MLP8": true
+      }
+    },
+    "bge": {
+      "quantum_minus_HEAD_total": 2,
+      "quantum_exceeds_native": true,
+      "quantum_exceeds_each_control": {
+        "HEAD": true,
+        "SIGNED_LOCAL": true,
+        "GELU_LOCAL": true,
+        "ABS_LOCAL": true,
+        "DEPHASED": true,
+        "RANDOM_FRAME": true,
+        "CLASSICAL_MATCHING": true,
+        "MLP8": true
+      }
+    }
+  },
+  "source_sha256": {
+    "applications/rag/toy100_local_born_v001.py": "60b2c702fa8bd53da4a42c1f0b1ab3a9014e3b69af1ed1ded3a00af8d52ecb73",
+    "applications/rag/tests/test_toy100_local_born_v001.py": "8f602ce24b913a7bfb95c4181db40a174cdbd428d697f06eb89b80c064bd3d56",
+    "applications/rag/toy100_plugins_v001.py": "87df9c5263685d643305b953788f7f4f87ef51d4ede6d62e8db9b4d19bcbf91f"
+  },
+  "quantum_head_contrasts": {
+    "dpr": [
+      {
+        "seed": 20261122,
+        "max_logit_difference": 0.3631657361984253,
+        "different_top5_questions": 5
+      },
+      {
+        "seed": 20261123,
+        "max_logit_difference": 0.32338428497314453,
+        "different_top5_questions": 3
+      },
+      {
+        "seed": 20261124,
+        "max_logit_difference": 0.412081241607666,
+        "different_top5_questions": 3
+      }
+    ],
+    "bge": [
+      {
+        "seed": 20261122,
+        "max_logit_difference": 0.9820809364318848,
+        "different_top5_questions": 1
+      },
+      {
+        "seed": 20261123,
+        "max_logit_difference": 0.5038943290710449,
+        "different_top5_questions": 3
+      },
+      {
+        "seed": 20261124,
+        "max_logit_difference": 1.2295293807983398,
+        "different_top5_questions": 3
+      }
+    ]
+  },
+  "train_diagnostics": [
+    {
+      "arm": "HEAD",
+      "seed": 20261122,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 337
+        }
+      },
+      "loss": 0.1783219575881958
+    },
+    {
+      "arm": "HEAD",
+      "seed": 20261123,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 338
+        }
+      },
+      "loss": 0.12779536843299866
+    },
+    {
+      "arm": "HEAD",
+      "seed": 20261124,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 338
+        }
+      },
+      "loss": 0.13569557666778564
+    },
+    {
+      "arm": "SIGNED_LOCAL",
+      "seed": 20261122,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 338
+        }
+      },
+      "loss": 0.17816658318042755
+    },
+    {
+      "arm": "SIGNED_LOCAL",
+      "seed": 20261123,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 338
+        }
+      },
+      "loss": 0.12689027190208435
+    },
+    {
+      "arm": "SIGNED_LOCAL",
+      "seed": 20261124,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 337
+        }
+      },
+      "loss": 0.13561251759529114
+    },
+    {
+      "arm": "GELU_LOCAL",
+      "seed": 20261122,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 338
+        }
+      },
+      "loss": 0.17750079929828644
+    },
+    {
+      "arm": "GELU_LOCAL",
+      "seed": 20261123,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 337
+        }
+      },
+      "loss": 0.12723208963871002
+    },
+    {
+      "arm": "GELU_LOCAL",
+      "seed": 20261124,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 337
+        }
+      },
+      "loss": 0.13514968752861023
+    },
+    {
+      "arm": "ABS_LOCAL",
+      "seed": 20261122,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 341
+        }
+      },
+      "loss": 0.1750904619693756
+    },
+    {
+      "arm": "ABS_LOCAL",
+      "seed": 20261123,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 327
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 341
+        }
+      },
+      "loss": 0.12712618708610535
+    },
+    {
+      "arm": "ABS_LOCAL",
+      "seed": 20261124,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 339
+        }
+      },
+      "loss": 0.13508543372154236
+    },
+    {
+      "arm": "DEPHASED",
+      "seed": 20261122,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 337
+        }
+      },
+      "loss": 0.17832809686660767
+    },
+    {
+      "arm": "DEPHASED",
+      "seed": 20261123,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 338
+        }
+      },
+      "loss": 0.12743259966373444
+    },
+    {
+      "arm": "DEPHASED",
+      "seed": 20261124,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 338
+        }
+      },
+      "loss": 0.13560868799686432
+    },
+    {
+      "arm": "RANDOM_FRAME",
+      "seed": 20261122,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 336
+        }
+      },
+      "loss": 0.17698948085308075
+    },
+    {
+      "arm": "RANDOM_FRAME",
+      "seed": 20261123,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 337
+        }
+      },
+      "loss": 0.1276473104953766
+    },
+    {
+      "arm": "RANDOM_FRAME",
+      "seed": 20261124,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 338
+        }
+      },
+      "loss": 0.13589712977409363
+    },
+    {
+      "arm": "CLASSICAL_MATCHING",
+      "seed": 20261122,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 325
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 337
+        }
+      },
+      "loss": 0.17528711259365082
+    },
+    {
+      "arm": "CLASSICAL_MATCHING",
+      "seed": 20261123,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 336
+        }
+      },
+      "loss": 0.1261594593524933
+    },
+    {
+      "arm": "CLASSICAL_MATCHING",
+      "seed": 20261124,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 338
+        }
+      },
+      "loss": 0.13549751043319702
+    },
+    {
+      "arm": "MLP8",
+      "seed": 20261122,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 325
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 340
+        }
+      },
+      "loss": 0.15993964672088623
+    },
+    {
+      "arm": "MLP8",
+      "seed": 20261123,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 324
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 340
+        }
+      },
+      "loss": 0.1210998147726059
+    },
+    {
+      "arm": "MLP8",
+      "seed": 20261124,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 325
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 334
+        }
+      },
+      "loss": 0.1144016683101654
+    },
+    {
+      "arm": "QUANTUM",
+      "seed": 20261122,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 337
+        }
+      },
+      "loss": 0.17746052145957947
+    },
+    {
+      "arm": "QUANTUM",
+      "seed": 20261123,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 337
+        }
+      },
+      "loss": 0.12514770030975342
+    },
+    {
+      "arm": "QUANTUM",
+      "seed": 20261124,
+      "by_backbone": {
+        "bge": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 326
+        },
+        "dpr": {
+          "denominator": 400,
+          "questions": 80,
+          "useful_top5": 337
+        }
+      },
+      "loss": 0.13652125000953674
+    }
+  ],
+  "fit_diagnostics": {
+    "critic_parameters": 40,
+    "limits": "KnownexactclassicalstructuredU/square, no newprimitive/hardware/exclusivity. Unconstrainedrowspacelemma notactualcircuitcoverage: BGEdeltaA sums0/excludesonepreLNoutputdirection. Randomframe also changesexcluded direction andgate/singularalignment, notpuresemanticcausality. V^Tz canvanish forvalidnativeinput; fataldoesnotmakeinputinvalid. FullprobabilityandO(Dh)framecosts; no amplitude/conditioningmatch, repeatedsingularframesnonunique. No_CNOT20nominal10effective, inputmayalreadyentangle. Frozenframe/tail reconstructedbyhashedfactory.",
+    "mechanism": "Pinned full native output-rowspace SVD modes. y=V^Tz; pad768/1024 to1024. OriginalGELU+V*(Aθ(y)-Ainit(y)); unchangednative tail/currenthead. Randomorientation uses pairedencode/decode.",
+    "padding_mass_probe": {
+      "bge": {
+        "final": {
+          "applicable": true,
+          "candidates": 50,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0
+        },
+        "initial": {
+          "applicable": true,
+          "candidates": 50,
+          "maximum": 0.0,
+          "mean": 0.0,
+          "minimum": 0.0
+        }
+      },
+      "dpr": {
+        "final": {
+          "applicable": true,
+          "candidates": 50,
+          "maximum": 0.005124475536989741,
+          "mean": 0.0049102160613030315,
+          "minimum": 0.00451566497779442
+        },
+        "initial": {
+          "applicable": true,
+          "candidates": 50,
+          "maximum": 0.006795572988449821,
+          "mean": 0.006453865734219828,
+          "minimum": 0.005819460007860248
+        }
+      }
+    },
+    "probe_scope": "first TRAIN query/all50, not fullpopulation/trajectory"
+  },
+  "claim_ceiling": "Knownexactclassicalstructuredquadraticmap andinputdephasing. No entanglementnecessity/quantumexclusivity/newprimitive/hardware/independentconfirmation/fullsmallsetclaim. All146rank/radius/fullBGEzero-sum/nonuniqueSVD/framecost limits retained. SameU outputsnotamplitudematched; statepuritydeletionchangescapacity. No selectingmodel-specificwinners.",
+  "history": "All141completeconfigs old68+high73 retained. 146fullCNOT mainfailed. ItslocalNO_CNOTwasD87/88/88,B83/84/83 vsHEAD D87/88/87,B83/83/82; selectedafteradaptiveheldinspection andnotalreadyL3. Adaptivecomplexentanglerfutureproposal notimplemented/run/counted.",
+  "execution": {
+    "tests": {
+      "exit": 0,
+      "finished": 1795573946.9644055,
+      "peak_group_rss": 3268608,
+      "quiescent": true,
+      "resource_violation": null
+    },
+    "study": {
+      "exit": 0,
+      "finished": 1795574960.9683998,
+      "peak_group_rss": 2279161856,
+      "quiescent": true,
+      "resource_violation": null
+    },
+    "supervisor": {
+      "exit": 0,
+      "completed": 1795574960.9692197,
+      "science_child_quiescent": true
+    },
+    "run_root": "/workspace/q-duet-toy100-20261122-v001/local-born-run-v001"
+  }
+}

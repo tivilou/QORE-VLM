@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 import shutil
 import sys
+from applications.rag.model_input_guards import require_complete_question
 
 
 def need(ok, message):
@@ -147,7 +148,9 @@ def extract_cache(train_path, eval_path, model_root, output, checkpoint=lambda: 
                 original = tokenizer(**kwargs, truncation=False, padding=False)['input_ids']
                 truncated_rows += sum(len(x) > 350 for x in original)
                 encoded = tokenizer(**kwargs, truncation=True, max_length=350,
-                                    padding=True, return_tensors='pt').to('cuda')
+                                    padding=True, return_tensors='pt')
+                require_complete_question(tokenizer, row['question'], encoded['input_ids'])
+                encoded = encoded.to('cuda')
                 captured = {}; handles = []
                 def before10(module, args, kw):
                     need('block10' not in captured, 'one block10 capture')

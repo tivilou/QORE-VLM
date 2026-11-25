@@ -1,0 +1,14 @@
+{
+  "recorded_at": "2026-11-25T02:28:32.723281+00:00",
+  "mode": "same_family_text_only_subagent_fallback",
+  "reviewer": "/root/token_density_math_review",
+  "status": "PASS_WITH_RISK",
+  "scope": "net-angle inputdephasing/controlmath only; nofiles/tools/network/source/runtime/benefit/L3certification",
+  "conditions": [
+    "eta_q=theta1_q+theta2_q, applyT=[[cos²(eta/2),sin²],[sin²,cos²]] toinitialintensity y²; exactinputcomputationaldephase then sameUmeasurement, mass||y||² andA=p/r-r.",
+    "Both20nominal10effective, sameoptimizer andownfullfrozenreference; no dephasingbetweentwolayers substitution.",
+    "Deletion isolatesfixedframeinputoff-diagonalterms, notentanglementnecessity/quantumexclusivity.",
+    "FullCNOTremainsunfavorablecomparisonbackground, notoneofnewlocalclaimclassical/deletionrivals;146notretroactivelyupgraded.",
+    "Actualframe/radius/BGEzero-sum/source/cost/nonuniqueSVDboundaries unchanged."
+  ]
+}

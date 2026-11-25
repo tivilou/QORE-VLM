@@ -22,7 +22,7 @@ def atomic(path, value):
 
 class Progress:
     def __init__(self, attempt, log):
-        self.attempt=attempt;self.jobs={};self.current=None;self.phase='启动／准备'
+        self.name='TriviaQA · DPR / BGE · 8+2方案';self.attempt=attempt;self.jobs={};self.current=None;self.phase='启动／准备'
         self.log_path=str(log);self.checkpoint='待测；显示心跳不代表检查点已保存'
         self.result='等待完成';self.last_event=None;self.cache=None
         self.worker_exit_code=None
@@ -32,6 +32,7 @@ class Progress:
         if e.get('qduet_progress')!=1:return
         kind=e.get('event');stamp=e['time'];self.last_event=stamp
         if kind=='schedule':
+            self.name=e.get('name',self.name)
             self.roster=set(e['jobs'])
             for key in e['jobs']:self.jobs.setdefault(key,dict(id=key,state='pending'))
         elif kind=='cell':
@@ -81,7 +82,7 @@ class Progress:
 
     def snapshot(self, now=None, watch=False):
         now=time.time() if now is None else now
-        return dict(schema='qduet.cli-progress.v1',name='TriviaQA · DPR / BGE · 8+2方案',
+        return dict(schema='qduet.cli-progress.v1',name=self.name,
             attempt=self.attempt,watch_only=watch,phase=self.phase,jobs=list(self.jobs.values()),
             log_path=self.log_path,checkpoint_status=self.checkpoint,return_status=self.result,
             supervisor_heartbeat_at=now,worker_event_at=self.last_event,cache=self.cache,
